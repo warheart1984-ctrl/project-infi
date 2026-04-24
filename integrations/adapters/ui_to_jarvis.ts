@@ -121,7 +121,6 @@ function inferResponseStatus(payload: Record<string, unknown>, responseOk: boole
 
   if (
     payload.provider_notice
-    || payload.provider_fallback
     || outputCompletion.truncation_detected
     || outputCompletion.repetition_detected
     || outputCompletion.completion_guard_applied
@@ -164,43 +163,32 @@ export async function sendToJarvis(
   request: ChatRequest,
   baseUrl?: string,
 ): Promise<ChatResponse> {
-  const context = request.context || {};
-  let sessionId = context.session_id;
-
-  if (!sessionId) {
-    const sessionPayload = await createJarvisSession(context, baseUrl);
-    sessionId = String(sessionPayload.session_id || '');
-  }
-
-  if (!sessionId) {
-    throw new Error('Jarvis session_id is required');
-  }
-
-  const response = await fetch(
-    resolveIntegrationRoute('jarvis_message', { session_id: sessionId }, baseUrl),
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(buildMessagePayload(request)),
-      signal: request.signal,
+  const response = await fetch(resolveIntegrationRoute('jarvis_chat', {}, baseUrl), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  );
+    body: JSON.stringify({
+      input: request.input,
+      context: request.context || {},
+      mode: request.mode || 'normal',
+    }),
+    signal: request.signal,
+  });
 
   const payload = await parseJson(response);
-  const status = inferResponseStatus(payload, response.ok);
+  const status = String(payload.status || inferResponseStatus(payload, response.ok)) as ChatResponse['status'];
 
   if (!response.ok) {
     throw new Error(String(payload.error || 'Jarvis request failed'));
   }
 
   return {
-    output: String(payload.response || ''),
-    trace: (payload.response_trace || null) as Record<string, unknown> | null,
+    output: String(payload.output || ''),
+    trace: (payload.trace || null) as Record<string, unknown> | null,
     status,
-    session_id: sessionId,
-    runtime: payload,
+    session_id: String(payload.session_id || ''),
+    runtime: (payload.runtime || payload) as Record<string, unknown>,
   };
 }
 

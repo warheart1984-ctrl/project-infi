@@ -16,26 +16,26 @@ describe('jarvis integration contract adapter', () => {
   });
 
   it('resolves routes from the shared routing map', () => {
-    expect(systemRoutingMap.routes.jarvis_sessions).toBe('/legacy_api/api/chat/sessions');
-    expect(resolveIntegrationRoute('jarvis_message', { session_id: 'session-1' })).toBe(
-      'http://127.0.0.1:8000/legacy_api/api/chat/sessions/session-1/message',
+    expect(systemRoutingMap.routes.jarvis_chat).toBe('/api/jarvis');
+    expect(resolveIntegrationRoute('jarvis_chat')).toBe(
+      'http://127.0.0.1:8000/api/jarvis',
     );
   });
 
-  it('creates a session and sends a normalized Jarvis message', async () => {
-    global.fetch = vi.fn()
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ session_id: 'session-1', turns: [] }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          session_id: 'session-1',
+  it('sends one normalized Jarvis message through the compatibility endpoint', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        session_id: 'session-1',
+        output: 'Ready.',
+        trace: { provider_dispatch: {} },
+        status: 'ok',
+        runtime: {
           response: 'Ready.',
           response_trace: { provider_dispatch: {} },
-        }),
-      });
+        },
+      }),
+    });
 
     const response = await sendToJarvis({
       input: 'Test request',
@@ -48,14 +48,8 @@ describe('jarvis integration contract adapter', () => {
     expect(response.output).toBe('Ready.');
     expect(response.status).toBe('ok');
     expect(response.session_id).toBe('session-1');
-    expect(global.fetch).toHaveBeenNthCalledWith(
-      1,
-      'http://127.0.0.1:8000/legacy_api/api/chat/sessions',
-      expect.objectContaining({ method: 'POST' }),
-    );
-    expect(global.fetch).toHaveBeenNthCalledWith(
-      2,
-      'http://127.0.0.1:8000/legacy_api/api/chat/sessions/session-1/message',
+    expect(global.fetch).toHaveBeenCalledWith(
+      'http://127.0.0.1:8000/api/jarvis',
       expect.objectContaining({ method: 'POST' }),
     );
   });
@@ -89,7 +83,7 @@ describe('jarvis integration contract adapter', () => {
 
     expect(response.id).toBe('memory-1');
     expect(global.fetch).toHaveBeenCalledWith(
-      'http://127.0.0.1:8000/legacy_api/api/jarvis/memory',
+      'http://127.0.0.1:8000/api/memory/write',
       expect.objectContaining({ method: 'POST' }),
     );
   });

@@ -6,10 +6,80 @@ import types
 import unittest
 from unittest.mock import patch
 
+from fastapi.testclient import TestClient
+
 from app import main as app_main
 
 
 class TestCanonicalHealth(unittest.TestCase):
+    def test_openapi_includes_shell_jarvis_route(self):
+        paths = app_main.app.openapi()["paths"]
+
+        self.assertIn("/api/jarvis", paths)
+        self.assertIn("post", paths["/api/jarvis"])
+        self.assertIn("/api/memory/write", paths)
+        self.assertIn("post", paths["/api/memory/write"])
+        self.assertNotIn("/chat", paths)
+        self.assertNotIn("/chat/stream", paths)
+
+    def test_shell_jarvis_route_proxies_to_legacy_runtime(self):
+        with patch.object(
+            app_main,
+            "_forward_legacy_jarvis_request",
+            return_value=(
+                200,
+                {
+                    "output": "Jarvis received: hello",
+                    "trace": None,
+                    "status": "ok",
+                    "session_id": "session-1",
+                    "runtime": {"response": "Jarvis received: hello"},
+                    "mode": "normal",
+                },
+            ),
+        ) as mock_forward:
+            with TestClient(app_main.app) as client:
+                response = client.post("/api/jarvis", json={"input": "hello"})
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertEqual(payload["output"], "Jarvis received: hello")
+        self.assertEqual(payload["status"], "ok")
+        self.assertEqual(payload["session_id"], "session-1")
+        mock_forward.assert_called_once_with({"input": "hello", "context": None, "mode": "normal"})
+
+    def test_shell_memory_write_route_proxies_to_legacy_runtime(self):
+        with patch.object(
+            app_main,
+            "_forward_legacy_runtime_json_request",
+            return_value=(
+                201,
+                {
+                    "id": "memory-1",
+                    "text": "remember this",
+                    "governance": {"action": "write"},
+                },
+            ),
+        ) as mock_forward:
+            with TestClient(app_main.app) as client:
+                response = client.post("/api/memory/write", json={"text": "remember this"})
+
+        self.assertEqual(response.status_code, 201)
+        payload = response.json()
+        self.assertEqual(payload["id"], "memory-1")
+        self.assertEqual(payload["text"], "remember this")
+        mock_forward.assert_called_once_with(
+            "/api/jarvis/memory",
+            {
+                "text": "remember this",
+                "tags": [],
+                "source": None,
+                "category": None,
+                "kind": None,
+                "why": None,
+            },
+        )
+
     def test_legacy_bridge_mount_uses_supported_a2wsgi_wrapper(self):
         mounted_route = next(
             route for route in app_main.app.routes if getattr(route, "path", None) == app_main.LEGACY_API_MOUNT_PATH

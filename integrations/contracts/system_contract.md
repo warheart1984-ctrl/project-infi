@@ -16,44 +16,40 @@ The adapter provides the simplified UI contract.
 - `app/main.py` is the public UI-facing API shell.
 - `src/api.py` is the canonical Jarvis runtime.
 - UI traffic must enter through the shell surface.
-- Runtime routes exposed by `src/api.py` are mounted under `/legacy_api`.
+- `POST /api/jarvis` is the shell-owned Jarvis ingress exposed in FastAPI docs.
+- The shell forwards Jarvis chat traffic into the mounted runtime lane.
 
 The UI should not bypass the shell and call the runtime directly when the shell
 is present.
 
-## Raw Endpoints
+## Primary Endpoint
 
 - `GET /health`
+- `POST /api/jarvis`
+- `POST /api/memory/write`
+
+## Lower-Level Runtime Endpoints
+
+- `POST /legacy_api/api/jarvis`
 - `POST /legacy_api/api/chat/sessions`
 - `POST /legacy_api/api/chat/sessions/{session_id}/message`
 - `POST /legacy_api/api/jarvis/memory`
 
-## Raw Request: Create Session
+## Raw Request: Jarvis Chat
 
 ```json
 {
-  "system_prompt": "string",
-  "persona_mode": "builder",
-  "response_mode": "fast",
-  "provider": "auto",
-  "provider_mode": "auto_best",
-  "requested_specialists": [],
-  "requested_specialist_preset": null
-}
-```
-
-## Raw Request: Chat Message
-
-```json
-{
-  "message": "string",
-  "response_mode": "fast | think",
-  "use_research": false,
-  "persona_mode": "builder",
-  "provider": "auto",
-  "provider_mode": "auto_best",
-  "requested_specialists": [],
-  "requested_specialist_preset": null
+  "input": "string",
+  "context": {
+    "session_id": "string",
+    "system_prompt": "string",
+    "persona_mode": "builder",
+    "provider": "auto",
+    "provider_mode": "auto_best",
+    "requested_specialists": [],
+    "requested_specialist_preset": null
+  },
+  "mode": "normal | think | research"
 }
 ```
 
@@ -70,22 +66,22 @@ is present.
 }
 ```
 
-## Raw Response: Chat Message
+## Raw Response: Jarvis Chat
 
 ```json
 {
-  "response": "string",
-  "response_trace": {},
+  "output": "string",
+  "trace": {},
+  "status": "ok | degraded | blocked",
   "session_id": "string",
-  "session_state": {},
-  "policy_status": {},
-  "provider_notice": null
+  "runtime": {}
 }
 ```
 
 ## Normalized Adapter Request
 
-This is the UI contract exposed by `integrations/adapters/ui_to_jarvis.ts`.
+This is the UI contract exposed by `integrations/adapters/ui_to_jarvis.ts` and it
+now matches the compatibility endpoint directly.
 
 ```json
 {
@@ -123,12 +119,14 @@ This is the UI contract exposed by `integrations/adapters/ui_to_jarvis.ts`.
 
 ## Status Mapping
 
-- `ok` -> backend completed normally with no visible degradation signal
-- `degraded` -> backend completed, but exposed fallback, truncation, or prompt-pressure evidence
-- `blocked` -> backend rejected the request or returned an error posture
+- `ok` -> Jarvis completed normally with no visible degradation signal
+- `degraded` -> Jarvis completed, but exposed fallback, truncation, or prompt-pressure evidence
+- `blocked` -> Jarvis rejected the request or returned an error posture
 
 ## Law
 
 - UI code should prefer the adapter contract over direct hardcoded route strings for new integration work.
 - Route ownership lives in `integrations/routing/map.json`.
+- `POST /api/jarvis` is the public compatibility chat ingress for UI callers.
+- `POST /api/memory/write` is the public compatibility memory-write ingress for UI callers.
 - If raw backend endpoints change, this contract and the route map must be updated together.

@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Literal
 from pydantic import BaseModel, Field
 
 
@@ -19,6 +19,41 @@ class ChatResponse(BaseModel):
     session_id: str
     cache_hit: bool = False
     route: str | None = None
+
+
+class JarvisCompatContext(BaseModel):
+    session_id: str | None = Field(default=None, min_length=1, max_length=200)
+    system_prompt: str | None = Field(default=None, max_length=4000)
+    persona_mode: str | None = Field(default=None, max_length=64)
+    provider: str | None = Field(default=None, max_length=64)
+    provider_mode: str | None = Field(default=None, max_length=64)
+    requested_specialists: list[str] = Field(default_factory=list)
+    requested_specialist_preset: str | None = Field(default=None, max_length=128)
+
+
+class JarvisCompatRequest(BaseModel):
+    input: str = Field(..., min_length=1, max_length=8000)
+    context: JarvisCompatContext | None = None
+    mode: Literal["normal", "think", "research"] = "normal"
+
+
+class JarvisCompatResponse(BaseModel):
+    output: str
+    trace: dict[str, Any] | None = None
+    status: Literal["ok", "degraded", "blocked"]
+    session_id: str | None = None
+    runtime: dict[str, Any] = Field(default_factory=dict)
+    error: str | None = None
+    mode: Literal["normal", "think", "research"] | None = None
+
+
+class JarvisMemoryWriteRequest(BaseModel):
+    text: str = Field(..., min_length=1, max_length=8000)
+    tags: list[str] = Field(default_factory=list)
+    source: str | None = Field(default=None, max_length=128)
+    category: str | None = Field(default=None, max_length=128)
+    kind: str | None = Field(default=None, max_length=128)
+    why: str | None = Field(default=None, max_length=4000)
 
 class AgentRequest(BaseModel):
     goal: str = Field(..., min_length=1, max_length=8000)

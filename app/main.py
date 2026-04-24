@@ -15,12 +15,13 @@ import uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
 from a2wsgi import WSGIMiddleware
-from fastapi import FastAPI, Depends, HTTPException, Request, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, Depends, HTTPException, Request, Response as FastAPIResponse, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from app.schemas import (
     ChatRequest, ChatResponse,
+    JarvisCompatRequest, JarvisCompatResponse, JarvisMemoryWriteRequest,
     AgentRequest, AgentResponse, AgentStep,
     JobResponse, JobStatusResponse, RagIndexRequest, RagIndexResponse, RagQueryRequest, RagQueryResponse,
     WorkflowApprovalActionRequest, WorkflowDraftRequest, WorkflowRunRequest,
@@ -491,6 +492,30 @@ def _queue_workflow_run_record(
         },
     )
 
+
+def _forward_legacy_jarvis_request(payload: dict) -> tuple[int, dict]:
+    """Send one shell-owned Jarvis request through the canonical legacy runtime lane."""
+    try:
+        flask_app = legacy_api_bridge._load_app()
+    except Exception as exc:  # pragma: no cover - only exercised when the legacy runtime is broken
+        raise HTTPException(status_code=503, detail=f"Jarvis runtime unavailable: {exc}") from exc
+
+    with flask_app.test_client() as client:
+        response = client.post("/api/jarvis", json=payload)
+    return response.status_code, response.get_json(silent=True) or {}
+
+
+def _forward_legacy_runtime_json_request(path: str, payload: dict) -> tuple[int, dict]:
+    """Forward one shell-owned JSON request to the mounted legacy runtime."""
+    try:
+        flask_app = legacy_api_bridge._load_app()
+    except Exception as exc:  # pragma: no cover - only exercised when the legacy runtime is broken
+        raise HTTPException(status_code=503, detail=f"Jarvis runtime unavailable: {exc}") from exc
+
+    with flask_app.test_client() as client:
+        response = client.post(path, json=payload)
+    return response.status_code, response.get_json(silent=True) or {}
+
 @app.get("/")
 def index():
     if _has_modern_frontend_bundle():
@@ -536,7 +561,7 @@ def health_details():
         details={"contract_version": PROJECT_INFI_CONTRACT_VERSION},
     )
 
-@app.post("/chat", response_model=ChatResponse, dependencies=[Depends(require_token)])
+@app.post("/chat", response_model=ChatResponse, dependencies=[Depends(require_token)], include_in_schema=False)
 def chat(req: ChatRequest):
     history = load_recent_messages(req.session_id, limit=20)
     response, used_tool, tool_result, cache_hit, route = run_tool_loop(req.message, history, session_id=req.session_id)
@@ -558,7 +583,22 @@ def chat(req: ChatRequest):
         route=route,
     )
 
-@app.post("/chat/stream", dependencies=[Depends(require_token)])
+
+@app.post("/api/jarvis", response_model=JarvisCompatResponse)
+def jarvis_chat(req: JarvisCompatRequest, response: FastAPIResponse):
+    status_code, payload = _forward_legacy_jarvis_request(req.model_dump())
+    response.status_code = status_code
+    return JarvisCompatResponse(**payload)
+
+
+@app.post("/api/memory/write")
+def write_memory(req: JarvisMemoryWriteRequest, response: FastAPIResponse):
+    status_code, payload = _forward_legacy_runtime_json_request("/api/jarvis/memory", req.model_dump())
+    response.status_code = status_code
+    return payload
+
+
+@app.post("/chat/stream", dependencies=[Depends(require_token)], include_in_schema=False)
 def chat_stream(req: ChatRequest):
     history = load_recent_messages(req.session_id, limit=12)
     messages = build_messages(req.message, history, req.session_id)

@@ -1896,6 +1896,41 @@ class TestChatApi(unittest.TestCase):
         fake_model.generate_chat.assert_called_once()
 
     @patch("src.api.init_ai")
+    def test_jarvis_compat_endpoint_normalizes_chat_runtime_payload(self, mock_init_ai):
+        """The simplified `/api/jarvis` lane should reuse the session runtime and return the UI contract."""
+        fake_model = MagicMock()
+        fake_model.generate_chat.return_value = "Ready."
+        mock_init_ai.return_value = (fake_model, object())
+
+        response = self.client.post(
+            "/api/jarvis",
+            json={
+                "input": "Test request",
+                "mode": "think",
+                "context": {"persona_mode": "builder"},
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.get_json()
+        self.assertEqual(payload["output"], "Ready.")
+        self.assertEqual(payload["status"], "ok")
+        self.assertTrue(payload["session_id"])
+        self.assertEqual(payload["trace"]["mode"], "think")
+        self.assertEqual(payload["runtime"]["response"], "Ready.")
+        self.assertEqual(payload["runtime"]["persona_mode"], "builder")
+
+    def test_jarvis_compat_endpoint_blocks_missing_input(self):
+        """The simplified `/api/jarvis` lane should fail closed when input is missing."""
+        response = self.client.post("/api/jarvis", json={"mode": "normal"})
+
+        self.assertEqual(response.status_code, 400)
+        payload = response.get_json()
+        self.assertEqual(payload["status"], "blocked")
+        self.assertEqual(payload["error"], "Input is required")
+        self.assertEqual(payload["runtime"]["error"], "Input is required")
+
+    @patch("src.api.init_ai")
     def test_chat_message_dedupes_memory_cues_and_keeps_scaffolding_out_of_future_context(self, mock_init_ai):
         """Current-turn cue dedupe and assistant-history sanitization should keep prompt assembly bounded."""
         fake_model = MagicMock()

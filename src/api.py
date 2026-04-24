@@ -9671,54 +9671,186 @@ def verify_browser_route(session_id):
 # Conversation Memory / Chat
 # ──────────────────────────────────────────────
 
+def _create_chat_session_from_payload(data: dict | None):
+    """Create one session from the canonical chat-session payload."""
+    payload = dict(data or {})
+    persona_mode = normalize_persona_mode(payload.get("persona_mode"))
+    companion_profile = _get_companion_surface_profile(persona_mode=persona_mode)
+    system_prompt = companion_profile["system_prompt"] if companion_profile else payload.get("system_prompt")
+    session_id = conversation_memory.create_session(system_prompt=system_prompt)
+    session = conversation_memory.get_session(session_id)
+    if session:
+        _set_session_persona_mode(session, persona_mode)
+        _set_session_response_mode(
+            session,
+            _coerce_response_mode_for_persona(persona_mode, payload.get("response_mode")),
+        )
+        _set_session_preferred_provider(
+            session,
+            payload.get("provider"),
+            requested_provider_mode=payload.get("provider_mode"),
+            prefer_new_session_default=bool(
+                normalize_provider_mode_identifier(payload.get("provider_mode"), default="")
+            ),
+        )
+        _set_session_requested_specialists(session, payload.get("requested_specialists"))
+        _set_session_requested_specialist_preset(session, payload.get("requested_specialist_preset"))
+        _transition_session_state(
+            session,
+            "idle",
+            summary="Session created and waiting for the operator.",
+            reason="session_created",
+            event_type="session_created",
+            payload={
+                "persona_mode": session.metadata.get("persona_mode"),
+                "requested_response_mode": session.metadata.get("requested_response_mode"),
+                "response_mode": session.metadata.get("response_mode"),
+                "preferred_provider": session.metadata.get("preferred_provider"),
+                "provider_mode": session.metadata.get("provider_mode"),
+                "provider_fallback": session.metadata.get("provider_fallback"),
+                "requested_specialists": session.metadata.get("requested_specialists"),
+                "requested_specialist_preset": session.metadata.get("requested_specialist_preset"),
+            },
+        )
+    return session
+
+
+def _infer_jarvis_compat_status(payload: dict | None, status_code: int) -> str:
+    """Project one runtime payload into the UI-facing chat contract status."""
+    normalized_payload = dict(payload or {})
+    if status_code >= 400 or normalized_payload.get("error"):
+        return "blocked"
+
+    response_trace = dict(normalized_payload.get("response_trace") or {})
+    output_completion = dict(response_trace.get("output_completion") or {})
+    provider_dispatch = dict(response_trace.get("provider_dispatch") or {})
+
+    if (
+        normalized_payload.get("provider_notice")
+        or output_completion.get("truncation_detected")
+        or output_completion.get("repetition_detected")
+        or output_completion.get("completion_guard_applied")
+        or provider_dispatch.get("prompt_overflow_tokens")
+    ):
+        return "degraded"
+
+    return "ok"
+
+
+def _build_jarvis_compat_message_payload(data: dict | None) -> tuple[dict, dict, str]:
+    """Normalize one simplified `/api/jarvis` request into the session-message payload."""
+    payload = dict(data or {})
+    context = dict(payload.get("context") or {})
+    mode = " ".join(str(payload.get("mode") or "normal").strip().lower().split()) or "normal"
+    message_payload = {
+        "message": payload.get("input"),
+        "persona_mode": context.get("persona_mode"),
+        "provider": context.get("provider"),
+        "provider_mode": context.get("provider_mode"),
+        "requested_specialists": context.get("requested_specialists"),
+        "requested_specialist_preset": context.get("requested_specialist_preset"),
+    }
+    if mode == "think":
+        message_payload["response_mode"] = "think"
+    if mode == "research":
+        message_payload["use_research"] = True
+    return context, message_payload, mode
+
+
 @app.route("/api/chat/sessions", methods=["POST"])
 def create_chat_session():
     """Create a new chat session"""
     try:
-        data = request.json or {}
-        persona_mode = normalize_persona_mode(data.get("persona_mode"))
-        companion_profile = _get_companion_surface_profile(persona_mode=persona_mode)
-        system_prompt = companion_profile["system_prompt"] if companion_profile else data.get("system_prompt")
-        session_id = conversation_memory.create_session(system_prompt=system_prompt)
-        session = conversation_memory.get_session(session_id)
-        if session:
-            _set_session_persona_mode(session, persona_mode)
-            _set_session_response_mode(
-                session,
-                _coerce_response_mode_for_persona(persona_mode, data.get("response_mode")),
-            )
-            _set_session_preferred_provider(
-                session,
-                data.get("provider"),
-                requested_provider_mode=data.get("provider_mode"),
-                prefer_new_session_default=bool(
-                    normalize_provider_mode_identifier(data.get("provider_mode"), default="")
-                ),
-            )
-            _set_session_requested_specialists(session, data.get("requested_specialists"))
-            _set_session_requested_specialist_preset(session, data.get("requested_specialist_preset"))
-            _transition_session_state(
-                session,
-                "idle",
-                summary="Session created and waiting for the operator.",
-                reason="session_created",
-                event_type="session_created",
-                payload={
-                    "persona_mode": session.metadata.get("persona_mode"),
-                    "requested_response_mode": session.metadata.get("requested_response_mode"),
-                    "response_mode": session.metadata.get("response_mode"),
-                    "preferred_provider": session.metadata.get("preferred_provider"),
-                    "provider_mode": session.metadata.get("provider_mode"),
-                    "provider_fallback": session.metadata.get("provider_fallback"),
-                    "requested_specialists": session.metadata.get("requested_specialists"),
-                    "requested_specialist_preset": session.metadata.get("requested_specialist_preset"),
-                },
-            )
-        return jsonify(_serialize_session_payload(session) if session else {"session_id": session_id}), 201
+        session = _create_chat_session_from_payload(request.json or {})
+        return jsonify(
+            _serialize_session_payload(session)
+            if session
+            else {"session_id": None, "error": "Unable to create session"}
+        ), 201
 
     except Exception as e:
         logger.error(f"Error creating session: {e}")
         return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis", methods=["POST"])
+def jarvis_chat_compat():
+    """Expose one simplified Jarvis chat endpoint on top of the session runtime."""
+    try:
+        request_payload = dict(request.json or {})
+        context, message_payload, mode = _build_jarvis_compat_message_payload(request_payload)
+        session_id = str(context.get("session_id") or "").strip()
+
+        if not message_payload.get("message"):
+            payload = {
+                "output": "",
+                "trace": None,
+                "status": "blocked",
+                "session_id": session_id or None,
+                "runtime": {"error": "Input is required"},
+                "error": "Input is required",
+            }
+            return jsonify(payload), 400
+
+        if session_id:
+            session = conversation_memory.get_session(session_id)
+            if not session:
+                payload = {
+                    "output": "",
+                    "trace": None,
+                    "status": "blocked",
+                    "session_id": session_id,
+                    "runtime": {"error": "Session not found or expired"},
+                    "error": "Session not found or expired",
+                }
+                return jsonify(payload), 404
+        else:
+            session = _create_chat_session_from_payload(context)
+            if not session:
+                return jsonify(
+                    {
+                        "output": "",
+                        "trace": None,
+                        "status": "blocked",
+                        "session_id": None,
+                        "runtime": {"error": "Unable to create Jarvis session"},
+                        "error": "Unable to create Jarvis session",
+                    }
+                ), 500
+            session_id = session.session_id
+
+        with app.test_request_context(
+            f"/api/chat/sessions/{session_id}/message",
+            method="POST",
+            json=message_payload,
+        ):
+            chat_result = chat_message(session_id)
+            chat_response = app.make_response(chat_result)
+
+        runtime_payload = chat_response.get_json(silent=True) or {}
+        normalized_payload = {
+            "output": runtime_payload.get("response") or "",
+            "trace": runtime_payload.get("response_trace"),
+            "status": _infer_jarvis_compat_status(runtime_payload, chat_response.status_code),
+            "session_id": session_id,
+            "runtime": runtime_payload,
+        }
+        if runtime_payload.get("error"):
+            normalized_payload["error"] = runtime_payload.get("error")
+        if mode:
+            normalized_payload["mode"] = mode
+        return jsonify(normalized_payload), chat_response.status_code
+    except Exception as e:
+        logger.error(f"Error in jarvis_chat_compat: {e}")
+        payload = {
+            "output": "",
+            "trace": None,
+            "status": "blocked",
+            "session_id": None,
+            "runtime": {"error": str(e)},
+            "error": str(e),
+        }
+        return jsonify(payload), 500
 
 
 @app.route("/api/chat/sessions", methods=["GET"])
