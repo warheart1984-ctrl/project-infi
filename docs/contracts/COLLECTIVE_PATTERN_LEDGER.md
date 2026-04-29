@@ -234,6 +234,8 @@ Current truth:
 - the law is admitted
 - EvolveEngine already provides the strongest live Hall of Fame / Hall of Shame
   runtime surface
+- Jarvis detachment containment writes signature-only runtime pattern entries for
+  blocked ingress pressure
 - broader repo-wide ledger coverage remains incomplete and should grow through
   governed integration rather than ad hoc logging
 

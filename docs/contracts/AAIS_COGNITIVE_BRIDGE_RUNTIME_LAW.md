@@ -30,9 +30,17 @@ The bridge must:
 
 - normalize input into one bounded packet shape
 - derive doctrine path and invariant expectations
+- require a signed, time-bound ingress attestation on protected Jarvis surfaces
 - route the packet through the governed event chain
 - classify whether the packet is allowed, degraded, or blocked
 - expose a structured trace that explains the decision
+
+Protected ingress attestation must be:
+
+- non-replayable
+- context-bound
+- issued by AAIS runtime, not user input
+- rejected if timestamp, nonce, or signature checks fail
 
 ## Governed LLM Seam
 
@@ -72,3 +80,27 @@ If packet shape, doctrine attachment, invariants, provider resolution, or trace
 context are missing or uncertain, the bridge path must fail closed.
 
 Missing context is not a soft warning. It is a block condition.
+
+## Detachment Containment
+
+Jarvis may not be lifted out of AAIS by alternate launch, missing attestation,
+forged context, or replayed ingress.
+
+If detachment pressure is detected, the system must:
+
+- record a seam event with a detachment vector
+- route the event into immune posture
+- place the source on temporary review hold
+- write a pattern-only ledger entry
+- require manual re-admission before the source may try again
+
+## Re-Admission Contract
+
+Temporary review holds may only be cleared by a declared owner, security
+reviewer, or the system itself acting through an approved review path.
+
+Re-admission requires:
+
+- an explicit review reason
+- a tracked readmission event
+- a fresh bridge attestation on the next ingress

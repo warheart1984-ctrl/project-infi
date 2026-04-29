@@ -60,6 +60,7 @@ from src.cognitive_bridge import (
     CognitiveBridgeValidationError,
     summarize_bridge_result,
 )
+from src.jarvis_detachment_guard import build_bridge_attestation
 from src.critic import mission_critic
 from src.corrigibility import corrigibility_engine, default_corrigibility_state
 from src.dreamspace import dreamspace
@@ -4091,6 +4092,11 @@ def _bridge_block_message(bridge_result: dict | None, default: str) -> str:
     """Render one concise operator-facing bridge block message."""
     payload = dict(bridge_result or {})
     reason_codes = list(payload.get("reason_codes") or [])
+    if "jarvis_detachment_guard_blocked" in reason_codes:
+        return (
+            "Cognitive Bridge sealed Jarvis inside AAIS because the ingress was not "
+            "an approved AAIS boundary."
+        )
     if "approval_missing_for_effectful_execution" in reason_codes:
         return "Cognitive Bridge blocked execution because explicit approval was missing."
     if "model_only_source_cannot_execute" in reason_codes:
@@ -4125,6 +4131,26 @@ def _route_session_turn_to_bridge(
                 "requested_specialists": list(payload.get("requested_specialists") or []),
                 "requested_specialist_preset": payload.get("requested_specialist_preset"),
                 "execution_intent": "respond",
+                "bridge_attestation": build_bridge_attestation(
+                    ingress="chat_session",
+                    surface="jarvis_chat",
+                    source_id=session.session_id,
+                    route="api.chat.sessions.message",
+                    intent="respond",
+                    runtime_context="live_runtime",
+                    packet_type="operator_turn",
+                ),
+                **{
+                    key: payload.get(key)
+                    for key in (
+                        "detach_from_aais",
+                        "run_outside_aais",
+                        "standalone_jarvis",
+                        "bridge_bypass",
+                        "governance_disabled",
+                    )
+                    if key in payload
+                },
                 **external_details,
             },
             "requires_approval": False,
@@ -4161,6 +4187,15 @@ def _route_action_execution_to_bridge(
                 "approval_source": approval_source,
                 "verification_required": True if repo_change else False,
                 "execution_intent": "execute",
+                "bridge_attestation": build_bridge_attestation(
+                    ingress="api_action",
+                    surface="jarvis_action_execution",
+                    source_id=session.session_id,
+                    route="api.chat.sessions.actions.execute",
+                    intent="execute",
+                    runtime_context="operator_runtime",
+                    packet_type="repo_change_execute" if repo_change else "runtime_action_execute",
+                ),
                 **external_details,
             },
             "requires_approval": True if repo_change else False,
@@ -4188,6 +4223,15 @@ def _route_reasoning_ingress_to_bridge(raw_packet: dict | None, *, runtime_conte
                 "tags": list(meta.get("tags") or []),
                 "payload_present": bool(packet.get("payload")),
                 "execution_intent": "evaluate",
+                "bridge_attestation": build_bridge_attestation(
+                    ingress="reasoning_exchange",
+                    surface="reasoning_protocol",
+                    source_id=str(packet.get("id") or "") or None,
+                    route="api.reasoning.evaluate",
+                    intent="evaluate",
+                    runtime_context=runtime_context,
+                    packet_type="reasoning_packet_ingress",
+                ),
             },
             "requires_approval": False,
             "risk": "medium",

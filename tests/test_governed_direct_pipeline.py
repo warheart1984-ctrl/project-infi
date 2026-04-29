@@ -11,6 +11,7 @@ from src.governed_direct_pipeline import (
     SERVICE_TOOL_LANE,
     build_governed_turn_pipeline,
 )
+from src.jarvis_detachment_guard import jarvis_detachment_guard
 from src.module_governance import module_governance
 from src.phase_gate import reset_registry
 
@@ -21,12 +22,17 @@ class TestGovernedDirectPipeline(unittest.TestCase):
     def setUp(self):
         self.temp_root = Path(tempfile.mkdtemp(prefix="governed-pipeline-"))
         self.original_module_governance_runtime_dir = module_governance.runtime_dir
+        self.original_detachment_guard_runtime_dir = jarvis_detachment_guard.runtime_dir
         module_governance.configure_runtime_dir(self.temp_root)
         module_governance.reset()
+        jarvis_detachment_guard.configure_runtime_dir(self.temp_root)
+        jarvis_detachment_guard.reset()
         reset_registry()
 
     def tearDown(self):
         module_governance.configure_runtime_dir(self.original_module_governance_runtime_dir)
+        jarvis_detachment_guard.configure_runtime_dir(self.original_detachment_guard_runtime_dir)
+        jarvis_detachment_guard.reset()
         shutil.rmtree(self.temp_root, ignore_errors=True)
 
     def test_core_turn_uses_direct_lane_with_uniform_packets(self):

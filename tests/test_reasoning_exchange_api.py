@@ -82,10 +82,13 @@ class TestReasoningExchangeApi(unittest.TestCase):
         self.temp_root = Path(tempfile.mkdtemp(prefix="reasoning-exchange-api-"))
         self.original_module_governance_runtime_dir = api.module_governance.runtime_dir
         self.original_immune_runtime_dir = api.immune_system.runtime_dir
+        self.original_detachment_guard_runtime_dir = api.cognitive_bridge_service.detachment_guard.runtime_dir
         api.module_governance.configure_runtime_dir(self.temp_root)
         api.module_governance.reset()
         api.immune_system.configure_runtime_dir(self.temp_root)
         api.immune_system.reset()
+        api.cognitive_bridge_service.detachment_guard.configure_runtime_dir(self.temp_root)
+        api.cognitive_bridge_service.detachment_guard.reset()
         reset_registry()
 
     def tearDown(self):
@@ -93,6 +96,8 @@ class TestReasoningExchangeApi(unittest.TestCase):
         api.module_governance.reset()
         api.immune_system.configure_runtime_dir(self.original_immune_runtime_dir)
         api.immune_system.reset()
+        api.cognitive_bridge_service.detachment_guard.configure_runtime_dir(self.original_detachment_guard_runtime_dir)
+        api.cognitive_bridge_service.detachment_guard.reset()
         reset_registry()
         shutil.rmtree(self.temp_root, ignore_errors=True)
 

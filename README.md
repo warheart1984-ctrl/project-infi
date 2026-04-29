@@ -45,6 +45,7 @@ AAIS is designed to feel steady, not surprising.
 When things are normal, it should answer directly and keep moving.
 When memory is blocked, context is weak, or a boundary is crossed, it should degrade safely instead of pretending everything is fine.
 When a tool or subsystem needs more authority, it should go through governed checks before acting.
+Protected Jarvis ingress also uses bridge-issued, time-bound attestation so detached or replayed launches fail closed instead of drifting silently.
 
 ## How Does It Work?
 

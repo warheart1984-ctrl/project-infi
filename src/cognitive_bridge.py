@@ -15,6 +15,7 @@ from typing import Any
 from src.aris_integration import build_aris_enforcement
 from src.governed_event_chain import governed_event
 from src.immune_system import ImmuneSystemController, immune_system
+from src.jarvis_detachment_guard import JarvisDetachmentGuard, jarvis_detachment_guard
 
 
 BRIDGE_ID = "aais.cognitive_bridge"
@@ -111,6 +112,18 @@ def _normalize_payload(payload: Any) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise CognitiveBridgeValidationError("payload must be a JSON object")
     return dict(payload)
+
+
+def _payload_for_governance_fingerprint(payload: dict[str, Any]) -> dict[str, Any]:
+    fingerprint_payload = dict(payload or {})
+    attestation = dict(fingerprint_payload.get("bridge_attestation") or {})
+    if attestation:
+        fingerprint_payload["bridge_attestation"] = {
+            key: value
+            for key, value in attestation.items()
+            if key not in {"signature", "nonce", "issued_at"}
+        }
+    return fingerprint_payload
 
 
 def _is_effectful(packet_type: str, payload: dict[str, Any]) -> bool:
@@ -425,6 +438,7 @@ def _build_governed_event_feed(packet: dict[str, Any], governance: GovernancePac
 
 
 def _build_governance_packet(packet: dict[str, Any]) -> GovernancePacket:
+    fingerprint_payload = _payload_for_governance_fingerprint(packet["payload"])
     doctrine_path = _derive_doctrine_path(
         packet["type"],
         packet["payload"],
@@ -439,12 +453,12 @@ def _build_governance_packet(packet: dict[str, Any]) -> GovernancePacket:
         requires_approval=packet["requires_approval"],
     )
     intent = _derive_intent(packet["type"], packet["payload"], packet["execution_intent"])
-    payload_fingerprint = _fingerprint(packet["payload"])
+    payload_fingerprint = _fingerprint(fingerprint_payload)
     packet_fingerprint = _fingerprint(
         {
             "source": packet["source"],
             "type": packet["type"],
-            "payload": packet["payload"],
+            "payload": fingerprint_payload,
             "requires_approval": packet["requires_approval"],
             "approval_granted": packet["approval_granted"],
             "risk": packet["risk"],
@@ -487,8 +501,14 @@ def summarize_bridge_result(result: dict[str, Any] | None) -> str:
 class CognitiveBridgeService:
     """Normalize ingress, derive doctrine/invariants, and fail closed when needed."""
 
-    def __init__(self, *, immune_controller: ImmuneSystemController | None = None):
+    def __init__(
+        self,
+        *,
+        immune_controller: ImmuneSystemController | None = None,
+        detachment_guard: JarvisDetachmentGuard | None = None,
+    ):
         self.immune_controller = immune_controller or immune_system
+        self.detachment_guard = detachment_guard or jarvis_detachment_guard
 
     def route_to_bridge(
         self,
@@ -498,6 +518,48 @@ class CognitiveBridgeService:
     ) -> dict[str, Any]:
         normalized = _normalize_input_packet(input_packet, runtime_context=runtime_context)
         governance = _build_governance_packet(normalized)
+        detachment = self.detachment_guard.evaluate(
+            normalized,
+            runtime_context=governance.runtime_context,
+            packet_fingerprint=governance.packet_fingerprint,
+        )
+        if detachment.get("decision") == DECISION_BLOCK:
+            summary = str(
+                detachment.get("summary")
+                or "Cognitive Bridge blocked execution because Jarvis must remain inside AAIS."
+            )
+            return {
+                "bridge_id": BRIDGE_ID,
+                "version": BRIDGE_VERSION,
+                "decision": DECISION_BLOCK,
+                "status": "blocked",
+                "summary": summary,
+                "execution_allowed": False,
+                "runtime_context": governance.runtime_context,
+                "requires_approval": governance.requires_approval,
+                "approval_granted": governance.approval_granted,
+                "risk": governance.risk,
+                "normalized_input": normalized,
+                "governance_packet": asdict(governance),
+                "doctrine_path": list(governance.doctrine_path),
+                "invariants": list(governance.invariants),
+                "detachment_guard": detachment,
+                "aris_enforcement": {
+                    "status": "skipped",
+                    "reason": "detachment_guard_blocked",
+                },
+                "event_feed": None,
+                "governed_event": None,
+                "reason_codes": ["jarvis_detachment_guard_blocked", *list(detachment.get("reason_codes") or [])],
+                "notes": ["jarvis_containment_preserved"],
+                "trace": [
+                    {"stage": "intent", "value": governance.intent},
+                    {"stage": "doctrine", "value": list(governance.doctrine_path)},
+                    {"stage": "invariants", "value": list(governance.invariants)},
+                    {"stage": "detachment_guard", "value": detachment},
+                    {"stage": "decision", "value": DECISION_BLOCK},
+                ],
+            }
         aris_enforcement = build_aris_enforcement(
             details=normalized["payload"],
             runtime_context=governance.runtime_context,
@@ -584,6 +646,7 @@ class CognitiveBridgeService:
             "governance_packet": asdict(governance),
             "doctrine_path": list(governance.doctrine_path),
             "invariants": list(governance.invariants),
+            "detachment_guard": detachment,
             "aris_enforcement": aris_enforcement,
             "event_feed": event_feed,
             "governed_event": governed,
@@ -593,6 +656,7 @@ class CognitiveBridgeService:
                 {"stage": "intent", "value": governance.intent},
                 {"stage": "doctrine", "value": list(governance.doctrine_path)},
                 {"stage": "invariants", "value": list(governance.invariants)},
+                {"stage": "detachment_guard", "value": detachment},
                 {"stage": "aris", "value": aris_enforcement},
                 {"stage": "governance_packet", "value": asdict(governance)},
                 {"stage": "decision", "value": decision},

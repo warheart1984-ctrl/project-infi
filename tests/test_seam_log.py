@@ -30,6 +30,7 @@ class TestSeamLog(unittest.TestCase):
             boundary="memory_gateway",
             reason="Second seam was blocked.",
             decision="BLOCK",
+            vector="missing_attestation",
             runtime_dir=self.temp_dir,
         )
 
@@ -37,6 +38,7 @@ class TestSeamLog(unittest.TestCase):
 
         self.assertEqual([item["event_id"] for item in events], [first["event_id"], second["event_id"]])
         self.assertEqual(events[-1]["decision"], "BLOCK")
+        self.assertEqual(events[-1]["vector"], "missing_attestation")
 
 
 if __name__ == "__main__":

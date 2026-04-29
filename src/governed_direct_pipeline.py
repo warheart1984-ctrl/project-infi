@@ -1138,6 +1138,7 @@ def build_governed_turn_pipeline(
         previous_pipeline=previous_pipeline,
     )
     from src.cognitive_bridge import route_to_bridge
+    from src.jarvis_detachment_guard import build_bridge_attestation
 
     bridge_hops = []
     if god_brain:
@@ -1147,10 +1148,20 @@ def build_governed_turn_pipeline(
                     "source": "swarm",
                     "type": "deliberation_request",
                     "payload": {
+                        "pipeline_id": pipeline_id,
                         "strategy_label": (god_brain or {}).get("strategy_label"),
                         "action_bias": (god_brain or {}).get("action_bias"),
                         "contract": active_contract,
                         "execution_intent": "route",
+                        "bridge_attestation": build_bridge_attestation(
+                            ingress="governed_direct_pipeline",
+                            surface="swarm_deliberation",
+                            source_id=pipeline_id,
+                            route="governed_direct_pipeline.swarm_deliberation",
+                            intent="route",
+                            runtime_context=normalized_runtime_context,
+                            packet_type="deliberation_request",
+                        ),
                     },
                     "requires_approval": False,
                     "risk": "medium" if active_lane == SERVICE_TOOL_LANE else "low",
@@ -1164,11 +1175,21 @@ def build_governed_turn_pipeline(
                 "source": "service_lane" if tool_result else "llm",
                 "type": "tool_result_observation" if tool_result else "generation_request",
                 "payload": {
+                    "pipeline_id": pipeline_id,
                     "contract": active_contract,
                     "response_mode": normalized_mode,
                     "tool_type": (tool_result or {}).get("type"),
                     "route_id": (model_route or {}).get("id"),
                     "execution_intent": "observe" if tool_result else "respond",
+                    "bridge_attestation": build_bridge_attestation(
+                        ingress="governed_direct_pipeline",
+                        surface="service_observation" if tool_result else "llm_generation",
+                        source_id=pipeline_id,
+                        route="governed_direct_pipeline.service_observation" if tool_result else "governed_direct_pipeline.llm_generation",
+                        intent="observe" if tool_result else "respond",
+                        runtime_context=normalized_runtime_context,
+                        packet_type="tool_result_observation" if tool_result else "generation_request",
+                    ),
                 },
                 "requires_approval": False,
                 "risk": "medium" if tool_result else "low",
@@ -1187,6 +1208,15 @@ def build_governed_turn_pipeline(
                     "traffic_class": traffic_class,
                     "signal_count": realtime_signal_feed.get("signal_count"),
                     "execution_intent": "observe",
+                    "bridge_attestation": build_bridge_attestation(
+                        ingress="governed_direct_pipeline",
+                        surface="predictor_signal",
+                        source_id=pipeline_id,
+                        route="governed_direct_pipeline.predictor_signal",
+                        intent="observe",
+                        runtime_context=normalized_runtime_context,
+                        packet_type="signal_evaluation",
+                    ),
                 },
                 "requires_approval": False,
                 "risk": "low",

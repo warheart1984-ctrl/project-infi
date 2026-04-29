@@ -74,6 +74,7 @@ def record_seam_event(
     details: dict[str, Any] | None = None,
     severity: str | None = None,
     decision: str | None = None,
+    vector: str | None = None,
     component_id: str | None = None,
     runtime_context: str | None = None,
     trace_id: str | None = None,
@@ -98,6 +99,7 @@ def record_seam_event(
         "boundary": _clip_text(boundary or "runtime_boundary", limit=120).lower().replace(" ", "_"),
         "severity": normalized_severity,
         "decision": _clip_text(decision, limit=80).upper() or None,
+        "vector": _clip_text(vector, limit=80).lower().replace(" ", "_") or None,
         "component_id": _clip_text(component_id, limit=160) or None,
         "runtime_context": _clip_text(runtime_context, limit=80).lower().replace(" ", "_") or None,
         "trace_id": _clip_text(trace_id, limit=160) or None,
@@ -140,4 +142,3 @@ def reset_seam_log(*, runtime_dir: str | Path | None = None) -> None:
     with _LOCK:
         if path.exists():
             path.unlink()
-

@@ -63,8 +63,11 @@ Current Jarvis core responsibilities:
 - provider selection
 - response finalization
 - sovereignty and anti-drift integration
+- bridge attestation and detachment containment
 
 Jarvis must remain the main source of runtime truth.
+Protected Jarvis ingress must also remain inside the Cognitive Bridge boundary and
+fail closed when attestation, runtime context, or review status does not clear.
 
 ## Nova Companion Spec
 

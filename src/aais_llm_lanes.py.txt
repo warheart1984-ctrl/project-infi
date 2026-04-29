@@ -1032,7 +1032,7 @@ ENV_TEMPLATE = """
 # Copy to .env and fill in your keys. Only set the ones you use.
 
 # OpenAI (direct)
-OPENAI_API_KEY=sk-...
+OPENAI_API_KEY=<set-in-env>
 
 # Azure OpenAI
 AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
@@ -1040,7 +1040,7 @@ AZURE_OPENAI_KEY=...
 AZURE_OPENAI_API_VERSION=2025-03-01-preview
 
 # Anthropic Claude
-ANTHROPIC_API_KEY=sk-ant-...
+ANTHROPIC_API_KEY=<set-in-env>
 
 # Google Gemini
 GEMINI_API_KEY=...
