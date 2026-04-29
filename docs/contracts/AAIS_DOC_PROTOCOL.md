@@ -104,7 +104,9 @@ The main reading set for the current AAIS system is:
 - [../contracts/SEAM_LAW.md](../contracts/SEAM_LAW.md)
 - [../contracts/SEAM_TEST_CHECKLIST.md](../contracts/SEAM_TEST_CHECKLIST.md)
 - [../contracts/EXTERNAL_SUGGESTION_ADMISSION_RULE.md](../contracts/EXTERNAL_SUGGESTION_ADMISSION_RULE.md)
+- [../contracts/ARIS_RUNTIME_CONTRACT.md](../contracts/ARIS_RUNTIME_CONTRACT.md)
 - [../contracts/seams/SEAM-VC-002-visible-scaffold-leakage.md](../contracts/seams/SEAM-VC-002-visible-scaffold-leakage.md)
+- [../contracts/seams/SEAM-SN-001-super-nova-governance-boundary.md](../contracts/seams/SEAM-SN-001-super-nova-governance-boundary.md)
 - [../spine/README.md](../spine/README.md)
 - [../audit/AAIS_STATUS_AUDIT.md](../audit/AAIS_STATUS_AUDIT.md)
 - [../runtime/AAIS_RUNTIME_CANONICAL.md](../runtime/AAIS_RUNTIME_CANONICAL.md)
@@ -165,7 +167,7 @@ When pulling ideas from docs into the runtime, use this order:
    - specialist layer
    - workbench/tools
    - doctrine/guardrail layer
-4. if the idea is external, apply the external suggestion admission rule before adoption
+4. if the idea is external, apply the external suggestion admission rule before adoption and preserve the ARIS non-copy clause while doing it
 5. implement it in a modular zone
 6. expose it through one runtime truth, not parallel logic
 7. add tests or an inspectable API surface
@@ -214,6 +216,7 @@ When borrowing from sibling projects or older docs:
 - reference repos are sources of ideas, not replacements
 - nothing enters Jarvis raw
 - external suggestions may pressure or inspire the system, but they do not become truth without law-filtered admitted form
+- raw outside proposals and private runs stay local; only admitted, abstracted, or signature-only forms may move forward
 - new subsystems must speak the existing Jarvis protocol or UL shape
 - visible guardrail state must come from one canonical runtime evaluation
 - external ideas may enrich the shell, but they do not redefine Jarvis identity
@@ -237,9 +240,10 @@ If someone needs to understand the repo quickly, use this order:
 13. [../contracts/SEAM_TEST_CHECKLIST.md](../contracts/SEAM_TEST_CHECKLIST.md)
 14. [../contracts/EXTERNAL_SUGGESTION_ADMISSION_RULE.md](../contracts/EXTERNAL_SUGGESTION_ADMISSION_RULE.md)
 15. [../contracts/seams/SEAM-VC-002-visible-scaffold-leakage.md](../contracts/seams/SEAM-VC-002-visible-scaffold-leakage.md)
-16. [../contracts/AAIS_UL_DOCTRINE.md](../contracts/AAIS_UL_DOCTRINE.md)
-17. [../runtime/SPECIALIST_REGISTRY_SPEC.md](../runtime/SPECIALIST_REGISTRY_SPEC.md)
-18. [../_archive/legacy/workspace/WORKSPACE_INDEX.md](../_archive/legacy/workspace/WORKSPACE_INDEX.md)
+16. [../contracts/seams/SEAM-SN-001-super-nova-governance-boundary.md](../contracts/seams/SEAM-SN-001-super-nova-governance-boundary.md)
+17. [../contracts/AAIS_UL_DOCTRINE.md](../contracts/AAIS_UL_DOCTRINE.md)
+18. [../runtime/SPECIALIST_REGISTRY_SPEC.md](../runtime/SPECIALIST_REGISTRY_SPEC.md)
+19. [../_archive/legacy/workspace/WORKSPACE_INDEX.md](../_archive/legacy/workspace/WORKSPACE_INDEX.md)
 
 After that, read runtime code.
 

@@ -37,6 +37,7 @@ import {
   getJarvisProfile,
   mapSessionRuntime,
   mapSessionTurns,
+  resolveOperatingModeDisplay,
   saveJarvisProfile,
   setActiveJarvisSessionId,
   SMALL_NOVA_PERSONA_MODE,
@@ -7441,7 +7442,9 @@ function JarvisConsole() {
   const preferenceEntries = Object.entries(sessionRuntime.memorySummary.preferences || {});
   const activePersona = profile.personaMode || sessionRuntime.personaMode || 'builder';
   const selectedResponseMode = profile.responseMode || sessionRuntime.requestedResponseMode || 'fast';
-  const activeOperatingMode = sessionRuntime.responseMode || selectedResponseMode || 'fast';
+  const activeOperatingMode = resolveOperatingModeDisplay(profile, sessionRuntime, {
+    forceRuntimeMode: sending || booting,
+  });
   const companionNovaActive = [SMALL_NOVA_PERSONA_MODE, TINY_NOVA_PERSONA_MODE].includes(activePersona)
     || ['small', 'tiny'].includes(selectedResponseMode);
   const activeResponseTrace = sessionRuntime.responseTrace;

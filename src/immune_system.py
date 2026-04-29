@@ -277,6 +277,94 @@ class ImmuneSystemController:
                 "state": self._state.to_dict(),
             }
 
+    def observe_protocol_signal(
+        self,
+        *,
+        component_id: str,
+        signal_type: str,
+        severity: str,
+        reason: str,
+        details: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Record one bounded protocol-boundary signal without default module quarantine."""
+        normalized_severity = str(severity or "low").strip().lower()
+        if normalized_severity not in {"low", "medium", "high", "critical"}:
+            normalized_severity = "low"
+        component_key = str(component_id or "").strip() or "unknown_component"
+        signal_key = str(signal_type or "protocol_anomaly").strip().lower() or "protocol_anomaly"
+        signal_details = dict(details or {})
+        source_id = str(
+            signal_details.get("source")
+            or signal_details.get("source_id")
+            or signal_details.get("caller_id")
+            or ""
+        ).strip()
+        caller_id = f"reasoning_exchange:{source_id}" if source_id else None
+        applied_actions: list[dict[str, Any]] = []
+
+        with self._lock:
+            if normalized_severity in {"medium", "high", "critical"} and caller_id:
+                applied_actions.append(
+                    self._tighten_caller_locked(
+                        caller_id,
+                        severity=normalized_severity,
+                        reason=reason,
+                    )
+                )
+
+            if normalized_severity == "critical":
+                applied_actions.append(
+                    self._quarantine_resource_locked(
+                        component_key,
+                        severity=normalized_severity,
+                        reason=reason,
+                    )
+                )
+
+            next_mode = self._recommended_protocol_mode_locked(normalized_severity)
+            if next_mode != self._state.system_mode:
+                applied_actions.append(
+                    self._set_mode_locked(
+                        next_mode,
+                        reason=f"{normalized_severity} protocol boundary signal",
+                    )
+                )
+                if next_mode in {"restricted", "crisis"}:
+                    applied_actions.append(
+                        self._open_incident_locked(
+                            trigger=reason,
+                            mode=next_mode,
+                            event={"caller_id": caller_id, "resource_id": component_key},
+                        )
+                    )
+
+            immune_event = {
+                "id": f"imm_{uuid.uuid4().hex[:12]}",
+                "timestamp": _utc_now_iso(),
+                "caller_id": caller_id,
+                "resource_id": component_key,
+                "action": "observe_protocol_signal",
+                "severity": normalized_severity,
+                "triggered_by_alert": signal_key,
+                "alert_severity": normalized_severity,
+                "details": {
+                    "component_id": component_key,
+                    "signal_type": signal_key,
+                    "reason": reason,
+                    "applied_actions": [action.get("action") for action in applied_actions if action],
+                    "signal_details": signal_details,
+                },
+            }
+            self._events.append(immune_event)
+            self._events = self._events[-250:]
+            self._persist_locked()
+            return {
+                "severity": normalized_severity,
+                "applied_actions": [action for action in applied_actions if action],
+                "event": dict(immune_event),
+                "state": self._state.to_dict(),
+            }
+
     def release_module(self, module_id: str, *, reason: str) -> dict[str, Any]:
         """Release a previously isolated or quarantined module after correction."""
         module_key = str(module_id or "").strip()
@@ -341,6 +429,15 @@ class ImmuneSystemController:
         if severity == "critical":
             return "crisis"
         if severity in {"medium", "high"}:
+            return "restricted"
+        if self._state.system_mode == "crisis":
+            return "crisis"
+        return self._state.system_mode
+
+    def _recommended_protocol_mode_locked(self, severity: str) -> str:
+        if severity == "critical":
+            return "crisis"
+        if severity == "high":
             return "restricted"
         if self._state.system_mode == "crisis":
             return "crisis"

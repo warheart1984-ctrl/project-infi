@@ -53,9 +53,16 @@ class ProviderMind:
             if result.get("relative_path")
         ]
 
-        if response_mode in {"tiny", "small"}:
-            label = "Small Nova" if response_mode == "small" else "Tiny Nova"
-            hidden_reason = "small_nova_lane" if response_mode == "small" else "tiny_nova_lane"
+        if response_mode in {"tiny", "small", "super", "governed_full"}:
+            if response_mode == "small":
+                label = "Small Nova"
+                hidden_reason = "small_nova_lane"
+            elif response_mode in {"super", "governed_full"}:
+                label = "Super Nova"
+                hidden_reason = "super_nova_lane"
+            else:
+                label = "Tiny Nova"
+                hidden_reason = "tiny_nova_lane"
             decision = ProviderDecision(
                 decision_id=f"pm_{uuid4().hex}",
                 engine_path="jarvis_chat",

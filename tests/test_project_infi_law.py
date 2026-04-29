@@ -101,6 +101,28 @@ class TestProjectInfiLaw(unittest.TestCase):
         self.assertTrue(law_check["passed"])
         self.assertEqual(law_check["status"], "enforced")
 
+    def test_non_copy_clause_fails_closed_on_raw_copy_request(self):
+        with self.assertRaisesRegex(ValueError, "non_copy_clause"):
+            self.law.require_contract(
+                surface="workflow_shell",
+                action_id="raw_copy_attempt",
+                actor_id="workflow_shell",
+                actor_role="system",
+                target="raw_copy_attempt",
+                repo_change=False,
+                cisiv_stage="structure",
+                details={
+                    "external_suggestion": {
+                        "source": "external_note",
+                        "summary": "Copy this directly.",
+                    },
+                    "external_suggestion_usage": "adoption",
+                    "law_filter_applied": True,
+                    "admitted_external_form": "Use only the bounded structure, not the raw wording.",
+                    "copy_raw_external": True,
+                },
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

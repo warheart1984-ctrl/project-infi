@@ -409,7 +409,7 @@ If someone needs to understand the repo quickly, use this order:
 
 1. `README.md`
 2. `AAIS_SYSTEM_HANDBOOK.md`
-3. `DOCUMENTATION_INDEX.md`
+3. `docs/README.md`
 4. `AAIS_CANONICAL_MAP.md`
 5. `CUOS_FOUNDATION_LAWS.md`
 6. `JARVIS_PROTOCOL.md`

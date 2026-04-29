@@ -60,6 +60,65 @@ class TestInvariantEngine(unittest.TestCase):
         with self.assertRaises(ValueError):
             InvariantEngine.cross_domain_report()
 
+    def test_runtime_event_prediction_allows_consistent_bounded_state(self):
+        event = {
+            "runtime_context": "live_runtime",
+            "signal_count": 2,
+            "signals": [{}, {}],
+            "immune_response": "ALLOW",
+            "validation": {
+                "runtime_context_explicit": True,
+                "signal_shape_uniform": True,
+            },
+        }
+        prediction = {
+            "status": "bounded_inference",
+            "cause_class": "steady_state",
+            "confidence": 0.82,
+            "supporting_signals": ["turn_state_stable"],
+            "conflict_flags": [],
+            "data_sufficiency": "sufficient",
+            "recommended_state": "observe",
+            "runtime_context": "live_runtime",
+            "signal_count": 2,
+            "phase_gate": {"decision": "ALLOW"},
+            "advisory_only": True,
+        }
+
+        result = InvariantEngine.validate_realtime_event_prediction(event, prediction)
+
+        self.assertTrue(result["allows"])
+        self.assertEqual(result["status"], "pass")
+        self.assertFalse(result["failed_invariants"])
+
+    def test_runtime_event_prediction_blocks_conflicting_proceed_state(self):
+        event = {
+            "runtime_context": "live_runtime",
+            "signal_count": 1,
+            "signals": [{}],
+            "immune_response": "ALLOW",
+            "validation": {"runtime_context_explicit": True},
+        }
+        prediction = {
+            "status": "bounded_inference",
+            "cause_class": "conflicting_signal_state",
+            "confidence": 0.61,
+            "supporting_signals": ["turn_shift_detected"],
+            "conflict_flags": ["lane_and_tool_tension"],
+            "data_sufficiency": "sufficient",
+            "recommended_state": "proceed",
+            "runtime_context": "live_runtime",
+            "signal_count": 1,
+            "phase_gate": {"decision": "ALLOW"},
+            "advisory_only": True,
+        }
+
+        result = InvariantEngine.validate_realtime_event_prediction(event, prediction)
+
+        self.assertFalse(result["allows"])
+        self.assertEqual(result["status"], "fail")
+        self.assertIn("conflict_safe_state", result["failed_invariants"])
+
 
 if __name__ == "__main__":
     unittest.main()

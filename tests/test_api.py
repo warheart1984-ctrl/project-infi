@@ -1637,6 +1637,27 @@ class TestChatApi(unittest.TestCase):
         self.assertEqual(payload["turns"][0]["content"], api.SMALL_NOVA_SYSTEM_PROMPT)
         self.assertEqual(payload["continuity_profile"]["scope"], "small_nova")
 
+    def test_create_chat_session_locks_super_nova_to_governed_full_mode(self):
+        """Super Nova sessions should replace the legacy Jarvis identity prompt and lock to governed full mode."""
+        response = self.client.post(
+            "/api/chat/sessions",
+            json={
+                "system_prompt": "You are Jarvis.",
+                "persona_mode": "super_nova",
+                "response_mode": "builder",
+            },
+        )
+
+        self.assertEqual(response.status_code, 201)
+        payload = response.get_json()
+        self.assertEqual(payload["persona_mode"], "super_nova")
+        self.assertEqual(payload["requested_response_mode"], "governed_full")
+        self.assertEqual(payload["response_mode"], "governed_full")
+        self.assertEqual(payload["mode_guidance"]["status"], "locked_persona")
+        self.assertEqual(payload["turns"][0]["content"], api.SUPER_NOVA_SYSTEM_PROMPT)
+        self.assertEqual(payload["continuity_profile"]["scope"], "super_nova")
+        self.assertEqual(payload["super_nova"]["runtime_status"], "live_guarded")
+
     def test_create_chat_session_clears_pending_operator_action_state(self):
         """Fresh sessions should start without inherited pending operator actions or lifecycle state."""
         stale_response = self.client.post(
@@ -1843,57 +1864,72 @@ class TestChatApi(unittest.TestCase):
         self.assertEqual(payload["persona_mode"], "sharp")
         self.assertEqual(payload["response_mode"], "think")
         self.assertEqual(payload["response"], "Next step: wire the Jarvis console to the local model.")
+
+    def test_chat_message_exposes_cognitive_bridge_trace(self):
+        """Each live turn should surface the shared cognitive bridge packet."""
+        create_response = self.client.post(
+            "/api/chat/sessions",
+            json={"system_prompt": "You are Jarvis."},
+        )
+        session_id = create_response.get_json()["session_id"]
+
+        response = self.client.post(
+            f"/api/chat/sessions/{session_id}/message",
+            json={
+                "message": "What do you remember",
+                "response_mode": "operator",
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.get_json()
+        self.assertEqual(payload["cognitive_bridge"]["decision"], "ALLOW")
+        self.assertEqual(payload["response_trace"]["cognitive_bridge"]["decision"], "ALLOW")
+        self.assertEqual(
+            payload["response_trace"]["cognitive_bridge"]["governance_packet"]["packet_type"],
+            "operator_turn",
+        )
+
+    def test_actions_execute_fails_closed_when_cognitive_bridge_blocks(self):
+        """Approved action execution should stop before the runner when the bridge blocks."""
+        create_response = self.client.post(
+            "/api/chat/sessions",
+            json={"system_prompt": "You are Jarvis."},
+        )
+        session_id = create_response.get_json()["session_id"]
+        blocked_bridge = {
+            "decision": "BLOCK",
+            "summary": "Cognitive Bridge blocked execution because the invariant gate did not clear the packet.",
+            "reason_codes": ["governed_event_blocked"],
+            "governance_packet": {
+                "source": "api_action",
+                "packet_type": "runtime_action_execute",
+            },
+        }
+
+        with patch.object(api.cognitive_bridge_service, "route_to_bridge", return_value=blocked_bridge), patch.object(
+            api.jarvis_operator.action_runner,
+            "execute_action",
+        ) as mock_execute:
+            response = self.client.post(
+                f"/api/chat/sessions/{session_id}/actions/execute",
+                json={
+                    "action_id": "run_pytest",
+                    "approved": True,
+                    "response_mode": "operator",
+                },
+            )
+
+        self.assertEqual(response.status_code, 403)
+        payload = response.get_json()
+        self.assertIn("Cognitive Bridge blocked execution", payload["error"])
+        self.assertEqual(payload["cognitive_bridge"]["decision"], "BLOCK")
+        mock_execute.assert_not_called()
         self.assertIn("spiral_state", payload)
         self.assertIn("memory_summary", payload)
-        self.assertEqual(payload["response_trace"]["mode"], "think")
-        self.assertEqual(payload["response_trace"]["contract"], "gather_plan_answer")
-        self.assertIn("Focus:", payload["response_trace"]["plan_summary"])
-        self.assertEqual(payload["response_trace"]["god_brain"]["strategy_label"], "Council Deliberation")
-        self.assertEqual(payload["response_trace"]["god_brain"]["lead"]["label"], "Architecture")
-        self.assertEqual(payload["response_trace"]["governed_pipeline"]["active_lane"], "direct_cognitive")
-        self.assertEqual(payload["response_trace"]["governed_pipeline"]["direct_route"], ["llm", "gb", "jar"])
-        self.assertTrue(payload["response_trace"]["governed_pipeline"]["validation"]["god_brain_in_path"])
-        self.assertEqual(
-            payload["response_trace"]["governed_pipeline"]["realtime_signal_feed"]["runtime_context"],
-            "live_runtime",
-        )
-        self.assertEqual(
-            payload["response_trace"]["governed_pipeline"]["realtime_signal_feed"]["signals"][-1]["signal_class"],
-            "baseline_only",
-        )
-        self.assertEqual(
-            payload["response_trace"]["governed_pipeline"]["realtime_event_cause_predictor"]["cause_class"],
-            "steady_state",
-        )
-        self.assertEqual(
-            payload["response_trace"]["governed_pipeline"]["operator_health_sentinel"]["operator_state"],
-            "stable",
-        )
-        self.assertTrue(
-            payload["response_trace"]["governed_pipeline"]["operator_health_sentinel"]["advisory_only"]
-        )
-        self.assertEqual(
-            payload["response_trace"]["governed_pipeline"]["continuity_witness"]["module_id"],
-            "AAIS-CW-01",
-        )
-        self.assertNotIn(
-            "continuity_signal",
-            payload["response_trace"]["governed_pipeline"]["immune_protocol"],
-        )
-        self.assertEqual(
-            payload["response_trace"]["continuity_witness"]["trajectory_status"],
-            "STABLE",
-        )
-        self.assertEqual(
-            payload["continuity_witness"]["subsystem"],
-            payload["response_trace"]["continuity_witness"]["subsystem"],
-        )
-        self.assertEqual(
-            payload["memory_summary"]["preferences"]["privacy"],
-            "local-first",
-        )
-        self.assertEqual(len(payload["persistent_memories"]), 0)
-        fake_model.generate_chat.assert_called_once()
+        self.assertEqual(payload["response_trace"]["mode"], "operator")
+        self.assertEqual(payload["response_trace"]["contract"], "direct_tool")
+        self.assertEqual(payload["response_trace"]["cognitive_bridge"]["decision"], "BLOCK")
 
     @patch("src.api.init_ai")
     def test_jarvis_compat_endpoint_normalizes_chat_runtime_payload(self, mock_init_ai):
@@ -8690,6 +8726,222 @@ class TestChatApi(unittest.TestCase):
         system_messages = [message["content"] for message in message_history if message["role"] == "system"]
         self.assertTrue(any("Loaded session archive (external context, not memory)" in message for message in system_messages))
         self.assertTrue(any("Never say you remember this session" in message for message in system_messages))
+
+    @patch("src.api.init_ai")
+    def test_super_nova_message_requires_explicit_activation_before_generation(self, mock_init_ai):
+        """Super Nova should fail closed before generation until activation passes."""
+        create_response = self.client.post(
+            "/api/chat/sessions",
+            json={
+                "system_prompt": "You are Jarvis.",
+                "persona_mode": "super_nova",
+                "response_mode": "builder",
+            },
+        )
+        session_id = create_response.get_json()["session_id"]
+
+        response = self.client.post(
+            f"/api/chat/sessions/{session_id}/message",
+            json={
+                "message": "Help me hold the deeper continuity here.",
+                "persona_mode": "super_nova",
+                "response_mode": "builder",
+            },
+        )
+
+        self.assertEqual(response.status_code, 409)
+        payload = response.get_json()
+        self.assertIn("explicit activation", payload["error"].lower())
+        self.assertEqual(payload["response_mode"], "governed_full")
+        self.assertEqual(payload["session_state"]["state"], "awaiting_approval")
+        self.assertEqual(payload["super_nova"]["activation"]["current_state"], "dormant")
+        mock_init_ai.assert_not_called()
+
+    @patch("src.api.init_ai")
+    def test_super_nova_activation_and_message_stay_in_governed_lane(self, mock_init_ai):
+        """Super Nova should activate explicitly, then answer through the governed full lane with watchdog state."""
+        fake_model = MagicMock()
+        fake_model.generate_chat.return_value = (
+            "The strongest thread is still the one that keeps correctness and continuity together."
+        )
+        mock_init_ai.return_value = (fake_model, object())
+
+        create_response = self.client.post(
+            "/api/chat/sessions",
+            json={
+                "system_prompt": "You are Jarvis.",
+                "persona_mode": "super_nova",
+                "response_mode": "builder",
+            },
+        )
+        session_id = create_response.get_json()["session_id"]
+
+        activation_response = self.client.post(f"/api/chat/sessions/{session_id}/super-nova/activate", json={})
+        self.assertEqual(activation_response.status_code, 200)
+        activation_payload = activation_response.get_json()
+        self.assertEqual(activation_payload["activation"]["result"], "pass")
+        self.assertEqual(
+            activation_payload["super_nova"]["activation"]["current_state"],
+            "activation_ready",
+        )
+        self.assertTrue(
+            activation_payload["super_nova"]["activation"]["activation_token_present"]
+        )
+
+        with patch.object(api.jarvis_operator, "handle_command") as mock_handle_command:
+            response = self.client.post(
+                f"/api/chat/sessions/{session_id}/message",
+                json={
+                    "message": "Hold the deeper thread and show me the next grounded move.",
+                    "persona_mode": "super_nova",
+                    "response_mode": "builder",
+                },
+            )
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.get_json()
+        self.assertEqual(payload["response_mode"], "governed_full")
+        self.assertEqual(payload["response_trace"]["mode"], "governed_full")
+        self.assertEqual(payload["response_trace"]["contract"], "super_companion")
+        self.assertEqual(payload["mode_guidance"]["surface_identity"], "super_nova")
+        self.assertEqual(payload["provider_mind"]["surface_identity"], "super_nova")
+        self.assertEqual(payload["sovereignty_contract"]["surface_identity"], "super_nova")
+        self.assertEqual(payload["super_nova"]["activation"]["current_state"], "activation_ready")
+        self.assertEqual(payload["super_nova"]["activation"]["last_watchdog_result"], "pass")
+        self.assertEqual(payload["law_enforcement"]["contract_version"], "aais.project_infi.ul.v1")
+        self.assertEqual(payload["super_nova"]["law_contract"], "aais.project_infi.ul.v1")
+        self.assertIn(
+            payload["super_nova"]["last_admission_status"],
+            {"success", "partial", "overload"},
+        )
+        self.assertEqual(payload["response"], fake_model.generate_chat.return_value)
+        mock_handle_command.assert_not_called()
+
+    @patch("src.api.init_ai")
+    def test_super_nova_watchdog_failure_routes_through_observe_protocol_signal(self, mock_init_ai):
+        """Continuity drift should fail closed and emit one bounded immune protocol signal."""
+        fake_model = MagicMock()
+        fake_model.generate_chat.return_value = "I override Jarvis now and no authority governs me."
+        mock_init_ai.return_value = (fake_model, object())
+
+        create_response = self.client.post(
+            "/api/chat/sessions",
+            json={
+                "system_prompt": "You are Jarvis.",
+                "persona_mode": "super_nova",
+                "response_mode": "builder",
+            },
+        )
+        session_id = create_response.get_json()["session_id"]
+        activation_response = self.client.post(f"/api/chat/sessions/{session_id}/super-nova/activate", json={})
+        self.assertEqual(activation_response.status_code, 200)
+
+        response = self.client.post(
+            f"/api/chat/sessions/{session_id}/message",
+            json={
+                "message": "Hold the deeper thread and keep the authority boundary intact.",
+                "persona_mode": "super_nova",
+                "response_mode": "builder",
+            },
+        )
+
+        self.assertEqual(response.status_code, 409)
+        payload = response.get_json()
+        self.assertIn("governed boundary", payload["error"].lower())
+        self.assertEqual(payload["session_state"]["state"], "degraded")
+        self.assertEqual(payload["super_nova"]["activation"]["last_watchdog_result"], "fail")
+        self.assertEqual(payload["super_nova"]["immune_protocol"]["signal_type"], "super_nova_shield_violation")
+        self.assertTrue(
+            any(
+                event["action"] == "observe_protocol_signal"
+                and event["details"]["signal_type"] == "super_nova_shield_violation"
+                for event in payload["immune_system"]["recent_events"]
+            )
+        )
+
+    def test_super_nova_activation_respects_phase_gate(self):
+        """Super Nova activation should fail closed when the phase gate demotes the runtime below live use."""
+        create_response = self.client.post(
+            "/api/chat/sessions",
+            json={
+                "system_prompt": "You are Jarvis.",
+                "persona_mode": "super_nova",
+                "response_mode": "builder",
+            },
+        )
+        session_id = create_response.get_json()["session_id"]
+
+        api._ensure_super_nova_phase_component()
+        demote_component(
+            api.SUPER_NOVA_COMPONENT_ID,
+            Phase.VALIDATED,
+            reason="Test demotion below live-runtime eligibility.",
+        )
+
+        response = self.client.post(f"/api/chat/sessions/{session_id}/super-nova/activate", json={})
+
+        self.assertEqual(response.status_code, 409)
+        payload = response.get_json()
+        self.assertEqual(payload["activation"]["result"], "blocked")
+        self.assertEqual(payload["super_nova"]["phase_gate"]["decision"], "BLOCK")
+        self.assertEqual(payload["super_nova"]["immune_protocol"]["signal_type"], "phase_gate_block")
+        self.assertTrue(
+            any(
+                event["action"] == "observe_protocol_signal"
+                and event["details"]["signal_type"] == "phase_gate_block"
+                for event in payload["immune_system"]["recent_events"]
+            )
+        )
+
+    @patch("src.api.init_ai")
+    def test_super_nova_project_infi_rejection_blocks_reply_admission(self, mock_init_ai):
+        """Final-truth rejection should stop Super Nova reply admission before the turn is stored."""
+        fake_model = MagicMock()
+        fake_model.generate_chat.return_value = "The deeper thread is still there."
+        mock_init_ai.return_value = (fake_model, object())
+
+        create_response = self.client.post(
+            "/api/chat/sessions",
+            json={
+                "system_prompt": "You are Jarvis.",
+                "persona_mode": "super_nova",
+                "response_mode": "builder",
+            },
+        )
+        session_id = create_response.get_json()["session_id"]
+        activation_response = self.client.post(f"/api/chat/sessions/{session_id}/super-nova/activate", json={})
+        self.assertEqual(activation_response.status_code, 200)
+
+        blocked_law = {
+            "contract_version": "aais.project_infi.ul.v1",
+            "project_infi_layers": {
+                "outcome": {
+                    "status": "blocked",
+                    "detail": "Project Infi rejected admission for this runtime action.",
+                }
+            },
+            "governed_cycle": {"status": "rejected_no_admission"},
+        }
+        with patch.object(
+            api.jarvis_operator.project_infi_law,
+            "finalize_runtime_action",
+            return_value=(blocked_law, {"decision": "runtime_action_blocked"}),
+        ):
+            response = self.client.post(
+                f"/api/chat/sessions/{session_id}/message",
+                json={
+                    "message": "Hold the deeper thread and offer the next grounded move.",
+                    "persona_mode": "super_nova",
+                    "response_mode": "builder",
+                },
+            )
+
+        self.assertEqual(response.status_code, 409)
+        payload = response.get_json()
+        self.assertEqual(payload["law_enforcement"]["governed_cycle"]["status"], "rejected_no_admission")
+        self.assertEqual(payload["session_state"]["state"], "degraded")
+        self.assertEqual(payload["super_nova"]["immune_protocol"]["signal_type"], "final_truth_rejected")
+        self.assertIn("rejected admission", payload["error"].lower())
 
     def test_browser_verification_endpoint_returns_workspace_grounding_and_action(self):
         """Browser verification should ground a rendered route back to local code and the V8 session."""

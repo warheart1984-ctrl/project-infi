@@ -61,6 +61,7 @@ Current runtime stages:
 
 - `tiny_nova`
 - `small_nova`
+- `super_nova`
 
 Current live default surface:
 
@@ -70,6 +71,7 @@ Current response-mode bindings:
 
 - `tiny_nova -> tiny`
 - `small_nova -> small`
+- `super_nova -> governed_full`
 
 These bindings are not optional persona suggestions.
 They are governed lane locks.
@@ -209,19 +211,31 @@ Do not create a new Nova path by adding one more isolated if-statement somewhere
 
 ## Immune Coupling Rule
 
-Builders must not hook Nova or Super Nova directly into the immune system yet.
+Nova and Super Nova may emit bounded protocol observations into the immune
+system.
 
-That remains blocked until both of these are true in live runtime code:
+The allowed live coupling is:
+
+- `observe_protocol_signal(...)`
+- bounded, inspectable protocol observation
+- no self-authorized escalation
+- no bypass around Jarvis or Project Infi law
+
+That means:
+
+- Nova may trigger immune observation
+- Nova may not authorize her own escalation
+- Nova may not convert shield failure into direct hidden control
+
+Broader predictive or autonomous immune coupling still remains blocked until
+both of these are true in live runtime code:
 
 1. the realtime event-cause predictor is installed as a real runtime producer
 2. the invariant engine is wired into Nova runtime comparison as a real
    consumer
 
-Before those prerequisites are satisfied, Nova may use only local dormant
-integrity enforcement such as the activation gate and watchdog.
-
-Do not treat immune coupling as a substitute for missing event or invariant
-infrastructure.
+Do not treat observe-only immune coupling as proof that the broader immune stack
+is complete.
 
 ## Input Surface Rule
 
@@ -243,11 +257,20 @@ It is not:
 - a justification for hidden tool access
 - a waiver of companion-lane law
 
-If Super Nova is ever activated, it must still project:
+When Super Nova is activated, it must still project:
 
 - `authority_lane = jarvis`
 - `routing_authority = jarvis`
 - `surface_replaces_authority = false`
+
+Live Super Nova must also preserve:
+
+- phase gate before execution
+- explicit activation before execution
+- watchdog validation after generation
+- Project Infi final-truth admission before reply completion
+
+There is no lawful bypass around those boundaries.
 
 ## Conflict Rule
 

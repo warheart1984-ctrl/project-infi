@@ -36,6 +36,20 @@ Conversation is not admission.
 
 Law decides entry.
 
+## ARIS Non-Copy Clause
+
+The active ARIS rule that sharpens this contract is:
+
+> Raw outside proposals and private runs stay local.
+> Only admitted, abstracted, or signature-only forms may move forward.
+
+That means:
+
+- outside ideas may be discussed, compared, critiqued, or pressure-tested
+- raw outside wording must not be copied directly into architecture or shared
+  truth
+- adoption must use the documented admitted form, not the raw proposal text
+
 ## Admission Flow
 
 1. suggestion received

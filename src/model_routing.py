@@ -54,6 +54,19 @@ MODEL_ROUTES = {
             "no_repeat_ngram_size": 3,
         },
     },
+    "super_companion": {
+        "label": "Super Companion",
+        "summary": "Keep the answer deeply grounded, organized across threads, and companion-led without taking authority.",
+        "adapter_mode": "think",
+        "generation_overrides": {
+            "temperature_max": 0.24,
+            "min_new_tokens_floor": 26,
+            "min_new_tokens_ratio": 0.22,
+            "repetition_penalty": 1.07,
+            "input_max_length": 1792,
+            "no_repeat_ngram_size": 4,
+        },
+    },
     "rapid_local": {
         "label": "Rapid Local",
         "summary": "Keep latency low and answer directly with minimal drift.",
@@ -181,6 +194,8 @@ def _build_surface_authority_profile(response_mode: str, route_id: str) -> dict:
         surface_identity = "tiny_nova"
     elif normalized_mode == "small" or route_id == "small_companion":
         surface_identity = "small_nova"
+    elif normalized_mode in {"super", "governed_full"} or route_id == "super_companion":
+        surface_identity = "super_nova"
     else:
         surface_identity = "jarvis"
     return {
@@ -239,6 +254,9 @@ def resolve_model_route(
     elif normalized_mode == "small":
         route_id = "small_companion"
         reason = "small_persona"
+    elif normalized_mode in {"super", "governed_full"}:
+        route_id = "super_companion"
+        reason = "super_persona"
     elif domain == "training":
         route_id = "training_coach"
         reason = "training_domain"

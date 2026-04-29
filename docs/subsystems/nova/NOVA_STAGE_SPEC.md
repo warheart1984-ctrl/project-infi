@@ -29,8 +29,8 @@ The canonical public Nova family path is:
 1. Tiny Nova
 2. Super Nova
 
-Small Nova remains the current installed bridge stage in runtime until Super
-Nova is activated.
+Small Nova remains the current installed bridge stage in runtime while Super
+Nova is available as a guarded, explicitly activated lane.
 
 ## Global Rules
 
@@ -49,14 +49,14 @@ These rules apply to every stage:
 
 | Field | Tiny Nova | Small Nova | Super Nova |
 | --- | --- | --- | --- |
-| Runtime status | Live | Live | Dormant / not live |
-| Persona mode | `tiny_nova` | `small_nova` | not assigned yet |
-| Response mode | `tiny` | `small` | not assigned yet |
+| Runtime status | Live | Live | Live guarded |
+| Persona mode | `tiny_nova` | `small_nova` | `super_nova` |
+| Response mode | `tiny` | `small` | `governed_full` |
 | Home surface default | No | Yes | No |
-| Session archive support | load only as document context | save/load local archive | not assigned yet |
+| Session archive support | load only as document context | save/load local archive | load local archive as explicit document context |
 | Authority lane | Jarvis | Jarvis | Jarvis |
-| Surface role | seed-form companion | installed bridge companion | final higher-capacity companion |
-| Depth | minimal | modest | future deepest |
+| Surface role | seed-form companion | installed bridge companion | final guarded companion |
+| Depth | minimal | modest | deepest bounded live companion |
 | Tool authority | none | none | none by default |
 | Repo authority | none | none | none by default |
 | Verification authority | none | none | none |
@@ -142,9 +142,9 @@ These rules apply to every stage:
 ### Identity
 
 - label: Super Nova
-- role: future final-stage companion
+- role: final-stage governed companion
 - tone: deeper without identity rupture
-- runtime status: not yet live
+- runtime status: live under explicit activation and governed admission
 
 ### Intended Function
 
@@ -164,19 +164,29 @@ These rules apply to every stage:
   source of truth
 - Shields and Wards define invariants; runtime systems enforce them
 
-### Hard Requirements Before Live Adoption
+### Current Live Runtime Requirements
 
-- law pack must be explicit
-- identity anchor must be explicit
-- authority split must remain intact
-- memory and continuity rules must be specified
-- Jarvis ↔ Super Nova interface contract must be explicit
-- realtime event-cause predictor must be installed in the live path before any
-  immune coupling
-- invariant engine must be wired to Nova runtime comparison before any immune
-  coupling
-- verification and regression tests must exist
-- no hidden bypass logic may be introduced
+The live guarded Super Nova lane now requires all of the following:
+
+- shared profile in the companion substrate
+- explicit identity anchor
+- explicit Jarvis ↔ Super Nova interface contract
+- explicit activation before live execution
+- governed phase/existence gate before live execution
+- watchdog validation around live output
+- continuity verification before and after generation
+- bounded immune observation through `observe_protocol_signal`
+- Project Infi final-truth admission before reply completion
+- verification and regression tests
+
+### Broader Future Requirements
+
+The following are still future-expansion requirements, not prerequisites for the
+current guarded lane:
+
+- realtime event-cause predictor as a broader live immune producer
+- invariant engine as a broader live Nova-runtime consumer
+- anything beyond observe-only immune signaling
 
 ## Current Runtime Source Map
 
@@ -212,11 +222,11 @@ It is:
 - explicit UI selection between Tiny and Small on the Nova surface
 - fuller Small Nova continuity design
 - explicit touch-input doctrine while keystroke remains the only live input mode
-- Super Nova runtime scaffold and verification plan before activation
+- broader immune automation only after the predictor/invariant prerequisites are real
 
 ## Recommended Build Order
 
 1. lock the three-doc pack
 2. sharpen Tiny vs Small behavioral differences
 3. add Tiny/Small switching on the live surface
-4. define Super Nova before implementing her
+4. keep Super Nova governed while broadening only the parts that already have proof

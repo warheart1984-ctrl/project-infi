@@ -104,3 +104,17 @@ class TestModelRouting(unittest.TestCase):
         self.assertEqual(route["routing_authority"], "jarvis")
         self.assertFalse(route["surface_replaces_authority"])
         self.assertEqual(route["system_shape"], "organismic")
+
+    def test_super_route_keeps_jarvis_as_authority_lane(self):
+        route = resolve_model_route(
+            response_mode="governed_full",
+            preferred_provider="local",
+            provider_available=lambda provider_id: provider_id == "local",
+        )
+
+        self.assertEqual(route["id"], "super_companion")
+        self.assertEqual(route["surface_identity"], "super_nova")
+        self.assertEqual(route["authority_lane"], "jarvis")
+        self.assertEqual(route["routing_authority"], "jarvis")
+        self.assertFalse(route["surface_replaces_authority"])
+        self.assertEqual(route["system_shape"], "organismic")

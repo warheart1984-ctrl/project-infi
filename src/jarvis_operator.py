@@ -44,10 +44,12 @@ from src.provider_mind import ProviderMind
 from src.run_ledger import RunLedger
 from src.Spatial_reasoning import SpatialReasoningPlug
 from src.otem_runtime import (
+    OTEM_VERSION,
     build_otem_catalog_snapshot,
     build_tool_registry,
     classify_otem_operation,
     enrich_otem_result,
+    get_frozen_otem_version,
     load_workflow_template_catalog,
 )
 from src.state_hygiene import (
@@ -900,9 +902,16 @@ def _arbitrate_lane_transition(
     """Apply the current AAIS lane-routing guardrails to one proposed transition."""
     normalized_mode = _normalize_mode_name(response_mode)
     authority_lane = _higher_authority_lane(active_lane, target_lane)
-    if normalized_mode in {"tiny", "small"} and target_lane in {LANE_FORGE, LANE_FORGE_EVAL}:
-        label = "Small Nova" if normalized_mode == "small" else "Tiny Nova"
-        reason = "RULE_SMALL_NOVA_STAYS_CONVERSATIONAL" if normalized_mode == "small" else "RULE_TINY_NOVA_STAYS_CONVERSATIONAL"
+    if normalized_mode in {"tiny", "small", "super", "governed_full"} and target_lane in {LANE_FORGE, LANE_FORGE_EVAL}:
+        if normalized_mode == "small":
+            label = "Small Nova"
+            reason = "RULE_SMALL_NOVA_STAYS_CONVERSATIONAL"
+        elif normalized_mode in {"super", "governed_full"}:
+            label = "Super Nova"
+            reason = "RULE_SUPER_NOVA_STAYS_CONVERSATIONAL"
+        else:
+            label = "Tiny Nova"
+            reason = "RULE_TINY_NOVA_STAYS_CONVERSATIONAL"
         return {
             "allowed": False,
             "active_lane": active_lane,
@@ -3109,6 +3118,49 @@ class JarvisOperator:
     ):
         """Build the OTEM v2-v5 read-only result for one turn without side effects."""
         base_result = build_otem_result(text)
+        if str(base_result.get("status") or "").strip().lower() == "rejected":
+            return {
+                **base_result,
+                "version": get_frozen_otem_version(),
+                "phase": "deterministic_gate_rejected",
+                "operation": "rejected",
+                "session_context": {
+                    "active": False,
+                    "operation": "rejected",
+                    "task": base_result.get("task"),
+                    "restated_task": base_result.get("restated_task"),
+                    "plan": [],
+                    "focus_step_index": None,
+                    "focus_step": None,
+                    "note": "No plan was generated. This preserves OTEM's reasoning-only contract.",
+                    "session_scoped": True,
+                    "persistent": False,
+                },
+                "execution_awareness": {
+                    "workflow_catalog": {
+                        "count": 0,
+                        "templates": [],
+                        "read_only": True,
+                    },
+                    "recent_runs": [],
+                    "approval_state": {
+                        "pending": False,
+                        "pending_action": {},
+                        "action_lifecycle": {},
+                        "read_only": True,
+                    },
+                    "recommendations": [],
+                    "conflicts": [],
+                    "summary": "OTEM rejected the task before execution-aware planning began.",
+                },
+                "workflow_handoff": None,
+                "tool_awareness": {
+                    "registry": [],
+                    "suggestions": [],
+                    "coverage": "not_applicable",
+                    "summary": "OTEM stayed tool-cold because the task was rejected before tool matching.",
+                },
+            }
         workflow_templates = load_workflow_template_catalog()
         tool_registry = build_tool_registry(self.list_actions())
         recent_runs = self.list_runs(session_id=session_id, limit=6, truth_scope="live") if session_id else []
@@ -3136,6 +3188,7 @@ class JarvisOperator:
         result["reasoning_summary"] = (
             "Jarvis produced an OTEM v5 proposal-only plan with read-only workflow, run, approval, and tool awareness."
         )
+        assert result.get("version") == OTEM_VERSION, f"Unexpected OTEM payload version: {result.get('version')!r}"
         return result
 
     def _sync_evolving_workspace(self):
@@ -3920,6 +3973,23 @@ class JarvisOperator:
             "external_suggestion_usage",
             "law_filter_applied",
             "admitted_external_form",
+            "content_transfer_mode",
+            "share_mode",
+            "export_mode",
+            "pattern_share_mode",
+            "collective_share_mode",
+            "copy_raw_external",
+            "share_raw",
+            "raw_export",
+            "copy_raw",
+            "copy_private_run",
+            "share_private_run",
+            "private_export",
+            "raw_prompts",
+            "raw_chat_logs",
+            "raw_code",
+            "raw_traces",
+            "raw_documents",
         )
         details: dict[str, Any] = {}
         for source in sources:
@@ -4814,7 +4884,13 @@ class JarvisOperator:
             },
         }
 
-    def execute_action(self, action_id: str, action=None, session_id: str | None = None):
+    def execute_action(
+        self,
+        action_id: str,
+        action=None,
+        session_id: str | None = None,
+        cognitive_bridge: dict[str, Any] | None = None,
+    ):
         """Execute a safe action and wrap it for chat/UI consumption."""
         normalized = _normalize_action_id(action_id)
         action_payload = dict(action or {})
@@ -4841,6 +4917,8 @@ class JarvisOperator:
                 "ul_snapshot": dict(patch_apply.get("ul_snapshot") or {}),
                 "law_event_log": dict(patch_apply.get("law_event_log") or {}),
             }
+            if cognitive_bridge:
+                result["cognitive_bridge"] = dict(cognitive_bridge)
             result["stdout"] = json.dumps(result["patch_apply"], indent=2)
         else:
             action_definition = dict(self.action_runner.get_action(normalized) or {})
@@ -4876,6 +4954,8 @@ class JarvisOperator:
             result["law_enforcement"] = law_enforcement
             result["ul_snapshot"] = ul_snapshot
             result["law_event_log"] = law_event_log
+            if cognitive_bridge:
+                result["cognitive_bridge"] = dict(cognitive_bridge)
         response = (
             f"{result['action']['label']} finished.\n"
             f"{result['summary']}\n\n"

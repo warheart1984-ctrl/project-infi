@@ -63,6 +63,7 @@ class TestGovernedDirectPipeline(unittest.TestCase):
         witness_input = pipeline["continuity_witness_input"]
         signal_types = [signal["signal_type"] for signal in realtime_feed["signals"]]
         predictor = pipeline["realtime_event_cause_predictor"]
+        governed_event = pipeline["governed_event"]
         sentinel = pipeline["operator_health_sentinel"]
         self.assertEqual(realtime_feed["runtime_context"], "live_runtime")
         self.assertEqual(realtime_feed["active_lane"], DIRECT_COGNITIVE_LANE)
@@ -79,10 +80,23 @@ class TestGovernedDirectPipeline(unittest.TestCase):
         self.assertEqual(witness_input["subsystem"], "JARVIS")
         self.assertEqual(witness_input["fingerprint"]["lane_type"], DIRECT_COGNITIVE_LANE)
         self.assertEqual(predictor["phase_gate"]["decision"], "ALLOW")
+        self.assertEqual(governed_event["decision"], "ALLOW")
+        self.assertIsNone(governed_event["immune_action"])
         self.assertTrue(all(realtime_feed["validation"].values()))
         self.assertTrue(pipeline["validation"]["realtime_signal_feed_valid"])
         self.assertTrue(pipeline["validation"]["realtime_event_cause_predictor_valid"])
+        self.assertTrue(pipeline["validation"]["governed_event_valid"])
         self.assertTrue(pipeline["validation"]["operator_health_sentinel_valid"])
+        self.assertTrue(pipeline["validation"]["bridge_hops_routed"])
+        self.assertEqual(
+            [hop["governance_packet"]["source"] for hop in pipeline["bridge_hops"]],
+            ["swarm", "llm", "predictor"],
+        )
+        self.assertEqual(pipeline["bridge_hops"][0]["governed_llm"]["status"], "PROPOSED")
+        self.assertEqual(pipeline["bridge_hops"][0]["governed_llm"]["packet_type"], "deliberation_request")
+        self.assertEqual(pipeline["bridge_hops"][1]["governed_llm"]["status"], "PROPOSED")
+        self.assertEqual(pipeline["bridge_hops"][1]["governed_llm"]["packet_type"], "generation_request")
+        self.assertNotIn("governed_llm", pipeline["bridge_hops"][2])
 
     def test_tool_turn_uses_service_lane_without_clogging_direct_lane(self):
         """Tool turns should keep tool call/result traffic off the direct cognitive lane."""
@@ -129,6 +143,7 @@ class TestGovernedDirectPipeline(unittest.TestCase):
         realtime_feed = pipeline["realtime_signal_feed"]
         signal_classes = [signal["signal_class"] for signal in realtime_feed["signals"]]
         predictor = pipeline["realtime_event_cause_predictor"]
+        governed_event = pipeline["governed_event"]
         sentinel = pipeline["operator_health_sentinel"]
         self.assertEqual(realtime_feed["runtime_context"], "operator_runtime")
         self.assertEqual(realtime_feed["packet_metrics"]["service_packet_count"], 2)
@@ -137,9 +152,18 @@ class TestGovernedDirectPipeline(unittest.TestCase):
         self.assertIn("service_tool_completed", signal_classes)
         self.assertEqual(predictor["cause_class"], "operator_service_request")
         self.assertEqual(predictor["recommended_state"], "proceed")
+        self.assertEqual(governed_event["decision"], "ALLOW")
         self.assertEqual(sentinel["operator_state"], "watch")
         self.assertEqual(sentinel["recommended_mode"], "simplify")
         self.assertTrue(all(realtime_feed["validation"].values()))
+        self.assertTrue(pipeline["validation"]["bridge_hops_routed"])
+        self.assertEqual(
+            [hop["governance_packet"]["source"] for hop in pipeline["bridge_hops"]],
+            ["swarm", "service_lane", "predictor"],
+        )
+        self.assertEqual(pipeline["bridge_hops"][0]["governed_llm"]["status"], "PROPOSED")
+        self.assertNotIn("governed_llm", pipeline["bridge_hops"][1])
+        self.assertNotIn("governed_llm", pipeline["bridge_hops"][2])
 
     def test_realtime_signal_feed_reports_turn_shift_from_previous_pipeline(self):
         """The feed should surface bounded deltas when the turn changes lanes or tool state."""
@@ -186,6 +210,7 @@ class TestGovernedDirectPipeline(unittest.TestCase):
         self.assertTrue(turn_delta["attributes"]["tool_changed"])
         self.assertGreater(turn_delta["attributes"]["change_count"], 0)
         self.assertEqual(predictor["cause_class"], "service_lane_request")
+        self.assertEqual(pipeline["governed_event"]["decision"], "ALLOW")
 
     def test_realtime_signal_feed_reports_stable_repeat_for_identical_turn(self):
         """Repeated identical turn shapes should produce a stable repeat delta."""
@@ -221,6 +246,7 @@ class TestGovernedDirectPipeline(unittest.TestCase):
         self.assertEqual(turn_delta["attributes"]["change_count"], 0)
         self.assertEqual(predictor["cause_class"], "steady_state")
         self.assertEqual(predictor["recommended_state"], "proceed")
+        self.assertEqual(pipeline["governed_event"]["decision"], "ALLOW")
 
     def test_realtime_signal_feed_records_immune_boundary_when_protocol_degrades(self):
         """Immune protocol degradation should appear as a bounded signal in the realtime feed."""
@@ -258,7 +284,43 @@ class TestGovernedDirectPipeline(unittest.TestCase):
         self.assertEqual(immune_signal["signal_class"], "immune_clamp")
         self.assertEqual(immune_signal["severity"], "medium")
         self.assertEqual(predictor["cause_class"], "immune_guard_intervention")
-        self.assertEqual(predictor["recommended_state"], "degrade_safe")
-        self.assertTrue(all(realtime_feed["validation"].values()))
-        self.assertTrue(pipeline["validation"]["realtime_signal_feed_valid"])
-        self.assertTrue(pipeline["validation"]["realtime_event_cause_predictor_valid"])
+        self.assertEqual(pipeline["governed_event"]["decision"], "ALLOW")
+
+    def test_governed_event_chain_blocks_invalid_prediction_and_triggers_immune(self):
+        invalid_prediction = {
+            "module_id": "aais.realtime_event_cause_predictor",
+            "version": "0.1",
+            "status": "bounded_inference",
+            "cause_class": "conflicting_signal_state",
+            "confidence": 0.77,
+            "supporting_signals": ["turn_shift_detected"],
+            "conflict_flags": ["lane_and_tool_tension"],
+            "data_sufficiency": "sufficient",
+            "recommended_state": "proceed",
+            "runtime_context": "live_runtime",
+            "source_pipeline_id": "gdp_test",
+            "signal_count": 5,
+            "phase_gate": {"decision": "ALLOW"},
+            "advisory_only": True,
+        }
+
+        with patch(
+            "src.realtime_event_cause_predictor.interpret_realtime_signal_feed",
+            return_value=invalid_prediction,
+        ):
+            pipeline = build_governed_turn_pipeline(
+                response_mode="think",
+                contract="gather_plan_answer",
+                god_brain={
+                    "strategy_label": "Council Deliberation",
+                    "action_bias": "deliberate_then_answer",
+                    "surface_identity": "jarvis",
+                },
+                model_route={"id": "local_fast", "label": "Local Fast Route"},
+            )
+
+        governed_event = pipeline["governed_event"]
+        self.assertEqual(governed_event["decision"], "BLOCK")
+        self.assertEqual(governed_event["status"], "blocked")
+        self.assertIsInstance(governed_event["immune_action"], dict)
+        self.assertTrue(pipeline["validation"]["governed_event_valid"])

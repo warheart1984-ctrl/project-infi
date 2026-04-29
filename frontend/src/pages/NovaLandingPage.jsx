@@ -25,6 +25,10 @@ import {
   SMALL_NOVA_PERSONA_MODE,
   SMALL_NOVA_RESPONSE_MODE,
   SMALL_NOVA_SYSTEM_PROMPT,
+  SUPER_NOVA_ASSISTANT_NAME,
+  SUPER_NOVA_PERSONA_MODE,
+  SUPER_NOVA_RESPONSE_MODE,
+  SUPER_NOVA_SYSTEM_PROMPT,
   TINY_NOVA_ASSISTANT_NAME,
   TINY_NOVA_PERSONA_MODE,
   TINY_NOVA_RESPONSE_MODE,
@@ -44,7 +48,11 @@ import {
 import './NovaLandingPage.css';
 
 const DEFAULT_COMPANION_PERSONA = SMALL_NOVA_PERSONA_MODE;
-const COMPANION_PERSONA_MODES = [SMALL_NOVA_PERSONA_MODE, TINY_NOVA_PERSONA_MODE];
+const COMPANION_PERSONA_MODES = [
+  SMALL_NOVA_PERSONA_MODE,
+  SUPER_NOVA_PERSONA_MODE,
+  TINY_NOVA_PERSONA_MODE,
+];
 
 const COMPANION_SURFACES = {
   [SMALL_NOVA_PERSONA_MODE]: {
@@ -73,6 +81,33 @@ const COMPANION_SURFACES = {
     offlineDetail: 'Start the backend to chat with Small Nova.',
     checkingDetail: 'Small Nova is checking the local runtime.',
     readyLabel: 'Small Nova ready',
+  },
+  [SUPER_NOVA_PERSONA_MODE]: {
+    personaMode: SUPER_NOVA_PERSONA_MODE,
+    responseMode: SUPER_NOVA_RESPONSE_MODE,
+    systemPrompt: SUPER_NOVA_SYSTEM_PROMPT,
+    assistantName: SUPER_NOVA_ASSISTANT_NAME,
+    blurb: 'Deeper continuity, structured reflection, and explicit governed activation.',
+    heroLead: 'Super Nova is the governed deep-companion lane: broader continuity, calmer multi-thread organization, and explicit activation before live use while Jarvis keeps authority.',
+    greeting: 'I’m Super Nova. Activate me when you want deeper continuity and a more structured companion conversation.',
+    starterPrompts: [
+      'Help me hold the full shape of this problem without losing the next step.',
+      'Organize these threads and show me what matters most first.',
+      'Stay grounded and help me continue this with deeper continuity.',
+    ],
+    intakeSuccess: 'is now in Super Nova\'s intake.',
+    intakeHeading: 'Bring source material in without leaving Super Nova.',
+    promptPlaceholder: 'Activate Super Nova, then bring the deeper thread, draft, or question you want to work through.',
+    chatModeLabel: 'Super Nova chat',
+    heading: 'Ask Super Nova directly.',
+    siteSignal: 'Super Nova is available behind an explicit governed activation gate.',
+    siteIntakeContext: 'Super Nova site intake',
+    pastedNoteContext: 'Super Nova pasted note intake',
+    pastedNoteSource: 'Super Nova pasted note',
+    urlIntakeContext: 'Super Nova URL intake',
+    offlineDetail: 'Start the backend to activate and chat with Super Nova.',
+    checkingDetail: 'Super Nova is checking the local runtime and activation gate.',
+    readyLabel: 'Super Nova available',
   },
   [TINY_NOVA_PERSONA_MODE]: {
     personaMode: TINY_NOVA_PERSONA_MODE,
@@ -268,6 +303,59 @@ function summarizeHealth(response) {
   };
 }
 
+function isSuperNovaPersona(personaMode) {
+  return personaMode === SUPER_NOVA_PERSONA_MODE;
+}
+
+function summarizeSuperNovaActivation(superNovaState) {
+  const activation = superNovaState?.activation || {};
+  const continuity = superNovaState?.continuity || {};
+  const currentState = activation.current_state || 'dormant';
+  const failureReasons = continuity.failure_reasons || activation.last_failure_reasons || [];
+
+  if (currentState === 'activation_ready' && activation.activation_token_present) {
+    return {
+      tone: 'connected',
+      label: 'Activation ready',
+      detail: continuity.status === 'verified'
+        ? 'Token live and continuity verified.'
+        : 'Token live, but continuity still needs review.',
+      currentState,
+      failureReasons,
+    };
+  }
+
+  if (currentState === 'paused') {
+    return {
+      tone: 'warning',
+      label: 'Paused',
+      detail: 'Super Nova is paused by operator control.',
+      currentState,
+      failureReasons,
+    };
+  }
+
+  if (currentState === 'stopped') {
+    return {
+      tone: 'error',
+      label: 'Stopped',
+      detail: 'The live token was revoked. Activate again to continue.',
+      currentState,
+      failureReasons,
+    };
+  }
+
+  return {
+    tone: failureReasons.length ? 'warning' : 'warning',
+    label: 'Needs activation',
+    detail: failureReasons.length
+      ? `Blocked until activation passes: ${failureReasons.join(', ')}`
+      : 'Explicit activation is required before Super Nova can answer live.',
+    currentState,
+    failureReasons,
+  };
+}
+
 function NovaLandingPage() {
   const [companionPersona, setCompanionPersona] = useState(loadInitialCompanionPersona);
   const surface = getCompanionSurface(companionPersona);
@@ -288,6 +376,8 @@ function NovaLandingPage() {
   const [urlUploading, setUrlUploading] = useState(false);
   const [textIntake, setTextIntake] = useState('');
   const [urlIntake, setUrlIntake] = useState('');
+  const [superNovaState, setSuperNovaState] = useState(null);
+  const [superNovaBusy, setSuperNovaBusy] = useState(false);
   const [archiveEntries, setArchiveEntries] = useState([]);
   const [archiveSaving, setArchiveSaving] = useState(false);
   const [archiveLoading, setArchiveLoading] = useState(false);
@@ -302,11 +392,27 @@ function NovaLandingPage() {
   const streamAbortRef = useRef(null);
   const surfaceCategories = buildSurfaceCategories(surface);
   const calmSignals = buildCalmSignals(surface);
+  const superNovaSurface = isSuperNovaPersona(companionPersona);
+  const superNovaActivation = superNovaState?.activation || {};
+  const superNovaContinuity = superNovaState?.continuity || {};
+  const superNovaStatus = summarizeSuperNovaActivation(superNovaState);
+  const superNovaReady = !superNovaSurface || (
+    superNovaActivation.current_state === 'activation_ready'
+    && Boolean(superNovaActivation.activation_token_present)
+  );
 
   const persistCompanionProfile = useCallback((personaMode) => {
     const nextProfile = applyPersonaProfileSelection(getJarvisProfile(), personaMode);
     saveJarvisProfile(nextProfile);
   }, []);
+
+  const syncSuperNovaState = useCallback((payload, personaMode = companionPersona) => {
+    if (isSuperNovaPersona(personaMode)) {
+      setSuperNovaState(payload?.super_nova || null);
+      return;
+    }
+    setSuperNovaState(null);
+  }, [companionPersona]);
 
   const patchMessage = (messageId, patch) => {
     setMessages((current) => current.map((message) => (
@@ -329,6 +435,19 @@ function NovaLandingPage() {
     });
     return entries;
   }, []);
+
+  const refreshSuperNovaStatus = useCallback(async (targetSessionId = sessionId, targetPersona = companionPersona) => {
+    if (!targetSessionId || !isSuperNovaPersona(targetPersona)) {
+      setSuperNovaState(null);
+      return null;
+    }
+
+    const response = await apiGet(`/api/chat/sessions/${targetSessionId}/super-nova/status`);
+    startTransition(() => {
+      setSuperNovaState(response.data?.super_nova || null);
+    });
+    return response.data?.super_nova || null;
+  }, [companionPersona, sessionId]);
 
   const applyLoadedArchive = (nextArchive) => {
     const normalizedArchive = nextArchive || null;
@@ -370,10 +489,17 @@ function NovaLandingPage() {
           setArchiveEntries(archiveResult.value);
         });
       }
+      if (sessionId && isSuperNovaPersona(companionPersona)) {
+        try {
+          await refreshSuperNovaStatus(sessionId, companionPersona);
+        } catch (error) {
+          setSuperNovaState(null);
+        }
+      }
     } finally {
       setRefreshing(false);
     }
-  }, [refreshArchiveEntries, surface.offlineDetail]);
+  }, [companionPersona, refreshArchiveEntries, refreshSuperNovaStatus, sessionId, surface.offlineDetail]);
 
   const hydrateNovaSession = useCallback(async (targetPersona = companionPersona) => {
     const targetSurface = getCompanionSurface(targetPersona);
@@ -384,11 +510,15 @@ function NovaLandingPage() {
         const response = await apiGet(`/api/chat/sessions/${storedSessionId}`);
         if (response.data?.persona_mode === targetSurface.personaMode) {
           setSessionId(storedSessionId);
+          syncSuperNovaState(response.data, targetSurface.personaMode);
           startTransition(() => {
             setMessages(mapSessionTurns(response.data.turns).length
               ? mapSessionTurns(response.data.turns)
               : buildDefaultMessages(targetSurface));
           });
+          if (isSuperNovaPersona(targetSurface.personaMode) && !response.data?.super_nova) {
+            await refreshSuperNovaStatus(storedSessionId, targetSurface.personaMode);
+          }
           return storedSessionId;
         }
       } catch (error) {
@@ -405,13 +535,17 @@ function NovaLandingPage() {
 
     setActiveJarvisSessionId(response.data.session_id);
     setSessionId(response.data.session_id);
+    syncSuperNovaState(response.data, targetSurface.personaMode);
     startTransition(() => {
       setMessages(mapSessionTurns(response.data.turns).length
         ? mapSessionTurns(response.data.turns)
         : buildDefaultMessages(targetSurface));
     });
+    if (isSuperNovaPersona(targetSurface.personaMode) && !response.data?.super_nova) {
+      await refreshSuperNovaStatus(response.data.session_id, targetSurface.personaMode);
+    }
     return response.data.session_id;
-  }, [companionPersona, persistCompanionProfile]);
+  }, [companionPersona, persistCompanionProfile, refreshSuperNovaStatus, syncSuperNovaState]);
 
   const ensureNovaSession = useCallback(async () => {
     if (sessionId) {
@@ -490,6 +624,11 @@ function NovaLandingPage() {
   const handleSend = async (mode = activeMode) => {
     const text = draft.trim();
     if (!text || sending) {
+      return;
+    }
+
+    if (superNovaSurface && !superNovaReady) {
+      toast.error('Activate Super Nova before sending a live turn.');
       return;
     }
 
@@ -572,6 +711,7 @@ function NovaLandingPage() {
                   content: payload.response || '',
                   streaming: false,
                 });
+                syncSuperNovaState(payload, surface.personaMode);
                 return;
               }
 
@@ -599,6 +739,9 @@ function NovaLandingPage() {
             ...finalPayload.loaded_session_archive,
           });
         }
+        if (finalPayload?.super_nova) {
+          setSuperNovaState(finalPayload.super_nova);
+        }
       }
 
       setBackendStatus((current) => (
@@ -612,6 +755,9 @@ function NovaLandingPage() {
         error: true,
         streaming: false,
       });
+      if (error?.response?.data?.super_nova) {
+        setSuperNovaState(error.response.data.super_nova);
+      }
       setBackendStatus({
         tone: 'error',
         label: 'Backend offline',
@@ -635,6 +781,7 @@ function NovaLandingPage() {
     setDraft('');
     setSessionId('');
     setActiveMode('chat');
+    setSuperNovaState(null);
     setMessages(buildDefaultMessages(targetSurface));
     setBackendStatus((current) => ({
       ...current,
@@ -644,6 +791,41 @@ function NovaLandingPage() {
     clearActiveJarvisSessionId();
     persistCompanionProfile(targetPersona);
     setCompanionPersona(targetPersona);
+  };
+
+  const runSuperNovaControl = async (path, successMessage) => {
+    const activeSessionId = await ensureNovaSession();
+    setSuperNovaBusy(true);
+    try {
+      const response = await apiPost(`/api/chat/sessions/${activeSessionId}${path}`, {});
+      syncSuperNovaState(response.data, SUPER_NOVA_PERSONA_MODE);
+      if (successMessage) {
+        toast.success(successMessage);
+      }
+    } catch (error) {
+      if (error?.response?.data) {
+        syncSuperNovaState(error.response.data, SUPER_NOVA_PERSONA_MODE);
+      }
+      toast.error(getApiErrorMessage(error, 'Super Nova control request failed.'));
+    } finally {
+      setSuperNovaBusy(false);
+    }
+  };
+
+  const handleActivateSuperNova = async () => {
+    await runSuperNovaControl('/super-nova/activate', 'Super Nova activated.');
+  };
+
+  const handlePauseSuperNova = async () => {
+    await runSuperNovaControl('/super-nova/pause', 'Super Nova paused.');
+  };
+
+  const handleResumeSuperNova = async () => {
+    await runSuperNovaControl('/super-nova/resume', 'Super Nova resumed.');
+  };
+
+  const handleStopSuperNova = async () => {
+    await runSuperNovaControl('/super-nova/stop', 'Super Nova stopped.');
   };
 
   const handleFileIntake = async (event) => {
@@ -944,6 +1126,70 @@ function NovaLandingPage() {
               </div>
             </section>
 
+            {superNovaSurface ? (
+              <section className="nova-super-panel" aria-label="Super Nova controls">
+                <div className="nova-super-panel__intro">
+                  <p className="nova-kicker">Super Nova Control</p>
+                  <h3>Explicit activation, visible state, and governed continuity.</h3>
+                  <p>
+                    Super Nova stays under Jarvis authority. She must be activated before live use,
+                    and the watchdog can pause or revoke the lane if continuity drifts.
+                  </p>
+                </div>
+                <div className="nova-super-panel__status">
+                  <span className={`status-pill ${superNovaStatus.tone}`}>{superNovaStatus.label}</span>
+                  <span className="nova-status-detail">{superNovaStatus.detail}</span>
+                </div>
+                <div className="nova-super-panel__facts">
+                  <span>State: {superNovaActivation.current_state || 'dormant'}</span>
+                  <span>Continuity: {superNovaContinuity.status || 'not_checked'}</span>
+                  <span>Trace events: {(superNovaState?.trace || []).length}</span>
+                  <span>Immune coupling: {superNovaState?.immune_coupling || 'blocked'}</span>
+                </div>
+                {superNovaStatus.failureReasons.length ? (
+                  <div className="nova-super-panel__reasons">
+                    {superNovaStatus.failureReasons.map((reason) => (
+                      <span key={reason} className="nova-super-reason">{reason}</span>
+                    ))}
+                  </div>
+                ) : null}
+                <div className="nova-super-panel__actions">
+                  <button
+                    type="button"
+                    className="nova-button nova-button--primary"
+                    onClick={handleActivateSuperNova}
+                    disabled={superNovaBusy || sending || superNovaReady}
+                  >
+                    {superNovaBusy && !superNovaReady ? 'Activating…' : 'Activate'}
+                  </button>
+                  <button
+                    type="button"
+                    className="nova-button nova-button--ghost"
+                    onClick={handlePauseSuperNova}
+                    disabled={superNovaBusy || !superNovaReady || superNovaActivation.current_state === 'paused'}
+                  >
+                    Pause
+                  </button>
+                  <button
+                    type="button"
+                    className="nova-button nova-button--ghost"
+                    onClick={handleResumeSuperNova}
+                    disabled={superNovaBusy || superNovaActivation.current_state !== 'paused'}
+                  >
+                    Resume
+                  </button>
+                  <button
+                    type="button"
+                    className="nova-button nova-button--ghost"
+                    onClick={handleStopSuperNova}
+                    disabled={superNovaBusy || !superNovaActivation.current_state || superNovaActivation.current_state === 'stopped'}
+                  >
+                    Stop
+                  </button>
+                </div>
+              </section>
+            ) : null}
+
             {loadedArchive ? (
               <section className="nova-loaded-archive" aria-label="Loaded session archive">
                 <div>
@@ -1154,10 +1400,14 @@ function NovaLandingPage() {
                     type="button"
                     className="nova-button nova-button--primary"
                     onClick={() => handleSend()}
-                    disabled={sending || !draft.trim()}
+                    disabled={sending || !draft.trim() || (superNovaSurface && !superNovaReady)}
                   >
                     <FiSend />
-                    {activeMode === 'documents' ? 'Ask Intake' : 'Send'}
+                    {superNovaSurface && !superNovaReady
+                      ? 'Activate First'
+                      : activeMode === 'documents'
+                        ? 'Ask Intake'
+                        : 'Send'}
                   </button>
                 </div>
               </div>

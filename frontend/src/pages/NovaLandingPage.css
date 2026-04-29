@@ -371,7 +371,8 @@
 .nova-archive-panel,
 .nova-loaded-archive,
 .nova-archive-form,
-.nova-archive-recent {
+.nova-archive-recent,
+.nova-super-panel {
   border-radius: 1.2rem;
   border: 1px solid rgba(255, 234, 190, 0.12);
   background: rgba(255, 255, 255, 0.03);
@@ -379,8 +380,67 @@
 
 .nova-archive-panel,
 .nova-loaded-archive,
-.nova-archive-form {
+.nova-archive-form,
+.nova-super-panel {
   padding: 1rem 1.05rem;
+}
+
+.nova-super-panel {
+  display: grid;
+  gap: 0.9rem;
+  border-color: rgba(157, 204, 255, 0.22);
+  background:
+    linear-gradient(180deg, rgba(157, 204, 255, 0.08), rgba(255, 217, 138, 0.05)),
+    rgba(255, 255, 255, 0.03);
+}
+
+.nova-super-panel__intro {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.nova-super-panel__intro h3 {
+  font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  letter-spacing: -0.02em;
+}
+
+.nova-super-panel__intro p,
+.nova-super-panel__facts span {
+  color: var(--nova-muted);
+  line-height: 1.6;
+}
+
+.nova-super-panel__status,
+.nova-super-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.nova-super-panel__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.nova-super-panel__reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.nova-super-reason {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 217, 138, 0.16);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--nova-muted);
+  font-size: 0.82rem;
+  font-family: 'IBM Plex Mono', monospace;
 }
 
 .nova-archive-panel {
@@ -781,6 +841,10 @@
   .nova-archive-row {
     display: grid;
   }
+
+  .nova-super-panel__facts {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 720px) {
@@ -836,7 +900,9 @@
   .nova-archive-recent__head,
   .nova-archive-panel__actions,
   .nova-loaded-archive__actions,
-  .nova-archive-form__actions {
+  .nova-archive-form__actions,
+  .nova-super-panel__actions,
+  .nova-super-panel__status {
     flex-direction: column;
     align-items: stretch;
   }

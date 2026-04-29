@@ -233,7 +233,7 @@ AAIS subsystems currently cluster into these architectural layers:
 ### Nova Companion Line
 
 - status: `live`
-- primary purpose: Tiny and Small companion surfaces under Jarvis authority, with dormant Super Nova as the terminal target stage
+- primary purpose: Tiny, Small, and guarded Super Nova companion surfaces under Jarvis authority
 - architectural layer: authority and cognition
 - dependencies:
   - `src/conversation_memory.py`
@@ -250,9 +250,15 @@ AAIS subsystems currently cluster into these architectural layers:
   - `docs/subsystems/nova/TINY_NOVA_CANONICAL.md`
   - `docs/spine/AAIS_MASTER_SPEC.md`
 - current implementation gaps:
-  - Super Nova is not live
-  - Small Nova still carries the live bridge role between Tiny Nova and dormant Super Nova
-  - Super Nova immune coupling remains blocked until the realtime event-cause predictor is installed in the live runtime path and the invariant engine is wired as a Nova runtime consumer
+  - Small Nova still carries the default home-surface bridge role even though
+    Super Nova is available as a guarded lane
+  - Super Nova immune coupling is currently observe-only; broader
+    predictor/invariant-driven immune automation remains blocked until the
+    realtime event-cause predictor is installed in the live runtime path and
+    the invariant engine is wired as a Nova runtime consumer
+  - there is no separate ARIS service in this repo; the active ARIS-equivalent
+    enforcement at the Super Nova boundary is the shared Project Infi
+    final-truth admission seam
   - touch interaction is document-defined only; live Nova input remains keystroke-first today
 - integration risk: `medium`
 - recommended priority: `P3 keep bounded`
@@ -354,9 +360,12 @@ AAIS subsystems currently cluster into these architectural layers:
 - invariants or doctrine surfaces:
   - `tests/test_governed_direct_pipeline.py`
   - `docs/contracts/SEAM_LAW.md`
+  - `docs/contracts/SWARM_LAW.md`
 - current implementation gaps:
   - integrated as trace and packet contract, not yet the full runtime transport
     substrate
+  - swarm-originated doctrine is admitted, but the broader multi-agent field
+    runtime remains partial rather than installed as a first-class subsystem
 - integration risk: `medium`
 - recommended priority: `P2 after infrastructure`
 
@@ -462,6 +471,7 @@ AAIS subsystems currently cluster into these architectural layers:
   - `src/system_guard.py`
 - invariants or doctrine surfaces:
   - `docs/contracts/AAIS_MODULE_GOVERNANCE_PROTOCOL.md`
+  - `docs/contracts/AAIS_IMMUNE_PROTOCOL.md`
   - `docs/contracts/SEAM_LAW.md`
 - current implementation gaps:
   - cross-system incident choreography is still more code-local than
@@ -697,8 +707,12 @@ AAIS subsystems currently cluster into these architectural layers:
   - `src/api.py`
 - invariants or doctrine surfaces:
   - `docs/contracts/EVOLVE_ENGINE_CONTRACT.md`
+  - `docs/contracts/COLLECTIVE_PATTERN_LEDGER.md`
 - current implementation gaps:
   - mutation governance remains bounded and no direct patch authority exists
+  - Collective Pattern Ledger law is now admitted, but full repo-wide ledger
+    coverage is still strongest in EvolveEngine hall traces rather than every
+    AAIS lane
 - integration risk: `high`
 - recommended priority: `special_review_only`
 
@@ -840,44 +854,111 @@ AAIS subsystems currently cluster into these architectural layers:
 - integration risk: `medium`
 - recommended priority: `P1 keep_aligned`
 
-### StoryForge
+### Story Forge
 
-- status: `concept`
-- primary purpose: implied future governed presentation or workflow lane
-- architectural layer: hidden or seeded subsystem primitive
+- status: `partial`
+- primary purpose: governed narrative build plus movie-audio handoff stack
+- architectural layer: execution lanes
 - dependencies:
-  - would require phase gate, runtime lane, UI surface, and explicit contract
+  - `src/capabilities/story_forge_audio.py`
+  - `external/story_forge/src/story_forge/backend_full_build.py`
+  - `external/story_forge/src/story_forge/movie_audio_pipeline.py`
+  - `external/beatbox_speakers/src/`
 - governed inputs and outputs:
-  - input: none live
-  - output: none live
+  - input: `BackendBuildArtifact`, rendered video path, dialogue or narration
+    metadata
+  - output: bounded final movie artifact contract
 - related files/modules:
-  - `tests/test_phase_gate.py`
+  - `src/capabilities/story_forge_audio.py`
+  - `external/story_forge/src/story_forge/contracts/`
+  - `tests/test_story_forge_audio_capability.py`
 - invariants or doctrine surfaces:
-  - none active
+  - `docs/subsystems/storyforge/STORYFORGE_CANONICAL.md`
+  - `docs/subsystems/storyforge/STORYFORGE_STAGE_SPEC.md`
 - current implementation gaps:
-  - no runtime implementation exists
-  - only appears as a phase-gate test identifier
-- integration risk: `unknown_high`
-- recommended priority: `P3 dormant until explicitly specified`
+  - the current admitted AAIS surface is the audio/movie capability path, not
+    the full Story Forge front door
+  - the standalone launcher, game lane, and text-to-3D lane are not yet
+    admitted as first-class AAIS runtime surfaces
+- integration risk: `medium_high`
+- recommended priority: `P1 stabilize_and_expand`
+
+### Beatbox
+
+- status: `partial`
+- primary purpose: downstream score lane between Story Forge build truth and
+  Speakers mix truth
+- architectural layer: execution lanes
+- dependencies:
+  - `external/beatbox_speakers/src/beatbox/`
+  - `external/beatbox_speakers/src/audio_pipeline/`
+  - `external/ai/beatbox/adapter.py`
+  - `integrations/contracts/beatbox_contract.md`
+- governed inputs and outputs:
+  - input: Story Forge handoff timing and emotional score data
+  - output: cue plan, score artifact, and audio pipeline handoff state
+- related files/modules:
+  - `external/beatbox_speakers/src/beatbox/contracts.py`
+  - `external/beatbox_speakers/src/audio_pipeline/contracts.py`
+- invariants or doctrine surfaces:
+  - `docs/subsystems/beatbox/BEATBOX_CANONICAL.md`
+  - `integrations/contracts/beatbox_contract.md`
+- current implementation gaps:
+  - currently admitted through the Story Forge audio path rather than as a
+    separate operator-facing AAIS lane
+- integration risk: `medium`
+- recommended priority: `P1 harden_in_chain`
+
+### Speakers
+
+- status: `partial`
+- primary purpose: downstream voice rendering, mix planning, and final movie
+  audio assembly
+- architectural layer: execution lanes
+- dependencies:
+  - `external/beatbox_speakers/src/speakers/`
+  - `external/beatbox_speakers/src/assembler/`
+  - `external/beatbox_speakers/src/audio_pipeline/`
+- governed inputs and outputs:
+  - input: Story Forge presented output plus Beatbox cue/timing state
+  - output: voice stems, mix plan, final audio, and assembled movie package
+- related files/modules:
+  - `external/beatbox_speakers/src/speakers/contracts.py`
+  - `external/beatbox_speakers/src/assembler/contracts.py`
+- invariants or doctrine surfaces:
+  - `docs/subsystems/speakers/SPEAKERS_CANONICAL.md`
+- current implementation gaps:
+  - currently admitted through the Story Forge audio path rather than as a
+    separate operator-facing AAIS lane
+- integration risk: `medium`
+- recommended priority: `P1 harden_in_chain`
 
 ### ARIS
 
-- status: `missing`
-- primary purpose: not determinable from this repository
-- architectural layer: hidden or seeded subsystem primitive
+- status: `partial`
+- primary purpose: embedded governed repo-intelligence boundary, external-admission hardening, and non-copy enforcement
+- architectural layer: authority and cognition
 - dependencies:
-  - unknown
+  - `src/aris_integration.py`
+  - `src/cognitive_bridge.py`
+  - `src/project_infi_law.py`
+  - `docs/contracts/ARIS_RUNTIME_CONTRACT.md`
 - governed inputs and outputs:
-  - input: none found
-  - output: none found
+  - input: outside proposals, runtime ingress, pattern-sharing intent
+  - output: admitted-form gating, non-copy enforcement, signature-only sharing posture
 - related files/modules:
-  - none found in `src/`, `frontend/src/`, `tests/`, or the canonical docs
+  - `src/aris_integration.py`
+  - `src/cognitive_bridge.py`
+  - `src/project_infi_law.py`
 - invariants or doctrine surfaces:
-  - none in this repository
+  - `docs/contracts/ARIS_RUNTIME_CONTRACT.md`
+  - `docs/contracts/EXTERNAL_SUGGESTION_ADMISSION_RULE.md`
+  - `docs/contracts/COLLECTIVE_PATTERN_LEDGER.md`
 - current implementation gaps:
-  - subsystem not present here
-- integration risk: `unknown`
-- recommended priority: `do_not_plan_here`
+  - active as an embedded profile, not a standalone ARIS service or desktop stack
+  - the broader archive ARIS pipeline family is still lineage unless separately admitted
+- integration risk: `medium`
+- recommended priority: `P1 harden_embedded_profile`
 
 ### Legacy Experimental Modular Copy
 
@@ -937,13 +1018,13 @@ AAIS subsystems currently cluster into these architectural layers:
 - OTEM beyond the current bounded ceiling
 - Universal Language and modular preview as a primary runtime substrate
 - Invariant engine as a runtime subsystem
-- ARIS in this repository
+- a distinct standalone ARIS service beyond the current embedded AAIS profile
 
 ### Should Remain Dormant Until Later
 
 - Dreamspace expansion
-- Super Nova beyond Tiny and Small
-- StoryForge
+- Super Nova expansion beyond the current guarded lane
+- broad Story Forge front-door activation beyond the current audio capability path
 - legacy experimental modular copies
 - media processor seeds beyond bridge-safe use
 
@@ -983,6 +1064,7 @@ AAIS subsystems currently cluster into these architectural layers:
 ### Partial
 
 - OTEM bounded reasoning lane
+- embedded ARIS runtime profile
 - Universal Language and modular preview
 - governed direct pipeline
 - perception, spatial, and mystic toolkit
@@ -990,17 +1072,15 @@ AAIS subsystems currently cluster into these architectural layers:
 - memory governance stack
 - capability module layer and service bridge
 - coding organs and patch verification stack
+- Story Forge
+- Beatbox
+- Speakers
 
 ### Hidden Or Seeded
 
 - realtime event-cause predictor
 - invariant engine
-- StoryForge
 - media and processor seeds
-
-### Missing
-
-- ARIS
 
 ### Deprecated Or Dormant
 
@@ -1043,8 +1123,9 @@ The strongest barebones or hidden subsystem seeds currently visible in code are:
   seeded mission and review gate fabric
 - `src/invariant_engine.py`
   seeded mathematical verification fabric
-- `tests/test_phase_gate.py` with `storyforge.llm_presentation`
-  seeded but not implemented StoryForge presence
+- `src/capabilities/story_forge_audio.py`
+  current partial Story Forge audio/movie capability seam backed by vendored
+  Story Forge, Beatbox, and Speakers sources
 
 These are the main hidden or barebones areas worth treating as a map of missing
 or not-yet-activated subsystem families.

@@ -15,6 +15,23 @@ const profileStore = vi.hoisted(() => ({
   },
 }));
 
+const superNovaStore = vi.hoisted(() => ({
+  current: {
+    activation: {
+      current_state: 'dormant',
+      activation_token_present: false,
+      last_watchdog_result: 'not_run',
+      last_failure_reasons: [],
+    },
+    continuity: {
+      status: 'not_checked',
+      failure_reasons: [],
+    },
+    trace: [],
+    immune_coupling: 'blocked',
+  },
+}));
+
 const {
   applyPersonaProfileSelection,
   apiGet,
@@ -30,9 +47,21 @@ const {
   applyPersonaProfileSelection: vi.fn((profile, personaMode) => ({
     ...(profile || {}),
     personaMode,
-    responseMode: personaMode === 'tiny_nova' ? 'tiny' : 'small',
-    assistantName: personaMode === 'tiny_nova' ? 'Tiny Nova' : 'Small Nova',
-    systemPrompt: 'Nova system prompt',
+    responseMode: personaMode === 'tiny_nova'
+      ? 'tiny'
+      : personaMode === 'super_nova'
+        ? 'governed_full'
+        : 'small',
+    assistantName: personaMode === 'tiny_nova'
+      ? 'Tiny Nova'
+      : personaMode === 'super_nova'
+        ? 'Super Nova'
+        : 'Small Nova',
+    systemPrompt: personaMode === 'tiny_nova'
+      ? 'Tiny Nova system prompt'
+      : personaMode === 'super_nova'
+        ? 'Super Nova system prompt'
+        : 'Nova system prompt',
   })),
   apiGet: vi.fn(async (path) => {
     if (path === '/health') {
@@ -52,6 +81,14 @@ const {
       };
     }
 
+    if (path === '/api/chat/sessions/mock-session/super-nova/status') {
+      return {
+        data: {
+          super_nova: superNovaStore.current,
+        },
+      };
+    }
+
     return { data: {} };
   }),
   apiPost: vi.fn(async (path) => {
@@ -64,12 +101,86 @@ const {
       };
     }
 
+    if (path === '/api/chat/sessions/mock-session/super-nova/activate') {
+      superNovaStore.current = {
+        activation: {
+          current_state: 'activation_ready',
+          activation_token_present: true,
+          last_watchdog_result: 'pass',
+          last_failure_reasons: [],
+        },
+        continuity: {
+          status: 'verified',
+          failure_reasons: [],
+        },
+        trace: [{ event_type: 'activation_granted' }],
+        immune_coupling: 'blocked',
+      };
+      return {
+        data: {
+          super_nova: superNovaStore.current,
+        },
+      };
+    }
+
+    if (path === '/api/chat/sessions/mock-session/super-nova/pause') {
+      superNovaStore.current = {
+        ...superNovaStore.current,
+        activation: {
+          ...superNovaStore.current.activation,
+          current_state: 'paused',
+        },
+      };
+      return {
+        data: {
+          super_nova: superNovaStore.current,
+        },
+      };
+    }
+
+    if (path === '/api/chat/sessions/mock-session/super-nova/resume') {
+      superNovaStore.current = {
+        ...superNovaStore.current,
+        activation: {
+          ...superNovaStore.current.activation,
+          current_state: 'activation_ready',
+          activation_token_present: true,
+        },
+      };
+      return {
+        data: {
+          super_nova: superNovaStore.current,
+        },
+      };
+    }
+
+    if (path === '/api/chat/sessions/mock-session/super-nova/stop') {
+      superNovaStore.current = {
+        ...superNovaStore.current,
+        activation: {
+          ...superNovaStore.current.activation,
+          current_state: 'stopped',
+          activation_token_present: false,
+        },
+      };
+      return {
+        data: {
+          super_nova: superNovaStore.current,
+        },
+      };
+    }
+
     return { data: {} };
   }),
-  apiPostStream: vi.fn(async (_path, _payload, options) => {
+  apiPostStream: vi.fn(async (_path, payload, options) => {
     options?.onEvent?.({
       event: 'final',
-      response: 'Small Nova stayed with the loaded session.',
+      response: payload?.persona_mode === 'super_nova'
+        ? 'Super Nova stayed inside the governed lane.'
+        : 'Small Nova stayed with the loaded session.',
+      super_nova: payload?.persona_mode === 'super_nova'
+        ? superNovaStore.current
+        : undefined,
     });
   }),
   clearActiveJarvisSessionId: vi.fn(),
@@ -109,6 +220,10 @@ vi.mock('../lib/jarvis', () => ({
   SMALL_NOVA_PERSONA_MODE: 'small_nova',
   SMALL_NOVA_RESPONSE_MODE: 'small',
   SMALL_NOVA_SYSTEM_PROMPT: 'Nova system prompt',
+  SUPER_NOVA_ASSISTANT_NAME: 'Super Nova',
+  SUPER_NOVA_PERSONA_MODE: 'super_nova',
+  SUPER_NOVA_RESPONSE_MODE: 'governed_full',
+  SUPER_NOVA_SYSTEM_PROMPT: 'Super Nova system prompt',
   TINY_NOVA_ASSISTANT_NAME: 'Tiny Nova',
   TINY_NOVA_PERSONA_MODE: 'tiny_nova',
   TINY_NOVA_RESPONSE_MODE: 'tiny',
@@ -157,6 +272,23 @@ vi.mock('../lib/novaSessionArchive', () => ({
   })),
 }));
 
+function buildDormantSuperNovaState() {
+  return {
+    activation: {
+      current_state: 'dormant',
+      activation_token_present: false,
+      last_watchdog_result: 'not_run',
+      last_failure_reasons: [],
+    },
+    continuity: {
+      status: 'not_checked',
+      failure_reasons: [],
+    },
+    trace: [],
+    immune_coupling: 'blocked',
+  };
+}
+
 describe('Nova landing categories', () => {
   beforeEach(() => {
     profileStore.current = {
@@ -165,6 +297,7 @@ describe('Nova landing categories', () => {
       assistantName: 'Small Nova',
       systemPrompt: 'Nova system prompt',
     };
+    superNovaStore.current = buildDormantSuperNovaState();
     applyPersonaProfileSelection.mockClear();
     apiGet.mockClear();
     apiPost.mockClear();
@@ -320,6 +453,92 @@ describe('Nova landing categories', () => {
     });
 
     expect(clearActiveJarvisSessionId).toHaveBeenCalled();
+  });
+
+  it('bootstraps Super Nova when the saved profile is already on the governed tier', async () => {
+    profileStore.current = {
+      personaMode: 'super_nova',
+      responseMode: 'governed_full',
+      assistantName: 'Super Nova',
+      systemPrompt: 'Super Nova system prompt',
+    };
+
+    render(
+      <MemoryRouter>
+        <NovaLandingPage />
+      </MemoryRouter>,
+    );
+
+    expect(await screen.findByRole('heading', { name: /Ask Super Nova directly/i })).toBeTruthy();
+
+    await waitFor(() => {
+      expect(apiPost).toHaveBeenCalledWith('/api/chat/sessions', {
+        system_prompt: 'Super Nova system prompt',
+        persona_mode: 'super_nova',
+        response_mode: 'governed_full',
+      });
+    });
+
+    await waitFor(() => {
+      expect(apiGet).toHaveBeenCalledWith('/api/chat/sessions/mock-session/super-nova/status');
+    });
+
+    expect(await screen.findByText(/Super Nova Control/i)).toBeTruthy();
+    expect(screen.getByText(/Needs activation/i)).toBeTruthy();
+    expect(screen.getByRole('button', { name: /Activate First/i })).toBeTruthy();
+  });
+
+  it('requires activation before Super Nova can send and keeps the governed lane after activation', async () => {
+    profileStore.current = {
+      personaMode: 'super_nova',
+      responseMode: 'governed_full',
+      assistantName: 'Super Nova',
+      systemPrompt: 'Super Nova system prompt',
+    };
+
+    render(
+      <MemoryRouter>
+        <NovaLandingPage />
+      </MemoryRouter>,
+    );
+
+    const composer = await screen.findByPlaceholderText(
+      /Activate Super Nova, then bring the deeper thread/i,
+    );
+
+    fireEvent.change(composer, { target: { value: 'Hold the full shape of this problem.' } });
+
+    const gatedSendButton = screen.getByRole('button', { name: /Activate First/i });
+    expect(gatedSendButton.disabled).toBe(true);
+
+    fireEvent.click(screen.getByRole('button', { name: /^Activate$/i }));
+
+    await waitFor(() => {
+      expect(apiPost).toHaveBeenCalledWith('/api/chat/sessions/mock-session/super-nova/activate', {});
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText(/Activation ready/i)).toBeTruthy();
+    });
+
+    const sendButton = screen.getByRole('button', { name: /^Send$/i });
+    expect(sendButton.disabled).toBe(false);
+
+    fireEvent.click(sendButton);
+
+    await waitFor(() => {
+      expect(apiPostStream).toHaveBeenCalledWith(
+        '/api/chat/sessions/mock-session/stream',
+        expect.objectContaining({
+          message: 'Hold the full shape of this problem.',
+          persona_mode: 'super_nova',
+          response_mode: 'governed_full',
+        }),
+        expect.any(Object),
+      );
+    });
+
+    expect(await screen.findByText(/Super Nova stayed inside the governed lane/i)).toBeTruthy();
   });
 
   it('restores a pending loaded archive onto the Nova surface', async () => {

@@ -38,10 +38,11 @@ The current staging is:
 
 - Tiny Nova: the lighter seed-form companion
 - Small Nova: the steadier installed bridge companion surface
-- Super Nova: the final intended stage, not yet a live runtime in this workspace
+- Super Nova: the final guarded companion stage, available only through explicit activation
 
 Small Nova is what the home surface now uses by default.
 Tiny Nova still exists as the lower bounded companion tier.
+Super Nova is live as a governed lane, but she is not the default home surface.
 
 ## Input Truth Right Now
 
@@ -97,9 +98,16 @@ She is meant for:
 
 ### Super Nova
 
-Super Nova is the future terminal companion form.
+Super Nova is the terminal companion form in the live runtime.
 
-She is not live yet in this repo.
+She is live only as a guarded lane.
+
+That means:
+
+- she requires explicit activation
+- she is checked by a governed phase/existence gate before live use
+- her replies are checked by a watchdog boundary
+- her replies still pass through Jarvis and Project Infi before they complete
 
 She should eventually expand:
 
@@ -115,10 +123,13 @@ Super Nova is not a different being from Nova.
 It is the final stage name for a higher-capacity Nova that remains anchored to
 the same law and identity.
 
-Super Nova is also not ready for immune-system coupling yet.
+Super Nova may now emit bounded immune protocol observations when her shields or
+watchdog fail.
 
-That remains blocked until the event-cause and invariant runtime pieces are
-installed for real.
+What she still does not have is broad autonomous immune authority.
+
+That remains bounded until the larger event-cause and invariant runtime pieces
+exist as real live infrastructure.
 
 ## What Nova Is Not
 
@@ -185,8 +196,8 @@ The intended public growth path is:
 1. Tiny Nova
 2. Super Nova
 
-Small Nova is the current installed bridge stage while Super Nova remains
-dormant.
+Small Nova is the current installed bridge stage and the default everyday home
+surface.
 
 The important rule is:
 
@@ -213,6 +224,8 @@ As of the current runtime:
 
 - Small Nova is live
 - Tiny Nova remains available
+- Super Nova is live as an explicitly activated governed lane
 - Jarvis retains authority
 - the companion line is bounded and governed
-- Super Nova is still future work
+- Super Nova shield failures route through bounded immune observation and
+  Project Infi final-truth admission before completion

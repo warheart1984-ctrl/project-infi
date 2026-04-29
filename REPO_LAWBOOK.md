@@ -71,7 +71,15 @@ These are the clearest repo-wide laws in the project.
 
 **Source:** [docs/contracts/README_LAW_V1.md](docs/contracts/README_LAW_V1.md)
 
-### 5. Project Infi Runtime Law
+### 5. Cognitive Bridge Runtime Law
+
+**What it governs:** the only legal ingress for governed cognitive packets.
+
+**Core idea:** no proposal, lane, or downstream reasoning surface may become runtime motion until the bridge has normalized it, attached law, and issued a bounded decision.
+
+**Source:** [docs/contracts/AAIS_COGNITIVE_BRIDGE_RUNTIME_LAW.md](docs/contracts/AAIS_COGNITIVE_BRIDGE_RUNTIME_LAW.md)
+
+### 6. Project Infi Runtime Law
 
 **What it governs:** the law substrate for repo actions, runtime actions, verification, admission, observability, and fail-closed behavior in the Project Infi runtime.
 
@@ -83,7 +91,7 @@ These are the clearest repo-wide laws in the project.
 
 These are not always named “law,” but they act as governing contracts for major repo boundaries.
 
-### 6. AAIS-UL Doctrine
+### 7. AAIS-UL Doctrine
 
 **What it governs:** the shared structural language used before modules, tools, provider previews, and adaptive subsystems move outward.
 
@@ -91,7 +99,7 @@ These are not always named “law,” but they act as governing contracts for ma
 
 **Source:** [docs/contracts/AAIS_UL_DOCTRINE.md](docs/contracts/AAIS_UL_DOCTRINE.md)
 
-### 7. AAIS Module Governance Protocol
+### 8. AAIS Module Governance Protocol
 
 **What it governs:** how modules are admitted into the system.
 
@@ -99,7 +107,7 @@ These are not always named “law,” but they act as governing contracts for ma
 
 **Source:** [docs/contracts/AAIS_MODULE_GOVERNANCE_PROTOCOL.md](docs/contracts/AAIS_MODULE_GOVERNANCE_PROTOCOL.md)
 
-### 8. Jarvis Memory Board Doctrine
+### 9. Jarvis Memory Board Doctrine
 
 **What it governs:** how memory is structured, upgraded, migrated, and controlled.
 
@@ -107,7 +115,7 @@ These are not always named “law,” but they act as governing contracts for ma
 
 **Source:** [docs/contracts/JARVIS_MEMORY_BOARD_DOCTRINE.md](docs/contracts/JARVIS_MEMORY_BOARD_DOCTRINE.md)
 
-### 9. AAIS Doc Protocol
+### 10. AAIS Doc Protocol
 
 **What it governs:** how documentation should be read, trusted, and layered.
 
@@ -115,7 +123,7 @@ These are not always named “law,” but they act as governing contracts for ma
 
 **Source:** [docs/contracts/AAIS_DOC_PROTOCOL.md](docs/contracts/AAIS_DOC_PROTOCOL.md)
 
-### 10. Jarvis Protocol
+### 11. Jarvis Protocol
 
 **What it governs:** the common runtime language between UI, memory, tools, specialists, and model backends.
 

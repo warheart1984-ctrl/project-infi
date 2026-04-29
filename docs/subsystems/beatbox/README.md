@@ -1,16 +1,30 @@
-# Beatbox
+# Beatbox Subsystem
 
-No active Beatbox subsystem docs were found in this repository during the
-documentation normalization pass.
+This folder contains the active Beatbox subsystem docs for `AAIS-main`.
 
-## Current Status
+## What Beatbox Is
 
-- status: unknown / needs explicit target clarification
-- runtime implementation found: none
-- admitted docs found: none
+Beatbox is the governed audio scoring lane that sits downstream of Story Forge
+and upstream of Speakers.
 
-## What This Means
+It turns structured shot and emotional data into score cues and audio artifacts.
 
-Beatbox does not currently have an admitted place in the active AAIS doc tree.
-If Beatbox material is added later, it should land here only after its status
-and authority are explicit.
+## Active Docs In This Folder
+
+- [BEATBOX_CANONICAL.md](./BEATBOX_CANONICAL.md)
+  - canonical source of truth for the active Beatbox surface in AAIS
+
+## Current Runtime Status
+
+- status: partial live
+- current live role: downstream Story Forge scoring lane
+- current live source roots:
+  - `external/beatbox_speakers/src/beatbox`
+  - `external/beatbox_speakers/src/audio_pipeline`
+
+## Canonical Rule
+
+The active canonical doc in this folder is
+[BEATBOX_CANONICAL.md](./BEATBOX_CANONICAL.md).
+
+If Beatbox docs conflict with runtime code, runtime code wins.

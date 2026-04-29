@@ -16,6 +16,7 @@ If it cannot do that, it should slow down, ask for confirmation, or stop.
 ## What Is This?
 
 This repository contains the live AAIS application, API, operator console, workflow shell, memory controls, and safety layers.
+It also now carries ARIS in embedded form as governed repo-intelligence law instead of leaving ARIS only in archive lineage.
 
 In practical terms, it gives you:
 
@@ -151,5 +152,11 @@ Two that matter near the front door are:
 
 - [README Law v1](docs/contracts/README_LAW_V1.md)
 - [External Suggestion Admission Rule](docs/contracts/EXTERNAL_SUGGESTION_ADMISSION_RULE.md)
+- [ARIS Runtime Contract](docs/contracts/ARIS_RUNTIME_CONTRACT.md)
+- [AAIS Cognitive Bridge Runtime Law](docs/contracts/AAIS_COGNITIVE_BRIDGE_RUNTIME_LAW.md)
 
 The core doctrine behind the system remains [Stabilize and Free](docs/spine/STABILIZE_AND_FREE.md).
+
+---
+There are foundations in this system that are not documented. Some are only discovered.
+---

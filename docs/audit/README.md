@@ -12,6 +12,8 @@ system.
 - cleanup audits
 - component inventories
 - logbook material
+- corpus-level feature/subsystem coverage audits such as
+  [DOCUMENT_CORPUS_SUBSYSTEM_AUDIT.md](./DOCUMENT_CORPUS_SUBSYSTEM_AUDIT.md)
 - root structure audits such as [ROOT_STRUCTURE_AUDIT.md](./ROOT_STRUCTURE_AUDIT.md)
 
 ## Read Rule

@@ -1108,6 +1108,10 @@ def build_governed_turn_pipeline(
         interpret_realtime_signal_feed,
         validate_interpreted_event_state,
     )
+    from src.governed_event_chain import (
+        governed_event,
+        validate_governed_event_result,
+    )
     from src.operator_health_sentinel import (
         observe_operator_health,
         validate_operator_health_snapshot,
@@ -1117,15 +1121,78 @@ def build_governed_turn_pipeline(
         realtime_signal_feed,
         runtime_context=normalized_runtime_context,
     )
+    governed_event_guard = governed_event(
+        realtime_signal_feed,
+        prediction=realtime_event_cause_predictor,
+        runtime_context=normalized_runtime_context,
+    )
     operator_health_sentinel = observe_operator_health(
         {
             "runtime_context": normalized_runtime_context,
             "realtime_signal_feed": realtime_signal_feed,
             "realtime_event_cause_predictor": realtime_event_cause_predictor,
+            "governed_event": governed_event_guard,
         },
         runtime_context=normalized_runtime_context,
         operator_text=operator_text,
         previous_pipeline=previous_pipeline,
+    )
+    from src.cognitive_bridge import route_to_bridge
+
+    bridge_hops = []
+    if god_brain:
+        bridge_hops.append(
+            route_to_bridge(
+                {
+                    "source": "swarm",
+                    "type": "deliberation_request",
+                    "payload": {
+                        "strategy_label": (god_brain or {}).get("strategy_label"),
+                        "action_bias": (god_brain or {}).get("action_bias"),
+                        "contract": active_contract,
+                        "execution_intent": "route",
+                    },
+                    "requires_approval": False,
+                    "risk": "medium" if active_lane == SERVICE_TOOL_LANE else "low",
+                },
+                runtime_context=normalized_runtime_context,
+            )
+        )
+    bridge_hops.append(
+        route_to_bridge(
+            {
+                "source": "service_lane" if tool_result else "llm",
+                "type": "tool_result_observation" if tool_result else "generation_request",
+                "payload": {
+                    "contract": active_contract,
+                    "response_mode": normalized_mode,
+                    "tool_type": (tool_result or {}).get("type"),
+                    "route_id": (model_route or {}).get("id"),
+                    "execution_intent": "observe" if tool_result else "respond",
+                },
+                "requires_approval": False,
+                "risk": "medium" if tool_result else "low",
+            },
+            runtime_context=normalized_runtime_context,
+        )
+    )
+    bridge_hops.append(
+        route_to_bridge(
+            {
+                "source": "predictor",
+                "type": "signal_evaluation",
+                "payload": {
+                    "pipeline_id": pipeline_id,
+                    "active_lane": active_lane,
+                    "traffic_class": traffic_class,
+                    "signal_count": realtime_signal_feed.get("signal_count"),
+                    "execution_intent": "observe",
+                },
+                "requires_approval": False,
+                "risk": "low",
+            },
+            runtime_context=normalized_runtime_context,
+        )
     )
 
     pipeline = {
@@ -1151,8 +1218,10 @@ def build_governed_turn_pipeline(
         "service_packets": service_packets,
         "return_packets": return_packets,
         "immune_protocol": immune_protocol,
+        "bridge_hops": bridge_hops,
         "realtime_signal_feed": realtime_signal_feed,
         "realtime_event_cause_predictor": realtime_event_cause_predictor,
+        "governed_event": governed_event_guard,
         "operator_health_sentinel": operator_health_sentinel,
         "validation": {
             "uniform_packet_shape": all(
@@ -1180,12 +1249,23 @@ def build_governed_turn_pipeline(
                 ).values()
                 if isinstance(ok, bool)
             ),
+            "governed_event_valid": all(
+                ok
+                for ok in validate_governed_event_result(
+                    governed_event_guard
+                ).values()
+                if isinstance(ok, bool)
+            ),
             "operator_health_sentinel_valid": all(
                 ok
                 for ok in validate_operator_health_snapshot(
                     operator_health_sentinel
                 ).values()
                 if isinstance(ok, bool)
+            ),
+            "bridge_hops_routed": all(
+                hop.get("decision") in {"ALLOW", "DEGRADE"}
+                for hop in bridge_hops
             ),
         },
         "model_route": {

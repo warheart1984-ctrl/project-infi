@@ -478,6 +478,7 @@ function Dashboard() {
   const activeOtemRecommendations = activeOtemState?.execution_awareness?.recommendations || [];
   const activeOtemToolSuggestions = activeOtemState?.tool_awareness?.suggestions || [];
   const activeOtemWorkflowHandoff = activeOtemState?.workflow_handoff || null;
+  const activeOtemRejected = String(activeOtemState?.status || '').toLowerCase() === 'rejected';
   const activeSessionModeGuidance = activeSession?.mode_guidance || {};
   const activeSessionTrace = activeSession?.response_trace || {};
   const activeTurnContract = activeSession?.turn_contract || {};
@@ -1827,6 +1828,17 @@ function Dashboard() {
             </div>
             {activeOtemState ? (
               <>
+                {activeOtemRejected ? (
+                  <div className="workbench-notice error" data-testid="otem-rejection">
+                    <strong>OTEM rejected this task before planning.</strong>
+                    <p>{activeOtemState.rejection_reason || 'The OTEM deterministic gate blocked this task.'}</p>
+                    {activeOtemState.allowed_alternative ? (
+                      <p>
+                        Allowed alternative: {activeOtemState.allowed_alternative}
+                      </p>
+                    ) : null}
+                  </div>
+                ) : null}
                 <div className="workbench-inline-grid">
                   <div className="workbench-mini-panel">
                     <span>Task</span>
@@ -1847,7 +1859,7 @@ function Dashboard() {
                 </div>
                 <p className="workbench-muted">{activeOtemState.session_context?.note || 'OTEM is carrying the active task plan inside this session only.'}</p>
                 <div className="workbench-history-list">
-                  {activeOtemPlan.map((step) => (
+                  {activeOtemPlan.length ? activeOtemPlan.map((step) => (
                     <div key={`otem-step-${step.index}`} className="workbench-history-item" data-testid={`otem-step-${step.index}`}>
                       <div>
                         <strong>{step.index}. {step.title}</strong>
@@ -1855,7 +1867,15 @@ function Dashboard() {
                       </div>
                       <small>{step.status}</small>
                     </div>
-                  ))}
+                  )) : (
+                    <div className="workbench-history-item" data-testid="otem-no-plan">
+                      <div>
+                        <strong>No plan was generated</strong>
+                        <p>This preserves the OTEM reasoning-only contract for rejected tasks.</p>
+                      </div>
+                      <small>{activeOtemState.status || 'idle'}</small>
+                    </div>
+                  )}
                 </div>
               </>
             ) : (

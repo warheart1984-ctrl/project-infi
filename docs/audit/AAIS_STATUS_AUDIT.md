@@ -1,6 +1,6 @@
 # AAIS Status Audit
 
-Snapshot date: 2026-04-15
+Snapshot date: 2026-04-28
 
 This file is the working inventory of what is clearly documented, what is intentionally unfinished, and what currently needs repair or cleanup.
 
@@ -19,7 +19,7 @@ These files currently do a good job of describing the live system or one bounded
 
 - [README.md](../../README.md)
   - best high-level summary of the current AAIS runtime, its lanes, and the OTEM boundary
-- [AAIS_SYSTEM_HANDBOOK.md](../runtime/AAIS_SYSTEM_HANDBOOK.md)
+- [AAIS_RUNTIME_GUIDE.md](../runtime/AAIS_RUNTIME_GUIDE.md)
   - best concise handbook for state hygiene, visibility rules, and the canonical runtime spine
 - [AAIS_HUMAN_GUIDE.md](../spine/AAIS_HUMAN_GUIDE.md)
   - human-facing project entry guide
@@ -31,16 +31,22 @@ These files currently do a good job of describing the live system or one bounded
   - canonical project doctrine for governed stability and operator cognitive load reduction
 - [AAIS_DOC_PROTOCOL.md](../contracts/AAIS_DOC_PROTOCOL.md)
   - explains how to trust and rank repo docs
+- [ARIS_RUNTIME_CONTRACT.md](../contracts/ARIS_RUNTIME_CONTRACT.md)
+  - admits ARIS as an embedded AAIS runtime profile and carries the canonical non-copy clause
 - [TINY_NOVA_CANONICAL.md](../subsystems/nova/TINY_NOVA_CANONICAL.md)
   - canonical markdown source for Tiny/Small Nova identity, memory boundaries, growth stages, and the Jarvis authority split
 - [NOVA_HUMAN_GUIDE.md](../subsystems/nova/NOVA_HUMAN_GUIDE.md), [NOVA_AI_OPERATING_CONTRACT.md](../subsystems/nova/NOVA_AI_OPERATING_CONTRACT.md), and [NOVA_STAGE_SPEC.md](../subsystems/nova/NOVA_STAGE_SPEC.md)
   - now describe the live Session Archive boundary as opt-in, local-only, encrypted archive state that re-enters Nova only as explicit document context rather than memory
-- [DOCUMENTATION_INDEX.md](../spine/DOCUMENTATION_INDEX.md)
-  - points readers at the live runtime spine and now includes the shared Project Infi law/runtime pair
-- [AAIS_CANONICAL_MAP.md](../runtime/AAIS_CANONICAL_MAP.md)
-  - maps older lineage material into the current system
-- [README.md](../../README.md), [AAIS_SYSTEM_HANDBOOK.md](../runtime/AAIS_SYSTEM_HANDBOOK.md), [AAIS_DOC_PROTOCOL.md](../contracts/AAIS_DOC_PROTOCOL.md), and [DOCUMENTATION_INDEX.md](../spine/DOCUMENTATION_INDEX.md)
+- [SEAM-SN-001-super-nova-governance-boundary.md](../contracts/seams/SEAM-SN-001-super-nova-governance-boundary.md)
+  - canonical seam record for the live guarded Super Nova boundary, including phase gate before execution, watchdog after generation, bounded immune protocol observation, and Project Infi final-truth admission before completion
+- [AAIS Documentation Map](../README.md) and [AAIS Spine](../spine/README.md)
+  - point readers at the live runtime spine and the project-wide canonical reading path
+- [AAIS_RUNTIME_CANONICAL.md](../runtime/AAIS_RUNTIME_CANONICAL.md)
+  - practical runtime and workspace map for what is canonical, functional, separate, or archive-only
+- [README.md](../../README.md), [AAIS_RUNTIME_GUIDE.md](../runtime/AAIS_RUNTIME_GUIDE.md), [AAIS_DOC_PROTOCOL.md](../contracts/AAIS_DOC_PROTOCOL.md), [AAIS Documentation Map](../README.md), and [AAIS Spine](../spine/README.md)
   - now agree on Project Infi runtime ownership, the L2 truth guard, Chronos TTL, `WAIT`, recoverable `FRACTURE`, and shared law/logbook handling
+- [AAIS_MASTER_SPEC.md](../spine/AAIS_MASTER_SPEC.md), [AAIS_HUMAN_GUIDE.md](../spine/AAIS_HUMAN_GUIDE.md), [AAIS_AI_OPERATING_CONTRACT.md](../spine/AAIS_AI_OPERATING_CONTRACT.md), and the active Nova pack
+  - now agree that Super Nova is a live guarded companion lane with `persona_mode=super_nova`, `response_mode=governed_full`, explicit activation, phase-gated execution, bounded immune protocol observation, and Project Infi final-truth admission
 - [AAIS_MODULE_GOVERNANCE_PROTOCOL.md](../contracts/AAIS_MODULE_GOVERNANCE_PROTOCOL.md)
   - admission and immune-law contract for modules
 - [AAIS_PROJECT_CLEANUP_AUDIT.md](AAIS_PROJECT_CLEANUP_AUDIT.md)
@@ -53,7 +59,7 @@ These files currently do a good job of describing the live system or one bounded
     desktop launcher and packaged shell
 - [LOGBOOK.md](LOGBOOK.md)
   - canonical logbook for major project-alignment changes
-- [WORKSPACE_INDEX.md](../workspace/WORKSPACE_INDEX.md)
+- [WORKSPACE_INDEX.md](../_archive/legacy/workspace/WORKSPACE_INDEX.md)
   - workspace-support entry point that separates support docs from runtime authority
 - [FORGE_CONTRACTOR.md](../contracts/FORGE_CONTRACTOR.md)
   - bounded contractor service contract
@@ -84,8 +90,8 @@ These are not hidden bugs. They are explicit limits in the current design.
   - [src/patchforge.py](../../src/patchforge.py) still emits `after_snippet` placeholder text, `status="proposal_only"`, and `preview_only=True`.
   - [src/patch_apply_engine.py](../../src/patch_apply_engine.py) explicitly blocks placeholder text from being applied.
 - The remaining manual security closeout is still OpenRouter key rotation.
-  - [AAIS_SYSTEM_HANDBOOK.md](../runtime/AAIS_SYSTEM_HANDBOOK.md) calls this out directly.
-- [roadmap.csv](../workspace/roadmap.csv) is only a thin phase outline.
+  - [AAIS_RUNTIME_GUIDE.md](../runtime/AAIS_RUNTIME_GUIDE.md) still points readers to the current runtime and operator discipline surfaces, while the remaining workspace planning file stays archived.
+- [roadmap.csv](../_archive/legacy/workspace/roadmap.csv) is only a thin phase outline.
   - It names Memory Bank, Security Fabric, and Governance Layer, but it is not a maintained progress tracker yet.
 
 ## 3. Currently Broken Or Needing Follow-Up
@@ -99,6 +105,9 @@ These are not hidden bugs. They are explicit limits in the current design.
   - non-truthful final truth now ends lawfully as `rejected_no_admission`
   - admission no longer runs after untruthful L2 state
   - Chronos TTL, `WAIT`, recovery drift, and recoverable `FRACTURE` are live and tested
+- The Super Nova guarded runtime seam is now repaired and documented.
+  - Super Nova is no longer described as dormant or future-only in the active truth surfaces
+  - the live boundary now reflects phase gate before execution, explicit activation, watchdog enforcement, bounded immune protocol observation, and Project Infi final-truth admission
 - The workflow shell still carries one bridge-era implementation detail that should be revisited later.
   - [app/main.py](../../app/main.py) is now named as the AAIS workflow shell, but it still mounts the legacy Flask bridge for compatibility.
   - That bridge is intentional for now, but it remains a transition seam worth tracking.
@@ -108,10 +117,15 @@ These are not hidden bugs. They are explicit limits in the current design.
 ## 4. Documentation Drift Or Missing Documentation
 
 - The canonical reading set is now aligned on the live runtime spine.
-  - [README.md](../../README.md), [AAIS_SYSTEM_HANDBOOK.md](../runtime/AAIS_SYSTEM_HANDBOOK.md), [AAIS_DOC_PROTOCOL.md](../contracts/AAIS_DOC_PROTOCOL.md), and [DOCUMENTATION_INDEX.md](../spine/DOCUMENTATION_INDEX.md) now agree on:
+  - [README.md](../../README.md), [AAIS_RUNTIME_GUIDE.md](../runtime/AAIS_RUNTIME_GUIDE.md), [AAIS_DOC_PROTOCOL.md](../contracts/AAIS_DOC_PROTOCOL.md), [AAIS Documentation Map](../README.md), and [AAIS Spine](../spine/README.md) now agree on:
   - `src/api.py` as the Jarvis runtime authority
   - `app/main.py` as the workflow/onboarding shell and bridge
   - `src/project_infi_state_machine.py` plus `src/project_infi_law.py` as the shared Project Infi runtime substrate
+- The active Nova and seam-reading path is now aligned on the live guarded Super Nova lane.
+  - the active Nova docs no longer describe Super Nova as unassigned or dormant
+  - [SEAM-SN-001-super-nova-governance-boundary.md](../contracts/seams/SEAM-SN-001-super-nova-governance-boundary.md) now records the live boundary law and explicitly notes that ARIS enforcement in this repo is embedded through shared AAIS law rather than a separate service
+- ARIS is now active AAIS truth in embedded form.
+  - [ARIS_RUNTIME_CONTRACT.md](../contracts/ARIS_RUNTIME_CONTRACT.md), [EXTERNAL_SUGGESTION_ADMISSION_RULE.md](../contracts/EXTERNAL_SUGGESTION_ADMISSION_RULE.md), and [COLLECTIVE_PATTERN_LEDGER.md](../contracts/COLLECTIVE_PATTERN_LEDGER.md) now agree on the non-copy clause
 - Folder-level entry documentation is still incomplete across several active
   code and support directories.
   - [FOLDER_DOCUMENTATION_AUDIT.md](FOLDER_DOCUMENTATION_AUDIT.md) now tracks the
@@ -123,17 +137,18 @@ These are not hidden bugs. They are explicit limits in the current design.
     `frontend/README.md` drift, and the non-canonical status of the old
     `COMPONENT_AUDIT.md` inventory
 - The runtime-data policy for local Chroma state is explicit.
-  - [AAIS_SYSTEM_HANDBOOK.md](../runtime/AAIS_SYSTEM_HANDBOOK.md) and [README.md](../../README.md) treat `data/chroma/` as local rebuildable runtime state rather than canonical source truth.
+  - [AAIS_RUNTIME_GUIDE.md](../runtime/AAIS_RUNTIME_GUIDE.md) and [README.md](../../README.md) treat `data/chroma/` as local rebuildable runtime state rather than canonical source truth.
 - The main remaining drift is now mostly confined to archive material.
   - legacy and infrastructure notes have been moved under `docs/archive/`
   - they remain useful as planning/reference material, but they are not the source of current runtime truth
 
 ## 5. Verification Snapshot
 
-- Backend tests: latest verified snapshot is `399 passed`, `6 subtests passed`
-- Frontend tests: `33 passed`, `0 failed`
+- Backend tests: latest verified snapshot is `643 passed`, `12 subtests passed`
+- Frontend tests: `47 passed`, `0 failed`
 - Frontend production build: passes
-- The Nova Session Archive pass reran the full backend suite plus the full frontend test/build pipeline.
+- Link sanity for the updated Super Nova truth surfaces: `SUPER_NOVA_DOC_LINKS_OK`
+- The Super Nova governed-runtime truth pass reran the full backend suite, the full frontend test suite, the frontend production build, and a local link sanity check across the touched canonical docs.
 
 ## 6. Recommended Next Documentation Moves
 
@@ -142,4 +157,4 @@ These are not hidden bugs. They are explicit limits in the current design.
 - Author the highest-priority local entry docs listed in
   [FOLDER_DOCUMENTATION_AUDIT.md](FOLDER_DOCUMENTATION_AUDIT.md), starting with
   `api/`, `tests/`, `evals/`, `data/`, and `docs/`.
-- Turn [roadmap.csv](../workspace/roadmap.csv) into a real maintained tracker or move it deeper into planning/archive material.
+- Turn [roadmap.csv](../_archive/legacy/workspace/roadmap.csv) into a real maintained tracker or leave it clearly archived as planning-only material.

@@ -64,6 +64,20 @@ Current ownership:
 
 New code should consume these shared substrates instead of inventing isolated local behavior.
 
+## ARIS Rule
+
+ARIS is now part of active AAIS truth in embedded form.
+
+That means:
+
+- ARIS does not arrive as a parallel self-authorizing service
+- ARIS enters through the shared bridge and Project Infi law surfaces
+- raw outside proposals and private runs stay local
+- only admitted, abstracted, or signature-only forms may move forward
+
+Use [`../contracts/ARIS_RUNTIME_CONTRACT.md`](../contracts/ARIS_RUNTIME_CONTRACT.md)
+as the canonical ARIS law surface.
+
 ## CISIV Rule
 
 Every meaningful module and governed work path must respect:
@@ -119,6 +133,7 @@ Current stages:
 
 - Tiny Nova
 - Small Nova
+- Super Nova
 
 Current default surface:
 
@@ -130,6 +145,13 @@ Companion lanes must not directly own:
 - tool execution
 - verification finality
 - hidden operational authority
+
+Super Nova is now part of the live governed companion stack, but only behind:
+
+- a fail-closed phase gate
+- explicit activation
+- watchdog validation
+- Project Infi final-truth admission
 
 ## Shared Primitive Rule
 

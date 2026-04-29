@@ -1,21 +1,44 @@
-# StoryForge
+# Story Forge Subsystem
 
-StoryForge is not a live subsystem in this repository.
+This folder contains the active Story Forge subsystem docs for `AAIS-main`.
 
-## Current Status
+## What Story Forge Is
 
-- status: concept
-- runtime implementation: none
-- admitted docs: none
-- live authority: none
+Story Forge is the governed narrative-to-cinematic build stack inside AAIS.
 
-## What Exists Today
+It takes structured story material, turns it into validated narrative build
+artifacts, and hands those artifacts to downstream audio and movie layers.
 
-StoryForge currently appears only as seeded concept material in the runtime map:
+Story Forge owns narrative build truth.
+Beatbox and Speakers may express that truth, but they do not replace it.
 
-- [../../runtime/AAIS_SUBSYSTEM_SPEC.md](../../runtime/AAIS_SUBSYSTEM_SPEC.md)
+## Active Docs In This Folder
+
+- [STORYFORGE_CANONICAL.md](./STORYFORGE_CANONICAL.md)
+  - canonical active source of truth for Story Forge inside AAIS
+- [STORYFORGE_HUMAN_GUIDE.md](./STORYFORGE_HUMAN_GUIDE.md)
+  - human-first explanation of what Story Forge does and how it behaves
+- [STORYFORGE_AI_OPERATING_CONTRACT.md](./STORYFORGE_AI_OPERATING_CONTRACT.md)
+  - builder-facing rules for integrating or extending Story Forge
+- [STORYFORGE_STAGE_SPEC.md](./STORYFORGE_STAGE_SPEC.md)
+  - stage map for Story Forge plus Beatbox and Speakers handoffs
+
+## Current Runtime Status
+
+- status: partial live
+- admitted AAIS surface: `src/capabilities/story_forge_audio.py`
+- vendored runtime sources:
+  - `external/story_forge/src/story_forge`
+  - `external/beatbox_speakers/src`
+- current downstream audio chain:
+  - Story Forge backend build
+  - Beatbox scoring
+  - Speakers voice and mix
+  - assembler final movie package
 
 ## Canonical Rule
 
-There is no active StoryForge canonical doc yet.
-Until one is admitted, the subsystem map is the closest source of truth.
+The active canonical doc in this folder is
+[STORYFORGE_CANONICAL.md](./STORYFORGE_CANONICAL.md).
+
+If Story Forge docs conflict with runtime code, runtime code wins.

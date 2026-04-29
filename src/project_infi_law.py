@@ -4,6 +4,7 @@ from copy import deepcopy
 from datetime import UTC, datetime
 from typing import Any
 
+from src.aris_integration import ARIS_CONTRACT_VERSION, build_aris_enforcement
 from src.aais_ul import build_ul_snapshot
 from src.governance_layer import GovernanceLayer, governance_layer
 from src.project_infi_state_machine import (
@@ -26,6 +27,8 @@ PROJECT_INFI_LAW_IDS = [
     "law_5_observability",
     "law_6_fail_closed",
     "law_7_external_suggestion_admission",
+    "law_8_aris_runtime_boundary",
+    "law_9_non_copy_clause",
 ]
 VERIFICATION_PASS_STATES = {"completed", "healthy", "passed", "success", "verified"}
 CYCLE_SUCCESS_RESULTS = {
@@ -506,6 +509,13 @@ class ProjectInfiLaw:
         normalized_details = dict(details or {})
         normalized_plan = self._normalize_verification_plan(verification_plan)
         external_admission = _normalize_external_suggestion_admission(normalized_details)
+        aris_enforcement = build_aris_enforcement(
+            details=normalized_details,
+            runtime_context="operator_runtime" if bool(repo_change) else "live_runtime",
+            effectful=bool(repo_change or normalized_surface not in {"chat_turn", "workflow_shell"}),
+            source=normalized_surface,
+            packet_type="repo_change_execute" if bool(repo_change) else normalized_action_id,
+        )
         missing: list[str] = []
         if not normalized_surface:
             missing.append("surface")
@@ -521,6 +531,8 @@ class ProjectInfiLaw:
             missing.append("external_suggestion_law_filter")
         if external_admission["adoption_requested"] and not external_admission["admitted_form_documented"]:
             missing.append("admitted_external_form")
+        if not aris_enforcement["non_copy_clause"]["allowed"]:
+            missing.append("non_copy_clause")
 
         shield = ShieldWard().check(
             GuardrailState(
@@ -610,6 +622,7 @@ class ProjectInfiLaw:
                 "suggestion_summary": external_admission["suggestion_summary"],
                 "admitted_form_summary": external_admission["admitted_form_summary"],
             },
+            "aris_enforcement": aris_enforcement,
             "project_infi_layers": {
                 "entry": {
                     "status": "blocked" if blocked else "passed",
@@ -742,6 +755,41 @@ class ProjectInfiLaw:
                     "source": external_admission["source"],
                     "law_filter_applied": external_admission["law_filter_applied"],
                     "admitted_form_documented": external_admission["admitted_form_documented"],
+                },
+            ),
+            _law_check(
+                law_id="law_8_aris_runtime_boundary",
+                title="ARIS Runtime Boundary Law",
+                core_principle="ARIS enters AAIS only as a governed embedded runtime profile and may not self-authorize as a parallel service.",
+                passed=aris_enforcement["status"] == "enforced",
+                status="enforced" if aris_enforcement["status"] == "enforced" else "blocked",
+                action="aris_embedded_runtime_boundary",
+                detail=(
+                    "ARIS is enforced through the shared AAIS bridge and Project Infi law substrate."
+                    if aris_enforcement["status"] == "enforced"
+                    else "ARIS boundary enforcement blocked this request before raw or private material could drift into authority."
+                ),
+                metadata={
+                    "contract_version": ARIS_CONTRACT_VERSION,
+                    "runtime_profile": aris_enforcement["runtime_profile"],
+                    "execution_boundary": aris_enforcement["execution_boundary"],
+                },
+            ),
+            _law_check(
+                law_id="law_9_non_copy_clause",
+                title="ARIS Non-Copy Clause",
+                core_principle="Raw outside proposals and private runs stay local; only admitted, abstracted, or signature-only forms may move forward.",
+                passed=aris_enforcement["non_copy_clause"]["allowed"],
+                status="enforced" if aris_enforcement["non_copy_clause"]["allowed"] else "blocked",
+                action="aris_non_copy_clause",
+                detail=aris_enforcement["non_copy_clause"]["summary"],
+                metadata={
+                    "share_mode": aris_enforcement["non_copy_clause"]["share_mode"],
+                    "raw_copy_requested": aris_enforcement["non_copy_clause"]["raw_copy_requested"],
+                    "private_run_requested": aris_enforcement["non_copy_clause"]["private_run_requested"],
+                    "raw_categories_requested": list(
+                        aris_enforcement["non_copy_clause"]["raw_categories_requested"]
+                    ),
                 },
             ),
         ]

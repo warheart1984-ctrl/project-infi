@@ -10,9 +10,11 @@ contracts.
 - [nova/README.md](./nova/README.md)
   - active Nova subsystem documentation
 - [storyforge/README.md](./storyforge/README.md)
-  - concept-only placeholder with no live implementation
+  - active Story Forge subsystem pack with partial-live runtime truth
 - [beatbox/README.md](./beatbox/README.md)
-  - no admitted subsystem docs found in this repo today
+  - active Beatbox downstream audio-lane documentation
+- [speakers/README.md](./speakers/README.md)
+  - active Speakers downstream voice/mix documentation
 
 ## Rule
 

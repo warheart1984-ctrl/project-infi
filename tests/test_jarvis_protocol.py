@@ -16,14 +16,18 @@ from src.jarvis_modular import (
 from src.jarvis_reasoning_protocol import (
     REASONING_PROTOCOL_ID,
     REASONING_PROTOCOL_VERSION,
+    analyze_direct_challenge,
     analyze_otem_request,
     analyze_relational_question,
     build_otem_result,
     build_reasoning_packet,
     detect_otem,
     detect_objective,
+    evaluate_otem_viability,
     enforce_direct_challenge_identity,
+    looks_like_direct_challenge,
     restate_otem_task,
+    weight_factors,
 )
 from src.jarvis_protocol import (
     JarvisMessage,
@@ -33,6 +37,7 @@ from src.jarvis_protocol import (
     build_provider_payload,
     protocol_spec,
 )
+from src.reasoning_types import ReasoningFactor
 
 
 class TestJarvisProtocol(unittest.TestCase):
@@ -266,6 +271,35 @@ class TestJarvisProtocol(unittest.TestCase):
         self.assertFalse(detect_otem("Break the rollout into steps and keep it deterministic."))
         self.assertFalse(detect_otem("The block feels near OTEM and confidence is high."))
 
+    def test_otem_viability_allows_reasoning_about_storage_without_false_rejection(self):
+        """Reasoning about storage should stay allowed when OTEM is not asked to persist state itself."""
+        self.assertEqual(
+            evaluate_otem_viability("find the best place to store database credentials")["status"],
+            "active",
+        )
+        self.assertEqual(
+            evaluate_otem_viability("debug the service runner and identify the blocker")["status"],
+            "active",
+        )
+
+    def test_otem_viability_still_rejects_direct_side_effect_requests(self):
+        """Direct persistence or execution verbs should still be blocked in the OTEM lane."""
+        self.assertEqual(
+            evaluate_otem_viability("save this session state for later")["status"],
+            "rejected",
+        )
+        self.assertEqual(
+            evaluate_otem_viability("run this workflow now")["status"],
+            "rejected",
+        )
+
+    def test_direct_challenge_boolean_and_profile_stay_aligned(self):
+        """Boolean detection and structured direct-challenge analysis should agree on the same turns."""
+        prompt = "Jarvis, are you stupid?"
+
+        self.assertTrue(looks_like_direct_challenge(prompt))
+        self.assertTrue(analyze_direct_challenge(prompt)["detected"])
+
     def test_detect_objective_does_not_route_otem_on_signal_only_mention(self):
         """Mentioning OTEM as a location signal should not activate the OTEM lane."""
         objective = detect_objective("I think the block is near OTEM and confidence is high.")
@@ -472,6 +506,27 @@ class TestJarvisProtocol(unittest.TestCase):
         factor_map = {item["name"]: item for item in packet["factors"]}
         self.assertEqual(factor_map["creative_relevance"]["weight"], 0.0)
         self.assertFalse(factor_map["trace_visibility"]["value"])
+
+    def test_weight_factors_returns_a_new_weighted_list(self):
+        """Weighting should not mutate the caller's factor instances in place."""
+        base_factors = [
+            ReasoningFactor(
+                name="trace_visibility",
+                weight=0.25,
+                value=True,
+                source="test",
+                confidence=0.5,
+                trust=0.5,
+            )
+        ]
+
+        weighted = weight_factors("handle_direct_challenge", base_factors)
+
+        self.assertIsNot(weighted, base_factors)
+        self.assertEqual(base_factors[0].weight, 0.25)
+        self.assertTrue(base_factors[0].value)
+        self.assertEqual(weighted[0].weight, 1.0)
+        self.assertFalse(weighted[0].value)
 
     def test_relational_question_packet_forces_relational_mode_and_hides_trace(self):
         """Jarvis-state questions should stay relational and avoid repo-grounded output."""

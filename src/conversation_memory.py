@@ -106,6 +106,7 @@ PERSONA_DIRECTIVES = {
     "unfiltered": "Be candid and direct without becoming careless, reckless, or untruthful.",
     "tiny_nova": "Stay light, clear, steady, and warm. Reflect briefly, keep scope narrow, and offer one useful thought at a time.",
     "small_nova": "Stay calm, warm, and grounded. Reflect with a bit more depth than Tiny Nova, keep scope human-sized, and offer one or two useful thoughts at a time.",
+    "super_nova": "Stay deeply grounded, calm, and coherent. Hold broader continuity without claiming authority, offer structured reflections with gentle depth, and keep Jarvis as the governing lane.",
 }
 
 RESPONSE_MODE_DIRECTIVES = {
@@ -118,6 +119,12 @@ RESPONSE_MODE_DIRECTIVES = {
         "Act like Small Nova: stay calm, grounded, and companion-oriented, keep replies compact "
         "but not tiny, ask at most one clarifying question when needed, offer one or two useful "
         "reflections, and never mention tools, operator controls, hidden systems, or execution."
+    ),
+    "governed_full": (
+        "Act like Super Nova: stay grounded, steady, and deeply coherent, offer broader companion "
+        "continuity with structured reflections, ask at most one clarifying question when needed, "
+        "support multi-thread organization without taking authority, and never mention tools, "
+        "operator controls, hidden systems, execution, or governance internals."
     ),
     "fast": (
         "Answer in 1-3 crisp sentences, lead with the answer, avoid fragments, "
@@ -218,6 +225,13 @@ TINY_NOVA_SYSTEM_LEAK_TERMS = (
 TINY_NOVA_WORD_BOUNDARY_TERMS = {"ui", "api"}
 TINY_NOVA_SESSION_MEMORY_LIMIT = 12
 SMALL_NOVA_SESSION_MEMORY_LIMIT = 18
+SUPER_NOVA_SESSION_MEMORY_LIMIT = 24
+SUPER_NOVA_PROFILE = {
+    "persona_mode": "super_nova",
+    "response_mode": "governed_full",
+    "memory_mode": "extended_continuity",
+    "drift_enforced": True,
+}
 PROMPT_SCAFFOLD_MARKERS = (
     "Response Trace",
     "Think Contract",
@@ -274,6 +288,30 @@ COMPANION_LANE_PROFILES = {
             "then offer one or two grounded reflections or next thoughts"
         ),
     },
+    "super_nova": {
+        "identity": "super_nova",
+        "label": "Super Nova",
+        "persona_aliases": {"super_nova", "super nova", "supernova"},
+        "response_aliases": {"governed_full", "super", "super_nova"},
+        "response_mode": SUPER_NOVA_PROFILE["response_mode"],
+        "memory_mode": SUPER_NOVA_PROFILE["memory_mode"],
+        "drift_enforced": SUPER_NOVA_PROFILE["drift_enforced"],
+        "memory_key": "super_nova_memories",
+        "memory_limit": SUPER_NOVA_SESSION_MEMORY_LIMIT,
+        "insight_limit": 420,
+        "continuity_limit": 4,
+        "tone": "deep, calm, coherent, grounded",
+        "default_topics": "deep companion continuity",
+        "scope": "super_nova",
+        "self_description": (
+            "Super Nova keeps the conversation deeply grounded, coherent, and "
+            "companion-led while Jarvis retains authority."
+        ),
+        "reply_shape": (
+            "notice what matters, organize the strongest threads, ask one clarifying question "
+            "only if needed, then offer a structured grounded reflection with clear next thoughts"
+        ),
+    },
 }
 
 
@@ -292,6 +330,11 @@ def is_small_nova_persona(mode: str | None) -> bool:
     return _normalize_mode_token(mode) in COMPANION_LANE_PROFILES["small_nova"]["persona_aliases"]
 
 
+def is_super_nova_persona(mode: str | None) -> bool:
+    """Return whether the requested persona is Super Nova."""
+    return _normalize_mode_token(mode) in COMPANION_LANE_PROFILES["super_nova"]["persona_aliases"]
+
+
 def is_tiny_response_mode(mode: str | None) -> bool:
     """Return whether the requested response mode is the Tiny Nova lane."""
     return _normalize_mode_token(mode) in COMPANION_LANE_PROFILES["tiny_nova"]["response_aliases"]
@@ -300,6 +343,11 @@ def is_tiny_response_mode(mode: str | None) -> bool:
 def is_small_response_mode(mode: str | None) -> bool:
     """Return whether the requested response mode is the Small Nova lane."""
     return _normalize_mode_token(mode) in COMPANION_LANE_PROFILES["small_nova"]["response_aliases"]
+
+
+def is_super_response_mode(mode: str | None) -> bool:
+    """Return whether the requested response mode is the Super Nova lane."""
+    return _normalize_mode_token(mode) in COMPANION_LANE_PROFILES["super_nova"]["response_aliases"]
 
 
 def companion_lane_identity(persona_mode: str | None, response_mode: str | None = None) -> str | None:
@@ -359,6 +407,11 @@ def serialize_loaded_session_archive(record: dict | None) -> dict | None:
 def uses_small_nova_lane(persona_mode: str | None, response_mode: str | None = None) -> bool:
     """Return whether this session should stay in the Small Nova conversational lane."""
     return companion_lane_identity(persona_mode, response_mode) == "small_nova"
+
+
+def uses_super_nova_lane(persona_mode: str | None, response_mode: str | None = None) -> bool:
+    """Return whether this session should stay in the Super Nova conversational lane."""
+    return companion_lane_identity(persona_mode, response_mode) == "super_nova"
 
 
 def contains_companion_system_leak(text: str | None) -> bool:
@@ -557,6 +610,8 @@ def normalize_persona_mode(mode: str | None) -> str:
         cleaned = "tiny_nova"
     elif cleaned in {"small nova", "smallnova"}:
         cleaned = "small_nova"
+    elif cleaned in {"super nova", "supernova"}:
+        cleaned = "super_nova"
     return cleaned if cleaned in PERSONA_DIRECTIVES else "builder"
 
 
@@ -567,6 +622,8 @@ def normalize_response_mode(mode: str | None) -> str:
         cleaned = "tiny"
     elif cleaned == "small_nova":
         cleaned = "small"
+    elif cleaned in {"super_nova", "super"}:
+        cleaned = SUPER_NOVA_PROFILE["response_mode"]
     return cleaned if cleaned in RESPONSE_MODE_DIRECTIVES else "fast"
 
 
@@ -1125,6 +1182,7 @@ class ConversationSession:
             "loaded_session_archive": None,
             "tiny_nova_memories": [],
             "small_nova_memories": [],
+            "super_nova_memories": [],
         }
         self.spiral_state = SpiralState()
         self.memory_summary = SessionMemorySummary()
@@ -2082,6 +2140,7 @@ class ConversationSession:
             "persistent_memories": list(self.metadata.get("persistent_memories", [])),
             "tiny_nova_memories": list(self.metadata.get("tiny_nova_memories", [])),
             "small_nova_memories": list(self.metadata.get("small_nova_memories", [])),
+            "super_nova_memories": list(self.metadata.get("super_nova_memories", [])),
             "loaded_session_archive": serialize_loaded_session_archive(
                 self.metadata.get("loaded_session_archive")
             ),

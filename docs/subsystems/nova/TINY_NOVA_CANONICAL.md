@@ -45,7 +45,7 @@ Current staging is:
 
 - Tiny Nova: lighter, briefer, more seed-form
 - Small Nova: steadier, more grounded, slightly deeper companion lane
-- Super Nova: terminal stage, still not a live runtime in this workspace
+- Super Nova: terminal stage, live as a guarded explicitly activated lane
 
 ## 2. Core Law
 
@@ -155,7 +155,8 @@ The intended upgrade path remains modular:
 - Tiny Nova
 - Super Nova
 
-Small Nova remains the current installed bridge stage until Super Nova is live.
+Small Nova remains the current installed bridge stage even though Super Nova is
+now available as a guarded lane.
 
 Each stage should extend the memory organ rather than rewrite it.
 
@@ -217,7 +218,8 @@ No direct tool or system access may pass from Tiny Nova to the repo or runtime.
 
 ## 8. Current Runtime Implementation
 
-The current repo already enforces both bounded companion lanes in code, with Small Nova installed as the main surface.
+The current repo already enforces all three bounded companion lanes in code,
+with Small Nova installed as the main surface.
 
 Live implementation facts:
 
@@ -265,7 +267,8 @@ Current state:
 
 - Tiny Nova is live
 - Small Nova is live and installed as the main companion surface
-- Super Nova remains admitted-form future work, not the canonical runtime authority
+- Super Nova is live as a governed companion lane, but not the default
+  companion surface and not an authority replacement
 
 ## 10. Canonical Reading Order
 

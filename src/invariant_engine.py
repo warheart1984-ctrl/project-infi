@@ -21,6 +21,11 @@ import numpy as np
 from scipy.stats import kurtosis, skew
 import sympy as sp
 
+RUNTIME_INVARIANT_STATUS_PASS = "pass"
+RUNTIME_INVARIANT_STATUS_FAIL = "fail"
+RUNTIME_SAFE_RECOMMENDED_STATES = {"pause", "degrade_safe", "observe"}
+MAX_RUNTIME_SUPPORTING_SIGNALS = 4
+
 
 def _normalize_scalar(value):
     if isinstance(value, sp.Basic):
@@ -192,5 +197,89 @@ class MathInvariants:
         }
 
 
-InvariantEngine = MathInvariants
+class InvariantEngine(MathInvariants):
+    """Math invariants plus bounded runtime-event validation helpers."""
 
+    @staticmethod
+    def validate_realtime_event_prediction(event, prediction) -> dict:
+        """Validate one governed realtime event/prediction pair with bounded invariants."""
+        from src.realtime_event_cause_predictor import validate_interpreted_event_state
+
+        event_payload = dict(event or {})
+        prediction_payload = dict(prediction or {})
+        event_validation = {
+            key: bool(value)
+            for key, value in dict(event_payload.get("validation") or {}).items()
+            if isinstance(value, bool)
+        }
+        prediction_validation = validate_interpreted_event_state(prediction_payload)
+        event_signals = list(event_payload.get("signals") or [])
+        event_signal_count = int(event_payload.get("signal_count") or len(event_signals))
+        prediction_signal_count = int(prediction_payload.get("signal_count") or 0)
+        runtime_context = str(event_payload.get("runtime_context") or "").strip().lower()
+        prediction_context = str(prediction_payload.get("runtime_context") or "").strip().lower()
+        recommended_state = str(prediction_payload.get("recommended_state") or "").strip().lower()
+        data_sufficiency = str(prediction_payload.get("data_sufficiency") or "").strip().lower()
+        immune_response = str(event_payload.get("immune_response") or "ALLOW").strip().upper()
+        phase_gate_decision = str((prediction_payload.get("phase_gate") or {}).get("decision") or "").strip().upper()
+        conflict_flags = list(prediction_payload.get("conflict_flags") or [])
+        supporting_signals = list(prediction_payload.get("supporting_signals") or [])
+
+        basic_event_shape = bool(runtime_context) and isinstance(event_signals, list) and event_signal_count >= 0
+        checks = {
+            "event_validation_pass": all(event_validation.values()) if event_validation else basic_event_shape,
+            "prediction_validation_pass": all(
+                value for value in prediction_validation.values() if isinstance(value, bool)
+            ),
+            "prediction_phase_allows": phase_gate_decision == "ALLOW",
+            "runtime_context_match": runtime_context == prediction_context and bool(runtime_context),
+            "signal_count_match": prediction_signal_count == event_signal_count,
+            "supporting_signal_bound": len(supporting_signals) <= MAX_RUNTIME_SUPPORTING_SIGNALS
+            and (event_signal_count <= 0 or len(supporting_signals) <= event_signal_count),
+            "insufficient_data_safe_state": not (
+                data_sufficiency == "insufficient" and recommended_state not in RUNTIME_SAFE_RECOMMENDED_STATES
+            ),
+            "conflict_safe_state": not (
+                conflict_flags and recommended_state not in RUNTIME_SAFE_RECOMMENDED_STATES
+            ),
+            "immune_alignment": not (
+                immune_response != "ALLOW"
+                and (
+                    prediction_payload.get("cause_class") != "immune_guard_intervention"
+                    or recommended_state not in {"pause", "degrade_safe"}
+                )
+            ),
+            "phase_gate_alignment": not (
+                phase_gate_decision == "BLOCK"
+                and (
+                    prediction_payload.get("status") != "phase_blocked"
+                    or recommended_state != "pause"
+                )
+            ),
+        }
+        failed = [name for name, passed in checks.items() if not passed]
+        return {
+            "module_id": "aais.invariant_engine.runtime_event_guard",
+            "status": RUNTIME_INVARIANT_STATUS_PASS if not failed else RUNTIME_INVARIANT_STATUS_FAIL,
+            "allows": not failed,
+            "checked_invariants": checks,
+            "failed_invariants": failed,
+            "reason_codes": list(failed),
+            "summary": (
+                "Realtime invariant gate accepted the bounded predictor output."
+                if not failed
+                else "Realtime invariant gate blocked the bounded predictor output: "
+                + ", ".join(failed)
+            ),
+            "advisory_only": True,
+        }
+
+    @staticmethod
+    def assert_realtime_event_prediction_allowed(event, prediction) -> None:
+        """Raise when one governed realtime event/prediction pair violates invariants."""
+        result = InvariantEngine.validate_realtime_event_prediction(event, prediction)
+        if not result["allows"]:
+            raise ValueError(
+                "Realtime event invariant validation failed: "
+                + ", ".join(result["failed_invariants"])
+            )

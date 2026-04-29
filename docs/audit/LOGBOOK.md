@@ -213,3 +213,56 @@ Every major entry should name its CISIV stage explicitly.
 - scope: documented that Nova and Super Nova must not be coupled into the immune system until the realtime event-cause predictor is installed in the live runtime path and the invariant engine is wired as a Nova runtime consumer, then clarified the Nova input story so touch remains design-only while keystroke stays the only live interaction truth
 - outcome: the active Nova docs now point readers to the future Super Nova and touch design docs with the correct boundary language, the future Super Nova canonical spec explicitly blocks premature immune coupling, the touch guide explains the current keystroke-only truth, and the subsystem map now records those two infrastructure blockers directly
 - verification note: this was a documentation pass only; the updated Nova docs, future design docs, and subsystem spec were checked locally after the edit and no runtime code changed in this pass
+
+## 2026-04-27
+
+### Super Nova Governed Runtime Truth And Seam Closure
+
+- CISIV stage: `verification`
+- scope: reconciled the active Nova/runtime/spec docs with the live guarded Super Nova runtime, added a canonical seam record for the Super Nova governance boundary, and documented the active law stack as phase gate before execution, explicit activation, watchdog enforcement, bounded immune protocol observation, and Project Infi final-truth admission before reply completion
+- outcome: the active documentation tree no longer describes Super Nova as dormant or unassigned, the canonical seam set now includes `SEAM-SN-001-super-nova-governance-boundary.md`, and the repo truth surfaces now state clearly that there is no separate ARIS service in this repository and that the active ARIS-equivalent enforcement at the Super Nova boundary is the shared Project Infi admission seam
+- verification note: `.venv\Scripts\python.exe -m pytest -q` passed at `643 passed, 12 subtests passed`; `frontend\npm.cmd run test:ci` passed at `47 passed`; `frontend\npm.cmd run build` passed; and the updated Super Nova canonical docs passed local link sanity as `SUPER_NOVA_DOC_LINKS_OK`
+
+## 2026-04-28
+
+### Parent Workspace Document Pull
+
+- CISIV stage: `structure`
+- scope: mirrored the parent `project infi` workspace-root document layer plus the external workspace archive document buckets into `AAIS-main/docs/_archive/workspace_pull/` so AAIS can resolve that lineage from inside the repo
+- outcome: `AAIS-main` now contains an internal mirror of `96` workspace-root document files, `48` external archived workspace documents, and `2` archived workspace notes, with one archive entry doc that explains source, use rule, and high-signal imported files
+- verification note: the mirror was checked locally after copy, and the archive/document indexes were updated so the new pull is reachable from inside the AAIS docs tree
+
+### Tracing Docx Admission
+
+- CISIV stage: `structure`
+- scope: extracted the parent-workspace `tracing.docx`, converted its lane/module/Jaeger proposal into one admitted AAIS markdown contract, and aligned that contract with the live cognitive bridge, governed direct pipeline, and governed event chain instead of copying the raw prototype wording directly
+- outcome: AAIS now has `docs/contracts/AAIS_TRACING_PROTOCOL.md` as the active proof-layer tracing contract, while the raw source remains preserved under `docs/_archive/workspace_pull/`
+- verification note: this was a documentation pass only; the new contract file, archive source link, and reading-path references were checked locally after the patch
+
+### Full Document Corpus Subsystem Audit
+
+- CISIV stage: `verification`
+- scope: processed the full reachable AAIS document corpus across active docs plus the mirrored parent-workspace archive pull, then compared recurring feature and subsystem families against live AAIS docs and runtime code to see what is covered, partial, archive-only, or only reference lineage
+- outcome: AAIS now has `docs/audit/DOCUMENT_CORPUS_SUBSYSTEM_AUDIT.md`, which identifies the highest-signal remaining misses and thin areas, especially the Collective Pattern Ledger, a dedicated immune contract, a dedicated swarm-law contract, and several archive-only subsystem families awaiting classification
+- verification note: this pass processed `431` documents with zero extraction failures before the active-vs-archive comparison was written into the audit
+
+### Immune Protocol And Collective Pattern Ledger Admission
+
+- CISIV stage: `structure`
+- scope: admitted the immune layer and Collective Pattern Ledger into the active AAIS contract tree, grounded both in live runtime code, and updated subsystem/spec/audit surfaces so those two families are no longer treated as missing live documentation
+- outcome: AAIS now has `docs/contracts/AAIS_IMMUNE_PROTOCOL.md` and `docs/contracts/COLLECTIVE_PATTERN_LEDGER.md`, with runtime/spec/audit references updated to reflect active immune law and active pattern-ledger law with partial runtime coverage
+- verification note: this was a documentation pass only; the new contract files, source lineage links, and updated doc surfaces were checked locally after the patch
+
+### Swarm Law Admission
+
+- CISIV stage: `structure`
+- scope: admitted Swarm Law from the parent-workspace archive lineage into the active AAIS contract tree, aligned it with the live bridge and governed direct pipeline, and updated runtime/spec/audit surfaces so swarm doctrine is no longer treated as an undocumented gap
+- outcome: AAIS now has `docs/contracts/SWARM_LAW.md`, with explicit active-law wording that keeps swarm-originated deliberation bridge-governed today while documenting the broader multi-agent field-runtime embodiment as still partial
+- verification note: this was a documentation pass only; the new contract file, source lineage links, and updated doc surfaces were checked locally after the patch
+
+### ARIS Embedded Admission And Non-Copy Propagation
+
+- CISIV stage: `verification`
+- scope: admitted ARIS into AAIS as an embedded runtime contract, added one shared ARIS/non-copy runtime primitive, wired that primitive into the Cognitive Bridge and Project Infi law, and propagated the non-copy clause through the active contract/spec/audit surfaces
+- outcome: AAIS now has `docs/contracts/ARIS_RUNTIME_CONTRACT.md` plus `src/aris_integration.py`, the bridge emits ARIS enforcement at ingress, Project Infi law fails closed on explicit non-copy violations, and the external suggestion plus collective pattern docs now agree on the same canonical non-copy rule
+- verification note: targeted bridge and Project Infi law tests passed after the patch, and the touched canonical docs were checked locally for link integrity

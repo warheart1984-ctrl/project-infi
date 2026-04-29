@@ -24,6 +24,7 @@ It is a layered project with:
 - a Jarvis runtime core
 - a companion line through Tiny Nova and Small Nova
 - a governed Project Infi action cycle
+- an embedded ARIS repo-intelligence boundary and non-copy clause
 - workflow and approval surfaces
 - repo and review tooling
 - continuity, governance, security, and logbook systems
@@ -55,6 +56,7 @@ The current live project truth is:
 - `app/main.py` is the workflow shell and compatibility bridge
 - Small Nova is the installed companion surface
 - Tiny Nova remains available as the lighter bounded companion stage
+- Super Nova is available as a guarded explicitly activated companion lane
 - Project Infi law and the governed runtime cycle are live
 - CISIV is enforced in governance and operationally carried through the live workflow surfaces
 
@@ -120,6 +122,18 @@ It governs:
 
 This is where lawful runtime behavior, verification, rejection, wait, degradation, and governed carryover are handled.
 
+### ARIS
+
+ARIS is now active in AAIS as embedded governed repo intelligence.
+
+That means:
+
+- ARIS strengthens ingress, verification, and sharing law
+- ARIS does not exist here as a separate self-authorizing service
+- raw outside proposals and private runs must not be copied directly into
+  system truth
+- only admitted, abstracted, or signature-only forms may move forward
+
 ### Forge
 
 Forge is the contractor/repo-change lane.
@@ -145,13 +159,13 @@ The current companion growth path is:
 
 1. Tiny Nova
 2. Small Nova
-3. future full Nova
+3. Super Nova
 
 Current state:
 
 - Tiny Nova is live
 - Small Nova is live and installed
-- full Nova is not yet a live runtime
+- Super Nova is live as a guarded lane, not the default home surface
 
 ## Current Boundaries
 
@@ -175,7 +189,7 @@ The biggest remaining items are:
 
 - OTEM is still capped and not a full execution layer
 - PatchForge is still not a full autonomous authoring system
-- full Nova is not yet implemented as a live runtime
+- broader Super Nova immune automation beyond the current observe-only governed path is not yet implemented
 - some older docs are still lineage/reference material rather than canonical current truth
 
 ## Best Reading Path

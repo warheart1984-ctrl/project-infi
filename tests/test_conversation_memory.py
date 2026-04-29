@@ -267,6 +267,48 @@ class TestConversationSession(unittest.TestCase):
         self.assertEqual(stored["prompt_shape"], "statement")
         self.assertIn("part that still feels true", stored["insight"])
 
+    def test_super_nova_runtime_directive_stays_governed_and_bounded(self):
+        """Super Nova should expose the governed full lane without leaking operator scaffolding."""
+        session = ConversationSession("session-super", system_prompt="You are Super Nova.")
+        session.metadata["persona_mode"] = "super_nova"
+        session.metadata["response_mode"] = "governed_full"
+        session.metadata["workspace_context"] = {"prompt_block": "Workspace context should stay hidden."}
+        session.metadata["live_research"] = {"prompt_block": "Live web research should stay hidden."}
+        session.metadata["mission_board"] = {"prompt_block": "Mission board should stay hidden."}
+        session.metadata["continuity_prompt_block"] = "Jarvis Continuity Profile"
+        session.metadata["corrigibility_prompt_block"] = "Corrigibility block"
+        session.add_turn("user", "Help me hold the deeper thread without losing the next step.")
+
+        messages = session.build_messages()
+        self.assertEqual(len(messages), 2)
+        system_message = messages[0]["content"]
+
+        self.assertIn("Super Nova runtime state", system_message)
+        self.assertIn("response_mode: governed_full", system_message)
+        self.assertNotIn("Workspace context should stay hidden.", system_message)
+        self.assertNotIn("Live web research should stay hidden.", system_message)
+        self.assertNotIn("Mission board should stay hidden.", system_message)
+        self.assertNotIn("Jarvis Continuity Profile", system_message)
+        self.assertNotIn("Corrigibility block", system_message)
+        self.assertIn("reply_shape:", system_message)
+
+    def test_super_nova_assistant_turn_stores_extended_continuity_insight(self):
+        """Super Nova should retain a deeper continuity cue without leaving the companion lane."""
+        session = ConversationSession("session-super-memory", system_prompt="You are Super Nova.")
+        session.metadata["persona_mode"] = "super_nova"
+        session.metadata["response_mode"] = "governed_full"
+
+        session.add_turn("user", "Help me keep the whole shape of this problem in view.")
+        session.add_turn(
+            "assistant",
+            "The strongest thread is still the one that keeps correctness and pace together, so let that thread lead the next step.",
+        )
+
+        self.assertEqual(len(session.metadata["super_nova_memories"]), 1)
+        stored = session.metadata["super_nova_memories"][0]
+        self.assertEqual(stored["prompt_shape"], "request")
+        self.assertIn("correctness and pace together", stored["insight"])
+
     def test_tiny_nova_assistant_turn_stores_micro_insight(self):
         """Tiny Nova should retain brief session-safe micro-insights from conversational replies."""
         session = ConversationSession("session-tiny-micro", system_prompt="You are Tiny Nova.")

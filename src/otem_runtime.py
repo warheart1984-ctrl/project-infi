@@ -15,6 +15,14 @@ from __future__ import annotations
 import re
 from typing import Any
 
+OTEM_VERSION = "v5_frozen"
+
+
+def get_frozen_otem_version() -> str:
+    version = str(OTEM_VERSION or "").strip()
+    assert version == "v5_frozen", f"Unexpected OTEM runtime version: {version!r}"
+    return version
+
 
 FOCUS_STEP_RE = re.compile(r"\b(?:focus on|zoom into|drill into)\s+step\s+(\d+)\b", re.IGNORECASE)
 SHOW_PLAN_PATTERNS = (
@@ -506,7 +514,7 @@ def build_otem_catalog_snapshot(actions: list[dict[str, Any]] | None) -> dict[st
     workflow_templates = load_workflow_template_catalog()
     tool_registry = build_tool_registry(actions)
     return {
-        "version_ceiling": "v5",
+        "version_ceiling": get_frozen_otem_version(),
         "workflow_catalog": workflow_templates,
         "tool_registry": tool_registry,
         "execution_boundaries": [
@@ -556,7 +564,7 @@ def enrich_otem_result(
     operation = str((operation_info or {}).get("operation") or session_context.get("operation") or "new_task")
     result.update(
         {
-            "version": "v5",
+            "version": get_frozen_otem_version(),
             "phase": "tool_aware_tool_cold",
             "status": "active" if session_bound and session_context.get("active") else "complete",
             "session_scoped": True,

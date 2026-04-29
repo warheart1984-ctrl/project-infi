@@ -974,6 +974,24 @@ class TestJarvisOperator(unittest.TestCase):
         self.assertEqual(result["tool_result"]["lane_guardrail"]["requested_lane"], "FORGE")
         self.assertIn("Small Nova stays in a conversational lane", result["response"])
 
+    def test_handle_command_blocks_explicit_forge_requests_in_super_lane(self):
+        """Super Nova should not be allowed to hand the turn directly to the Forge execution lane."""
+        operator = JarvisOperator()
+
+        result = operator.handle_command(
+            "Use Forge for this: refactor the API route.",
+            response_mode="governed_full",
+        )
+
+        self.assertEqual(result["tool_result"]["type"], "lane_guardrail")
+        self.assertEqual(result["tool_result"]["status"], "blocked")
+        self.assertEqual(
+            result["tool_result"]["lane_guardrail"]["reason"],
+            "RULE_SUPER_NOVA_STAYS_CONVERSATIONAL",
+        )
+        self.assertEqual(result["tool_result"]["lane_guardrail"]["requested_lane"], "FORGE")
+        self.assertIn("Super Nova stays in a conversational lane", result["response"])
+
     def test_handle_command_does_not_treat_forge_questions_as_execution_requests(self):
         """Forge routing should stay narrow and ignore descriptive questions."""
         operator = JarvisOperator()

@@ -28,6 +28,7 @@ AAIS currently includes these major areas:
 
 - Jarvis core runtime
 - Nova companion line
+- embedded ARIS runtime profile
 - Project Infi governed runtime
 - workflow shell
 - Forge lanes
@@ -44,7 +45,8 @@ AAIS currently includes these major areas:
 | Workflow shell | `app/main.py`, `app/workflow_runtime.py`, `app/db.py` | workflow/onboarding/runs/approvals shell | Live |
 | Project Infi law | `src/project_infi_law.py`, `src/project_infi_state_machine.py` | governed cycle, action law, records | Live |
 | Conversation substrate | `src/conversation_memory.py` | session memory, persona, runtime prompt assembly | Live |
-| Nova companion line | `src/api.py`, `src/conversation_memory.py`, `frontend/src/pages/NovaLandingPage.jsx` | Tiny/Small companion surfaces | Live |
+| Nova companion line | `src/api.py`, `src/conversation_memory.py`, `frontend/src/pages/NovaLandingPage.jsx` | Tiny/Small/Super companion surfaces | Live |
+| Embedded ARIS | `src/aris_integration.py`, `src/cognitive_bridge.py`, `src/project_infi_law.py` | repo-intelligence boundary, non-copy clause, signature-only pattern sharing law | Live |
 | Forge | `src/jarvis_operator.py`, `forge/service.py` | governed repo review/apply lanes | Live but bounded |
 | Evolve | evolve-related clients and runtime state | evaluation/mutation/search lane | Live but bounded |
 | OTEM | `src/jarvis_reasoning_protocol.py`, `src/otem_runtime.py` | reasoning/proposal lane | Partial |
@@ -72,7 +74,7 @@ Current Nova stages:
 | --- | --- | --- | --- | --- |
 | Tiny Nova | `tiny_nova` | `tiny` | Live | lower bounded companion |
 | Small Nova | `small_nova` | `small` | Live | installed bridge companion surface |
-| Super Nova | not assigned | not assigned | Not live | final higher-capacity companion |
+| Super Nova | `super_nova` | `governed_full` | Live guarded | final higher-capacity companion |
 
 Canonical public path:
 
@@ -81,7 +83,8 @@ Canonical public path:
 
 Current runtime bridge:
 
-- Small Nova remains the installed bridge stage until Super Nova is activated
+- Small Nova remains the installed bridge stage while Super Nova requires
+  explicit activation and governed admission
 
 Current companion laws:
 
@@ -90,6 +93,8 @@ Current companion laws:
 - companion lanes do not own repo mutation
 - companion lanes do not own tool execution
 - continuity is filtered before prompt assembly
+- Super Nova runs behind a phase gate, watchdog boundary, bounded immune
+  protocol observation, and Project Infi final-truth admission
 
 ## Project Infi Spec
 
@@ -108,6 +113,18 @@ Current governed behavior includes:
 - lawful rejection and non-admission
 - degradation and fracture handling
 - carryover state across cycles
+
+## ARIS Spec
+
+ARIS is live in AAIS as an embedded runtime profile, not a separate service.
+
+Current ARIS laws:
+
+- nothing happens without verification
+- ARIS does not self-apply changes
+- build/runtime separation remains load-bearing
+- raw outside proposals and private runs stay local
+- only admitted, abstracted, or signature-only forms may move forward
 
 ## Workflow Shell Spec
 
@@ -174,6 +191,9 @@ Current project record expectations:
 - structured judgment logs for verification decisions
 - canonical logbook alignment for major repo changes
 - run ledger continuity
+- immune posture and incident visibility
+- Collective Pattern Ledger guidance and defense traces where implemented
+- swarm-originated deliberation must remain bridge-governed where implemented
 - governed rejection/degradation/wait records where applicable
 
 ## Current Incomplete Areas
@@ -182,7 +202,8 @@ The biggest still-incomplete areas are:
 
 - OTEM beyond its current bounded ceiling
 - PatchForge/Forge as a fuller autonomous authoring lane
-- Super Nova as a live runtime
+- broader predictor/invariant-driven immune automation beyond the current
+  observe-only Super Nova coupling
 - some lineage and infrastructure docs still needing reclassification or cleanup
 
 ## Canonical Build Path

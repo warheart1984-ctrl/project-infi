@@ -30,9 +30,14 @@ out of this folder intentionally:
 Current live interaction truth is still keystroke-first.
 
 That means touch remains design-only until runtime code and tests explicitly
-install it, and Super Nova immune coupling remains blocked until the realtime
-event-cause predictor and invariant engine are both wired into the live Nova
-path.
+install it.
+
+Current Super Nova truth is:
+
+- live as a guarded lane
+- explicit activation required
+- immune coupling is observe-only through protocol signals
+- broader predictor/invariant-driven immune automation remains future work
 
 ## Canonical Rule
 

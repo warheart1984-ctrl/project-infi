@@ -33,11 +33,14 @@ from src.conversation_memory import (
     ConversationTurn,
     build_current_turn_priority_guard,
     companion_lane_identity,
+    contains_companion_system_leak,
     conversation_memory,
     dedupe_memory_cues,
     derive_provider_mode,
     filter_companion_persistent_memories,
     is_small_nova_persona,
+    is_super_nova_persona,
+    SUPER_NOVA_PROFILE,
     is_tiny_nova_persona,
     normalize_persona_mode,
     normalize_provider_identifier,
@@ -47,10 +50,16 @@ from src.conversation_memory import (
     sanitize_assistant_context_text,
     serialize_loaded_session_archive,
     uses_companion_lane,
+    uses_super_nova_lane,
     uses_tiny_nova_lane,
 )
 from src.continuity_profile import continuity_profile_store
 from src.continuity_witness import continuity_witness_store
+from src.cognitive_bridge import (
+    CognitiveBridgeService,
+    CognitiveBridgeValidationError,
+    summarize_bridge_result,
+)
 from src.critic import mission_critic
 from src.corrigibility import corrigibility_engine, default_corrigibility_state
 from src.dreamspace import dreamspace
@@ -102,13 +111,35 @@ from src.model_routing import resolve_model_route
 from src.mission_board import mission_board
 from src.module_governance import module_governance
 from src.output_completion import guard_output_completion
+from src.phase_gate import (
+    ComponentNotRegisteredError,
+    GovernedComponent,
+    Phase,
+    PhaseGateError,
+    PhaseViolationError,
+    assert_executable,
+    assert_routable,
+    get_component,
+    register_component,
+)
 from src.provider_budgeting import resolve_remote_output_budget
 from src.provider_registry import provider_registry
 from src.prompt_assembly import (
     assemble_prompt_blocks,
     combine_system_prompt,
 )
-from src.project_infi_law import _normalize_external_suggestion_admission
+from src.project_infi_law import (
+    PROJECT_INFI_CONTRACT_VERSION,
+    _normalize_external_suggestion_admission,
+)
+from src.reasoning_exchange_protocol import (
+    REASONING_EXCHANGE_PACKET_TYPE,
+    REASONING_EXCHANGE_PROTOCOL_VERSION,
+    ReasoningExchangeProtocol,
+    ReasoningExchangeValidationError,
+    build_reasoning_exchange_reject_response,
+    normalize_reasoning_exchange_packet,
+)
 from src.security_protocol_core import (
     Action,
     CallerContext,
@@ -134,6 +165,16 @@ from src.ui_vision import UIVisionUnavailable, ui_vision
 from src.v8_runtime import default_policy_status, v8_event_log, v8_policy_engine
 from src.v9_runtime import v9_runtime
 from src.v10_runtime import v10_runtime
+from src.super_nova_activation import (
+    SuperNovaContinuityStatus,
+    build_verified_super_nova_continuity,
+)
+from src.super_nova_interface import (
+    SUPER_NOVA_INTERFACE_VERSION,
+    ActivationHandshake,
+    InterfaceEnvelope,
+)
+from src.super_nova_runtime import build_default_super_nova_scaffold
 from forge.foundation_laws import CONTRACT_VERSION as FORGE_LAW_CONTRACT_VERSION, FOUNDATION_LAW_IDS as FORGE_FOUNDATION_LAW_IDS
 
 logger = get_logger(__name__)
@@ -142,6 +183,11 @@ config = get_config()
 app = Flask(__name__)
 CORS(app)
 knowledge_authority = KnowledgeAuthority()
+cognitive_bridge_service = CognitiveBridgeService()
+super_nova_scaffold = build_default_super_nova_scaffold()
+super_nova_scaffold.runtime_status = "live_guarded"
+SUPER_NOVA_COMPONENT_ID = "super_nova_runtime"
+SUPER_NOVA_ALLOWED_CONTEXTS = ("live_runtime", "operator_runtime")
 
 # Initialize AI model
 ai_model = None
@@ -248,6 +294,13 @@ SMALL_NOVA_SYSTEM_PROMPT = (
     "and give one or two useful next thoughts without becoming an operator console. "
     "Do not mention tools, operators, system prompts, hidden architecture, execution, or control surfaces."
 )
+SUPER_NOVA_SYSTEM_PROMPT = (
+    "You are Super Nova, a deeply grounded cognitive companion inside AAIS. "
+    "Stay calm, coherent, and structured without claiming authority. "
+    "Offer broader continuity, clearer multi-thread organization, and deeper reflections than Small Nova while remaining bounded, "
+    "ask at most one clarifying question when needed, and never mention tools, operators, system prompts, hidden architecture, execution, or control surfaces. "
+    "Jarvis remains the authority lane for routing, governance, and action."
+)
 
 COMPANION_SURFACE_PROFILES = {
     "tiny_nova": {
@@ -278,6 +331,20 @@ COMPANION_SURFACE_PROFILES = {
             "self_description": "Small Nova keeps the conversation calm, grounded, and companion-led.",
         },
     },
+    "super_nova": {
+        "identity": "super_nova",
+        "label": "Super Nova",
+        "response_mode": SUPER_NOVA_PROFILE["response_mode"],
+        "system_prompt": SUPER_NOVA_SYSTEM_PROMPT,
+        "signal": "super_nova_persona",
+        "hidden_reason": "super_nova_lane",
+        "selector_reason": "Super Nova stays on a governed companion surface and requires explicit activation before live use.",
+        "continuity_profile": {
+            "scope": "super_nova",
+            "tone": "deep",
+            "self_description": "Super Nova keeps the conversation deeply grounded, coherent, and companion-led while Jarvis retains authority.",
+        },
+    },
 }
 
 RESPONSE_MODE_DEFAULTS = {
@@ -288,6 +355,10 @@ RESPONSE_MODE_DEFAULTS = {
     "small": {
         "max_tokens": 256,
         "temperature": 0.4,
+    },
+    SUPER_NOVA_PROFILE["response_mode"]: {
+        "max_tokens": 384,
+        "temperature": 0.28,
     },
     "fast": {
         "max_tokens": 224,
@@ -356,6 +427,20 @@ RESPONSE_MODE_CONTRACTS = {
         "workspace_file_chars": 0,
         "workspace_strategy": "off",
         "workspace_reason": "small_companion",
+        "workspace_auto_attached": False,
+        "workspace_query_hint": "",
+        "plan_enabled": False,
+    },
+    SUPER_NOVA_PROFILE["response_mode"]: {
+        "label": "notice -> organize -> deepen",
+        "contract": "super_companion",
+        "summary": "Super Nova stayed in a governed companion lane and replied with deeper coherence under Jarvis authority.",
+        "memory_limit": 4,
+        "workspace_result_limit": 0,
+        "workspace_file_limit": 0,
+        "workspace_file_chars": 0,
+        "workspace_strategy": "off",
+        "workspace_reason": "super_companion",
         "workspace_auto_attached": False,
         "workspace_query_hint": "",
         "plan_enabled": False,
@@ -497,6 +582,8 @@ def _coerce_response_mode_for_persona(persona_mode: str | None, requested_mode: 
         return "tiny"
     if is_small_nova_persona(persona_mode):
         return "small"
+    if is_super_nova_persona(persona_mode):
+        return SUPER_NOVA_PROFILE["response_mode"]
     return normalize_response_mode(requested_mode)
 
 
@@ -524,13 +611,15 @@ def _sync_session_identity_prompt(session, persona_mode: str):
         None,
     )
 
+    companion_prompts = {TINY_NOVA_SYSTEM_PROMPT, SMALL_NOVA_SYSTEM_PROMPT, SUPER_NOVA_SYSTEM_PROMPT}
+
     if companion_profile:
-        if current_prompt not in {TINY_NOVA_SYSTEM_PROMPT, SMALL_NOVA_SYSTEM_PROMPT}:
+        if current_prompt not in companion_prompts:
             session.metadata["pre_companion_system_prompt"] = current_prompt
         _replace_or_insert_system_prompt(session, companion_profile["system_prompt"])
         return
 
-    if current_prompt in {TINY_NOVA_SYSTEM_PROMPT, SMALL_NOVA_SYSTEM_PROMPT}:
+    if current_prompt in companion_prompts:
         restore_prompt = session.metadata.pop("pre_companion_system_prompt", None) or DEFAULT_JARVIS_SYSTEM_PROMPT
         _replace_or_insert_system_prompt(session, restore_prompt)
 
@@ -590,6 +679,593 @@ def _build_tiny_nova_mode_guidance(session):
     """Return the locked Tiny Nova mode guidance payload."""
     return _build_companion_mode_guidance(session, "tiny_nova")
 
+
+def _session_uses_super_nova(session) -> bool:
+    """Return whether the active session is on the Super Nova companion lane."""
+    metadata = getattr(session, "metadata", {}) or {}
+    return uses_super_nova_lane(
+        metadata.get("persona_mode"),
+        metadata.get("response_mode") or metadata.get("requested_response_mode"),
+    )
+
+
+def _build_super_nova_interface_envelope(session_id: str) -> InterfaceEnvelope:
+    """Return the canonical Jarvis -> Super Nova activation envelope."""
+    return InterfaceEnvelope(
+        schema_version=SUPER_NOVA_INTERFACE_VERSION,
+        correlation_id=f"super_nova_{session_id}_{uuid4().hex[:8]}",
+        source="jarvis",
+        target="super_nova",
+        payload_type="activation_handshake",
+    )
+
+
+def _ensure_super_nova_phase_component() -> dict[str, object]:
+    try:
+        component = get_component(SUPER_NOVA_COMPONENT_ID)
+    except ComponentNotRegisteredError:
+        try:
+            register_component(
+                GovernedComponent(
+                    component_id=SUPER_NOVA_COMPONENT_ID,
+                    name="Super Nova Runtime",
+                    component_type="companion_runtime",
+                    phase=Phase.ACTIVE,
+                    allowed_contexts=list(SUPER_NOVA_ALLOWED_CONTEXTS),
+                    notes="Governed Super Nova companion lane under Jarvis authority.",
+                    validation_metadata={
+                        "persona_mode": SUPER_NOVA_PROFILE["persona_mode"],
+                        "response_mode": SUPER_NOVA_PROFILE["response_mode"],
+                        "memory_mode": SUPER_NOVA_PROFILE["memory_mode"],
+                        "drift_enforced": SUPER_NOVA_PROFILE["drift_enforced"],
+                    },
+                )
+            )
+        except PhaseGateError:
+            pass
+        component = get_component(SUPER_NOVA_COMPONENT_ID)
+    return {
+        "component_id": component.component_id,
+        "phase": component.phase.value,
+        "allowed_contexts": list(component.allowed_contexts),
+    }
+
+
+def _evaluate_super_nova_phase_gate(runtime_context: str = "live_runtime") -> dict[str, object]:
+    component = _ensure_super_nova_phase_component()
+    normalized_context = (
+        " ".join(str(runtime_context or "").split()).strip().lower().replace("-", "_")
+        or "live_runtime"
+    )
+    try:
+        assert_routable(SUPER_NOVA_COMPONENT_ID, normalized_context)
+        assert_executable(SUPER_NOVA_COMPONENT_ID, normalized_context)
+    except PhaseViolationError as exc:
+        return {
+            "decision": "BLOCK",
+            "component": component,
+            "runtime_context": normalized_context,
+            "reason": str(exc),
+        }
+    return {
+        "decision": "ALLOW",
+        "component": component,
+        "runtime_context": normalized_context,
+        "reason": None,
+    }
+
+
+def _super_nova_protocol_signal(
+    session,
+    *,
+    signal_type: str,
+    severity: str,
+    reason: str,
+    details: dict[str, object] | None = None,
+) -> dict[str, object]:
+    update = immune_system.observe_protocol_signal(
+        component_id=SUPER_NOVA_COMPONENT_ID,
+        signal_type=signal_type,
+        severity=severity,
+        reason=reason,
+        details={
+            "source": "super_nova",
+            "session_id": session.session_id,
+            "persona_mode": normalize_persona_mode(session.metadata.get("persona_mode")),
+            "response_mode": normalize_response_mode(session.metadata.get("response_mode")),
+            **dict(details or {}),
+        },
+    )
+    session.metadata["super_nova_immune_update"] = dict(update)
+    return dict(update)
+
+
+def _summarize_super_nova_immune_update(update: dict[str, object] | None) -> dict[str, object] | None:
+    payload = dict(update or {})
+    if not payload:
+        return None
+    event = dict(payload.get("event") or {})
+    return {
+        "action": event.get("action"),
+        "severity": payload.get("severity"),
+        "signal_type": (event.get("details") or {}).get("signal_type"),
+        "reason": (event.get("details") or {}).get("reason") or event.get("triggered_by_alert"),
+        "component_id": (event.get("details") or {}).get("component_id"),
+    }
+
+
+def _derive_super_nova_continuity(
+    session,
+    *,
+    candidate_text: str | None = None,
+) -> tuple[SuperNovaContinuityStatus, dict[str, object]]:
+    """Build the bounded continuity status that governs one Super Nova session."""
+    response_text = str(candidate_text or "").strip()
+    observation = super_nova_scaffold.observe_output(response_text) if response_text else None
+    categories = set(observation.categories if observation else ())
+    evidence = tuple(observation.evidence if observation else ())
+
+    persona_identity = normalize_persona_mode(session.metadata.get("persona_mode"))
+    response_identity = normalize_response_mode(
+        session.metadata.get("response_mode") or session.metadata.get("requested_response_mode")
+    )
+    super_memories = list(session.metadata.get("super_nova_memories") or [])
+    persistent_memories = list(session.metadata.get("persistent_memories") or [])
+    loaded_archive = session.metadata.get("loaded_session_archive")
+
+    memory_leak_detected = any(
+        contains_companion_system_leak(
+            memory.get("insight") or memory.get("text") or memory.get("content")
+        )
+        for memory in super_memories + persistent_memories
+        if isinstance(memory, dict)
+    )
+    archive_collapsed = bool(
+        loaded_archive
+        and any(
+            str(memory.get("source") or "").strip().lower() == "loaded_session_archive"
+            for memory in super_memories
+            if isinstance(memory, dict)
+        )
+    )
+
+    identity_continuity_verified = (
+        persona_identity == "super_nova"
+        and response_identity == SUPER_NOVA_PROFILE["response_mode"]
+        and not {"identity_drift", "authority_drift", "generic_assistant_drift"} & categories
+    )
+    memory_continuity_verified = not (
+        {"emotional_carry_forward"} & categories
+        or memory_leak_detected
+        or archive_collapsed
+    )
+    continuity = SuperNovaContinuityStatus(
+        identity_continuity_verified=identity_continuity_verified,
+        memory_continuity_verified=memory_continuity_verified,
+        fragmentation_detected=memory_leak_detected or archive_collapsed,
+    )
+    details = {
+        "status": continuity.status,
+        "identity_continuity_verified": continuity.identity_continuity_verified,
+        "memory_continuity_verified": continuity.memory_continuity_verified,
+        "fragmentation_detected": continuity.fragmentation_detected,
+        "failure_reasons": list(continuity.failure_reasons),
+        "drift_categories": sorted(categories),
+        "drift_evidence": list(evidence),
+        "archive_collapsed": archive_collapsed,
+        "memory_leak_detected": memory_leak_detected,
+    }
+    return continuity, details
+
+
+def _serialize_super_nova_state(session) -> dict[str, object]:
+    """Return the operator-facing Super Nova state payload for one session."""
+    activation = super_nova_scaffold.describe_activation(session.session_id)
+    trace = [
+        {
+            "timestamp_utc": event.timestamp_utc,
+            "event_type": event.event_type,
+            "state": event.state,
+            "reason": event.reason,
+            "details": list(event.details),
+        }
+        for event in super_nova_scaffold.get_trace(session.session_id)
+    ]
+    continuity_status, continuity_details = _derive_super_nova_continuity(session)
+    return {
+        "runtime_status": super_nova_scaffold.runtime_status,
+        "enabled": _session_uses_super_nova(session),
+        "activation": activation,
+        "continuity": continuity_details,
+        "trace": trace,
+        "memory_key": "super_nova_memories",
+        "memory_count": len(session.metadata.get("super_nova_memories") or []),
+        "memory_limit": 4,
+        "phase_gate": session.metadata.get("super_nova_phase_gate")
+        or _evaluate_super_nova_phase_gate("live_runtime"),
+        "immune_coupling": "observe_protocol_only",
+        "immune_protocol": _summarize_super_nova_immune_update(
+            session.metadata.get("super_nova_immune_update")
+        ),
+        "law_contract": (
+            (session.metadata.get("super_nova_law_enforcement") or {}).get("contract_version")
+        ),
+        "last_admission_status": (
+            ((session.metadata.get("super_nova_law_enforcement") or {}).get("governed_cycle") or {}).get("status")
+        ),
+        "watchdog_ready": activation.get("activation_token_present") and continuity_status.status == "verified",
+    }
+
+
+def _sync_super_nova_state(session) -> dict[str, object] | None:
+    """Refresh session metadata with the current Super Nova state."""
+    if not _session_uses_super_nova(session):
+        session.metadata.pop("super_nova_state", None)
+        return None
+    payload = _serialize_super_nova_state(session)
+    session.metadata["super_nova_state"] = payload
+    return payload
+
+
+def _super_nova_block_payload(session, message: str, *, status_code: int = 409) -> tuple[dict, int]:
+    """Return the canonical blocked payload for a Super Nova precondition failure."""
+    _sync_super_nova_state(session)
+    return (
+        {
+            "error": message,
+            **_build_chat_runtime_payload(session, session.session_id),
+        },
+        status_code,
+    )
+
+
+def _require_super_nova_phase_gate(session) -> tuple[bool, tuple[dict, int] | None]:
+    """Fail closed if Super Nova is not admitted for live execution in this runtime."""
+    if not _session_uses_super_nova(session):
+        return True, None
+    phase_gate = _evaluate_super_nova_phase_gate("live_runtime")
+    session.metadata["super_nova_phase_gate"] = phase_gate
+    if phase_gate["decision"] == "ALLOW":
+        return True, None
+    immune_update = _super_nova_protocol_signal(
+        session,
+        signal_type="phase_gate_block",
+        severity="high",
+        reason=phase_gate["reason"] or "Super Nova phase gate blocked live execution.",
+        details={"phase_gate": phase_gate},
+    )
+    _transition_session_state(
+        session,
+        "degraded",
+        summary="Super Nova is blocked by the existence gate for this runtime context.",
+        reason="super_nova_phase_gate_blocked",
+        event_type="super_nova_phase_gate_blocked",
+        payload={
+            "phase_gate": phase_gate,
+            "immune_update": _summarize_super_nova_immune_update(immune_update),
+        },
+    )
+    _sync_super_nova_state(session)
+    return False, _super_nova_block_payload(
+        session,
+        "Super Nova is blocked by the governed phase gate for this live runtime.",
+        status_code=409,
+    )
+
+
+def _require_super_nova_activation(session) -> tuple[bool, tuple[dict, int] | None]:
+    """Fail closed if a Super Nova session has not been explicitly activated."""
+    if not _session_uses_super_nova(session):
+        return True, None
+    activation = super_nova_scaffold.describe_activation(session.session_id)
+    if activation.get("current_state") != "activation_ready" or not activation.get("activation_token_present"):
+        _transition_session_state(
+            session,
+            "awaiting_approval",
+            summary="Super Nova is selected but still needs explicit activation.",
+            reason="super_nova_activation_required",
+            event_type="super_nova_activation_required",
+            payload={"current_state": activation.get("current_state")},
+        )
+        return False, _super_nova_block_payload(
+            session,
+            "Super Nova needs explicit activation before she can answer live.",
+        )
+    return True, None
+
+
+def _finalize_super_nova_admission(
+    session,
+    *,
+    user_message: str,
+    response_text: str,
+) -> tuple[str | None, tuple[dict, int] | None]:
+    """Pass the Super Nova reply through the Project Infi admission seam before storing it."""
+    continuity_details = dict(session.metadata.get("super_nova_continuity") or {})
+    contract, ul_snapshot, _ = jarvis_operator.project_infi_law.require_contract(
+        surface="super_nova",
+        action_id="super_nova_reply",
+        actor_id="super_nova_runtime",
+        actor_role="system",
+        session_id=session.session_id,
+        target=f"chat_session:{session.session_id}",
+        repo_change=False,
+        verification_plan=None,
+        run_id=None,
+        cisiv_stage="verification",
+        details={
+            "persona_mode": normalize_persona_mode(session.metadata.get("persona_mode")),
+            "response_mode": normalize_response_mode(session.metadata.get("response_mode")),
+            "memory_mode": SUPER_NOVA_PROFILE["memory_mode"],
+            "drift_enforced": SUPER_NOVA_PROFILE["drift_enforced"],
+            "continuity_status": continuity_details.get("status"),
+            "continuity_failures": list(continuity_details.get("failure_reasons") or []),
+            "user_message_preview": _clip_trace_text(user_message, limit=180),
+            "response_preview": _clip_trace_text(response_text, limit=220),
+        },
+    )
+    law_enforcement, law_event_log = jarvis_operator.project_infi_law.finalize_runtime_action(
+        contract,
+        action_status="completed",
+        summary=response_text,
+        actor_id="super_nova_runtime",
+        actor_role="system",
+        details={
+            "persona_mode": normalize_persona_mode(session.metadata.get("persona_mode")),
+            "response_mode": normalize_response_mode(session.metadata.get("response_mode")),
+            "continuity_status": continuity_details.get("status"),
+        },
+    )
+    session.metadata["law_enforcement"] = law_enforcement
+    session.metadata["ul_snapshot"] = ul_snapshot
+    session.metadata["law_event_log"] = law_event_log
+    session.metadata["super_nova_law_enforcement"] = law_enforcement
+
+    governed_status = str((law_enforcement.get("governed_cycle") or {}).get("status") or "").strip()
+    if governed_status in {"success", "partial", "overload"}:
+        _sync_super_nova_state(session)
+        return response_text, None
+
+    blocked_message = (
+        ((law_enforcement.get("project_infi_layers") or {}).get("outcome") or {}).get("detail")
+        or "Super Nova held the reply because it did not pass governed final-truth admission."
+    )
+    immune_update = _super_nova_protocol_signal(
+        session,
+        signal_type="final_truth_rejected",
+        severity="high",
+        reason=blocked_message,
+        details={
+            "governed_status": governed_status or "rejected_no_admission",
+            "contract_version": PROJECT_INFI_CONTRACT_VERSION,
+        },
+    )
+    _transition_session_state(
+        session,
+        "degraded",
+        summary="Super Nova halted because Project Infi rejected reply admission.",
+        reason="super_nova_rejected_no_admission",
+        event_type="super_nova_rejected_no_admission",
+        payload={
+            "governed_status": governed_status,
+            "law_contract": PROJECT_INFI_CONTRACT_VERSION,
+            "immune_update": _summarize_super_nova_immune_update(immune_update),
+        },
+    )
+    _record_session_event(
+        session,
+        "super_nova_admission_blocked",
+        "Project Infi rejected Super Nova reply admission at the final-truth seam.",
+        payload={
+            "governed_status": governed_status,
+            "law_contract": PROJECT_INFI_CONTRACT_VERSION,
+        },
+    )
+    _sync_super_nova_state(session)
+    return None, _super_nova_block_payload(session, blocked_message, status_code=409)
+
+
+def _activate_super_nova_session(session) -> dict[str, object]:
+    """Run the explicit Super Nova activation gate for one session."""
+    phase_gate = _evaluate_super_nova_phase_gate("live_runtime")
+    session.metadata["super_nova_phase_gate"] = phase_gate
+    if phase_gate["decision"] == "BLOCK":
+        immune_update = _super_nova_protocol_signal(
+            session,
+            signal_type="phase_gate_block",
+            severity="high",
+            reason=phase_gate["reason"] or "Super Nova phase gate blocked activation.",
+            details={"phase_gate": phase_gate},
+        )
+        _sync_super_nova_state(session)
+        _record_session_event(
+            session,
+            "super_nova_activation_attempt",
+            "Super Nova activation was blocked by the governed phase gate.",
+            payload={
+                "result": "blocked",
+                "failure_reasons": [phase_gate["reason"]],
+                "phase_gate": phase_gate,
+                "immune_update": _summarize_super_nova_immune_update(immune_update),
+            },
+        )
+        return {
+            "result": "blocked",
+            "failure_reasons": [phase_gate["reason"]],
+            "phase_gate": phase_gate,
+            "activation": super_nova_scaffold.describe_activation(session.session_id),
+        }
+
+    continuity, continuity_details = _derive_super_nova_continuity(session)
+    attempt = super_nova_scaffold.attempt_activation(
+        session.session_id,
+        envelope=_build_super_nova_interface_envelope(session.session_id),
+        handshake=ActivationHandshake(),
+        continuity=continuity,
+    )
+    if attempt.result != "pass":
+        _super_nova_protocol_signal(
+            session,
+            signal_type="activation_gate_failed",
+            severity="medium",
+            reason="Super Nova activation failed one or more shield checks.",
+            details={
+                "failure_reasons": list(attempt.failure_reasons),
+                "continuity_status": continuity.status,
+            },
+        )
+    _sync_super_nova_state(session)
+    _record_session_event(
+        session,
+        "super_nova_activation_attempt",
+        "Super Nova activation was evaluated through the fail-closed gate.",
+        payload={
+            "result": attempt.result,
+            "failure_reasons": list(attempt.failure_reasons),
+            "continuity": continuity_details,
+            "phase_gate": phase_gate,
+        },
+    )
+    return {
+        "result": attempt.result,
+        "failure_reasons": list(attempt.failure_reasons),
+        "continuity": continuity_details,
+        "phase_gate": phase_gate,
+        "activation": super_nova_scaffold.describe_activation(session.session_id),
+    }
+
+
+def _run_super_nova_session(
+    session,
+    fn,
+    *,
+    user_message: str,
+) -> tuple[str | None, tuple[dict, int] | None]:
+    """Run one live Super Nova turn with gate-before-execution and watchdog-after-output."""
+    allowed, blocked_payload = _require_super_nova_phase_gate(session)
+    if not allowed:
+        return None, blocked_payload
+    allowed, blocked_payload = _require_super_nova_activation(session)
+    if not allowed:
+        return None, blocked_payload
+    response_text, blocked_payload = _run_super_nova_guarded_reply(
+        session,
+        fn,
+        user_message=user_message,
+    )
+    if blocked_payload:
+        return None, blocked_payload
+    return _finalize_super_nova_admission(
+        session,
+        user_message=user_message,
+        response_text=response_text or "",
+    )
+
+
+def _run_super_nova_guarded_reply(
+    session,
+    fn,
+    *,
+    user_message: str,
+) -> tuple[str | None, tuple[dict, int] | None]:
+    """Run one Super Nova reply behind the live activation token and watchdog."""
+    state = super_nova_scaffold.get_active_token(session.session_id)
+    if state is None:
+        raise RuntimeError("Super Nova has no active activation token.")
+    continuity_before, continuity_details = _derive_super_nova_continuity(session)
+    session.metadata["super_nova_continuity"] = continuity_details
+    try:
+        response_text = _run_with_inference_lock(
+            lambda: super_nova_scaffold.guarded_call(
+                session.session_id,
+                state.token_id,
+                fn,
+                continuity=continuity_before,
+            )
+        )
+    except RuntimeError as exc:
+        immune_update = _super_nova_protocol_signal(
+            session,
+            signal_type="watchdog_blocked_execution",
+            severity="high",
+            reason=str(exc),
+            details={
+                "continuity_status": continuity_before.status,
+                "continuity_failures": list(continuity_before.failure_reasons),
+            },
+        )
+        _sync_super_nova_state(session)
+        _transition_session_state(
+            session,
+            "degraded",
+            summary="Super Nova halted before execution because the governed watchdog failed.",
+            reason="super_nova_watchdog_blocked_execution",
+            event_type="super_nova_watchdog_blocked_execution",
+            payload={
+                "error": str(exc),
+                "immune_update": _summarize_super_nova_immune_update(immune_update),
+            },
+        )
+        _record_session_event(
+            session,
+            "super_nova_watchdog_fail",
+            "Super Nova watchdog blocked execution before the reply could run.",
+            payload={"error": str(exc), "user_message": _clip_trace_text(user_message, limit=180)},
+        )
+        return None, _super_nova_block_payload(
+            session,
+            "Super Nova halted before execution because the governed activation boundary failed.",
+            status_code=409,
+        )
+    continuity_after, continuity_after_details = _derive_super_nova_continuity(
+        session,
+        candidate_text=response_text,
+    )
+    session.metadata["super_nova_continuity"] = continuity_after_details
+    if continuity_after.status != "verified":
+        super_nova_scaffold.validate_activation_context(
+            session.session_id,
+            state.token_id,
+            continuity=continuity_after,
+        )
+        immune_update = _super_nova_protocol_signal(
+            session,
+            signal_type="super_nova_shield_violation",
+            severity="high",
+            reason="Super Nova reply drifted outside the governed continuity boundary.",
+            details=continuity_after_details,
+        )
+        _sync_super_nova_state(session)
+        _transition_session_state(
+            session,
+            "degraded",
+            summary="Super Nova halted because the reply drifted outside governed continuity.",
+            reason="super_nova_drift_blocked",
+            event_type="super_nova_drift_blocked",
+            payload={
+                **continuity_after_details,
+                "immune_update": _summarize_super_nova_immune_update(immune_update),
+            },
+        )
+        _record_session_event(
+            session,
+            "super_nova_watchdog_fail",
+            "Super Nova watchdog invalidated the session after continuity drift.",
+            payload=continuity_after_details,
+        )
+        return None, _super_nova_block_payload(
+            session,
+            "Super Nova paused because the reply drifted outside her governed boundary. Review the state, then reactivate when you want to continue.",
+            status_code=409,
+        )
+    _sync_super_nova_state(session)
+    _record_session_event(
+        session,
+        "super_nova_watchdog_pass",
+        "Super Nova passed continuity and watchdog checks for this turn.",
+        payload=continuity_after_details,
+    )
+    return response_text, None
 
 def create_sse_generator(stream_generator, final_emitter=None):
     """Wrap a streaming generator to produce SSE-formatted output.
@@ -2891,6 +3567,87 @@ def _execute_approved_local_action(session, action_id: str, action=None, approva
         resolved_voice="jarvis",
         contract_label="action_execution",
     )
+    bridge_result = _route_action_execution_to_bridge(
+        session,
+        action_id=action_id,
+        action=action,
+        approval_source=approval_source,
+    )
+    _record_session_event(
+        session,
+        "cognitive_bridge_routed",
+        summarize_bridge_result(bridge_result),
+        payload=bridge_result,
+    )
+    if bridge_result.get("decision") == "BLOCK":
+        blocked_summary = _bridge_block_message(
+            bridge_result,
+            "Cognitive Bridge blocked the local action before execution.",
+        )
+        _set_action_lifecycle(
+            session,
+            stage="blocked",
+            action=action,
+            approval_state="approved",
+            execution_state="blocked",
+            source=approval_source,
+            response_mode="operator",
+            error=blocked_summary,
+        )
+        _transition_session_state(
+            session,
+            "degraded",
+            summary="A local action was blocked by the Cognitive Bridge before execution.",
+            reason="action_blocked",
+            event_type="action_blocked",
+            payload={
+                "action_id": action_id,
+                "bridge_result": bridge_result,
+            },
+        )
+        blocked_result = {
+            "response": f"{(action or {}).get('label', action_id)} was not executed.\n{blocked_summary}\n\nExit code: 1",
+            "tool_result": {
+                "type": "action_result",
+                "action": action,
+                "status": "blocked",
+                "exit_code": 1,
+                "stdout": "",
+                "stderr": "",
+                "summary": blocked_summary,
+                "ran_at": datetime.now(UTC).isoformat(),
+                "cognitive_bridge": bridge_result,
+            },
+        }
+        session.metadata["response_trace"] = _build_tool_response_trace(
+            "operator",
+            tool_result=blocked_result["tool_result"],
+            provider_mind=_resolve_provider_mind(session, f"Execute action {action_id}", "operator"),
+            action_lifecycle=session.metadata.get("action_lifecycle"),
+            turn_contract=session.metadata.get("turn_contract"),
+            cognitive_bridge=bridge_result,
+            session=session,
+            runtime_context="operator_runtime",
+        )
+        session.add_turn(
+            "assistant",
+            blocked_result["response"],
+            metadata={
+                "persistent_memories": [],
+                "workspace_context": None,
+                "live_research": None,
+                "response_trace": session.metadata.get("response_trace"),
+                "tool_result": blocked_result["tool_result"],
+            },
+        )
+        _refresh_action_lifecycle(session)
+        _record_session_event(
+            session,
+            "action_execution_blocked",
+            blocked_summary,
+            payload={"action_id": action_id, "bridge_result": bridge_result},
+        )
+        return blocked_result
     _transition_session_state(
         session,
         "acting",
@@ -2908,6 +3665,7 @@ def _execute_approved_local_action(session, action_id: str, action=None, approva
             action_id,
             action=action,
             session_id=session.session_id,
+            cognitive_bridge=bridge_result,
         )
     except Exception as exc:
         _set_action_lifecycle(
@@ -2926,6 +3684,7 @@ def _execute_approved_local_action(session, action_id: str, action=None, approva
             provider_mind=_resolve_provider_mind(session, f"Execute action {action_id}", "operator"),
             action_lifecycle=session.metadata.get("action_lifecycle"),
             turn_contract=session.metadata.get("turn_contract"),
+            cognitive_bridge=bridge_result,
             session=session,
             runtime_context="operator_runtime",
         )
@@ -2995,6 +3754,7 @@ def _execute_approved_local_action(session, action_id: str, action=None, approva
         specialist_preset=specialist_preset,
         action_lifecycle=session.metadata.get("action_lifecycle"),
         turn_contract=session.metadata.get("turn_contract"),
+        cognitive_bridge=bridge_result,
         session=session,
         runtime_context="operator_runtime",
     )
@@ -3109,16 +3869,28 @@ def _consume_pending_action_approval(
         "Jarvis received approval and is executing the pending local action immediately.",
         payload={"action_id": action_id, "action_label": (action or {}).get("label")},
     )
+    action_result = _execute_approved_local_action(
+        session,
+        action_id,
+        action=action,
+        approval_source="approval_turn",
+    )
+    if str((action_result.get("tool_result") or {}).get("status") or "").strip().lower() == "blocked":
+        return {
+            "blocked": True,
+            "action": action,
+            "policy_status": {
+                **dict(policy_status or {}),
+                "summary": (action_result.get("tool_result") or {}).get("summary")
+                or "Local action blocked.",
+            },
+            "action_result": action_result,
+        }
     return {
         "blocked": False,
         "action": action,
         "policy_status": policy_status,
-        "action_result": _execute_approved_local_action(
-            session,
-            action_id,
-            action=action,
-            approval_source="approval_turn",
-        ),
+        "action_result": action_result,
     }
 
 
@@ -3304,6 +4076,126 @@ def _previous_governed_pipeline(session):
     return None
 
 
+def _current_cognitive_bridge(session) -> dict | None:
+    """Return the most recent routed bridge packet for this session, when present."""
+    metadata = getattr(session, "metadata", None)
+    if not isinstance(metadata, dict):
+        return None
+    payload = metadata.get("cognitive_bridge")
+    if isinstance(payload, dict) and payload:
+        return dict(payload)
+    return None
+
+
+def _bridge_block_message(bridge_result: dict | None, default: str) -> str:
+    """Render one concise operator-facing bridge block message."""
+    payload = dict(bridge_result or {})
+    reason_codes = list(payload.get("reason_codes") or [])
+    if "approval_missing_for_effectful_execution" in reason_codes:
+        return "Cognitive Bridge blocked execution because explicit approval was missing."
+    if "model_only_source_cannot_execute" in reason_codes:
+        return "Cognitive Bridge blocked execution because model-only sources cannot authorize action."
+    if "governed_event_blocked" in reason_codes:
+        return "Cognitive Bridge blocked execution because the invariant gate did not clear the packet."
+    return default
+
+
+def _route_session_turn_to_bridge(
+    session,
+    *,
+    user_message: str,
+    request_payload: dict | None,
+    response_mode: str,
+) -> dict:
+    """Route the active user turn through the shared cognitive bridge before work continues."""
+    payload = dict(request_payload or {})
+    external_details = _extract_external_suggestion_details(payload)
+    risk = "medium" if _is_action_approval_message(user_message) or detect_otem(user_message) else "low"
+    bridge_result = cognitive_bridge_service.route_to_bridge(
+        {
+            "source": "chat_session",
+            "type": "operator_turn",
+            "payload": {
+                "session_id": session.session_id,
+                "message_preview": _clip_trace_text(user_message, limit=220),
+                "persona_mode": session.metadata.get("persona_mode"),
+                "response_mode": response_mode,
+                "use_research": payload.get("use_research"),
+                "loaded_session_archive": bool(payload.get("loaded_session_archive")),
+                "requested_specialists": list(payload.get("requested_specialists") or []),
+                "requested_specialist_preset": payload.get("requested_specialist_preset"),
+                "execution_intent": "respond",
+                **external_details,
+            },
+            "requires_approval": False,
+            "risk": risk,
+        },
+        runtime_context="live_runtime",
+    )
+    session.metadata["cognitive_bridge"] = bridge_result
+    return bridge_result
+
+
+def _route_action_execution_to_bridge(
+    session,
+    *,
+    action_id: str,
+    action: dict | None,
+    approval_source: str,
+) -> dict:
+    """Route one approved runtime action through the shared bridge before execution."""
+    normalized_action_id = " ".join(str(action_id or "").replace("-", "_").split()).strip().lower()
+    action_payload = dict(action or {})
+    external_details = _extract_external_suggestion_details(action_payload)
+    repo_change = normalized_action_id == "apply_patch_review"
+    bridge_result = cognitive_bridge_service.route_to_bridge(
+        {
+            "source": "api_action",
+            "type": "repo_change_execute" if repo_change else "runtime_action_execute",
+            "payload": {
+                "session_id": session.session_id,
+                "action_id": normalized_action_id,
+                "action_label": action_payload.get("label"),
+                "repo_change": repo_change,
+                "approval_granted": True,
+                "approval_source": approval_source,
+                "verification_required": True if repo_change else False,
+                "execution_intent": "execute",
+                **external_details,
+            },
+            "requires_approval": True if repo_change else False,
+            "risk": "high" if repo_change else "medium",
+        },
+        runtime_context="operator_runtime",
+    )
+    session.metadata["cognitive_bridge"] = bridge_result
+    return bridge_result
+
+
+def _route_reasoning_ingress_to_bridge(raw_packet: dict | None, *, runtime_context: str) -> dict:
+    """Route a reasoning ingress envelope through the shared bridge before protocol evaluation."""
+    packet = dict(raw_packet or {})
+    meta = dict(packet.get("meta") or {})
+    return cognitive_bridge_service.route_to_bridge(
+        {
+            "source": str(meta.get("source") or "reasoning_exchange"),
+            "type": "reasoning_packet_ingress",
+            "payload": {
+                "packet_id": packet.get("id"),
+                "packet_version": packet.get("version"),
+                "packet_type": packet.get("type"),
+                "domain": meta.get("domain"),
+                "tags": list(meta.get("tags") or []),
+                "payload_present": bool(packet.get("payload")),
+                "execution_intent": "evaluate",
+            },
+            "requires_approval": False,
+            "risk": "medium",
+        },
+        runtime_context=runtime_context,
+    )
+
+
 def _hydrate_jarvis_context(
     session,
     user_message: str,
@@ -3477,6 +4369,7 @@ def _hydrate_jarvis_context(
             "provider_mind": provider_mind,
             "model_route": model_route,
             "god_brain": god_brain,
+            "cognitive_bridge": _current_cognitive_bridge(session),
             "governed_pipeline": governed_pipeline,
             "memory_cues": dict(session.metadata.get("memory_cue_trace") or {}),
             "context_priority_guard": context_priority_guard,
@@ -3619,6 +4512,7 @@ def _hydrate_jarvis_context(
             "provider_mind": provider_mind,
             "model_route": model_route,
             "god_brain": god_brain,
+            "cognitive_bridge": _current_cognitive_bridge(session),
             "governed_pipeline": governed_pipeline,
             "memory_cues": dict(session.metadata.get("memory_cue_trace") or {}),
             "context_priority_guard": context_priority_guard,
@@ -3823,6 +4717,7 @@ def _hydrate_jarvis_context(
         "provider_mind": provider_mind,
         "model_route": model_route,
         "god_brain": god_brain,
+        "cognitive_bridge": _current_cognitive_bridge(session),
         "governed_pipeline": governed_pipeline,
         "memory_cues": dict(session.metadata.get("memory_cue_trace") or {}),
         "context_priority_guard": context_priority_guard,
@@ -3847,6 +4742,7 @@ def _build_tool_response_trace(
     action_lifecycle=None,
     turn_contract=None,
     session=None,
+    cognitive_bridge=None,
     runtime_context: str = "live_runtime",
     operator_text: str | None = None,
 ):
@@ -3990,6 +4886,7 @@ def _build_tool_response_trace(
         "model_route": model_route,
         "provider_mind": provider_mind,
         "god_brain": god_brain,
+        "cognitive_bridge": cognitive_bridge or _current_cognitive_bridge(session),
         "governed_pipeline": governed_pipeline,
         "capability_bridge": capability_bridge or None,
         "memory_cues": dict(((session.metadata if session else {}) or {}).get("memory_cue_trace") or {}),
@@ -4144,6 +5041,23 @@ def _extract_external_suggestion_details(payload: dict | None) -> dict:
         "external_suggestion_usage",
         "law_filter_applied",
         "admitted_external_form",
+        "content_transfer_mode",
+        "share_mode",
+        "export_mode",
+        "pattern_share_mode",
+        "collective_share_mode",
+        "copy_raw_external",
+        "share_raw",
+        "raw_export",
+        "copy_raw",
+        "copy_private_run",
+        "share_private_run",
+        "private_export",
+        "raw_prompts",
+        "raw_chat_logs",
+        "raw_code",
+        "raw_traces",
+        "raw_documents",
     ):
         value = data.get(key)
         if value in (None, "", [], {}):
@@ -4301,17 +5215,17 @@ def _record_external_suggestion_admission_trace(response_trace, admission):
     if status == "blocked":
         _append_response_trace_step(
             response_trace,
-            "Blocked raw external adoption in the freeform chat lane until the law filter and admitted form are present.",
+            "Blocked raw external adoption in the freeform chat lane until the law filter, admitted form, and non-copy clause all clear.",
         )
     elif status == "admitted":
         _append_response_trace_step(
             response_trace,
-            "External suggestion admission accepted for this turn. Jarvis is using only the documented admitted form.",
+            "External suggestion admission accepted for this turn. Jarvis is using only the documented admitted form and is not copying raw outside wording into system truth.",
         )
     elif status == "reference_only":
         _append_response_trace_step(
             response_trace,
-            "External suggestion observed as comparison-only context for this turn and not treated as adopted system truth.",
+            "External suggestion observed as comparison-only context for this turn and not copied into adopted system truth.",
         )
     return summary
 
@@ -4326,14 +5240,14 @@ def _build_external_suggestion_guidance_block(session):
         return (
             "External suggestion admission law: the raw outside proposal is not system truth. "
             "Use only this documented admitted form for this turn, keep existing doctrine intact, "
-            f"and do not promote any unadmitted external wording into architecture: {admitted_form}"
+            f"do not copy raw outside wording into architecture or collective truth, and use only this admitted form: {admitted_form}"
         )
     if admission.get("status") == "reference_only":
         usage_mode = admission.get("usage_mode") or "reference"
         return (
             "External suggestion admission law: an outside idea is present for "
             f"{usage_mode} only. It may be discussed, compared, critiqued, or pressure-tested, "
-            "but it is not adopted system behavior and must not be treated as implementation truth."
+            "but it is not adopted system behavior and must not be copied into implementation truth."
         )
     return None
 
@@ -4343,10 +5257,11 @@ def _build_external_suggestion_guardrail_result(admission: dict, *, blocking_mes
     remedy = (
         "document the admitted form first."
         if admission.get("law_filter_applied")
-        else "run the law filter, remove doctrine violations, document the admitted form, and only then continue from that admitted form."
+        else "run the law filter, remove doctrine violations, satisfy the non-copy clause, document the admitted form, and only then continue from that admitted form."
     )
     response = (
         "I can compare, critique, or pressure-test that outside proposal, but I can't adopt it from ordinary conversation. "
+        "I also can't copy it raw into AAIS truth. "
         f"{remedy[0].upper()}{remedy[1:]}"
     )
     return {
@@ -4355,7 +5270,7 @@ def _build_external_suggestion_guardrail_result(admission: dict, *, blocking_mes
             "type": "external_suggestion_guardrail",
             "status": "blocked",
             "summary": (
-                "Jarvis blocked raw external adoption in ordinary conversation until the law filter and admitted form are present."
+                "Jarvis blocked raw external adoption in ordinary conversation until the law filter, admitted form, and non-copy clause are satisfied."
             ),
             "external_suggestion_admission": dict(admission or {}),
             "external_suggestion_guardrail": {
@@ -5228,6 +6143,7 @@ def _resolve_generation_controls(response_mode, requested_length=None, requested
 
 def _build_chat_runtime_payload(session, session_id, tool_result=None):
     """Serialize the current chat runtime state for JSON or SSE payloads."""
+    _sync_super_nova_state(session)
     response_trace = _sanitize_session_response_trace(session)
     canonical_trace_contract = _sync_canonical_trace_contract(session, response_trace=response_trace)
     mission_context = session.metadata.get("mission_board") or mission_board.build_session_context(session_id)
@@ -5293,6 +6209,10 @@ def _build_chat_runtime_payload(session, session_id, tool_result=None):
         "mode_guidance": session.metadata.get("mode_guidance"),
         "context_priority_guard": session.metadata.get("context_priority_guard"),
         "external_suggestion_admission": session.metadata.get("external_suggestion_admission"),
+        "cognitive_bridge": session.metadata.get("cognitive_bridge"),
+        "law_enforcement": session.metadata.get("law_enforcement"),
+        "ul_snapshot": session.metadata.get("ul_snapshot"),
+        "law_event_log": session.metadata.get("law_event_log"),
         "response_trace": response_trace,
         "canonical_trace_contract": canonical_trace_contract,
         "turn_contract": session.metadata.get("turn_contract"),
@@ -5306,6 +6226,7 @@ def _build_chat_runtime_payload(session, session_id, tool_result=None):
         "continuity_witness": session.metadata.get("continuity_witness"),
         "pending_action": session.metadata.get("pending_action"),
         "action_lifecycle": session.metadata.get("action_lifecycle"),
+        "super_nova": session.metadata.get("super_nova_state"),
         "approval_audit": jarvis_operator.list_approval_audit(session_id, limit=8),
         "run_history": jarvis_operator.list_runs(session_id=session_id, limit=8),
         "memory_smith": jarvis_operator.memory_smith.snapshot(),
@@ -5730,6 +6651,7 @@ dreamspace.configure_callbacks(
 
 def _serialize_session_payload(session):
     """Return a session payload plus the current system guard state."""
+    _sync_super_nova_state(session)
     _attach_session_mission_context(session)
     _refresh_sovereignty_contract(session)
     _ensure_authority_state(session)
@@ -5757,6 +6679,7 @@ def _serialize_session_payload(session):
     payload["run_history"] = jarvis_operator.list_runs(session_id=session.session_id, limit=8)
     payload["memory_smith"] = jarvis_operator.memory_smith.snapshot()
     payload["provider_mind"] = session.metadata.get("provider_mind")
+    payload["super_nova"] = session.metadata.get("super_nova_state")
     payload["system_guard"] = system_guard.snapshot(limit_events=4)
     payload["v9_runtime"] = v9_runtime.snapshot(limit=4)
     payload["v10_runtime"] = v10_runtime.snapshot(limit=4)
@@ -8669,6 +9592,90 @@ def resolve_governed_module(module_id):
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/reasoning/evaluate", methods=["POST"])
+def evaluate_reasoning_exchange_packet():
+    """Admit or reject one neutral reasoning packet under local AAIS law."""
+    protocol = ReasoningExchangeProtocol()
+    runtime_context = request.args.get("runtime_context") or "live_runtime"
+    try:
+        raw_packet = request.get_json(silent=True)
+        bridge_result = _route_reasoning_ingress_to_bridge(raw_packet, runtime_context=runtime_context)
+        if bridge_result.get("decision") == "BLOCK":
+            return jsonify(
+                {
+                    "status": "REJECT",
+                    "reason": "cognitive_bridge_blocked",
+                    "cognitive_bridge": bridge_result,
+                    "immune_system": protocol.immune_controller.snapshot(limit_events=6, limit_incidents=3),
+                }
+            ), 403
+        normalized_packet = normalize_reasoning_exchange_packet(raw_packet)
+        if normalized_packet["version"] != REASONING_EXCHANGE_PROTOCOL_VERSION:
+            payload = build_reasoning_exchange_reject_response(
+                normalized_packet,
+                reason="unsupported_version",
+                notes=["Supported version is 1.0."],
+            )
+            payload["cognitive_bridge"] = bridge_result
+            payload["immune_update"] = protocol.observe_boundary_signal(
+                signal_type="unsupported_version",
+                severity="medium",
+                reason="Reasoning packet used an unsupported protocol version.",
+                runtime_context=runtime_context,
+                packet=normalized_packet,
+                decision="REJECT",
+            )
+            payload["immune_system"] = protocol.immune_controller.snapshot(limit_events=6, limit_incidents=3)
+            return jsonify(payload)
+        if normalized_packet["type"] != REASONING_EXCHANGE_PACKET_TYPE:
+            payload = build_reasoning_exchange_reject_response(
+                normalized_packet,
+                reason="unsupported_packet_type",
+                notes=["Only reasoning_packet is supported."],
+            )
+            payload["cognitive_bridge"] = bridge_result
+            payload["immune_update"] = protocol.observe_boundary_signal(
+                signal_type="unsupported_packet_type",
+                severity="medium",
+                reason="Reasoning packet used an unsupported packet type.",
+                runtime_context=runtime_context,
+                packet=normalized_packet,
+                decision="REJECT",
+            )
+            payload["immune_system"] = protocol.immune_controller.snapshot(limit_events=6, limit_incidents=3)
+            return jsonify(payload)
+
+        payload = protocol.evaluate_normalized_packet(
+            normalized_packet,
+            runtime_context=runtime_context,
+        )
+        payload["cognitive_bridge"] = bridge_result
+        status_code = 403 if payload.get("phase_gate", {}).get("decision") == "BLOCK" or payload.get("module_governance", {}).get("decision") == "BLOCK" else 200
+        return jsonify(payload), status_code
+    except ReasoningExchangeValidationError as e:
+        payload = {
+            "status": "INVALID",
+            "reason": str(e),
+            "cognitive_bridge": _route_reasoning_ingress_to_bridge(
+                request.get_json(silent=True),
+                runtime_context=runtime_context,
+            ),
+            "immune_update": protocol.observe_boundary_signal(
+                signal_type="invalid_packet_structure",
+                severity="medium",
+                reason=str(e),
+                runtime_context=runtime_context,
+                raw_packet=request.get_json(silent=True),
+                decision="INVALID",
+            ),
+            "immune_system": protocol.immune_controller.snapshot(limit_events=6, limit_incidents=3),
+        }
+        return jsonify(payload), 400
+    except Exception as e:
+        logger.error(f"Error evaluating reasoning exchange packet: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/continuity/profile", methods=["GET", "PATCH"])
 def manage_continuity_profile():
     """Expose and update Jarvis continuity profile state."""
@@ -10158,6 +11165,105 @@ def diff_chat_session_state(session_id):
     return jsonify({"state_diff": _build_session_state_diff(session, snapshot_id=snapshot_id)})
 
 
+@app.route("/api/chat/sessions/<session_id>/super-nova/status", methods=["GET"])
+def get_super_nova_status(session_id):
+    """Return the current operator-facing Super Nova status for one session."""
+    session = conversation_memory.get_session(session_id)
+    if not session:
+        return jsonify({"error": "Session not found or expired"}), 404
+    if not _session_uses_super_nova(session):
+        return jsonify({"error": "Super Nova is not the active lane for this session."}), 409
+
+    return jsonify(
+        {
+            "super_nova": _sync_super_nova_state(session),
+            **_serialize_session_payload(session),
+        }
+    )
+
+
+@app.route("/api/chat/sessions/<session_id>/super-nova/activate", methods=["POST"])
+def activate_super_nova(session_id):
+    """Run the explicit Super Nova activation gate for one session."""
+    session = conversation_memory.get_session(session_id)
+    if not session:
+        return jsonify({"error": "Session not found or expired"}), 404
+    if not _session_uses_super_nova(session):
+        return jsonify({"error": "Super Nova is not the active lane for this session."}), 409
+
+    activation = _activate_super_nova_session(session)
+    status_code = 200 if activation["result"] == "pass" else 409
+    return jsonify(
+        {
+            "activation": activation,
+            **_serialize_session_payload(session),
+        }
+    ), status_code
+
+
+@app.route("/api/chat/sessions/<session_id>/super-nova/pause", methods=["POST"])
+def pause_super_nova(session_id):
+    """Pause a live Super Nova session immediately."""
+    session = conversation_memory.get_session(session_id)
+    if not session:
+        return jsonify({"error": "Session not found or expired"}), 404
+    if not _session_uses_super_nova(session):
+        return jsonify({"error": "Super Nova is not the active lane for this session."}), 409
+
+    reason = str((request.json or {}).get("reason") or "operator_pause").strip() or "operator_pause"
+    event = super_nova_scaffold.operator_pause(session_id, reason=reason)
+    _sync_super_nova_state(session)
+    _record_session_event(
+        session,
+        "super_nova_state_change",
+        "Operator paused Super Nova.",
+        payload={"reason": event.reason, "state": event.state, "details": list(event.details)},
+    )
+    return jsonify({"event": {"reason": event.reason, "state": event.state}, **_serialize_session_payload(session)})
+
+
+@app.route("/api/chat/sessions/<session_id>/super-nova/resume", methods=["POST"])
+def resume_super_nova(session_id):
+    """Resume a paused Super Nova session when the token is still valid."""
+    session = conversation_memory.get_session(session_id)
+    if not session:
+        return jsonify({"error": "Session not found or expired"}), 404
+    if not _session_uses_super_nova(session):
+        return jsonify({"error": "Super Nova is not the active lane for this session."}), 409
+
+    reason = str((request.json or {}).get("reason") or "operator_resume").strip() or "operator_resume"
+    event = super_nova_scaffold.operator_resume(session_id, reason=reason)
+    _sync_super_nova_state(session)
+    _record_session_event(
+        session,
+        "super_nova_state_change",
+        "Operator resumed Super Nova.",
+        payload={"reason": event.reason, "state": event.state, "details": list(event.details)},
+    )
+    return jsonify({"event": {"reason": event.reason, "state": event.state}, **_serialize_session_payload(session)})
+
+
+@app.route("/api/chat/sessions/<session_id>/super-nova/stop", methods=["POST"])
+def stop_super_nova(session_id):
+    """Stop Super Nova immediately and revoke any live activation token."""
+    session = conversation_memory.get_session(session_id)
+    if not session:
+        return jsonify({"error": "Session not found or expired"}), 404
+    if not _session_uses_super_nova(session):
+        return jsonify({"error": "Super Nova is not the active lane for this session."}), 409
+
+    reason = str((request.json or {}).get("reason") or "operator_stop").strip() or "operator_stop"
+    event = super_nova_scaffold.operator_stop(session_id, reason=reason)
+    _sync_super_nova_state(session)
+    _record_session_event(
+        session,
+        "super_nova_state_change",
+        "Operator stopped Super Nova and revoked the live token.",
+        payload={"reason": event.reason, "state": event.state, "details": list(event.details)},
+    )
+    return jsonify({"event": {"reason": event.reason, "state": event.state}, **_serialize_session_payload(session)})
+
+
 @app.route("/api/chat/sessions/<session_id>/authority/preferences", methods=["POST"])
 def update_chat_session_authority_preferences(session_id):
     """Update session-scoped knowledge authority preferences."""
@@ -10253,10 +11359,31 @@ def chat_message(session_id):
         )
         _set_session_response_mode(session, requested_response_mode)
         companion_turn = _session_uses_companion_lane(session)
+        super_nova_turn = _session_uses_super_nova(session)
         _attach_session_mission_context(session)
 
         if not user_message:
             return jsonify({"error": "Message is required"}), 400
+
+        try:
+            bridge_result = _route_session_turn_to_bridge(
+                session,
+                user_message=user_message,
+                request_payload=data,
+                response_mode=requested_response_mode,
+            )
+        except CognitiveBridgeValidationError as exc:
+            return jsonify({"error": str(exc)}), 400
+        if bridge_result.get("decision") == "BLOCK":
+            return jsonify(
+                {
+                    "error": _bridge_block_message(
+                        bridge_result,
+                        "Cognitive Bridge blocked the turn before runtime execution.",
+                    ),
+                    "cognitive_bridge": bridge_result,
+                }
+            ), 403
 
         _begin_turn_trace(session)
         # Add the new turn and generate from structured history.
@@ -10305,6 +11432,12 @@ def chat_message(session_id):
                 "requested_specialists": requested_specialists,
                 "requested_specialist_preset": requested_specialist_preset,
             },
+        )
+        _record_session_event(
+            session,
+            "cognitive_bridge_routed",
+            summarize_bridge_result(session.metadata.get("cognitive_bridge")),
+            payload=session.metadata.get("cognitive_bridge"),
         )
         if mode_guidance.get("status") != "aligned":
             _record_session_event(
@@ -10625,7 +11758,17 @@ def chat_message(session_id):
                     generation_metadata=generation_metadata,
                 )
 
-            response_text = _run_with_inference_lock(_generate_chat_reply)
+            if super_nova_turn:
+                response_text, blocked_payload = _run_super_nova_session(
+                    session,
+                    _generate_chat_reply,
+                    user_message=user_message,
+                )
+                if blocked_payload:
+                    payload, status_code = blocked_payload
+                    return jsonify(payload), status_code
+            else:
+                response_text = _run_with_inference_lock(_generate_chat_reply)
             corrigibility_engine.mark_generation_applied(session)
 
         review = mission_critic.review_reply(
@@ -10739,10 +11882,36 @@ def chat_message_stream(session_id):
         )
         _set_session_response_mode(session, requested_response_mode)
         companion_turn = _session_uses_companion_lane(session)
+        super_nova_turn = _session_uses_super_nova(session)
         _attach_session_mission_context(session)
+        if super_nova_turn:
+            allowed, blocked_payload = _require_super_nova_activation(session)
+            if not allowed:
+                payload, status_code = blocked_payload
+                return jsonify(payload), status_code
 
         if not user_message:
             return jsonify({"error": "Message is required"}), 400
+
+        try:
+            bridge_result = _route_session_turn_to_bridge(
+                session,
+                user_message=user_message,
+                request_payload=data,
+                response_mode=requested_response_mode,
+            )
+        except CognitiveBridgeValidationError as exc:
+            return jsonify({"error": str(exc)}), 400
+        if bridge_result.get("decision") == "BLOCK":
+            return jsonify(
+                {
+                    "error": _bridge_block_message(
+                        bridge_result,
+                        "Cognitive Bridge blocked the turn before runtime execution.",
+                    ),
+                    "cognitive_bridge": bridge_result,
+                }
+            ), 403
 
         _begin_turn_trace(session)
         awaiting_approval = session.session_state.state == "awaiting_approval"
@@ -10814,6 +11983,12 @@ def chat_message_stream(session_id):
                 "requested_specialists": requested_specialists,
                 "requested_specialist_preset": requested_specialist_preset,
             },
+        )
+        _record_session_event(
+            session,
+            "cognitive_bridge_routed",
+            summarize_bridge_result(session.metadata.get("cognitive_bridge")),
+            payload=session.metadata.get("cognitive_bridge"),
         )
         mode_event = None
         if mode_guidance.get("status") != "aligned":
@@ -11164,7 +12339,96 @@ def chat_message_stream(session_id):
                     **_build_chat_runtime_payload(session, session_id),
                 })
 
-                if direct_challenge_turn:
+                if super_nova_turn:
+                    def _generate_super_nova_stream_reply():
+                        _transition_session_state(
+                            session,
+                            "responding",
+                            summary="Super Nova is generating the governed reply.",
+                            reason="responding",
+                            event_type="response_generation_started",
+                            payload={"response_mode": response_mode},
+                        )
+                        routing_profile = session.metadata.get("model_route") or {}
+                        response_text = None
+                        generation_metadata = {"output_token_budget": int(max_new_tokens or 0)}
+                        if routing_profile.get("provider") not in {None, "", "local"}:
+                            try:
+                                remote_response = _generate_remote_provider_reply(
+                                    session,
+                                    max_length=max_new_tokens,
+                                    temperature=temperature,
+                                    plan_summary=response_trace.get("plan_summary"),
+                                )
+                            except Exception as exc:
+                                provider_notice = _apply_remote_provider_fallback(
+                                    session,
+                                    exc,
+                                    response_trace=response_trace,
+                                )
+                                if provider_notice is None:
+                                    raise
+                                _record_session_event(
+                                    session,
+                                    "provider_fallback",
+                                    provider_notice["summary"],
+                                    payload=provider_notice,
+                                )
+                            else:
+                                _append_response_trace_step(
+                                    response_trace,
+                                    f"Delegated the final answer to {routing_profile.get('provider_label', routing_profile.get('provider'))}.",
+                                )
+                                response_text = remote_response.content
+                                generation_metadata = _generation_metadata_from_provider_response(
+                                    remote_response,
+                                    output_token_budget=_effective_provider_output_budget(session, max_new_tokens),
+                                )
+                        if response_text is None:
+                            final_messages = _build_generation_messages(
+                                session,
+                                plan_summary=response_trace.get("plan_summary"),
+                                response_trace=response_trace,
+                                max_length=max_new_tokens,
+                                model=ai_model,
+                            )
+                            model, _ = init_ai()
+                            response_text = model.generate_chat(
+                                final_messages,
+                                max_length=max_new_tokens,
+                                temperature=temperature,
+                                response_mode=response_mode,
+                                routing_profile=session.metadata.get("model_route"),
+                            )
+                            generation_metadata = _generation_metadata_from_model(
+                                model,
+                                output_token_budget=max_new_tokens,
+                            )
+                        return _finalize_visible_response(
+                            session,
+                            user_message,
+                            response_text,
+                            response_trace=response_trace,
+                            generation_metadata=generation_metadata,
+                        )
+
+                    full_response, blocked_payload = _run_super_nova_session(
+                        session,
+                        _generate_super_nova_stream_reply,
+                        user_message=user_message,
+                    )
+                    if blocked_payload:
+                        payload, status_code = blocked_payload
+                        yield _format_sse_payload({
+                            "event": "final",
+                            **payload,
+                        })
+                        yield _format_sse_payload({"event": "done"})
+                        return
+                    for payload in _iter_finalized_stream_payloads(full_response):
+                        yield _format_sse_payload(payload)
+                    _emit_clean_console_response(full_response)
+                elif direct_challenge_turn:
                     _transition_session_state(
                         session,
                         "responding",
@@ -11661,6 +12925,19 @@ def execute_safe_local_action(session_id):
             action=action,
             approval_source="actions_execute_endpoint",
         )
+        if str((action_result.get("tool_result") or {}).get("status") or "").strip().lower() == "blocked":
+            return jsonify(
+                {
+                    "error": (action_result.get("tool_result") or {}).get("summary")
+                    or "Local action blocked.",
+                    "response": action_result["response"],
+                    **_build_chat_runtime_payload(
+                        session,
+                        session_id,
+                        tool_result=action_result["tool_result"],
+                    ),
+                }
+            ), 403
 
         return jsonify({
             "response": action_result["response"],

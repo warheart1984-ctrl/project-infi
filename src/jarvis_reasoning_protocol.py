@@ -23,6 +23,7 @@ from src.direct_challenge_module import (
     stabilize_direct_challenge_reply,
     violates_direct_challenge_identity as direct_challenge_identity_violation,
 )
+from src.jarvis_types import RiskNote, WorkspaceRef
 from src.reasoning_types import OBJECTIVE_KINDS, OutputContract, ReasoningConstraint, ReasoningFactor
 
 
@@ -431,7 +432,84 @@ def restate_otem_task(user_input: str) -> str:
     return f"Handle this operator task: {normalized.rstrip('.')}."
 
 
+_OTEM_PERSISTENCE_DIRECT_OBJECT_RE = re.compile(
+    r"\b(?:save|store|remember|persist)\b\s+(?:this|that|it|them|the\s+(?:result|state|session|memory|note|notes|conversation|output|response))\b",
+    re.IGNORECASE,
+)
+_OTEM_EXECUTION_DIRECT_OBJECT_RE = re.compile(
+    r"\b(?:run|execute|deploy)\b\s+(?:this|that|it|them|the\s+(?:command|tool|workflow|job|script|service|action|plan|task))\b",
+    re.IGNORECASE,
+)
+_OTEM_WORKFLOW_DIRECT_OBJECT_RE = re.compile(
+    r"\b(?:automate|trigger|schedule)\b\s+(?:this|that|it|them|the\s+(?:workflow|job|run|action|task|service|script))\b",
+    re.IGNORECASE,
+)
+_OTEM_IMPERATIVE_BLOCKERS = {
+    "persistence": {"save", "store", "remember", "persist"},
+    "execution": {"run", "execute", "deploy"},
+    "workflow": {"automate", "trigger", "schedule"},
+}
+
+
+def _starts_with_blocked_otem_verb(task: str, blocked_verbs: set[str]) -> bool:
+    lowered = " ".join(str(task or "").split()).strip().lower()
+    if not lowered:
+        return False
+    return lowered.split()[0] in blocked_verbs
+
+
+def evaluate_otem_viability(task: str) -> dict[str, Any]:
+    normalized_task = " ".join(str(task or "").split()).strip().lower()
+
+    if not normalized_task or len(normalized_task) < 10:
+        return {
+            "status": "rejected",
+            "reason": "Task is too vague to produce a deterministic plan.",
+            "allowed_alternative": "Provide a specific, outcome-focused task.",
+        }
+
+    if _starts_with_blocked_otem_verb(task, _OTEM_IMPERATIVE_BLOCKERS["persistence"]) or _OTEM_PERSISTENCE_DIRECT_OBJECT_RE.search(normalized_task):
+        return {
+            "status": "rejected",
+            "reason": "OTEM v1-v5 forbids memory or persistence.",
+            "allowed_alternative": "Reframe as a reasoning-only task.",
+        }
+
+    if _starts_with_blocked_otem_verb(task, _OTEM_IMPERATIVE_BLOCKERS["execution"]) or _OTEM_EXECUTION_DIRECT_OBJECT_RE.search(normalized_task):
+        return {
+            "status": "rejected",
+            "reason": "OTEM is reason-only (no execution allowed).",
+            "allowed_alternative": "Request a plan or use workflow lane.",
+        }
+
+    if _starts_with_blocked_otem_verb(task, _OTEM_IMPERATIVE_BLOCKERS["workflow"]) or _OTEM_WORKFLOW_DIRECT_OBJECT_RE.search(normalized_task):
+        return {
+            "status": "rejected",
+            "reason": "This is a workflow request, not OTEM.",
+            "allowed_alternative": "Use workflow builder or handoff.",
+        }
+
+    return {"status": "active"}
+
+
+def build_otem_rejection_response(turn_contract: dict[str, Any]) -> str:
+    return (
+        "OTEM could not process this task.\n\n"
+        f"Status: rejected\n"
+        f"Reason: {turn_contract['otem_rejection_reason']}\n"
+        f"Allowed alternative: {turn_contract['otem_allowed_alternative']}\n\n"
+        "No plan was generated. This preserves OTEM's reasoning-only contract."
+    ).strip()
+
+
 def build_otem_plan(restated_task: str) -> list[dict[str, Any]]:
+    """Return the stable OTEM planning scaffold.
+
+    OTEM intentionally keeps a recognizable five-step outer frame so operators
+    can compare turns without relearning the planning shape each time. The task
+    clauses only specialize the work-splitting step; the scaffold itself stays
+    constant by design.
+    """
     normalized_task = " ".join(str(restated_task or "").split()).strip()
     if not normalized_task:
         normalized_task = "Handle this operator task: clarify the requested operator task."
@@ -560,6 +638,33 @@ def build_otem_result(user_input: str) -> dict[str, Any]:
     analysis = analyze_otem_request(user_input)
     raw_task = extract_otem_task(user_input) or "clarify the requested operator task"
     restated_task = restate_otem_task(user_input)
+    viability = evaluate_otem_viability(raw_task)
+
+    if viability["status"] == "rejected":
+        rejection_contract = {
+            "otem_status": "rejected",
+            "otem_rejection_reason": viability["reason"],
+            "otem_allowed_alternative": viability["allowed_alternative"],
+            "otem_plan": [],
+        }
+        return {
+            "task": raw_task,
+            "restated_task": restated_task,
+            "task_clauses": list(analysis.get("task_clauses") or []),
+            "signal_clauses": list(analysis.get("signal_clauses") or []),
+            "operator_signals": dict(analysis.get("operator_signals") or {}),
+            "otem_trigger": analysis.get("matched_trigger"),
+            "plan": [],
+            "status": "rejected",
+            "reasoning_summary": "Jarvis rejected the OTEM request at the deterministic pre-planning gate.",
+            "session_scoped": True,
+            "persistent": False,
+            "scope": "session",
+            "rejection_reason": viability["reason"],
+            "allowed_alternative": viability["allowed_alternative"],
+            "answer": build_otem_rejection_response(rejection_contract),
+        }
+
     plan = build_otem_plan(restated_task)
     return {
         "task": raw_task,
@@ -905,41 +1010,43 @@ def _set_factor(
 
 
 def weight_factors(objective: str, factors: list[ReasoningFactor]) -> list[ReasoningFactor]:
+    """Return a weighted factor list without mutating the caller's instances."""
+    weighted = [ReasoningFactor(**factor.to_dict()) for factor in factors]
     if objective == "handle_direct_challenge":
-        _set_factor(factors, "direct_challenge_relevance", weight=1.0, confidence=0.98, trust=0.98)
-        _set_factor(factors, "identity_stability_need", weight=1.0, confidence=0.98, trust=0.98)
-        _set_factor(factors, "relational_weight", weight=0.9, confidence=0.95, trust=0.95)
-        _set_factor(factors, "coding_relevance", weight=0.05, confidence=0.5, trust=0.2, value=False)
-        _set_factor(factors, "debug_relevance", weight=0.1, confidence=0.5, trust=0.2, value=False)
-        _set_factor(factors, "creative_relevance", weight=0.0, confidence=0.3, trust=0.1, value=False)
-        _set_factor(factors, "workspace_need", weight=0.0, confidence=1.0, trust=1.0, value=False)
-        _set_factor(factors, "memory_need", weight=0.15, confidence=0.6, trust=0.3)
-        _set_factor(factors, "trace_visibility", weight=1.0, confidence=1.0, trust=1.0, value=False)
+        _set_factor(weighted, "direct_challenge_relevance", weight=1.0, confidence=0.98, trust=0.98)
+        _set_factor(weighted, "identity_stability_need", weight=1.0, confidence=0.98, trust=0.98)
+        _set_factor(weighted, "relational_weight", weight=0.9, confidence=0.95, trust=0.95)
+        _set_factor(weighted, "coding_relevance", weight=0.05, confidence=0.5, trust=0.2, value=False)
+        _set_factor(weighted, "debug_relevance", weight=0.1, confidence=0.5, trust=0.2, value=False)
+        _set_factor(weighted, "creative_relevance", weight=0.0, confidence=0.3, trust=0.1, value=False)
+        _set_factor(weighted, "workspace_need", weight=0.0, confidence=1.0, trust=1.0, value=False)
+        _set_factor(weighted, "memory_need", weight=0.15, confidence=0.6, trust=0.3)
+        _set_factor(weighted, "trace_visibility", weight=1.0, confidence=1.0, trust=1.0, value=False)
     elif objective == "run_otem":
-        _set_factor(factors, "otem_relevance", weight=1.0, confidence=0.98, trust=0.98, value=True)
-        _set_factor(factors, "operator_task_anchor", weight=1.0, confidence=0.98, trust=0.98, value=True)
-        _set_factor(factors, "side_effect_block", weight=1.0, confidence=1.0, trust=1.0, value=True)
-        _set_factor(factors, "execution_awareness", weight=0.84, confidence=0.94, trust=0.94, value=True)
-        _set_factor(factors, "workflow_handoff_only", weight=0.86, confidence=0.95, trust=0.95, value=True)
-        _set_factor(factors, "tool_awareness_only", weight=0.86, confidence=0.95, trust=0.95, value=True)
-        _set_factor(factors, "coding_relevance", weight=0.15, confidence=0.55, trust=0.35)
-        _set_factor(factors, "debug_relevance", weight=0.05, confidence=0.4, trust=0.2, value=False)
-        _set_factor(factors, "creative_relevance", weight=0.0, confidence=0.25, trust=0.1, value=False)
-        _set_factor(factors, "workspace_need", weight=0.0, confidence=1.0, trust=1.0, value=False)
-        _set_factor(factors, "memory_need", weight=0.0, confidence=1.0, trust=1.0, value=False)
-        _set_factor(factors, "trace_visibility", weight=1.0, confidence=1.0, trust=1.0, value=False)
+        _set_factor(weighted, "otem_relevance", weight=1.0, confidence=0.98, trust=0.98, value=True)
+        _set_factor(weighted, "operator_task_anchor", weight=1.0, confidence=0.98, trust=0.98, value=True)
+        _set_factor(weighted, "side_effect_block", weight=1.0, confidence=1.0, trust=1.0, value=True)
+        _set_factor(weighted, "execution_awareness", weight=0.84, confidence=0.94, trust=0.94, value=True)
+        _set_factor(weighted, "workflow_handoff_only", weight=0.86, confidence=0.95, trust=0.95, value=True)
+        _set_factor(weighted, "tool_awareness_only", weight=0.86, confidence=0.95, trust=0.95, value=True)
+        _set_factor(weighted, "coding_relevance", weight=0.15, confidence=0.55, trust=0.35)
+        _set_factor(weighted, "debug_relevance", weight=0.05, confidence=0.4, trust=0.2, value=False)
+        _set_factor(weighted, "creative_relevance", weight=0.0, confidence=0.25, trust=0.1, value=False)
+        _set_factor(weighted, "workspace_need", weight=0.0, confidence=1.0, trust=1.0, value=False)
+        _set_factor(weighted, "memory_need", weight=0.0, confidence=1.0, trust=1.0, value=False)
+        _set_factor(weighted, "trace_visibility", weight=1.0, confidence=1.0, trust=1.0, value=False)
     elif objective == "answer_relational_question":
-        _set_factor(factors, "relational_question_relevance", weight=1.0, confidence=0.97, trust=0.97, value=True)
-        _set_factor(factors, "identity_stability_need", weight=0.95, confidence=0.96, trust=0.96, value=True)
-        _set_factor(factors, "relational_weight", weight=0.86, confidence=0.93, trust=0.93, value=True)
-        _set_factor(factors, "coding_relevance", weight=0.05, confidence=0.45, trust=0.2, value=False)
-        _set_factor(factors, "debug_relevance", weight=0.05, confidence=0.4, trust=0.2, value=False)
-        _set_factor(factors, "creative_relevance", weight=0.0, confidence=0.25, trust=0.1, value=False)
-        _set_factor(factors, "workspace_need", weight=0.0, confidence=1.0, trust=1.0, value=False)
-        _set_factor(factors, "memory_need", weight=0.0, confidence=1.0, trust=1.0, value=False)
-        _set_factor(factors, "trace_visibility", weight=1.0, confidence=1.0, trust=1.0, value=False)
+        _set_factor(weighted, "relational_question_relevance", weight=1.0, confidence=0.97, trust=0.97, value=True)
+        _set_factor(weighted, "identity_stability_need", weight=0.95, confidence=0.96, trust=0.96, value=True)
+        _set_factor(weighted, "relational_weight", weight=0.86, confidence=0.93, trust=0.93, value=True)
+        _set_factor(weighted, "coding_relevance", weight=0.05, confidence=0.45, trust=0.2, value=False)
+        _set_factor(weighted, "debug_relevance", weight=0.05, confidence=0.4, trust=0.2, value=False)
+        _set_factor(weighted, "creative_relevance", weight=0.0, confidence=0.25, trust=0.1, value=False)
+        _set_factor(weighted, "workspace_need", weight=0.0, confidence=1.0, trust=1.0, value=False)
+        _set_factor(weighted, "memory_need", weight=0.0, confidence=1.0, trust=1.0, value=False)
+        _set_factor(weighted, "trace_visibility", weight=1.0, confidence=1.0, trust=1.0, value=False)
 
-    return factors
+    return weighted
 
 
 def choose_reasoning_mode(
@@ -1141,40 +1248,6 @@ def enforce_direct_challenge_identity(text: str, user_input: str | None = None) 
 
 def build_direct_challenge_guidance(user_input: str | None = None) -> str:
     return build_direct_challenge_guidance_profile(user_input)
-
-
-@dataclass(slots=True)
-class WorkspaceRef:
-    file_path: str
-    symbol: str | None = None
-    line_start: int | None = None
-    line_end: int | None = None
-
-    def to_dict(self) -> dict[str, Any]:
-        payload = {"file_path": self.file_path}
-        if self.symbol:
-            payload["symbol"] = self.symbol
-        if self.line_start is not None:
-            payload["line_start"] = self.line_start
-        if self.line_end is not None:
-            payload["line_end"] = self.line_end
-        return payload
-
-
-@dataclass(slots=True)
-class RiskNote:
-    level: str
-    message: str
-    target: str | None = None
-
-    def to_dict(self) -> dict[str, Any]:
-        payload = {
-            "level": self.level,
-            "message": _clip_text(self.message, limit=220),
-        }
-        if self.target:
-            payload["target"] = self.target
-        return payload
 
 
 @dataclass(slots=True)
