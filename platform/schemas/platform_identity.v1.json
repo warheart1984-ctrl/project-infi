@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "platform.platform_identity.v1",
+  "title": "Platform Identity v1",
+  "type": "object",
+  "required": ["identity_version", "org_id", "principal_id", "roles"],
+  "properties": {
+    "identity_version": { "const": "platform.platform_identity.v1" },
+    "org_id": { "type": "string" },
+    "principal_id": { "type": "string" },
+    "principal_kind": { "enum": ["human", "service_account", "ci_bot"] },
+    "display_name": { "type": "string" },
+    "roles": {
+      "type": "array",
+      "items": {
+        "enum": ["platform_admin", "org_admin", "operator", "viewer"]
+      }
+    },
+    "ugr_tenant_id": { "type": "string" },
+    "api_key_id": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "disabled": { "type": "boolean" }
+  }
+}

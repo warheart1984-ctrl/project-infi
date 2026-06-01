@@ -1,0 +1,450 @@
+stages:
+  - validate
+  - test
+  - build
+  - security
+  - deploy
+  - monitor
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: "/certs"
+  REGISTRY: registry.gitlab.com
+  IMAGE_NAME: $REGISTRY/$CI_PROJECT_PATH
+  SONAR_HOST_URL: "https://sonarcloud.io"
+  CACHE_KEY: "$CI_COMMIT_REF_SLUG"
+
+# ============================================================================
+# VALIDATE STAGE - Code quality and formatting checks
+# ============================================================================
+
+validate:lint:
+  stage: validate
+  image: python:3.10
+  cache:
+    key: $CACHE_KEY
+    paths:
+      - .cache/pip
+  before_script:
+    - pip install --cache-dir .cache/pip flake8 black isort pylint
+  script:
+    - echo "Running Python linting..."
+    - flake8 src/ --max-line-length=120 --ignore=E203,W503 --count --statistics
+    - black --check src/
+    - isort --check-only src/
+    - pylint src/ --disable=all --enable=E,F || true
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+    - develop
+
+validate:frontend:
+  stage: validate
+  image: node:18-alpine
+  cache:
+    key: $CACHE_KEY
+    paths:
+      - frontend/node_modules
+  before_script:
+    - cd frontend
+    - npm ci
+  script:
+    - echo "Running frontend linting..."
+    - npm run lint || true
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+    - develop
+
+validate:docker:
+  stage: validate
+  image: hadolint/hadolint:latest-alpine
+  script:
+    - echo "Validating Dockerfiles..."
+    - hadolint Dockerfile
+    - hadolint Dockerfile.frontend
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+    - develop
+
+# ============================================================================
+# TEST STAGE - Unit, integration, and coverage tests
+# ============================================================================
+
+test:backend:
+  stage: test
+  image: python:3.10
+  services:
+    - postgres:15
+    - redis:7
+  variables:
+    POSTGRES_USER: aais
+    POSTGRES_PASSWORD: aais_password
+    POSTGRES_DB: aais_db
+    DATABASE_URL: postgresql://aais:aais_password@postgres:5432/aais_db
+    REDIS_URL: redis://redis:6379/0
+  cache:
+    key: $CACHE_KEY
+    paths:
+      - .cache/pip
+  before_script:
+    - pip install --cache-dir .cache/pip -r requirements.txt
+    - pip install --cache-dir .cache/pip pytest pytest-cov pytest-asyncio pytest-mock
+  script:
+    - echo "Running backend tests..."
+    - pytest tests/ -v --cov=app --cov=src --cov-report=xml --cov-report=html --cov-report=term
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+    paths:
+      - htmlcov/
+      - coverage.xml
+    expire_in: 30 days
+  coverage: '/TOTAL.*\s+(\d+%)$/'
+  only:
+    - merge_requests
+    - main
+    - develop
+
+test:frontend:
+  stage: test
+  image: node:18-alpine
+  cache:
+    key: $CACHE_KEY
+    paths:
+      - frontend/node_modules
+  before_script:
+    - cd frontend
+    - npm ci
+  script:
+    - echo "Running frontend tests..."
+    - npm test -- --coverage --watchAll=false
+  artifacts:
+    paths:
+      - frontend/build/
+      - frontend/coverage/
+    expire_in: 30 days
+  only:
+    - merge_requests
+    - main
+    - develop
+
+test:workflow-smoke:
+  stage: test
+  image: mcr.microsoft.com/playwright:v1.59.1-jammy
+  cache:
+    key: $CACHE_KEY
+    paths:
+      - frontend/node_modules
+      - .cache/pip
+  before_script:
+    - python3 -m venv .venv
+    - . .venv/bin/activate
+    - pip install --cache-dir .cache/pip -r requirements.txt
+    - cd frontend
+    - npm ci
+    - npx playwright install chromium
+  script:
+    - echo "Running workflow browser smoke..."
+    - npm run smoke:workflow
+  artifacts:
+    when: on_failure
+    paths:
+      - .runtime/workflow-smoke/
+    expire_in: 7 days
+  only:
+    - merge_requests
+    - main
+    - develop
+
+test:integration:
+  stage: test
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "Running integration tests..."
+    - docker-compose -f docker-compose.test.yml up --abort-on-container-exit
+  only:
+    - merge_requests
+    - main
+    - develop
+
+test:performance:
+  stage: test
+  image: python:3.10
+  cache:
+    key: $CACHE_KEY
+    paths:
+      - .cache/pip
+  before_script:
+    - pip install --cache-dir .cache/pip -r requirements.txt
+    - pip install --cache-dir .cache/pip locust
+  script:
+    - echo "Running performance tests..."
+    - python performance_test.py
+  artifacts:
+    paths:
+      - performance_results/
+    expire_in: 30 days
+  allow_failure: true
+  only:
+    - main
+    - develop
+
+# ============================================================================
+# BUILD STAGE - Docker image building and pushing
+# ============================================================================
+
+build:backend:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - echo "Building backend image..."
+    - docker build -t $IMAGE_NAME:backend-$CI_COMMIT_SHA -f Dockerfile .
+    - docker tag $IMAGE_NAME:backend-$CI_COMMIT_SHA $IMAGE_NAME:backend-latest
+    - docker push $IMAGE_NAME:backend-$CI_COMMIT_SHA
+    - docker push $IMAGE_NAME:backend-latest
+  only:
+    - main
+    - develop
+    - tags
+
+build:frontend:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - echo "Building frontend image..."
+    - docker build -t $IMAGE_NAME:frontend-$CI_COMMIT_SHA -f Dockerfile.frontend .
+    - docker tag $IMAGE_NAME:frontend-$CI_COMMIT_SHA $IMAGE_NAME:frontend-latest
+    - docker push $IMAGE_NAME:frontend-$CI_COMMIT_SHA
+    - docker push $IMAGE_NAME:frontend-latest
+  only:
+    - main
+    - develop
+    - tags
+
+build:mobile:
+  stage: build
+  image: node:18-alpine
+  cache:
+    key: $CACHE_KEY
+    paths:
+      - mobile/node_modules
+  before_script:
+    - cd mobile
+    - npm ci
+  script:
+    - echo "Building mobile app..."
+    - npm run build:android || true
+  artifacts:
+    paths:
+      - mobile/android/app/build/outputs/
+    expire_in: 30 days
+  allow_failure: true
+  only:
+    - main
+    - tags
+
+# ============================================================================
+# SECURITY STAGE - Security scanning and vulnerability checks
+# ============================================================================
+
+security:sast:
+  stage: security
+  image: python:3.10
+  cache:
+    key: $CACHE_KEY
+    paths:
+      - .cache/pip
+  before_script:
+    - pip install --cache-dir .cache/pip bandit safety semgrep
+  script:
+    - echo "Running SAST security checks..."
+    - bandit -r src/ -f json -o bandit-report.json || true
+    - safety check --json > safety-report.json || true
+    - semgrep --config=p/security-audit src/ --json -o semgrep-report.json || true
+  artifacts:
+    paths:
+      - bandit-report.json
+      - safety-report.json
+      - semgrep-report.json
+    expire_in: 30 days
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+    - develop
+
+security:container:
+  stage: security
+  image: aquasec/trivy:latest
+  script:
+    - echo "Scanning container images..."
+    - trivy image --severity HIGH,CRITICAL $IMAGE_NAME:backend-latest || true
+    - trivy image --severity HIGH,CRITICAL $IMAGE_NAME:frontend-latest || true
+  allow_failure: true
+  only:
+    - main
+    - develop
+
+security:dependency:
+  stage: security
+  image: python:3.10
+  cache:
+    key: $CACHE_KEY
+    paths:
+      - .cache/pip
+  before_script:
+    - pip install --cache-dir .cache/pip pip-audit
+  script:
+    - echo "Checking dependencies for vulnerabilities..."
+    - pip-audit || true
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+    - develop
+
+# ============================================================================
+# DEPLOY STAGE - Deployment to staging and production
+# ============================================================================
+
+deploy:staging:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache curl openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$STAGING_SSH_KEY" | base64 -d > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H $STAGING_SERVER >> ~/.ssh/known_hosts
+  script:
+    - echo "Deploying to staging..."
+    - ssh $STAGING_USER@$STAGING_SERVER "cd /app/aais && docker-compose pull && docker-compose up -d"
+    - echo "Running smoke tests..."
+    - sleep 10
+    - curl -f http://$STAGING_SERVER/health || exit 1
+    - echo "Staging deployment complete"
+  environment:
+    name: staging
+    url: https://staging.aais.example.com
+  only:
+    - develop
+  when: manual
+
+deploy:production:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache curl openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$PRODUCTION_SSH_KEY" | base64 -d > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H $PRODUCTION_SERVER >> ~/.ssh/known_hosts
+  script:
+    - echo "Deploying to production..."
+    - ssh $PRODUCTION_USER@$PRODUCTION_SERVER "cd /app/aais && docker-compose pull && docker-compose up -d"
+    - echo "Running health checks..."
+    - sleep 10
+    - curl -f http://$PRODUCTION_SERVER/health || exit 1
+    - echo "Production deployment complete"
+  environment:
+    name: production
+    url: https://aais.example.com
+  only:
+    - main
+    - tags
+  when: manual
+
+rollback:production:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$PRODUCTION_SSH_KEY" | base64 -d > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H $PRODUCTION_SERVER >> ~/.ssh/known_hosts
+  script:
+    - echo "Rolling back production..."
+    - ssh $PRODUCTION_USER@$PRODUCTION_SERVER "cd /app/aais && docker-compose down && docker-compose up -d"
+    - echo "Rollback complete"
+  environment:
+    name: production
+    action: rollback
+  only:
+    - main
+  when: manual
+
+# ============================================================================
+# MONITOR STAGE - Post-deployment monitoring and notifications
+# ============================================================================
+
+monitor:health:
+  stage: monitor
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - echo "Checking application health..."
+    - curl -f http://$PRODUCTION_SERVER/health || exit 1
+    - curl -f http://$PRODUCTION_SERVER/api/analytics/performance || exit 1
+  only:
+    - main
+  when: on_success
+
+monitor:logs:
+  stage: monitor
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$PRODUCTION_SSH_KEY" | base64 -d > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H $PRODUCTION_SERVER >> ~/.ssh/known_hosts
+  script:
+    - echo "Checking application logs..."
+    - ssh $PRODUCTION_USER@$PRODUCTION_SERVER "docker-compose logs --tail=100 backend | grep -i error" || true
+  allow_failure: true
+  only:
+    - main
+  when: on_success
+
+notify:slack:
+  stage: monitor
+  image: curlimages/curl:latest
+  script:
+    - |
+      curl -X POST $SLACK_WEBHOOK_URL \
+        -H 'Content-Type: application/json' \
+        -d "{
+          \"text\": \"Deployment Status\",
+          \"blocks\": [
+            {
+              \"type\": \"section\",
+              \"text\": {
+                \"type\": \"mrkdwn\",
+                \"text\": \"*AAIS Deployment*\\nProject: $CI_PROJECT_NAME\\nBranch: $CI_COMMIT_REF_NAME\\nStatus: $CI_JOB_STATUS\"
+              }
+            }
+          ]
+        }"
+  only:
+    - main
+  when: always
+  allow_failure: true

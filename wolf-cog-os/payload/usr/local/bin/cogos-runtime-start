@@ -1,0 +1,114 @@
+#!/bin/sh
+# Native CoGOS runtime launcher (systemd ExecStart — no SysV/update-rc.d).
+set -eu
+
+COGOS_ROOT=/opt/cogos
+COGOS_LOG=/var/log/cogos-service.log
+BOOT_REPORT=/opt/cogos/memory/logs/boot_report.json
+PID1_PROOF=/opt/cogos/memory/logs/pid1_proof.json
+BOOT_PROFILE=/opt/cogos/config/boot_profile.json
+PID_FILE=/run/cogos-boot.pid
+DAEMON_PID_FILE=/run/cogos-daemon.pid
+DASHBOARD_PID_FILE=/run/cogos-dashboard.pid
+
+log() {
+  mkdir -p /var/log /opt/cogos/memory/logs /run 2>/dev/null || true
+  printf '%s %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo boot)" "$*" >> "$COGOS_LOG" 2>/dev/null || true
+}
+
+profile_value() {
+  python3 - "$BOOT_PROFILE" "$1" "$2" <<'PY'
+import json
+import sys
+
+path, key, default = sys.argv[1], sys.argv[2], sys.argv[3]
+try:
+    with open(path, "r", encoding="utf-8") as handle:
+        data = json.load(handle)
+except Exception:
+    data = {}
+value = data.get(key, default)
+if isinstance(value, bool):
+    print("true" if value else "false")
+else:
+    print(value)
+PY
+}
+
+log "cogos-runtime-start: launching governed runtime layer"
+
+if [ ! -d "$COGOS_ROOT" ]; then
+  log "missing $COGOS_ROOT; runtime deferred"
+  exit 0
+fi
+
+if ! command -v python3 >/dev/null 2>&1; then
+  log "python3 missing; runtime deferred"
+  exit 0
+fi
+
+PROFILE="$(profile_value profile operator_shell)"
+BOOT_VERIFY_AUTOSTART="$(profile_value boot_verify_autostart true)"
+DAEMON_AUTOSTART="$(profile_value daemon_autostart true)"
+DASHBOARD_AUTOSTART="$(profile_value dashboard_autostart false)"
+DESKTOP_AUTOSTART="$(profile_value desktop_autostart false)"
+HAL_AUTOSTART="$(profile_value hal_autostart true)"
+PERSISTENCE_AUTOSTART="$(profile_value persistence_autostart true)"
+DAILY_DRIVER_AUTOSTART="$(profile_value daily_driver_autostart true)"
+log "boot profile: $PROFILE; dashboard=$DASHBOARD_AUTOSTART desktop=$DESKTOP_AUTOSTART hal=$HAL_AUTOSTART persistence=$PERSISTENCE_AUTOSTART daily_driver=$DAILY_DRIVER_AUTOSTART"
+
+if [ "$PERSISTENCE_AUTOSTART" = "true" ] && [ -x /usr/local/bin/cogos-persist ]; then
+  /usr/local/bin/cogos-persist mount >> "$COGOS_LOG" 2>&1 || true
+  log "persistence mount requested"
+fi
+
+if [ "$DAILY_DRIVER_AUTOSTART" = "true" ] && [ -x /usr/local/bin/cogos-daily-driver ]; then
+  /usr/local/bin/cogos-daily-driver boot >> "$COGOS_LOG" 2>&1 || true
+  (
+    sleep 8
+    /usr/local/bin/cogos-daily-driver daily >> "$COGOS_LOG" 2>&1 || true
+  ) >> "$COGOS_LOG" 2>&1 &
+  log "daily driver boot + deferred daily cycle requested"
+fi
+
+if [ -s "$PID1_PROOF" ]; then
+  log "PID1 proof exists; boot verification already handled"
+elif [ "$BOOT_VERIFY_AUTOSTART" = "true" ] && [ -x "$COGOS_ROOT/bin/cogos_boot.py" ]; then
+  (
+    sleep 2
+    python3 "$COGOS_ROOT/bin/cogos_boot.py" --boot
+    rc=$?
+    log "boot verifier exited with code $rc"
+    exit $rc
+  ) >> "$COGOS_LOG" 2>&1 &
+  echo $! > "$PID_FILE" 2>/dev/null || true
+  log "boot verifier launched; report target: $BOOT_REPORT"
+fi
+
+if [ -s "$DAEMON_PID_FILE" ] && kill -0 "$(cat "$DAEMON_PID_FILE")" 2>/dev/null; then
+  log "daemon already running"
+elif [ "$DAEMON_AUTOSTART" = "true" ] && [ -f "$COGOS_ROOT/bin/cogos_daemon.py" ]; then
+  python3 "$COGOS_ROOT/bin/cogos_daemon.py" --daemon >> "$COGOS_LOG" 2>&1 &
+  echo $! > "$DAEMON_PID_FILE" 2>/dev/null || true
+  log "daemon launched; task inbox: /opt/cogos/tasks/inbox"
+fi
+
+if [ "$DASHBOARD_AUTOSTART" = "true" ] && [ -f "$COGOS_ROOT/bin/cogos_dashboard.py" ]; then
+  python3 "$COGOS_ROOT/bin/cogos_daemon.py" --verify-laws >> "$COGOS_LOG" 2>&1 || true
+  python3 "$COGOS_ROOT/bin/cogos_dashboard.py" >> "$COGOS_LOG" 2>&1 &
+  echo $! > "$DASHBOARD_PID_FILE" 2>/dev/null || true
+  log "dashboard launched: http://localhost:8080"
+fi
+
+if [ "$HAL_AUTOSTART" = "true" ] && [ -x /usr/local/bin/cogos-hal-start ]; then
+  /usr/local/bin/cogos-hal-start >> "$COGOS_LOG" 2>&1 || true
+  log "HAL daemon launch requested"
+fi
+
+if [ "$DESKTOP_AUTOSTART" = "true" ] && [ -x /usr/local/bin/cogos-desktop-start ]; then
+  /usr/local/bin/cogos-desktop-start >> "$COGOS_LOG" 2>&1 || true
+  log "desktop shell launch requested"
+fi
+
+log "cogos-runtime-start complete"
+exit 0

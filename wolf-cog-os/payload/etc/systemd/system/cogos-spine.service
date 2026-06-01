@@ -1,0 +1,15 @@
+[Unit]
+Description=CoGOS Runtime Spine
+Wants=cogos-governance.service
+After=cogos-governance.service
+
+ConditionPathExists=/usr/lib/cogos/spine
+
+[Service]
+Type=simple
+ExecStart=/usr/lib/cogos/spine
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

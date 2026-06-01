@@ -1,0 +1,53 @@
+{
+  "schema_version": "scorpion.os_invariants.v1",
+  "description": "Constitutional OS behavioral truth patterns for Scorpion evaluators",
+  "event_schema": "scorpion.event.v1",
+  "invariants": [
+    {
+      "id": "syscall_sequence",
+      "severity": "high",
+      "allowed_sequence": ["open", "read", "write", "close"],
+      "gate_checks": ["no_read_before_open", "no_write_after_close"]
+    },
+    {
+      "id": "scheduler_rhythm",
+      "severity": "medium",
+      "max_tick_delta_ns": 5000000,
+      "gate_checks": ["tick_delta_within_band"]
+    },
+    {
+      "id": "memory_lifecycle",
+      "severity": "high",
+      "gate_checks": ["alloc_free_balance_non_negative"]
+    },
+    {
+      "id": "fd_flow",
+      "severity": "high",
+      "gate_checks": ["every_open_has_close"]
+    },
+    {
+      "id": "ipc_choreography",
+      "severity": "medium",
+      "allowed_sequence": ["connect", "send", "recv", "close"],
+      "gate_checks": ["ipc_order_preserved"]
+    },
+    {
+      "id": "privilege_transition",
+      "severity": "critical",
+      "allowed_uids": [0, 1000],
+      "gate_checks": ["uid_in_allowed_set"]
+    },
+    {
+      "id": "entropy_signature",
+      "severity": "medium",
+      "min_entropy_bits": 4.0,
+      "gate_checks": ["pool_entropy_above_floor"]
+    },
+    {
+      "id": "timing_delta",
+      "severity": "medium",
+      "max_latency_ns": 10000000,
+      "gate_checks": ["paired_latency_within_bound"]
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+.compose-receipt {
+  margin: 1rem 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(120, 180, 255, 0.22);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(12, 24, 44, 0.92), rgba(8, 14, 28, 0.88));
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.compose-receipt--compact {
+  margin: 0.75rem 0;
+  padding: 0.85rem 1rem;
+}
+
+.compose-receipt__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.compose-receipt__kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(180, 210, 255, 0.72);
+}
+
+.compose-receipt__status {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.compose-receipt__status--completed {
+  color: #8dffb6;
+  border-color: rgba(80, 220, 140, 0.35);
+  background: rgba(40, 120, 70, 0.18);
+}
+
+.compose-receipt__status--blocked {
+  color: #ffb4b4;
+  border-color: rgba(255, 120, 120, 0.35);
+  background: rgba(120, 40, 40, 0.18);
+}
+
+.compose-receipt__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.65rem 1rem;
+}
+
+.compose-receipt__fact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.compose-receipt__fact span {
+  font-size: 0.72rem;
+  color: rgba(200, 220, 255, 0.58);
+}
+
+.compose-receipt__fact strong {
+  font-size: 0.92rem;
+  color: rgba(240, 248, 255, 0.96);
+  font-weight: 600;
+}
+
+.compose-receipt__runtimes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.compose-receipt__chip {
+  font-size: 0.74rem;
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(90, 140, 255, 0.14);
+  border: 1px solid rgba(120, 170, 255, 0.24);
+  color: rgba(220, 235, 255, 0.92);
+}
+
+.compose-receipt__empty {
+  margin: 0.75rem 0 0;
+  font-size: 0.82rem;
+  color: rgba(200, 215, 240, 0.72);
+}
+
+.compose-receipt__super {
+  margin-top: 0.9rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(120, 160, 220, 0.16);
+}
+
+.compose-receipt__super-title {
+  margin: 0 0 0.55rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 210, 150, 0.82);
+}
+
+.compose-receipt__reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.compose-receipt__reason {
+  font-size: 0.72rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 180, 80, 0.12);
+  color: rgba(255, 220, 170, 0.95);
+}

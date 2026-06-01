@@ -1,0 +1,5 @@
+wolf-cog-os/payload/etc/systemd/system/** text eol=lf
+wolf-cog-os/payload/usr/lib/cogos/** text eol=lf
+wolf-cog-os/payload/usr/local/bin/cogos-* text eol=lf
+wolf-cog-os/scripts/**/*.sh text eol=lf
+wolf-cog-os/scripts/**/*.py text eol=lf

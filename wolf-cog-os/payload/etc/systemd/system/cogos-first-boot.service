@@ -1,0 +1,11 @@
+[Unit]
+Description=CoGOS post-install first boot takeover
+After=graphical.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/cogos-first-boot
+TimeoutStartSec=300
+
+[Install]
+WantedBy=graphical.target

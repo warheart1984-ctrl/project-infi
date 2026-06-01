@@ -1,0 +1,920 @@
+{
+  "version": 1,
+  "default_verification_policy": "warn",
+  "commands": [
+    {
+      "id": "make.rootfs",
+      "owner": "Makefile",
+      "component": "cogos-build",
+      "invocation": {
+        "type": "make_target",
+        "makefile": "Makefile",
+        "target": "rootfs"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "contains": "make rootfs"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-rc.yml",
+          "contains": "make rootfs"
+        }
+      ]
+    },
+    {
+      "id": "make.iso-tree",
+      "owner": "Makefile",
+      "component": "cogos-build",
+      "invocation": {
+        "type": "make_target",
+        "makefile": "Makefile",
+        "target": "iso-tree"
+      },
+      "required_env": [],
+      "optional_env": [
+        "ISO"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "contains": "make iso-tree"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-rc.yml",
+          "contains": "make iso-tree"
+        }
+      ]
+    },
+    {
+      "id": "make.installer-smoke",
+      "owner": "Makefile",
+      "component": "cogos-installer",
+      "invocation": {
+        "type": "make_target",
+        "makefile": "Makefile",
+        "target": "installer-smoke"
+      },
+      "required_env": [
+        "INSTALLER_ARGS"
+      ],
+      "optional_env": [
+        "INSTALLER_STATE_DIR"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-public.yml",
+          "contains": "make installer-smoke"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "contains": "make installer-smoke"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-rc.yml",
+          "contains": "make installer-smoke"
+        }
+      ]
+    },
+    {
+      "id": "make.installer-integration",
+      "owner": "Makefile",
+      "component": "cogos-installer",
+      "invocation": {
+        "type": "make_target",
+        "makefile": "Makefile",
+        "target": "installer-integration"
+      },
+      "required_env": [],
+      "optional_env": [
+        "INSTALLER_TEST_SCENARIOS",
+        "COGOS_MATRIX_BASE_ISO",
+        "ISO",
+        "COGOS_FORGE_PROFILE",
+        "COGOS_FORGE_REQUIRED_SCENARIOS"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "contains": "make installer-integration"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-rc.yml",
+          "contains": "make installer-integration"
+        }
+      ]
+    },
+    {
+      "id": "make.sign-artifacts",
+      "owner": "Makefile",
+      "component": "cogos-release",
+      "invocation": {
+        "type": "make_target",
+        "makefile": "Makefile",
+        "target": "sign-artifacts"
+      },
+      "required_env": [
+        "ARTIFACT_DIR"
+      ],
+      "optional_env": [
+        "SIGNING_REQUIRED",
+        "MINISIGN_SECRET_KEY"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "contains": "make sign-artifacts"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-rc.yml",
+          "contains": "make sign-artifacts"
+        }
+      ]
+    },
+    {
+      "id": "make.verify-artifacts",
+      "owner": "Makefile",
+      "component": "cogos-release",
+      "invocation": {
+        "type": "make_target",
+        "makefile": "Makefile",
+        "target": "verify-artifacts"
+      },
+      "required_env": [
+        "ARTIFACT_DIR"
+      ],
+      "optional_env": [
+        "MINISIGN_PUBLIC_KEY",
+        "MINISIGN_PUBLIC_KEY_FILE"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-rc.yml",
+          "contains": "make verify-artifacts"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-release.yml",
+          "contains": "make verify-artifacts"
+        }
+      ]
+    },
+    {
+      "id": "script.github.sanitize-tag",
+      "owner": ".github/scripts/sanitize-tag.sh",
+      "component": "ci-metadata",
+      "invocation": {
+        "type": "script_path",
+        "path": ".github/scripts/sanitize-tag.sh"
+      },
+      "required_env": [],
+      "optional_env": [
+        "COGOS_TAG"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-public.yml",
+          "contains": ".github/scripts/sanitize-tag.sh"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "contains": ".github/scripts/sanitize-tag.sh"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-rc.yml",
+          "contains": ".github/scripts/sanitize-tag.sh"
+        }
+      ]
+    },
+    {
+      "id": "script.github.check-performance-gates",
+      "owner": ".github/scripts/check-performance-gates.py",
+      "component": "ci-performance",
+      "invocation": {
+        "type": "script_path",
+        "path": ".github/scripts/check-performance-gates.py"
+      },
+      "required_env": [],
+      "optional_env": [
+        "PERF_GATES_MODE",
+        "PERF_SCENARIO_PCT",
+        "PERF_SCENARIO_SEC",
+        "PERF_TOTAL_PCT",
+        "PERF_QEMU_PCT",
+        "PERF_QEMU_SEC",
+        "PERF_RR_PCT",
+        "PERF_RR_SEC",
+        "PERF_HISTORY_WINDOW",
+        "PERF_BURNIN_MIN_SAMPLES",
+        "PERF_ZSCORE_THRESHOLD",
+        "PERF_MIN_STDDEV_SEC",
+        "PERF_BREACH_STREAK_THRESHOLD"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "contains": ".github/scripts/check-performance-gates.py"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-rc.yml",
+          "contains": ".github/scripts/check-performance-gates.py"
+        }
+      ]
+    },
+    {
+      "id": "script.github.generate-release-notes",
+      "owner": ".github/scripts/generate-release-notes.py",
+      "component": "release-automation",
+      "invocation": {
+        "type": "script_path",
+        "path": ".github/scripts/generate-release-notes.py"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-release.yml",
+          "contains": ".github/scripts/generate-release-notes.py"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-rc.yml",
+          "contains": ".github/scripts/generate-release-notes.py"
+        }
+      ]
+    },
+    {
+      "id": "script.github.update-build-index",
+      "owner": ".github/scripts/update-build-index.py",
+      "component": "release-automation",
+      "invocation": {
+        "type": "script_path",
+        "path": ".github/scripts/update-build-index.py"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-release.yml",
+          "contains": ".github/scripts/update-build-index.py"
+        }
+      ]
+    },
+    {
+      "id": "script.github.validate-promotion-source",
+      "owner": ".github/scripts/validate-promotion-source.py",
+      "component": "release-automation",
+      "invocation": {
+        "type": "script_path",
+        "path": ".github/scripts/validate-promotion-source.py"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-release.yml",
+          "contains": ".github/scripts/validate-promotion-source.py"
+        }
+      ]
+    },
+    {
+      "id": "script.wolf-cog-os.build-rootfs",
+      "owner": "wolf-cog-os/scripts/build-rootfs.sh",
+      "component": "cogos-build",
+      "invocation": {
+        "type": "script_path",
+        "path": "wolf-cog-os/scripts/build-rootfs.sh"
+      },
+      "required_env": [],
+      "optional_env": [
+        "ISO"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": []
+    },
+    {
+      "id": "script.wolf-cog-os.installer",
+      "owner": "wolf-cog-os/scripts/cogos-installer.sh",
+      "component": "cogos-installer",
+      "invocation": {
+        "type": "script_path",
+        "path": "wolf-cog-os/scripts/cogos-installer.sh"
+      },
+      "required_env": [],
+      "optional_env": [
+        "INSTALLER_STATE_DIR",
+        "INSTALLER_TEST_SCENARIOS"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": []
+    },
+    {
+      "id": "script.wolf-cog-os.profile-loader",
+      "owner": "wolf-cog-os/scripts/lib/profile-loader.sh",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": "wolf-cog-os/scripts/lib/profile-loader.sh"
+      },
+      "required_env": [],
+      "optional_env": [
+        "COGOS_FORGE_PROFILE",
+        "COGOS_BOOT_PROFILE"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-public.yml",
+          "contains": "bash wolf-cog-os/scripts/lib/profile-loader.sh"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "contains": "bash wolf-cog-os/scripts/lib/profile-loader.sh"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-rc.yml",
+          "contains": "bash wolf-cog-os/scripts/lib/profile-loader.sh"
+        }
+      ]
+    },
+    {
+      "id": "script.wolf-cog-os.validate-profile",
+      "owner": "wolf-cog-os/scripts/validate-profile.py",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": "wolf-cog-os/scripts/validate-profile.py"
+      },
+      "required_env": [
+        "COGOS_FORGE_PROFILE"
+      ],
+      "optional_env": [
+        "COGOS_PROFILE_PRECEDENCE_POLICY"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-public.yml",
+          "contains": "python3 wolf-cog-os/scripts/validate-profile.py"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "contains": "python3 wolf-cog-os/scripts/validate-profile.py"
+        }
+      ]
+    },
+    {
+      "id": "script.wolf-cog-os.emit-profile-attestation",
+      "owner": "wolf-cog-os/scripts/emit-profile-attestation.py",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": "wolf-cog-os/scripts/emit-profile-attestation.py"
+      },
+      "required_env": [
+        "COGOS_FORGE_PROFILE"
+      ],
+      "optional_env": [
+        "COGOS_PROFILE_PRECEDENCE_POLICY"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-public.yml",
+          "contains": "python3 wolf-cog-os/scripts/emit-profile-attestation.py"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "contains": "python3 wolf-cog-os/scripts/emit-profile-attestation.py"
+        }
+      ]
+    },
+    {
+      "id": "make.forge-installer",
+      "owner": "Makefile",
+      "component": "cogos-build",
+      "invocation": {
+        "type": "make_target",
+        "makefile": "Makefile",
+        "target": "forge-installer"
+      },
+      "required_env": [],
+      "optional_env": [
+        "ISO",
+        "COGOS_FORGE_PROFILE"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": []
+    },
+    {
+      "id": "script.wolf-cog-os.build-forge-installer",
+      "owner": "wolf-cog-os/scripts/build-forge-installer.sh",
+      "component": "cogos-build",
+      "invocation": {
+        "type": "script_path",
+        "path": "wolf-cog-os/scripts/build-forge-installer.sh"
+      },
+      "required_env": [],
+      "optional_env": [
+        "COGOS_FORGE_PROFILE",
+        "COGOS_OUT",
+        "COGOS_DEBIAN_ISO"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "make_target",
+          "path": "Makefile",
+          "contains": "forge-installer"
+        }
+      ]
+    },
+    {
+      "id": "script.wolf-cog-os.stage-forge-layout",
+      "owner": "wolf-cog-os/scripts/lib/stage-forge-layout.sh",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": "wolf-cog-os/scripts/lib/stage-forge-layout.sh"
+      },
+      "required_env": [],
+      "optional_env": [
+        "COGOS_FORGE_STAGING"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "script_path",
+          "path": "wolf-cog-os/scripts/build.sh",
+          "contains": "stage_forge_layout"
+        },
+        {
+          "type": "script_path",
+          "path": "wolf-cog-os/scripts/build-rootfs.sh",
+          "contains": "stage_forge_layout"
+        }
+      ]
+    },
+    {
+      "id": "script.wolf-cog-os.forge-iso-smoke",
+      "owner": "wolf-cog-os/scripts/test/forge-iso-smoke.sh",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": "wolf-cog-os/scripts/test/forge-iso-smoke.sh"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-public.yml",
+          "contains": "forge-iso-smoke.sh"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "contains": "forge-iso-smoke.sh"
+        }
+      ]
+    },
+    {
+      "id": "script.wolf-cog-os.emit-forge-build-state",
+      "owner": "wolf-cog-os/scripts/emit-forge-build-state.py",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": "wolf-cog-os/scripts/emit-forge-build-state.py"
+      },
+      "required_env": [],
+      "optional_env": [
+        "COGOS_FORGE_PROFILE"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "contains": "emit-forge-build-state.py"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-rc.yml",
+          "contains": "emit-forge-build-state.py"
+        }
+      ]
+    },
+    {
+      "id": "script.github.emit-promotion-dry-run-report",
+      "owner": ".github/scripts/emit-promotion-dry-run-report.py",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": ".github/scripts/emit-promotion-dry-run-report.py"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-release.yml",
+          "contains": "emit-promotion-dry-run-report.py"
+        },
+        {
+          "type": "script_path",
+          "path": "wolf-cog-os/scripts/test/promotion-dry-run.sh",
+          "contains": "emit-promotion-dry-run-report.py"
+        }
+      ]
+    },
+    {
+      "id": "script.wolf-cog-os.promotion-dry-run",
+      "owner": "wolf-cog-os/scripts/test/promotion-dry-run.sh",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": "wolf-cog-os/scripts/test/promotion-dry-run.sh"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-public.yml",
+          "contains": "promotion-dry-run.sh"
+        }
+      ]
+    },
+    {
+      "id": "make.forge-shippable-gate",
+      "owner": "Makefile",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "make_target",
+        "makefile": "Makefile",
+        "target": "forge-shippable-gate"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-public.yml",
+          "contains": "forge-platform-gate"
+        },
+        {
+          "type": "script_path",
+          "path": ".github/scripts/check-forge-platform-gate.py",
+          "contains": "check-forge-shippable-gate.py"
+        }
+      ]
+    },
+    {
+      "id": "script.github.check-forge-shippable-gate",
+      "owner": ".github/scripts/check-forge-shippable-gate.py",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": ".github/scripts/check-forge-shippable-gate.py"
+      },
+      "required_env": [],
+      "optional_env": [
+        "COGOS_FORGE_PROFILE"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "make_target",
+          "path": "Makefile",
+          "contains": "forge-shippable-gate"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-rc.yml",
+          "contains": "check-forge-shippable-gate.py"
+        }
+      ]
+    },
+    {
+      "id": "script.wolf-cog-os.validate-substrate",
+      "owner": "wolf-cog-os/scripts/validate-substrate.py",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": "wolf-cog-os/scripts/validate-substrate.py"
+      },
+      "required_env": [],
+      "optional_env": [
+        "COGOS_SUBSTRATE_ID",
+        "COGOS_SUBSTRATE_VALIDATION_MODE"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "script_path",
+          "path": "wolf-cog-os/scripts/build-forge-installer.sh",
+          "contains": "validate-substrate.py"
+        },
+        {
+          "type": "script_path",
+          "path": "wolf-cog-os/forge/scripts/forge-run-pipeline.sh",
+          "contains": "validate-substrate.py"
+        },
+        {
+          "type": "script_path",
+          "path": "wolf-cog-os/scripts/test/forge-iso-smoke.sh",
+          "contains": "validate-substrate.py"
+        }
+      ]
+    },
+    {
+      "id": "script.github.validate-substrate-evolution-ledger",
+      "owner": ".github/scripts/validate-substrate-evolution-ledger.py",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": ".github/scripts/validate-substrate-evolution-ledger.py"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "script_path",
+          "path": ".github/scripts/check-forge-shippable-gate.py",
+          "contains": "validate-substrate-evolution-ledger.py"
+        }
+      ]
+    },
+    {
+      "id": "script.wolf-cog-os.validate-rootfs-backend",
+      "owner": "wolf-cog-os/scripts/validate-rootfs-backend.py",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": "wolf-cog-os/scripts/validate-rootfs-backend.py"
+      },
+      "required_env": [],
+      "optional_env": [
+        "COGOS_ROOTFS_BACKEND"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "script_path",
+          "path": ".github/scripts/check-forge-shippable-gate.py",
+          "contains": "validate-rootfs-backend.py"
+        },
+        {
+          "type": "script_path",
+          "path": "wolf-cog-os/scripts/build-rootfs.sh",
+          "contains": "rootfs-bootstrap.sh"
+        }
+      ]
+    },
+    {
+      "id": "make.forge-dashboard",
+      "owner": "Makefile",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "make_target",
+        "makefile": "Makefile",
+        "target": "forge-dashboard"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": []
+    },
+    {
+      "id": "script.wolf-cog-os.forge-platform-dashboard",
+      "owner": "wolf-cog-os/scripts/forge-platform-dashboard.py",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": "wolf-cog-os/scripts/forge-platform-dashboard.py"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "make_target",
+          "path": "Makefile",
+          "contains": "forge-dashboard"
+        }
+      ]
+    },
+    {
+      "id": "make.forge-platform-gate",
+      "owner": "Makefile",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "make_target",
+        "makefile": "Makefile",
+        "target": "forge-platform-gate"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/cogos-ci-public.yml",
+          "contains": "forge-platform-gate"
+        }
+      ]
+    },
+    {
+      "id": "script.github.check-forge-platform-gate",
+      "owner": ".github/scripts/check-forge-platform-gate.py",
+      "component": "forge-contract",
+      "invocation": {
+        "type": "script_path",
+        "path": ".github/scripts/check-forge-platform-gate.py"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "make_target",
+          "path": "Makefile",
+          "contains": "forge-platform-gate"
+        }
+      ]
+    }
+  ]
+}

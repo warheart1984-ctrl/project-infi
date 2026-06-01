@@ -1,0 +1,15 @@
+{
+  "manifest_version": "scorpion.cross_machine.v1",
+  "operational_status": "inactive",
+  "primary_machine": "",
+  "secondary_machine": "",
+  "commands": [
+    "py -3.12 -m unittest tests.test_scorpion -v",
+    "py -3.12 -m scorpion.scorpion --mode verify --case-id sc-cross-replay --scope .",
+    "py -3.12 -m scorpion.scorpion --mode chaos-check --case-id sc-cross-replay"
+  ],
+  "artifact_hashes": {
+    "scorpion_report": "docs/proof/scorpion/scorpion_report.json",
+    "anomaly_ledger": ".runtime/scorpion/anomaly_ledger.jsonl"
+  }
+}

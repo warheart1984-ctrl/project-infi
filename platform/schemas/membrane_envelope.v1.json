@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "platform.membrane_envelope.v1",
+  "type": "object",
+  "required": ["envelope_version", "tenant_id", "kind", "body"],
+  "properties": {
+    "envelope_version": { "const": "platform.membrane_envelope.v1" },
+    "tenant_id": { "type": "string" },
+    "source_org_id": { "type": "string" },
+    "target_org_id": { "type": "string" },
+    "kind": { "type": "string" },
+    "body": { "type": "object" },
+    "consent_id": { "type": "string" },
+    "dual_consent": { "type": "boolean" },
+    "signature": { "type": "string" }
+  }
+}

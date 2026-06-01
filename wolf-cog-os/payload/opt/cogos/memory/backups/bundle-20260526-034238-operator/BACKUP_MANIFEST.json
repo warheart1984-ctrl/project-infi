@@ -1,0 +1,193 @@
+{
+  "version": "1.0",
+  "created_at": "2026-05-26T03:42:39Z",
+  "files": [
+    {
+      "path": "config\\aais_stripped.json",
+      "sha256": "023fb1bbbcec76d087998e475a0aefe5cba9d88d06b4febf40f43df55f7a4ede"
+    },
+    {
+      "path": "config\\boot_profile.json",
+      "sha256": "c57b7e10290859ad39dd9e2fd12955dfbe3016eb3e0e5505b36b9fe01c4480d4"
+    },
+    {
+      "path": "config\\compute_tiers.json",
+      "sha256": "74dda275f8d4756b54bcf671866f98b4c633116e09656a824184932465fe95c0"
+    },
+    {
+      "path": "config\\daily_driver.json",
+      "sha256": "2c77ed3b94c78d35a3fcb19cd6027fd16f480bcee78c5c30e518b889db66ea5e"
+    },
+    {
+      "path": "config\\god_brain.json",
+      "sha256": "52acaad7ac10f726256934f614a6fdfd83dfdaf50acea47c67f35058dc825a6a"
+    },
+    {
+      "path": "config\\governance_registry.json",
+      "sha256": "9171c901302a7f7cc2c938da7ac93ea14e328184a66492688ca4fcecd4727451"
+    },
+    {
+      "path": "config\\hostname.json",
+      "sha256": "9bcb768970e13fd7dcbe20dfcce730117fdb87f0eaf1e6bf427e4a648bbdd56a"
+    },
+    {
+      "path": "config\\master_boot.json",
+      "sha256": "71a509491609888d9941ec5fcb6821522d13d4b3fc9da5706248d5d3aeda5ac4"
+    },
+    {
+      "path": "config\\master_boot_artifact.json",
+      "sha256": "72fa3cd346ab9878361ad2ea7669e9d3551860064f58c30603ec003bace8322b"
+    },
+    {
+      "path": "config\\mesh.json",
+      "sha256": "6f18c639c74a43d4b45c7bc2360ed63c483858f92567094ad07fe50ee410ed59"
+    },
+    {
+      "path": "config\\metal_boot_reference.json",
+      "sha256": "fca0643db70926a9edebe0c086648b114a25be160230f5a3b2702ee762bf9cc5"
+    },
+    {
+      "path": "config\\module_manifest.json",
+      "sha256": "14a5617177456fc5514b72384d4c27e1ae6c941205bd2843b4f2bad3d7a094c2"
+    },
+    {
+      "path": "config\\nova_voice_policy.json",
+      "sha256": "4cd900831a5c53ebed1a449f0b0a5e851eef2b1685b8c1df15c644a83b2c96e2"
+    },
+    {
+      "path": "config\\operator_trust_policy.json",
+      "sha256": "c400880766dc51cc058da340e9897eb08f5056c3787a157ffcb56679b99e9831"
+    },
+    {
+      "path": "config\\package_catalog.json",
+      "sha256": "f54760ce8163081145fe8951f22a8f701ee13a3035bb8ac35ed9b48c276202ca"
+    },
+    {
+      "path": "config\\package_catalog.json.sig",
+      "sha256": "ee2da0354fbcf600723d40b12c1f125a28cbe3502ee013c024ac8a9cc74c97fe"
+    },
+    {
+      "path": "config\\release_manifest.json",
+      "sha256": "c3bfb2f473d962c182df2383b71783c2da9c920029da2cebb2a12460303f9088"
+    },
+    {
+      "path": "config\\release_manifest.json.sig",
+      "sha256": "b4a9727a8fe5a3e5a63a91b8f837d22d72bebf1acca7ec503ce377bc256deeac"
+    },
+    {
+      "path": "config\\runtime.json",
+      "sha256": "4edcd5a2e78b8ec1abf27a59f961513423c6541b2dd741c0369d05666ca554b1"
+    },
+    {
+      "path": "config\\runtime_immune.json",
+      "sha256": "bf370d43aeb418f2422d87861a916a2e61c4a7ad748b0169cb6a068e9f7c7f1a"
+    },
+    {
+      "path": "config\\source_approvals.json",
+      "sha256": "3cc7dd69d9a0b5a2f9eebd220909d43688a98338d628607707ca2e3acca2a742"
+    },
+    {
+      "path": "config\\supernova.json",
+      "sha256": "e633115abcc76c2b39a8349445b59aa930f5533a10deaf429838cf13a57aa590"
+    },
+    {
+      "path": "config\\trust_keys.json",
+      "sha256": "804cf431af11b034d8d96b5cf604211470f73249eb9068c26005e25e2cd62bb4"
+    },
+    {
+      "path": "config\\ul_app_bridge_policy.json",
+      "sha256": "5bfa141efe2e26330201eeb5df3583243844a929cde90c2e911fd308b6dbfcd0"
+    },
+    {
+      "path": "config\\update_channel.json",
+      "sha256": "d3e2adb1a51754660337e60cb09dd1b35342d59325a0b76dba5efcf15fb15a38"
+    },
+    {
+      "path": "config\\update_channel.json.sig",
+      "sha256": "1d4243ad5bd5d0e30b1123b9a82f0ae7b8a6d41ebb5dc1a4dfbd7469701e58ad"
+    },
+    {
+      "path": "config\\users.json",
+      "sha256": "32896a188d242463aad5e96eff49c9107abd5cf1c07ff3cc91cd9fbbf754a99b"
+    },
+    {
+      "path": "config\\wine_wolf_bridge.json",
+      "sha256": "be0b4e47bb746488e1709722034deb88cebd5c204bad9ec7be4a83822662d0bc"
+    },
+    {
+      "path": "law\\a real ai os - stripped current files.docx",
+      "sha256": "0a746f74e40bf51e31e95c237c7c124a7dd6b7379eb8a7c3be0ce32c8254e3b2"
+    },
+    {
+      "path": "law\\AAIS clean copy - AI OS plan.docx",
+      "sha256": "57e81e036e1713111b6eaadfeb8c7e32339373c87244fd850476a18695c18436"
+    },
+    {
+      "path": "law\\ARIS clean copy - AI OS plan.docx",
+      "sha256": "5abd4970e9719d099b078f1e7e53507764b859beb1a35eff07b22fc4c7f8426b"
+    },
+    {
+      "path": "law\\boot_law.json",
+      "sha256": "f168659d260152473210a82c888f27584aea73d00afcbad3ca7a6422caad5d23"
+    },
+    {
+      "path": "law\\governance_rules.json",
+      "sha256": "cf882281ff1d9066020e579f6679dacce20fdc23d20d8106cfda946105942436"
+    },
+    {
+      "path": "law\\law_manifest.json",
+      "sha256": "4e8e87e0a42da608c8efad3845fc43bf82149b06dbe7c6baba3636bcf96b8e47"
+    },
+    {
+      "path": "law\\root_law.json",
+      "sha256": "f9ce02b33aaa8fba87c8cfd7fb14e398d829eb18d79ff28bef86ac3f5d2fad74"
+    },
+    {
+      "path": "memory\\creative\\.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "memory\\operator\\aais_nova_receipts.jsonl",
+      "sha256": "7a544a4e1aae167efef5e9df5e40a1ba0dbd920c881efeae164233eb0e823e0b"
+    },
+    {
+      "path": "memory\\operator\\first_run_events.jsonl",
+      "sha256": "71cf0d584e4766a48e739caa5965a6a4f5d4bde87222583229be5500e0b9a34b"
+    },
+    {
+      "path": "memory\\operator\\god_brain_decisions.jsonl",
+      "sha256": "5c1ccb9c8ec3f5cfe075ecffe2a90d76d38cfd15b398a7d919e2b013a55469f2"
+    },
+    {
+      "path": "memory\\operator\\nova_identity.json",
+      "sha256": "e6a978e0b0f437108957d05aa6bb221ca144adc69a6941e7de19987aaf04d9fc"
+    },
+    {
+      "path": "memory\\operator\\supernova_identity.json",
+      "sha256": "f6f4fd0ee455bea1950a6893155ba72dc073fc9da538c64ec984f0dbcb6309fe"
+    },
+    {
+      "path": "memory\\operator\\trust_receipts.jsonl",
+      "sha256": "af8fab92073c11b6c8995d3ffc335f3a137651d611d4683e38a0e94158ce7155"
+    },
+    {
+      "path": "memory\\operator\\trust_state.json",
+      "sha256": "86a83cc5439038d84bee0c9e6d368ad793b022733d9e2d2a0484f3052165cae1"
+    },
+    {
+      "path": "memory\\operator\\voice_confirm_pending.json",
+      "sha256": "00eb611339128f67667fff232335d947c53645e222945d5e807ad0b0d72ad075"
+    },
+    {
+      "path": "memory\\packages\\.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "memory\\patterns\\gre_audit.jsonl",
+      "sha256": "d4774bc4ed2c5935e3579afbec8e6740ea4a6fc2e7dd3fe9bd8211200d0d127b"
+    }
+  ],
+  "file_count": 46,
+  "label": "operator",
+  "lambda_anchor": "1ba1e8352ff43aec5203f9043bffc396d1969a1ef2999558f1c4bc9491b4c3a6"
+}

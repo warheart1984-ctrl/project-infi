@@ -1,0 +1,22 @@
+{"detail": {"critical_gaps": 0, "gap_count": 5}, "kind": "audit", "ts": "2026-05-26T03:42:53Z"}
+{"detail": {"steps": 3}, "kind": "boot_apply", "ts": "2026-05-26T03:42:53Z"}
+{"detail": {}, "kind": "enable", "ts": "2026-05-26T03:42:53Z"}
+{"detail": {"steps": 3}, "kind": "boot_apply", "ts": "2026-05-26T03:43:05Z"}
+{"detail": {}, "kind": "enable", "ts": "2026-05-26T03:43:05Z"}
+{"detail": {"steps": 3}, "kind": "boot_apply", "ts": "2026-05-26T03:45:07Z"}
+{"detail": {}, "kind": "enable", "ts": "2026-05-26T03:45:07Z"}
+{"detail": {"steps": 3}, "kind": "boot_apply", "ts": "2026-05-26T03:45:47Z"}
+{"detail": {}, "kind": "enable", "ts": "2026-05-26T03:45:47Z"}
+{"detail": {"sha256": "568C20483862D0ECCDB4580434FCAFEB695D8948222C75215DEC6A006397287C", "tag": "master-boot-1.3"}, "kind": "finalize_baseline", "ts": "2026-05-26T04:13:53Z"}
+{"detail": {"steps": 3}, "kind": "boot_apply", "ts": "2026-05-26T11:23:56Z"}
+{"detail": {}, "kind": "enable", "ts": "2026-05-26T11:23:56Z"}
+{"detail": {"steps": 3}, "kind": "boot_apply", "ts": "2026-05-26T11:28:25Z"}
+{"detail": {}, "kind": "enable", "ts": "2026-05-26T11:28:25Z"}
+{"detail": {"sha256": "15CBD057E490F45CA9C6CF06CA13951BC72559ED15B4599CE31BB39B5DFAC990", "tag": "master-boot-1.4-tree"}, "kind": "finalize_baseline", "ts": "2026-05-26T12:01:12Z"}
+{"detail": {"steps": 3}, "kind": "boot_apply", "ts": "2026-05-26T12:03:33Z"}
+{"detail": {}, "kind": "enable", "ts": "2026-05-26T12:03:33Z"}
+{"detail": {"steps": 3}, "kind": "boot_apply", "ts": "2026-05-26T14:02:47Z"}
+{"detail": {}, "kind": "enable", "ts": "2026-05-26T14:02:47Z"}
+{"detail": {"steps": 3}, "kind": "boot_apply", "ts": "2026-05-26T14:03:02Z"}
+{"detail": {}, "kind": "enable", "ts": "2026-05-26T14:03:02Z"}
+{"detail": {"sha256": "E4DE17AD7F93A521D70B1BD00FE3119CC936D5D1C080D65FFD3ADD38DA2D7E96", "tag": "12.22.0-wolf-os"}, "kind": "finalize_baseline", "ts": "2026-05-26T14:24:29Z"}

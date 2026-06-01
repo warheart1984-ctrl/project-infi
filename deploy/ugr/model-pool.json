@@ -1,0 +1,40 @@
+{
+  "pool_version": "0.1",
+  "authority": "docs/contracts/UGR_EMBRYO_V0_CONTRACT.md",
+  "default_tier": "mid",
+  "generation_overrides": {
+    "temperature": 0,
+    "temperature_max": 0
+  },
+  "rail_caps": {
+    "SAFE": ["tiny", "mid"],
+    "NORMAL": ["tiny", "mid", "big"],
+    "EXPRESS": ["tiny", "mid", "big"]
+  },
+  "slots": {
+    "tiny": {
+      "slot_id": "pool-tiny-local",
+      "provider": "local",
+      "provider_label": "Local Tiny",
+      "execution_backend": "local",
+      "response_mode": "fast",
+      "proposal_only": true
+    },
+    "mid": {
+      "slot_id": "pool-mid-local",
+      "provider": "local",
+      "provider_label": "Local Mid",
+      "execution_backend": "local",
+      "response_mode": "think",
+      "proposal_only": true
+    },
+    "big": {
+      "slot_id": "pool-big-local",
+      "provider": "local",
+      "provider_label": "Local Big",
+      "execution_backend": "local",
+      "response_mode": "think",
+      "proposal_only": true
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "config_version": "0.1",
+  "default_region": "local-primary",
+  "regions": {
+    "local-primary": {
+      "label": "Local primary region",
+      "shard_ids": ["shard-global"],
+      "overlay_tenants": ["global"],
+      "status": "healthy",
+      "latency_bias": 0.2
+    },
+    "tenant-us": {
+      "label": "Tenant US overlay",
+      "shard_ids": ["shard-global", "shard-tenant-acme"],
+      "overlay_tenants": ["tenant:acme"],
+      "status": "healthy",
+      "latency_bias": 0.35
+    },
+    "tenant-eu": {
+      "label": "Tenant EU overlay",
+      "shard_ids": ["shard-tenant-contoso"],
+      "overlay_tenants": ["tenant:contoso"],
+      "status": "degraded",
+      "latency_bias": 0.5
+    }
+  }
+}

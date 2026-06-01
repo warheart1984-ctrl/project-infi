@@ -1,0 +1,8 @@
+# Arch base packages for pacstrap backend (P11)
+base
+systemd
+sudo
+bash
+openssh
+pacman
+networkmanager

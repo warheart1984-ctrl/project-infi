@@ -1,0 +1,28 @@
+.App {
+  min-height: 100vh;
+}
+
+.main-content {
+  min-height: calc(100vh - 72px);
+  padding: 0 0 4rem;
+}
+
+.App--nova {
+  background: #07111f;
+}
+
+.App--jarvis {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(92, 231, 255, 0.1), transparent 22%),
+    radial-gradient(circle at 82% 18%, rgba(88, 123, 255, 0.1), transparent 24%),
+    linear-gradient(180deg, #050b14 0%, #07101a 46%, #050b14 100%);
+}
+
+.main-content--nova {
+  min-height: calc(100vh - 72px);
+  padding-bottom: 0;
+}
+
+.main-content--jarvis {
+  min-height: calc(100vh - 72px);
+}

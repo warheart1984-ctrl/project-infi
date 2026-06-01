@@ -1,0 +1,23 @@
+{
+  "manifest_version": "cognitive_runtime.cross_machine.v1",
+  "operational_status": "inactive",
+  "debt_register_id": "INV-1",
+  "primary_machine": "",
+  "secondary_machine": "",
+  "identity_id": "operator",
+  "store_paths": {
+    "narrative": "/opt/cogos/memory/operator/nova_narrative/operator.json",
+    "intent": "/opt/cogos/memory/operator/nova_intent/operator.intent.json"
+  },
+  "commands": [
+    "python -m pytest tests/test_wolf_rehydration_harness.py -q",
+    "python -m src.cogos_runtime_bridge --verify-rehydration .runtime/wolf_rehydration_smoke",
+    "python -m src.cogos_runtime_bridge --rehydrate-boot operator --narrative-store /opt/cogos/memory/operator/nova_narrative --intent-store /opt/cogos/memory/operator/nova_intent"
+  ],
+  "artifact_hashes": {
+    "narrative_store": "",
+    "intent_store": "",
+    "pre_reboot_snapshot": "",
+    "post_reboot_snapshot": ""
+  }
+}

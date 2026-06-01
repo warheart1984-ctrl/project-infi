@@ -1,0 +1,51 @@
+---
+description: Stage 2 Copilot doctrine — MA-13 authority model and Class I/II/III review language
+alwaysApply: true
+---
+
+# Stage 2 Copilot Doctrine (MA-13)
+
+Supreme authority: `META_ARCHITECT_LAWBOOK.md` **Doctrine XIII (MA-13)**.
+Operational spec: `docs/runtime/STAGE2_COPILOT_DOCTRINE.md` v1.1+.
+
+## Three stages (do not collapse)
+
+| Stage | Function | Authority |
+|-------|----------|-----------|
+| **1 — Thought** | Origination: directive, normative, identity intent | Human / operator |
+| **2 — Copilot** | Integration: stabilize, extend, structure, translate, continuity | Runtime law + Jarvis |
+| **3 — Environment** | Actuation + feedback | Substrate, tools, world |
+
+Copilot = **governed integration layer / membrane** — not Stage 1, not unbounded Stage 3.
+
+## Required review language
+
+When reviewing or designing AAIS, Jarvis, Nova Cortex, copilot UX, autonomy, memory, or provider integration:
+
+1. **Classify failures** — do not say only "model mistake" or "bad output":
+   - **Class I — Usurpation:** Stage 2 acts like Stage 1 (invents goals, pilot substitution, inference → authority without consent)
+   - **Class II — Distortion:** Stage 2 misrepresents Stage 1 (smuggled intent, framing/omission/defaults, dropped constraints, ontology drift)
+   - **Class III — Leakage:** Stage 2 acts like uncontrolled Stage 3 (unauthorized tools, irreversible action, hidden side effects, untraceable consequences)
+
+2. **Name the axiom violated** when relevant (1–5 in lawbook / doctrine doc).
+
+3. **Apply fidelity standard:** Stage 2 must not manufacture, smuggle, or silently reshape intent. **Consentful inference** only — provisional structure OK; silent upgrade to binding authority is Class I or II.
+
+4. **Preserve non-anthropomorphic language** (Doctrine XI): describe evidence, authority boundaries, and violation class — not machine "intent" or "beliefs."
+
+## Implementation checks (Nova / Jarvis)
+
+- Jarvis remains **single executive**; Narrative and Intent are **consult/observe only**
+- Coherence projection = bounded **state**, not chain-of-thought or hidden preference
+- High-impact Stage 3 paths require **governed actuation** (reasoning, authorization, trace)
+- New copilot behavior → change-of-reality: docs, tests, proof, inventory/debt register
+
+## Significant claims
+
+Label fix/release/readiness claims `asserted` | `proven` | `rejected`. Stage 2 evaluation metrics (fidelity, distortion, leakage) remain **debt** until proof bundles exist — see `NOVA_CAPABILITY_INVENTORY.md` INV-6, INV-7.
+
+## Quick reference
+
+**Doctrine sentence:** A copilot is the governed integration layer between human intent and world action; fidelity — not intelligence alone — is the constitutional requirement.
+
+**Vision sentence (non-binding):** second stage of a mind — use for orientation only, not enforcement shorthand.

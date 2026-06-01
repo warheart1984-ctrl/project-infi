@@ -1,0 +1,37 @@
+schema_version: forge-pipeline.v2
+name: windows-installer
+base: windows-base
+variant:
+  id: windows-installer-main
+  channel: nightly
+lineage:
+  parent: cogos-base
+  parent_lineage_id: ""
+reproducibility:
+  seed: windows-installer-v1
+  deterministic: true
+substrate:
+  id: windows-installer
+rootfs:
+  backend: winpe-backend
+kernel:
+  flavor: generic
+packages:
+  include: []
+  exclude: []
+overlays:
+  - overlays/windows-inject
+governance:
+  sigil_profile: strict
+  invariant_set: windows-boot-chain
+  required_invariants:
+    - bcd_integrity
+    - signature_preservation
+    - boot_chain_order
+runtime:
+  mode: installer
+  logging: normal
+output:
+  iso_name: forge-windows-installer.iso
+  cloud_formats:
+    - raw-img

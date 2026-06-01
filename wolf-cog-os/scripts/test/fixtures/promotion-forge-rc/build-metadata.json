@@ -1,0 +1,9 @@
+{
+  "run": {
+    "workflow": "CoGOS Release Candidate",
+    "run_id": "424242",
+    "run_number": "1",
+    "cogos_tag": "rc-forge-fixture",
+    "channel": "forge-rc"
+  }
+}

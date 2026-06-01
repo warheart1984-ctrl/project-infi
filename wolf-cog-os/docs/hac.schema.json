@@ -1,0 +1,537 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wolf-cog-os.local/schemas/hac.v1.schema.json",
+  "title": "Host Adaptation Contract (HAC) v1",
+  "description": "Contract between host_probe output, host_profile normalization, and universal installer policy selection.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "profile_id",
+    "generated_at",
+    "plane_contract",
+    "probe",
+    "host",
+    "compat",
+    "policy_candidates",
+    "selection",
+    "runtime_binding",
+    "attestation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "hac.v1"
+    },
+    "profile_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{7,63}$"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "plane_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime_plane",
+        "adapter_plane",
+        "pipeline_stage"
+      ],
+      "properties": {
+        "runtime_plane": {
+          "type": "string",
+          "const": "governed-runtime"
+        },
+        "adapter_plane": {
+          "type": "string",
+          "const": "hardware-adapter"
+        },
+        "pipeline_stage": {
+          "type": "string",
+          "enum": [
+            "stage-a-runtime-blob",
+            "stage-b-adapter-build",
+            "stage-c-runtime-adapter-bind"
+          ]
+        }
+      }
+    },
+    "probe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "probe_version",
+        "source",
+        "host_probe_sha256",
+        "commands"
+      ],
+      "properties": {
+        "probe_version": {
+          "type": "string",
+          "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "live-session",
+            "installer-ci",
+            "factory-preflight"
+          ]
+        },
+        "host_probe_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "host": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "arch",
+        "boot_mode",
+        "vendor",
+        "product",
+        "cpu",
+        "memory_mib",
+        "storage",
+        "graphics"
+      ],
+      "properties": {
+        "arch": {
+          "type": "string",
+          "enum": [
+            "x86_64"
+          ]
+        },
+        "boot_mode": {
+          "type": "string",
+          "enum": [
+            "uefi",
+            "bios"
+          ]
+        },
+        "vendor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "product": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cpu": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "vendor",
+            "model",
+            "cores",
+            "threads"
+          ],
+          "properties": {
+            "vendor": {
+              "type": "string",
+              "enum": [
+                "GenuineIntel",
+                "AuthenticAMD",
+                "Other"
+              ]
+            },
+            "model": {
+              "type": "string",
+              "minLength": 1
+            },
+            "cores": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "threads": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "flags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": []
+            }
+          }
+        },
+        "memory_mib": {
+          "type": "integer",
+          "minimum": 1024
+        },
+        "storage": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "bus",
+              "size_gib",
+              "rotational"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "bus": {
+                "type": "string",
+                "enum": [
+                  "nvme",
+                  "sata",
+                  "usb",
+                  "virtio",
+                  "unknown"
+                ]
+              },
+              "size_gib": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "rotational": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "graphics": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "vendor",
+              "device",
+              "driver_hint"
+            ],
+            "properties": {
+              "vendor": {
+                "type": "string",
+                "enum": [
+                  "intel",
+                  "amd",
+                  "nvidia",
+                  "virtio",
+                  "other"
+                ]
+              },
+              "device": {
+                "type": "string",
+                "minLength": 1
+              },
+              "driver_hint": {
+                "type": "string",
+                "enum": [
+                  "safe-nomodeset",
+                  "kms-ok",
+                  "unknown"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "compat": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "legacy_bias",
+        "modern_bias",
+        "risk_flags"
+      ],
+      "properties": {
+        "legacy_bias": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "modern_bias": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "risk_flags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "legacy_gpu",
+              "old_bios",
+              "uefi_secureboot_unknown",
+              "storage_controller_quirk",
+              "low_memory",
+              "unknown_chipset"
+            ]
+          }
+        }
+      }
+    },
+    "policy_candidates": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "family",
+          "score",
+          "reasons",
+          "kernel_package",
+          "initramfs_modules_profile",
+          "grub_profile"
+        ],
+        "properties": {
+          "family": {
+            "type": "string",
+            "enum": [
+              "legacy-lts",
+              "modern-lts"
+            ]
+          },
+          "score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "reasons": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "kernel_package": {
+            "type": "string",
+            "minLength": 1
+          },
+          "initramfs_modules_profile": {
+            "type": "string",
+            "enum": [
+              "minimal-safe",
+              "standard",
+              "broad-compat"
+            ]
+          },
+          "grub_profile": {
+            "type": "string",
+            "enum": [
+              "metal-default",
+              "metal-safe",
+              "universal-fallback"
+            ]
+          }
+        }
+      }
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selected_family",
+        "selected_kernel_package",
+        "selected_kernel_path",
+        "selected_initramfs_path",
+        "selected_initramfs_modules_profile",
+        "selected_grub_profile",
+        "decision_mode",
+        "decision_reasons"
+      ],
+      "properties": {
+        "selected_family": {
+          "type": "string",
+          "enum": [
+            "legacy-lts",
+            "modern-lts"
+          ]
+        },
+        "selected_kernel_package": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selected_kernel_path": {
+          "type": "string",
+          "pattern": "^/boot/kernel-(legacy|modern)$"
+        },
+        "selected_initramfs_path": {
+          "type": "string",
+          "pattern": "^/boot/initramfs-(legacy|modern)(\\.img)?$"
+        },
+        "selected_initramfs_modules_profile": {
+          "type": "string",
+          "enum": [
+            "minimal-safe",
+            "standard",
+            "broad-compat"
+          ]
+        },
+        "selected_grub_profile": {
+          "type": "string",
+          "enum": [
+            "metal-default",
+            "metal-safe",
+            "universal-fallback"
+          ]
+        },
+        "decision_mode": {
+          "type": "string",
+          "enum": [
+            "report-only",
+            "dry-run",
+            "enforced"
+          ]
+        },
+        "decision_reasons": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "runtime_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime_blob_path",
+        "runtime_blob_sha256",
+        "live_squashfs_path",
+        "dual_kernel_same_runtime"
+      ],
+      "properties": {
+        "runtime_blob_path": {
+          "type": "string",
+          "const": "/system/runtime.ul"
+        },
+        "runtime_blob_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "live_squashfs_path": {
+          "type": "string",
+          "const": "/live/filesystem.squashfs"
+        },
+        "dual_kernel_same_runtime": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    },
+    "attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_version",
+        "policy_digest_sha256",
+        "stage_digests",
+        "leak_checks",
+        "evidence_log",
+        "governance_mode",
+        "release_gate"
+      ],
+      "properties": {
+        "policy_version": {
+          "type": "string",
+          "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "policy_digest_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "stage_digests": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "stage_a_runtime_blob_sha256",
+            "stage_b_adapter_bundle_sha256",
+            "stage_c_binding_sha256"
+          ],
+          "properties": {
+            "stage_a_runtime_blob_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "stage_b_adapter_bundle_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "stage_c_binding_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "leak_checks": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "check_id",
+              "status"
+            ],
+            "properties": {
+              "check_id": {
+                "type": "string",
+                "enum": [
+                  "initramfs-mismatch",
+                  "module-version-drift",
+                  "policy-handoff-integrity",
+                  "squashfs-path-consistency"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "pass",
+                  "fail",
+                  "warn"
+                ]
+              },
+              "details": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "evidence_log": {
+          "type": "string",
+          "pattern": "^/var/log/[A-Za-z0-9._/-]+\\.jsonl$"
+        },
+        "governance_mode": {
+          "type": "string",
+          "enum": [
+            "strict",
+            "audit-only",
+            "off"
+          ]
+        },
+        "release_gate": {
+          "type": "string",
+          "enum": [
+            "blocked",
+            "candidate",
+            "approved"
+          ]
+        }
+      }
+    }
+  }
+}

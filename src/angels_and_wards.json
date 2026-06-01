@@ -1,0 +1,75 @@
+{
+  "name": "Jarvis Angels and Wards",
+  "version": "1.0.0",
+  "doctrine": {
+    "angels": [
+      {
+        "name": "SHIELD",
+        "role": "preserve core identity",
+        "protects": [
+          "core identity",
+          "permanent mission",
+          "foundational tone",
+          "untouchable principles"
+        ]
+      },
+      {
+        "name": "PROTECT",
+        "role": "preserve stability",
+        "protects": [
+          "system stability",
+          "module contracts",
+          "deterministic assembly",
+          "safe merges"
+        ]
+      },
+      {
+        "name": "GUARD",
+        "role": "preserve boundaries",
+        "protects": [
+          "layer boundaries",
+          "protocol boundaries",
+          "responsibility separation"
+        ]
+      }
+    ],
+    "wards": [
+      {
+        "name": "WARD",
+        "role": "block contamination",
+        "protects": [
+          "context separation",
+          "memory hygiene",
+          "contamination boundaries"
+        ]
+      },
+      {
+        "name": "SEE",
+        "role": "preserve visibility",
+        "protects": [
+          "inspectability",
+          "traceability",
+          "protocol visibility"
+        ]
+      },
+      {
+        "name": "WEARY",
+        "role": "detect fatigue",
+        "protects": [
+          "coherence under strain",
+          "anti-loop behavior",
+          "degraded-state handling"
+        ]
+      }
+    ],
+    "combined_doctrine": [
+      "Shield the soul.",
+      "Protect the form.",
+      "Guard the gate.",
+      "Ward against corruption.",
+      "See the true state.",
+      "Grow weary before collapse."
+    ],
+    "engineering_rule": "Jarvis remains stabilized at the core. Adaptation is allowed only inside approved modular zones. No evolving subsystem may bypass the Angels or the Wards."
+  }
+}

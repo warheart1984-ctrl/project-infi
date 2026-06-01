@@ -1,0 +1,48 @@
+{
+  "schema_version": "forge-nightly-variant-matrix.v1",
+  "description": "Nightly evolution variant matrix (P13)",
+  "variants": [
+    {
+      "id": "minimal-core",
+      "pipeline": "wolf-cog-os/forge/pipelines/minimal.yaml",
+      "profile": "forge-selfhosted",
+      "emit_cloud": false,
+      "required": true
+    },
+    {
+      "id": "daily-driver-main",
+      "pipeline": "wolf-cog-os/forge/pipelines/daily-driver.yaml",
+      "profile": "forge-selfhosted",
+      "emit_cloud": true,
+      "required": true
+    },
+    {
+      "id": "recovery-main",
+      "pipeline": "wolf-cog-os/forge/pipelines/recovery.yaml",
+      "profile": "forge-selfhosted",
+      "emit_cloud": false,
+      "required": false
+    },
+    {
+      "id": "windows-installer-main",
+      "pipeline": "wolf-cog-os/forge/pipelines/windows-installer.yaml",
+      "profile": "forge-selfhosted",
+      "emit_cloud": true,
+      "required": false
+    },
+    {
+      "id": "macos-installer-main",
+      "pipeline": "wolf-cog-os/forge/pipelines/macos-installer.yaml",
+      "profile": "forge-selfhosted",
+      "emit_cloud": true,
+      "required": false
+    },
+    {
+      "id": "android-system-main",
+      "pipeline": "wolf-cog-os/forge/pipelines/android-system.yaml",
+      "profile": "forge-selfhosted",
+      "emit_cloud": true,
+      "required": false
+    }
+  ]
+}

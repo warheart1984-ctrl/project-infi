@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "platform.workflow_listing_step.v1",
+  "type": "object",
+  "required": ["subsystem", "kind"],
+  "properties": {
+    "subsystem": { "type": "string" },
+    "kind": { "type": "string" },
+    "params": { "type": "object" },
+    "proof_required": { "type": "boolean" }
+  }
+}

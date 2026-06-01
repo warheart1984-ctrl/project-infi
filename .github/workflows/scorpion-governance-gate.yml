@@ -1,0 +1,42 @@
+name: Scorpion Governance Gate
+
+on:
+  pull_request:
+    paths:
+      - "scorpion/**"
+      - "tests/test_scorpion.py"
+      - "scripts/scorpion/**"
+      - "docs/subsystems/scorpion/**"
+      - "docs/proof/scorpion/**"
+      - ".github/scripts/check-scorpion-governance.py"
+      - ".github/workflows/scorpion-governance-gate.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scorpion/**"
+      - "tests/test_scorpion.py"
+      - "scripts/scorpion/**"
+      - "docs/subsystems/scorpion/**"
+      - "docs/proof/scorpion/**"
+      - ".github/scripts/check-scorpion-governance.py"
+      - ".github/workflows/scorpion-governance-gate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  scorpion-governance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Scorpion read-only governance gate
+        run: |
+          python3 .github/scripts/check-scorpion-governance.py --repo-root .

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "slingshot.packet.v1",
+  "title": "Slingshot Packet v1",
+  "type": "object",
+  "required": [
+    "packet_version",
+    "case_id",
+    "compose_mode",
+    "cortex_fast_path",
+    "authorized_goals",
+    "required_constraints",
+    "expires_at_utc",
+    "claim_label"
+  ],
+  "properties": {
+    "packet_version": { "const": "slingshot.packet.v1" },
+    "case_id": { "type": "string", "minLength": 1 },
+    "compose_mode": { "enum": ["fast", "instant", "full"] },
+    "cortex_fast_path": { "type": "boolean" },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] }
+  }
+}

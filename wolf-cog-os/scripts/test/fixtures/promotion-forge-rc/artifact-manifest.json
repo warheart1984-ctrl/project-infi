@@ -1,0 +1,6 @@
+{
+  "artifacts": [
+    {"name": "build-metadata.json", "size_bytes": 128, "sha256": "fixture"},
+    {"name": "wolf-cog-forge-fixture.iso", "size_bytes": 32, "sha256": "fixture"}
+  ]
+}

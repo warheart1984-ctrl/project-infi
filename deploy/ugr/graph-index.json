@@ -1,0 +1,6 @@
+{
+  "config_version": "0.1",
+  "max_rows_per_path": 5000,
+  "index_version": "1.0",
+  "canonical_backend": "jsonl"
+}

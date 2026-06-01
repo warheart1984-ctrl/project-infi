@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "forge-substrate-registry.v2",
+  "title": "Forge substrate registry v2",
+  "type": "object",
+  "required": ["registry_version", "default_substrate_id", "substrate_classes", "substrates"],
+  "properties": {
+    "registry_version": { "const": "substrate-registry.v2" },
+    "default_substrate_id": { "type": "string" },
+    "default_contract_version": { "type": "string" },
+    "substrate_classes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string" },
+          "tier": { "enum": ["fallback", "distro", "product", "experimental"] }
+        }
+      }
+    },
+    "substrates": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string" },
+          "class": { "type": "string" },
+          "family": { "type": "string" },
+          "contract_version": { "type": "string" },
+          "priority": { "type": "integer" },
+          "extends": { "type": "string" },
+          "min_bytes": { "type": "integer" },
+          "replay_adapter": { "type": "string" },
+          "detect": {
+            "type": "object",
+            "properties": {
+              "path_globs": { "type": "array", "items": { "type": "string" } },
+              "path_any": { "type": "array", "items": { "type": "string" } },
+              "path_markers": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    }
+  }
+}

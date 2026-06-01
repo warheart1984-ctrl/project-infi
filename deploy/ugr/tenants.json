@@ -1,0 +1,26 @@
+{
+  "config_version": "0.1",
+  "tenants": {
+    "global": {
+      "label": "Global shared knowledge",
+      "enabled": true,
+      "shard_id": "shard-global",
+      "overlay_global": false,
+      "max_claims_per_query": 100
+    },
+    "tenant:acme": {
+      "label": "Acme Corp overlay",
+      "enabled": true,
+      "shard_id": "shard-tenant-acme",
+      "overlay_global": true,
+      "max_claims_per_query": 50
+    },
+    "tenant:contoso": {
+      "label": "Contoso overlay",
+      "enabled": true,
+      "shard_id": "shard-tenant-contoso",
+      "overlay_global": true,
+      "max_claims_per_query": 50
+    }
+  }
+}

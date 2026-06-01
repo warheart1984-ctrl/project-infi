@@ -1,0 +1,135 @@
+{
+  "name": "Project Infi Root Law",
+  "version": "0.1",
+  "principle": "No action becomes state unless it is verified, judged, debt-reckoned, truthfully admitted, stabilized, and bound.",
+  "authority": {
+    "runtime_authority": "Jarvis",
+    "presentation_authority": "Nova",
+    "state_authority": "Project Infi governed cycle",
+    "module_authority": "AAIS Module Governance"
+  },
+  "invariants": [
+    "fail_closed_on_missing_law",
+    "no_false_admission",
+    "no_skipped_gates",
+    "delta_freezes_mutation",
+    "lambda_binding_runs_every_cycle",
+    "modules_require_cisiv_verification",
+    "capability_modules_return_deterministic_results",
+    "operator_pattern_evidence_over_assumption",
+    "runtime_update_adds_weight",
+    "runtime_patch_requires_metal_boot_verification",
+    "governance_serves_operator_trust",
+    "config_unification_law"
+  ],
+  "config_unification_law": {
+    "name": "Config Unification Law",
+    "principle": "Everything must be unified. Nothing may conflict. One canonical source per concern; all loaders resolve through the governance registry.",
+    "requires": [
+      "single_canonical_path_per_concern",
+      "forbidden_duplicate_config_files",
+      "loaders_use_governance_registry_only",
+      "cross_domain_refs_via_bindings_not_copy",
+      "unification_verify_before_release",
+      "deprecated_config_paths_absent"
+    ],
+    "registry": "/opt/cogos/config/governance_registry.json",
+    "runtime": "/opt/cogos/runtime/governance_registry.py",
+    "verify_cli": "cogos-unified-verify",
+    "forbidden_examples": [
+      "config/voice_confirm.json",
+      "config/nova_voice.json",
+      "config/nova_spoken_contract.json",
+      "duplicate greeting or confirm phrase definitions across configs"
+    ]
+  },
+  "master_boot_law": {
+    "name": "Master Boot Law",
+    "principle": "One master boot ISO remasters from metal baseline with unified governance, full runtime stack, and fail-closed preflight.",
+    "requires": [
+      "preflight_unified_verify",
+      "preflight_first_run_smoke",
+      "metal_boot_reference_present",
+      "signed_release_manifests",
+      "iso_size_within_metal_range",
+      "master_boot_artifact_recorded",
+      "governed_boot_menu_entry_available"
+    ],
+    "config": "/opt/cogos/config/master_boot.json",
+    "runtime": "/opt/cogos/runtime/master_boot.py",
+    "build_script": "wolf-cog-os/scripts/build-master-boot.sh",
+    "output_iso": "Wolf-CoG-OS-master-boot.iso",
+    "metal_baseline": "/opt/cogos/config/metal_boot_reference.json"
+  },
+  "daily_driver_law": {
+    "name": "Daily Driver Law",
+    "principle": "Real daily use absorbs worldwide OS pain — Linux, Windows, macOS — in silent infrastructure. Governance speaks only when something actually matters.",
+    "requires": [
+      "pain_points_mapped_to_remedies",
+      "silent_governance_after_first_run",
+      "daily_routine_without_operator_ceremony",
+      "persistence_or_install_path_for_state",
+      "trust_band_daily_driver_reduces_friction",
+      "immune_auto_heal_without_av_nag",
+      "unified_verify_on_daily_cycle"
+    ],
+    "config": "/opt/cogos/config/daily_driver.json",
+    "runtime": "/opt/cogos/runtime/daily_driver.py",
+    "cli": "cogos-daily-driver"
+  },
+  "operator_trust_policy_law": {
+    "name": "Operator Trust Policy Law",
+    "principle": "Governance without operator trust is governance beating a dead horse. Hard law blocks real danger; operator trust reduces friction and keeps receipts.",
+    "requires": [
+      "operator_profile_default_trust_stance",
+      "hard_block_only_for_verified_danger",
+      "operator_confirm_accepted_when_trust_band_allows",
+      "trust_receipts_append_only",
+      "repeat_prompts_suppressed_at_full_trust",
+      "operator_pattern_conflict_reduces_trust_not_identity"
+    ],
+    "config": "/opt/cogos/config/operator_trust_policy.json",
+    "runtime": "/opt/cogos/runtime/operator_policy.py"
+  },
+  "operator_pattern_law": {
+    "name": "Operator Pattern Evidence Law",
+    "principle": "When the operator detects an artifact mismatch, boot anomaly, size drift, kernel panic, or behavior that does not match known-good reality, the system must treat that observation as first-class verification evidence.",
+    "requires": [
+      "artifact_size_compared_to_known_good",
+      "bootloader_layout_verified",
+      "real_usb_or_vm_boot_test_before_release",
+      "kernel_panic_treated_as_failed_release_gate",
+      "init_path_verified_before_governed_pid1_default",
+      "operator_observation_logged_without_dismissal"
+    ],
+    "release_rule": "No ISO is promoted when operator pattern evidence conflicts with tool-only success."
+  },
+  "runtime_weight_law": {
+    "name": "Runtime Update Weight Law",
+    "principle": "Every runtime patch or upgrade must verify against the original metal boot reference before weight is recorded; weight is tracked after each patch and upgrade.",
+    "requires": [
+      "verify_against_original_metal_boot_before_weight",
+      "successful_runtime_patch_increments_weight",
+      "successful_runtime_upgrade_increments_weight",
+      "weight_persisted_after_every_patch_or_upgrade",
+      "weight_ledger_append_only",
+      "operator_pattern_conflict_subtracts_weight",
+      "release_promotion_requires_minimum_weight_and_metal_baseline"
+    ],
+    "metal_baseline": {
+      "reference": "/opt/cogos/config/metal_boot_reference.json",
+      "iso_filename": "Wolf-CoG-OS-metal-fixed.iso",
+      "verification": [
+        "iso_size_within_metal_range",
+        "iso_sha256_when_artifact_present",
+        "signed_runtime_manifests",
+        "boot_proof_or_operator_confirm"
+      ]
+    },
+    "defaults": {
+      "weight_per_verified_patch": 15,
+      "promotion_threshold": 100,
+      "operator_conflict_penalty": 40
+    }
+  }
+}

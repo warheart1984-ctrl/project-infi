@@ -1,0 +1,40 @@
+{
+  "schema_version": "aais.cloud_forge.domain_slices.v1",
+  "slices": [
+    {
+      "slice_id": "forge-voss-os",
+      "domain": "forge/voss/os_architecture",
+      "namespace": "cloud-forge-forge-voss",
+      "region": "us-central1",
+      "vpc": "cloud-forge-governed",
+      "components": [
+        "llm-gateway",
+        "vector-store",
+        "ledger-shard",
+        "voss-workers",
+        "cache-l2",
+        "law-bundle-cache"
+      ],
+      "co_located_artifacts": [
+        "META_ARCHITECT_LAWBOOK.md",
+        "REPO_PROOF_LAW.md",
+        "docs/contracts/cloud-forge-rail-contract.md"
+      ],
+      "notes": "Primary governed architecture Q&A slice; aligns with EXPRESS template forge/voss/os_architecture."
+    },
+    {
+      "slice_id": "aais-default",
+      "domain": "*",
+      "namespace": "cloud-forge-default",
+      "region": "us-central1",
+      "vpc": "cloud-forge-governed",
+      "components": [
+        "llm-gateway",
+        "ledger-shard",
+        "cache-l1"
+      ],
+      "co_located_artifacts": [],
+      "notes": "Fallback slice for unmapped domains."
+    }
+  ]
+}

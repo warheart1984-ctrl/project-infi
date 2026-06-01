@@ -1,0 +1,49 @@
+{
+  "version": "1.0.0",
+  "ul_bridge_version": "1.0.0",
+  "auto_assign": true,
+  "profiles": {
+    "win.default.safe": {
+      "backend": "wine",
+      "bridge_class": "foreign_app_ul_bridge",
+      "caps": ["fs.read", "fs.write", "fs.list", "net.request", "proc.spawn", "log.write"],
+      "allowed_path_prefixes": ["/home", "~/", "/tmp/cogos_wine_bridge"],
+      "deny_path_prefixes": ["/etc", "/root", "/sys", "/proc", "/boot", "/usr", "/var/lib"],
+      "net_allowed": true,
+      "first_time_banner": "Running as a governed Windows app. It can access your home folder, not system files."
+    },
+    "profile.win.default": {
+      "backend": "wine",
+      "bridge_class": "foreign_app_ul_bridge",
+      "caps": ["fs.read", "fs.write", "fs.list", "net.request", "proc.spawn", "log.write"],
+      "allowed_path_prefixes": ["/home", "~/"],
+      "deny_path_prefixes": ["/etc", "/root", "/sys", "/proc/kcore"],
+      "net_allowed": true
+    },
+    "profile.mac.default": {
+      "backend": "darling",
+      "bridge_class": "foreign_app_ul_bridge",
+      "caps": ["fs.read", "fs.write", "fs.list", "net.request", "proc.spawn", "log.write"],
+      "allowed_path_prefixes": ["/home", "~/"],
+      "deny_path_prefixes": ["/etc", "/root"],
+      "net_allowed": true
+    },
+    "profile.linux.foreign": {
+      "backend": "linux-shim",
+      "bridge_class": "foreign_app_ul_bridge",
+      "caps": ["fs.read", "fs.write", "fs.list", "net.request", "proc.spawn", "log.write"],
+      "allowed_path_prefixes": ["/home", "~/"],
+      "deny_path_prefixes": ["/etc/shadow", "/etc/sudoers"],
+      "net_allowed": true
+    }
+  },
+  "seccomp": {
+    "mode": "governed_v0",
+    "note": "LD_PRELOAD is observability-only; governed mode requires seccomp/LSM",
+    "deny_shm_v1": true
+  },
+  "ipc_v1": {
+    "governed": ["fs", "net", "proc"],
+    "observed_only": ["dbus", "com", "pipes", "shm"]
+  }
+}

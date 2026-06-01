@@ -1,0 +1,15 @@
+{
+  "profile": "operator_shell",
+  "shell_mode": "desktop",
+  "dashboard_autostart": false,
+  "desktop_autostart": false,
+  "daemon_autostart": true,
+  "hal_autostart": true,
+  "persistence_autostart": true,
+  "boot_verify_autostart": true,
+  "daily_driver_mode": false,
+  "daily_driver_autostart": true,
+  "nova_bubble_suppressed": false,
+  "nova_voice_default": false,
+  "operator_message": "Phases 0-3 complete. Persistence is enabled when a COGOSDATA volume exists. Use cogos-install plan, cogos-persist status, cogos-daily-driver enable, cogos-cockpit, cogos-eval run, and cogos-backup export before changes."
+}

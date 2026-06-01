@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "enabled_at": "2026-05-26T14:03:02Z",
+  "last_daily_at": null,
+  "last_boot_apply_at": "2026-05-26T14:03:02Z",
+  "last_audit_at": "2026-05-26T03:42:53Z",
+  "silent_governance": {},
+  "pain_gaps": [
+    "bloatware_nags",
+    "package_fragmentation",
+    "onedrive_icloud_nag",
+    "notification_storm",
+    "lost_work_no_autosave"
+  ],
+  "patch_baseline_finalized": true,
+  "patch_baseline_tag": "12.22.0-wolf-os",
+  "patch_baseline_sha256": "E4DE17AD7F93A521D70B1BD00FE3119CC936D5D1C080D65FFD3ADD38DA2D7E96"
+}

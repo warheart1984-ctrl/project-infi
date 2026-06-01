@@ -1,0 +1,17 @@
+[Unit]
+Description=CoGOS Governance Daemon
+After=network.target dbus.service cogos-firstboot.service
+Before=cogos-spine.service
+Wants=dbus.service accounts-daemon.service systemd-logind.service polkit.service
+
+ConditionPathExists=/usr/lib/cogos/governance-daemon
+
+[Service]
+Type=simple
+ExecStart=/usr/lib/cogos/governance-daemon
+Restart=always
+RestartSec=5
+TimeoutStartSec=300
+
+[Install]
+WantedBy=multi-user.target

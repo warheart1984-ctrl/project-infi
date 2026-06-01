@@ -1,0 +1,18 @@
+echo "[4/8] Stage Wolf CoG OS CoGOS payload"
+PAYLOAD_SRC="$PAYLOAD"
+if [[ "$PAYLOAD" == /mnt/* ]]; then
+  PAYLOAD_CACHE="${COGOS_PAYLOAD_CACHE:-${HOME}/.cogos-payload-cache}"
+  echo "[4a/8] Mirror payload to WSL ext4: $PAYLOAD_CACHE"
+  mkdir -p "$PAYLOAD_CACHE"
+  if rsync -a --delete \
+    --exclude 'opt/cogos/memory/' \
+    --exclude '**/__pycache__/' \
+    --exclude '*.pyc' \
+    "$PAYLOAD/" "$PAYLOAD_CACHE/"; then
+    PAYLOAD_SRC="$PAYLOAD_CACHE"
+  else
+    echo "WARN: payload cache rsync had warnings; using drvfs payload directly" >&2
+    PAYLOAD_SRC="$PAYLOAD"
+  fi
+fi
+rsync -aH \

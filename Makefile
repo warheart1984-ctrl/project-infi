@@ -1,0 +1,324 @@
+.PHONY: run worker test governance-check rootfs iso-tree rootfs-forge iso-tree-forge forge-installer forge-shippable-gate forge-platform-gate forge-dashboard forge-nightly-evolution forge-nightly-build installer-smoke installer-integration sign-artifacts verify-artifacts ugr-cloud-gate ugr-ingestion-gate ugr-platform-gate ugr-graph-index-gate ugr-embryo-gate ugr-causal-graph-gate ugr-llm-provider-gate ugr-cogos-write-path-gate ugr-graph-backend-gate ugr-trust-bundle-gate ugr-operator-console-gate forge-clean forge-rocky forge-rocky-fallback fetch-rocky-substrate ai-factory-build ai-factory-gate lab-init lab-gate mechanic-gate slingshot-gate platform-gate platform-smoke platform-up
+
+FORGE_PROFILE ?= $(COGOS_FORGE_PROFILE)
+FORGE_PROFILE_ARG := $(if $(strip $(FORGE_PROFILE)),--profile $(FORGE_PROFILE),)
+
+run:
+	uvicorn app.main:app --reload
+
+worker:
+	celery -A app.celery_app.celery worker --loglevel=info
+
+test:
+	pytest -q
+
+governance-check:
+	python3 .github/scripts/validate-governance-ledger.py
+
+rootfs:
+	sudo -E bash wolf-cog-os/scripts/build-rootfs.sh $(FORGE_PROFILE_ARG)
+
+iso-tree:
+	COGOS_BUILD_FROM_TREE=1 bash wolf-cog-os/scripts/build.sh $(FORGE_PROFILE_ARG) "$${ISO:-}"
+
+rootfs-forge:
+	sudo -E bash wolf-cog-os/scripts/build-rootfs.sh --profile "$${COGOS_FORGE_PROFILE:-forge-selfhosted}"
+
+iso-tree-forge:
+	COGOS_BUILD_FROM_TREE=1 bash wolf-cog-os/scripts/build.sh --profile "$${COGOS_FORGE_PROFILE:-forge-selfhosted}" "$${ISO:-}"
+
+forge-installer:
+	bash wolf-cog-os/scripts/build-forge-installer.sh "$${ISO:-}"
+
+forge-shippable-gate:
+	python3 .github/scripts/check-forge-shippable-gate.py --mode fail
+
+forge-platform-gate:
+	python3 .github/scripts/check-forge-platform-gate.py --mode fail
+
+forge-dashboard:
+	python3 wolf-cog-os/scripts/forge-platform-dashboard.py $(FORGE_DASHBOARD_ARGS)
+
+forge-nightly-evolution:
+	bash wolf-cog-os/scripts/test/forge-nightly-evolution.sh --dry-run
+
+forge-nightly-build:
+	bash wolf-cog-os/scripts/test/forge-nightly-evolution.sh --build
+
+forge-run-pipeline:
+	bash wolf-cog-os/scripts/run-forge-pipeline.sh $(PIPELINE)
+
+forge-rocky-fallback:
+	bash wolf-cog-os/scripts/test/forge-build-with-rocky-fallback.sh
+
+forge-clean:
+	bash wolf-cog-os/scripts/test/forge-clean-work.sh
+
+forge-rocky:
+	bash wolf-cog-os/scripts/test/forge-build-rocky.sh
+
+fetch-rocky-substrate:
+	bash wolf-cog-os/scripts/test/fetch-rocky-substrate.sh $(ROCKY_ISO)
+
+installer-smoke:
+	bash wolf-cog-os/scripts/cogos-installer.sh --smoke $(INSTALLER_ARGS)
+
+installer-integration:
+	python3 wolf-cog-os/scripts/test/installer-matrix.py
+
+sign-artifacts:
+	bash .github/scripts/sign-artifacts.sh "$(ARTIFACT_DIR)"
+
+verify-artifacts:
+	bash .github/scripts/verify-artifacts.sh "$(ARTIFACT_DIR)"
+
+ugr-cloud-gate:
+	python3 wolf-cog-os/scripts/validate-ugr-cloud-manifest.py --mode fail
+	pytest tests/test_ugr_cloud.py -q
+
+ugr-ingestion-gate:
+	python3 wolf-cog-os/scripts/validate-ugr-ingestion-manifest.py --mode fail
+	pytest tests/test_ugr_ingestion.py -q
+
+ugr-platform-gate:
+	python3 wolf-cog-os/scripts/validate-ugr-platform-manifest.py --mode fail
+	pytest tests/test_ugr_platform.py -q
+
+ugr-graph-index-gate:
+	python3 wolf-cog-os/scripts/validate-ugr-graph-index-manifest.py --mode fail
+	pytest tests/test_ugr_graph_index.py -q
+
+ugr-embryo-gate:
+	python3 wolf-cog-os/scripts/validate-ugr-embryo-manifest.py --mode fail
+	pytest tests/test_ugr_embryo.py -q
+
+ugr-causal-graph-gate:
+	python3 wolf-cog-os/scripts/validate-ugr-causal-graph-manifest.py --mode fail
+	pytest tests/test_ugr_causal_graph.py -q
+
+ugr-llm-provider-gate:
+	python3 wolf-cog-os/scripts/validate-ugr-llm-provider-manifest.py --mode fail
+	pytest tests/test_ugr_governed_llm_executor.py tests/test_ugr_llm_lane.py -q
+
+ugr-cogos-write-path-gate:
+	python3 wolf-cog-os/scripts/validate-ugr-cogos-write-path-manifest.py --mode fail
+	pytest tests/test_ugr_cogos_pattern_bridge.py tests/test_unified_pattern_ledger.py -q
+
+ugr-graph-backend-gate:
+	python3 wolf-cog-os/scripts/validate-ugr-graph-backend-manifest.py --mode fail
+	pytest tests/test_ugr_graph_backend.py tests/test_ugr_graph_index.py -q
+
+ugr-trust-bundle-gate:
+	python3 wolf-cog-os/scripts/validate-ugr-trust-bundle-manifest.py --mode fail
+	pytest tests/test_ugr_trust_bundle_organ.py -q
+	python3 tools/proof/run_ugr_trust_bundle.py --mode fail
+
+ugr-operator-console-gate:
+	python3 wolf-cog-os/scripts/validate-ugr-operator-console-manifest.py --mode fail
+	pytest tests/test_ugr_operator_console.py -q
+
+SPEC ?= factory/specs/nova-default.yaml
+
+ai-factory-build:
+	python3 -m ai_factory build --spec $(SPEC)
+
+ai-factory-gate:
+	python3 .github/scripts/check-ai-factory-governance.py
+
+LAB_SPEC ?= lab/specs/default.yaml
+LAB_PROJECT ?= nova-ai-factory
+
+lab-init:
+	python3 -m lab init --spec $(LAB_SPEC) --source .
+
+lab-gate:
+	python3 .github/scripts/check-lab-governance.py
+
+mechanic-gate:
+	python3 .github/scripts/check-mechanic-governance.py
+
+slingshot-gate:
+	python3 .github/scripts/check-slingshot-governance.py
+
+platform-gate:
+	python3 .github/scripts/check-platform-governance.py
+
+platform-smoke:
+	python3 -m pytest tests/test_platform_schemas.py tests/test_platform_api_smoke.py -q
+
+platform-v1-1-gate:
+	python3 .github/scripts/check-platform-v1-1-governance.py
+
+platform-v1-1-smoke:
+	python3 -m pytest tests/test_platform_schemas.py tests/test_platform_api_smoke.py tests/test_platform_v11.py tests/test_platform_onboarding.py tests/test_platform_graph.py -q
+
+platform-billing-export:
+	python3 -m platform billing export --org $(or $(ORG),acme) --month $(or $(MONTH),2026-05)
+
+platform-proof-run:
+	python3 -m platform replay --manifest docs/proof/platform/cross_machine/REPLAY_MANIFEST.template.json
+
+platform-v8-v14-gate:
+	python3 .github/scripts/check-platform-v8-v14-governance.py
+
+platform-v8-v14-smoke:
+	python3 -m pytest tests/test_platform_v814.py tests/test_platform_schemas.py tests/test_platform_api_smoke.py -q
+
+platform-v15-gate:
+	python3 .github/scripts/check-platform-mesh-governance.py
+
+platform-v16-smoke:
+	python3 -m pytest tests/test_platform_v1520.py -q -k "mesh or handoff"
+
+platform-v17-gate:
+	python3 .github/scripts/check-platform-marketplace-governance.py
+
+platform-v18-smoke:
+	python3 -m pytest tests/test_platform_v1520.py -q -k marketplace
+
+platform-v19-gate:
+	python3 .github/scripts/check-platform-proof-federation-governance.py
+
+platform-v20-smoke:
+	python3 -m pytest tests/test_platform_v1520.py -q -k attestation
+
+platform-v3-gate:
+	python3 .github/scripts/check-platform-v3-governance.py
+
+platform-v3-smoke:
+	python3 -m pytest tests/test_platform_v1520.py tests/test_platform_v814.py -q
+
+platform-v21-gate:
+	python3 .github/scripts/check-platform-mesh-v2-governance.py
+
+platform-v22-smoke:
+	python3 -m pytest tests/test_platform_v2130.py -q -k "mesh or handoff"
+
+platform-v23-gate:
+	python3 .github/scripts/check-platform-marketplace-v2-governance.py
+
+platform-v24-smoke:
+	python3 -m pytest tests/test_platform_v2130.py -q -k marketplace
+
+platform-v25-gate:
+	python3 .github/scripts/check-platform-proof-v2-governance.py
+
+platform-v28-smoke:
+	python3 -m pytest tests/test_platform_v2130.py -q -k proof
+	python3 -m platform replay --manifest docs/proof/platform/cross_machine/REPLAY_MANIFEST.v2.template.json
+
+platform-v29-gate:
+	python3 .github/scripts/check-platform-sovereign-governance.py
+
+platform-v30-smoke:
+	python3 -m pytest tests/test_platform_v2130.py -q -k sovereign
+
+platform-v4-gate:
+	python3 .github/scripts/check-platform-v4-governance.py
+
+platform-v4-smoke:
+	python3 -m pytest tests/test_platform_v1520.py tests/test_platform_v2130.py tests/test_platform_schemas.py -q
+
+platform-v31-gate:
+	python3 .github/scripts/check-platform-events-governance.py
+
+platform-v32-smoke:
+	python3 -m pytest tests/test_platform_v3140.py -q -k webhook
+
+platform-v33-gate:
+	python3 .github/scripts/check-platform-marketplace-v3-governance.py
+
+platform-v34-smoke:
+	python3 -m pytest tests/test_platform_v3140.py -q -k marketplace
+
+platform-v35-gate:
+	python3 .github/scripts/check-platform-proof-v3-governance.py
+
+platform-v36-smoke:
+	python3 -m pytest tests/test_platform_v3140.py -q -k proof
+
+platform-v37-gate:
+	python3 .github/scripts/check-platform-mesh-v3-governance.py
+
+platform-v38-smoke:
+	python3 -m pytest tests/test_platform_v3140.py -q -k mesh
+
+platform-v39-gate:
+	python3 .github/scripts/check-platform-sovereign-v2-governance.py
+
+platform-v40-smoke:
+	python3 -m pytest tests/test_platform_v3140.py -q -k sovereign
+
+platform-v5-gate:
+	python3 .github/scripts/check-platform-v5-governance.py
+
+platform-v5-smoke:
+	python3 -m pytest tests/test_platform_v1520.py tests/test_platform_v2130.py tests/test_platform_v3140.py tests/test_platform_schemas.py -q
+
+platform-v41-gate:
+	python3 .github/scripts/check-platform-mesh-v4-governance.py
+
+platform-v42-smoke:
+	python3 -m pytest tests/test_platform_v4150.py -q -k routing
+
+platform-v43-gate:
+	python3 .github/scripts/check-platform-proof-network-governance.py
+
+platform-v44-smoke:
+	python3 -m pytest tests/test_platform_v4150.py -q -k witness
+
+platform-v45-gate:
+	python3 .github/scripts/check-platform-exchange-governance.py
+
+platform-v46-smoke:
+	python3 -m pytest tests/test_platform_v4150.py -q -k exchange
+
+platform-v47-gate:
+	python3 .github/scripts/check-platform-ledger-v2-governance.py
+
+platform-v48-smoke:
+	python3 -m pytest tests/test_platform_v4150.py -q -k ledger
+
+platform-v49-gate:
+	python3 .github/scripts/check-platform-sovereign-runtime-governance.py
+
+platform-v50-smoke:
+	python3 -m pytest tests/test_platform_v4150.py -q -k sovereign
+
+platform-v6-gate:
+	python3 .github/scripts/check-platform-v6-governance.py
+
+platform-v6-smoke:
+	python3 -m pytest tests/test_platform_v1520.py tests/test_platform_v2130.py tests/test_platform_v3140.py tests/test_platform_v4150.py tests/test_platform_schemas.py -q
+
+stack-platform-gate: platform-gate platform-v1-1-gate platform-v8-v14-gate platform-v6-gate platform-v6-smoke
+
+ugr-ledger-bridge-gate:
+	python3 .github/scripts/check-ugr-ledger-bridge-governance.py
+
+pilot-compose-smoke:
+	python3 scripts/pilot_compose_smoke.py --local
+
+stack-pilot-gate: platform-v6-gate platform-v6-smoke ugr-ledger-bridge-gate pilot-compose-smoke
+	python3 -m pytest tests/test_ugr_ledger_bridge.py tests/test_infinity_pilot_stack_smoke.py -q
+
+pilot-up:
+	cd deploy/pilot && docker compose up --build
+
+platform-up:
+	cd deploy/platform && docker compose up --build
+
+wolf-rehydration-gate:
+	python3 .github/scripts/check-wolf-rehydration.py
+
+stage2-fidelity-gate:
+	python3 .github/scripts/check-stage2-fidelity.py
+
+ai-factory-deploy-wolf:
+	python3 -m ai_factory deploy --build-id $(or $(BUILD_ID),nova-default) --wolf --repo-root .
+
+stack-closure-gate: wolf-rehydration-gate stage2-fidelity-gate ai-factory-gate lab-gate
+	python3 -m pytest tests/test_wolf_rehydration_harness.py tests/test_stage2_fidelity_metrics.py tests/test_memory_governance_membrane.py tests/test_ai_factory_wolf_deploy.py tests/test_lab_forge_bridge.py tests/test_nova_formal_spec.py tests/test_narrative_continuity_proof.py tests/test_intent_agency_evidence.py tests/test_ai_factory.py tests/test_lab.py -q
+	python3 .github/scripts/check-nova-cortex-governance.py
+	python3 .github/scripts/check-nova-narrative-continuity.py
+	python3 .github/scripts/check-nova-intent-agency.py

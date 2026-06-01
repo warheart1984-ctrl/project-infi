@@ -1,0 +1,173 @@
+services:
+  ugr-policy:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ../..:/app
+    environment:
+      AAIS_RUNTIME_DIR: /data/runtime
+      UGR_DEPLOYMENT_MODE: distributed
+    command: python tools/services/start_ugr_service.py policy --host 0.0.0.0 --port 8091
+    ports:
+      - "8091:8091"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8091/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  ugr-ledger:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ../..:/app
+      - ugr-runtime:/data/runtime
+    environment:
+      AAIS_RUNTIME_DIR: /data/runtime
+      UGR_DEPLOYMENT_MODE: distributed
+    command: python tools/services/start_ugr_service.py ledger --host 0.0.0.0 --port 8092
+    ports:
+      - "8092:8092"
+    depends_on:
+      ugr-policy:
+        condition: service_healthy
+
+  ugr-lane-worker:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ../..:/app
+      - ugr-runtime:/data/runtime
+    environment:
+      AAIS_RUNTIME_DIR: /data/runtime
+      UGR_DEPLOYMENT_MODE: distributed
+      UGR_MESH_CONFIG: /app/deploy/ugr/mesh.docker.json
+    command: python tools/services/start_ugr_service.py lane_worker --host 0.0.0.0 --port 8093
+    ports:
+      - "8093:8093"
+    depends_on:
+      ugr-ledger:
+        condition: service_started
+
+  ugr-convergence:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ../..:/app
+    environment:
+      UGR_DEPLOYMENT_MODE: distributed
+    command: python tools/services/start_ugr_service.py convergence --host 0.0.0.0 --port 8094
+    ports:
+      - "8094:8094"
+
+  ugr-ingestion:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ../..:/app
+      - ugr-runtime:/data/runtime
+    environment:
+      AAIS_RUNTIME_DIR: /data/runtime
+      UGR_DEPLOYMENT_MODE: distributed
+      UGR_INGESTION_CONFIG: /app/deploy/ugr/ingestion.sources.json
+    command: python tools/services/start_ugr_service.py ingestion --host 0.0.0.0 --port 8095
+    ports:
+      - "8095:8095"
+    depends_on:
+      ugr-ledger:
+        condition: service_started
+
+  ugr-platform:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ../..:/app
+      - ugr-runtime:/data/runtime
+    environment:
+      AAIS_RUNTIME_DIR: /data/runtime
+      UGR_DEPLOYMENT_MODE: distributed
+      UGR_PLATFORM_ENABLED: "1"
+      UGR_TENANTS_CONFIG: /app/deploy/ugr/tenants.json
+      UGR_GRAPH_SHARDS_CONFIG: /app/deploy/ugr/graph-shards.json
+      UGR_COGNITION_PROMOTION_CONFIG: /app/deploy/ugr/cognition-promotion.json
+    command: python tools/services/start_ugr_service.py platform --host 0.0.0.0 --port 8096
+    ports:
+      - "8096:8096"
+    depends_on:
+      ugr-ledger:
+        condition: service_started
+
+  ugr-graph-index:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ../..:/app
+      - ugr-runtime:/data/runtime
+    environment:
+      AAIS_RUNTIME_DIR: /data/runtime
+      UGR_GRAPH_ENABLED: "1"
+      UGR_GRAPH_INDEX_CONFIG: /app/deploy/ugr/graph-index.json
+      UGR_PLATFORM_ENABLED: "1"
+      UGR_TENANTS_CONFIG: /app/deploy/ugr/tenants.json
+      UGR_GRAPH_SHARDS_CONFIG: /app/deploy/ugr/graph-shards.json
+    command: python tools/services/start_ugr_service.py graph_index --host 0.0.0.0 --port 8097
+    ports:
+      - "8097:8097"
+    depends_on:
+      ugr-ledger:
+        condition: service_started
+
+  ugr-model-pool:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ../..:/app
+    environment:
+      UGR_MODEL_POOL_CONFIG: /app/deploy/ugr/model-pool.json
+    command: python tools/services/start_ugr_service.py model_pool --host 0.0.0.0 --port 8098
+    ports:
+      - "8098:8098"
+
+  ugr-embryo-gateway:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ../..:/app
+      - ugr-runtime:/data/runtime
+    environment:
+      AAIS_RUNTIME_DIR: /data/runtime
+      UGR_GRAPH_ENABLED: "1"
+      UGR_MODEL_POOL_CONFIG: /app/deploy/ugr/model-pool.json
+      UGR_CLOUD_FORGE_ENABLED: "1"
+    command: python tools/services/start_ugr_service.py embryo_gateway --host 0.0.0.0 --port 8099
+    ports:
+      - "8099:8099"
+    depends_on:
+      ugr-ledger:
+        condition: service_started
+
+  ugr-orchestrator:
+    image: python:3.12-slim
+    working_dir: /app
+    volumes:
+      - ../..:/app
+      - ugr-runtime:/data/runtime
+    environment:
+      AAIS_RUNTIME_DIR: /data/runtime
+      UGR_DEPLOYMENT_MODE: distributed
+      UGR_MESH_CONFIG: /app/deploy/ugr/mesh.docker.json
+    command: python tools/services/start_ugr_service.py orchestrator --host 0.0.0.0 --port 8090
+    ports:
+      - "8090:8090"
+    depends_on:
+      ugr-policy:
+        condition: service_healthy
+      ugr-ledger:
+        condition: service_started
+      ugr-lane-worker:
+        condition: service_started
+      ugr-convergence:
+        condition: service_started
+
+volumes:
+  ugr-runtime:

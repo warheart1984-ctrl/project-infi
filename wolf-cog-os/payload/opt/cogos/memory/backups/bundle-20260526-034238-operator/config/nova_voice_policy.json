@@ -1,0 +1,84 @@
+{
+  "name": "SuperNova Voice Policy",
+  "version": "2.1",
+  "principle": "One policy file for voice protocol, trust prompts, spoken contract, bubble timing. Identity and greetings live in supernova.json only.",
+  "protocol": {
+    "enabled": true,
+    "confirm_phrases": ["yes confirm", "confirm yes", "operator confirm", "i confirm", "confirmed"],
+    "cancel_phrases": ["no confirm", "cancel", "stop", "never mind"],
+    "pending_ttl_seconds": 120,
+    "dangerous_capabilities": [
+      {"pattern": "\\b(install|add)\\b.*\\bpack", "capability": "pkg.install", "reason": "package install via voice"},
+      {"pattern": "\\b(remove|uninstall)\\b.*\\bpack", "capability": "pkg.remove", "reason": "package removal via voice"},
+      {"pattern": "\\b(mount|unmount)\\b", "capability": "storage.mount", "reason": "storage mount change via voice"},
+      {"pattern": "\\bdelete\\b.*\\b(all|everything|backup)", "capability": "data.destructive", "reason": "destructive delete via voice"},
+      {"pattern": "\\b(apply|erase)\\b.*\\binstall", "capability": "install.apply", "reason": "disk install apply via voice"},
+      {"pattern": "\\bimmune\\b.*\\breset", "capability": "immune.reset", "reason": "immune reset via voice"},
+      {"pattern": "\\bforce\\b.*\\bheal", "capability": "immune.force_heal", "reason": "forced immune heal via voice"},
+      {"pattern": "\\bmode\\b.*\\b(crisis|restricted|elevated)", "capability": "runtime.mode", "reason": "runtime mode change via voice"}
+    ]
+  },
+  "trust_prompts": {
+    "confirm_hint": "Say yes confirm to proceed, or cancel.",
+    "bands": {
+      "full_trust": {
+        "style": "brief",
+        "template": "Confirm {capability}? {confirm_hint}"
+      },
+      "daily_driver": {
+        "style": "standard",
+        "template": "Voice confirmation required for {reason}. {confirm_hint}"
+      },
+      "ask_once": {
+        "style": "explicit",
+        "template": "Operator trust is limited. I will not run {capability} until you confirm. {reason}. {confirm_hint}"
+      },
+      "low": {
+        "style": "strict",
+        "template": "Governed hold on {capability}. {reason}. Say operator confirm clearly, or cancel."
+      }
+    }
+  },
+  "spoken_contract": {
+    "identity_ref": "supernova",
+    "max_sentences": 3,
+    "max_chars": 340,
+    "tone": "calm, direct, factual, partner-not-servant",
+    "forbidden_phrases": [
+      "as an ai",
+      "as a language model",
+      "chatgpt",
+      "i cannot help with that",
+      "i'm just an assistant"
+    ],
+    "apply_on": ["voice_response", "voice_confirm", "voice_greeting"]
+  },
+  "bubble_timing": {
+    "enabled": true,
+    "delay_ms": 2500,
+    "title_ref": "supernova.name",
+    "message": "Want help getting started on Wolf CoG OS?",
+    "labels": {
+      "yes": "Yes, help me",
+      "voice": "Enable voice",
+      "dismiss": "Not now"
+    },
+    "rules": {
+      "show_when_first_run_incomplete": true,
+      "show_when_immune_not_normal": true,
+      "silent_modes": ["crisis", "restricted"],
+      "silent_during_voice_session": true,
+      "voice_session_silent_seconds": 1800,
+      "snooze_hours_after_dismiss": 24,
+      "max_shows_per_day": 2,
+      "silent_if_panel_open": true
+    }
+  },
+  "activation": {
+    "wake_phrases": ["hey nova", "ok nova", "okay nova", "nova"],
+    "enabled_by_default": false,
+    "continuous_listen": true,
+    "speak_responses": true,
+    "language": "en-US"
+  }
+}

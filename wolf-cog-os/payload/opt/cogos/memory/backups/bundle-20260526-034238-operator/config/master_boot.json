@@ -1,0 +1,72 @@
+{
+  "name": "Wolf CoG OS Master Boot",
+  "version": "1.0",
+  "principle": "One governed ISO: metal baseline, unified config law, full runtime stack, verified before remaster.",
+  "law_refs": [
+    "config_unification_law",
+    "operator_trust_policy_law",
+    "runtime_weight_law",
+    "artifact_reality_gate"
+  ],
+  "base_iso": {
+    "preferred": "Wolf-CoG-OS-metal-fixed.iso",
+    "fallback": "debian-live-13.4.0-amd64-cinnamon.iso",
+    "metal_reference": "config/metal_boot_reference.json"
+  },
+  "output": {
+    "filename": "Wolf-CoG-OS-master-boot.iso",
+    "tag": "master-boot-1.2",
+    "also_write_sha256": true
+  },
+  "preflight": {
+    "required_canonical": [
+      "immune",
+      "voice",
+      "supernova",
+      "operator_trust",
+      "god_brain",
+      "aais",
+      "daily_driver"
+    ],
+    "forbidden_configs_must_be_absent": true,
+    "commands": [
+      "cogos-unified-verify",
+      "first_run_smoke",
+      "cogos-manifest sign config/release_manifest.json",
+      "cogos-manifest sign config/package_catalog.json",
+      "cogos-manifest sign config/update_channel.json"
+    ]
+  },
+  "payload_stack": [
+    "governance_registry",
+    "runtime_immune",
+    "immune_heal_ledger",
+    "nova_voice_policy",
+    "supernova_layer",
+    "god_brain",
+    "aais_stripped",
+    "nova_bridge",
+    "voice_confirm",
+    "operator_policy",
+    "metal_boot_verify",
+    "first_run_wizard",
+    "cogos_desktop",
+    "cogos_immune",
+    "cogos_unified_verify",
+    "daily_driver"
+  ],
+  "boot_menu": {
+    "profile_env": "COGOS_BOOT_PROFILE",
+    "master_entry": {
+      "label": "Wolf CoG OS Master Boot — governed full stack",
+      "hotkey": "m",
+      "kernel_args": "cogos.master=1 cogos.unified=1 cogos.metal=1"
+    }
+  },
+  "post_build": {
+    "min_size_bytes": 3400000000,
+    "record_path": "memory/logs/master_boot_build.json",
+    "verify_metal_range": true,
+    "update_master_artifact": true
+  }
+}

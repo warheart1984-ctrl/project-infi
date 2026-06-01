@@ -1,0 +1,63 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - forge
+      - forge_eval
+      - evolve_engine
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+  worker:
+    build: .
+    command: celery -A app.celery_app.celery worker --loglevel=info
+    env_file:
+      - .env
+    depends_on:
+      - redis
+
+  forge:
+    build: .
+    command: python tools/services/start_forge.py --host 0.0.0.0 --port 6060
+    ports:
+      - "6060:6060"
+    env_file:
+      - .env
+
+  forge_eval:
+    build: .
+    command: python tools/services/start_forge_eval.py --host 0.0.0.0 --port 6061
+    ports:
+      - "6061:6061"
+    env_file:
+      - .env
+
+  evolve_engine:
+    build: .
+    command: python tools/services/start_evolve_engine.py --host 0.0.0.0 --port 6062
+    ports:
+      - "6062:6062"
+    env_file:
+      - .env
+    depends_on:
+      - forge_eval
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"

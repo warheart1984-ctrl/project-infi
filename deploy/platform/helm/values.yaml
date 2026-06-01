@@ -1,0 +1,49 @@
+replicaCount: 1
+
+image:
+  repository: platform-membrane
+  tag: latest
+  pullPolicy: IfNotPresent
+
+api:
+  port: 8090
+  host: 0.0.0.0
+
+worker:
+  enabled: true
+  replicaCount: 1
+
+postgres:
+  enabled: true
+  database: platform
+  user: platform
+  password: platform
+
+redis:
+  enabled: true
+  url: redis://platform-redis:6379/0
+
+minio:
+  enabled: true
+  bucket: platform-artifacts
+
+env:
+  PLATFORM_REQUIRE_API_KEY: "1"
+  PLATFORM_PROOF_QUORUM: "2"
+
+regions:
+  - us
+  - eu
+
+proofRunners:
+  - id: primary
+    region: us
+    replicas: 1
+  - id: secondary
+    region: eu
+    replicas: 1
+  - id: tertiary
+    region: us
+    replicas: 1
+
+resources: {}

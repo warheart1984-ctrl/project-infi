@@ -1,0 +1,201 @@
+name: Platform Cross-Machine Gate
+
+
+
+on:
+
+  workflow_dispatch:
+
+  push:
+
+    paths:
+
+      - "platform/**"
+
+      - "docs/proof/platform/**"
+
+      - ".github/workflows/platform-cross-machine-gate.yml"
+
+
+
+jobs:
+
+  primary:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+
+        with:
+
+          python-version: "3.12"
+
+      - name: Platform gate
+
+        run: |
+
+          python .github/scripts/check-platform-governance.py
+
+          pip install cryptography -q
+          python .github/scripts/check-platform-v6-governance.py
+          pytest tests/test_platform_schemas.py tests/test_platform_api_smoke.py tests/test_platform_v1520.py tests/test_platform_v2130.py tests/test_platform_v3140.py tests/test_platform_v4150.py -q
+
+      - name: Replay report (primary v2)
+
+        run: |
+
+          python -m platform replay --manifest docs/proof/platform/cross_machine/REPLAY_MANIFEST.v2.template.json
+
+      - name: Upload replay report
+
+        uses: actions/upload-artifact@v4
+
+        with:
+
+          name: platform-replay-primary-v2
+
+          path: .runtime/platform/replay/platform_replay_report.v2.json
+
+          if-no-files-found: ignore
+
+
+
+  secondary:
+
+    runs-on: ubuntu-latest
+
+    needs: primary
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+
+        with:
+
+          python-version: "3.12"
+
+      - name: Replay report (secondary)
+
+        run: |
+
+          python -m platform replay --manifest docs/proof/platform/cross_machine/REPLAY_MANIFEST.v2.template.json
+
+      - name: Upload replay report
+
+        uses: actions/upload-artifact@v4
+
+        with:
+
+          name: platform-replay-secondary-v2
+
+          path: .runtime/platform/replay/platform_replay_report.v2.json
+
+          if-no-files-found: ignore
+
+
+
+  tertiary:
+
+    runs-on: ubuntu-latest
+
+    needs: [primary, secondary]
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+
+        with:
+
+          python-version: "3.12"
+
+      - name: Download primary and secondary artifacts
+
+        uses: actions/download-artifact@v4
+
+        with:
+
+          pattern: platform-replay-*-v2
+
+          merge-multiple: true
+
+          path: replay-artifacts
+
+      - name: Witness quorum (v43–v44)
+
+        run: |
+          pip install cryptography -q
+          python -c "
+          import os
+          os.environ['PLATFORM_WITNESS_REQUIRED'] = '1'
+          os.environ['PLATFORM_WITNESS_QUORUM'] = '1'
+          os.environ['PLATFORM_PROOF_QUORUM'] = '2'
+          from platform.service import PlatformService
+          from platform.proof.witnesses import enroll_witness
+          from platform.proof.federation import register_attestation
+          from platform.proof.quorum import evaluate_quorum
+          from platform.proof.signing import sign_hmac
+          from platform.common import new_id
+          svc = PlatformService()
+          enroll_witness(store=svc.store, witness_id='ci-witness', region='us')
+          org_id = 'ci-witness-org'
+          svc.store.upsert_org({'org_id': org_id, 'label': 'CI'})
+          jid = new_id('job')
+          job = {'job_id': jid, 'org_id': org_id, 'subsystem': 'lab', 'kind': 'lab.session',
+                 'proof_required': True, 'proof_status': 'asserted', 'status': 'complete'}
+          svc.store.upsert_job(job)
+          hsh = 'ci' * 16
+          for rid in ('r1', 'r2'):
+              register_attestation(store=svc.store, job_id=jid, runner_id=rid, result_hash=hsh)
+          updated, ok = evaluate_quorum(store=svc.store, job=job)
+          assert not ok, 'runner-only must not promote when witness required'
+          sig = sign_hmac(job_id=jid, runner_id='witness:ci-witness', result_hash=hsh)
+          register_attestation(store=svc.store, job_id=jid, runner_id='', result_hash=hsh,
+                               witness_id='ci-witness', signature=sig)
+          updated, ok = evaluate_quorum(store=svc.store, job=svc.store.get_job(jid) or job)
+          assert ok and updated.get('proof_status') == 'proven', 'witness attestation must promote'
+          print('witness policy enforcement ok')
+          "
+          pytest tests/test_platform_v4150.py -q -k witness
+
+      - name: Hash consensus (strict)
+
+        run: |
+
+          python -c "
+
+          import json, sys
+
+          from pathlib import Path
+
+          hashes = []
+
+          for p in Path('replay-artifacts').rglob('platform_replay_report.v2.json'):
+
+              r = json.loads(p.read_text())
+
+              h = r.get('result_hash') or ''
+
+              if h:
+
+                  hashes.append(h)
+
+          if len(hashes) < 2:
+
+              sys.exit('need at least two runner reports with result_hash')
+
+          if len(set(hashes)) != 1:
+
+              sys.exit(f'hash mismatch across machines: {hashes}')
+
+          print('quorum hash', hashes[0])
+
+          "
+

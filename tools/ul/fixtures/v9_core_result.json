@@ -1,0 +1,10 @@
+{
+  "status": "completed",
+  "location": "Ashfall District",
+  "provider": "openrouter",
+  "model": "openrouter/free",
+  "pipeline": ["DraftAngel", "LoreAngel", "ToneAngel"],
+  "output": "The veil lifted slowly over the district.",
+  "characters": ["Mira"],
+  "input": "Continue the scene at the gate."
+}

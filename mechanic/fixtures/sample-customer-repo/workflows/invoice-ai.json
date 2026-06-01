@@ -1,0 +1,7 @@
+{
+  "name": "invoice-ai",
+  "steps": [
+    {"type": "ai.analyze", "label": "classify"},
+    {"type": "api.call", "label": "post_result"}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "platform.proof_attestation_bundle.v1",
+  "title": "Proof Attestation Bundle",
+  "type": "object",
+  "required": ["bundle_version", "job_id", "attestations"],
+  "properties": {
+    "bundle_version": { "const": "platform.proof_attestation_bundle.v1" },
+    "job_id": { "type": "string" },
+    "federation_status": { "type": "object" },
+    "attestations": { "type": "array" },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] }
+  }
+}

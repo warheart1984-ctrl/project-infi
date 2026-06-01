@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "platform.workflow_listing.v1",
+  "title": "Workflow Listing",
+  "type": "object",
+  "required": ["listing_version", "listing_id", "org_id", "visibility", "steps"],
+  "properties": {
+    "listing_version": { "const": "platform.workflow_listing.v1" },
+    "listing_id": { "type": "string" },
+    "workflow_id": { "type": "string" },
+    "org_id": { "type": "string" },
+    "ugr_tenant_id": { "type": "string" },
+    "visibility": { "enum": ["org", "tenant", "public"] },
+    "curated": { "type": "boolean" },
+    "semver": { "type": "string" },
+    "steps": {
+      "type": "array",
+      "items": { "$ref": "platform.workflow_listing_step.v1" }
+    },
+    "approval_status": {
+      "enum": ["draft", "pending", "published", "deprecated"]
+    },
+    "approved_by": { "type": "string" },
+    "published_at": { "type": "string" },
+    "deprecated_at": { "type": "string" },
+    "proof_requirements": { "type": "array", "items": { "type": "string" } },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] }
+  }
+}

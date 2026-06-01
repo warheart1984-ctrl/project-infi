@@ -1,0 +1,20 @@
+{
+  "runs": [
+    {
+      "id": "ls-run-1",
+      "run_type": "llm",
+      "name": "release planner",
+      "model": "gpt-4.1",
+      "metadata": {
+        "trace": "fixture"
+      }
+    },
+    {
+      "id": "ls-run-2",
+      "parent_run_id": "ls-run-1",
+      "run_type": "tool",
+      "name": "deploy_check",
+      "tool": "github_actions"
+    }
+  ]
+}

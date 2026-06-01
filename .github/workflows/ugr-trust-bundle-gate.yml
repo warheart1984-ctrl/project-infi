@@ -1,0 +1,65 @@
+name: UGR Trust Bundle Gate
+
+on:
+  pull_request:
+    paths:
+      - "src/ugr/trust_bundle/**"
+      - "tools/proof/run_ugr_trust_bundle.py"
+      - "tests/test_ugr_trust_bundle_organ.py"
+      - "wolf-cog-os/scripts/validate-ugr-trust-bundle-manifest.py"
+      - "docs/trust_bundles/**"
+      - "docs/contracts/UGR_TRUST_BUNDLE_ORGAN_CONTRACT.md"
+      - "docs/proof/ugr/UGR_TRUST_BUNDLE_ORGAN_PROOF.md"
+      - ".github/workflows/ugr-trust-bundle-gate.yml"
+  push:
+    branches: [main]
+    paths:
+      - "src/ugr/trust_bundle/**"
+      - "tools/proof/run_ugr_trust_bundle.py"
+      - "tests/test_ugr_trust_bundle_organ.py"
+      - "wolf-cog-os/scripts/validate-ugr-trust-bundle-manifest.py"
+      - "docs/trust_bundles/**"
+      - "docs/contracts/UGR_TRUST_BUNDLE_ORGAN_CONTRACT.md"
+      - "docs/proof/ugr/UGR_TRUST_BUNDLE_ORGAN_PROOF.md"
+      - ".github/workflows/ugr-trust-bundle-gate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  trust-bundle-organ:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: UGR trust bundle gate
+        shell: bash
+        run: |
+          python wolf-cog-os/scripts/validate-ugr-trust-bundle-manifest.py --mode fail
+          python -m pytest tests/test_ugr_trust_bundle_organ.py -q
+          python tools/proof/run_ugr_trust_bundle.py --mode fail
+
+      - name: Upload proof bundle artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ugr-trust-bundle-proof-${{ matrix.os }}
+          path: .runtime/trust-bundles/latest/
+          if-no-files-found: warn

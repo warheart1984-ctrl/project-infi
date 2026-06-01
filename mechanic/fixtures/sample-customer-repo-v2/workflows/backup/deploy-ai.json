@@ -1,0 +1,7 @@
+{
+  "name": "deploy-ai-shadow",
+  "steps": [
+    {"type": "ai.analyze", "label": "shadow_plan"},
+    {"type": "api.call", "label": "shadow_deploy"}
+  ]
+}

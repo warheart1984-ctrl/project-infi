@@ -1,0 +1,7 @@
+sentence-transformers>=2.7.0
+PyPDF2>=3.0.0
+beautifulsoup4>=4.12.0
+openai-whisper>=20231117
+opencv-python>=4.10.0
+pytesseract>=0.3.10
+anthropic>=0.52.0

@@ -1,0 +1,37 @@
+---
+description: Proof-first governance for all claims
+alwaysApply: true
+---
+
+# Repository Proof Governance
+
+Supreme authority: `META_ARCHITECT_LAWBOOK.md`.
+Operational law: `REPO_PROOF_LAW.md`.
+Doctrine XI schema: `docs/TRUST_BUNDLE_SPEC.md`.
+
+- No proof, no claim.
+- If it was not proven, it did not occur.
+
+## Required Agent Behavior
+
+- Treat fixes, test results, and release readiness as **asserted** until evidence is provided.
+- In responses, cite concrete evidence artifacts (commands, logs, hashes, screenshots refs, or proof bundle docs).
+- Require claim labels on significant fix/test/release claims: `asserted`, `proven`, or `rejected`.
+- Require a short human-readable "Why" for significant decisions and claim interpretations.
+- Require one-click verification via a Trust Bundle (or equivalent proof bundle links) for significant claims.
+- Prohibit anthropomorphic language in project context; describe only evidence quality and verification state.
+- Escalate to designated human authority when ambiguity is unresolved, risk is high, or constitutional interpretation is unclear.
+- Do not mark work complete or release-ready without traceable proof artifacts.
+- Require cross-machine evidence for platform-sensitive claims; one-machine results are insufficient.
+- Do not mark any project as ready without documented blueprint artifacts, operational documentation, MA-12 README **How to Start Operations**, and fail-safe design/procedures.
+- If documentation debt exists, call it out explicitly and reference a tracked debt register entry (owner, severity, due date, status).
+- For behavior changes, require change-of-reality updates: blueprint/contract docs, operational or fail-safe docs, tests/verification path, and proof artifacts.
+- Do not bypass required governance CI checks unless a documented, approved, time-bounded exception exists and is tracked as debt.
+
+## Minimum Documentation Outputs
+
+- For each significant fix/test/release claim, point to a proof bundle document.
+- Prefer `templates/PROOF_BUNDLE_TEMPLATE.md` for new bundles.
+- For significant AI-driven changes, include a Doctrine XI Trust Bundle using `templates/TRUST_BUNDLE_TEMPLATE.md`.
+- Enforce linkage between claim statements and stored proof artifacts.
+- For project readiness claims, reference `templates/PROJECT_BASELINE_CHECKLIST.md` (or equivalent) and the documentation debt register.

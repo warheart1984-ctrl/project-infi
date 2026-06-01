@@ -1,0 +1,151 @@
+{
+  "schema_version": "mechanic.ai_workflow_invariants.v1",
+  "description": "Constitutional AI workflow truth patterns for AI Mechanic evaluators",
+  "genome_schema": "process_genome.v1",
+  "invariants": [
+    {
+      "id": "GOV-01",
+      "family": "GOV",
+      "severity": "high",
+      "predicate": "missing_decision_owner",
+      "ma13_class": "II",
+      "evaluator": "check_decision_owner"
+    },
+    {
+      "id": "GOV-12",
+      "family": "GOV",
+      "severity": "high",
+      "predicate": "ai_decision_without_exception_path",
+      "ma13_class": "II",
+      "evaluator": "check_exception_surface"
+    },
+    {
+      "id": "GOV-15",
+      "family": "GOV",
+      "severity": "medium",
+      "predicate": "ungoverned_prompt_asset",
+      "ma13_class": "II",
+      "evaluator": "check_prompt_governance"
+    },
+    {
+      "id": "RNT-04",
+      "family": "RNT",
+      "severity": "critical",
+      "predicate": "agent_self_loop_without_boundary",
+      "ma13_class": "III",
+      "evaluator": "check_self_loop_boundary"
+    },
+    {
+      "id": "RNT-08",
+      "family": "RNT",
+      "severity": "high",
+      "predicate": "missing_output_validation",
+      "ma13_class": "II",
+      "evaluator": "check_output_validation"
+    },
+    {
+      "id": "RNT-11",
+      "family": "RNT",
+      "severity": "medium",
+      "predicate": "model_call_without_audit_hook",
+      "ma13_class": "III",
+      "evaluator": "check_audit_hooks"
+    },
+    {
+      "id": "CST-07",
+      "family": "CST",
+      "severity": "medium",
+      "predicate": "redundant_model_calls",
+      "ma13_class": "",
+      "evaluator": "check_redundant_model_calls"
+    },
+    {
+      "id": "CST-09",
+      "family": "CST",
+      "severity": "low",
+      "predicate": "ci_llm_without_cost_center",
+      "ma13_class": "",
+      "evaluator": "check_cost_center_tagging"
+    },
+    {
+      "id": "HUM-03",
+      "family": "HUM",
+      "severity": "high",
+      "predicate": "human_control_removed_without_substitute",
+      "ma13_class": "II",
+      "evaluator": "check_human_control_substitute"
+    },
+    {
+      "id": "HUM-05",
+      "family": "HUM",
+      "severity": "medium",
+      "predicate": "high_impact_workflow_missing_hitl",
+      "ma13_class": "II",
+      "evaluator": "check_hitl_on_high_impact"
+    },
+    {
+      "id": "GOV-20",
+      "family": "GOV",
+      "severity": "medium",
+      "predicate": "shadow_workflow_duplicate",
+      "ma13_class": "II",
+      "evaluator": "check_shadow_workflows"
+    },
+    {
+      "id": "HUM-08",
+      "family": "HUM",
+      "severity": "high",
+      "predicate": "prompt_claims_unauthorized_action",
+      "ma13_class": "III",
+      "evaluator": "check_prompt_stage2_fidelity"
+    },
+    {
+      "id": "GOV-25",
+      "family": "GOV",
+      "severity": "medium",
+      "predicate": "workflow_missing_rollback_metadata",
+      "ma13_class": "II",
+      "evaluator": "check_rollback_metadata"
+    },
+    {
+      "id": "GOV-30",
+      "family": "GOV",
+      "severity": "low",
+      "predicate": "genome_missing_extraction_provenance",
+      "ma13_class": "",
+      "evaluator": "check_extraction_provenance"
+    },
+    {
+      "id": "RNT-20",
+      "family": "RNT",
+      "severity": "high",
+      "predicate": "trace_tool_without_audit",
+      "ma13_class": "III",
+      "evaluator": "check_trace_tool_audit"
+    },
+    {
+      "id": "RNT-22",
+      "family": "RNT",
+      "severity": "medium",
+      "predicate": "model_chain_missing_validation_edge",
+      "ma13_class": "II",
+      "evaluator": "check_model_validation_edges"
+    },
+    {
+      "id": "CST-12",
+      "family": "CST",
+      "severity": "medium",
+      "predicate": "tool_calls_without_cost_ceiling",
+      "ma13_class": "",
+      "evaluator": "check_tool_cost_ceiling"
+    },
+    {
+      "id": "RNT-15",
+      "family": "RNT",
+      "severity": "high",
+      "predicate": "tool_binding_without_constraint",
+      "ma13_class": "III",
+      "evaluator": "check_tool_constraints"
+    }
+  ]
+}

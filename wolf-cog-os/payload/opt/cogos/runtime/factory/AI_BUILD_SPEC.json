@@ -1,0 +1,34 @@
+{
+  "build_id": "nova-default",
+  "capabilities": {
+    "compose_mode": "full",
+    "enabled_lobes": [
+      "cognitive.attention",
+      "cognitive.deliberation",
+      "cognitive.execution",
+      "cognitive.memory",
+      "cognitive.planning",
+      "cognitive.reflection",
+      "jarvis.reasoning",
+      "speaking.runtime"
+    ]
+  },
+  "data_sensitivity": "operator",
+  "intent_summary": "Default Nova Cortex v3 governed mind with Spark v1 ignition and full lobe stack.",
+  "interfaces": {
+    "face_id": "nova",
+    "speaking_mode": "governed"
+  },
+  "oversight": {
+    "require_agency_check": true,
+    "require_generation_gate": true,
+    "require_speaking": true
+  },
+  "prohibitions": {
+    "forbidden_tools": [],
+    "high_impact_actions_blocked": true
+  },
+  "risk_level": "low",
+  "spec_version": "ai_factory.ai_build_spec.v1",
+  "tools_allowed": []
+}

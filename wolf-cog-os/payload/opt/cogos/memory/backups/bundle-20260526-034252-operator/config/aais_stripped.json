@@ -1,0 +1,35 @@
+{
+  "name": "AAIS Stripped for Wolf CoG OS",
+  "version": "1.0",
+  "spine": "llm → doctrine → nova",
+  "principle": "The spine of AAIS is stripped to LLM all the way to Nova. Everything else from AAIS-main stays archived.",
+  "spine_steps": [
+    "god_brain_decide",
+    "llm",
+    "doctrine_drift_check",
+    "supernova_present"
+  ],
+  "authority": {
+    "routing": "Jarvis god_brain",
+    "runtime": "Jarvis",
+    "presentation": "SuperNova",
+    "aais_role": "llm_and_doctrine_only"
+  },
+  "llm": {
+    "endpoint_env": "COGOS_LLM_ENDPOINT",
+    "model_env": "COGOS_LLM_MODEL",
+    "default_endpoint": "http://127.0.0.1:11434/api/chat",
+    "default_model": "phi4-mini:latest",
+    "timeout_env": "COGOS_LLM_TIMEOUT",
+    "default_timeout_seconds": 120
+  },
+  "stripped_out": [
+    "api.py",
+    "jarvis_operator",
+    "frontend",
+    "mobile",
+    "aais_runtime_immune_loops",
+    "full god_brain activation scaffold"
+  ],
+  "runtime_immune": "/opt/cogos/runtime/immune_system.py"
+}

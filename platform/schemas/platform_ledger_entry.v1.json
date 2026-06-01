@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "platform.platform_ledger_entry.v1",
+  "type": "object",
+  "required": ["entry_version", "entry_id", "org_id", "kind", "entry_hash"],
+  "properties": {
+    "entry_version": { "const": "platform.platform_ledger_entry.v1" },
+    "entry_id": { "type": "string" },
+    "org_id": { "type": "string" },
+    "kind": { "type": "string" },
+    "prev_hash": { "type": "string" },
+    "entry_hash": { "type": "string" },
+    "payload": { "type": "object" },
+    "created_at": { "type": "string" }
+  }
+}

@@ -1,0 +1,468 @@
+.memory-bank {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 0;
+}
+
+.memory-bank-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.memory-board-panel {
+  border-radius: 28px;
+  padding: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.memory-board-copy {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  max-width: 72ch;
+  line-height: 1.55;
+}
+
+.memory-board-inline-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.memory-board-inline-stat {
+  min-width: 7rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 18px;
+  border: 1px solid rgba(92, 231, 255, 0.08);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.memory-board-inline-stat span,
+.memory-board-slot-topline span {
+  display: block;
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.memory-board-inline-stat strong {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.memory-board-links,
+.memory-board-slot-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.memory-board-chip {
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(92, 231, 255, 0.12);
+  background: rgba(92, 231, 255, 0.08);
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.74rem;
+}
+
+.memory-board-slots {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.memory-board-slot {
+  border-radius: 22px;
+  border: 1px solid rgba(92, 231, 255, 0.08);
+  background: rgba(255, 255, 255, 0.025);
+  padding: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.memory-board-slot.installed {
+  background:
+    linear-gradient(135deg, rgba(92, 231, 255, 0.12), rgba(255, 255, 255, 0.03)),
+    rgba(255, 255, 255, 0.02);
+}
+
+.memory-board-slot.reserved {
+  opacity: 0.72;
+  border-style: dashed;
+}
+
+.memory-board-slot-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.memory-board-slot-topline strong {
+  display: block;
+  margin-top: 0.28rem;
+  font-size: 0.98rem;
+  color: var(--ink);
+}
+
+.memory-board-slot-count {
+  white-space: nowrap;
+}
+
+.memory-board-slot-copy {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.memory-board-slot-meta span {
+  padding: 0.35rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.memory-stat {
+  border-radius: 24px;
+  padding: 1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.memory-stat span {
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.memory-stat strong {
+  font-size: 1.5rem;
+  color: var(--ink);
+}
+
+.memory-bank-toolbar {
+  border-radius: 28px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.memory-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+}
+
+.memory-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.memory-toolbar-button,
+.memory-primary-button,
+.memory-panel-link,
+.memory-icon-button,
+.memory-toggle {
+  border: 1px solid rgba(92, 231, 255, 0.14);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.memory-toolbar-button:hover,
+.memory-primary-button:hover,
+.memory-panel-link:hover,
+.memory-icon-button:hover,
+.memory-toggle:hover {
+  transform: translateY(-1px);
+  border-color: rgba(92, 231, 255, 0.24);
+}
+
+.memory-toolbar-button,
+.memory-primary-button,
+.memory-panel-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.memory-toolbar-button.secondary {
+  color: var(--muted);
+}
+
+.memory-primary-button {
+  background: linear-gradient(135deg, rgba(92, 231, 255, 0.2), rgba(86, 183, 255, 0.12));
+}
+
+.memory-bank-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 0.95fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.memory-panel {
+  border-radius: 28px;
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 38rem;
+}
+
+.memory-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.memory-panel-header span {
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.memory-panel-header h2 {
+  margin-top: 0.3rem;
+  font-size: 1.15rem;
+}
+
+.memory-records {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.memory-record {
+  border-radius: 22px;
+  border: 1px solid rgba(92, 231, 255, 0.08);
+  background: rgba(255, 255, 255, 0.025);
+  padding: 0.8rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.8rem;
+}
+
+.memory-record.selected {
+  border-color: rgba(92, 231, 255, 0.28);
+  background:
+    linear-gradient(135deg, rgba(92, 231, 255, 0.12), rgba(255, 255, 255, 0.04)),
+    rgba(255, 255, 255, 0.03);
+}
+
+.memory-record.inactive {
+  opacity: 0.76;
+}
+
+.memory-record-main {
+  border: none;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  cursor: pointer;
+}
+
+.memory-record-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  align-items: flex-start;
+}
+
+.memory-record-topline strong {
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
+.memory-priority {
+  color: #ffe27a;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.76rem;
+  white-space: nowrap;
+}
+
+.memory-record-meta,
+.memory-badges,
+.memory-record-actions,
+.memory-toggle-row,
+.memory-form-footer,
+.memory-stamp-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.memory-record-meta {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.memory-record-actions {
+  align-items: center;
+}
+
+.memory-icon-button {
+  min-width: 2.8rem;
+  height: 2.5rem;
+  padding: 0 0.8rem;
+}
+
+.memory-icon-button.danger {
+  color: #ffd5dd;
+  background: rgba(255, 106, 135, 0.14);
+  border-color: rgba(255, 106, 135, 0.2);
+}
+
+.memory-empty {
+  height: 100%;
+  min-height: 14rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 24px;
+  border: 1px dashed rgba(92, 231, 255, 0.12);
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.memory-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  height: 100%;
+}
+
+.memory-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.memory-form label span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.memory-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.memory-bank input[type="number"] {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--outline);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--ink);
+}
+
+.memory-bank input[type="number"]:focus {
+  outline: none;
+  border-color: rgba(92, 231, 255, 0.5);
+  box-shadow: 0 0 0 4px rgba(92, 231, 255, 0.12);
+}
+
+.memory-form textarea {
+  min-height: 10rem;
+}
+
+.memory-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.8rem 0.95rem;
+}
+
+.memory-toggle.active {
+  background: rgba(92, 231, 255, 0.12);
+}
+
+.memory-toggle.warning {
+  background: rgba(255, 226, 122, 0.12);
+  border-color: rgba(255, 226, 122, 0.18);
+}
+
+.memory-form-footer {
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.memory-stamp-group {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 1180px) {
+  .memory-bank-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .memory-panel {
+    min-height: 0;
+  }
+
+  .memory-board-slots {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .memory-bank-summary,
+  .memory-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .memory-bank {
+    padding: 1.4rem 1rem 0;
+  }
+
+  .memory-bank-summary,
+  .memory-filter-grid,
+  .memory-form-grid,
+  .memory-search {
+    grid-template-columns: 1fr;
+  }
+
+  .memory-panel-header,
+  .memory-form-footer,
+  .memory-record {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,21 @@
+# Forge ISO build-appliance package profile
+# Installed when a Forge profile is active (see build-rootfs.sh).
+squashfs-tools
+xorriso
+debootstrap
+git
+make
+cpio
+zstd
+pigz
+xz-utils
+parted
+dosfstools
+e2fsprogs
+isolinux
+syslinux-common
+syslinux-utils
+qemu-system-x86
+qemu-utils
+minisign
+python3-yaml

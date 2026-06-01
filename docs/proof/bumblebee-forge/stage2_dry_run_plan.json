@@ -1,0 +1,50 @@
+{
+  "attestation_hooks": [
+    {
+      "hook_name": "law_precheck",
+      "message": "pending proof bundle attestation",
+      "status": "asserted"
+    },
+    {
+      "hook_name": "scope_boundary_precheck",
+      "message": "pending explicit allowlist validation",
+      "status": "asserted"
+    }
+  ],
+  "change_edges": [
+    {
+      "relation": "ordered_after",
+      "source": "node-001",
+      "target": "node-002"
+    }
+  ],
+  "change_nodes": [
+    {
+      "action": "proposed_update",
+      "content_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "file_path": "forge/forgekeeper.py",
+      "node_id": "node-001",
+      "rationale": "dry-run placeholder for goal: deterministic dry-run scaffold"
+    },
+    {
+      "action": "proposed_update",
+      "content_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "file_path": "tests/test_forgekeeper.py",
+      "node_id": "node-002",
+      "rationale": "dry-run placeholder for goal: deterministic dry-run scaffold"
+    }
+  ],
+  "claim_label": "asserted",
+  "deterministic_seed": "4624ec1ac99532e7ace6772e14c7aaad322c91d33e707632a87c8c5e5c434f73",
+  "generated_at_utc": "2026-05-27T18:26:37.610436+00:00",
+  "goal": "deterministic dry-run scaffold",
+  "mode": "plan",
+  "notes": [
+    "non-destructive stage 2 scaffold",
+    "execution path intentionally gated off"
+  ],
+  "plan_id": "bf-stage2-plan-001",
+  "rollback_token": "rbk-4624ec1ac99532e7",
+  "safety_state": "dry_run_only",
+  "scope": "forge"
+}

@@ -1,0 +1,6 @@
+{
+  "schema_version": "forge-inject-manifest.v1",
+  "platform": "macos",
+  "description": "macOS darwin overlay manifest (LaunchDaemons, profiles, payloads)",
+  "copy": []
+}

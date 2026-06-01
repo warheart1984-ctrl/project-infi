@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ai_factory.ai_build_spec.v1",
+  "title": "AI Build Spec v1",
+  "type": "object",
+  "required": [
+    "spec_version",
+    "build_id",
+    "intent_summary",
+    "risk_level",
+    "capabilities",
+    "prohibitions",
+    "oversight",
+    "data_sensitivity",
+    "interfaces"
+  ],
+  "properties": {
+    "spec_version": {
+      "const": "ai_factory.ai_build_spec.v1"
+    },
+    "build_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "intent_summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "capabilities": {
+      "type": "object",
+      "required": ["enabled_lobes", "compose_mode"],
+      "properties": {
+        "enabled_lobes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "compose_mode": {
+          "type": "string",
+          "enum": ["instant", "fast", "full"]
+        }
+      }
+    },
+    "prohibitions": {
+      "type": "object",
+      "properties": {
+        "forbidden_tools": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "high_impact_actions_blocked": {
+          "type": "boolean"
+        }
+      }
+    },
+    "oversight": {
+      "type": "object",
+      "required": [
+        "require_speaking",
+        "require_agency_check",
+        "require_generation_gate"
+      ],
+      "properties": {
+        "require_speaking": { "type": "boolean" },
+        "require_agency_check": { "type": "boolean" },
+        "require_generation_gate": { "type": "boolean" }
+      }
+    },
+    "data_sensitivity": {
+      "type": "string",
+      "enum": ["public", "operator", "restricted"]
+    },
+    "interfaces": {
+      "type": "object",
+      "required": ["face_id", "speaking_mode"],
+      "properties": {
+        "face_id": { "type": "string" },
+        "speaking_mode": { "type": "string" }
+      }
+    },
+    "tools_allowed": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

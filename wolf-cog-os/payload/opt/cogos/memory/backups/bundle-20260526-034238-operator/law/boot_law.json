@@ -1,0 +1,47 @@
+{
+  "name": "Project Infi Boot Law",
+  "version": "0.1",
+  "sequence": [
+    "mount_proc_sys_dev_run",
+    "load_root_law",
+    "verify_governance_registry",
+    "verify_payload_files",
+    "load_governance_rules",
+    "load_module_manifest",
+    "metal_boot_baseline_check",
+    "write_boot_report",
+    "enter_governed_ready_shell"
+  ],
+  "artifact_reality_gate": {
+    "principle": "A bootable release must match known-good artifact reality, not only pass tool output.",
+    "requires": [
+      "iso_size_within_expected_metal_range",
+      "squashfs_profile_matches_source_or_is_explicitly_approved",
+      "bios_and_uefi_boot_entries_present",
+      "default_boot_reaches_native_init_before_governed_pid1",
+      "usb_or_vm_boot_test_passes_without_kernel_panic"
+    ],
+    "failure_policy": "do_not_promote_release",
+    "runtime_weight_gate": {
+      "principle": "Release promotion requires cumulative verified runtime weight tracked after each patch or upgrade, verified against original metal boot.",
+      "minimum_weight": 100,
+      "requires_metal_baseline": true,
+      "metal_reference": "/opt/cogos/config/metal_boot_reference.json",
+      "weight_sources": [
+        "verified_runtime_patches_against_metal",
+        "verified_runtime_upgrades_against_metal",
+        "usb_or_vm_boot_test_passes",
+        "operator_pattern_confirmations"
+      ],
+      "failure_policy": "do_not_promote_release"
+    },
+    "master_boot_gate": {
+      "principle": "Master boot ISO must pass unified governance preflight and metal artifact verification before promotion.",
+      "config": "/opt/cogos/config/master_boot.json",
+      "preflight_cli": "cogos-master-boot preflight",
+      "verify_cli": "cogos-unified-verify"
+    }
+  },
+  "failure_policy": "maintenance_shell",
+  "state_cycle": "0001 -> 1000 -> 1001(L1) -> 1010 -> 1111 -> 1001(L2) -> Gamma -> Tau -> admit|wait -> 0001-prime -> Delta -> Lambda -> next 1000"
+}

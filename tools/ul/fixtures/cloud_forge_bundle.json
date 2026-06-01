@@ -1,0 +1,20 @@
+{
+  "contract_version": "cloud_forge.v1",
+  "rail_decision": {
+    "rail": "NORMAL",
+    "risk": "LOW",
+    "novelty": "familiar"
+  },
+  "cognition_plan": {
+    "domain_template": "code",
+    "steps": ["analyze", "propose"],
+    "model_tier": "standard",
+    "parallelism": 1
+  },
+  "cloud_forge_readout": {
+    "rail": "NORMAL",
+    "risk": "LOW",
+    "summary": "Cloud Forge rail: NORMAL; risk=LOW",
+    "runtime_effect": "readout_only"
+  }
+}

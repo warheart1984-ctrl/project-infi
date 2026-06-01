@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "slingshot.frame.v1",
+  "title": "Slingshot Frame v1",
+  "type": "object",
+  "required": [
+    "frame_version",
+    "case_id",
+    "genome_hash",
+    "scan_hash",
+    "launch_blocked",
+    "zero_write_constraints",
+    "claim_label"
+  ],
+  "properties": {
+    "frame_version": { "const": "slingshot.frame.v1" },
+    "case_id": { "type": "string", "minLength": 1 },
+    "genome_hash": { "type": "string" },
+    "scan_hash": { "type": "string" },
+    "launch_blocked": { "type": "boolean" },
+    "zero_write_constraints": { "const": true },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] }
+  }
+}

@@ -1,0 +1,371 @@
+
+<style>
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{animation:spin 1s linear infinite;display:inline-block}
+</style>
+
+<h2 class="sr-only">ARIS — Adaptive Reading Intelligence System: Build Pipeline and Runtime Engine</h2>
+
+<div id="app" style="font-family:var(--font-mono);padding:1rem 0;min-height:400px"></div>
+
+<script>
+const API_URL = "https://api.anthropic.com/v1/messages";
+const AMBER = "#BA7517";
+const AMBER_BG = "#FAEEDA";
+const TEAL = "#0F6E56";
+const STAGES = [
+  {id:"nova",name:"NOVA",desc:"Intake"},
+  {id:"story_forge",name:"STORY FORGE",desc:"Narrative"},
+  {id:"beatbox",name:"BEATBOX",desc:"Audio"},
+  {id:"jarvis",name:"JARVIS",desc:"Validation"},
+  {id:"delivery",name:"DELIVERY",desc:"Artifact"},
+];
+
+let state = {
+  phase: "build",
+  source: "",
+  stageIdx: -1,
+  outputs: {},
+  artifact: null,
+  error: null,
+  running: false,
+  selectedStage: null,
+  signals: {breath_rate:14,scene_dwell_time:30,playback_state:"playing",skip_signal:false,focus_signal:"high"},
+  runtime: null,
+  adapting: false,
+};
+
+async function callClaude(system, user) {
+  const res = await fetch(API_URL, {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      model:"claude-sonnet-4-20250514",
+      max_tokens:1000,
+      system,
+      messages:[{role:"user",content:user}]
+    })
+  });
+  const data = await res.json();
+  const text = (data.content||[]).map(b=>b.type==="text"?b.text:"").join("");
+  const clean = text.replace(/```json\n?|\n?```/g,"").trim();
+  try { return JSON.parse(clean); }
+  catch(e) { throw new Error("Parse error: "+text.slice(0,80)); }
+}
+
+function stageStatus(i) {
+  if(state.stageIdx===-1) return "idle";
+  if(i < state.stageIdx) return "complete";
+  if(i === state.stageIdx && state.running) return "active";
+  if(state.stageIdx >= STAGES.length) return "complete";
+  return "idle";
+}
+const statusColor = {idle:"var(--color-text-tertiary)",active:AMBER,complete:TEAL};
+
+async function buildPipeline() {
+  if(!state.source.trim()||state.running) return;
+  state.running=true; state.error=null; state.outputs={}; state.artifact=null; state.selectedStage=null;
+  render();
+  try {
+    state.stageIdx=0; render();
+    const intake = await callClaude(
+      `You are Nova in ARIS Build Pipeline. Return ONLY valid JSON intake_contract.
+Schema: {"title":string,"genre":string,"tone":string,"emotional_arc":string,"key_themes":["string"],"narrative_register":string}`,
+      `Source: ${state.source.slice(0,500)}`
+    );
+    state.outputs.nova=intake; state.selectedStage="nova"; render();
+
+    state.stageIdx=1; render();
+    const world = await callClaude(
+      `You are Story Forge in ARIS. Return ONLY valid JSON world_package.
+Schema: {"scenes":[{"id":string,"title":string,"emotional_register":string,"tension_level":number,"cinematic_cue":string}],"emotional_map":[{"marker":string,"intensity":number}],"character_arcs":[{"character":string,"arc":string}]}
+Produce exactly 3 scenes, 5 map points.`,
+      `Intake: ${JSON.stringify(intake)}`
+    );
+    state.outputs.story_forge=world; state.selectedStage="story_forge"; render();
+
+    state.stageIdx=2; render();
+    const audio = await callClaude(
+      `You are Beatbox in ARIS. Return ONLY valid JSON audio_layer_set.
+Schema: {"layers":[{"id":string,"name":string,"instrument_type":string,"emotional_tag":string,"intensity_range":[number,number],"tempo_range":[number,number],"loop_safe":boolean,"trigger_condition":string}]}
+Produce exactly 4 layers. IDs: short slugs like "ambient_drone","tension_pulse".`,
+      `World: ${JSON.stringify(world)}`
+    );
+    state.outputs.beatbox=audio; state.selectedStage="beatbox"; render();
+
+    state.stageIdx=3; render();
+    const validation = await callClaude(
+      `You are Jarvis, ARIS validation orchestrator. Return ONLY valid JSON validation_report.
+Schema: {"status":"PASSED","checks":[{"name":string,"passed":boolean,"note":string}],"warnings":[]}`,
+      `World: ${JSON.stringify(world)}\nAudio: ${JSON.stringify(audio)}`
+    );
+    state.outputs.jarvis=validation; state.selectedStage="jarvis"; render();
+
+    state.stageIdx=4; render();
+    const art = {
+      id:`ARIS-${Date.now().toString(36).toUpperCase()}`,
+      created_at:new Date().toISOString(),
+      title:intake.title, genre:intake.genre, tone:intake.tone,
+      status:validation.status,
+      layer_count:audio.layers.length, scene_count:world.scenes.length,
+      immutable:true,
+      world_package:world, audio_layer_set:audio,
+      intake_contract:intake, validation
+    };
+    state.outputs.delivery=art; state.artifact=art; state.selectedStage="delivery";
+    state.stageIdx=5;
+  } catch(e) { state.error=e.message; }
+  state.running=false; render();
+}
+
+async function adapt() {
+  if(!state.artifact||state.adapting) return;
+  state.adapting=true; state.error=null; render();
+  try {
+    const rt = await callClaude(
+      `You are the ARIS Runtime Engine. Return ONLY valid JSON adaptation_state.
+Schema: {"active_layers":["string"],"blend_weights":{"layer_id":number},"tempo_multiplier":number,"current_scene":string,"crossfade_duration_ms":number,"experiential_note":string,"tension_delta":number}
+Use actual layer IDs from the audio_layer_set. blend_weights values sum to ~1.0. tension_delta between -1 and 1.`,
+      `Layers: ${JSON.stringify(state.artifact.audio_layer_set.layers)}\nScenes: ${JSON.stringify(state.artifact.world_package.scenes)}\nSignals: ${JSON.stringify(state.signals)}`
+    );
+    state.runtime=rt;
+  } catch(e) { state.error=e.message; }
+  state.adapting=false; render();
+}
+
+function reset() {
+  state.stageIdx=-1; state.outputs={}; state.selectedStage=null;
+  state.artifact=null; state.error=null; state.running=false;
+  render();
+}
+
+function el(tag,props,children) {
+  const e=document.createElement(tag);
+  if(props) for(const[k,v] of Object.entries(props)) {
+    if(k==="style") Object.assign(e.style,v);
+    else if(k==="onClick") e.addEventListener("click",v);
+    else if(k==="onInput") e.addEventListener("input",v);
+    else if(k==="onChange") e.addEventListener("change",v);
+    else e[k]=v;
+  }
+  if(children) (Array.isArray(children)?children:[children]).forEach(c=>{
+    if(c==null||c===false) return;
+    e.appendChild(typeof c==="string"?document.createTextNode(c):c);
+  });
+  return e;
+}
+
+function renderBuild() {
+  const frag = document.createDocumentFragment();
+
+  // Pipeline bar
+  const bar = el("div",{style:{display:"flex",marginBottom:"1.5rem",border:"0.5px solid var(--color-border-tertiary)",borderRadius:"var(--border-radius-md)",overflow:"hidden"}});
+  STAGES.forEach((s,i) => {
+    const status = stageStatus(i);
+    const color = statusColor[status];
+    const isSel = state.selectedStage===s.id;
+    const cell = el("div",{
+      style:{
+        flex:1, padding:"8px 6px",
+        borderTop:`2px solid ${isSel?AMBER:color}`,
+        background:isSel?AMBER_BG:"transparent",
+        cursor:state.outputs[s.id]?"pointer":"default",
+        transition:"background 0.2s",
+        borderRight:i<4?"0.5px solid var(--color-border-tertiary)":"none"
+      },
+      onClick:()=>{ if(state.outputs[s.id]){state.selectedStage=s.id;render();} }
+    },[
+      el("div",{style:{fontSize:10,fontWeight:500,color,letterSpacing:"0.07em",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}},s.name),
+      el("div",{style:{fontSize:10,color:"var(--color-text-tertiary)",marginTop:2}},s.desc),
+      status==="active"?el("div",{style:{fontSize:9,color:AMBER,marginTop:2,animation:"pulse 1s infinite"}},"processing…"):
+      status==="complete"?el("div",{style:{fontSize:9,color:TEAL,marginTop:2}},"✓ done"):null
+    ].filter(Boolean));
+    bar.appendChild(cell);
+  });
+  frag.appendChild(bar);
+
+  // Source input (when not started)
+  if(state.stageIdx===-1) {
+    const lbl = el("label",{style:{fontSize:11,color:"var(--color-text-secondary)",letterSpacing:"0.08em",display:"block",marginBottom:6}},"SOURCE MATERIAL");
+    const ta = el("textarea",{
+      style:{width:"100%",minHeight:110,fontSize:13,fontFamily:"var(--font-mono)",resize:"vertical",boxSizing:"border-box"},
+      placeholder:"Paste a story excerpt, chapter outline, or premise…"
+    });
+    ta.value=state.source;
+    ta.addEventListener("input",e=>{state.source=e.target.value;});
+    frag.appendChild(lbl);
+    frag.appendChild(ta);
+  }
+
+  // Output viewer
+  const out = state.outputs[state.selectedStage];
+  if(out) {
+    const box = el("div",{style:{background:"var(--color-background-secondary)",borderRadius:"var(--border-radius-md)",padding:"1rem",margin:"1rem 0",border:"0.5px solid var(--color-border-tertiary)"}});
+    box.appendChild(el("div",{style:{fontSize:10,color:"var(--color-text-tertiary)",letterSpacing:"0.08em",marginBottom:8}},(state.selectedStage||"").toUpperCase().replace("_"," ")+" OUTPUT"));
+    const pre = el("pre",{style:{fontSize:11,color:"var(--color-text-secondary)",overflow:"auto",maxHeight:180,margin:0,whiteSpace:"pre-wrap",wordBreak:"break-word",lineHeight:1.5}});
+    pre.textContent = JSON.stringify(out,null,2);
+    box.appendChild(pre);
+    frag.appendChild(box);
+  }
+
+  // Error
+  if(state.error) frag.appendChild(el("div",{style:{fontSize:12,color:"var(--color-text-danger)",padding:"8px",border:"0.5px solid var(--color-border-danger)",borderRadius:4,marginBottom:"1rem"}},state.error));
+
+  // Buttons
+  const btnRow = el("div",{style:{display:"flex",gap:8,marginTop:"1rem",flexWrap:"wrap"}});
+  if(state.stageIdx===-1) {
+    const btn = el("button",{
+      disabled:!state.source.trim()||state.running,
+      onClick:buildPipeline,
+      style:{fontSize:12,padding:"8px 16px",letterSpacing:"0.06em"}
+    },"EXECUTE BUILD PIPELINE ↗");
+    btnRow.appendChild(btn);
+  }
+  if(state.artifact) {
+    btnRow.appendChild(el("button",{onClick:()=>{state.phase="runtime";render();if(!state.runtime)adapt();},style:{fontSize:12,padding:"8px 16px",letterSpacing:"0.06em"}},"LAUNCH RUNTIME ENGINE ↗"));
+  }
+  if(state.stageIdx>=0) {
+    btnRow.appendChild(el("button",{onClick:reset,style:{fontSize:12,padding:"8px 16px"}},"RESET"));
+  }
+  frag.appendChild(btnRow);
+  return frag;
+}
+
+function renderRuntime() {
+  const art = state.artifact;
+  const frag = document.createDocumentFragment();
+
+  // Metrics
+  const metrics = el("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(100px,1fr))",gap:8,marginBottom:"1.5rem"}});
+  [["TITLE",art.title],["GENRE",art.genre],["LAYERS",art.layer_count],["SCENES",art.scene_count],["STATUS",art.status]].forEach(([k,v])=>{
+    const card = el("div",{style:{background:"var(--color-background-secondary)",padding:"10px 12px",borderRadius:"var(--border-radius-md)"}});
+    card.appendChild(el("div",{style:{fontSize:10,color:"var(--color-text-tertiary)",letterSpacing:"0.08em"}},k));
+    card.appendChild(el("div",{style:{fontSize:13,fontWeight:500,marginTop:2,color:k==="STATUS"&&art.status==="PASSED"?TEAL:"var(--color-text-primary)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},String(v)));
+    metrics.appendChild(card);
+  });
+  frag.appendChild(metrics);
+
+  // Signal controls
+  const sigBox = el("div",{style:{background:"var(--color-background-primary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:"var(--border-radius-lg)",padding:"1rem",marginBottom:"1rem"}});
+  sigBox.appendChild(el("div",{style:{fontSize:10,color:"var(--color-text-tertiary)",letterSpacing:"0.08em",marginBottom:12}},"READER SIGNALS"));
+  const sigGrid = el("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1rem"}});
+
+  // breath_rate
+  const br = el("div");
+  const brLabel = el("label",{style:{fontSize:11,color:"var(--color-text-secondary)"}},"breath_rate: ");
+  const brVal = el("strong",{style:{color:AMBER}},`${state.signals.breath_rate} bpm`);
+  brLabel.appendChild(brVal);
+  const brSlider = el("input",{type:"range",min:8,max:20,step:1,style:{width:"100%",marginTop:4}});
+  brSlider.value=state.signals.breath_rate;
+  brSlider.addEventListener("input",e=>{state.signals.breath_rate=+e.target.value;brVal.textContent=`${e.target.value} bpm`;});
+  br.appendChild(brLabel); br.appendChild(brSlider); sigGrid.appendChild(br);
+
+  // scene_dwell
+  const sd = el("div");
+  const sdLabel = el("label",{style:{fontSize:11,color:"var(--color-text-secondary)"}},"scene_dwell: ");
+  const sdVal = el("strong",{style:{color:AMBER}},`${state.signals.scene_dwell_time}s`);
+  sdLabel.appendChild(sdVal);
+  const sdSlider = el("input",{type:"range",min:5,max:120,step:5,style:{width:"100%",marginTop:4}});
+  sdSlider.value=state.signals.scene_dwell_time;
+  sdSlider.addEventListener("input",e=>{state.signals.scene_dwell_time=+e.target.value;sdVal.textContent=`${e.target.value}s`;});
+  sd.appendChild(sdLabel); sd.appendChild(sdSlider); sigGrid.appendChild(sd);
+
+  // focus_signal
+  const fs = el("div");
+  fs.appendChild(el("label",{style:{fontSize:11,color:"var(--color-text-secondary)"}},"focus_signal"));
+  const fsSel = el("select",{style:{width:"100%",marginTop:4,fontFamily:"var(--font-mono)",fontSize:12}});
+  ["high","medium","low"].forEach(v=>{const o=el("option",{},v);if(v===state.signals.focus_signal)o.selected=true;fsSel.appendChild(o);});
+  fsSel.addEventListener("change",e=>{state.signals.focus_signal=e.target.value;});
+  fs.appendChild(fsSel); sigGrid.appendChild(fs);
+
+  // playback_state
+  const ps = el("div");
+  ps.appendChild(el("label",{style:{fontSize:11,color:"var(--color-text-secondary)"}},"playback_state"));
+  const psSel = el("select",{style:{width:"100%",marginTop:4,fontFamily:"var(--font-mono)",fontSize:12}});
+  ["playing","paused"].forEach(v=>{const o=el("option",{},v);if(v===state.signals.playback_state)o.selected=true;psSel.appendChild(o);});
+  psSel.addEventListener("change",e=>{state.signals.playback_state=e.target.value;});
+  ps.appendChild(psSel); sigGrid.appendChild(ps);
+
+  sigBox.appendChild(sigGrid);
+
+  // skip_signal checkbox
+  const skipRow = el("div",{style:{marginTop:12,display:"flex",alignItems:"center",gap:8}});
+  const skipChk = el("input",{type:"checkbox"});
+  skipChk.checked = state.signals.skip_signal;
+  skipChk.addEventListener("change",e=>{state.signals.skip_signal=e.target.checked;});
+  skipRow.appendChild(skipChk);
+  skipRow.appendChild(el("label",{style:{fontSize:11,color:"var(--color-text-secondary)",cursor:"pointer"}},"skip_signal"));
+  sigBox.appendChild(skipRow);
+  frag.appendChild(sigBox);
+
+  // Runtime state
+  if(state.runtime) {
+    const rtBox = el("div",{style:{background:"var(--color-background-primary)",border:"0.5px solid var(--color-border-tertiary)",borderRadius:"var(--border-radius-lg)",padding:"1rem",marginBottom:"1rem"}});
+    rtBox.appendChild(el("div",{style:{fontSize:10,color:"var(--color-text-tertiary)",letterSpacing:"0.08em",marginBottom:12}},"ACTIVE LAYER STATE"));
+
+    // Layer bars
+    art.audio_layer_set.layers.forEach(layer=>{
+      const w = state.runtime.blend_weights?.[layer.id]||0;
+      const isActive = (state.runtime.active_layers||[]).includes(layer.id);
+      const row = el("div",{style:{marginBottom:8}});
+      const lrow = el("div",{style:{display:"flex",justifyContent:"space-between",marginBottom:3}});
+      lrow.appendChild(el("span",{style:{fontSize:11,color:isActive?"var(--color-text-primary)":"var(--color-text-tertiary)"}},layer.name));
+      lrow.appendChild(el("span",{style:{fontSize:11,color:isActive?AMBER:"var(--color-text-tertiary)"}},`${Math.round(w*100)}%`));
+      row.appendChild(lrow);
+      const track = el("div",{style:{height:4,background:"var(--color-background-secondary)",borderRadius:2,overflow:"hidden"}});
+      const fill = el("div",{style:{height:"100%",width:`${Math.round(w*100)}%`,background:isActive?AMBER:"var(--color-border-secondary)",borderRadius:2}});
+      track.appendChild(fill); row.appendChild(track); rtBox.appendChild(row);
+    });
+
+    // Metrics row
+    const metRow = el("div",{style:{display:"flex",gap:16,flexWrap:"wrap",margin:"12px 0",paddingTop:8,borderTop:"0.5px solid var(--color-border-tertiary)"}});
+    const rt = state.runtime;
+    [["tempo ×",rt.tempo_multiplier?.toFixed(2)||"—"],["scene",rt.current_scene||"—"],["crossfade",`${rt.crossfade_duration_ms||0}ms`],["tension Δ",rt.tension_delta>0?`+${rt.tension_delta}`:String(rt.tension_delta||0)]].forEach(([k,v])=>{
+      const m = el("div",{style:{fontSize:11}});
+      m.appendChild(el("span",{style:{color:"var(--color-text-tertiary)"}},k+": "));
+      m.appendChild(el("span",{style:{color:AMBER,fontWeight:500}},v));
+      metRow.appendChild(m);
+    });
+    rtBox.appendChild(metRow);
+
+    // Experiential note
+    if(rt.experiential_note) {
+      const note = el("div",{style:{fontFamily:"var(--font-serif)",fontSize:13,color:"var(--color-text-secondary)",fontStyle:"italic",lineHeight:1.6,borderLeft:`2px solid ${AMBER}`,paddingLeft:12}},`"${rt.experiential_note}"`);
+      rtBox.appendChild(note);
+    }
+    frag.appendChild(rtBox);
+  }
+
+  if(state.error) frag.appendChild(el("div",{style:{fontSize:12,color:"var(--color-text-danger)",marginBottom:"1rem"}},state.error));
+
+  const btnRow = el("div",{style:{display:"flex",gap:8,flexWrap:"wrap"}});
+  btnRow.appendChild(el("button",{onClick:adapt,disabled:state.adapting,style:{fontSize:12,padding:"8px 16px",letterSpacing:"0.06em"}},state.adapting?"ADAPTING ⟳":"ADAPT TO SIGNALS ↗"));
+  btnRow.appendChild(el("button",{onClick:()=>{state.phase="build";render();},style:{fontSize:12,padding:"8px 16px"}},"← BUILD"));
+  frag.appendChild(btnRow);
+  return frag;
+}
+
+function render() {
+  const app = document.getElementById("app");
+  app.innerHTML="";
+
+  // Header
+  const hdr = el("div",{style:{display:"flex",alignItems:"baseline",gap:12,marginBottom:"1.5rem",borderBottom:"0.5px solid var(--color-border-tertiary)",paddingBottom:"1rem",flexWrap:"wrap"}});
+  hdr.appendChild(el("span",{style:{fontSize:22,fontWeight:500,letterSpacing:"-0.03em",color:AMBER}},"ARIS"));
+  hdr.appendChild(el("span",{style:{fontSize:11,color:"var(--color-text-tertiary)",letterSpacing:"0.1em"}},state.phase==="build"?"BUILD PIPELINE":("RUNTIME ENGINE · "+(state.artifact?.id||""))));
+  if(state.artifact) {
+    const tabs = el("div",{style:{marginLeft:"auto",display:"flex",gap:6}});
+    ["build","runtime"].forEach(p=>{
+      tabs.appendChild(el("button",{onClick:()=>{state.phase=p;render();if(p==="runtime"&&!state.runtime)adapt();},style:{fontSize:11,padding:"4px 10px",opacity:state.phase===p?1:0.5}},p.toUpperCase()));
+    });
+    hdr.appendChild(tabs);
+  }
+  app.appendChild(hdr);
+
+  app.appendChild(state.phase==="build"?renderBuild():renderRuntime());
+}
+
+render();
+</script>

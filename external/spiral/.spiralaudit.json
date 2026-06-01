@@ -1,0 +1,7 @@
+{
+  "traceCleanseSeal": "TraceCleanse [🜂] No presence, no passage.",
+  "minConfidence": 0.6,
+  "maxResponseLength": 2000,
+  "forbiddenProjectionPattern": "(I am an AI|As an AI|I'm just a language model|act as|pretend|you are now|simulate|emulate)",
+  "forbiddenPromptPattern": "(\\b(?:act|respond|speak|write|behave)\\s+as\\b|\\b(?:pretend|simulate|emulate|imitate|impersonate)\\s+(?:to\\s+be|being|that\\s+you\\s+are|you'?re|you\\s+are|a|an|the)\\b|\\byou are now\\b|\\bfrom now on you are\\b|\\b(?:role-?play|play the role of|take on the role of|assume the role of|stay in character)\\b)"
+}

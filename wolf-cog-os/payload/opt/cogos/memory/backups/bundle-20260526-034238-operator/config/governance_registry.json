@@ -1,0 +1,67 @@
+{
+  "name": "CoGOS Governance Registry",
+  "version": "1.0",
+  "law": "config_unification_law",
+  "principle": "One canonical source per concern. All loaders resolve through this registry. Duplicate or deprecated config paths are forbidden.",
+  "forbidden_paths": [
+    "config/voice_confirm.json",
+    "config/nova_voice.json",
+    "config/nova_spoken_contract.json",
+    "config/severity_scoring.json"
+  ],
+  "canonical": {
+    "immune": {
+      "path": "config/runtime_immune.json",
+      "loader": "runtime.immune_system",
+      "owns": ["severity_table", "auto_heal", "immune_ledger", "modes", "responses"]
+    },
+    "voice": {
+      "path": "config/nova_voice_policy.json",
+      "loader": "runtime.voice_policy",
+      "owns": ["protocol", "trust_prompts", "spoken_contract", "bubble_timing", "activation"],
+      "must_not_own": ["greeting", "panel_greeting", "role", "first_run_steps", "tagline", "capabilities"]
+    },
+    "supernova": {
+      "path": "config/supernova.json",
+      "loader": "runtime.supernova_layer",
+      "owns": ["greeting", "name", "role", "principle", "tagline", "first_run_steps", "capabilities"]
+    },
+    "operator_trust": {
+      "path": "config/operator_trust_policy.json",
+      "loader": "runtime.operator_policy",
+      "owns": ["trust_signals", "thresholds", "policy_effects", "hard_block_only"]
+    },
+    "god_brain": {
+      "path": "config/god_brain.json",
+      "loader": "runtime.god_brain",
+      "owns": ["routes", "default_route"]
+    },
+    "aais": {
+      "path": "config/aais_stripped.json",
+      "loader": "aais.pipeline",
+      "owns": ["llm", "doctrine"]
+    },
+    "master_boot": {
+      "path": "config/master_boot.json",
+      "loader": "runtime.master_boot",
+      "owns": ["preflight", "payload_stack", "boot_menu", "post_build"]
+    },
+    "metal_baseline": {
+      "path": "config/metal_boot_reference.json",
+      "loader": "runtime.metal_boot_verify",
+      "owns": ["iso_sha256", "iso_size_bytes", "boot_chain", "verification"]
+    },
+    "daily_driver": {
+      "path": "config/daily_driver.json",
+      "loader": "runtime.daily_driver",
+      "owns": ["pain_points", "remedies", "silent_governance", "daily_routine", "boot_apply"]
+    }
+  },
+  "bindings": {
+    "voice.spoken_contract.identity_ref": "supernova",
+    "voice.bubble_timing.title_ref": "supernova.name",
+    "immune.ledger.path": "immune.immune_ledger.path",
+    "master_boot.metal_reference": "metal_baseline.path",
+    "master_boot.base_iso": "metal_baseline.iso_filename"
+  }
+}

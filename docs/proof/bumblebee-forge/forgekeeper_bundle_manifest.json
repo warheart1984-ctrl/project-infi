@@ -1,0 +1,65 @@
+{
+  "chaos_summary": {
+    "claim_label": "proven",
+    "scenarios_passed": 3,
+    "scenarios_run": 3
+  },
+  "claim_label": "proven",
+  "generated_at_utc": "2026-05-28T12:00:00Z",
+  "hash_manifest": [
+    {
+      "artifact": "decision_ledger",
+      "claim_label": "proven",
+      "exists": true,
+      "path": "E:\\project-infi\\.runtime\\forgekeeper\\decision_ledger.jsonl",
+      "sha256": "5515e86bec2c1c15453e09ea2d2aa1821205c4a0b4e51548527c2a73a3e01110"
+    },
+    {
+      "artifact": "governance_report",
+      "claim_label": "proven",
+      "exists": true,
+      "path": "E:\\project-infi\\docs\\proof\\bumblebee-forge\\forgekeeper_report.json",
+      "sha256": "d1f017ae34c152f18952412d14c6e531530c17cb5e06bfa641a07e3c2576fb2f"
+    },
+    {
+      "artifact": "latest_plan",
+      "claim_label": "proven",
+      "exists": true,
+      "path": "E:\\project-infi\\docs\\proof\\bumblebee-forge\\stage2_attested_plan.json",
+      "sha256": "a994aee495078170e0f36b5b71a1f6b0253932887613f7720a2993808355578c"
+    },
+    {
+      "artifact": "snapshot",
+      "claim_label": "proven",
+      "exists": true,
+      "path": "E:\\project-infi\\docs\\proof\\bumblebee-forge\\forgekeeper_snapshot.json",
+      "sha256": "6655f6b58a68a88b4e22208ae0e06533b087bf931d9890df31ea3c0fdda8773b"
+    },
+    {
+      "artifact": "snapshot_index",
+      "claim_label": "proven",
+      "exists": true,
+      "path": "E:\\project-infi\\docs\\proof\\bumblebee-forge\\forgekeeper_snapshot_index.jsonl",
+      "sha256": "fd44751a7bc27665e7950485efde437ec9d8e8d885b8825476f6ee9aa8006b03"
+    },
+    {
+      "artifact": "verify_report",
+      "claim_label": "proven",
+      "exists": true,
+      "path": "E:\\project-infi\\docs\\proof\\bumblebee-forge\\forgekeeper_verify_report.json",
+      "sha256": "638c2af114df4e05c12d893587fdc7c97cd3fdb5aa1da2ea7860dee93c55349e"
+    }
+  ],
+  "manifest_version": "forgekeeper.bundle_export.v1",
+  "mode": "bundle-export",
+  "plan_id": "bf-weekly",
+  "proof_bundle_ref": "docs/proof/bumblebee-forge/STAGE1_PROOF_BUNDLE.md",
+  "safety_state": "dry_run_only",
+  "verification_summary": {
+    "claim_label": "proven",
+    "cross_machine_status": "inactive",
+    "drift_claim_label": "asserted",
+    "reconcile_claim_label": "asserted",
+    "trace_claim_label": "asserted"
+  }
+}

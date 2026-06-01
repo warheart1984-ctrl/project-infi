@@ -1,0 +1,2 @@
+{"ts_ns": 1000, "domain": "fd_flow", "actor": "pid:400", "payload": {"op": "open", "fd": 3}, "lineage_id": "fixture-fd-001"}
+{"ts_ns": 2000, "domain": "fd_flow", "actor": "pid:400", "payload": {"op": "open", "fd": 4}, "lineage_id": "fixture-fd-001"}

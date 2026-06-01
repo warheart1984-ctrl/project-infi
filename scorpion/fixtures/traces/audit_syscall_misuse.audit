@@ -1,0 +1,4 @@
+# Sample linux audit text export (Stage 4 audit sentinel)
+type=SYSCALL msg=audit(1.0:1): arch=c000003e syscall=read success=yes
+type=SYSCALL msg=audit(1.0:2): arch=c000003e syscall=open success=yes
+type=SYSCALL msg=audit(1.0:3): arch=c000003e syscall=close success=yes

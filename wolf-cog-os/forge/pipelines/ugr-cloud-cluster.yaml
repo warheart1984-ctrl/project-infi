@@ -1,0 +1,51 @@
+schema_version: forge-pipeline.v2
+name: ugr-cloud-cluster
+base: cogos-base
+variant:
+  id: ugr-cloud-v1
+  channel: rc
+lineage:
+  parent: daily-driver-main
+  parent_lineage_id: ""
+reproducibility:
+  seed: ugr-cloud-v1
+  deterministic: true
+substrate:
+  id: auto
+kernel:
+  flavor: generic
+packages:
+  include:
+    - base
+    - daily-driver
+  exclude: []
+overlays:
+  - overlays/common-ops-tools
+services:
+  enable:
+    - sshd
+    - cogos-governor
+    - ugr-policy
+    - ugr-ledger
+    - ugr-lane-worker
+    - ugr-convergence
+    - ugr-orchestrator
+    - ugr-ingestion
+    - ugr-platform
+    - ugr-graph-index
+    - ugr-model-pool
+    - ugr-embryo-gateway
+  disable: []
+governance:
+  sigil_profile: strict
+  invariant_set: operator-default
+runtime:
+  mode: ugr-cloud
+  logging: normal
+  mesh_config: /forge/ugr/mesh.forge-node.json
+  deployment_mode: distributed
+output:
+  iso_name: cogos-ugr-cloud.iso
+  cloud_formats:
+    - raw-img
+    - qcow2

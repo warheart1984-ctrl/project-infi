@@ -1,0 +1,38 @@
+schema_version: forge-pipeline.v2
+name: android-system
+base: android-base
+variant:
+  id: android-system-main
+  channel: nightly
+lineage:
+  parent: cogos-base
+  parent_lineage_id: ""
+reproducibility:
+  seed: android-system-v1
+  deterministic: true
+substrate:
+  id: android-bootable
+rootfs:
+  backend: android-backend
+kernel:
+  flavor: generic
+packages:
+  include: []
+  exclude: []
+overlays:
+  - overlays/android-inject
+governance:
+  sigil_profile: strict
+  invariant_set: android-avb
+  required_invariants:
+    - selinux_label_consistency
+    - avb_vbmeta_awareness
+    - ab_slot_metadata
+runtime:
+  mode: system
+  logging: normal
+output:
+  iso_name: forge-android-system.img
+  cloud_formats:
+    - raw-img
+    - qcow2

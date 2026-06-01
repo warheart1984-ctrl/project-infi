@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "platform.platform_artifact_ref.v1",
+  "title": "Platform Artifact Reference v1",
+  "type": "object",
+  "required": [
+    "ref_version",
+    "ref_id",
+    "org_id",
+    "subsystem",
+    "logical_path",
+    "storage_uri",
+    "sha256",
+    "claim_label",
+    "registered_at"
+  ],
+  "properties": {
+    "ref_version": { "const": "platform.platform_artifact_ref.v1" },
+    "ref_id": { "type": "string" },
+    "org_id": { "type": "string" },
+    "job_id": { "type": "string" },
+    "correlation_id": { "type": "string" },
+    "subsystem": {
+      "enum": ["mechanic", "forgekeeper", "slingshot", "lab", "ai_factory"]
+    },
+    "logical_path": { "type": "string" },
+    "storage_uri": { "type": "string" },
+    "sha256": { "type": "string" },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] },
+    "lineage_parent_refs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "visibility": { "enum": ["org", "private", "shared"] },
+    "retention_class": { "enum": ["short", "standard", "long"] },
+    "artifact_type": { "type": "string" },
+    "acl": {
+      "type": "object",
+      "required": ["org_id"],
+      "properties": {
+        "org_id": { "type": "string" },
+        "visibility": { "enum": ["org_private"] }
+      }
+    },
+    "registered_at": { "type": "string", "format": "date-time" },
+    "ttl_days": { "type": "integer", "minimum": 0 },
+    "metadata": { "type": "object" }
+  }
+}

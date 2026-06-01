@@ -1,0 +1,19 @@
+{
+  "channel": "stable",
+  "product": "Wolf CoG OS",
+  "release": "1.1",
+  "release_name": "Wolf CoG OS Release 1.1",
+  "release_folder_url": "https://drive.google.com/drive/folders/1umPIVwZjMzeAc-Vp9xquUCrT8crW5-Hd?usp=sharing",
+  "download_mirrors": [
+    {
+      "label": "Wolf CoG OS 1.1 Google Drive release folder",
+      "url": "https://drive.google.com/drive/folders/1umPIVwZjMzeAc-Vp9xquUCrT8crW5-Hd?usp=sharing",
+      "type": "release-folder"
+    }
+  ],
+  "package_repo": "https://warheart1984-ctrl.github.io/wolf-packages",
+  "manifest_path": "/opt/cogos/config/release_manifest.json",
+  "snapshots_dir": "/opt/cogos/memory/snapshots",
+  "rollback_points_max": 8,
+  "require_operator_for_apply": true
+}

@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "component": "wine-wolf-bridge",
+  "wine_track": "stable",
+  "max_lag_releases": 2,
+  "supported_wine_major": [9, 10],
+  "ul_bridge_version": "1.0.0",
+  "auto_assign_profile": "win.default.safe",
+  "hook_surface": ["CreateFile", "ReadFile", "WriteFile", "FindFirstFile", "connect", "getaddrinfo"],
+  "preload_shim": "lib/libcogos_wine_preload.so",
+  "daemon_socket": "memory/ul_app_bridge/bridge.sock",
+  "launcher": "bin/wolf-wine",
+  "auto_launcher": "bin/cogos-win-launcher",
+  "desktop_handler": "cogos-win-launcher.desktop",
+  "maintenance": "Pinned component; audit on Wine stable bumps."
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Wolf CoG OS Master Boot Artifact",
+  "version": "1.0",
+  "iso_filename": "Wolf-CoG-OS-master-boot.iso",
+  "iso_sha256": "35C39B08222C282A9BB1FA2DCC62E133E81D49A1DD9AD87311CDAD6D1D286B6F",
+  "iso_size_bytes": 4259936256,
+  "built_at": "2026-05-26T03:10:18Z",
+  "inherits_metal_reference": "config/metal_boot_reference.json"
+}

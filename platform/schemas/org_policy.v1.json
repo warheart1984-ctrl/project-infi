@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "platform.org_policy.v1",
+  "title": "Org Policy v1",
+  "type": "object",
+  "required": ["policy_version", "org_id", "plan_id"],
+  "properties": {
+    "policy_version": { "const": "platform.org_policy.v1" },
+    "org_id": { "type": "string" },
+    "plan_id": { "enum": ["free", "pro", "enterprise"] },
+    "max_concurrent_jobs": { "type": "integer" },
+    "max_daily_cost": { "type": "number" },
+    "jobs_per_day": { "type": "integer" },
+    "artifacts_per_day": { "type": "integer" },
+    "allowed_subsystems": { "type": "array", "items": { "type": "string" } },
+    "allowed_job_types": { "type": "array", "items": { "type": "string" } },
+    "slingshot_enabled": { "type": "boolean" },
+    "region": { "type": "string" },
+    "data_residency": { "type": "string" }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "manifest_version": "platform.platform_replay_manifest.v3",
+  "operational_status": "active",
+  "subsystem": "platform",
+  "job_id": "replay-quorum-job",
+  "runners": [
+    {
+      "runner_id": "primary",
+      "region": "us",
+      "commands": {
+        "platform": "python .github/scripts/check-platform-v5-governance.py"
+      },
+      "post_attestation_url": ""
+    },
+    {
+      "runner_id": "secondary",
+      "region": "eu",
+      "commands": {
+        "platform": "python .github/scripts/check-platform-v3-governance.py"
+      }
+    }
+  ]
+}

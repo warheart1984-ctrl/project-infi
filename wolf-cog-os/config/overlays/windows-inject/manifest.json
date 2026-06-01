@@ -1,0 +1,6 @@
+{
+  "schema_version": "forge-inject-manifest.v1",
+  "platform": "windows",
+  "description": "Windows WinPE inject manifest (drivers, registry hives, provisioning packages)",
+  "copy": []
+}

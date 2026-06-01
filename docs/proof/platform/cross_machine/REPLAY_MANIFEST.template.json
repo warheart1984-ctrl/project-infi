@@ -1,0 +1,18 @@
+{
+  "manifest_version": "platform.platform_replay_manifest.v1",
+  "operational_status": "active",
+  "primary_machine": "",
+  "secondary_machine": "",
+  "subsystem": "platform",
+  "commands": {
+    "mechanic": "pytest tests/test_platform_schemas.py -q -k mechanic",
+    "slingshot": "pytest tests/test_platform_schemas.py -q",
+    "lab": "pytest tests/test_platform_api_smoke.py -q -k lab",
+    "ai_factory": "pytest tests/test_platform_schemas.py -q",
+    "forgekeeper": "pytest tests/test_platform_schemas.py -q",
+    "platform": "python .github/scripts/check-platform-v8-v14-governance.py"
+  },
+  "artifact_hashes": {
+    "platform_proof_bundle": "docs/proof/platform/PLATFORM_V1_PROOF_BUNDLE.md"
+  }
+}

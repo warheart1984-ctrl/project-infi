@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "platform.sovereign_profile.v1",
+  "type": "object",
+  "properties": {
+    "profile_version": { "const": "platform.sovereign_profile.v1" },
+    "mode": { "enum": ["hosted", "self_hosted"] },
+    "data_residency": { "type": "string" },
+    "export_bundle_schedule": { "type": "string" },
+    "runner_endpoint": { "type": "string" }
+  }
+}

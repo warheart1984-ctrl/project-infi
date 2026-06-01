@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "ledger_id": "forge-nightly-evolution",
+  "default_verification_policy": "fail",
+  "schedule_utc": "0 4 * * *",
+  "entries": [
+    {
+      "id": "nightly.v1.platform-evolution-loop",
+      "date": "2026-05-27",
+      "author": "forge-platform-program",
+      "change_type": "add",
+      "status": "active",
+      "targets": [
+        "substrate-registry.v2",
+        "rootfs-backend-registry.v1",
+        "forge-arch-matrix.v1",
+        "forge-cloud-output.v1",
+        "forge-pipeline.v2"
+      ],
+      "verification": {
+        "scripts": ["wolf-cog-os/scripts/test/forge-nightly-evolution.sh"],
+        "tests": ["tests/test_nightly_evolution.py"]
+      },
+      "notes": "P9 nightly evolution dry-run validates platform contracts without full ISO build."
+    },
+    {
+      "id": "nightly.v2.variant-build-mode",
+      "date": "2026-05-28",
+      "author": "forge-platform-program",
+      "change_type": "add",
+      "status": "active",
+      "targets": [
+        "forge-nightly-variant-matrix.v1",
+        "forge-nightly-build.v1"
+      ],
+      "verification": {
+        "scripts": [
+          "wolf-cog-os/scripts/test/forge-nightly-evolution.sh",
+          "wolf-cog-os/scripts/test/forge-nightly-build.sh"
+        ],
+        "tests": ["tests/test_nightly_evolution.py"]
+      },
+      "notes": "P13: nightly --build mode emits variant lineage bundles and optional cloud outputs."
+    }
+  ]
+}

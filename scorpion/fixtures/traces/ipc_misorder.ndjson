@@ -1,0 +1,2 @@
+{"ts_ns": 1000, "domain": "ipc_choreography", "actor": "pid:500", "payload": {"op": "send"}, "lineage_id": "fixture-ipc-001"}
+{"ts_ns": 2000, "domain": "ipc_choreography", "actor": "pid:500", "payload": {"op": "connect"}, "lineage_id": "fixture-ipc-001"}

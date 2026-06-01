@@ -1,0 +1,30 @@
+---
+description: Repository safety and cleanup constraints
+alwaysApply: true
+---
+
+# Project Infi Repository Safety
+
+Constitutional authority is defined in `META_ARCHITECT_LAWBOOK.md`.
+This rule governs safety and cleanup behavior only.
+
+- Never delete a repository directory.
+- Never run broad destructive cleanup across the workspace.
+- Cleanup must be minimal and scoped only to files/directories required for the current task.
+
+## Hard Prohibitions
+
+- Do not delete top-level project folders.
+- Do not run destructive commands like `rm -rf` on broad paths (repo root, parent dirs, wildcards).
+- Do not run destructive git cleanup (`git clean -fd`, `git clean -fdx`, hard resets) unless explicitly requested by the user.
+
+## Required Behavior for Cleanup
+
+- Prefer targeted file deletion over directory-wide deletion.
+- Keep unrelated files, artifacts, and repos intact.
+- If a deletion scope could affect anything outside the exact task output, ask for explicit confirmation first.
+
+## Default Principle
+
+- Preserve repository integrity first.
+- Clean only what is necessary for the immediate task and nothing more.

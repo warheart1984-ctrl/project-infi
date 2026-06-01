@@ -1,0 +1,26 @@
+{
+  "name": "Wolf CoG OS Original Metal Boot Reference",
+  "version": "1.0-metal-fixed",
+  "product": "Wolf CoG OS",
+  "release": "1.0",
+  "iso_filename": "Wolf-CoG-OS-metal-fixed.iso",
+  "iso_sha256": "F77638110EB1ECF97202302594AD5E5E19D6A0469F56ED1516A04D7A464CB615",
+  "iso_size_bytes": 4259821568,
+  "iso_size_min_bytes": 3400000000,
+  "iso_size_max_bytes": 4500000000,
+  "boot_chain": [
+    "firmware_uefi_or_bios",
+    "grub_live_entry",
+    "vmlinuz_and_initrd",
+    "native_init_before_governed_pid1",
+    "graphical_desktop_reachable"
+  ],
+  "verification": {
+    "required_before_runtime_weight": true,
+    "required_before_release_promotion": true,
+    "compare_iso_size_to_metal": true,
+    "compare_iso_sha256_when_present": true,
+    "require_boot_proof_or_operator_confirm": true
+  },
+  "notes": "Canonical known-good bare-metal boot reference. Every runtime patch or upgrade must verify against this baseline before weight is recorded."
+}

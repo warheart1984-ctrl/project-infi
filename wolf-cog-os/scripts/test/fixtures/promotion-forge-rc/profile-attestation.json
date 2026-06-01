@@ -1,0 +1,10 @@
+{
+  "profile": {
+    "id": "forge-selfhosted"
+  },
+  "resolution": {
+    "profile_id": "forge-selfhosted",
+    "source": "cli"
+  },
+  "binding_status": "bound"
+}

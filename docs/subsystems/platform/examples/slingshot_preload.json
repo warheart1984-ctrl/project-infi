@@ -1,0 +1,8 @@
+{
+  "subsystem": "slingshot",
+  "kind": "slingshot.preload",
+  "params": {
+    "case_id": "onboard-sling-001",
+    "repo_path": "mechanic/fixtures/sample-customer-repo-v2"
+  }
+}

@@ -1,0 +1,10 @@
+# Local Wolf-CoG-OS forge outputs — never commit to GitHub
+output/
+build/
+artifacts/
+# payload-iso/install/ is tracked (d-i hooks); other payload-iso build outputs stay local
+payload-iso/**
+!payload-iso/install/
+!payload-iso/install/**
+*.iso
+*.iso.sha256

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bloodrose</title>
+<style>
+  :root{--bg:#090509;--panel:#140b12;--text:#f7dbe8;--muted:#c88aa6;--rose:#d84d7c;--thorn:#7c1236;--mercy:#74d69e;--warning:#ffb347;}
+  html,body{margin:0;height:100%;background:radial-gradient(circle at center,#1b0d16 0%,#090509 60%,#020102 100%);color:var(--text);font-family:Georgia,serif;overflow:hidden}
+  #wrap{display:grid;grid-template-columns:320px 1fr;height:100vh}
+  #ui{background:linear-gradient(180deg,rgba(20,11,18,.95),rgba(10,6,10,.98));border-right:1px solid rgba(255,255,255,.08);padding:18px;box-sizing:border-box;overflow:auto}
+  h1{margin:0 0 6px;font-size:34px;letter-spacing:2px;color:#ffd7e6}
+  .sub{color:var(--muted);font-size:13px;line-height:1.4;margin-bottom:16px}
+  .meter{margin:12px 0}
+  .label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:#f0b9cc}
+  .bar{height:12px;background:#28111d;border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+  .fill{height:100%;width:0%}
+  #corruptionFill{background:linear-gradient(90deg,#6c0f2d,#ff5f8f)}
+  #redemptionFill{background:linear-gradient(90deg,#18482e,#74d69e)}
+  #score{font-size:18px;color:#fff4f8;margin:10px 0 14px}
+  #help{font-size:13px;line-height:1.5;color:#d8b0c1}
+  #log{margin-top:14px;height:280px;overflow:auto;padding:10px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.08);border-radius:10px;font-size:13px;line-height:1.45}
+  #log div{margin-bottom:8px}
+  #status{margin-top:12px;font-size:14px;color:#ffd5e4;min-height:22px}
+  button{margin-top:12px;background:#2a1220;color:#ffd7e6;border:1px solid rgba(255,255,255,.12);padding:10px 14px;border-radius:10px;cursor:pointer;font-family:inherit}
+  button:hover{background:#3a1a2b}
+  #game{position:relative}
+  canvas{display:block;width:100%;height:100%;background:transparent}
+  #overlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.5);backdrop-filter:blur(2px)}
+  #card{background:rgba(20,11,18,.94);border:1px solid rgba(255,255,255,.12);padding:28px 32px;border-radius:18px;text-align:center;max-width:420px}
+  #card h2{margin:0 0 10px;font-size:34px;color:#ffd7e6}
+  #card p{margin:0 0 16px;color:#e4bdd0;line-height:1.5}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="ui">
+    <h1>BLOODROSE</h1>
+    <div class="sub">Lady Isolde is trapped in her heart-garden. Gather emotional fragments, avoid thorns, and reach the altar with enough redemption to choose an ending.</div>
+    <div class="meter"><div class="label"><span>Corruption</span><span id="corruptionVal">0</span></div><div class="bar"><div class="fill" id="corruptionFill"></div></div></div>
+    <div class="meter"><div class="label"><span>Redemption</span><span id="redemptionVal">0</span></div><div class="bar"><div class="fill" id="redemptionFill"></div></div></div>
+    <div id="score">Score: 0</div>
+    <div id="help">Move: WASD / Arrow Keys<br>Collect petals. Touch thorns to raise corruption. Reach the altar once redemption is high enough.</div>
+    <div id="status"></div>
+    <button id="restartBtn">Restart</button>
+    <div id="log"></div>
+  </div>
+  <div id="game">
+    <canvas id="c"></canvas>
+    <div id="overlay"><div id="card"><h2 id="endTitle">End</h2><p id="endText"></p><button id="playAgainBtn">Play Again</button></div></div>
+  </div>
+</div>
+<script>
+const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
+const logEl=document.getElementById('log'),statusEl=document.getElementById('status');
+const cVal=document.getElementById('corruptionVal'),rVal=document.getElementById('redemptionVal'),scoreEl=document.getElementById('score');
+const cFill=document.getElementById('corruptionFill'),rFill=document.getElementById('redemptionFill');
+const overlay=document.getElementById('overlay'),endTitle=document.getElementById('endTitle'),endText=document.getElementById('endText');
+const keys={};
+let W,H,game;
+function resize(){W=canvas.width=canvas.clientWidth=canvas.offsetWidth;H=canvas.height=canvas.clientHeight;}
+window.addEventListener('resize',resize);
+window.addEventListener('keydown',e=>keys[e.key.toLowerCase()]=true);
+window.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+function rnd(a,b){return Math.random()*(b-a)+a;}
+function dist(a,b){return Math.hypot(a.x-b.x,a.y-b.y);}
+function log(msg){const d=document.createElement('div');d.textContent=msg;logEl.prepend(d);}
+function reset(){resize();game={corruption:0,redemption:0,score:0,game_over:false,ending_type:null,player:{x:80,y:H/2,r:12,speed:3.2},altar:{x:W-120,y:H/2,r:26},petals:[],thorns:[],lastThorn:0,lastPetal:0,warning70:false,altarUnlocked:false};overlay.style.display='none';logEl.innerHTML='';statusEl.textContent='';spawnWorld();updateUI();log('You awaken in the Heart-Garden.');}
+function spawnWorld(){game.petals=[];game.thorns=[];const types=['guilt','desire','rage','mercy'];for(let i=0;i<12;i++)spawnPetal(types[i%4]);for(let i=0;i<8;i++)spawnThorn();}
+function spawnPetal(type){game.petals.push({x:rnd(120,W-160),y:rnd(70,H-70),r:10,type});}
+function spawnThorn(){game.thorns.push({x:rnd(180,W-120),y:rnd(60,H-60),w:rnd(40,120),h:rnd(40,120)});}
+function applyPetal(type){game.score+=10; if(type==='guilt'){game.corruption+=18;log('Guilt blooms like a wound.');} else if(type==='desire'){game.corruption+=6;game.redemption+=5;log('Desire trembles between ruin and release.');} else if(type==='rage'){game.corruption+=22;log('Rage burns through the roses.');} else {game.redemption+=20;log('Mercy softens the thorns.');} game.corruption=clamp(game.corruption,0,100);game.redemption=clamp(game.redemption,0,100);if(game.score%50===0)log('A narrative threshold shivers through the garden.');}
+function end(type,title,text){game.game_over=true;game.ending_type=type;endTitle.textContent=title;endText.textContent=text;overlay.style.display='flex';}
+function updateUI(){cVal.textContent=Math.floor(game.corruption);rVal.textContent=Math.floor(game.redemption);scoreEl.textContent='Score: '+game.score;cFill.style.width=game.corruption+'%';rFill.style.width=game.redemption+'%';statusEl.textContent=game.redemption>=65?'The altar is ready to receive you.':'Seek mercy before the altar. ';}
+function update(){if(game.game_over)return;const p=game.player;let dx=0,dy=0;if(keys['arrowleft']||keys['a'])dx-=1;if(keys['arrowright']||keys['d'])dx+=1;if(keys['arrowup']||keys['w'])dy-=1;if(keys['arrowdown']||keys['s'])dy+=1;const len=Math.hypot(dx,dy)||1;p.x+=dx/len*p.speed;p.y+=dy/len*p.speed;p.x=clamp(p.x,p.r,W-p.r);p.y=clamp(p.y,p.r,H-p.r);
+for(let i=game.petals.length-1;i>=0;i--){const pet=game.petals[i];if(dist(p,pet)<p.r+pet.r){applyPetal(pet.type);game.petals.splice(i,1);spawnPetal(['guilt','desire','rage','mercy'][Math.floor(Math.random()*4)]);}}
+for(const t of game.thorns){const nearestX=clamp(p.x,t.x,t.x+t.w),nearestY=clamp(p.y,t.y,t.y+t.h);if(Math.hypot(p.x-nearestX,p.y-nearestY)<p.r){game.corruption+=0.35; if(Date.now()-game.lastThorn>400){log('Thorns remember your pain.');game.lastThorn=Date.now();}}}
+game.corruption=clamp(game.corruption,0,100);game.redemption=clamp(game.redemption,0,100);if(game.corruption>=70&&!game.warning70){log('Corruption nears collapse.');game.warning70=true;}if(game.corruption>=100){end('consumed','Consumed by Thorns','Your heart-garden closes over you. Corruption consumed the last path.');}
+const a=game.altar;if(dist(p,a)<p.r+a.r){if(game.redemption>=65){if(game.redemption>game.corruption){end('mercy','Mercy Dominant','You reach the altar in a cleansing bloom. Mercy transforms the ruin into chosen release.');}else{end('unbroken','Bound but Unbroken','You reach the altar scarred but sovereign. The wounds remain, but they do not rule you.');}}else{log('The altar rejects you. More mercy is required.');}}
+updateUI();}
+function draw(){ctx.clearRect(0,0,W,H);const g=ctx.createRadialGradient(W/2,H/2,50,W/2,H/2,Math.max(W,H)/1.2);g.addColorStop(0,'rgba(255,100,150,.06)');g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+for(const t of game.thorns){ctx.fillStyle='rgba(124,18,54,.38)';ctx.fillRect(t.x,t.y,t.w,t.h);ctx.strokeStyle='rgba(255,90,140,.18)';ctx.strokeRect(t.x,t.y,t.w,t.h);} 
+ctx.beginPath();ctx.arc(game.altar.x,game.altar.y,game.altar.r,0,Math.PI*2);ctx.fillStyle='rgba(255,200,220,.12)';ctx.fill();ctx.strokeStyle='rgba(255,190,215,.8)';ctx.lineWidth=3;ctx.stroke();
+for(const pet of game.petals){ctx.beginPath();ctx.arc(pet.x,pet.y,pet.r,0,Math.PI*2);ctx.fillStyle=pet.type==='mercy'?'#74d69e':pet.type==='desire'?'#e7a2c7':pet.type==='rage'?'#ff6b6b':'#d84d7c';ctx.fill();}
+ctx.beginPath();ctx.arc(game.player.x,game.player.y,game.player.r,0,Math.PI*2);ctx.fillStyle='#ffd7e6';ctx.fill();ctx.strokeStyle='#7a1236';ctx.lineWidth=2;ctx.stroke();
+ctx.fillStyle='rgba(255,255,255,.04)';for(let i=0;i<80;i++){ctx.fillRect((i*97)%W,(i*53)%H,2,2);}
+}
+function loop(){update();draw();requestAnimationFrame(loop);}
+document.getElementById('restartBtn').onclick=reset;document.getElementById('playAgainBtn').onclick=reset;reset();loop();
+</script>
+</body>
+</html>

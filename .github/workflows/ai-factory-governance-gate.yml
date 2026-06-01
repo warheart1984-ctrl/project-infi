@@ -1,0 +1,41 @@
+name: AI Factory Governance Gate
+
+on:
+  pull_request:
+    paths:
+      - "ai_factory/**"
+      - "factory/**"
+      - "tests/test_ai_factory.py"
+      - "docs/runtime/AI_FACTORY.md"
+      - "docs/proof/ai_factory/**"
+      - ".github/scripts/check-ai-factory-governance.py"
+      - ".github/workflows/ai-factory-governance-gate.yml"
+      - "pyproject.toml"
+  push:
+    branches: [main]
+    paths:
+      - "ai_factory/**"
+      - "factory/**"
+      - "tests/test_ai_factory.py"
+      - "docs/runtime/AI_FACTORY.md"
+      - "docs/proof/ai_factory/**"
+      - ".github/scripts/check-ai-factory-governance.py"
+      - ".github/workflows/ai-factory-governance-gate.yml"
+      - "pyproject.toml"
+
+permissions:
+  contents: read
+
+jobs:
+  ai-factory-governance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Run AI Factory governance gate
+        run: python3 .github/scripts/check-ai-factory-governance.py

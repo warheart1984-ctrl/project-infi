@@ -1,0 +1,45 @@
+{
+  "name": "AAIS Universal Language",
+  "short_name": "AAIS-UL",
+  "version": "0.1.0",
+  "core_truth": [
+    "Python is the vessel.",
+    "UL is the law inside it."
+  ],
+  "definition": "UL is the universal protocol-language inside AAIS that lets all modular systems connect to Jarvis through one shared, inspectable, guarded structure.",
+  "laws": [
+    "One meaning, many forms.",
+    "The core must not be rewritten by the outside.",
+    "All modules must pass through adaptation.",
+    "Structure before expansion.",
+    "Visibility is part of truth.",
+    "Boundaries preserve intelligence.",
+    "Evolution must speak UL."
+  ],
+  "sections": [
+    "identity",
+    "runtime_context",
+    "workspace_context",
+    "mission_context",
+    "knowledge_context",
+    "tool_results",
+    "attachments",
+    "provider_payload",
+    "guardrail_state",
+    "protocol_trace",
+    "proposal_state"
+  ],
+  "objects": [
+    "Identity",
+    "Mode",
+    "Module",
+    "Adapter",
+    "Payload",
+    "Protocol",
+    "Preview",
+    "Guardrail",
+    "Proposal"
+  ],
+  "plug_and_play_principle": "If it can speak UL, it can join the system.",
+  "engineering_rule": "Nothing enters Jarvis raw. Everything passes through adaptation. Nothing evolves outside the protocol. The core remains stabilized."
+}

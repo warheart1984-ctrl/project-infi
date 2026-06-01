@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "platform-membrane.fullname" . }}-api
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: platform-api
+  template:
+    metadata:
+      labels:
+        app: platform-api
+    spec:
+      containers:
+        - name: api
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["python", "-m", "platform", "serve", "--host", "0.0.0.0", "--port", "8090"]
+          ports:
+            - containerPort: {{ .Values.api.port }}
+          env:
+            - name: PLATFORM_REDIS_URL
+              value: {{ .Values.redis.url | quote }}
+            - name: PLATFORM_REQUIRE_API_KEY
+              value: {{ .Values.env.PLATFORM_REQUIRE_API_KEY | quote }}

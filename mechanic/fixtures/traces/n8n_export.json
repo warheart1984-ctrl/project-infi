@@ -1,0 +1,10 @@
+{
+  "executions": [
+    {
+      "id": "n8n-1",
+      "name": "invoice workflow",
+      "operation": "httpRequest",
+      "node_type": "workflow"
+    }
+  ]
+}

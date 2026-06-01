@@ -1,0 +1,82 @@
+{
+  "artifact_sync_claim_label": "proven",
+  "claim_label": "proven",
+  "claim_trend": "degrading",
+  "claim_trend_claim_label": "rejected",
+  "cross_machine_replay": {
+    "activation_env": "FORGE_CROSS_MACHINE_REPLAY_ACTIVE",
+    "activation_env_set": false,
+    "claim_label": "asserted",
+    "manifest_exists": false,
+    "manifest_path": "docs\\proof\\bumblebee-forge\\cross_machine\\REPLAY_MANIFEST.json",
+    "message": "Cross-machine replay is built in repository but not activated.",
+    "operational_status": "inactive",
+    "scaffold_built": true,
+    "template_path": "docs\\proof\\bumblebee-forge\\cross_machine\\REPLAY_MANIFEST.template.json"
+  },
+  "generated_at_utc": "2026-05-28T12:00:00Z",
+  "mode": "verify",
+  "plan_id": "bf-weekly",
+  "presence_checks": [
+    {
+      "artifact": "proof_dir",
+      "claim_label": "proven",
+      "exists": true,
+      "path": "E:\\project-infi\\docs\\proof\\bumblebee-forge"
+    },
+    {
+      "artifact": "ledger",
+      "claim_label": "proven",
+      "exists": true,
+      "path": "E:\\project-infi\\.runtime\\forgekeeper\\decision_ledger.jsonl",
+      "sha256": "7e66aa436060c54d86cc01bcd29ce9378ba2544ef8bc695a658cd0507a49a988"
+    },
+    {
+      "artifact": "report",
+      "claim_label": "proven",
+      "exists": true,
+      "path": "E:\\project-infi\\docs\\proof\\bumblebee-forge\\forgekeeper_report.json",
+      "sha256": "1e2d4b7cc896fad7d7232a280cc00f24081871643de2cb6ab9fb3d3fc18eea38"
+    },
+    {
+      "artifact": "snapshot",
+      "claim_label": "proven",
+      "exists": true,
+      "path": "E:\\project-infi\\docs\\proof\\bumblebee-forge\\forgekeeper_snapshot.json",
+      "sha256": "bb1f8c9c2a0dc5087a18cda1cf2863641b4d8588f580aa9b8c9d0133d4ef5de9"
+    },
+    {
+      "artifact": "snapshot_index",
+      "claim_label": "proven",
+      "exists": true,
+      "path": "E:\\project-infi\\docs\\proof\\bumblebee-forge\\forgekeeper_snapshot_index.jsonl",
+      "sha256": "5a0720c7ac6e8f5834488a65058a0d35b1b7586b197897b429c05a178ded3cd5"
+    },
+    {
+      "artifact": "latest_plan",
+      "claim_label": "proven",
+      "exists": true,
+      "path": "E:\\project-infi\\docs\\proof\\bumblebee-forge\\stage2_attested_plan.json",
+      "sha256": "a994aee495078170e0f36b5b71a1f6b0253932887613f7720a2993808355578c"
+    }
+  ],
+  "proof_bundle_ref": "docs/proof/bumblebee-forge/STAGE1_PROOF_BUNDLE.md",
+  "recommendation_claim_label": "proven",
+  "reconcile_claim_label": "asserted",
+  "reconcile_drift_count": 0,
+  "safety_state": "dry_run_only",
+  "trace_claim_label": "asserted",
+  "traceability_drift": {
+    "claim_label": "proven",
+    "drift_checks": [],
+    "drift_detected": false
+  },
+  "verification_steps": [
+    "py -3.12 -m forge.forgekeeper --mode observe --plan-id <id> --scope .",
+    "py -3.12 -m forge.forgekeeper --mode plan --plan-id <id> --scope . --goal \"bounded map\"",
+    "py -3.12 -m forge.forgekeeper --mode report --plan-id <id>",
+    "py -3.12 -m forge.forgekeeper --mode snapshot --plan-id <id>",
+    "py -3.12 -m forge.forgekeeper --mode snapshot-index --plan-id <id>",
+    "py -3.12 -m forge.forgekeeper --mode verify --plan-id <id>"
+  ]
+}

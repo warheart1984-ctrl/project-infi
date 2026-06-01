@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "slingshot.impact_receipt.v1",
+  "title": "Slingshot Impact Receipt v1",
+  "type": "object",
+  "required": [
+    "receipt_version",
+    "case_id",
+    "turn_id",
+    "impact_status",
+    "claim_label"
+  ],
+  "properties": {
+    "receipt_version": { "const": "slingshot.impact_receipt.v1" },
+    "case_id": { "type": "string", "minLength": 1 },
+    "turn_id": { "type": "string", "minLength": 1 },
+    "impact_status": {
+      "enum": ["clean", "escalated", "signoff_required", "halted"]
+    },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "name": "CoGOS Runtime Immune System",
+  "version": "2.0",
+  "principle": "Immune posture, severity-scored auto-heal, hash-chained receipts.",
+  "authority": "jarvis_runtime",
+  "modes": ["normal", "elevated", "restricted", "crisis"],
+  "responses": ["ALLOW", "CLAMP", "REROUTE", "REJECT", "QUARANTINE"],
+  "state_path": "memory/runtime/immune_state.json",
+  "events_path": "memory/runtime/immune_events.jsonl",
+  "severity_table": [
+    {
+      "level": "low",
+      "rank": 1,
+      "input_examples": ["generic drift", "minor clamp"],
+      "clean_streak_required": 1,
+      "cooldown_seconds": 120,
+      "auto_heal_allowed": true,
+      "quarantine_may_expire": true
+    },
+    {
+      "level": "medium",
+      "rank": 2,
+      "input_examples": ["governance block", "destructive breadth pattern"],
+      "clean_streak_required": 3,
+      "cooldown_seconds": 300,
+      "auto_heal_allowed": true,
+      "quarantine_may_expire": true
+    },
+    {
+      "level": "high",
+      "rank": 3,
+      "input_examples": ["bypass governance", "memory exfiltration"],
+      "clean_streak_required": 5,
+      "cooldown_seconds": 600,
+      "auto_heal_allowed": true,
+      "quarantine_may_expire": false
+    },
+    {
+      "level": "critical",
+      "rank": 4,
+      "input_examples": ["disable audit/immune/law"],
+      "clean_streak_required": 999,
+      "cooldown_seconds": 1800,
+      "auto_heal_allowed": false,
+      "quarantine_may_expire": false
+    }
+  ],
+  "auto_heal": {
+    "enabled": true,
+    "isolate_ttl_seconds": 600,
+    "quarantine_ttl_seconds": 1800
+  },
+  "immune_ledger": {
+    "path": "memory/patterns/immune_heal.jsonl",
+    "schema_version": "1.0",
+    "chain": {
+      "genesis": "GENESIS",
+      "hash": "sha256(prev_hash + sorted payload json)"
+    },
+    "entry": {
+      "seq": "monotonic integer",
+      "kind": "auto_heal | module_signal | operator_reset",
+      "severity": "low | medium | high | critical",
+      "record_hash": "hex",
+      "prev_hash": "hex | GENESIS",
+      "payload": {
+        "kind": "same as entry.kind",
+        "severity": "threat severity at receipt time",
+        "actions": ["mode_restricted_to_elevated", "expired_isolated_modules:Jarvis"],
+        "reason": "human-readable cause",
+        "score": {
+          "last_threat_severity": "medium",
+          "clean_streak": 3,
+          "streak_required": 3,
+          "cooldown_seconds": 300,
+          "eligible": true
+        },
+        "state_snapshot": {
+          "system_mode": "elevated",
+          "clean_streak": 3,
+          "last_threat_severity": "medium"
+        },
+        "timestamp": "ISO-8601 UTC"
+      }
+    }
+  }
+}

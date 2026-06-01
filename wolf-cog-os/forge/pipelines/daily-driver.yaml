@@ -1,0 +1,39 @@
+schema_version: forge-pipeline.v2
+name: daily-driver
+base: cogos-base
+variant:
+  id: daily-driver-main
+  channel: rc
+lineage:
+  parent: minimal-core
+  parent_lineage_id: ""
+reproducibility:
+  seed: daily-driver-v1
+  deterministic: true
+substrate:
+  id: auto
+kernel:
+  flavor: generic
+packages:
+  include:
+    - base
+    - daily-driver
+  exclude: []
+overlays:
+  - overlays/common-ops-tools
+services:
+  enable:
+    - sshd
+    - cogos-governor
+  disable: []
+governance:
+  sigil_profile: strict
+  invariant_set: operator-default
+runtime:
+  mode: daily
+  logging: normal
+output:
+  iso_name: cogos-daily-driver.iso
+  cloud_formats:
+    - raw-img
+    - qcow2

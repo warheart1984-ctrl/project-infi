@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "platform.on_call_schedule.v1",
+  "type": "object",
+  "required": ["rotation_id", "org_id", "principal_ids"],
+  "properties": {
+    "rotation_id": { "type": "string" },
+    "org_id": { "type": "string" },
+    "principal_ids": { "type": "array", "items": { "type": "string" } },
+    "effective_from": { "type": "string" },
+    "effective_to": { "type": "string" }
+  }
+}

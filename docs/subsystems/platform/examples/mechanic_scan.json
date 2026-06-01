@@ -1,0 +1,8 @@
+{
+  "subsystem": "mechanic",
+  "kind": "mechanic.scan",
+  "params": {
+    "case_id": "onboard-demo-001",
+    "repo_path": "mechanic/fixtures/sample-customer-repo"
+  }
+}

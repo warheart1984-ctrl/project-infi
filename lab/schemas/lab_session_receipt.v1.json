@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lab.lab_session_receipt.v1",
+  "title": "Lab Session Receipt v1",
+  "type": "object",
+  "required": ["receipt_version", "project", "session_id", "agent", "status"],
+  "properties": {
+    "receipt_version": { "const": "lab.lab_session_receipt.v1" },
+    "project": { "type": "string" },
+    "session_id": { "type": "string" },
+    "agent": { "type": "string" },
+    "status": { "enum": ["ok", "failed"] },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] },
+    "files_read": { "type": "array", "items": { "type": "string" } },
+    "files_written": { "type": "array", "items": { "type": "string" } },
+    "tools_used": { "type": "array" },
+    "tests_run": { "type": "array" },
+    "experiment_id": { "type": "string" },
+    "workspace_head_post": { "type": "string" },
+    "content_hashes": { "type": "object" }
+  }
+}

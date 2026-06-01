@@ -1,0 +1,2 @@
+{"ts_ns": 100, "domain": "timing_delta", "actor": "pid:200", "payload": {"op": "start", "pair_id": "lock-a"}, "lineage_id": "fixture-race-001"}
+{"ts_ns": 20000000, "domain": "timing_delta", "actor": "pid:200", "payload": {"op": "end", "pair_id": "lock-a"}, "lineage_id": "fixture-race-001"}

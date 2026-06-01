@@ -1,0 +1,5 @@
+{
+  "profile_id": "forge-selfhosted",
+  "source": "cli",
+  "profile_path": "wolf-cog-os/profiles/forge/forge-selfhosted.yaml"
+}

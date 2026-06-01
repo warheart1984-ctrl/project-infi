@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "AAIS Mobile",
+    "slug": "aais-mobile",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "aaismobile",
+    "platforms": ["ios", "android", "web"]
+  }
+}

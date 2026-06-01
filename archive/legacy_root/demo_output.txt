@@ -1,0 +1,182 @@
+=== Protocol View ===
+context_modules:
+  - ProtocolContextModule
+  - RuntimeContextModule
+  - WorkspaceContextModule
+  - ToolResultsModule
+  - AttachmentsModule
+  - ProviderPayloadModule
+modules:
+  -
+    name: ProtocolContextModule
+    section: runtime_context
+    content:
+      session_id: sess_demo_001
+      mode: operator
+      model: gpt-5.4-thinking
+      timestamp_utc: 2026-04-06T05:28:37.754324+00:00
+      flags: 
+      metadata: 
+    priority: 10
+    metadata: 
+  -
+    name: RuntimeContextModule
+    section: runtime_context
+    content:
+      environment: dev
+      provider: openai
+    priority: 20
+    metadata: 
+  -
+    name: WorkspaceContextModule
+    section: workspace_context
+    content:
+      workspace_id: ws_123
+      workspace_name: AAIS Lab
+      runner:
+        active_task:
+          name: workspace_sync
+          phase: ready
+        artifacts:
+          -
+            id: art_1
+            kind: note
+        status: idle
+    priority: 30
+    metadata: 
+  -
+    name: ToolResultsModule
+    section: tool_results
+    content:
+      -
+        tool: search
+        status: ok
+        result_count: 3
+    priority: 60
+    metadata:       count: 1
+  -
+    name: AttachmentsModule
+    section: attachments
+    content:
+      -
+        name: design.md
+        type: text/markdown
+    priority: 70
+    metadata:       count: 1
+  -
+    name: ProviderPayloadModule
+    section: provider_payload
+    content:       note: payload_formatter
+    priority: 999
+    metadata: 
+provider_messages:
+  -
+    role: system
+    content:
+Runtime context
+session_id: sess_demo_001
+  mode: operator
+  model: gpt-5.4-thinking
+  timestamp_utc: 2026-04-06T05:28:37.754324+00:00
+  flags: 
+  metadata:
+
+Runtime context
+environment: dev
+  provider: openai
+
+Workspace context
+workspace_id: ws_123
+  workspace_name: AAIS Lab
+  runner:
+    active_task:
+      name: workspace_sync
+      phase: ready
+    artifacts:
+      -
+        id: art_1
+        kind: note
+    status: idle
+
+Tool results
+-
+    tool: search
+    status: ok
+    result_count: 3
+
+Attachments
+-
+    name: design.md
+    type: text/markdown
+  -
+    role: user
+    content: Open the research workspace.
+  -
+    role: assistant
+    content: Workspace opened.
+  -
+    role: user
+    content: Summarize the current workspace state and next action.
+provider_preview:
+  model: gpt-5.4-thinking
+  provider_messages:
+    -
+      role: system
+      content:
+Runtime context
+session_id: sess_demo_001
+  mode: operator
+  model: gpt-5.4-thinking
+  timestamp_utc: 2026-04-06T05:28:37.754324+00:00
+  flags: 
+  metadata:
+
+Runtime context
+environment: dev
+  provider: openai
+
+Workspace context
+workspace_id: ws_123
+  workspace_name: AAIS Lab
+  runner:
+    active_task:
+      name: workspace_sync
+      phase: ready
+    artifacts:
+      -
+        id: art_1
+        kind: note
+    status: idle
+
+Tool results
+-
+    tool: search
+    status: ok
+    result_count: 3
+
+Attachments
+-
+    name: design.md
+    type: text/markdown
+    -
+      role: user
+      content: Open the research workspace.
+    -
+      role: assistant
+      content: Workspace opened.
+    -
+      role: user
+      content: Summarize the current workspace state and next action.
+  rendered_sections:
+    - runtime_context
+    - runtime_context
+    - workspace_context
+    - tool_results
+    - attachments
+  module_order:
+    - ProtocolContextModule
+    - RuntimeContextModule
+    - WorkspaceContextModule
+    - ToolResultsModule
+    - AttachmentsModule
+    - ProviderPayloadModule

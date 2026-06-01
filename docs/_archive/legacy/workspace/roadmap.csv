@@ -1,0 +1,4 @@
+Phase,Module,Includes
+Phase 1,Memory Bank,"Schema, CRUD, categories, UI"
+Phase 2,Security Fabric,"Global policy engine, guardrails, audit logs"
+Phase 3,Governance Layer,"Tenants, crisis mode, break-glass, incidents"

@@ -1,0 +1,9 @@
+name: LLM Review
+on: [push]
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: OpenAI review
+        run: echo "openai review placeholder"

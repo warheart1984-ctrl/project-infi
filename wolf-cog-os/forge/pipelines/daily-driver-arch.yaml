@@ -1,0 +1,37 @@
+schema_version: forge-pipeline.v2
+name: daily-driver-arch
+base: cogos-base
+variant:
+  id: daily-driver-arch-main
+  channel: nightly
+lineage:
+  parent: daily-driver-main
+  parent_lineage_id: ""
+reproducibility:
+  seed: daily-driver-arch-v1
+  deterministic: true
+substrate:
+  id: auto
+rootfs:
+  backend: pacstrap
+kernel:
+  flavor: generic
+packages:
+  include:
+    - arch-base
+  exclude: []
+overlays: []
+services:
+  enable:
+    - sshd
+  disable: []
+governance:
+  sigil_profile: strict
+  invariant_set: operator-default
+runtime:
+  mode: daily
+  logging: normal
+output:
+  iso_name: cogos-daily-driver-arch.iso
+  cloud_formats:
+    - raw-img

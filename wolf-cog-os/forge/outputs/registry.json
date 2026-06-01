@@ -1,0 +1,36 @@
+{
+  "registry_version": "forge-cloud-output.v1",
+  "default_format": "raw-img",
+  "contract_version": "forge-cloud-output.v1",
+  "formats": {
+    "raw-img": {
+      "description": "Raw block image (dd-compatible)",
+      "implementation_status": "production",
+      "extension": ".img",
+      "required_tools": ["dd"],
+      "multi_arch": true
+    },
+    "qcow2": {
+      "description": "QEMU qcow2 image",
+      "implementation_status": "production",
+      "extension": ".qcow2",
+      "required_tools": ["qemu-img"],
+      "multi_arch": true
+    },
+    "vhd": {
+      "description": "Hyper-V VHD image",
+      "implementation_status": "stub",
+      "extension": ".vhd",
+      "required_tools": ["qemu-img"],
+      "multi_arch": true
+    },
+    "ami": {
+      "description": "AWS AMI packaging workflow (bundle contract)",
+      "implementation_status": "stub",
+      "extension": ".ami.json",
+      "required_tools": ["tar", "gzip"],
+      "multi_arch": true,
+      "requires_lineage": true
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lab.lab_project_spec.v1",
+  "title": "Lab Project Spec v1",
+  "type": "object",
+  "required": ["spec_version", "project_id"],
+  "properties": {
+    "spec_version": { "const": "lab.lab_project_spec.v1" },
+    "project_id": { "type": "string", "minLength": 1 },
+    "intent_summary": { "type": "string" },
+    "source_repo": { "type": "string" },
+    "risk_level": { "enum": ["low", "medium", "high"] },
+    "require_session_summary": { "type": "boolean" },
+    "prohibitions": {
+      "type": "object",
+      "properties": {
+        "forbidden_commands": { "type": "array", "items": { "type": "string" } },
+        "network_allowed": { "type": "boolean" },
+        "high_impact_patterns": { "type": "array", "items": { "type": "string" } },
+        "read_only_paths": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "instruments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "kind": { "type": "string" },
+          "command": { "type": "array", "items": { "type": "string" } },
+          "max_runtime_s": { "type": "integer", "minimum": 1 },
+          "allowed_paths": { "type": "array", "items": { "type": "string" } },
+          "requires_network": { "type": "boolean" },
+          "requires_confirmation_paths": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

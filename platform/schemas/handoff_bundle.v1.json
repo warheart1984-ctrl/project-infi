@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "platform.handoff_bundle.v1",
+  "type": "object",
+  "required": ["bundle_id", "org_id", "from_principal", "to_principal", "created_at"],
+  "properties": {
+    "bundle_id": { "type": "string" },
+    "org_id": { "type": "string" },
+    "from_principal": { "type": "string" },
+    "to_principal": { "type": "string" },
+    "open_job_ids": { "type": "array" },
+    "drift_job_ids": { "type": "array" },
+    "notes": { "type": "string" },
+    "runbook_ref": { "type": "string" },
+    "created_at": { "type": "string" }
+  }
+}

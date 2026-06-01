@@ -1,0 +1,22 @@
+.operator-console-page .operator-console-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.operator-console-page .operator-claim-connected {
+  color: var(--success-color, #22c55e);
+}
+
+.operator-console-page .operator-claim-warning {
+  color: var(--warning-color, #f59e0b);
+}
+
+.operator-console-page .operator-trace-button {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}

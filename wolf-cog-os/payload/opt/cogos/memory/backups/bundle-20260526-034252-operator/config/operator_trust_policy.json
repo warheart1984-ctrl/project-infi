@@ -1,0 +1,51 @@
+{
+  "name": "Wolf CoG OS Operator Trust Policy",
+  "version": "1.0",
+  "principle": "Governance without operator trust is governance beating a dead horse. The policy layer trusts the operator first, keeps receipts, and only hard-blocks clear danger.",
+  "default_stance": "trust_operator",
+  "hard_block_only": [
+    "malware_or_bad_reputation",
+    "hash_mismatch",
+    "missing_required_sha256",
+    "tier_explicit_deny",
+    "unsigned_governance_mutation",
+    "kernel_panic_reported"
+  ],
+  "trust_signals": {
+    "profile_operator": 40,
+    "profile_elevated_tier": 20,
+    "metal_baseline_verified": 25,
+    "runtime_weight_per_25": 5,
+    "runtime_weight_cap": 20,
+    "approved_source_each": 3,
+    "approved_source_cap": 15,
+    "successful_patch_each": 4,
+    "successful_patch_cap": 16,
+    "operator_confirm_without_conflict": 10,
+    "recent_conflict": -30
+  },
+  "thresholds": {
+    "full_trust": 80,
+    "daily_driver": 50,
+    "ask_once": 30
+  },
+  "policy_effects": {
+    "full_trust": [
+      "skip_repeat_source_approval",
+      "accept_operator_metal_confirm",
+      "soften_unknown_source_to_allow",
+      "reduce_tier_friction_for_userland"
+    ],
+    "daily_driver": [
+      "ask_once_then_remember",
+      "accept_operator_metal_confirm"
+    ],
+    "ask_once": [
+      "prompt_once_per_new_source"
+    ]
+  },
+  "receipts": {
+    "path": "/opt/cogos/memory/operator/trust_receipts.jsonl",
+    "state_path": "/opt/cogos/memory/operator/trust_state.json"
+  }
+}

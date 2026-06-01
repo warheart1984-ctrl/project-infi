@@ -1,0 +1,10 @@
+{
+  "events": [
+    {
+      "id": "make-1",
+      "name": "scenario router",
+      "operation": "webhook",
+      "type": "scenario"
+    }
+  ]
+}

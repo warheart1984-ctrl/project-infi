@@ -1,0 +1,56 @@
+#!/bin/sh
+# Launch Calamares graphical installer from live session.
+set -eu
+
+LOG=/var/log/cogos-launch-installer.log
+AUTO=0
+
+log() {
+  printf '%s cogos-launch-installer: %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date)" "$*" >>"$LOG"
+}
+
+if grep -qE 'cogos\.calamares=1|cogos\.surprise=1' /proc/cmdline 2>/dev/null; then
+  AUTO=1
+fi
+
+if ! command -v calamares >/dev/null 2>&1; then
+  log "ERROR: calamares not found in PATH"
+  exit 127
+fi
+
+if [ -z "${DISPLAY:-}" ] && [ -S /tmp/.X11-unix/X0 ]; then
+  export DISPLAY=:0
+fi
+
+i=0
+while [ "$i" -lt 45 ]; do
+  if [ -n "${DISPLAY:-}" ]; then
+    break
+  fi
+  i=$((i + 1))
+  sleep 2
+done
+
+log "launch auto=$AUTO display=${DISPLAY:-unset} user=$(id -un 2>/dev/null || echo unknown)"
+
+launch() {
+  if command -v pkexec >/dev/null 2>&1; then
+    exec pkexec calamares >>"$LOG" 2>&1
+  fi
+  exec calamares >>"$LOG" 2>&1
+}
+
+if [ "$AUTO" = "1" ]; then
+  launch
+fi
+
+if command -v zenity >/dev/null 2>&1; then
+  if zenity --question --title="Wolf CoG OS" \
+      --text="Open the graphical disk installer (Calamares)?\n\nUse Install Wolf CoG OS (Graphical) from GRUB for automatic launch." \
+      --ok-label="Install" --cancel-label="Not now" 2>>"$LOG"; then
+    launch
+  fi
+  exit 0
+fi
+
+exit 0

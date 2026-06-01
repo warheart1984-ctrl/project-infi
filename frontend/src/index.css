@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Orbitron:wght@500;700&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+:root {
+  --bg: #030814;
+  --surface: rgba(8, 18, 36, 0.82);
+  --ink: #eefaff;
+  --muted: #8da6bc;
+  --outline: rgba(92, 231, 255, 0.14);
+  --accent: #5ce7ff;
+  --accent-strong: #36c8e7;
+  --accent-soft: rgba(92, 231, 255, 0.1);
+  --danger: #ff6a87;
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background:
+    radial-gradient(circle at top left, rgba(92, 231, 255, 0.12), transparent 24%),
+    radial-gradient(circle at top right, rgba(86, 183, 255, 0.1), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(129, 255, 214, 0.08), transparent 20%),
+    linear-gradient(180deg, #020510 0%, #061023 38%, #030814 100%);
+  color: var(--ink);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+textarea,
+input[type="text"],
+select {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--outline);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--ink);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+select:focus {
+  outline: none;
+  border-color: rgba(92, 231, 255, 0.5);
+  box-shadow: 0 0 0 4px rgba(92, 231, 255, 0.12);
+}
+
+textarea {
+  min-height: 12rem;
+  resize: vertical;
+}
+
+.page-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-bottom: 1.6rem;
+}
+
+.page-intro h1 {
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+}
+
+.page-intro p {
+  max-width: 56rem;
+  color: var(--muted);
+}
+
+.page-panel {
+  background: var(--surface);
+  border: 1px solid rgba(92, 231, 255, 0.08);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-family: 'IBM Plex Mono', monospace;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+}
+
+.status-pill.connected {
+  background: rgba(92, 231, 255, 0.12);
+  color: var(--accent-strong);
+}
+
+.status-pill.error {
+  background: rgba(255, 106, 135, 0.14);
+  color: var(--danger);
+}
+
+.status-pill.warning {
+  background: rgba(255, 226, 122, 0.14);
+  color: #ffe27a;
+}
