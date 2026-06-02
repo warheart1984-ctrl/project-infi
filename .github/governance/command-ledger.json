@@ -915,6 +915,60 @@
           "contains": "forge-platform-gate"
         }
       ]
+    },
+    {
+      "id": "make.repo-hygiene-gate",
+      "owner": "Makefile",
+      "component": "repo-steward",
+      "invocation": {
+        "type": "make_target",
+        "makefile": "Makefile",
+        "target": "repo-hygiene-gate"
+      },
+      "required_env": [],
+      "optional_env": [
+        "REPO_HYGIENE_MODE"
+      ],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/repo-hygiene-gate.yml",
+          "contains": "repo-hygiene-gate"
+        }
+      ]
+    },
+    {
+      "id": "script.github.check-repo-hygiene",
+      "owner": ".github/scripts/check-repo-hygiene.py",
+      "component": "repo-steward",
+      "invocation": {
+        "type": "script_path",
+        "path": ".github/scripts/check-repo-hygiene.py"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "make_target",
+          "path": "Makefile",
+          "contains": "repo-hygiene-gate"
+        },
+        {
+          "type": "script_path",
+          "path": ".github/scripts/check-forge-shippable-gate.py",
+          "contains": "check-repo-hygiene.py"
+        }
+      ]
     }
   ]
 }

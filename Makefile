@@ -1,4 +1,6 @@
-.PHONY: run worker test governance-check rootfs iso-tree rootfs-forge iso-tree-forge forge-installer forge-shippable-gate forge-platform-gate forge-dashboard forge-nightly-evolution forge-nightly-build installer-smoke installer-integration sign-artifacts verify-artifacts ugr-cloud-gate ugr-ingestion-gate ugr-platform-gate ugr-graph-index-gate ugr-embryo-gate ugr-causal-graph-gate ugr-llm-provider-gate ugr-cogos-write-path-gate ugr-graph-backend-gate ugr-trust-bundle-gate ugr-operator-console-gate forge-clean forge-rocky forge-rocky-fallback fetch-rocky-substrate ai-factory-build ai-factory-gate lab-init lab-gate mechanic-gate slingshot-gate platform-gate platform-smoke platform-up
+.PHONY: run worker test governance-check rootfs iso-tree rootfs-forge iso-tree-forge forge-installer forge-shippable-gate forge-platform-gate forge-dashboard forge-nightly-evolution forge-nightly-build installer-smoke installer-integration sign-artifacts verify-artifacts ugr-cloud-gate ugr-ingestion-gate ugr-platform-gate ugr-graph-index-gate ugr-embryo-gate ugr-causal-graph-gate ugr-llm-provider-gate ugr-cogos-write-path-gate ugr-graph-backend-gate ugr-trust-bundle-gate ugr-operator-console-gate forge-clean forge-rocky forge-rocky-fallback fetch-rocky-substrate ai-factory-build ai-factory-gate synthetic-mind-gate repo-hygiene-gate lab-init lab-gate mechanic-gate slingshot-gate platform-gate platform-smoke platform-up
+
+REPO_HYGIENE_MODE ?= fail
 
 FORGE_PROFILE ?= $(COGOS_FORGE_PROFILE)
 FORGE_PROFILE_ARG := $(if $(strip $(FORGE_PROFILE)),--profile $(FORGE_PROFILE),)
@@ -124,6 +126,15 @@ ai-factory-build:
 
 ai-factory-gate:
 	python3 .github/scripts/check-ai-factory-governance.py
+
+repo-hygiene-gate:
+	python3 .github/scripts/check-repo-hygiene.py --mode $(REPO_HYGIENE_MODE) --output ci-artifacts/repo-hygiene-report.json
+
+synthetic-mind-gate:
+	python3 scripts/cogos/build_synthetic_mind_bundle.py
+	python3 .github/scripts/check-canonical-lane-sync.py --mode $(REPO_HYGIENE_MODE)
+	python3 wolf-cog-os/scripts/validate-substrate-invariants.py --mode fail
+	python3 -m pytest tests/test_synthetic_mind_bundle.py tests/test_synthetic_mind_platform.py tests/test_spark_pipeline.py tests/test_coherence_projection.py -q
 
 LAB_SPEC ?= lab/specs/default.yaml
 LAB_PROJECT ?= nova-ai-factory

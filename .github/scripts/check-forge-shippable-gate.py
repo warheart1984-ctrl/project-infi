@@ -116,6 +116,7 @@ def main() -> int:
         GateCheck("B", "Substrate evolution ledger", [sys.executable, ".github/scripts/validate-substrate-evolution-ledger.py", "--mode", "fail"]),
         GateCheck("B", "Rootfs backend registry", [sys.executable, "wolf-cog-os/scripts/validate-rootfs-backend.py", "--backend", "debootstrap", "--registry-only", "--mode", "fail"]),
         GateCheck("B", "Repo safety", [sys.executable, ".github/scripts/check-repo-safety.py", "--summary-only"]),
+        GateCheck("B", "Repo hygiene", [sys.executable, ".github/scripts/check-repo-hygiene.py", "--mode", "warn", "--summary-only", "--skip-bundle-compare"], required=False),
         GateCheck("C", "Forge ISO contract smoke", ["bash", "wolf-cog-os/scripts/test/forge-iso-smoke.sh"]),
         GateCheck("D", "Promotion dry-run fixture", ["bash", "wolf-cog-os/scripts/test/promotion-dry-run.sh", "--skip-verify"]),
         GateCheck("D", "Promotion source unit tests", [sys.executable, "-m", "unittest", "tests.test_validate_promotion_source"]),
