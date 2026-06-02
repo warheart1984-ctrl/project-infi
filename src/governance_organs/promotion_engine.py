@@ -32,6 +32,7 @@ GENE_GATES: dict[str, str] = {
     "jarvis_memory_board": "memory-board-gate",
     "governed_direct_pipeline": "governed-pipeline-gate",
     "adaptive_lane_organ": "adaptive-lane-gate",
+    "operator_cognition_coherence_fabric": "coherence-fabric-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -50,6 +51,7 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     "reflection-runtime-gate": [".github/scripts/check-reflection-runtime-governance.py"],
     "memory-runtime-gate": [".github/scripts/check-memory-runtime-governance.py"],
     "adaptive-lane-gate": [".github/scripts/check-adaptive-lane-governance.py"],
+    "coherence-fabric-gate": [".github/scripts/check-coherence-fabric-governance.py"],
     "capability-bridge-gate": [".github/scripts/check-capability-bridge-governance.py"],
     "memory-board-gate": [".github/scripts/check-memory-board-governance.py"],
     "governed-pipeline-gate": [".github/scripts/check-governed-pipeline-governance.py"],

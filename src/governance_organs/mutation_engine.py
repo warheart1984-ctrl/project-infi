@@ -6,6 +6,7 @@ import json
 import re
 import shutil
 import subprocess
+import sys
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -20,6 +21,19 @@ MP_FRONT_MATTER = re.compile(
     re.DOTALL | re.MULTILINE,
 )
 
+FABRIC_MINIMUM_GENES = frozenset(
+    {
+        "adaptive_lane_organ",
+        "operator_profile_organ",
+        "capability_service_bridge",
+        "recipe_module",
+        "governed_direct_pipeline",
+    }
+)
+
+SUPPORTED_LANE_OPS = frozenset({"append_capabilities", "add_lane"})
+FORBIDDEN_LANE_OPS = frozenset({"rename_lane", "decrease_weight", "override_authority"})
+
 
 @dataclass
 class MutationProposal:
@@ -30,6 +44,30 @@ class MutationProposal:
     schema_delta_ref: str | None
     path: Path
     raw: dict[str, str] = field(default_factory=dict)
+
+    @property
+    def mutation_kind(self) -> str | None:
+        return self.raw.get("mutation_kind")
+
+    @property
+    def operator_lanes_delta_ref(self) -> str | None:
+        return self.raw.get("operator_lanes_delta_ref") or self.schema_delta_ref
+
+    @property
+    def post_apply_wake(self) -> bool:
+        return self.raw.get("post_apply_wake", "").lower() in {"true", "yes", "1"}
+
+    @property
+    def post_apply_gate(self) -> str | None:
+        return self.raw.get("post_apply_gate")
+
+    @property
+    def fabric_genes(self) -> list[str]:
+        raw = self.raw.get("fabric_genes", "")
+        if not raw:
+            return [self.gene]
+        cleaned = raw.strip("[]")
+        return [part.strip() for part in cleaned.split(",") if part.strip()]
 
 
 @dataclass
@@ -103,6 +141,126 @@ class MutationEngine:
         shutil.copy2(self._genome_path(gene), dest)
         return dest
 
+    def _lane_delta_path(self, proposal: MutationProposal) -> Path | None:
+        ref = proposal.operator_lanes_delta_ref
+        if not ref:
+            return None
+        return self.root / ref
+
+    def _validate_lane_delta(self, delta: Any) -> list[str]:
+        failures: list[str] = []
+        if not isinstance(delta, dict):
+            return ["lane delta must be a JSON object"]
+        if delta.get("mutation_kind") != "lane_dna":
+            failures.append("lane delta mutation_kind must be lane_dna")
+        patches = delta.get("patches")
+        if not isinstance(patches, list) or not patches:
+            failures.append("lane delta patches must be a non-empty array")
+            return failures
+        for index, patch in enumerate(patches):
+            if not isinstance(patch, dict):
+                failures.append(f"lane delta patches[{index}] must be object")
+                continue
+            op = patch.get("op")
+            if op in FORBIDDEN_LANE_OPS:
+                failures.append(f"lane delta patches[{index}] op forbidden: {op}")
+            elif op not in SUPPORTED_LANE_OPS:
+                failures.append(f"lane delta patches[{index}] unsupported op: {op}")
+            elif op == "append_capabilities":
+                if not str(patch.get("lane_id") or "").strip():
+                    failures.append(f"lane delta patches[{index}] missing lane_id")
+                caps = patch.get("capabilities")
+                if not isinstance(caps, list) or not caps:
+                    failures.append(f"lane delta patches[{index}] capabilities required")
+            elif op == "add_lane":
+                lane = patch.get("lane")
+                if not isinstance(lane, dict) or not str(lane.get("lane_id") or "").strip():
+                    failures.append(f"lane delta patches[{index}] add_lane requires lane.lane_id")
+                if not isinstance(lane, dict) or not lane.get("capabilities"):
+                    failures.append(f"lane delta patches[{index}] add_lane requires capabilities")
+        return failures
+
+    def _apply_lane_delta(self, data: dict[str, Any], delta: dict[str, Any]) -> list[str]:
+        failures = self._validate_lane_delta(delta)
+        if failures:
+            return failures
+        gov = data.setdefault("governance", {})
+        lanes = [dict(lane) for lane in (gov.get("operator_lanes") or []) if isinstance(lane, dict)]
+        for patch in delta.get("patches") or []:
+            op = patch.get("op")
+            if op == "append_capabilities":
+                lane_id = str(patch.get("lane_id") or "").strip()
+                caps = [str(cap) for cap in (patch.get("capabilities") or [])]
+                found = False
+                for lane in lanes:
+                    if str(lane.get("lane_id") or "") == lane_id:
+                        existing = [str(cap) for cap in (lane.get("capabilities") or [])]
+                        for cap in caps:
+                            if cap not in existing:
+                                existing.append(cap)
+                        lane["capabilities"] = existing
+                        found = True
+                        break
+                if not found:
+                    failures.append(f"lane_id {lane_id!r} not found for append_capabilities")
+            elif op == "add_lane":
+                lane_obj = dict(patch.get("lane") or {})
+                lane_id = str(lane_obj.get("lane_id") or "").strip()
+                if any(str(lane.get("lane_id") or "") == lane_id for lane in lanes):
+                    failures.append(f"lane_id {lane_id!r} already exists")
+                    continue
+                lanes.append(lane_obj)
+        gov["operator_lanes"] = lanes
+        return failures
+
+    def _append_invariant(self, gov: dict[str, Any], invariant: str | None) -> None:
+        if not invariant:
+            return
+        invariants = list(gov.get("invariants") or [])
+        for entry in invariants:
+            if isinstance(entry, str) and entry == invariant:
+                return
+            if isinstance(entry, dict) and entry.get("text") == invariant:
+                return
+        needs_maturity = any(isinstance(entry, dict) and entry.get("maturity") for entry in invariants)
+        if needs_maturity:
+            invariants.append({"text": invariant, "maturity": "stable"})
+        else:
+            invariants.append(invariant)
+        gov["invariants"] = invariants
+
+    def _run_subprocess(self, script: Path, *, label: str) -> list[str]:
+        if not script.is_file():
+            return [f"{label} script missing: {script.relative_to(self.root)}"]
+        proc = subprocess.run(
+            [sys.executable, str(script)],
+            cwd=self.root,
+            capture_output=True,
+            text=True,
+            timeout=300,
+            check=False,
+        )
+        if proc.returncode != 0:
+            detail = (proc.stdout or proc.stderr or "").strip().splitlines()
+            suffix = detail[-1] if detail else "non-zero exit"
+            return [f"{label} failed: {suffix}"]
+        return []
+
+    def _post_apply_hooks(self, proposal: MutationProposal) -> list[str]:
+        failures: list[str] = []
+        if proposal.post_apply_wake:
+            from src.adaptive_lane_organ import wake_adaptive_lanes
+
+            report = wake_adaptive_lanes(self.root)
+            if not report.get("awakened"):
+                failures.append("post-apply wake did not awaken adaptive lanes")
+        if proposal.post_apply_gate == "alt6-governed-gate":
+            fabric_overlap = FABRIC_MINIMUM_GENES.intersection(proposal.fabric_genes)
+            if fabric_overlap:
+                script = self.root / "tools/governance/check_alt6_governed_eligibility.py"
+                failures.extend(self._run_subprocess(script, label="alt6-governed-gate"))
+        return failures
+
     def verify(self, gene: str, mp_id: str) -> MutationResult:
         failures: list[str] = []
         proposal = next(
@@ -113,23 +271,22 @@ class MutationEngine:
             return MutationResult(mp_id=mp_id, gene=gene, passed=False, failures=["proposal not found"])
         if not proposal.backward_compatible:
             failures.append("backward_compatible must be true")
-        if proposal.schema_delta_ref:
+        if proposal.mutation_kind == "lane_dna":
+            delta_path = self._lane_delta_path(proposal)
+            if delta_path is None or not delta_path.is_file():
+                failures.append(
+                    f"operator_lanes delta missing: {proposal.operator_lanes_delta_ref}"
+                )
+            else:
+                failures.extend(self._validate_lane_delta(load_json(delta_path)))
+        elif proposal.schema_delta_ref:
             delta_path = self.root / proposal.schema_delta_ref
             if not delta_path.is_file():
                 failures.append(f"schema delta missing: {proposal.schema_delta_ref}")
-        import sys
 
         script = self.root / "tools/governance/check_subsystem_genome.py"
-        proc = subprocess.run(
-            [sys.executable, str(script)],
-            cwd=self.root,
-            capture_output=True,
-            text=True,
-            timeout=300,
-            check=False,
-        )
-        if proc.returncode != 0:
-            failures.append("genome-gate failed during mutation verify")
+        failures.extend(self._run_subprocess(script, label="genome-gate"))
+
         test_path = self.root / "tests" / f"test_{gene}_mutation_{mp_id.replace('-', '_')}.py"
         if not test_path.is_file():
             alt = self.root / "tests" / f"test_{gene}_mutation.py"
@@ -146,16 +303,27 @@ class MutationEngine:
         path = self._genome_path(gene)
         data = load_json(path)
         gov = data.setdefault("governance", {})
-        invariants = list(gov.get("invariants") or [])
-        if invariant and invariant not in invariants:
-            invariants.append(invariant)
-            gov["invariants"] = invariants
+
+        if proposal.mutation_kind == "lane_dna":
+            delta_path = self._lane_delta_path(proposal)
+            assert delta_path is not None
+            lane_failures = self._apply_lane_delta(data, load_json(delta_path))
+            if lane_failures:
+                return MutationResult(
+                    mp_id=mp_id,
+                    gene=gene,
+                    passed=False,
+                    failures=lane_failures,
+                )
+
+        self._append_invariant(gov, invariant)
+
         history = data.setdefault("mutation", {}).setdefault("history", [])
         history.append(
             {
                 "proposal_id": mp_id,
                 "status": "promoted",
-                "schema_delta_ref": proposal.schema_delta_ref,
+                "schema_delta_ref": proposal.operator_lanes_delta_ref or proposal.schema_delta_ref,
                 "notes": f"backup: {backup.relative_to(self.root)}",
             }
         )
@@ -166,6 +334,17 @@ class MutationEngine:
             data.setdefault("identity", {})["version"] = ".".join(parts[:3])
         path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
         GenomeEngine.reload(self.root)
+
+        hook_failures = self._post_apply_hooks(proposal)
+        if hook_failures:
+            self.rollback(gene, mp_id)
+            return MutationResult(
+                mp_id=mp_id,
+                gene=gene,
+                passed=False,
+                failures=hook_failures,
+            )
+
         append_audit(
             "mutation_audit.jsonl",
             {"action": "mutation_apply", "gene": gene, "mp_id": mp_id, "backup": str(backup)},
@@ -187,6 +366,11 @@ class MutationEngine:
                 break
         self._genome_path(gene).write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
         GenomeEngine.reload(self.root)
+        proposal = next((p for p in self.list_proposals(gene) if p.mp_id == mp_id), None)
+        if proposal and proposal.post_apply_wake:
+            from src.adaptive_lane_organ import wake_adaptive_lanes
+
+            wake_adaptive_lanes(self.root)
         append_audit(
             "mutation_audit.jsonl",
             {"action": "mutation_rollback", "gene": gene, "mp_id": mp_id},
@@ -219,9 +403,6 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    import sys
-    from pathlib import Path
-
     _root = Path(__file__).resolve().parents[2]
     if str(_root) not in sys.path:
         sys.path.insert(0, str(_root))

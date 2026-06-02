@@ -75,7 +75,9 @@
       "operator_profile_organ",
       "capability_service_bridge"
     ],
-    "children": []
+    "children": [
+      "operator_cognition_coherence_fabric"
+    ]
   },
   "activation": {
     "order": 1,

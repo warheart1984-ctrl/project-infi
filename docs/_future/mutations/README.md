@@ -16,4 +16,5 @@ schemas/deltas/<gene>_MP-<ID>.json   # optional schema delta
 
 | ID | Gene | Status |
 |----|------|--------|
-| *(none)* | — | — |
+| MP-ALO-001 | adaptive_lane_organ | proposed |
+| MP-NTP-001 | narrative_trust_pack | proposed |

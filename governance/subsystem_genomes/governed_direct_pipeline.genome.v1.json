@@ -63,7 +63,9 @@
       "capability_service_bridge",
       "jarvis_memory_board"
     ],
-    "children": []
+    "children": [
+      "operator_cognition_coherence_fabric"
+    ]
   },
   "activation": {
     "order": 3,

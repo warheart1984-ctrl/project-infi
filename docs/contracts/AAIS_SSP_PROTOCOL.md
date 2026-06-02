@@ -197,6 +197,59 @@ make tier5-gate
 
 See [AAIS_ADAPTIVE_GOVERNANCE.md](./AAIS_ADAPTIVE_GOVERNANCE.md) § Governed Lane Fabric.
 
+## Alt-6.1 Lane Mutation (MP-X)
+
+Evolve fabric `operator_lanes` DNA under the constitutional invariant
+*Wake is read-only — no lane mutation without MP-X*.
+
+| Convention | Value |
+|------------|-------|
+| Contract | [AAIS_ADAPTIVE_GOVERNANCE.md](./AAIS_ADAPTIVE_GOVERNANCE.md) § Alt-6.1 |
+| Golden proposal | `MP-ALO-001` for `adaptive_lane_organ` |
+| Lane delta | `schemas/deltas/adaptive_lane_organ_MP-ALO-001.json` |
+| Gate | `make adaptive-lane-mutation-gate` |
+| Post-apply | `wake_adaptive_lanes()` + `make alt6-governed-gate` when fabric genes change |
+
+## Alt-7 Summon Wave — Operator–Cognition Coherence Fabric
+
+Cross-plane coherence snapshot joining profile, lanes, and envelope posture.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt7-summon-wave-2026-06` in LOGBOOK |
+| Initial stage | `concept` — genome + schema at admission |
+| MVP promotion | `tools/governance/alt7_promote_mvp.py` or Promotion Engine twice |
+| Gates | `make alt7-gate` — coherence-fabric-gate + alt6-governed-gate + genome-gate |
+| Proof | `docs/proof/platform/OPERATOR_COGNITION_COHERENCE_FABRIC_V1_PROOF.md` |
+
+Wave 1 (2026-06): `operator_cognition_coherence_fabric` — read-only
+`build_coherence_fabric_status()` joins operator profile, awakened lanes, and envelope
+governance modes; `GET /api/jarvis/coherence-fabric/status`.
+
+Depends on: Alt-5 profile + envelope organs; Alt-6 governed lane fabric; Alt-6.1 MP-X path.
+
+See [AAIS_ADAPTIVE_GOVERNANCE.md](./AAIS_ADAPTIVE_GOVERNANCE.md) § Alt-7.
+
+## Alt-7 Governed Promotion
+
+Promote coherence fabric from **MVP → governed** when cross-plane enforcement is proven.
+
+| Convention | Value |
+|------------|-------|
+| Eligibility | `make alt7-governed-gate` |
+| Promotion | `tools/governance/alt7_promote_governed.py` or `promotion_engine --apply` |
+| Proof bundle | `docs/proof/platform/OPERATOR_COGNITION_COHERENCE_FABRIC_GOVERNED_PROOF.md` |
+| Runtime enforcement | `evaluate_bridge_coherence()` in capability bridge `_execute_spec` |
+
+Operator checklist:
+
+```bash
+make alt7-governed-gate
+python tools/governance/alt7_promote_governed.py
+make alt4-gate
+make tier5-gate
+```
+
 ## Activation Rule
 
 Subsystems move through stages per

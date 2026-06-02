@@ -147,14 +147,17 @@ MP-X proposal → verify (genome-gate + delta + tests) → apply → optional ro
 | Schema delta | `schemas/deltas/<gene>_<MP-ID>.json` |
 | Tests | `tests/test_<gene>_mutation_<MP_ID>.py` |
 | Golden example | `MP-NTP-001` for `narrative_trust_pack` |
+| Lane mutation golden path | `MP-ALO-001` for `adaptive_lane_organ` |
 
 ### Commands
 
 ```bash
 make narrative-trust-pack-mutation-gate
+make adaptive-lane-mutation-gate
 python3 -m src.governance_organs.mutation_engine --gene narrative_trust_pack --mp-id MP-NTP-001 --verify
-python3 -m src.governance_organs.mutation_engine --gene narrative_trust_pack --mp-id MP-NTP-001 --apply --invariant "..."
-python3 -m src.governance_organs.mutation_engine --gene narrative_trust_pack --mp-id MP-NTP-001 --rollback
+python3 -m src.governance_organs.mutation_engine --gene adaptive_lane_organ --mp-id MP-ALO-001 --verify
+python3 -m src.governance_organs.mutation_engine --gene adaptive_lane_organ --mp-id MP-ALO-001 --apply --invariant "Lane DNA mutations require MP-X, fabric re-validation, and post-apply wake"
+python3 -m src.governance_organs.mutation_engine --gene adaptive_lane_organ --mp-id MP-ALO-001 --rollback
 ```
 
 History entries use `proposal_id` (MP-X id) and `status` per genome meta-schema.
@@ -171,7 +174,7 @@ Audit: `.runtime/governance/mutation_audit.jsonl`
 | Strict CI gate | `make alt4-gate-strict` |
 | See promotion blockers | `make promotion-scan` |
 | Auto-promote eligible genes | `make promotion-apply` |
-| Verify MP-X | `make narrative-trust-pack-mutation-gate` |
+| Verify MP-X | `make narrative-trust-pack-mutation-gate` or `make adaptive-lane-mutation-gate` |
 | Dry-run retirement (all genes) | `make retirement-scan` |
 | Full organ test suite | `python3 -m pytest tests/test_governance_organs_alt4.py -q` |
 

@@ -67,7 +67,8 @@
     "children": [
       "cisiv_operator_lineage_console",
       "governed_direct_pipeline",
-      "adaptive_lane_organ"
+      "adaptive_lane_organ",
+      "operator_cognition_coherence_fabric"
     ]
   },
   "activation": {

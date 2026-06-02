@@ -19,6 +19,7 @@ These ideas now have runtime MVP + proof packets — see active docs:
 | Recipe Module | [../../subsystems/platform/RECIPE_MODULE.md](../../subsystems/platform/RECIPE_MODULE.md) | [RECIPE_MODULE_MVP_PLAN.md](./RECIPE_MODULE_MVP_PLAN.md) | [../../proof/platform/RECIPE_MODULE_V1_PROOF.md](../../proof/platform/RECIPE_MODULE_V1_PROOF.md) |
 | Imagine Generator | [../../subsystems/storyforge/IMAGINE_GENERATOR.md](../../subsystems/storyforge/IMAGINE_GENERATOR.md) | [IMAGINE_GENERATOR_MVP_PLAN.md](./IMAGINE_GENERATOR_MVP_PLAN.md) | [../../proof/storyforge/IMAGINE_GENERATOR_V1_PROOF.md](../../proof/storyforge/IMAGINE_GENERATOR_V1_PROOF.md) |
 | Human Voice Extraction | [../../subsystems/speakers/HUMAN_VOICE_EXTRACTION.md](../../subsystems/speakers/HUMAN_VOICE_EXTRACTION.md) | [HUMAN_VOICE_EXTRACTION_MVP_PLAN.md](./HUMAN_VOICE_EXTRACTION_MVP_PLAN.md) | [../../proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md](../../proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md) |
+| Operator–Cognition Coherence Fabric | [../../subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md](../../subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md) | [OPERATOR_COGNITION_COHERENCE_FABRIC_MVP_PLAN.md](./OPERATOR_COGNITION_COHERENCE_FABRIC_MVP_PLAN.md) | [../../proof/platform/OPERATOR_COGNITION_COHERENCE_FABRIC_V1_PROOF.md](../../proof/platform/OPERATOR_COGNITION_COHERENCE_FABRIC_V1_PROOF.md) |
 
 Concept-origin specs (historical):
 
@@ -71,6 +72,7 @@ Full SSP bundle required at concept admission: concept spec + schema + MVP plan 
 - [schemas/reflection_runtime_organ.v1.json](./schemas/reflection_runtime_organ.v1.json)
 - [schemas/memory_runtime_organ.v1.json](./schemas/memory_runtime_organ.v1.json)
 - [schemas/adaptive_lane_organ.v1.json](./schemas/adaptive_lane_organ.v1.json)
+- [schemas/operator_cognition_coherence_fabric.v1.json](./schemas/operator_cognition_coherence_fabric.v1.json)
 
 Runtime copies also live under `schemas/`, `triangulation/schemas/`.
 

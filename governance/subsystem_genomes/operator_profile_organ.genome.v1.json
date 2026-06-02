@@ -64,7 +64,8 @@
     ],
     "children": [
       "reflection_runtime_organ",
-      "adaptive_lane_organ"
+      "adaptive_lane_organ",
+      "operator_cognition_coherence_fabric"
     ]
   },
   "activation": {

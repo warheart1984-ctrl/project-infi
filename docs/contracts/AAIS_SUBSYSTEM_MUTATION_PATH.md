@@ -22,6 +22,7 @@ preserving identity gene name and backward compatibility.
 | New runtime organ | Additional `runtime.surface[]` entry |
 | New cross-subsystem links | Genome `lineage.parents` / `children` update |
 | New governance rules | Additional `governance.contracts[]` entry |
+| **Lane DNA change** | MP-X with `mutation_kind: lane_dna` + `operator_lanes` delta (Alt-6.1) |
 
 ## Mutation Steps
 
@@ -48,6 +49,16 @@ Execute in order:
 - backward_compatible: true | false (must be true to proceed)
 - schema_delta_ref: schemas/deltas/...
 - affected_subsystems: []
+```
+
+Lane mutations (Alt-6.1) add optional fields:
+
+```markdown
+- mutation_kind: lane_dna
+- operator_lanes_delta_ref: schemas/deltas/<gene>_MP-<ID>.json
+- fabric_genes: [adaptive_lane_organ, ...]
+- post_apply_wake: true
+- post_apply_gate: alt6-governed-gate
 ```
 
 Record in LOGBOOK when promoted.

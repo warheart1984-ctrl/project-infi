@@ -55,7 +55,8 @@
     "parents": [],
     "children": [
       "cisiv_operator_lineage_console",
-      "governed_direct_pipeline"
+      "governed_direct_pipeline",
+      "operator_cognition_coherence_fabric"
     ]
   },
   "activation": {

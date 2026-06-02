@@ -11570,6 +11570,27 @@ def get_adaptive_lane_status():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/coherence-fabric/status", methods=["GET"])
+def get_coherence_fabric_status():
+    """Cross-plane coherence snapshot — profile, lanes, and envelopes (Alt-7 organ)."""
+    try:
+        from src.operator_cognition_coherence_fabric import build_coherence_fabric_status
+
+        bridge_snapshot = jarvis_operator.capability_bridge_snapshot()
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "coherence_fabric": build_coherence_fabric_status(
+                        bridge_snapshot=bridge_snapshot
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading coherence fabric status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/reflection-runtime/status", methods=["GET"])
 def get_reflection_runtime_status():
     """Read-only Reflection Runtime organ snapshot (Alt-5 wave 2)."""

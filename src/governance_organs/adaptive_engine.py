@@ -87,6 +87,13 @@ class AdaptiveEngine:
             lane_report = wake_adaptive_lanes(self.root)
             report["adaptive_lanes_awakened"] = lane_report.get("awakened", False)
             report["adaptive_lane_count"] = lane_report.get("lane_count", 0)
+            try:
+                from src.operator_cognition_coherence_fabric import build_coherence_fabric_status
+
+                fabric = build_coherence_fabric_status(root=self.root)
+                report["coherence_fabric_aligned"] = bool(fabric.get("fabric_genes_aligned"))
+            except Exception:
+                report["coherence_fabric_aligned"] = False
             out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         except Exception:
             report["adaptive_lanes_awakened"] = False

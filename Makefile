@@ -261,6 +261,19 @@ recipe-module-mutation-gate:
 narrative-trust-pack-mutation-gate:
 	python3 tools/governance/mutation_gate.py narrative_trust_pack MP-NTP-001
 
+adaptive-lane-mutation-gate:
+	python3 tools/governance/check_adaptive_lane_mutation.py
+
+coherence-fabric-gate:
+	python3 .github/scripts/check-coherence-fabric-governance.py
+
+alt7-gate: coherence-fabric-gate alt6-governed-gate genome-gate
+
+alt7-governed-gate:
+	python3 tools/governance/check_alt7_governed_eligibility.py
+	python3 .github/scripts/check-coherence-fabric-governance.py
+	python3 -m pytest tests/test_coherence_fabric_bridge.py tests/test_alt7_governed_eligibility.py -q
+
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py
 

@@ -13,6 +13,37 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.3.0] - 2026-06-02 — Infinity 1 · Alt-7
+
+**Infinity 1 · Alt-7** — fifteenth governed genome (`operator_cognition_coherence_fabric`); cross-plane coherence snapshot joins profile, lanes, and envelopes; capability bridge execute-path enforcement when fabric is misaligned or policy caps run under non-strict posture. Includes Alt-6.1 lane mutation golden path (MP-ALO-001).
+
+### Added
+
+- **Alt-7 Summon Wave** — `operator_cognition_coherence_fabric` at `governed`; `GET /api/jarvis/coherence-fabric/status`; `src/operator_cognition_coherence_fabric.py`
+- **Cross-plane enforcement** — `evaluate_bridge_coherence()` on capability bridge `_execute_spec`; blocks on fabric misalignment, safety halt, and non-strict bridge mode for policy capabilities
+- **Governance gates** — `make alt7-gate`, `make alt7-governed-gate`; `tools/governance/check_alt7_governed_eligibility.py`
+- **Promotion** — `tools/governance/alt7_promote_mvp.py`, `tools/governance/alt7_promote_governed.py`
+- **Alt-6.1 lane mutation** — MP-ALO-001 golden path; `MutationEngine` lane_dna apply with post-apply wake; `make adaptive-lane-mutation-gate`
+
+### Changed
+
+- Fifteen registered subsystem genomes; lineage `children` on six Alt-7 parent genomes
+- [AAIS_SSP_PROTOCOL.md](docs/contracts/AAIS_SSP_PROTOCOL.md) — Alt-7 governed promotion section
+- [AAIS_ADAPTIVE_GOVERNANCE.md](docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md) — Alt-7 governed checklist + bridge enforcement
+- Tier 5 health includes `coherence_fabric_aligned`
+
+### Verification (v1.3.0)
+
+```bash
+make alt7-governed-gate
+make genome-gate alt6-governed-gate
+python -m pytest tests/test_coherence_fabric_bridge.py tests/test_alt7_governed_eligibility.py \
+  tests/test_operator_cognition_coherence_fabric.py tests/test_adaptive_lane_organ_mutation_MP_ALO_001.py -q
+python tools/governance/alt7_promote_governed.py  # idempotent when already governed
+```
+
+[1.3.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.0
+
 ## [1.2.0] - 2026-06-02 — Infinity 1 · Alt-6
 
 **Infinity 1 · Alt-6** — fourteenth governed genome (`adaptive_lane_organ`); Tier 5 operator-weighted lanes wake into live runtime with fabric-minimum eligibility and governed promotion tooling.

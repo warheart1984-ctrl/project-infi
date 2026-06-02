@@ -14,6 +14,8 @@ make alt4-gate
 make alt5-gate
 make alt6-gate
 make alt6-governed-gate
+make alt7-gate
+make alt7-governed-gate
 ```
 
 ## Registered Genomes
@@ -34,6 +36,7 @@ make alt6-governed-gate
 | `jarvis_memory_board` | governed | [jarvis_memory_board.genome.v1.json](./jarvis_memory_board.genome.v1.json) |
 | `governed_direct_pipeline` | governed | [governed_direct_pipeline.genome.v1.json](./governed_direct_pipeline.genome.v1.json) |
 | `adaptive_lane_organ` | governed | [adaptive_lane_organ.genome.v1.json](./adaptive_lane_organ.genome.v1.json) |
+| `operator_cognition_coherence_fabric` | governed | [operator_cognition_coherence_fabric.genome.v1.json](./operator_cognition_coherence_fabric.genome.v1.json) |
 
 ## Adding a Genome
 

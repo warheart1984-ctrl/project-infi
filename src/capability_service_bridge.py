@@ -869,6 +869,29 @@ class CapabilityServiceBridge:
                 args=args,
             )
 
+        from src.operator_cognition_coherence_fabric import (
+            evaluate_bridge_coherence,
+            coherence_inputs_for_bridge,
+        )
+
+        bridge_mode, _, fabric_aligned, safety_halt = coherence_inputs_for_bridge(
+            self.snapshot(),
+            gene=gene,
+        )
+        coherence = evaluate_bridge_coherence(
+            capability_id=spec.get("capability_id"),
+            lane_resolution=lane_resolution,
+            bridge_governance_mode=bridge_mode,
+            fabric_genes_aligned=fabric_aligned,
+            safety_halt=safety_halt,
+        )
+        if not coherence.allowed:
+            return self._build_genome_block(
+                spec,
+                coherence.reason or "coherence fabric blocked",
+                args=args,
+            )
+
         prepared_args = self._prepare_args_for_selection(spec, dict(args or {}))
         phase_gate = self._evaluate_phase_gate(spec, runtime_context)
         if phase_gate["decision"] == "BLOCK":

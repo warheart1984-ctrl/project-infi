@@ -1,0 +1,94 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "operator_cognition_coherence_fabric",
+    "version": "1.0.0-governed",
+    "stage": "governed",
+    "display_name": "Operator Cognition Coherence Fabric"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    ],
+    "invariants": [
+      {
+        "text": "Profile authority_lane is the sole authority source for lane policy-cap checks",
+        "maturity": "constitutional"
+      },
+      {
+        "text": "Envelope governance_mode and lane resolution must agree before bridge execute on policy capabilities",
+        "maturity": "constitutional"
+      },
+      {
+        "text": "Envelope snapshots are read-only; lane or profile drift triggers auditable block",
+        "maturity": "stable"
+      },
+      {
+        "text": "Coherence projection remains read-only and does not route or authorize",
+        "maturity": "stable"
+      }
+    ]
+  },
+  "schema": {
+    "ref": "schemas/operator_cognition_coherence_fabric.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/operator_cognition_coherence_fabric.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/coherence-fabric/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make coherence-fabric-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/platform/OPERATOR_COGNITION_COHERENCE_FABRIC_GOVERNED_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/platform/OPERATOR_COGNITION_COHERENCE_FABRIC_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "operator_profile_organ",
+      "adaptive_lane_organ",
+      "safety_envelope_organ",
+      "capability_service_bridge",
+      "jarvis_memory_board",
+      "governed_direct_pipeline"
+    ],
+    "children": []
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "alt7-summon-wave-2026-06",
+    "notes": "Alt-7 \u2014 operator profile, lanes, and envelopes co-stabilize behavior"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/OPERATOR_COGNITION_COHERENCE_FABRIC.md",
+    "mvp_plan": "docs/_future/ideas_pending/OPERATOR_COGNITION_COHERENCE_FABRIC_MVP_PLAN.md",
+    "active_doc": "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md",
+    "summon_eligible": false
+  }
+}

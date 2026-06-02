@@ -605,6 +605,34 @@ Every major entry should name its CISIV stage explicitly.
 - outcome: genome `identity.stage` and `proof.posture` set to `governed`; §8 constitutional layer extended
 - verification note: `make alt6-governed-gate`; `python tools/governance/alt6_promote_governed.py`
 
+### Alt-6.1 Lane Mutation MP-X — Contract + Golden Path
+
+- CISIV stage: `structure`
+- scope: Alt-6.1 lane mutation contract; MP-ALO-001 golden path; MutationEngine lane_dna apply with post-apply wake and alt6-governed-gate hook; `make adaptive-lane-mutation-gate`
+- outcome: fabric `operator_lanes` DNA may evolve via MP-X under constitutional wake read-only invariant
+- verification note: `make adaptive-lane-mutation-gate`; `python -m pytest tests/test_adaptive_lane_organ_mutation_MP_ALO_001.py -q`
+
+### Alt-7 Summon Wave — Operator–Cognition Coherence Fabric (Concept)
+
+- CISIV stage: `concept`
+- scope: concept spec for lanes + profiles + envelopes co-stabilization; Alt-7 batch wiring; coherence snapshot schema stub
+- outcome: doc-only admission for future MVP summon; no runtime organ yet
+- verification note: `make ssp-gate`; `make genome-gate`
+
+### Alt-7 Summon Wave — Operator–Cognition Coherence Fabric (MVP)
+
+- CISIV stage: `implementation`
+- scope: `src/operator_cognition_coherence_fabric.py`; `GET /api/jarvis/coherence-fabric/status`; `make alt7-gate`; genome `operator_cognition_coherence_fabric`; tier5 health `coherence_fabric_aligned`
+- outcome: cross-plane read-only snapshot joins profile, lanes, and envelope posture; promoted to `mvp` via `alt7_promote_mvp.py`
+- verification note: `make alt7-gate`; `python -m pytest tests/test_operator_cognition_coherence_fabric.py -q`
+
+### Alt-7 Governed Promotion — Coherence Fabric + Bridge Enforcement
+
+- CISIV stage: `verification`
+- scope: `evaluate_bridge_coherence()`; capability bridge execute hook; `check_alt7_governed_eligibility.py`; `make alt7-governed-gate`; `OPERATOR_COGNITION_COHERENCE_FABRIC_GOVERNED_PROOF.md`
+- outcome: cross-plane enforcement on bridge execute; `operator_cognition_coherence_fabric` promoted to `governed` via `alt7_promote_governed.py`
+- verification note: `make alt7-governed-gate`; `python tools/governance/alt7_promote_governed.py`
+
 ### Adaptive Lane Organ — Prototype Promotion (Alt-4 Runtime)
 
 - CISIV stage: `verification`
@@ -615,5 +643,23 @@ Every major entry should name its CISIV stage explicitly.
 
 - CISIV stage: `verification`
 - scope: Promotion Engine full-auto — `adaptive_lane_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Operator Cognition Coherence Fabric — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `operator_cognition_coherence_fabric` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Operator Cognition Coherence Fabric — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `operator_cognition_coherence_fabric` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Operator Cognition Coherence Fabric — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `operator_cognition_coherence_fabric` `governed` via Alt-4 runtime organ
 - outcome: genome `identity.stage` and `proof.posture` set to `governed`
 - verification note: `make genome-gate`; `make alt4-gate`
