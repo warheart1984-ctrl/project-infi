@@ -11,6 +11,7 @@
       "docs/contracts/AAIS_SSP_PROTOCOL.md",
       "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
       "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md",
       "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
       "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
     ],
@@ -18,6 +19,13 @@
       "profile_id never empty on live path",
       "authority_lane defaults to operator",
       "No elevation without explicit operator action"
+    ],
+    "operator_lanes": [
+      {
+        "lane_id": "operator",
+        "weight": 1.0,
+        "capabilities": ["inspect_operator_profile", "resolve_authority_lane"]
+      }
     ]
   },
   "schema": {
@@ -55,7 +63,8 @@
       "knowledge_authority"
     ],
     "children": [
-      "reflection_runtime_organ"
+      "reflection_runtime_organ",
+      "adaptive_lane_organ"
     ]
   },
   "activation": {

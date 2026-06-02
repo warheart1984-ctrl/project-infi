@@ -12,6 +12,7 @@
       "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
       "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
       "docs/contracts/AAIS_IMMUNE_PROTOCOL.md",
+      "docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md",
       "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
       "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
     ],
@@ -19,6 +20,13 @@
       "Every governed turn packet names its lane explicitly",
       "Service and tool traffic uses service_tools lane unless dual-routed",
       "Immune blocked response never surfaces as silent stable state"
+    ],
+    "operator_lanes": [
+      {
+        "lane_id": "operator",
+        "weight": 1.0,
+        "capabilities": ["trace_direct_lane", "trace_service_lane"]
+      }
     ]
   },
   "schema": {

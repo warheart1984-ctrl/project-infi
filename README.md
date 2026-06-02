@@ -28,7 +28,7 @@ Authoritative references:
 
 This repository is also **Project Infi** — constitutional engineering where claims require proof, not intent.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.1.0 — Infinity 1 (complete)](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.1.0) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.2.0 — Infinity 1 · Alt-6](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.2.0) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -105,9 +105,9 @@ make alt3-gate
 #     python .github/scripts/check-human-voice-extraction-governance.py
 ```
 
-### Infinity 1 — Governance runtime and constitutional layer (v1.1.0)
+### Infinity 1 — Governance runtime and constitutional layer (v1.2.0)
 
-Self-governing AAIS with executable **Alt-4 lifecycle organs**, **thirteen governed subsystem genomes**, **Tier 5** adaptive governance, and **Alt-5** summon waves 1–2 (four organs, all `governed`).
+Self-governing AAIS with executable **Alt-4 lifecycle organs**, **fourteen governed subsystem genomes**, **Tier 5** adaptive governance, **Alt-5** summon waves 1–2, and **Alt-6** adaptive lane fabric.
 
 | Track | Subsystems | Key surfaces |
 |---|---|---|
@@ -115,21 +115,24 @@ Self-governing AAIS with executable **Alt-4 lifecycle organs**, **thirteen gover
 | **Barebones wave (3)** | Capability Service Bridge, Jarvis Memory Board, Governed Direct Pipeline | `GET /api/jarvis/capability-bridge/status`, `GET /api/jarvis/memory/board`, `GET /api/jarvis/pipeline/{turn_id}` |
 | **Alt-5 wave 1 (2)** | Safety Envelope Organ, Operator Profile Organ | `GET /api/jarvis/safety-envelope/status`, `GET /api/jarvis/operator-profile` |
 | **Alt-5 wave 2 (2)** | Reflection Runtime Organ, Memory Runtime Organ | `GET /api/jarvis/reflection-runtime/status`, `GET /api/jarvis/memory-runtime/status` |
+| **Alt-6 (1)** | Adaptive Lane Organ | `GET /api/jarvis/adaptive-lanes/status` |
 
-Promotion scripts: `tools/governance/alt5_promote_wave2_mvp.py`, `alt5_promote_governed.py`, `barebones_promote_governed.py`.
+Promotion scripts: `tools/governance/alt5_promote_wave2_mvp.py`, `alt5_promote_governed.py`, `barebones_promote_governed.py`, `alt6_promote_governed.py`.
 
 **Verification:**
 
 ```bash
-make genome-gate alt4-gate alt5-gate barebones-gate tier5-gate
+make genome-gate alt4-gate alt5-gate barebones-gate tier5-gate alt6-governed-gate
 python -m pytest tests/test_governance_organs_alt4.py tests/test_adaptive_governance.py \
-  tests/test_safety_envelope_organ.py tests/test_operator_profile_organ.py \
-  tests/test_reflection_runtime_organ.py tests/test_memory_runtime_organ.py -q
+  tests/test_adaptive_lane_organ.py tests/test_alt6_governed_eligibility.py \
+  tests/test_adaptive_lane_bridge.py tests/test_safety_envelope_organ.py \
+  tests/test_operator_profile_organ.py tests/test_reflection_runtime_organ.py \
+  tests/test_memory_runtime_organ.py -q
 ```
 
-Operator guide: [AAIS_ALT4_RUNTIME_OPERATOR_GUIDE](docs/contracts/AAIS_ALT4_RUNTIME_OPERATOR_GUIDE.md) · Adaptive law: [AAIS_ADAPTIVE_GOVERNANCE](docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md) · Genome registry: [governance/subsystem_genomes/README.md](governance/subsystem_genomes/README.md)
+Operator guide: [AAIS_ALT4_RUNTIME_OPERATOR_GUIDE](docs/contracts/AAIS_ALT4_RUNTIME_OPERATOR_GUIDE.md) · Adaptive law: [AAIS_ADAPTIVE_GOVERNANCE](docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md) · Adaptive lanes: [ADAPTIVE_LANE_ORGAN](docs/subsystems/platform/ADAPTIVE_LANE_ORGAN.md) · Genome registry: [governance/subsystem_genomes/README.md](governance/subsystem_genomes/README.md)
 
-> **v1.0.0** shipped the initial Infinity 1 slice (Alt-4, Tier 5, Alt-5 wave 1 at MVP). **v1.1.0** completes the constitutional layer (barebones wave + Alt-5 wave 2 + all Alt-5 at `governed`).
+> **v1.0.0** shipped the initial Infinity 1 slice (Alt-4, Tier 5, Alt-5 wave 1 at MVP). **v1.1.0** completes the constitutional layer (barebones wave + Alt-5 wave 2). **v1.2.0** adds Alt-6 adaptive lanes at `governed`.
 
 ### Three Ideas MVP partial-live subsystems (v0.4.0)
 
@@ -295,8 +298,9 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
-| Latest tag | [`v1.1.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.1.0) — **Infinity 1 (complete)** — 13 governed genomes, Alt-5 waves 1–2, barebones wave, Tier 5 |
-| Prior tag | [`v1.0.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.0.0) — Infinity 1 initial (Alt-4, Tier 5, Alt-5 wave 1 MVP) |
+| Latest tag | [`v1.2.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.2.0) — **Infinity 1 · Alt-6** — 14 governed genomes, adaptive lanes fabric, Tier 5 wake |
+| Prior tag | [`v1.1.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.1.0) — Infinity 1 (complete) — 13 governed genomes, Alt-5 waves 1–2, barebones wave |
+| Earlier | [`v1.0.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.0.0) — Infinity 1 initial (Alt-4, Tier 5, Alt-5 wave 1 MVP) |
 | Earlier | [`v0.4.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.4.0) — Three Ideas MVP (Lineage, Triangulation, NTP) |
 | Prior | [`v0.3.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.3.0) — Audit Alt-3 partial-live (Recipe, Imagine, Human Voice) |
 | Initial tag | [`v0.2.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.2.0) — initial public AAIS release |

@@ -205,6 +205,17 @@ memory-runtime-gate:
 
 alt5-gate: safety-envelope-gate operator-profile-gate reflection-runtime-gate memory-runtime-gate genome-gate
 
+adaptive-lane-gate:
+	python3 .github/scripts/check-adaptive-lane-governance.py
+
+alt6-gate: adaptive-lane-gate tier5-gate genome-gate
+
+alt6-governed-gate:
+	python3 tools/governance/check_alt6_governed_eligibility.py
+	python3 .github/scripts/check-adaptive-lane-governance.py
+	python3 tools/governance/check_adaptive_governance.py
+	python3 tools/governance/check_subsystem_genome.py
+
 tier5-gate:
 	python3 tools/governance/check_adaptive_governance.py
 

@@ -574,3 +574,46 @@ Every major entry should name its CISIV stage explicitly.
 - scope: Promotion Engine full-auto — `memory_runtime_organ` `governed` via Alt-4 runtime organ
 - outcome: genome `identity.stage` and `proof.posture` set to `governed`
 - verification note: `make genome-gate`; `make alt4-gate`
+
+## 2026-06-02
+
+### Alt-6 Summon Wave — Adaptive Lane Organ Concept Admission
+
+- CISIV stage: `concept`
+- scope: admitted Adaptive Lane Organ into `docs/_future/ideas_pending/` with CISIV concept spec, JSON schema, MVP plan, subsystem genome, and Alt-6 batch wiring in AAIS_SSP_PROTOCOL
+- outcome: `adaptive_lane_organ` documented as pending batch `alt6-summon-wave-2026-06` order 1; Tier 5 operator_lanes wake path specified
+- verification note: doc-only pass; schema validated as JSON; `make ssp-gate` passes
+
+### Alt-6 Summon Wave — Adaptive Lanes Wake Up (MVP)
+
+- CISIV stage: `implementation`
+- scope: `src/adaptive_lane_organ.py`; boot hook `Tier5Governance.wake_lanes()`; `GET /api/jarvis/adaptive-lanes/status`; capability bridge lane resolution; operator_profile_organ Tier 5 lane DNA
+- outcome: adaptive lanes persist to `.runtime/governance/adaptive_lanes.json`; tier5 health reports `adaptive_lanes_awakened`
+- verification note: `make alt6-gate`; `python -m pytest tests/test_adaptive_lane_organ.py -q`
+
+### Alt-6 Governed Promotion Criteria — Contract + Eligibility Gate
+
+- CISIV stage: `structure`
+- scope: Alt-6 governed promotion section in AAIS_SSP_PROTOCOL; Governed Lane Fabric checklist in AAIS_ADAPTIVE_GOVERNANCE; `check_alt6_governed_eligibility.py`; fabric minimum operator_lanes on capability_service_bridge and governed_direct_pipeline
+- outcome: `make alt6-governed-gate` enforces five-gene fabric minimum before governed promotion
+- verification note: `make alt6-governed-gate`
+
+### Adaptive Lane Organ — Governed Promotion (Alt-6 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `adaptive_lane_organ` `governed` via Alt-6 fabric minimum; `ADAPTIVE_LANE_GOVERNED_PROOF.md`; bridge policy-cap block tests
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`; §8 constitutional layer extended
+- verification note: `make alt6-governed-gate`; `python tools/governance/alt6_promote_governed.py`
+
+### Adaptive Lane Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `adaptive_lane_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Adaptive Lane Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `adaptive_lane_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`

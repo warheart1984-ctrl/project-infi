@@ -59,7 +59,7 @@ class AdaptiveEngine:
                 "to": r.target_stage,
                 "failures": r.failures,
             }
-            for r in promo.scan_all(apply=False)
+            for r in promo.scan_all(apply=False, run_gates=False)
             if r.target_stage and not r.passed
         ]
         mutations = [
@@ -81,6 +81,16 @@ class AdaptiveEngine:
         }
         out = runtime_governance_dir() / "tier5_health.json"
         out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        try:
+            from src.adaptive_lane_organ import wake_adaptive_lanes
+
+            lane_report = wake_adaptive_lanes(self.root)
+            report["adaptive_lanes_awakened"] = lane_report.get("awakened", False)
+            report["adaptive_lane_count"] = lane_report.get("lane_count", 0)
+            out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        except Exception:
+            report["adaptive_lanes_awakened"] = False
+            report["adaptive_lane_count"] = 0
         return report
 
     def evaluate_context(
@@ -150,6 +160,12 @@ class Tier5Governance:
     """Facade for Tier 5 adaptive governance."""
 
     adaptive = AdaptiveEngine
+
+    @classmethod
+    def wake_lanes(cls, root: Path | None = None) -> dict[str, Any]:
+        from src.adaptive_lane_organ import wake_adaptive_lanes
+
+        return wake_adaptive_lanes(root)
 
     @classmethod
     def health_check(cls, root: Path | None = None) -> dict[str, Any]:

@@ -856,6 +856,19 @@ class CapabilityServiceBridge:
                 args=args,
             )
 
+        from src.adaptive_lane_organ import lane_authorizes_capability, resolve_lane_for_gene
+
+        lane_resolution = lane_authorizes_capability(
+            resolve_lane_for_gene(gene),
+            spec.get("capability_id"),
+        )
+        if not lane_resolution.allowed:
+            return self._build_genome_block(
+                spec,
+                lane_resolution.reason or "adaptive lane blocked",
+                args=args,
+            )
+
         prepared_args = self._prepare_args_for_selection(spec, dict(args or {}))
         phase_gate = self._evaluate_phase_gate(spec, runtime_context)
         if phase_gate["decision"] == "BLOCK":

@@ -47,7 +47,20 @@ def main() -> int:
         print("[tier5-gate] FAIL: tier5_health.json not written")
         return 1
 
-    print(f"[tier5-gate] PASS: {report['genome_count']} genomes; health at {health_path}")
+    if not report.get("adaptive_lanes_awakened"):
+        errors.append("adaptive lanes not awakened — run Tier5Governance.wake_lanes()")
+    if int(report.get("adaptive_lane_count") or 0) < 1:
+        errors.append("adaptive_lane_count is zero")
+
+    if errors:
+        for err in errors:
+            print(f"[tier5-gate] FAIL: {err}")
+        return 1
+
+    print(
+        f"[tier5-gate] PASS: {report['genome_count']} genomes; "
+        f"{report.get('adaptive_lane_count', 0)} adaptive lane(s); health at {health_path}"
+    )
     return 0
 
 

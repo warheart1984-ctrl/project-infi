@@ -12,6 +12,8 @@ Contract: [docs/contracts/AAIS_SUBSYSTEM_GENOME.md](../../docs/contracts/AAIS_SU
 make genome-gate
 make alt4-gate
 make alt5-gate
+make alt6-gate
+make alt6-governed-gate
 ```
 
 ## Registered Genomes
@@ -31,6 +33,7 @@ make alt5-gate
 | `capability_service_bridge` | governed | [capability_service_bridge.genome.v1.json](./capability_service_bridge.genome.v1.json) |
 | `jarvis_memory_board` | governed | [jarvis_memory_board.genome.v1.json](./jarvis_memory_board.genome.v1.json) |
 | `governed_direct_pipeline` | governed | [governed_direct_pipeline.genome.v1.json](./governed_direct_pipeline.genome.v1.json) |
+| `adaptive_lane_organ` | governed | [adaptive_lane_organ.genome.v1.json](./adaptive_lane_organ.genome.v1.json) |
 
 ## Adding a Genome
 

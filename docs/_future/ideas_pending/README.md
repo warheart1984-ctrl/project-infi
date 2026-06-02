@@ -45,6 +45,7 @@ Concept-origin specs (historical):
 | Operator Profile Organ | [OPERATOR_PROFILE_ORGAN.md](./OPERATOR_PROFILE_ORGAN.md) | [OPERATOR_PROFILE_ORGAN_MVP_PLAN.md](./OPERATOR_PROFILE_ORGAN_MVP_PLAN.md) | [schemas/operator_profile_organ.v1.json](./schemas/operator_profile_organ.v1.json) |
 | Reflection Runtime Organ | [REFLECTION_RUNTIME_ORGAN.md](./REFLECTION_RUNTIME_ORGAN.md) | [REFLECTION_RUNTIME_ORGAN_MVP_PLAN.md](./REFLECTION_RUNTIME_ORGAN_MVP_PLAN.md) | [schemas/reflection_runtime_organ.v1.json](./schemas/reflection_runtime_organ.v1.json) |
 | Memory Runtime Organ | [MEMORY_RUNTIME_ORGAN.md](./MEMORY_RUNTIME_ORGAN.md) | [MEMORY_RUNTIME_ORGAN_MVP_PLAN.md](./MEMORY_RUNTIME_ORGAN_MVP_PLAN.md) | [schemas/memory_runtime_organ.v1.json](./schemas/memory_runtime_organ.v1.json) |
+| Adaptive Lane Organ | [ADAPTIVE_LANE_ORGAN.md](./ADAPTIVE_LANE_ORGAN.md) | [ADAPTIVE_LANE_ORGAN_MVP_PLAN.md](./ADAPTIVE_LANE_ORGAN_MVP_PLAN.md) | [schemas/adaptive_lane_organ.v1.json](./schemas/adaptive_lane_organ.v1.json) |
 
 ## Promotion Rule
 
@@ -69,6 +70,7 @@ Full SSP bundle required at concept admission: concept spec + schema + MVP plan 
 - [schemas/governed_direct_pipeline.v1.json](./schemas/governed_direct_pipeline.v1.json)
 - [schemas/reflection_runtime_organ.v1.json](./schemas/reflection_runtime_organ.v1.json)
 - [schemas/memory_runtime_organ.v1.json](./schemas/memory_runtime_organ.v1.json)
+- [schemas/adaptive_lane_organ.v1.json](./schemas/adaptive_lane_organ.v1.json)
 
 Runtime copies also live under `schemas/`, `triangulation/schemas/`.
 

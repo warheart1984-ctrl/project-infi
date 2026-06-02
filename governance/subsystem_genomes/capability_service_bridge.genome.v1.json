@@ -12,6 +12,7 @@
       "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
       "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
       "docs/contracts/AAIS_MODULE_GOVERNANCE_PROTOCOL.md",
+      "docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md",
       "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
       "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
     ],
@@ -19,6 +20,13 @@
       "Unregistered capability execute paths return blocked outcome when bridge is authoritative",
       "governance_mode is explicit in every exported bridge snapshot",
       "Phase violations surface auditable phase events without silent continue"
+    ],
+    "operator_lanes": [
+      {
+        "lane_id": "operator",
+        "weight": 1.0,
+        "capabilities": ["execute_capability", "inspect_bridge_status"]
+      }
     ]
   },
   "schema": {
@@ -58,7 +66,8 @@
     "parents": [],
     "children": [
       "cisiv_operator_lineage_console",
-      "governed_direct_pipeline"
+      "governed_direct_pipeline",
+      "adaptive_lane_organ"
     ]
   },
   "activation": {

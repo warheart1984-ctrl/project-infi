@@ -221,9 +221,10 @@ app = Flask(__name__)
 CORS(app)
 
 try:
-    from src.governance_organs import Alt4Runtime
+    from src.governance_organs import Alt4Runtime, Tier5Governance
 
     Alt4Runtime.boot_validate()
+    Tier5Governance.wake_lanes()
 except Exception as _alt4_boot_exc:
     import os as _alt4_os
 
@@ -11554,6 +11555,18 @@ def get_operator_profile():
         )
     except Exception as e:
         logger.error(f"Error reading operator profile: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/adaptive-lanes/status", methods=["GET"])
+def get_adaptive_lane_status():
+    """Awakened Tier 5 operator-weighted lane registry (Alt-6 organ)."""
+    try:
+        from src.adaptive_lane_organ import build_adaptive_lane_status
+
+        return jsonify(attach_ul_substrate({"adaptive_lanes": build_adaptive_lane_status()}))
+    except Exception as e:
+        logger.error(f"Error reading adaptive lane status: {e}")
         return jsonify({"error": str(e)}), 500
 
 

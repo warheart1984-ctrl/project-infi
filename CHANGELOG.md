@@ -13,6 +13,39 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.2.0] - 2026-06-02 — Infinity 1 · Alt-6
+
+**Infinity 1 · Alt-6** — fourteenth governed genome (`adaptive_lane_organ`); Tier 5 operator-weighted lanes wake into live runtime with fabric-minimum eligibility and governed promotion tooling.
+
+### Added
+
+- **Alt-6 Summon Wave** — `adaptive_lane_organ` at `governed`; `GET /api/jarvis/adaptive-lanes/status`; `src/adaptive_lane_organ.py`
+- **Adaptive lane wake** — boot `Tier5Governance.wake_lanes()`; persistence to `.runtime/governance/adaptive_lanes.json`
+- **Fabric minimum** — `operator_lanes` DNA on `adaptive_lane_organ`, `operator_profile_organ`, `capability_service_bridge`, `recipe_module`, `governed_direct_pipeline`
+- **Governance gates** — `make alt6-gate`, `make alt6-governed-gate`; `tools/governance/check_alt6_governed_eligibility.py`
+- **Promotion** — `tools/governance/alt6_promote_mvp.py`, `tools/governance/alt6_promote_governed.py`
+- **Bridge enforcement** — capability bridge lane resolution + policy-cap authority mismatch block
+
+### Changed
+
+- Fourteen registered subsystem genomes; [AAIS_SUBSYSTEM_SPEC.md](docs/runtime/AAIS_SUBSYSTEM_SPEC.md) §8 extended with Adaptive Lane Organ
+- [AAIS_SSP_PROTOCOL.md](docs/contracts/AAIS_SSP_PROTOCOL.md) — Alt-6 governed promotion section
+- [AAIS_ADAPTIVE_GOVERNANCE.md](docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md) — Governed Lane Fabric checklist
+- `PromotionEngine.evaluate(..., run_gates=False)` for tier5 health audit (prevents recursive gate freeze)
+- Tier 5 health report includes `adaptive_lanes_awakened` and `adaptive_lane_count`
+
+### Verification (v1.2.0)
+
+```bash
+make alt6-governed-gate
+make genome-gate alt4-gate tier5-gate
+python -m pytest tests/test_adaptive_lane_organ.py tests/test_alt6_governed_eligibility.py \
+  tests/test_adaptive_lane_bridge.py tests/test_adaptive_governance.py -q
+python tools/governance/alt6_promote_governed.py  # idempotent when already governed
+```
+
+[1.2.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.2.0
+
 ## [1.1.0] - 2026-06-02 — Infinity 1 (complete)
 
 **Infinity 1 (complete)** — thirteen governed subsystem genomes, Alt-5 waves 1–2 (four organs at `governed`), barebones summon wave (bridge, memory board, governed pipeline), and reproducible promotion scripts.

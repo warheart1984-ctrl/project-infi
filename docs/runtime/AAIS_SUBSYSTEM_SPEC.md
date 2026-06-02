@@ -1186,8 +1186,9 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | Capability Service Bridge | governed | [../subsystems/platform/CAPABILITY_SERVICE_BRIDGE.md](../subsystems/platform/CAPABILITY_SERVICE_BRIDGE.md) | [../proof/platform/CAPABILITY_SERVICE_BRIDGE_V1_PROOF.md](../proof/platform/CAPABILITY_SERVICE_BRIDGE_V1_PROOF.md) |
 | Jarvis Memory Board | governed | [../subsystems/platform/JARVIS_MEMORY_BOARD.md](../subsystems/platform/JARVIS_MEMORY_BOARD.md) | [../proof/platform/JARVIS_MEMORY_BOARD_V1_PROOF.md](../proof/platform/JARVIS_MEMORY_BOARD_V1_PROOF.md) |
 | Governed Direct Pipeline | governed | [GOVERNED_DIRECT_PIPELINE.md](./GOVERNED_DIRECT_PIPELINE.md) | [../proof/platform/GOVERNED_DIRECT_PIPELINE_V1_PROOF.md](../proof/platform/GOVERNED_DIRECT_PIPELINE_V1_PROOF.md) |
+| Adaptive Lane Organ | governed | [../subsystems/platform/ADAPTIVE_LANE_ORGAN.md](../subsystems/platform/ADAPTIVE_LANE_ORGAN.md) | [../proof/platform/ADAPTIVE_LANE_GOVERNED_PROOF.md](../proof/platform/ADAPTIVE_LANE_GOVERNED_PROOF.md) |
 
-Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate`
+Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate`
 
 ## 9. Concept Pending (SSP)
 

@@ -137,6 +137,66 @@ batch `alt5-summon-wave-2-2026-06`; promotion via `tools/governance/alt5_promote
 All four Alt-5 organs may be promoted `mvp` → `governed` via
 `tools/governance/alt5_promote_governed.py` or per-gene `promotion_engine --apply`.
 
+## Alt-6 Summon Wave — Adaptive Lanes Wake Up
+
+Batch-admit Tier 5 **operator-weighted lanes** into live runtime via the Adaptive Lane Organ.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt6-summon-wave-YYYY-MM` in LOGBOOK + `activation.batch_id` |
+| Initial stage | `concept` — empty `runtime.surface` |
+| MVP promotion | `tools/governance/alt6_promote_mvp.py` or Promotion Engine twice |
+| Gates | `make alt6-gate` — adaptive-lane-gate + tier5-gate + genome-gate |
+
+Wave 1 (2026-06): `adaptive_lane_organ` — wakes genome `operator_lanes` DNA into
+`.runtime/governance/adaptive_lanes.json`, boot hook via `Tier5Governance.wake_lanes()`,
+and capability bridge lane resolution.
+
+## Alt-6 Governed Promotion
+
+Promote the adaptive lane fabric from **MVP → governed** when the fabric minimum
+is proven and gates pass.
+
+| Convention | Value |
+|------------|-------|
+| Eligibility | `make alt6-governed-gate` |
+| Promotion | `tools/governance/alt6_promote_governed.py` or `promotion_engine --apply` |
+| Proof bundle | `docs/proof/platform/ADAPTIVE_LANE_GOVERNED_PROOF.md` |
+
+**Fabric minimum** — these genes MUST carry valid `governance.operator_lanes`:
+
+- `adaptive_lane_organ`, `operator_profile_organ`, `capability_service_bridge`,
+  `recipe_module`, `governed_direct_pipeline`
+
+**Awakened registry** (`.runtime/governance/adaptive_lanes.json`):
+
+- `awakened == true`
+- `genes_with_lanes` includes all five fabric genes
+- `authority_lane == "operator"`
+- merged `operator` lane present
+
+**Runtime enforcement (proven):**
+
+- Boot wake via `Tier5Governance.wake_lanes()`
+- Capability bridge lane resolution + policy-cap block on authority mismatch
+- Tier 5 health reports `adaptive_lanes_awakened` (health audit uses `run_gates=False`)
+
+**Genome at governed apply:**
+
+- `adaptive_lane_organ` invariants maturity-tagged (`constitutional` / `stable`)
+- `identity.version` → `1.0.0-governed`; `proof.posture` → `governed`
+
+Operator checklist:
+
+```bash
+make alt6-governed-gate
+python tools/governance/alt6_promote_governed.py
+make alt4-gate
+make tier5-gate
+```
+
+See [AAIS_ADAPTIVE_GOVERNANCE.md](./AAIS_ADAPTIVE_GOVERNANCE.md) § Governed Lane Fabric.
+
 ## Activation Rule
 
 Subsystems move through stages per

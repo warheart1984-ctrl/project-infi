@@ -31,6 +31,7 @@ GENE_GATES: dict[str, str] = {
     "capability_service_bridge": "capability-bridge-gate",
     "jarvis_memory_board": "memory-board-gate",
     "governed_direct_pipeline": "governed-pipeline-gate",
+    "adaptive_lane_organ": "adaptive-lane-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -48,6 +49,7 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     "operator-profile-gate": [".github/scripts/check-operator-profile-governance.py"],
     "reflection-runtime-gate": [".github/scripts/check-reflection-runtime-governance.py"],
     "memory-runtime-gate": [".github/scripts/check-memory-runtime-governance.py"],
+    "adaptive-lane-gate": [".github/scripts/check-adaptive-lane-governance.py"],
     "capability-bridge-gate": [".github/scripts/check-capability-bridge-governance.py"],
     "memory-board-gate": [".github/scripts/check-memory-board-governance.py"],
     "governed-pipeline-gate": [".github/scripts/check-governed-pipeline-governance.py"],
@@ -175,7 +177,7 @@ class PromotionEngine:
             return None
         return STAGE_ORDER[idx + 1]
 
-    def evaluate(self, gene: str) -> PromotionDecision:
+    def evaluate(self, gene: str, *, run_gates: bool = True) -> PromotionDecision:
         reg = GenomeEngine.reload(self.root)
         if gene not in reg.genomes:
             return PromotionDecision(
@@ -203,10 +205,11 @@ class PromotionEngine:
             )
 
         if target == "prototype":
-            ssp_ok, ssp_out = self._run_gate("ssp-gate")
-            artifacts.append("make ssp-gate")
-            if not ssp_ok:
-                failures.append(f"ssp-gate failed: {ssp_out[-400:]}")
+            if run_gates:
+                ssp_ok, ssp_out = self._run_gate("ssp-gate")
+                artifacts.append("make ssp-gate")
+                if not ssp_ok:
+                    failures.append(f"ssp-gate failed: {ssp_out[-400:]}")
             proof = data.get("proof") or {}
             for bundle in proof.get("bundles") or []:
                 if "PROTOTYPE" in bundle.upper():
@@ -221,10 +224,11 @@ class PromotionEngine:
         if target == "mvp":
             gate = GENE_GATES.get(gene)
             if gate:
-                ok, out = self._run_gate(gate)
                 artifacts.append(f"make {gate}")
-                if not ok:
-                    failures.append(f"{gate} failed: {out[-400:]}")
+                if run_gates:
+                    ok, out = self._run_gate(gate)
+                    if not ok:
+                        failures.append(f"{gate} failed: {out[-400:]}")
             else:
                 failures.append(f"no gene gate defined for {gene}")
             proof = data.get("proof") or {}
@@ -241,14 +245,16 @@ class PromotionEngine:
         if target == "governed":
             gate = GENE_GATES.get(gene)
             if gate:
-                ok, out = self._run_gate(gate)
                 artifacts.append(f"make {gate}")
-                if not ok:
-                    failures.append(f"{gate} failed: {out[-400:]}")
-            ok, out = self._run_gate("genome-gate")
+                if run_gates:
+                    ok, out = self._run_gate(gate)
+                    if not ok:
+                        failures.append(f"{gate} failed: {out[-400:]}")
             artifacts.append("make genome-gate")
-            if not ok:
-                failures.append(f"genome-gate failed: {out[-400:]}")
+            if run_gates:
+                ok, out = self._run_gate("genome-gate")
+                if not ok:
+                    failures.append(f"genome-gate failed: {out[-400:]}")
             if not self._has_invariant_tests(gene):
                 failures.append("governed requires invariant tests under tests/")
             if not self._has_cross_reference(gene, data):
@@ -386,10 +392,16 @@ class PromotionEngine:
         )
         return True
 
-    def scan_all(self, *, apply: bool = False, dry_run: bool = False) -> list[PromotionDecision]:
+    def scan_all(
+        self,
+        *,
+        apply: bool = False,
+        dry_run: bool = False,
+        run_gates: bool = True,
+    ) -> list[PromotionDecision]:
         results: list[PromotionDecision] = []
         for gene in sorted(GenomeEngine.registry().genomes):
-            decision = self.evaluate(gene)
+            decision = self.evaluate(gene, run_gates=run_gates)
             if apply and decision.passed and decision.target_stage:
                 decision = self.apply(decision, dry_run=dry_run)
             results.append(decision)
