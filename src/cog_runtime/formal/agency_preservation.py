@@ -34,6 +34,15 @@ def check_agency_preservation(
     story = dict(narrative or {})
     issues: list[str] = []
 
+    if not prior and not current and not story:
+        return {
+            "valid": True,
+            "issues": [],
+            "theorem": "8.1_agency_preservation_runtime",
+            "protected_value_count": 0,
+            "prior_active_commitments": 0,
+        }
+
     protected = {str(v) for v in (current.get("protected_values") or [])}
     for value in CONSTITUTIONAL_PROTECTED_VALUES:
         if value not in protected:

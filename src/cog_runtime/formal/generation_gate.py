@@ -31,7 +31,6 @@ def generation_verification_enabled(session) -> bool:
     turn_contract = dict(session.metadata.get("turn_contract") or {})
     return bool(
         session.metadata.get("speaking_runtime_enabled")
-        or session.metadata.get("cognitive_runtime_enabled")
         or turn_contract.get("companion_turn")
         or session.metadata.get("companion_turn")
     )

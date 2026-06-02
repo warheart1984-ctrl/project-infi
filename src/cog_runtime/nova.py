@@ -79,6 +79,16 @@ NOVA_COGNITIVE_FAMILY_ID = NOVA_CORTEX_ID
 REASONING_RUNTIME_ID = REASONING_PROTOCOL_ID
 
 
+def _json_safe(value: Any) -> Any:
+    if callable(value):
+        return getattr(value, "__name__", "callable")
+    if isinstance(value, dict):
+        return {str(key): _json_safe(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_json_safe(item) for item in value]
+    return value
+
+
 @dataclass
 class NovaCognitiveSession:
     """Shared turn session aggregating runtime ledgers and artifacts."""
@@ -101,9 +111,9 @@ class NovaCognitiveSession:
             "user_message": self.user_message,
             "frame_kind": self.frame_kind,
             "active_runtimes": list(self.active_runtimes),
-            "ledger": list(self.ledger),
-            "artifacts": dict(self.artifacts),
-            "context": dict(self.context or {}),
+            "ledger": _json_safe(list(self.ledger)),
+            "artifacts": _json_safe(dict(self.artifacts)),
+            "context": _json_safe(dict(self.context or {})),
         }
 
 

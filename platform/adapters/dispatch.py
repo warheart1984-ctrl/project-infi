@@ -7,7 +7,15 @@ from typing import Any
 
 from platform.adapters.ai_factory import run_ai_factory_build
 from platform.adapters.forgekeeper import run_forgekeeper_plan
-from platform.adapters.lab import run_lab_session
+from platform.adapters.lab import (
+    run_lab_experiments_list,
+    run_lab_project_init,
+    run_lab_project_status,
+    run_lab_session,
+    run_lab_session_close,
+    run_lab_session_start,
+    run_lab_tool_invoke,
+)
 from platform.adapters.mechanic import run_mechanic_scan
 from platform.adapters.slingshot import run_slingshot_preload
 from platform.artifacts.index import ArtifactIndex
@@ -15,6 +23,7 @@ from platform.artifacts.scanner import ingest_hash_manifest
 from platform.auth.rbac import Principal
 from platform.jobs.registry import JobRegistry
 from platform.drift.detectors.base import run_detectors
+from platform.synthetic_mind import register_synthetic_mind_for_org, ref_from_ai_factory_result
 from platform.drift.scheduler import maybe_enqueue_investigation
 from platform.jobs.schema import mark_job_started, update_job_status
 from platform.workflow.engine import advance_workflow, run_workflow
@@ -108,14 +117,71 @@ def dispatch_job(
                 correlation_id=str(job["correlation_id"]),
             )
 
+        elif subsystem == "lab" and kind == "lab.session.start":
+            project_id = str(params.get("project_id") or "nova-ai-factory")
+            result = run_lab_session_start(project_id=project_id, agent=str(params.get("agent") or "platform-agent"))
+            job = update_job_status(
+                job,
+                status="running",
+                subsystem_job_id=str(result["session_id"]),
+                metadata={"result": result},
+                links=[{"link_type": "lab_session", "target_id": result["session_id"]}],
+            )
+
+        elif subsystem == "lab" and kind == "lab.tool.invoke":
+            project_id = str(params.get("project_id") or "nova-ai-factory")
+            session_id = str(params.get("session_id") or "")
+            result = run_lab_tool_invoke(
+                project_id=project_id,
+                session_id=session_id,
+                tool=str(params.get("tool") or "read_file"),
+                args=dict(params.get("args") or {}),
+            )
+            job = update_job_status(job, status="complete", metadata={"result": result})
+
+        elif subsystem == "lab" and kind == "lab.session.close":
+            project_id = str(params.get("project_id") or "nova-ai-factory")
+            session_id = str(params.get("session_id") or "")
+            result = run_lab_session_close(project_id=project_id, session_id=session_id)
+            job = update_job_status(job, status="complete", metadata={"result": result})
+
+        elif subsystem == "lab" and kind == "lab.project.init":
+            result = run_lab_project_init(params)
+            job = update_job_status(
+                job,
+                status="complete",
+                subsystem_job_id=str(result.get("project_id") or ""),
+                metadata={"result": result},
+            )
+
+        elif subsystem == "lab" and kind == "lab.project.status":
+            project_id = str(params.get("project_id") or "nova-ai-factory")
+            result = run_lab_project_status(project_id)
+            job = update_job_status(job, status="complete", metadata={"result": result})
+
+        elif subsystem == "lab" and kind == "lab.experiments.list":
+            project_id = str(params.get("project_id") or "nova-ai-factory")
+            result = run_lab_experiments_list(project_id)
+            job = update_job_status(job, status="complete", metadata={"result": result})
+
         elif subsystem == "ai_factory" and kind == "ai_factory.build":
             spec_path = str(params.get("spec_path") or "factory/specs/nova-default.yaml")
             result = run_ai_factory_build(spec_path=spec_path, skip_pytest=bool(params.get("skip_pytest", True)))
+            mind_ref = ref_from_ai_factory_result(
+                org_id=str(job["org_id"]),
+                result=result,
+                job_id=str(job["job_id"]),
+            )
+            register_synthetic_mind_for_org(
+                store=registry.store,
+                org_id=str(job["org_id"]),
+                ref=mind_ref,
+            )
             job = update_job_status(
                 job,
                 status="complete",
                 subsystem_job_id=result["build_id"],
-                metadata={"result": result},
+                metadata={"result": result, "synthetic_mind_ref": mind_ref},
                 links=[{"link_type": "factory_build", "target_id": result["build_id"]}],
             )
             ingest_hash_manifest(
@@ -126,6 +192,20 @@ def dispatch_job(
                 correlation_id=str(job["correlation_id"]),
                 manifest=result.get("hash_manifest") or [],
                 base_dir=Path(result["output_dir"]),
+            )
+            artifact_index.register(
+                principal=principal,
+                payload=artifact_index.build_ref(
+                    org_id=principal.org_id,
+                    subsystem="ai_factory",
+                    logical_path=f"synthetic_mind/{mind_ref['build_id']}/ref.json",
+                    storage_uri=mind_ref.get("storage_uri") or f"synthetic-mind://{mind_ref['build_id']}",
+                    sha256=mind_ref["bundle_hash"],
+                    job_id=str(job["job_id"]),
+                    correlation_id=str(job["correlation_id"]),
+                    artifact_type="synthetic_mind_ref",
+                    metadata={"synthetic_mind_ref": mind_ref},
+                ),
             )
 
         elif subsystem == "forgekeeper" and kind == "forgekeeper.plan":

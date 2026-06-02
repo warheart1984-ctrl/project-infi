@@ -300,7 +300,9 @@ def _attach_criteria_to_decision(
     )
     if influence:
         decision["intent_influence"] = influence
-    return decision
+    from src.cog_runtime.formal.consentful_inference import attach_consentful_inference
+
+    return attach_consentful_inference(decision, intent_context=intent_context)
 
 
 def _deterministic_commit(
