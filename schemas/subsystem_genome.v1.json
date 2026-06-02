@@ -62,9 +62,60 @@
         },
         "invariants": {
           "type": "array",
-          "items": { "type": "string", "minLength": 1 },
-          "minItems": 1
+          "minItems": 1,
+          "items": {
+            "oneOf": [
+              { "type": "string", "minLength": 1 },
+              { "$ref": "#/$defs/invariant_entry" }
+            ]
+          }
+        },
+        "operator_lanes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/operator_lane" }
+        },
+        "contextual_gates": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/contextual_gate" }
         }
+      },
+      "additionalProperties": false
+    },
+    "invariant_entry": {
+      "type": "object",
+      "required": ["text", "maturity"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "maturity": {
+          "enum": ["emergent", "stable", "constitutional"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "operator_lane": {
+      "type": "object",
+      "required": ["lane_id", "weight"],
+      "properties": {
+        "lane_id": { "type": "string", "minLength": 1 },
+        "weight": { "type": "number", "minimum": 0, "maximum": 1 },
+        "capabilities": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "contextual_gate": {
+      "type": "object",
+      "required": ["gate_id", "activate_on", "make_target"],
+      "properties": {
+        "gate_id": { "type": "string", "minLength": 1 },
+        "activate_on": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "make_target": { "type": "string", "minLength": 1 }
       },
       "additionalProperties": false
     },

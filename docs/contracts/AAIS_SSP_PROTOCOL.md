@@ -85,6 +85,52 @@ Genome** meta-schema:
 
 Gates: `make ssp-gate` + `make genome-gate`
 
+## Alt-4 Runtime Organs
+
+Governance-of-governance protocols are executable at runtime via
+`src/governance_organs/`:
+
+| Organ | Module | Role |
+|-------|--------|------|
+| Genome Engine | `genome_engine.py` | Validates DNA on boot, `make genome-gate`, and capability-bridge calls |
+| Promotion Engine | `promotion_engine.py` | Full-auto `concept → prototype → mvp → governed` when gates pass |
+| Mutation Engine | `mutation_engine.py` | MP-X apply/rollback with `schemas/deltas/` |
+| Retirement Engine | `retirement_engine.py` | 10-step retirement state machine with lineage preservation |
+
+Facade: `Alt4Runtime` in `src/governance_organs/__init__.py`.
+
+Operator guide: [AAIS_ALT4_RUNTIME_OPERATOR_GUIDE.md](./AAIS_ALT4_RUNTIME_OPERATOR_GUIDE.md)
+
+Makefile targets:
+
+```bash
+make alt4-gate          # genome-gate + promotion eligibility scan
+make alt4-gate-strict   # same, but fail when promotions are pending
+make promotion-scan     # dry-run next-stage evaluation for all genes
+make promotion-apply    # full-auto apply when eligible
+make retirement-scan    # dry-run retirement step report for all genes
+make retirement-apply   # apply retirement advance (GENE= STEP= required)
+```
+
+Boot hook: Flask (`src/api.py`) and workflow shell (`app/main.py`) call
+`Alt4Runtime.boot_validate()` unless `AAIS_GENOME_BOOT=warn`.
+
+Step 7 summon completes when the genome exists **and** runtime organs can enforce
+lifecycle transitions without manual registry surgery.
+
+## Alt-5 Summon Wave
+
+Batch-admit new subsystem families via the [subsystem-summoner skill](../../.cursor/skills/subsystem-summoner/SKILL.md).
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt5-summon-wave-YYYY-MM` in LOGBOOK + `activation.batch_id` |
+| Initial stage | `concept` — empty `runtime.surface` |
+| MVP promotion | `tools/governance/alt5_promote_mvp.py` or Promotion Engine twice (`concept→prototype→mvp`) |
+| Gates | `make alt5-gate` — Alt-5 organ gates + `genome-gate` |
+
+Wave 1 (2026-06): `safety_envelope_organ`, `operator_profile_organ`.
+
 ## Activation Rule
 
 Subsystems move through stages per

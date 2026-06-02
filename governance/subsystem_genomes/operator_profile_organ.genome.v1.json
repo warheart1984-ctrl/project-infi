@@ -1,0 +1,74 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "operator_profile_organ",
+    "version": "1.0.0-mvp",
+    "stage": "mvp",
+    "display_name": "Operator Profile Organ"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md"
+    ],
+    "invariants": [
+      "profile_id never empty on live path",
+      "authority_lane defaults to operator",
+      "No elevation without explicit operator action"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/operator_profile_organ.v1.json",
+    "frozen": false
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/operator_profile_organ.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/operator-profile"
+      },
+      {
+        "kind": "gate",
+        "path": "make operator-profile-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/platform/OPERATOR_PROFILE_V1_PROOF.md"
+    ],
+    "posture": "mvp",
+    "target_bundles": [
+      "docs/proof/platform/OPERATOR_PROFILE_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "jarvis",
+      "knowledge_authority"
+    ],
+    "children": []
+  },
+  "activation": {
+    "order": 2,
+    "batch_id": "alt5-summon-wave-2026-06",
+    "notes": "Alt-5 wave 2 — operator identity lane"
+  },
+  "retirement": {
+    "path": null
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/OPERATOR_PROFILE_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/OPERATOR_PROFILE_ORGAN_MVP_PLAN.md",
+    "active_doc": "docs/subsystems/platform/OPERATOR_PROFILE_ORGAN.md",
+    "summon_eligible": false
+  }
+}

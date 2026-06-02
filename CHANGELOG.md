@@ -13,6 +13,29 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.0.0] - 2026-06-02 — Infinity 1
+
+**Infinity 1** — self-governing runtime: Alt-4 lifecycle organs, constitutional layer (six governed genomes), Alt-5 summon wave (two new organs), Governance Tier 5 adaptive layer.
+
+### Added
+
+- **Alt-4 Runtime Organs** — `src/governance_organs/` (Genome, Promotion, Mutation, Retirement engines); boot hooks in `src/api.py` and `app/main.py`; capability-bridge DNA enforcement; `make alt4-gate`, `promotion-scan`, `promotion-apply`; MP-NTP-001 golden mutation path; [AAIS_ALT4_RUNTIME_OPERATOR_GUIDE.md](docs/contracts/AAIS_ALT4_RUNTIME_OPERATOR_GUIDE.md)
+- **Governed Subsystem Expansion** — all six original genomes at `governed` (lineage console, triangulation, NTP, recipe, imagine, human voice)
+- **Alt-5 Summon Wave** — `safety_envelope_organ`, `operator_profile_organ` at MVP; `GET /api/jarvis/safety-envelope/status`, `GET /api/jarvis/operator-profile`; `make alt5-gate`
+- **Governance Tier 5** — [AAIS_ADAPTIVE_GOVERNANCE.md](docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md), `AdaptiveEngine`, `make tier5-gate`, contextual gates on capability bridge; `recipe_module` pilot
+
+### Changed
+
+- Eight registered subsystem genomes (six governed + two Alt-5 MVP); [AAIS_SUBSYSTEM_SPEC.md](docs/runtime/AAIS_SUBSYSTEM_SPEC.md) §8 constitutional layer
+- [AAIS_SSP_PROTOCOL.md](docs/contracts/AAIS_SSP_PROTOCOL.md) — Alt-4 runtime organs + Alt-5 summon wave sections
+
+### Verification (v1.0.0)
+
+```bash
+make genome-gate alt4-gate alt5-gate tier5-gate
+python -m pytest tests/test_governance_organs_alt4.py tests/test_adaptive_governance.py tests/test_safety_envelope_organ.py tests/test_operator_profile_organ.py -q
+```
+
 ## [0.4.0] - 2026-06-02
 
 Three Ideas MVP — CISIV Lineage Console, Forensic Triangulation Ledger, and Narrative Trust Pack promoted from concept to **partial live**.

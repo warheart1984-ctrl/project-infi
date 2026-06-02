@@ -1,0 +1,75 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "safety_envelope_organ",
+    "version": "0.1.0-concept",
+    "stage": "mvp",
+    "display_name": "Safety Envelope Organ"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/SWARM_LAW.md"
+    ],
+    "invariants": [
+      "Read-only v1 \u2014 no write path from envelope organ",
+      "halt_required blocks optimistic execution when wired to bridge",
+      "Thresholds align with SWARM_LAW no-improvisation doctrine"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/safety_envelope_organ.v1.json",
+    "frozen": false
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/safety_envelope.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/safety-envelope/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make safety-envelope-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/platform/SAFETY_ENVELOPE_V1_PROOF.md"
+    ],
+    "posture": "mvp",
+    "target_bundles": [
+      "docs/proof/platform/SAFETY_ENVELOPE_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "jarvis",
+      "immune_system"
+    ],
+    "children": []
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "alt5-summon-wave-2026-06",
+    "notes": "Alt-5 wave 1 \u2014 foundational guard"
+  },
+  "retirement": {
+    "path": null
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/SAFETY_ENVELOPE_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/SAFETY_ENVELOPE_ORGAN_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/platform/SAFETY_ENVELOPE_ORGAN.md"
+  }
+}

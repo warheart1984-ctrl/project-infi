@@ -217,6 +217,21 @@ config = get_config()
 
 app = Flask(__name__)
 CORS(app)
+
+try:
+    from src.governance_organs import Alt4Runtime
+
+    Alt4Runtime.boot_validate()
+except Exception as _alt4_boot_exc:
+    import os as _alt4_os
+
+    if _alt4_os.getenv("AAIS_GENOME_BOOT", "fail").strip().lower() not in {
+        "warn",
+        "warning",
+        "skip",
+    }:
+        raise
+    logger.warning("Alt-4 genome boot validation skipped: %s", _alt4_boot_exc)
 knowledge_authority = KnowledgeAuthority()
 cognitive_bridge_service = CognitiveBridgeService()
 super_nova_scaffold = build_default_super_nova_scaffold()
@@ -11428,6 +11443,35 @@ def get_lineage_graph(mission_id):
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/safety-envelope/status", methods=["GET"])
+def get_safety_envelope_status():
+    """Read-only safety envelope threshold snapshot (Alt-5 organ)."""
+    try:
+        from src.safety_envelope import build_envelope_status
+
+        return jsonify(attach_ul_substrate({"safety_envelope": build_envelope_status()}))
+    except Exception as e:
+        logger.error(f"Error reading safety envelope status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/operator-profile", methods=["GET"])
+def get_operator_profile():
+    """Normalized operator profile snapshot (Alt-5 organ)."""
+    try:
+        from src.operator_profile_organ import build_operator_profile
+
+        profile_id = request.args.get("profile_id") or "operator"
+        return jsonify(
+            attach_ul_substrate(
+                {"operator_profile": build_operator_profile(knowledge_authority, profile_id=profile_id)}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading operator profile: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/reset", methods=["POST"])
 def reset_mission_board():
     """Reset Mission Board state with an optional backup and seeded current objectives."""
@@ -15158,6 +15202,18 @@ def run_api(host="0.0.0.0", port=5000, debug=False):
     logger.info(f"Starting API server on {host}:{port}")
     should_run_startup_bootstrap = not debug or os.getenv("WERKZEUG_RUN_MAIN") == "true"
     if should_run_startup_bootstrap:
+        try:
+            from src.governance_organs import Alt4Runtime
+
+            Alt4Runtime.boot_validate()
+        except Exception as exc:
+            if os.getenv("AAIS_GENOME_BOOT", "fail").strip().lower() not in {
+                "warn",
+                "warning",
+                "skip",
+            }:
+                raise
+            logger.warning("Alt-4 genome boot validation (run_api): %s", exc)
         bootstrap_ai_runtime(reason="run_api")
     should_boot_dreamspace = os.getenv("AAIS_ENABLE_DREAMSPACE", "0").strip().lower() in {"1", "true", "yes", "on"}
     if should_boot_dreamspace and should_run_startup_bootstrap:

@@ -33,7 +33,8 @@ Concept-origin specs (historical):
 
 | Idea | Concept spec | MVP plan | Schema |
 |------|--------------|----------|--------|
-| *(none)* | — | — | — |
+| Safety Envelope Organ | [SAFETY_ENVELOPE_ORGAN.md](./SAFETY_ENVELOPE_ORGAN.md) | [SAFETY_ENVELOPE_ORGAN_MVP_PLAN.md](./SAFETY_ENVELOPE_ORGAN_MVP_PLAN.md) | [schemas/safety_envelope_organ.v1.json](./schemas/safety_envelope_organ.v1.json) |
+| Operator Profile Organ | [OPERATOR_PROFILE_ORGAN.md](./OPERATOR_PROFILE_ORGAN.md) | [OPERATOR_PROFILE_ORGAN_MVP_PLAN.md](./OPERATOR_PROFILE_ORGAN_MVP_PLAN.md) | [schemas/operator_profile_organ.v1.json](./schemas/operator_profile_organ.v1.json) |
 
 ## Promotion Rule
 

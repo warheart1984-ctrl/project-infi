@@ -771,6 +771,39 @@ class CapabilityServiceBridge:
             "phase_gate": phase_gate,
         }
 
+    def _build_genome_block(
+        self,
+        spec: dict[str, Any],
+        reason: str,
+        *,
+        args: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        capability_meta = {
+            "bridge_id": BRIDGE_ID,
+            "bridge_version": BRIDGE_VERSION,
+            "tool_type": spec["tool"],
+            "capability": spec["capability_id"],
+            "module": spec["module"].module_name,
+            "ok": False,
+            "error_type": "GenomeValidationError",
+            "service_lane": True,
+            "path": "capability_service_bridge",
+        }
+        self._record_event(capability_meta)
+        response = f"{spec['capability_label']} blocked by genome engine: {reason}"
+        return {
+            "response": response,
+            "tool_result": {
+                "type": spec["tool"],
+                "tool": spec["tool"],
+                "status": "blocked",
+                "args": dict(args or {}),
+                "result": {"error": reason, "genome_gate": True},
+                "summary": response,
+                "capability": capability_meta,
+            },
+        }
+
     def _execute_spec(
         self,
         spec: dict[str, Any],
@@ -779,6 +812,31 @@ class CapabilityServiceBridge:
         execution_profile: dict[str, Any] | None = None,
         runtime_context: str = DEFAULT_PHASE_CONTEXT,
     ) -> dict[str, Any]:
+        from src.governance_organs import GenomeEngine, GenomeValidationError
+
+        gene_hint = spec.get("gene") or spec.get("capability_id") or spec.get("module")
+        if isinstance(gene_hint, object) and hasattr(gene_hint, "module_name"):
+            gene_hint = getattr(gene_hint, "module_name", gene_hint)
+        gene = GenomeEngine.resolve_gene(str(gene_hint or ""))
+        try:
+            GenomeEngine.assert_gene_callable(gene, stage_min="mvp")
+        except GenomeValidationError as exc:
+            return self._build_genome_block(spec, str(exc), args=args)
+
+        from src.governance_organs.adaptive_engine import AdaptiveEngine
+
+        ctx_result = AdaptiveEngine().evaluate_context(
+            runtime_context,
+            spec.get("capability_id"),
+            gene=gene,
+        )
+        if ctx_result.blocked:
+            return self._build_genome_block(
+                spec,
+                ctx_result.reason or "contextual gate blocked",
+                args=args,
+            )
+
         prepared_args = self._prepare_args_for_selection(spec, dict(args or {}))
         phase_gate = self._evaluate_phase_gate(spec, runtime_context)
         if phase_gate["decision"] == "BLOCK":

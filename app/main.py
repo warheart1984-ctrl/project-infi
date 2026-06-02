@@ -125,6 +125,18 @@ legacy_api_mounted = True
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     init_db()
+    try:
+        from src.governance_organs import Alt4Runtime
+
+        Alt4Runtime.boot_validate()
+    except Exception as exc:
+        if os.getenv("AAIS_GENOME_BOOT", "fail").strip().lower() not in {
+            "warn",
+            "warning",
+            "skip",
+        }:
+            raise
+        logger.warning("Alt-4 genome boot validation (workflow shell): %s", exc)
     yield
 
 

@@ -28,7 +28,7 @@ Authoritative references:
 
 This repository is also **Project Infi** — constitutional engineering where claims require proof, not intent.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v0.4.0](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.4.0) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.0.0 — Infinity 1](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.0.0) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -104,6 +104,26 @@ make alt3-gate
 #     python .github/scripts/check-imagine-generator-governance.py
 #     python .github/scripts/check-human-voice-extraction-governance.py
 ```
+
+### Infinity 1 — Governance runtime and new organs (v1.0.0)
+
+Self-governing AAIS with executable lifecycle engines, a **constitutional layer** (six governed subsystems), and two **Alt-5** summoned organs:
+
+| Subsystem | Stage | Key surface | Proof |
+|---|---|---|---|
+| **Safety Envelope Organ** | mvp | `GET /api/jarvis/safety-envelope/status` | [SAFETY_ENVELOPE_V1_PROOF](docs/proof/platform/SAFETY_ENVELOPE_V1_PROOF.md) |
+| **Operator Profile Organ** | mvp | `GET /api/jarvis/operator-profile` | [OPERATOR_PROFILE_V1_PROOF](docs/proof/platform/OPERATOR_PROFILE_V1_PROOF.md) |
+
+All six golden-batch families are **governed**. Tier 5 adaptive governance pilots on `recipe_module` (maturity-tagged invariants, operator lanes, contextual gates).
+
+**Verification:**
+
+```bash
+make genome-gate alt4-gate alt5-gate tier5-gate
+python -m pytest tests/test_governance_organs_alt4.py tests/test_adaptive_governance.py -q
+```
+
+Operator guide: [AAIS_ALT4_RUNTIME_OPERATOR_GUIDE](docs/contracts/AAIS_ALT4_RUNTIME_OPERATOR_GUIDE.md) · Adaptive law: [AAIS_ADAPTIVE_GOVERNANCE](docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md)
 
 ### Three Ideas MVP partial-live subsystems (v0.4.0)
 
@@ -269,8 +289,9 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
-| Latest tag | [`v0.4.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.4.0) — Three Ideas MVP (Lineage, Triangulation, NTP) |
-| Prior tag | [`v0.3.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.3.0) — Audit Alt-3 partial-live (Recipe, Imagine, Human Voice) |
+| Latest tag | [`v1.0.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.0.0) — **Infinity 1** (Alt-4 runtime, governed layer, Alt-5 organs, Tier 5) |
+| Prior tag | [`v0.4.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.4.0) — Three Ideas MVP (Lineage, Triangulation, NTP) |
+| Earlier | [`v0.3.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.3.0) — Audit Alt-3 partial-live (Recipe, Imagine, Human Voice) |
 | Initial tag | [`v0.2.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.2.0) — initial public AAIS release |
 | License | [LICENSE](LICENSE) (Apache 2.0) |
 | Changelog | [CHANGELOG.md](CHANGELOG.md) |

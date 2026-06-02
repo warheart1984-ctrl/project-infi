@@ -2,15 +2,17 @@
   "subsystem_genome_version": "subsystem_genome.v1",
   "identity": {
     "gene": "narrative_trust_pack",
-    "version": "1.0.0-mvp",
-    "stage": "mvp",
+    "version": "1.0.0-governed",
+    "stage": "governed",
     "display_name": "Narrative Trust Pack"
   },
   "governance": {
     "contracts": [
       "docs/contracts/AAIS_SSP_PROTOCOL.md",
       "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
-      "docs/TRUST_BUNDLE_SPEC.md"
+      "docs/TRUST_BUNDLE_SPEC.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
     ],
     "invariants": [
       "NTP is subordinate to Jarvis capability routing; no sovereign creative subsystem",
@@ -22,24 +24,39 @@
   },
   "schema": {
     "ref": "schemas/narrative_trust_pack.v1.json",
-    "frozen": false
+    "frozen": true
   },
   "runtime": {
     "surface": [
-      { "kind": "module", "path": "src/capabilities/narrative_trust_pack.py" },
-      { "kind": "cli", "path": "python -m tools.narrative pack|verify|signoff" },
-      { "kind": "gate", "path": "make narrative-gate" }
+      {
+        "kind": "module",
+        "path": "src/capabilities/narrative_trust_pack.py"
+      },
+      {
+        "kind": "cli",
+        "path": "python -m tools.narrative pack|verify|signoff"
+      },
+      {
+        "kind": "gate",
+        "path": "make narrative-gate"
+      }
     ]
   },
   "proof": {
     "bundles": [
       "docs/proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md"
     ],
-    "posture": "mvp"
+    "posture": "governed"
   },
   "lineage": {
-    "parents": ["story_forge", "beatbox", "speakers"],
-    "children": []
+    "parents": [
+      "story_forge",
+      "beatbox",
+      "speakers"
+    ],
+    "children": [
+      "imagine_generator"
+    ]
   },
   "activation": {
     "order": 3,
@@ -47,7 +64,7 @@
     "notes": "After Lineage Console and Triangulation; wraps creative pipeline"
   },
   "retirement": {
-    "path": null
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
   },
   "mutation": {
     "history": []

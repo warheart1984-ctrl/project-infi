@@ -2,15 +2,17 @@
   "subsystem_genome_version": "subsystem_genome.v1",
   "identity": {
     "gene": "human_voice_extraction",
-    "version": "0.1.0-concept",
-    "stage": "concept",
+    "version": "1.0.0-governed",
+    "stage": "governed",
     "display_name": "Human Voice Extraction"
   },
   "governance": {
     "contracts": [
       "docs/contracts/AAIS_SSP_PROTOCOL.md",
       "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
-      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md"
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
     ],
     "invariants": [
       "Voice extraction requires explicit operator consent envelope",
@@ -21,29 +23,61 @@
   },
   "schema": {
     "ref": "schemas/human_voice_extraction.v1.json",
-    "frozen": false
+    "frozen": true
   },
   "runtime": {
-    "surface": []
-  },
-  "proof": {
-    "bundles": [],
-    "posture": "asserted",
-    "target_bundles": [
-      "docs/proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md"
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/human_voice_extraction.py"
+      },
+      {
+        "kind": "module",
+        "path": "src/capabilities/human_voice_extraction.py"
+      },
+      {
+        "kind": "api",
+        "path": "POST /api/jarvis/human-voice/extract"
+      },
+      {
+        "kind": "api",
+        "path": "POST /api/jarvis/human-voice/signoff"
+      },
+      {
+        "kind": "api",
+        "path": "POST /api/jarvis/human-voice/handoff"
+      },
+      {
+        "kind": "tool",
+        "path": "python -m tools.human_voice --extraction-id"
+      },
+      {
+        "kind": "gate",
+        "path": "make human-voice-extraction-gate"
+      }
     ]
   },
+  "proof": {
+    "bundles": [
+      "docs/proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md"
+    ],
+    "posture": "governed"
+  },
   "lineage": {
-    "parents": ["imagine_generator", "speakers", "story_forge"],
+    "parents": [
+      "imagine_generator",
+      "speakers",
+      "story_forge"
+    ],
     "children": []
   },
   "activation": {
     "order": 3,
     "batch_id": "audit-alt-3-2026-06-02",
-    "notes": "Last in batch — highest privacy/safety bar"
+    "notes": "Last in batch \u2014 highest privacy/safety bar"
   },
   "retirement": {
-    "path": null
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
   },
   "mutation": {
     "history": []
@@ -51,6 +85,7 @@
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/HUMAN_VOICE_EXTRACTION.md",
     "mvp_plan": "docs/_future/ideas_pending/HUMAN_VOICE_EXTRACTION_MVP_PLAN.md",
-    "summon_eligible": true
+    "active_doc": "docs/subsystems/speakers/HUMAN_VOICE_EXTRACTION.md",
+    "summon_eligible": false
   }
 }

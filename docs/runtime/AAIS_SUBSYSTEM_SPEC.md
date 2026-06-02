@@ -1167,20 +1167,22 @@ The strongest barebones or hidden subsystem seeds currently visible in code are:
 These are the main hidden or barebones areas worth treating as a map of missing
 or not-yet-activated subsystem families.
 
-## 8. Three Ideas MVP (Partial Live)
+## 8. Subsystem Constitutional Layer (Governed)
 
-The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_pending/) to **partial live** MVP:
+The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_pending/) to **governed** status:
 
 | Idea | Status | Active doc | Proof |
 |------|--------|------------|-------|
-| CISIV Operator Lineage Console | partial | [UL_LINEAGE_CONSOLE.md](./UL_LINEAGE_CONSOLE.md) | [../proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md](../proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md) |
-| Forensic Triangulation Ledger | partial | [../subsystems/forensics/TRIANGULATION.md](../subsystems/forensics/TRIANGULATION.md) | [../proof/forensics/TRIANGULATION_V1_PROOF.md](../proof/forensics/TRIANGULATION_V1_PROOF.md) |
-| Narrative Trust Pack | partial | [../subsystems/storyforge/NARRATIVE_TRUST_PACK.md](../subsystems/storyforge/NARRATIVE_TRUST_PACK.md) | [../proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md](../proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md) |
-| Recipe Module | partial | [../subsystems/platform/RECIPE_MODULE.md](../subsystems/platform/RECIPE_MODULE.md) | [../proof/platform/RECIPE_MODULE_V1_PROOF.md](../proof/platform/RECIPE_MODULE_V1_PROOF.md) |
-| Imagine Generator | partial | [../subsystems/storyforge/IMAGINE_GENERATOR.md](../subsystems/storyforge/IMAGINE_GENERATOR.md) | [../proof/storyforge/IMAGINE_GENERATOR_V1_PROOF.md](../proof/storyforge/IMAGINE_GENERATOR_V1_PROOF.md) |
-| Human Voice Extraction | partial | [../subsystems/speakers/HUMAN_VOICE_EXTRACTION.md](../subsystems/speakers/HUMAN_VOICE_EXTRACTION.md) | [../proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md](../proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md) |
+| CISIV Operator Lineage Console | governed | [UL_LINEAGE_CONSOLE.md](./UL_LINEAGE_CONSOLE.md) | [../proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md](../proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md) |
+| Forensic Triangulation Ledger | governed | [../subsystems/forensics/TRIANGULATION.md](../subsystems/forensics/TRIANGULATION.md) | [../proof/forensics/TRIANGULATION_V1_PROOF.md](../proof/forensics/TRIANGULATION_V1_PROOF.md) |
+| Narrative Trust Pack | governed | [../subsystems/storyforge/NARRATIVE_TRUST_PACK.md](../subsystems/storyforge/NARRATIVE_TRUST_PACK.md) | [../proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md](../proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md) |
+| Recipe Module | governed | [../subsystems/platform/RECIPE_MODULE.md](../subsystems/platform/RECIPE_MODULE.md) | [../proof/platform/RECIPE_MODULE_V1_PROOF.md](../proof/platform/RECIPE_MODULE_V1_PROOF.md) |
+| Imagine Generator | governed | [../subsystems/storyforge/IMAGINE_GENERATOR.md](../subsystems/storyforge/IMAGINE_GENERATOR.md) | [../proof/storyforge/IMAGINE_GENERATOR_V1_PROOF.md](../proof/storyforge/IMAGINE_GENERATOR_V1_PROOF.md) |
+| Human Voice Extraction | governed | [../subsystems/speakers/HUMAN_VOICE_EXTRACTION.md](../subsystems/speakers/HUMAN_VOICE_EXTRACTION.md) | [../proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md](../proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md) |
+| Safety Envelope Organ | partial | [../subsystems/platform/SAFETY_ENVELOPE_ORGAN.md](../subsystems/platform/SAFETY_ENVELOPE_ORGAN.md) | [../proof/platform/SAFETY_ENVELOPE_V1_PROOF.md](../proof/platform/SAFETY_ENVELOPE_V1_PROOF.md) |
+| Operator Profile Organ | partial | [../subsystems/platform/OPERATOR_PROFILE_ORGAN.md](../subsystems/platform/OPERATOR_PROFILE_ORGAN.md) | [../proof/platform/OPERATOR_PROFILE_V1_PROOF.md](../proof/platform/OPERATOR_PROFILE_V1_PROOF.md) |
 
-Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate`
+Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate`
 
 ## 9. Concept Pending (SSP)
 

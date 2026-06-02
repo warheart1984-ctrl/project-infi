@@ -1,4 +1,4 @@
-.PHONY: run worker test governance-check rootfs iso-tree rootfs-forge iso-tree-forge forge-installer forge-shippable-gate forge-platform-gate forge-dashboard forge-nightly-evolution forge-nightly-build installer-smoke installer-integration sign-artifacts verify-artifacts ugr-cloud-gate ugr-ingestion-gate ugr-platform-gate ugr-graph-index-gate ugr-embryo-gate ugr-causal-graph-gate ugr-llm-provider-gate ugr-cogos-write-path-gate ugr-graph-backend-gate ugr-trust-bundle-gate ugr-operator-console-gate forge-clean forge-rocky forge-rocky-fallback fetch-rocky-substrate ai-factory-build ai-factory-gate synthetic-mind-gate repo-hygiene-gate lab-init lab-gate mechanic-gate slingshot-gate lineage-gate triangulation-gate narrative-gate recipe-module-gate imagine-generator-gate human-voice-extraction-gate alt3-gate ssp-gate genome-gate platform-gate platform-smoke platform-up
+.PHONY: run worker test governance-check rootfs iso-tree rootfs-forge iso-tree-forge forge-installer forge-shippable-gate forge-platform-gate forge-dashboard forge-nightly-evolution forge-nightly-build installer-smoke installer-integration sign-artifacts verify-artifacts ugr-cloud-gate ugr-ingestion-gate ugr-platform-gate ugr-graph-index-gate ugr-embryo-gate ugr-causal-graph-gate ugr-llm-provider-gate ugr-cogos-write-path-gate ugr-graph-backend-gate ugr-trust-bundle-gate ugr-operator-console-gate forge-clean forge-rocky forge-rocky-fallback fetch-rocky-substrate ai-factory-build ai-factory-gate synthetic-mind-gate repo-hygiene-gate lab-init lab-gate mechanic-gate slingshot-gate lineage-gate triangulation-gate narrative-gate recipe-module-gate imagine-generator-gate human-voice-extraction-gate alt3-gate ssp-gate genome-gate alt4-gate promotion-scan recipe-module-prototype-gate imagine-generator-prototype-gate human-voice-extraction-prototype-gate narrative-trust-pack-prototype-gate forensic-triangulation-prototype-gate cisiv-operator-lineage-console-prototype-gate recipe-module-mutation-gate narrative-trust-pack-mutation-gate platform-gate platform-smoke platform-up
 
 REPO_HYGIENE_MODE ?= fail
 
@@ -176,6 +176,59 @@ ssp-gate:
 
 genome-gate:
 	python3 tools/governance/check_subsystem_genome.py
+
+safety-envelope-gate:
+	python3 .github/scripts/check-safety-envelope-governance.py
+
+operator-profile-gate:
+	python3 .github/scripts/check-operator-profile-governance.py
+
+alt5-gate: safety-envelope-gate operator-profile-gate genome-gate
+
+tier5-gate:
+	python3 tools/governance/check_adaptive_governance.py
+
+alt4-gate:
+	python3 tools/governance/alt4_gate.py
+
+alt4-gate-strict:
+	python3 tools/governance/alt4_gate.py --strict
+
+promotion-scan:
+	python3 -m src.governance_organs.promotion_engine --scan-all
+
+promotion-apply:
+	python3 -m src.governance_organs.promotion_engine --scan-all --apply
+
+retirement-scan:
+	python3 -m src.governance_organs.retirement_engine --scan-all
+
+retirement-apply:
+	python3 -m src.governance_organs.retirement_engine --gene $(GENE) --apply --step $(or $(STEP),6)
+
+recipe-module-prototype-gate:
+	python3 tools/governance/prototype_gate_stub.py recipe_module
+
+imagine-generator-prototype-gate:
+	python3 tools/governance/prototype_gate_stub.py imagine_generator
+
+human-voice-extraction-prototype-gate:
+	python3 tools/governance/prototype_gate_stub.py human_voice_extraction
+
+narrative-trust-pack-prototype-gate:
+	python3 tools/governance/prototype_gate_stub.py narrative_trust_pack
+
+forensic-triangulation-prototype-gate:
+	python3 tools/governance/prototype_gate_stub.py forensic_triangulation
+
+cisiv-operator-lineage-console-prototype-gate:
+	python3 tools/governance/prototype_gate_stub.py cisiv_operator_lineage_console
+
+recipe-module-mutation-gate:
+	python3 tools/governance/mutation_gate.py recipe_module MP-PLACEHOLDER
+
+narrative-trust-pack-mutation-gate:
+	python3 tools/governance/mutation_gate.py narrative_trust_pack MP-NTP-001
 
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py

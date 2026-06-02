@@ -2,15 +2,17 @@
   "subsystem_genome_version": "subsystem_genome.v1",
   "identity": {
     "gene": "forensic_triangulation",
-    "version": "1.0.0-mvp",
-    "stage": "mvp",
+    "version": "1.0.0-governed",
+    "stage": "governed",
     "display_name": "Forensic Triangulation Ledger"
   },
   "governance": {
     "contracts": [
       "docs/contracts/AAIS_SSP_PROTOCOL.md",
       "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
-      "docs/TRUST_BUNDLE_SPEC.md"
+      "docs/TRUST_BUNDLE_SPEC.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
     ],
     "invariants": [
       "Triangulation reads subsystem-native ledgers; does not bypass Mechanic, Scorpion, or Slingshot authority",
@@ -22,23 +24,36 @@
   },
   "schema": {
     "ref": "triangulation/schemas/triangulation.v1.json",
-    "frozen": false
+    "frozen": true
   },
   "runtime": {
     "surface": [
-      { "kind": "package", "path": "triangulation/" },
-      { "kind": "cli", "path": "python -m triangulation correlate --case-id" },
-      { "kind": "gate", "path": "make triangulation-gate" }
+      {
+        "kind": "package",
+        "path": "triangulation/"
+      },
+      {
+        "kind": "cli",
+        "path": "python -m triangulation correlate --case-id"
+      },
+      {
+        "kind": "gate",
+        "path": "make triangulation-gate"
+      }
     ]
   },
   "proof": {
     "bundles": [
       "docs/proof/forensics/TRIANGULATION_V1_PROOF.md"
     ],
-    "posture": "mvp"
+    "posture": "governed"
   },
   "lineage": {
-    "parents": ["mechanic", "scorpion", "cisiv_operator_lineage_console"],
+    "parents": [
+      "mechanic",
+      "scorpion",
+      "cisiv_operator_lineage_console"
+    ],
     "children": []
   },
   "activation": {
@@ -47,7 +62,7 @@
     "notes": "After Lineage Console; requires Mechanic + Scorpion ledgers"
   },
   "retirement": {
-    "path": null
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
   },
   "mutation": {
     "history": []
