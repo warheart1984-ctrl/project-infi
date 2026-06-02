@@ -1,0 +1,48 @@
+{
+  "manifest_version": "repo_hygiene_manifest.v1",
+  "authority": "docs/audit/ROOT_STRUCTURE_AUDIT.md",
+  "forbidden_root_names": [
+    "AAIS-main",
+    "Aris--main",
+    "Project-Infinity-main",
+    "aris",
+    "aris_launcher.py",
+    "ARIS.spec",
+    "start_jarvis.py"
+  ],
+  "forbidden_root_globs": [
+    "*.iso",
+    "*.iso.sha256",
+    "*.img",
+    "ProjectInfinity_UL_Documentation.pdf",
+    "project_blueprints_infinity.html",
+    "Aris--main.zip"
+  ],
+  "forbidden_tracked_prefixes": [
+    "AAIS-main/",
+    "Aris--main/",
+    "Project-Infinity-main/",
+    "aris/",
+    "opt/cogos/"
+  ],
+  "poison_dir_markers": [
+    "opt/cogos",
+    ".synthetic-mind-bundle-build"
+  ],
+  "allowed_bundle_roots": [
+    "wolf-cog-os/artifacts/synthetic-mind-bundle",
+    "wolf-cog-os/payload"
+  ],
+  "local_work_dirs": [
+    ".cogos-live-safe-work",
+    ".cogos-master-boot-work",
+    ".ground-up-work",
+    ".tmp-matrix-sweep",
+    "_tmp_iso_check",
+    "metal-iso-extract",
+    "ci-artifacts",
+    "release"
+  ],
+  "stale_payload_runtime": "wolf-cog-os/payload/opt/cogos/runtime/src/cog_runtime",
+  "canonical_cog_runtime": "src/cog_runtime"
+}

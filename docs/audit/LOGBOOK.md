@@ -282,3 +282,13 @@ Every major entry should name its CISIV stage explicitly.
 - scope: exposed the detachment guard through governed read and clear API routes, restored distinct bridge route and surface attribution across message, stream, and compat ingress lanes, and added regression coverage for detachment lifecycle control and route identity integrity
 - outcome: the repo no longer carries hidden detachment review state, operator-facing detachment clearance is explicit and bounded, and ingress attribution remains accurate across the governed API boundary
 - verification note: the detachment regression slice in `tests/test_api.py` passed after the patch, and the full backend suite remained green at `668 passed, 12 subtests passed`
+
+## 2026-06-02
+
+### Repo Steward Cleanup And Manual Purge
+
+- CISIV stage: `structure`
+- scope: landed Repo Steward gate (`check-repo-hygiene.py`, `REPO_HYGIENE_MANIFEST.json`, `repo-hygiene-gate.yml`), canonical runtime lane doc and sync check, manual purge of duplicate import trees, root ISOs, sidecars, and stale payload runtime
+- outcome: workspace hygiene is machine-enforced; canonical lane Option A closed in blueprint delta checklist; `REPO_HYGIENE_MODE` default is `fail`
+- verification note: `python -m unittest tests.test_check_repo_hygiene_script -q`; pre-purge report at `ci-artifacts/repo-hygiene-pre-purge.json` when present
+- operator debt: empty whitespace-named root directory may require manual removal after closing IDE/git file handles on Windows

@@ -41,12 +41,10 @@ Primary sources used for this pass:
 
 ## 3) Outstanding Items Requiring User Judgment (Blockers)
 
-1. [ ] **Canonical runtime lane is ambiguous across duplicated trees.**
-   - Evidence: parallel structures exist in root and mirrored trees (`Project-Infinity-main`, `Aris--main`), including duplicated contracts and runtime code.
-   - Why blocked: applying “binding law” updates to one tree can diverge the others; applying to all trees risks broad, non-minimal edits.
-   - Decision required:
-     - Option A: treat root (`E:/project-infi`) as sole canonical lane and ignore mirrors.
-     - Option B: keep mirrors synchronized as binding surfaces.
+1. [x] **Canonical runtime lane is ambiguous across duplicated trees.**
+   - **Decision (2026-06-02):** Option A — root (`E:/project-infi`) is sole canonical lane.
+   - Evidence: [CANONICAL_RUNTIME_LANE.md](../governance/CANONICAL_RUNTIME_LANE.md), `check-canonical-lane-sync.py`, duplicate mirrors removed from worktree.
+   - Enforcement: `make synthetic-mind-gate`, `make repo-hygiene-gate`.
 
 2. [ ] **`POST /aais/run` contract mapping is underspecified versus current runtime API.**
    - Blueprint contract: `persona`, `session_id`, `message` with persona set `{tiny_nova, small_nova, nova}`.
