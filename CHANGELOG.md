@@ -13,6 +13,33 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [0.4.0] - 2026-06-02
+
+Three Ideas MVP — CISIV Lineage Console, Forensic Triangulation Ledger, and Narrative Trust Pack promoted from concept to **partial live**.
+
+### Added
+
+- **CISIV Lineage Console** — `src/ul_lineage.py`, emitter hooks (chat, memory, capability, forge), `GET /api/jarvis/lineage/<mission_id>`, Operator CISIV Lineage panel, `tools.ul.smoke --lineage-graph`, `tools.ul.drift --lane lineage`
+- **Forensic Triangulation** — `triangulation/` package, `python -m triangulation correlate`, fixture `tri-demo-001`, bridge map GOV-CI-03 ↔ fd_flow, `make triangulation-gate`
+- **Narrative Trust Pack** — `src/capabilities/narrative_trust_pack.py`, `python -m tools.narrative pack|verify|signoff`, E2E + tamper tests, `make narrative-gate`
+- **Proof packets** — `docs/proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md`, `docs/proof/forensics/TRIANGULATION_V1_PROOF.md`, `docs/proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md`
+- **Docs** — active runtime/subsystem docs; `docs/_future/ideas_pending/` concept specs updated to implementation stage
+
+### Changed
+
+- `docs/runtime/AAIS_SUBSYSTEM_SPEC.md` — §8 Three Ideas MVP partial-live table
+- `README.md` — v0.4.0 release section and verification commands
+
+### Verification (v0.4.0)
+
+```bash
+make lineage-gate triangulation-gate narrative-gate
+python -m pytest tests/test_ul_lineage.py tests/test_triangulation.py tests/test_narrative_trust_pack.py -q
+python -m tools.ul.smoke --lineage-graph tools/ul/fixtures/lineage_multi_hop.json --no-pytest
+```
+
+[0.4.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.4.0
+
 ## [0.3.0] - 2026-06-02
 
 Audit Alt-3 — Recipe Module, Imagine Generator, and Human Voice Extraction promoted from concept to **partial live**, with capability bridge catalog, UL lineage hooks, and env-gated Grok imagine rendering.

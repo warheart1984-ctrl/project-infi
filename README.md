@@ -28,7 +28,7 @@ Authoritative references:
 
 This repository is also **Project Infi** — constitutional engineering where claims require proof, not intent.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v0.3.0](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.3.0) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v0.4.0](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.4.0) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -103,6 +103,26 @@ make alt3-gate
 # or: python .github/scripts/check-recipe-module-governance.py
 #     python .github/scripts/check-imagine-generator-governance.py
 #     python .github/scripts/check-human-voice-extraction-governance.py
+```
+
+### Three Ideas MVP partial-live subsystems (v0.4.0)
+
+Three repo-grounded ideas promoted from concept to **partial live** — runtime modules, governance gates, and proof packets:
+
+| Subsystem | Entry | Key surface | Proof |
+|---|---|---|---|
+| **CISIV Lineage Console** | `src/ul_lineage.py` | `GET /api/jarvis/lineage/<mission_id>`; Operator → CISIV Lineage panel | [UL_LINEAGE_CONSOLE_V1_PROOF](docs/proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md) |
+| **Forensic Triangulation** | `python -m triangulation correlate` | Correlates Mechanic + Scorpion + Slingshot per `case_id` | [TRIANGULATION_V1_PROOF](docs/proof/forensics/TRIANGULATION_V1_PROOF.md) |
+| **Narrative Trust Pack** | `python -m tools.narrative pack` | Story Forge → Beatbox → Speakers hash + signoff export | [NARRATIVE_TRUST_PACK_V1_PROOF](docs/proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md) |
+
+Active docs: [UL_LINEAGE_CONSOLE](docs/runtime/UL_LINEAGE_CONSOLE.md), [TRIANGULATION](docs/subsystems/forensics/TRIANGULATION.md), [NARRATIVE_TRUST_PACK](docs/subsystems/storyforge/NARRATIVE_TRUST_PACK.md).
+
+**Verification:**
+
+```bash
+make lineage-gate triangulation-gate narrative-gate
+python -m pytest tests/test_ul_lineage.py tests/test_triangulation.py tests/test_narrative_trust_pack.py -q
+python -m tools.ul.smoke --lineage-graph tools/ul/fixtures/lineage_multi_hop.json --no-pytest
 ```
 
 ---
@@ -218,6 +238,12 @@ python -m pytest tests/test_cisiv.py tests/test_chat_turn_governance.py tests/te
 make alt3-gate
 ```
 
+**Three Ideas MVP gates (v0.4.0+):**
+
+```bash
+make lineage-gate triangulation-gate narrative-gate
+```
+
 ### 6. Optional contractor lanes
 
 These are isolated HTTP services — start only when you need forge/evolve features:
@@ -243,8 +269,9 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
-| Latest tag | [`v0.3.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.3.0) — Audit Alt-3 partial-live (Recipe, Imagine, Human Voice) |
-| Prior tag | [`v0.2.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.2.0) — initial public AAIS release |
+| Latest tag | [`v0.4.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.4.0) — Three Ideas MVP (Lineage, Triangulation, NTP) |
+| Prior tag | [`v0.3.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.3.0) — Audit Alt-3 partial-live (Recipe, Imagine, Human Voice) |
+| Initial tag | [`v0.2.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.2.0) — initial public AAIS release |
 | License | [LICENSE](LICENSE) (Apache 2.0) |
 | Changelog | [CHANGELOG.md](CHANGELOG.md) |
 | Security | [SECURITY.md](SECURITY.md) |
@@ -269,7 +296,9 @@ forge/             Isolated Forge contractor service
 platform/          Multi-tenant Platform Membrane (ops ingress :8090)
 wolf-cog-os/       CoGOS ISO/rootfs forge (scripts tracked; outputs local-only)
 deploy/            Docker compose stacks (pilot | platform | ugr)
-tools/ul/          UL drift + smoke verification
+tools/ul/          UL drift + smoke verification (+ lineage graph smoke)
+tools/narrative/   Narrative Trust Pack CLI (pack | verify | signoff)
+triangulation/     Forensic Triangulation correlator (Mechanic + Scorpion + Slingshot)
 tools/recipe/      Recipe Module CLI + fixtures
 tools/imagine/     Imagine Generator fixtures
 tools/human_voice/ Human Voice Extraction fixtures
