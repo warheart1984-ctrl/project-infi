@@ -12,6 +12,7 @@ Project Infinity ships **two independent release tracks**. Do not conflate them.
 | History | [CHANGELOG.md](../../CHANGELOG.md) |
 | Tag format | `v1.1.0` (latest Infinity 1 complete), `v0.2.0`, or `aais-v0.2.0` |
 | GitHub Release | Manual or release-drafter; body = CHANGELOG section for that version |
+| v1.1.0 notes | [v1.1.0-infinity-complete.md](./v1.1.0-infinity-complete.md) |
 
 ### Publishing an AAIS release (maintainer)
 
