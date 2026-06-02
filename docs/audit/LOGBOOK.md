@@ -292,3 +292,17 @@ Every major entry should name its CISIV stage explicitly.
 - outcome: workspace hygiene is machine-enforced; canonical lane Option A closed in blueprint delta checklist; `REPO_HYGIENE_MODE` default is `fail`
 - verification note: `python -m unittest tests.test_check_repo_hygiene_script -q`; pre-purge report at `ci-artifacts/repo-hygiene-pre-purge.json` when present
 - operator debt: empty whitespace-named root directory may require manual removal after closing IDE/git file handles on Windows
+
+### Three New AAIS Ideas — Concept Admission
+
+- CISIV stage: `concept`
+- scope: admitted three repo-grounded future ideas into `docs/_future/ideas_pending/` with CISIV concept specs, JSON schemas, and proof posture tables; cross-linked from active docs map
+- outcome: Forensic Triangulation Ledger, CISIV Operator Lineage Console, and Narrative Trust Pack are documented pending ideas with recommended activation order; no runtime code changed
+- verification note: doc-only pass; schema files validated as JSON; active doc indexes updated in `docs/README.md`, `docs/_future/README.md`, and subsystem cross-links
+
+### Three Ideas MVP + Proof Build
+
+- CISIV stage: `verification`
+- scope: implemented CISIV Lineage Console (`src/ul_lineage.py`, API, UI), Forensic Triangulation (`triangulation/`), Narrative Trust Pack (`src/capabilities/narrative_trust_pack.py`, `tools/narrative/`); governance gates and proof packets for all three
+- outcome: all three ideas at partial-live MVP with pytest + make gates; promoted active docs under `docs/runtime/`, `docs/subsystems/forensics/`, `docs/subsystems/storyforge/`
+- verification note: `make lineage-gate triangulation-gate narrative-gate`; `python -m pytest tests/test_ul_lineage.py tests/test_triangulation.py tests/test_narrative_trust_pack.py -q`

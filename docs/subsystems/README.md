@@ -20,6 +20,8 @@ contracts.
 - [scorpion/README.md](./scorpion/README.md)
 - [mechanic/README.md](./mechanic/README.md)
   - governed OS anomaly extractor (fixture Sentinel; Stage 1+ runtime)
+- [forensics/TRIANGULATION.md](./forensics/TRIANGULATION.md)
+  - Forensic Triangulation correlator MVP (partial live)
 - [platform/README.md](./platform/README.md)
   - multi-tenant platform membrane (identity, jobs, artifacts, ingress)
 

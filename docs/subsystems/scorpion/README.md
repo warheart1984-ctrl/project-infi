@@ -46,3 +46,8 @@ This subsystem is subordinate to:
 3. active project contracts and runtime constraints
 
 No proof, no claim.
+
+## Pending Future Ideas
+
+- [Forensic Triangulation Ledger](../../_future/ideas_pending/FORENSIC_TRIANGULATION.md)
+  — correlate Scorpion drift claims with Mechanic and Slingshot (concept)

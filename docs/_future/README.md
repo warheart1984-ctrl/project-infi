@@ -10,3 +10,4 @@ docs tree and the runtime backs it up.
 - [super_nova_expansion/README.md](./super_nova_expansion/README.md)
 - [biometric_inputs/README.md](./biometric_inputs/README.md)
 - [ideas_pending/README.md](./ideas_pending/README.md)
+  - promoted MVP ideas (Lineage Console, Triangulation, NTP) — see [ideas_pending/README.md](./ideas_pending/README.md)

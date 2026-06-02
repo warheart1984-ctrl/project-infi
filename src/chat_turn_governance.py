@@ -322,6 +322,21 @@ def finalize_chat_turn_admission(
         blocked=not admitted,
     )
     if admitted:
+        try:
+            from src.ul_lineage import record_lineage_event
+
+            record_lineage_event(
+                node_type="chat_turn",
+                cisiv_stage=str(session.metadata.get("cisiv_stage") or "verification"),
+                session_id=session.session_id,
+                session_metadata=dict(session.metadata or {}),
+                law_enforcement=law_enforcement,
+                claim_label="proven" if admitted else "asserted",
+                source_module="src.chat_turn_governance",
+                payload={"user_message_preview": details.get("user_message_preview")},
+            )
+        except Exception:
+            pass
         return response_text, None
 
     blocked_message = (

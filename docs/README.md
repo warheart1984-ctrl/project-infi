@@ -27,6 +27,8 @@ Use it to answer four questions quickly:
     [contracts/ARIS_RUNTIME_CONTRACT.md](./contracts/ARIS_RUNTIME_CONTRACT.md)
   - includes the active swarm doctrine in
     [contracts/SWARM_LAW.md](./contracts/SWARM_LAW.md)
+  - includes the Subsystem Summoner Pattern (SSP) in
+    [contracts/AAIS_SSP_PROTOCOL.md](./contracts/AAIS_SSP_PROTOCOL.md)
 - [subsystems/](./subsystems/)
   - admitted or documented subsystem packs such as Nova
 - [audit/](./audit/)
@@ -42,6 +44,9 @@ Use it to answer four questions quickly:
     [_archive/workspace_pull/](./_archive/workspace_pull/)
 - [_future/](./_future/)
   - planned or bounded future material that is not live yet
+  - pending concept-stage ideas in
+    [_future/ideas_pending/](./_future/ideas_pending/)
+    (Forensic Triangulation, CISIV Lineage Console, Narrative Trust Pack)
 
 ## Fastest Reading Path
 

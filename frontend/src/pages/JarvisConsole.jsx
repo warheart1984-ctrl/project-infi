@@ -9,6 +9,7 @@ import {
   FiCpu,
   FiFolder,
   FiGlobe,
+  FiLayers,
   FiMic,
   FiMicOff,
   FiMonitor,
@@ -4381,6 +4382,61 @@ function AAISBlueprintCard({
   );
 }
 
+function LineageConsoleCard({ lineageGraph, busy, onRefresh, activeMissionId, sessionId }) {
+  const nodes = lineageGraph?.nodes || [];
+  const edges = lineageGraph?.edges || [];
+  const driftPassed = lineageGraph?.drift_status?.passed;
+
+  return (
+    <div className="jarvis-side-card page-panel">
+      <div className="jarvis-side-title">
+        <FiLayers />
+        <h3>CISIV Lineage</h3>
+        <button
+          type="button"
+          className="jarvis-inline-icon-button"
+          onClick={onRefresh}
+          disabled={busy || !activeMissionId}
+          aria-label="Refresh lineage graph"
+        >
+          <FiRefreshCw />
+        </button>
+      </div>
+
+      {!activeMissionId ? (
+        <p className="session-empty">Select or create a mission to inspect lineage.</p>
+      ) : nodes.length === 0 ? (
+        <p className="session-empty">No lineage nodes recorded for this mission yet.</p>
+      ) : (
+        <>
+          <div className="jarvis-inline-meta">
+            <span className="inline-meta-chip">{nodes.length} nodes</span>
+            <span className="inline-meta-chip">{edges.length} edges</span>
+            <span className={`inline-meta-chip ${driftPassed === false ? 'danger' : 'success'}`}>
+              {lineageGraph?.claim_label || 'asserted'}
+            </span>
+          </div>
+          <ul className="action-list">
+            {nodes.map((node) => (
+              <li key={node.node_id} className="action-list-item">
+                <strong>{node.node_type}</strong>
+                <span className="inline-meta-chip">{node.cisiv_stage}</span>
+                {node.claim_label ? (
+                  <span className="inline-meta-chip">{node.claim_label}</span>
+                ) : null}
+                <small>{node.timestamp_utc}</small>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {sessionId ? (
+        <p className="session-empty">Session: {sessionId.slice(0, 12)}…</p>
+      ) : null}
+    </div>
+  );
+}
+
 function MissionBoardCard({
   missionBoard,
   titleDraft,
@@ -5591,6 +5647,8 @@ function JarvisConsole() {
   const [dreamspace, setDreamspace] = useState(defaultDreamspace);
   const [dreamspacePresentation, setDreamspacePresentation] = useState('');
   const [missionBoard, setMissionBoard] = useState(defaultMissionBoard);
+  const [lineageGraph, setLineageGraph] = useState(null);
+  const [lineageBusy, setLineageBusy] = useState(false);
   const [missionTitleDraft, setMissionTitleDraft] = useState('');
   const [missionObjectiveDraft, setMissionObjectiveDraft] = useState('');
   const [missionNextStepDraft, setMissionNextStepDraft] = useState('');
@@ -5940,6 +5998,26 @@ function JarvisConsole() {
     }
   }, [sessionId]);
 
+  const refreshLineageGraph = useCallback(async (targetSessionId, missionIdOverride) => {
+    const missionId = missionIdOverride || missionBoard?.active_mission?.id;
+    if (!missionId) {
+      setLineageGraph(null);
+      return;
+    }
+    setLineageBusy(true);
+    try {
+      const activeSessionId = targetSessionId || sessionId;
+      const response = await apiGet(`/api/jarvis/lineage/${missionId}`, {
+        params: activeSessionId ? { session_id: activeSessionId } : undefined,
+      });
+      setLineageGraph(response.data.lineage_graph || null);
+    } catch (error) {
+      setLineageGraph(null);
+    } finally {
+      setLineageBusy(false);
+    }
+  }, [missionBoard?.active_mission?.id, sessionId]);
+
   const refreshBlueprint = useCallback(async () => {
     setBlueprintBusy(true);
     try {
@@ -6074,6 +6152,10 @@ function JarvisConsole() {
   useEffect(() => {
     refreshMissionBoard(sessionId);
   }, [refreshMissionBoard, sessionId]);
+
+  useEffect(() => {
+    refreshLineageGraph(sessionId, missionBoard?.active_mission?.id);
+  }, [missionBoard?.active_mission?.id, refreshLineageGraph, sessionId]);
 
   useEffect(() => {
     selectedSpecialistsRef.current = selectedSpecialists;
@@ -8701,6 +8783,16 @@ function JarvisConsole() {
           <V8EventFeed
             events={sessionEvents}
             formatRelativeTime={formatRelativeTime}
+          />
+          )}
+
+          {showOperatorPanel && (
+          <LineageConsoleCard
+            lineageGraph={lineageGraph}
+            busy={lineageBusy}
+            onRefresh={() => refreshLineageGraph(sessionId)}
+            activeMissionId={missionBoard?.active_mission?.id}
+            sessionId={sessionId}
           />
           )}
 

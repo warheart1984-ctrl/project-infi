@@ -4398,6 +4398,18 @@ class JarvisOperator:
             truth_status=classification["truth_status"],
             runtime_context="operator_runtime",
         )
+        try:
+            from src.ul_lineage import record_lineage_event
+
+            record_lineage_event(
+                node_type="memory_promotion",
+                cisiv_stage="structure",
+                claim_label="asserted",
+                source_module="src.jarvis_operator",
+                payload={"promotion_status": "promoted", "memory_id": promoted.get("id")},
+            )
+        except Exception:
+            pass
         return {
             **promoted,
             "governance": self.memory_store.last_board_event(),

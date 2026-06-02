@@ -87,7 +87,7 @@ def finalize_contractor_runtime_action(
     result_status = str((result or {}).get("status") or "completed").strip().lower() or "completed"
     if (result or {}).get("ok") is False and result_status == "completed":
         result_status = "failed"
-    law_enforcement, law_event_log = project_infi_law.finalize_runtime_action(
+    law_enforcement, ul_snapshot, law_event_log = project_infi_law.finalize_runtime_action(
         contract,
         action_status=result_status,
         summary=summary,
@@ -98,6 +98,20 @@ def finalize_contractor_runtime_action(
             **dict(finalize_details or {}),
         },
     )
+    try:
+        from src.ul_lineage import record_lineage_event
+
+        record_lineage_event(
+            node_type="forge_handoff",
+            cisiv_stage=normalize_cisiv_stage(cisiv_stage),
+            session_id=session_id,
+            law_enforcement=law_enforcement,
+            claim_label="asserted",
+            source_module="src.forge_repo_governance",
+            payload={"action_id": action_id, "surface": surface},
+        )
+    except Exception:
+        pass
     return law_enforcement, ul_snapshot, law_event_log
 
 

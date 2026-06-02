@@ -33,8 +33,11 @@ reference doc that sits above raw code but below vague planning notes.
   - Wolf-cog-os-full boot stack, manifest, bridge, verify gate
 - [COGNITIVE_RUNTIME_FAMILY.md](./COGNITIVE_RUNTIME_FAMILY.md)
   - legacy redirect to Nova Cortex
-- [SPEAKING_RUNTIME_SYSTEM_PROMPT.txt](./SPEAKING_RUNTIME_SYSTEM_PROMPT.txt)
-  - copy-paste system prompt for non-Python tools
+- [AI_SLINGSHOT.md](./AI_SLINGSHOT.md)
+  - governed kinetic accelerator (Mechanic → Jarvis handoff)
+- [UL_LINEAGE_CONSOLE.md](./UL_LINEAGE_CONSOLE.md)
+  - CISIV operator lineage graph (partial live MVP)
+- Promoted MVP ideas index: [../_future/ideas_pending/README.md](../_future/ideas_pending/README.md)
 
 ## Canonical Rule
 

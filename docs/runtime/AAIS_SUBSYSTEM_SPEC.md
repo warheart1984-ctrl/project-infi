@@ -1166,3 +1166,26 @@ The strongest barebones or hidden subsystem seeds currently visible in code are:
 
 These are the main hidden or barebones areas worth treating as a map of missing
 or not-yet-activated subsystem families.
+
+## 8. Three Ideas MVP (Partial Live)
+
+The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_pending/) to **partial live** MVP:
+
+| Idea | Status | Active doc | Proof |
+|------|--------|------------|-------|
+| CISIV Operator Lineage Console | partial | [UL_LINEAGE_CONSOLE.md](./UL_LINEAGE_CONSOLE.md) | [../proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md](../proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md) |
+| Forensic Triangulation Ledger | partial | [../subsystems/forensics/TRIANGULATION.md](../subsystems/forensics/TRIANGULATION.md) | [../proof/forensics/TRIANGULATION_V1_PROOF.md](../proof/forensics/TRIANGULATION_V1_PROOF.md) |
+| Narrative Trust Pack | partial | [../subsystems/storyforge/NARRATIVE_TRUST_PACK.md](../subsystems/storyforge/NARRATIVE_TRUST_PACK.md) | [../proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md](../proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md) |
+
+Gates: `make lineage-gate triangulation-gate narrative-gate`
+
+## 9. Concept Pending (SSP)
+
+Ideas at CISIV **concept** stage per [AAIS_SSP_PROTOCOL.md](../contracts/AAIS_SSP_PROTOCOL.md).
+Nothing here is live until promoted per [ideas_pending/README.md](../_future/ideas_pending/README.md).
+
+| Idea | Status | Concept spec | MVP plan |
+|------|--------|--------------|----------|
+| *(none)* | — | — | — |
+
+New admissions via SSP update this table. Graduated ideas move to §8.

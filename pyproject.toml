@@ -44,7 +44,7 @@ aais = "aais.launcher:main"
 lab = "lab.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["aais*", "app*", "src*", "scorpion*", "forge*", "ai_factory*", "lab*", "mechanic*", "slingshot*"]
+include = ["aais*", "app*", "src*", "scorpion*", "forge*", "ai_factory*", "lab*", "mechanic*", "slingshot*", "triangulation*", "tools*"]
 
 [tool.setuptools.package-data]
 app = ["static/*", "static/**/*"]

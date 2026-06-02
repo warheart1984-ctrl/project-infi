@@ -11414,6 +11414,20 @@ def get_mission_board():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/lineage/<mission_id>", methods=["GET"])
+def get_lineage_graph(mission_id):
+    """Return the UL lineage graph for one mission (read-only)."""
+    try:
+        from src.ul_lineage import build_graph
+
+        session_id = request.args.get("session_id")
+        graph = build_graph(str(mission_id), session_id=session_id)
+        return jsonify(attach_ul_substrate({"lineage_graph": graph}))
+    except Exception as e:
+        logger.error(f"Error reading lineage graph for {mission_id}: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/reset", methods=["POST"])
 def reset_mission_board():
     """Reset Mission Board state with an optional backup and seeded current objectives."""

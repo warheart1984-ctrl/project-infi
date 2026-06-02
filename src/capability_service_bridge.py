@@ -926,7 +926,7 @@ class CapabilityServiceBridge:
         )
         from src.aais_ul_substrate import wrap_service_bridge_result
 
-        return wrap_service_bridge_result(
+        wrapped = wrap_service_bridge_result(
             {
                 "response": response,
                 "tool_result": finalized_tool_result,
@@ -939,6 +939,24 @@ class CapabilityServiceBridge:
                 "phase_gate": dict(phase_gate or {}),
             }
         )
+        try:
+            from src.cisiv import normalize_cisiv_stage
+            from src.ul_lineage import record_lineage_event
+
+            session_id = str((execution_profile or {}).get("session_id") or "").strip() or None
+            record_lineage_event(
+                node_type="capability_call",
+                cisiv_stage=normalize_cisiv_stage(
+                    (phase_gate or {}).get("cisiv_stage") or "implementation"
+                ),
+                session_id=session_id,
+                claim_label="asserted",
+                source_module="src.capability_service_bridge",
+                payload={"capability": spec.get("capability") or spec.get("name")},
+            )
+        except Exception:
+            pass
+        return wrapped
 
     def _handle_spatial_reason(
         self,

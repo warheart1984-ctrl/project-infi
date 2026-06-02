@@ -22,6 +22,8 @@ Beatbox and Speakers may express that truth, but they do not replace it.
   - builder-facing rules for integrating or extending Story Forge
 - [STORYFORGE_STAGE_SPEC.md](./STORYFORGE_STAGE_SPEC.md)
   - stage map for Story Forge plus Beatbox and Speakers handoffs
+- [NARRATIVE_TRUST_PACK.md](./NARRATIVE_TRUST_PACK.md)
+  - governed creative export pack (partial live MVP)
 
 ## Current Runtime Status
 
@@ -42,3 +44,8 @@ The active canonical doc in this folder is
 [STORYFORGE_CANONICAL.md](./STORYFORGE_CANONICAL.md).
 
 If Story Forge docs conflict with runtime code, runtime code wins.
+
+## Pending Future Ideas
+
+- [Narrative Trust Pack (NTP)](../../_future/ideas_pending/NARRATIVE_TRUST_PACK.md)
+  — governed export bundle with signoff gate for the audio chain (concept)

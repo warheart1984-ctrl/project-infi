@@ -25,6 +25,7 @@ govern AAIS behavior.
 - seam closure records
 - evolve, forge, and capability contracts
 - cloud forge rail scheduler (`cloud-forge-rail-contract.md`)
+- subsystem summoner pattern for CISIV concept admission (`AAIS_SSP_PROTOCOL.md`)
 
 ## Canonical Rule
 

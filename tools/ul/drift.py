@@ -51,12 +51,47 @@ def collect_adapter_sections() -> dict[str, object]:
     }
 
 
+def collect_lineage_lane_report() -> dict[str, object]:
+    ensure_project_root()
+    from src.ul_lineage import REQUIRED_NODE_TYPES, SCHEMA_PATH
+
+    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+    node_enum = (
+        schema.get("$defs", {})
+        .get("lineage_node", {})
+        .get("properties", {})
+        .get("node_type", {})
+        .get("enum", [])
+    )
+    missing = sorted(REQUIRED_NODE_TYPES - set(node_enum))
+    extra = sorted(set(node_enum) - REQUIRED_NODE_TYPES)
+    return {
+        "lane": "lineage",
+        "schema_path": str(SCHEMA_PATH),
+        "required_node_types": sorted(REQUIRED_NODE_TYPES),
+        "schema_node_types": node_enum,
+        "missing_from_schema": missing,
+        "extra_in_schema": extra,
+    }
+
+
 def build_parser() -> argparse.ArgumentParser:
-    return argparse.ArgumentParser(description="Report AAIS-UL doctrine vs adapter drift.")
+    parser = argparse.ArgumentParser(description="Report AAIS-UL doctrine vs adapter drift.")
+    parser.add_argument(
+        "--lane",
+        choices=["lineage"],
+        help="Report drift for an extended UL lane (lineage graph node coverage).",
+    )
+    return parser
 
 
 def main(argv: list[str] | None = None) -> int:
-    build_parser().parse_args(argv)
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    if args.lane == "lineage":
+        report = collect_lineage_lane_report()
+        print_json(report)
+        return 1 if report.get("missing_from_schema") else 0
     report = collect_adapter_sections()
     print_json(report)
     return 1 if report.get("missing_from_adapters") else 0

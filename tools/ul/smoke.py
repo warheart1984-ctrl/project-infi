@@ -317,6 +317,22 @@ def _run_pytest() -> dict[str, Any]:
     }
 
 
+def validate_lineage_graph(path: Path) -> dict[str, Any]:
+    ensure_project_root()
+    from src.ul_lineage import validate_graph
+
+    graph = json.loads(path.read_text(encoding="utf-8"))
+    report = validate_graph(graph)
+    report["path"] = str(path)
+    return report
+
+
+def run_lineage_smoke(path: Path) -> dict[str, Any]:
+    report = validate_lineage_graph(path)
+    report["overall_ok"] = bool(report.get("passed"))
+    return report
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run AAIS-UL smoke checks.")
     parser.add_argument(
@@ -329,12 +345,21 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Skip attach_ul_substrate checks.",
     )
+    parser.add_argument(
+        "--lineage-graph",
+        metavar="PATH",
+        help="Validate a UL lineage graph fixture (skips standard smoke when set).",
+    )
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    if args.lineage_graph:
+        report = run_lineage_smoke(Path(args.lineage_graph))
+        print_json(report)
+        return 0 if report.get("overall_ok") else 1
     report = run_smoke(wrap=not args.no_wrap, run_pytest=not args.no_pytest)
     print_json(report)
     return 0 if report.get("overall_ok") else 1
