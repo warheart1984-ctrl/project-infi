@@ -6,14 +6,49 @@ inference caching, and model warm-up.
 
 import os
 import time
-import torch
-from huggingface_hub import snapshot_download
-from transformers import (
-    AutoTokenizer,
-    AutoModelForCausalLM,
-    CLIPProcessor,
-    CLIPModel,
-)
+
+try:
+    from huggingface_hub import snapshot_download
+except ImportError:
+    def snapshot_download(*args, **kwargs):
+        raise ImportError(
+            "huggingface_hub is required for AAIS local model inference."
+        )
+
+try:
+    from transformers import (
+        AutoTokenizer,
+        AutoModelForCausalLM,
+        CLIPProcessor,
+        CLIPModel,
+    )
+except ImportError:
+    class _MissingModelRuntime:
+        @staticmethod
+        def from_pretrained(*args, **kwargs):
+            raise ImportError(
+                "transformers is required for AAIS local model inference. "
+                "Install the model runtime extras before loading text or vision models."
+            )
+
+    AutoTokenizer = _MissingModelRuntime
+    AutoModelForCausalLM = _MissingModelRuntime
+    CLIPProcessor = _MissingModelRuntime
+    CLIPModel = _MissingModelRuntime
+
+try:
+    import torch
+except ImportError:
+    torch = None
+
+
+def _require_torch():
+    if torch is None:
+        raise ImportError(
+            "PyTorch is required for AAIS local model inference. "
+            "Install the model runtime extras before loading text, vision, or image models."
+        )
+    return torch
 
 
 def clean_response(raw_response: str) -> str:
@@ -446,6 +481,7 @@ class MultiModalAI:
 
     def _rank_image_labels(self, image, candidate_labels=None, top_k=5):
         """Rank simple label prompts against the current image using CLIP similarity."""
+        torch_module = _require_torch()
         self._load_vision_model()
         label_specs = list(candidate_labels or VISION_LABEL_PROMPTS)
         prompts = [spec["prompt"] for spec in label_specs]
@@ -458,7 +494,7 @@ class MultiModalAI:
             truncation=True,
         ).to(self.device)
 
-        with torch.no_grad(), torch.amp.autocast(
+        with torch_module.no_grad(), torch_module.amp.autocast(
             device_type=self.device if self.device in ("cuda", "cpu") else "cpu",
             enabled=self.device == "cuda",
         ):
@@ -477,7 +513,7 @@ class MultiModalAI:
             text_features = text_features / text_features.norm(dim=-1, keepdim=True)
             scores = (100.0 * image_features @ text_features.T).softmax(dim=-1).squeeze(0)
 
-        top_values, top_indices = torch.topk(scores, k=min(top_k, len(label_specs)))
+        top_values, top_indices = torch_module.topk(scores, k=min(top_k, len(label_specs)))
         top_matches = []
         for score, index in zip(top_values.tolist(), top_indices.tolist()):
             spec = label_specs[index]
@@ -607,7 +643,8 @@ class MultiModalAI:
                 }
             )
 
-        with torch.no_grad(), torch.amp.autocast(
+        torch_module = _require_torch()
+        with torch_module.no_grad(), torch_module.amp.autocast(
             device_type=self.device if self.device in ("cuda", "cpu") else "cpu",
             enabled=self.device == "cuda",
         ):

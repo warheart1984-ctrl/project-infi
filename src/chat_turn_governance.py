@@ -306,9 +306,15 @@ def finalize_chat_turn_admission(
     session.metadata["law_event_log"] = law_event_log
     session.metadata["cisiv_stage"] = infer_chat_turn_cisiv_stage(phase="admit")
 
-    governed_status = str((law_enforcement.get("governed_cycle") or {}).get("status") or "").strip().lower()
-    truthful = bool((law_enforcement.get("governed_cycle") or {}).get("truthful"))
-    admitted = governed_status in {"success", "partial", "overload"}
+    governed_cycle = dict(law_enforcement.get("governed_cycle") or {})
+    governed_status = str(governed_cycle.get("status") or "").strip().lower()
+    truthful = bool(
+        governed_cycle.get(
+            "truthful",
+            governed_status in {"success", "partial", "overload", "wait"},
+        )
+    )
+    admitted = truthful and governed_status in {"success", "partial", "overload", "wait"}
     _mirror_chat_turn_admission_trace(
         response_trace,
         governed_status=governed_status,

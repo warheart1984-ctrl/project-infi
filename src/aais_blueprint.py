@@ -160,8 +160,8 @@ def _module_admission_entries() -> list[dict[str, Any]]:
         {
             "id": "invariant_engine",
             "label": "Invariant Engine",
-            "normalized_status": "admitted",
-            "summary": "Invariant engine is live on the Cognitive Bridge deliberation and generation path.",
+            "normalized_status": "present but not admitted",
+            "summary": "Invariant engine exists as a governed guard but is not listed as an admitted standalone module.",
             "reason": (
                 "Bridge packets of type deliberation_request and generation_request pass through "
                 "InvariantEngine.validate_bridge_packet before ARIS enforcement and governed LLM routing."

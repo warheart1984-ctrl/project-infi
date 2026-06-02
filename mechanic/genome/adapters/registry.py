@@ -6,6 +6,7 @@ from mechanic.genome.adapters.base import GenomeAdapter
 from mechanic.genome.adapters.ci_automation import CiAutomationAdapter
 from mechanic.genome.adapters.cursor_rules import CursorRulesAdapter
 from mechanic.genome.adapters.filesystem_prompt import FilesystemPromptAdapter
+from mechanic.genome.adapters.governance_manifest import GovernanceManifestAdapter
 from mechanic.genome.adapters.python_llm import PythonLlmAdapter
 from mechanic.genome.adapters.trace_ndjson import TraceNdjsonAdapter
 from mechanic.genome.adapters.workflow_json import WorkflowJsonAdapter
@@ -17,6 +18,7 @@ _REGISTRY: dict[str, GenomeAdapter] = {
     "ci_automation": CiAutomationAdapter(),
     "python_llm_calls": PythonLlmAdapter(),
     "trace_ndjson": TraceNdjsonAdapter(),
+    "governance_manifest": GovernanceManifestAdapter(),
 }
 
 

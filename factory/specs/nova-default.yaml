@@ -1,6 +1,7 @@
 spec_version: ai_factory.ai_build_spec.v1
 build_id: nova-default
 intent_summary: Default Nova Cortex v3 governed mind with Spark v1 ignition and full lobe stack.
+synthetic_mind: true
 risk_level: low
 capabilities:
   enabled_lobes:

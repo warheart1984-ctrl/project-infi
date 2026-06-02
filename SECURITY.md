@@ -2,53 +2,43 @@
 
 ## Supported Versions
 
-AAIS is an actively evolving system. At this stage:
-
-* Only the **latest commit on `main`** is considered supported.
-* Older states, forks, or archived code are **not supported** for security updates.
-
-As the project stabilizes, versioned support will be introduced.
-
----
+| Version | Supported |
+|---------|-----------|
+| `0.2.x` (latest on `main`) | Yes |
+| Older commits, forks, or archived trees | No |
 
 ## Reporting a Vulnerability
 
-If you discover a security issue, please report it responsibly.
+Report security issues responsibly:
 
-### How to report
+- **Non-sensitive:** open a [GitHub Issue](https://github.com/warheart1984-ctrl/Project-Infinity1/issues)
+- **Sensitive:** email [warheart1984@gmail.com](mailto:warheart1984@gmail.com)
 
-* Open a **GitHub Issue** (if the issue is non-sensitive), or
-* Contact directly via: **[warheart1984@gmail.com](mailto:warheart1984@gmail.com)**
+Include a clear description, reproduction steps, impact, and optional mitigation.
 
-### What to include
+We acknowledge reports on a best-effort basis. Confirmed issues receive a fix or documented mitigation.
 
-* Clear description of the issue
-* Steps to reproduce
-* Impact (what can go wrong)
-* Any suggested mitigation (optional)
+## Before Production Deployment
 
----
+This repository ships development defaults. Operators must harden before any production or internet-facing deployment:
 
-## What to expect
+1. **Never use development CoGOS signing keys.** Generate fresh trust keys for Wolf-CoG-OS / CoGOS installs. Do not copy keys from local backup bundles under `wolf-cog-os/payload/opt/cogos/memory/backups/` (gitignored, local-only).
+2. **Rotate Platform secrets** in `deploy/pilot/.env` or `deploy/platform/.env`: `PLATFORM_MASTER_API_KEY`, `PLATFORM_EXPORT_PACK_SECRET`, `PLATFORM_EXCHANGE_SECRET`.
+3. **Protect provider API keys** (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `OPENROUTER_API_KEY`). Keep `.env` out of git; use your secret manager in production.
+4. **Set `APP_BEARER_TOKEN`** if exposing the workflow shell beyond localhost.
+5. **Review compose files** under `mechanic/hosted/deploy/` and `deploy/` — placeholder secrets are for local pilot only.
 
-* Acknowledgement within a reasonable timeframe (best effort)
-* Investigation and classification of the issue
-* If confirmed:
+## Secrets in This Repository
 
-  * A fix or mitigation will be applied
-  * Behavior will be documented if relevant to system law/governance
+The following must never contain real credentials in tracked files:
 
----
+- `.env` (gitignored)
+- Wolf-CoG-OS operator backup snapshots
+- Private training data under `training/data/private_messages*.jsonl`
+- GitHub Actions secrets (`MINISIGN_*` for CoGOS release promotion)
 
-## Project Approach to Security
+If you find a committed secret, report it immediately and rotate the affected credential.
 
-AAIS is designed around **governed behavior**, not just patching vulnerabilities.
+## CoGOS ISO Releases
 
-This means:
-
-* No component should operate outside defined boundaries
-* Failures should be **visible and controlled**, not silent
-* External input must pass **admission and verification rules**
-* Dependencies must be pinned, lock-backed, and reviewed as ingress surfaces
-
-Security is treated as part of system behavior, not an afterthought.
+CoGOS stable ISO promotion uses minisign keys stored in GitHub Actions secrets, not in the repo. See [`docs/releases/README.md`](docs/releases/README.md) for the AAIS vs CoGOS release split.

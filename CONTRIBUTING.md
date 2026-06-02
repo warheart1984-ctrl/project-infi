@@ -22,13 +22,16 @@ python -m aais prepare --data-dir ./.runtime/aais-data
 python -m aais start --data-dir ./.runtime/aais-data --preset mock --no-browser
 ```
 
-Full operator primer: [`README.md`](README.md) — **How to Make It Work**.
+Full operator onboarding: [`docs/operations/FIRST_TIME_OPERATOR_GUIDE.md`](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)  
+Quick start: [`README.md`](README.md) — **How to Make It Work**  
+Release history: [`CHANGELOG.md`](CHANGELOG.md)
 
 ## What not to commit
 
 Local-only artifacts are listed in [`.gitignore`](.gitignore). Never commit:
 
 - ISO images (`*.iso`) or forge output under `wolf-cog-os/output/`
+- Wolf-CoG-OS operator backup snapshots under `wolf-cog-os/payload/opt/cogos/memory/backups/`
 - Runtime data under `.runtime/`
 - Secrets (`.env`, API keys)
 - Duplicate import trees (`AAIS-main/`, `Project-Infinity-main/`, etc.)

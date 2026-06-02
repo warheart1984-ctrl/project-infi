@@ -26,10 +26,19 @@ def extract_process_genome(
     root = Path(repo_path).expanduser().resolve()
     if not root.is_dir():
         raise ValueError(f"repo-path is not a directory: {root}")
+    previous_trace_path = os.environ.get("MECHANIC_TRACE_PATH")
     if trace_path:
         os.environ["MECHANIC_TRACE_PATH"] = str(trace_path)
-    genome = empty_genome(case_id=case_id, repo_path=str(root))
-    run_adapters(root, genome, adapter_ids=adapter_ids)
+    else:
+        os.environ.pop("MECHANIC_TRACE_PATH", None)
+    try:
+        genome = empty_genome(case_id=case_id, repo_path=str(root))
+        run_adapters(root, genome, adapter_ids=adapter_ids)
+    finally:
+        if previous_trace_path is None:
+            os.environ.pop("MECHANIC_TRACE_PATH", None)
+        else:
+            os.environ["MECHANIC_TRACE_PATH"] = previous_trace_path
     profile_path = root / ".mechanic-profile.json"
     profile_meta: dict[str, Any] = {}
     if profile_path.is_file():

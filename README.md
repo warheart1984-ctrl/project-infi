@@ -28,6 +28,72 @@ Authoritative references:
 
 This repository is also **Project Infi** — constitutional engineering where claims require proof, not intent.
 
+**License:** [Apache 2.0](LICENSE) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+
+---
+
+## Architecture
+
+AAIS separates **cognition authority**, **workflow shell**, and **optional ops planes**. Jarvis runtime truth lives in Flask (`src/api.py`); the FastAPI shell (`app/main.py`) hosts the operator UI and bridges to Jarvis at `/legacy_api`.
+
+```mermaid
+flowchart LR
+    subgraph cognition [Cognition executive]
+        Flask["src/api.py Flask Jarvis"]
+        Law[project_infi_law]
+        UL[aais_ul]
+    end
+    subgraph shell [Workflow shell]
+        FastAPI["app/main.py :8000"]
+        UI[React app/static]
+    end
+    subgraph ops [Ops membrane optional]
+        Platform["platform serve :8090"]
+        UGR[UGR ledger]
+    end
+    subgraph contractors [Contractors optional]
+        Forge[forge :6060]
+        Evolve[evolve :6062]
+    end
+    UI --> FastAPI
+    FastAPI -->|"/legacy_api bridge"| Flask
+    Flask --> Law
+    Flask --> UL
+    Platform --> UGR
+    Flask -.-> Forge
+```
+
+### Authority boundaries
+
+| Plane | Owner | Role |
+|---|---|---|
+| **Cognition executive** | `src/api.py` | Jarvis sessions, chat turns, law admission, provider routing |
+| **Workflow shell** | `app/main.py` | Health, onboarding, static UI, Celery workflow — does not replace Jarvis |
+| **Ops membrane** | `platform/` | Multi-tenant jobs, ledger, artifacts — observe/actuate, not goal invention |
+| **Contractors** | `forge/`, `forge_eval/`, `evolve_engine/` | Isolated HTTP lanes for repo mutation and evaluation |
+
+### Request path (operator chat)
+
+1. Operator turn enters `/legacy_api/api/chat/...` (Flask Jarvis).
+2. **Chat turn governance** and **AAIS-UL substrate** adapt the outward payload.
+3. **Project Infi law** admits or filters the reply.
+4. **Provider registry** routes to mock, laptop, local, OpenAI, Anthropic, or OpenRouter.
+5. Response includes `ul_substrate`, `modular_preview`, `law_enforcement`, and `cisiv_stage`.
+
+Optional subsystems (Platform, Wolf-CoG-OS ISO forge, forge/evolve contractors) attach at the edges — core chat works without them.
+
+Deep dives: [`docs/runtime/AAIS_SUBSYSTEM_SPEC.md`](docs/runtime/AAIS_SUBSYSTEM_SPEC.md), [`docs/operations/FULL_STACK_PILOT_INTEGRATION.md`](docs/operations/FULL_STACK_PILOT_INTEGRATION.md).
+
+---
+
+## Choose Your Path
+
+| Path | Time | Start here | Outcome |
+|---|---|---|---|
+| **Tier 1 — AAIS local** | ~10 min | [First-Time Operator Guide §1](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-1-run-aais-locally-10-minutes) + **How to Make It Work** below | Mock Jarvis on `:8000` |
+| **Tier 2 — Infinity Pilot** | ~15 min | [Guide §2](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-2-infinity-pilot-docker-15-minutes) + [Early Adopter Guide](docs/operations/INFINITY_PILOT_EARLY_ADOPTER.md) | Docker stack: Platform + UGR + AAIS |
+| **Tier 3 — Full monorepo** | Advanced | [Guide §3](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-3-advanced-subsystems) + [Wolf-CoG-OS forge](wolf-cog-os/forge/README.md) | ISO forge, Platform v6+, subsystems |
+
 ---
 
 ## How to Make It Work
@@ -144,6 +210,9 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
+| License | [LICENSE](LICENSE) (Apache 2.0) |
+| Changelog | [CHANGELOG.md](CHANGELOG.md) |
+| Security | [SECURITY.md](SECURITY.md) |
 | Contributing | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
 | CI workflows | [`.github/workflows/`](.github/workflows/) |
 | Local-only rules | [`.gitignore`](.gitignore), [`docs/GITHUB.md`](docs/GITHUB.md) |
@@ -168,9 +237,13 @@ app/               FastAPI workflow shell + packaged static UI
 src/               Jarvis runtime authority (api, operator, UL, law)
 frontend/          React operator UI source (build → app/static)
 forge/             Isolated Forge contractor service
+platform/          Multi-tenant Platform Membrane (ops ingress :8090)
+wolf-cog-os/       CoGOS ISO/rootfs forge (scripts tracked; outputs local-only)
+deploy/            Docker compose stacks (pilot | platform | ugr)
 tools/ul/          UL drift + smoke verification
 docs/              Contracts, subsystem spec, proof packets
 tests/             Pytest suite
+external/          Vendored third-party integrations (see each package)
 ```
 
 ---

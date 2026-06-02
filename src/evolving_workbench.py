@@ -214,6 +214,12 @@ class EvolvingWorkspaceIntel:
         configured = str(os.getenv(PRIMARY_PROJECT_ENV, "")).strip()
         if configured:
             return configured
+        try:
+            workspace_root = self._resolve_workspace_root()
+            if (workspace_root / "AAIS-main").is_dir():
+                return "AAIS-main"
+        except OSError:
+            pass
         return Path(__file__).resolve().parents[1].name
 
     def _iter_visible_files(self) -> list[str]:

@@ -691,20 +691,20 @@ def _risk_level(prediction: dict[str, Any]) -> str:
 
 
 def _shared_state(prediction: dict[str, Any]) -> dict[str, str]:
-    return _wrap_ul_payload({
+    return {
         "user_mode": _normalize_mode(prediction.get("user_mode"), "normal"),
         "system_mode": _normalize_mode(prediction.get("system_mode"), "stable"),
         "risk_level": _risk_level(prediction),
-    })
+    }
 
 
 def _base_compact_payload(prediction: dict[str, Any]) -> dict[str, Any]:
-    return _wrap_ul_payload({
+    return {
         "ev": int(prediction["event_code"]),
         "ts": int(prediction["event_timestamp"]),
         "conf": int(prediction["confidence"]),
         "horiz": int(prediction["horizon_ms"]),
-    })
+    }
 
 
 def _event_payload(prediction: dict[str, Any]) -> dict[str, Any]:

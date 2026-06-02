@@ -140,4 +140,5 @@ def admit_slingshot_turn(
         "authorized_goals": list(packet.get("authorized_goals") or []),
         "required_constraints": list(packet.get("required_constraints") or []),
     }
+    session.metadata["mechanic_case_id"] = case_id
     return None

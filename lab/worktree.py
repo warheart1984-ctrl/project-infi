@@ -15,7 +15,10 @@ class WorktreeError(RuntimeError):
 
 
 def _run_git(args: list[str], *, cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
-    cmd = ["git", *args]
+    cmd = ["git"]
+    if cwd:
+        cmd.extend(["-c", f"safe.directory={Path(cwd).resolve()}"])
+    cmd.extend(args)
     return subprocess.run(
         cmd,
         cwd=str(cwd) if cwd else None,
@@ -82,8 +85,18 @@ def create_workspace(
     ref = branch or "HEAD"
     init_head = get_head_rev(source_root)
 
-    lab_host_root = find_git_root(workspace_path.parent)
-    use_worktree = _same_git_repository(source_root, lab_host_root)
+    try:
+        current_repo_root = find_git_root(Path.cwd())
+    except WorktreeError:
+        current_repo_root = None
+    try:
+        lab_host_root = find_git_root(workspace_path.parent)
+    except WorktreeError:
+        lab_host_root = None
+    use_worktree = (
+        (current_repo_root is not None and source_root == current_repo_root)
+        or (lab_host_root is not None and _same_git_repository(source_root, lab_host_root))
+    )
 
     if use_worktree:
         # worktree from same repository
@@ -105,11 +118,17 @@ def create_workspace(
         # external repo — local clone
         if workspace_path.exists():
             raise WorktreeError(f"workspace path exists: {workspace_path}")
+        safe_args = [
+            "-c",
+            f"safe.directory={source_root}",
+            "-c",
+            f"safe.directory={source_root / '.git'}",
+        ]
         proc = _run_git(
-            ["clone", "--local", str(source_root), str(workspace_path)],
+            [*safe_args, "clone", "--local", str(source_root), str(workspace_path)],
         )
         if proc.returncode != 0:
-            proc = _run_git(["clone", str(source_root), str(workspace_path)])
+            proc = _run_git([*safe_args, "clone", str(source_root), str(workspace_path)])
         if proc.returncode != 0:
             raise WorktreeError(f"git clone failed: {(proc.stderr or proc.stdout).strip()}")
         mode = "clone"

@@ -92,7 +92,10 @@ class ImmuneSystemController:
 
     def configure_runtime_dir(self, runtime_dir: str | Path) -> None:
         with self._lock:
-            self.runtime_dir = Path(runtime_dir) / "immune-system"
+            base_dir = Path(runtime_dir)
+            self.runtime_dir = (
+                base_dir if base_dir.name == "immune-system" else base_dir / "immune-system"
+            )
             self._state = ImmuneState()
             self._events = []
             self._incidents = []

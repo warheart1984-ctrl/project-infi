@@ -215,7 +215,12 @@ class SecurityProtocolCore:
 
     def configure_runtime_dir(self, runtime_dir: str | Path) -> None:
         with self._lock:
-            self.runtime_dir = Path(runtime_dir) / "security-protocol"
+            base_dir = Path(runtime_dir)
+            self.runtime_dir = (
+                base_dir
+                if base_dir.name == "security-protocol"
+                else base_dir / "security-protocol"
+            )
             self._events = []
             self._load_events()
 

@@ -19,6 +19,7 @@ from platform.policy.engine import evaluate_admission
 from platform.proof.runner import promote_consensus, run_proof_for_job
 from platform.service import PlatformService
 from platform.settings import PlatformSettings
+from platform.synthetic_mind import get_synthetic_mind_ref
 from platform.v814_routes import patch_oidc_routes, register_v814_routes
 from platform.v1520_routes import register_v1520_routes
 from platform.v2130_routes import register_v2130_routes
@@ -66,6 +67,18 @@ def register_extra_routes(
             return {"orgs": svc.store.list_orgs()}
         org = svc.store.get_org(principal.org_id)
         return {"orgs": [org] if org else []}
+
+    @app.get("/v1/orgs/{org_id}/synthetic-mind")
+    def get_org_synthetic_mind(
+        org_id: str,
+        principal: Principal = Depends(require_org_action("artifact.read")),
+    ) -> dict[str, Any]:
+        if org_id != principal.org_id and not principal.is_platform_admin():
+            raise HTTPException(status_code=403, detail="forbidden")
+        ref = get_synthetic_mind_ref(svc.store, org_id)
+        if not ref:
+            raise HTTPException(status_code=404, detail="synthetic mind ref not registered")
+        return {"synthetic_mind_ref": ref}
 
     @app.get("/v1/orgs/{org_id}/principals")
     def list_principals(

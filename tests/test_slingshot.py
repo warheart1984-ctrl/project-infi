@@ -13,6 +13,7 @@ from slingshot.frame import build_slingshot_frame, load_slingshot_frame
 from slingshot.impact import build_impact_receipt, persist_impact_receipt, verify_slingshot_case
 from slingshot.launch import admit_slingshot_turn, resolve_slingshot_turn_config
 from slingshot.midflight import (
+    evaluate_slingshot_midflight_cortex,
     evaluate_slingshot_midflight_reply,
     merge_midflight_reports,
 )
@@ -25,6 +26,8 @@ from slingshot.packet import (
 
 FIXTURE_V2 = Path("mechanic/fixtures/sample-customer-repo-v2")
 TRACE_V2 = FIXTURE_V2 / "traces" / "session.ndjson"
+FIXTURE_CLEAN = Path("mechanic/fixtures/sample-customer-repo-clean")
+TRACE_CLEAN = FIXTURE_CLEAN / "traces" / "session.ndjson"
 
 
 class TestSlingshotPreload(unittest.TestCase):
@@ -45,6 +48,75 @@ class TestSlingshotPreload(unittest.TestCase):
             self.assertTrue(frame_path("sc-v2", runtime_root=shot_root).is_file())
             profile = mech_root / "sc-v2" / "MECHANIC_RUNTIME_PROFILE.json"
             self.assertTrue(profile.is_file())
+
+    def test_clean_fixture_full_launch_impact_verify_path(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            shot_root = tmp_path / "slingshot"
+            mech_root = tmp_path / "mechanic"
+            case_id = "sc-clean"
+            frame = build_slingshot_frame(
+                case_id=case_id,
+                repo_path=FIXTURE_CLEAN.resolve(),
+                trace_path=str(TRACE_CLEAN),
+                slingshot_root=shot_root,
+                mechanic_root=mech_root,
+            )
+            self.assertFalse(frame["launch_blocked"])
+            self.assertEqual(frame["drift_count"], 0)
+
+            packet = build_slingshot_packet(
+                frame,
+                {"authorized_goals": ["analyze support triage only"], "required_constraints": ["no apply"]},
+                runtime_root=shot_root,
+            )
+            self.assertTrue(packet_path(case_id, runtime_root=shot_root).is_file())
+
+            session = SimpleNamespace(metadata={})
+            block = admit_slingshot_turn(
+                session,
+                {"case_id": case_id, "authorized_goals": packet["authorized_goals"]},
+                session_id="sess-clean",
+                slingshot_root=shot_root,
+                mechanic_root=mech_root,
+            )
+            self.assertIsNone(block)
+            self.assertTrue(session.metadata["slingshot"]["active"])
+
+            cortex_report = evaluate_slingshot_midflight_cortex(session, packet=packet, model_calls_this_turn=1)
+            reply_report = evaluate_slingshot_midflight_reply(
+                user_message="Analyze support triage with no apply.",
+                assistant_reply="Analysis only: no apply, no repo writes, and human review remains required.",
+                packet=packet,
+            )
+            merged = merge_midflight_reports(cortex_report, reply_report)
+            self.assertEqual(merged["impact_status"], "clean")
+            self.assertFalse(merged["drift_events"])
+
+            receipt = build_impact_receipt(
+                case_id=case_id,
+                turn_id="turn-clean",
+                user_message="Analyze support triage with no apply.",
+                assistant_reply="Analysis only: no apply, no repo writes, and human review remains required.",
+                midflight_report=merged,
+                session_metadata=session.metadata,
+                slingshot_root=shot_root,
+                mechanic_root=mech_root,
+            )
+            receipt_path = persist_impact_receipt(receipt, runtime_root=shot_root)
+            self.assertTrue(receipt_path.is_file())
+
+            result = verify_slingshot_case(
+                case_id,
+                repo_path=FIXTURE_CLEAN.resolve(),
+                slingshot_root=shot_root,
+                mechanic_root=mech_root,
+            )
+            self.assertTrue(result["ok"])
+            self.assertTrue(result["frame_present"])
+            self.assertTrue(result["packet_present"])
+            self.assertTrue(result["replay"]["matched"])
+            self.assertEqual(result["receipt_count"], 1)
 
 
 class TestSlingshotPacket(unittest.TestCase):

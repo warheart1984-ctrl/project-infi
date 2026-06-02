@@ -139,6 +139,49 @@ class TestScorpionCli(unittest.TestCase):
         payload = json.loads(stream.getvalue())
         self.assertGreater(payload["drift_count"], 0)
 
+    def test_cli_scan_does_not_append_drift_index_by_default(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            drift_index = Path(temp_dir) / "health_drift_index.jsonl"
+            stream = io.StringIO()
+            with redirect_stdout(stream):
+                code = main(
+                    [
+                        "--mode",
+                        "scan",
+                        "--case-id",
+                        "sc-cli-readonly",
+                        "--trace-path",
+                        str(FIXTURES / "privilege_drift.ndjson"),
+                        "--drift-index-path",
+                        str(drift_index),
+                    ]
+                )
+            self.assertEqual(code, 0)
+            self.assertFalse(drift_index.exists())
+
+    def test_cli_scan_appends_drift_index_when_explicit(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            drift_index = Path(temp_dir) / "health_drift_index.jsonl"
+            stream = io.StringIO()
+            with redirect_stdout(stream):
+                code = main(
+                    [
+                        "--mode",
+                        "scan",
+                        "--case-id",
+                        "sc-cli-append",
+                        "--trace-path",
+                        str(FIXTURES / "privilege_drift.ndjson"),
+                        "--drift-index-path",
+                        str(drift_index),
+                        "--append-drift-index",
+                    ]
+                )
+            self.assertEqual(code, 0)
+            lines = drift_index.read_text(encoding="utf-8").strip().splitlines()
+            self.assertEqual(len(lines), 1)
+            self.assertEqual(json.loads(lines[0])["case_id"], "sc-cli-append")
+
     def test_cli_chaos_check(self):
         stream = io.StringIO()
         with redirect_stdout(stream):

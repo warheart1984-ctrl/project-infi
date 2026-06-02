@@ -454,7 +454,10 @@ class ModuleGovernanceController:
 
     def configure_runtime_dir(self, runtime_dir: str | Path) -> None:
         with self._lock:
-            self.runtime_dir = Path(runtime_dir) / "module-governance"
+            base_dir = Path(runtime_dir)
+            self.runtime_dir = (
+                base_dir if base_dir.name == "module-governance" else base_dir / "module-governance"
+            )
             self._modules = {}
             self._events = []
             self._blacklist = {}

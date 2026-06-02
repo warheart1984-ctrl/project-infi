@@ -610,7 +610,12 @@ class ContinuityWitnessStore:
 
     def configure_runtime_dir(self, runtime_dir: str | Path) -> None:
         with self._lock:
-            self.runtime_dir = Path(runtime_dir) / "continuity_witness"
+            base_dir = Path(runtime_dir)
+            self.runtime_dir = (
+                base_dir
+                if base_dir.name == "continuity_witness"
+                else base_dir / "continuity_witness"
+            )
             self._state = {}
             self._observation_cache = {}
             self._load()

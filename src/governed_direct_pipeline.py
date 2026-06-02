@@ -1154,6 +1154,11 @@ def build_governed_turn_pipeline(
                         "strategy_label": (god_brain or {}).get("strategy_label"),
                         "action_bias": (god_brain or {}).get("action_bias"),
                         "contract": active_contract,
+                        "intent": (
+                            (god_brain or {}).get("strategy_label")
+                            or active_contract
+                            or "governed_direct_pipeline_deliberation"
+                        ),
                         "execution_intent": "route",
                         "bridge_attestation": build_bridge_attestation(
                             ingress="governed_direct_pipeline",

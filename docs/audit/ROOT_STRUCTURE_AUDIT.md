@@ -50,8 +50,7 @@ These are the roots that clearly belong in the visible repo structure now:
 - `pytest.ini`
 - `Makefile`
 - `Dockerfile`
-- `Dockerfile.frontend`
-- `docker-compose.yml`
+- `deploy/` (Docker compose stacks: pilot, platform, ugr — no root `docker-compose.yml`)
 
 These items define the live repo shape, runtime, packaging path, or primary
 developer workflow.

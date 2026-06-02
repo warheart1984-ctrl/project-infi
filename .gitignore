@@ -103,6 +103,9 @@ data/chroma/*
 wolf-cog-os/output/
 wolf-cog-os/artifacts/
 wolf-cog-os/payload-iso/
+# Operator backup snapshots (local-only; may contain signing keys)
+wolf-cog-os/payload/opt/cogos/memory/backups/*
+!wolf-cog-os/payload/opt/cogos/memory/backups/.gitkeep
 
 # ISO extract / CI scratch / release drops
 _tmp_iso_check/

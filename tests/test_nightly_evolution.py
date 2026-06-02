@@ -13,7 +13,7 @@ class NightlyEvolutionTests(unittest.TestCase):
     def test_nightly_evolution_dry_run(self) -> None:
         script = REPO_ROOT / "wolf-cog-os" / "scripts" / "test" / "forge-nightly-evolution.sh"
         result = subprocess.run(
-            ["bash", str(script), "--dry-run"],
+            ["bash", "wolf-cog-os/scripts/test/forge-nightly-evolution.sh", "--dry-run"],
             cwd=str(REPO_ROOT),
             text=True,
             capture_output=True,

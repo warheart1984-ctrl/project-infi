@@ -97,7 +97,8 @@ class ContinuityProfileStore:
 
     def configure_runtime_dir(self, runtime_dir: str | Path) -> None:
         with self._lock:
-            self.runtime_dir = Path(runtime_dir) / "continuity"
+            base_dir = Path(runtime_dir)
+            self.runtime_dir = base_dir if base_dir.name == "continuity" else base_dir / "continuity"
             self._profiles = {}
             self._load()
 

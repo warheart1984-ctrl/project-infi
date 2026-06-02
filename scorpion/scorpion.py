@@ -400,6 +400,7 @@ def run_reconcile_artifacts(
     scan_payload: dict[str, Any] = {"mode": "scan", "case_id": request.case_id, "drift_count": 0, "claim_label": "asserted"}
     if trace_path and trace_path.exists():
         scan_payload = scan_request(request, sentinel_name=sentinel_name)
+    proof_dir.mkdir(parents=True, exist_ok=True)
     scan_file = proof_dir / "scorpion_scan.json"
     scan_file.write_text(json_stable(scan_payload, pretty=True), encoding="utf-8")
     report = build_proof_report(
@@ -463,6 +464,11 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--ledger-path", default=".runtime/scorpion/anomaly_ledger.jsonl")
     parser.add_argument("--proof-dir", default="docs/proof/scorpion")
     parser.add_argument("--drift-index-path", default="docs/proof/scorpion/health_drift_index.jsonl")
+    parser.add_argument(
+        "--append-drift-index",
+        action="store_true",
+        help="append scan results to the historian drift index; scan is read-only by default",
+    )
     parser.add_argument("--fixed-timestamp", default="")
     parser.add_argument("--write-report", default="")
     parser.add_argument("--write-plan", default="")
@@ -507,7 +513,7 @@ def main(argv: list[str] | None = None) -> int:
         elif mode == "scan":
             payload = scan_request(request, sentinel_name=sentinel_name)
             _emit(payload, str(args.output))
-            if request.trace_path:
+            if request.trace_path and bool(args.append_drift_index):
                 prev = read_drift_index(Path(str(args.drift_index_path)))
                 record = build_drift_index_record(
                     case_id=request.case_id,

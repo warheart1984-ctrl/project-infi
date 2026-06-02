@@ -6,6 +6,7 @@ import os
 from typing import Any
 
 from platform.store import PlatformStore
+from platform.synthetic_mind import get_synthetic_mind_ref
 
 
 def build_context_bundle(
@@ -26,6 +27,7 @@ def build_context_bundle(
     drift_jobs = [j for j in store.list_jobs(org_id=org_id, subsystem="drift_detector")]
     usage = store.list_usage(org_id=org_id)[:7]
     rules = store.list_policy_rules(org_id=org_id)
+    synthetic_mind = get_synthetic_mind_ref(store, org_id)
     return {
         "org_id": org_id,
         "jobs": jobs,
@@ -33,6 +35,7 @@ def build_context_bundle(
         "drift_jobs": drift_jobs[:5],
         "usage": usage,
         "policy_rules_count": len(rules),
+        "synthetic_mind_ref": synthetic_mind,
     }
 
 
@@ -50,9 +53,16 @@ def run_assistant_query(
     else:
         n_jobs = len(ctx["jobs"])
         n_art = len(ctx["artifacts"])
+        mind = ctx.get("synthetic_mind_ref") or {}
+        mind_line = ""
+        if mind:
+            mind_line = (
+                f" Synthetic Mind: build={mind.get('build_id')} "
+                f"family={mind.get('family_id')} posture={mind.get('claim_label')}."
+            )
         summary = (
             f"Org {org_id}: {n_jobs} job(s) in scope, {n_art} artifact(s), "
-            f"{len(ctx['drift_jobs'])} drift job(s). Question: {question[:200]}"
+            f"{len(ctx['drift_jobs'])} drift job(s).{mind_line} Question: {question[:200]}"
         )
     anomalies = []
     for j in ctx["drift_jobs"]:

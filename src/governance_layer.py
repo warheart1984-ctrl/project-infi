@@ -120,7 +120,8 @@ class GovernanceLayer:
 
     def configure_runtime_dir(self, runtime_dir: str | Path) -> None:
         with self._lock:
-            self.runtime_dir = Path(runtime_dir) / "governance"
+            base_dir = Path(runtime_dir)
+            self.runtime_dir = base_dir if base_dir.name == "governance" else base_dir / "governance"
             self._events = []
             self._policy_requests = []
             self._break_glass = BreakGlassState()

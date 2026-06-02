@@ -9,6 +9,7 @@ from typing import Any
 
 from ai_factory.common import json_stable, sha256_file, write_json
 from ai_factory.orchestrator import FactoryBuildError
+from ai_factory.synthetic_mind_deploy import stage_synthetic_mind_after_wolf_deploy
 
 WOLF_DEPLOY_VERSION = "ai_factory.wolf_deploy.v1"
 DEFAULT_WOLF_PAYLOAD = Path("wolf-cog-os/payload/opt/cogos/config")
@@ -112,6 +113,15 @@ def deploy_build_to_wolf_payload(
             deploy_receipt["hash_manifest"].append(
                 {"artifact": name, "path": str(dest), "sha256": sha256_file(dest)}
             )
+
+    spec_synthetic = bool(spec.get("synthetic_mind", True))
+    if spec_synthetic and not dry_run:
+        mind_stage = stage_synthetic_mind_after_wolf_deploy(
+            repo_root=repo,
+            build_id=build_id,
+            dry_run=False,
+        )
+        deploy_receipt["synthetic_mind_stage"] = mind_stage
 
     deploy_receipt_path = source / "WOLF_DEPLOY_RECEIPT.json"
     if not dry_run:

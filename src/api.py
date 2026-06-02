@@ -19,6 +19,7 @@ from dataclasses import asdict, is_dataclass
 from datetime import datetime
 from src.datetime_compat import UTC
 from io import BytesIO
+from typing import Any
 from uuid import uuid4
 
 from flask import Flask, Response, jsonify, request
@@ -1517,6 +1518,12 @@ def bootstrap_ai_runtime(reason="startup", prefer_real=False):
     return model, streamer
 
 
+def _generate_chat_response(*args, **kwargs):
+    """Compatibility hook for legacy tests that patch the old chat generation seam."""
+    model, _ = bootstrap_ai_runtime(reason="compat_chat_response")
+    return model.generate_chat(*args, **kwargs)
+
+
 def _build_ai_runtime_status():
     """Return the shared AI runtime status payload."""
     status = "initialized" if ai_model is not None else "not_initialized"
@@ -1829,6 +1836,10 @@ def _build_canonical_trace_contract(session, response_trace=None):
         or response_trace.get("contract")
         or None
     )
+    if reasoning_objective == "answer_relational_question":
+        contract_label = "relational_question"
+    elif reasoning_objective == "handle_direct_challenge":
+        contract_label = "direct_challenge"
     response_contract = response_trace.get("contract")
     fallback = bool(
         response_trace.get("fallback")
@@ -1884,6 +1895,71 @@ def _begin_turn_trace(session):
     _sanitize_session_response_trace(session)
 
 
+def _mechanic_model_calls_this_turn(session) -> int:
+    """Count provider model calls recorded for the active turn."""
+    metadata = getattr(session, "metadata", None) or {}
+    slingshot_calls = int(metadata.get("slingshot_model_calls") or 0)
+    composed_calls = int(metadata.get("composed_turn_model_calls") or 0)
+    provider_calls = int(metadata.get("provider_model_calls_this_turn") or 0)
+    return max(slingshot_calls, composed_calls, provider_calls)
+
+
+def _summarize_mechanic_session_state(session) -> dict[str, Any]:
+    """Bounded mechanic enforcement state for operator UI payloads."""
+    metadata = getattr(session, "metadata", None) or {}
+    case_id = str(metadata.get("mechanic_case_id") or "").strip()
+    last_block = metadata.get("mechanic_enforcement_last")
+    payload: dict[str, Any] = {
+        "case_id": case_id or None,
+        "enforcement_enabled": bool(str(os.environ.get("MECHANIC_ENFORCE_PROFILE") or "").strip() in {"1", "true", "yes"}),
+    }
+    if isinstance(last_block, dict):
+        payload["last_block"] = {
+            "blocked": bool(last_block.get("blocked")),
+            "code": last_block.get("code"),
+            "message": last_block.get("message"),
+        }
+    return payload
+
+
+def _summarize_slingshot_session_state(session) -> dict[str, Any] | None:
+    """Bounded slingshot session state for operator UI payloads."""
+    metadata = getattr(session, "metadata", None) or {}
+    slingshot = metadata.get("slingshot")
+    if not isinstance(slingshot, dict) or not slingshot:
+        return None
+    packet = dict(slingshot.get("packet") or {})
+    return {
+        "active": bool(slingshot.get("active")),
+        "case_id": slingshot.get("case_id"),
+        "status": slingshot.get("status"),
+        "authorized_goals": list(slingshot.get("authorized_goals") or packet.get("authorized_goals") or []),
+        "required_constraints": list(
+            slingshot.get("required_constraints") or packet.get("required_constraints") or []
+        ),
+        "launch_blocked": bool(slingshot.get("launch_blocked")),
+        "packet": {
+            "expires_at_utc": packet.get("expires_at_utc"),
+            "compose_mode": packet.get("compose_mode"),
+        }
+        if packet
+        else None,
+    }
+
+
+def _bind_mechanic_case_from_payload(session, data: dict | None) -> None:
+    """Apply optional mechanic case binding from a chat turn payload."""
+    if not isinstance(data, dict):
+        return
+    if "mechanic_case_id" not in data:
+        return
+    case_id = str(data.get("mechanic_case_id") or "").strip()
+    if case_id:
+        session.metadata["mechanic_case_id"] = case_id
+    else:
+        session.metadata.pop("mechanic_case_id", None)
+
+
 def _maybe_block_mechanic_enforcement(session, session_id: str):
     """MECH-CHAT-01 — optional runtime profile gate before chat actuation."""
     from mechanic.integration.chat_hook import enforce_chat_turn_request
@@ -1893,12 +1969,21 @@ def _maybe_block_mechanic_enforcement(session, session_id: str):
     if slingshot.get("active"):
         return None
     case_id = str(metadata.get("mechanic_case_id") or "").strip()
-    return enforce_chat_turn_request(
+    block = enforce_chat_turn_request(
         action="propose",
-        model_calls_this_turn=0,
+        model_calls_this_turn=_mechanic_model_calls_this_turn(session),
         audit_fields={"trace_id": session_id, "case_id": case_id or session_id},
         case_id=case_id or None,
     )
+    if block is not None:
+        session.metadata["mechanic_enforcement_last"] = {
+            "blocked": True,
+            "code": (block.get("mechanic_enforcement") or block).get("code"),
+            "message": block.get("error") or block.get("message"),
+        }
+    else:
+        session.metadata["mechanic_enforcement_last"] = {"blocked": False}
+    return block
 
 
 def _admit_slingshot_turn(session, data: dict[str, Any], session_id: str):
@@ -2658,6 +2743,9 @@ def _finalize_visible_response(
             response_trace=response_trace,
         )
         if session.metadata.get("nova_cognitive_summary"):
+            persona_mode = str(session.metadata.get("persona_mode") or "").strip().lower()
+            if persona_mode in {"tiny_nova", "small_nova"}:
+                return finalized_text
             return cognitive_text
     return apply_speaking_runtime_finalization(
         session,
@@ -2742,10 +2830,15 @@ def _composed_turn_block_payload(session):
     composed = (session.metadata or {}).get("aais_composed_turn")
     if not isinstance(composed, dict) or composed.get("status") != "blocked":
         return None
-    aris = composed.get("aris") or {}
-    summary = (aris.get("non_copy_clause") or {}).get("summary") or (
-        "ARIS non-copy clause blocked this turn before Nova Cortex executed."
-    )
+    reason_codes = set(composed.get("reason_codes") or [])
+    if "agency_violation" in reason_codes:
+        violation = dict((session.metadata or {}).get("agency_violation") or {})
+        summary = violation.get("error") or "Agency preservation blocked this composed turn."
+    else:
+        aris = composed.get("aris") or {}
+        summary = (aris.get("non_copy_clause") or {}).get("summary") or (
+            "Composed runtime blocked this turn before Nova Cortex completed."
+        )
     return {
         "error": summary,
         "aais_composed_turn": composed,
@@ -6670,6 +6763,10 @@ def _build_chat_runtime_payload(session, session_id, tool_result=None):
         "cisiv_stage": session.metadata.get("cisiv_stage") or infer_chat_turn_cisiv_stage(phase="gather"),
         "cisiv_stage_sequence": list(CISIV_STAGE_SEQUENCE),
         "tool_result": tool_result,
+        "slingshot": _summarize_slingshot_session_state(session),
+        "slingshot_last_receipt": session.metadata.get("slingshot_last_receipt"),
+        "mechanic_case_id": session.metadata.get("mechanic_case_id"),
+        "mechanic_enforcement": _summarize_mechanic_session_state(session),
     }
     return wrap_chat_runtime_payload(payload)
 
@@ -11596,6 +11693,13 @@ def _create_chat_session_from_payload(data: dict | None):
     session = conversation_memory.get_session(session_id)
     if session:
         _set_session_persona_mode(session, persona_mode)
+        if not companion_profile:
+            session.metadata["nova_narrative_id"] = (
+                str(payload.get("nova_narrative_id") or "").strip() or f"chat-{session_id}"
+            )
+            session.metadata["nova_intent_id"] = (
+                str(payload.get("nova_intent_id") or "").strip() or session.metadata["nova_narrative_id"]
+            )
         _set_session_response_mode(
             session,
             _coerce_response_mode_for_persona(persona_mode, payload.get("response_mode")),
@@ -11610,6 +11714,9 @@ def _create_chat_session_from_payload(data: dict | None):
         )
         _set_session_requested_specialists(session, payload.get("requested_specialists"))
         _set_session_requested_specialist_preset(session, payload.get("requested_specialist_preset"))
+        mechanic_case_id = str(payload.get("mechanic_case_id") or "").strip()
+        if mechanic_case_id:
+            session.metadata["mechanic_case_id"] = mechanic_case_id
         _transition_session_state(
             session,
             "idle",
@@ -11679,6 +11786,10 @@ def _build_jarvis_compat_message_payload(data: dict | None) -> tuple[dict, dict,
         message_payload["response_mode"] = "think"
     if mode == "research":
         message_payload["use_research"] = True
+    if payload.get("slingshot"):
+        message_payload["slingshot"] = dict(payload.get("slingshot") or {})
+    if context.get("mechanic_case_id"):
+        message_payload["mechanic_case_id"] = context.get("mechanic_case_id")
     return context, message_payload, mode
 
 
@@ -12244,6 +12355,102 @@ def defer_chat_session_knowledge_conflict(session_id, conflict_id):
     )
 
 
+@app.route("/api/chat/sessions/<session_id>/mechanic", methods=["PATCH"])
+def patch_chat_session_mechanic(session_id):
+    """Bind a Mechanic case id to a chat session (MECH-CHAT-01)."""
+    session = conversation_memory.get_session(session_id)
+    if not session:
+        return jsonify({"error": "Session not found or expired"}), 404
+    payload = dict(request.json or {})
+    case_id = str(payload.get("mechanic_case_id") or payload.get("case_id") or "").strip()
+    if not case_id:
+        session.metadata.pop("mechanic_case_id", None)
+        summary = "Mechanic case binding cleared."
+    else:
+        session.metadata["mechanic_case_id"] = case_id
+        summary = f"Mechanic case bound: {case_id}"
+    _record_session_event(
+        session,
+        "mechanic_case_bound",
+        summary,
+        payload={"mechanic_case_id": case_id or None},
+    )
+    return jsonify({"mechanic_case_id": case_id or None, **_serialize_session_payload(session)})
+
+
+@app.route("/api/slingshot/status", methods=["GET"])
+def slingshot_status():
+    """Return slingshot frame/packet status for a case."""
+    case_id = str(request.args.get("case_id") or "").strip()
+    if not case_id:
+        return jsonify({"error": "case_id is required"}), 400
+    from slingshot.common import frame_path, packet_path
+    from slingshot.frame import load_slingshot_frame
+    from slingshot.packet import load_slingshot_packet
+
+    payload: dict[str, Any] = {"case_id": case_id, "claim_label": "asserted"}
+    if frame_path(case_id).is_file():
+        frame = load_slingshot_frame(case_id)
+        payload["frame"] = {
+            "launch_blocked": frame.get("launch_blocked"),
+            "drift_count": frame.get("drift_count"),
+            "ma13_summary": frame.get("ma13_summary"),
+        }
+    else:
+        payload["frame"] = None
+    if packet_path(case_id).is_file():
+        packet = load_slingshot_packet(case_id)
+        payload["packet"] = {
+            "expires_at_utc": packet.get("expires_at_utc"),
+            "compose_mode": packet.get("compose_mode"),
+            "authorized_goals": packet.get("authorized_goals"),
+            "required_constraints": packet.get("required_constraints"),
+        }
+    else:
+        payload["packet"] = None
+    payload["artifacts_present"] = bool(payload.get("frame")) and bool(payload.get("packet"))
+    return jsonify(payload)
+
+
+@app.route("/api/slingshot/preload", methods=["POST"])
+def slingshot_preload():
+    """Run slingshot preload for a repo case (governed, no auto-apply)."""
+    payload = dict(request.json or {})
+    case_id = str(payload.get("case_id") or "").strip()
+    repo_path = str(payload.get("repo_path") or payload.get("repo") or ".").strip() or "."
+    trace_path = str(payload.get("trace_path") or "").strip()
+    if not case_id:
+        return jsonify({"error": "case_id is required"}), 400
+    from slingshot.common import frame_path, packet_path
+    from slingshot.frame import build_slingshot_frame
+    from slingshot.packet import build_slingshot_packet
+
+    frame = build_slingshot_frame(
+        case_id=case_id,
+        repo_path=repo_path,
+        trace_path=trace_path,
+    )
+    packet = None
+    if not frame.get("launch_blocked"):
+        packet = build_slingshot_packet(
+            frame,
+            {
+                "authorized_goals": payload.get("authorized_goals") or ["analyze and propose remediation only"],
+                "required_constraints": payload.get("required_constraints") or [],
+            },
+        )
+    result = {
+        "case_id": case_id,
+        "launch_blocked": frame.get("launch_blocked"),
+        "frame_path": str(frame_path(case_id)),
+        "packet_path": str(packet_path(case_id)) if packet else None,
+        "drift_count": frame.get("drift_count"),
+        "claim_label": "asserted",
+    }
+    status_code = 200 if not frame.get("launch_blocked") else 403
+    return jsonify(result), status_code
+
+
 @app.route("/api/chat/sessions/<session_id>/message", methods=["POST"])
 def chat_message(session_id):
     """Send a message in a chat session (with conversation memory)"""
@@ -12253,6 +12460,7 @@ def chat_message(session_id):
             return jsonify({"error": "Session not found or expired"}), 404
 
         data = request.json or {}
+        _bind_mechanic_case_from_payload(session, data)
         user_message = data.get("message")
         use_research = bool(data["use_research"]) if "use_research" in data else None
         persona_mode = _set_session_persona_mode(session, data.get("persona_mode"))
@@ -12872,6 +13080,7 @@ def chat_message_stream(session_id):
             return jsonify({"error": "Session not found or expired"}), 404
 
         data = request.json or {}
+        _bind_mechanic_case_from_payload(session, data)
         user_message = data.get("message")
         use_research = bool(data["use_research"]) if "use_research" in data else None
         persona_mode = _set_session_persona_mode(session, data.get("persona_mode"))

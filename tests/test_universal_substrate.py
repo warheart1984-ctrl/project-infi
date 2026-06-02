@@ -76,6 +76,23 @@ class UniversalSubstrateTests(unittest.TestCase):
             )
             self.assertEqual(result.returncode, 0, msg=backend + ": " + result.stdout + result.stderr)
 
+    def test_synthetic_mind_bundle_builds(self) -> None:
+        bundle_dir = REPO_ROOT / "wolf-cog-os" / "artifacts" / "synthetic-mind-bundle"
+        if bundle_dir.exists():
+            import shutil
+
+            shutil.rmtree(bundle_dir)
+        result = subprocess.run(
+            [sys.executable, str(REPO_ROOT / "scripts" / "cogos" / "build_synthetic_mind_bundle.py"), str(bundle_dir)],
+            cwd=str(REPO_ROOT),
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
+        manifest = json.loads((bundle_dir / "synthetic_mind_manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["family_id"], "nova.cortex")
+
     def test_replay_registry_includes_universal_adapters(self) -> None:
         result = subprocess.run(
             [sys.executable, str(REPLAY_VALIDATOR), "--mode", "fail"],

@@ -46,12 +46,13 @@ Use it to answer four questions quickly:
 ## Fastest Reading Path
 
 1. [../README.md](../README.md)
-2. [spine/README.md](./spine/README.md)
-3. [spine/AAIS_HUMAN_GUIDE.md](./spine/AAIS_HUMAN_GUIDE.md)
-4. [spine/AAIS_MASTER_SPEC.md](./spine/AAIS_MASTER_SPEC.md)
-5. [runtime/AAIS_RUNTIME_GUIDE.md](./runtime/AAIS_RUNTIME_GUIDE.md)
-6. [runtime/AAIS_SUBSYSTEM_SPEC.md](./runtime/AAIS_SUBSYSTEM_SPEC.md)
-7. [contracts/AAIS_DOC_PROTOCOL.md](./contracts/AAIS_DOC_PROTOCOL.md)
+2. [operations/FIRST_TIME_OPERATOR_GUIDE.md](./operations/FIRST_TIME_OPERATOR_GUIDE.md)
+3. [spine/README.md](./spine/README.md)
+4. [spine/AAIS_HUMAN_GUIDE.md](./spine/AAIS_HUMAN_GUIDE.md)
+5. [spine/AAIS_MASTER_SPEC.md](./spine/AAIS_MASTER_SPEC.md)
+6. [runtime/AAIS_RUNTIME_GUIDE.md](./runtime/AAIS_RUNTIME_GUIDE.md)
+7. [runtime/AAIS_SUBSYSTEM_SPEC.md](./runtime/AAIS_SUBSYSTEM_SPEC.md)
+8. [contracts/AAIS_DOC_PROTOCOL.md](./contracts/AAIS_DOC_PROTOCOL.md)
 
 ## Folder Indexes
 

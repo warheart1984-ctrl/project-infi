@@ -13,6 +13,7 @@ chromadb>=0.5.5
 networkx>=3.0.0
 numpy>=1.26.0
 pydantic>=2.8.2
+Pillow>=12.2.0
 requests>=2.32.0
 scipy>=1.13.0
 sympy>=1.13.0

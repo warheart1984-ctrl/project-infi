@@ -419,21 +419,32 @@ def run_composed_turn(
         agency_report = run_agency_preservation(session)
         trace.append({"stage": "agency_preservation", "status": "ok", **agency_report})
     except AgencyViolation as exc:
-        compose_ms = round((time.perf_counter() - compose_started) * 1000)
-        result = ComposedTurnResult(
-            status="blocked",
-            user_message=user_message,
-            compose_mode=compose_mode,
-            spine=spine,
-            aris=aris,
-            nova_bridge=nova_bridge,
-            trace=trace,
-            reason_codes=["agency_violation"],
-            compose_ms=compose_ms,
-        )
-        session.metadata["aais_composed_turn"] = result.to_dict()
-        session.metadata["agency_violation"] = exc.to_dict()
-        return result
+        violation = exc.to_dict()
+        session.metadata["agency_violation"] = violation
+        if not companion_turn:
+            trace.append(
+                {
+                    "stage": "agency_preservation",
+                    "status": "advisory_violation",
+                    "violation": violation,
+                }
+            )
+            reason_codes.append("agency_violation_advisory")
+        else:
+            compose_ms = round((time.perf_counter() - compose_started) * 1000)
+            result = ComposedTurnResult(
+                status="blocked",
+                user_message=user_message,
+                compose_mode=compose_mode,
+                spine=spine,
+                aris=aris,
+                nova_bridge=nova_bridge,
+                trace=trace,
+                reason_codes=["agency_violation"],
+                compose_ms=compose_ms,
+            )
+            session.metadata["aais_composed_turn"] = result.to_dict()
+            return result
 
     slingshot_meta = dict(metadata.get("slingshot") or {})
     if slingshot_meta.get("active"):

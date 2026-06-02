@@ -8,3 +8,4 @@ payload-iso/**
 !payload-iso/install/**
 *.iso
 *.iso.sha256
+payload/opt/cogos/runtime/src/cog_runtime/
