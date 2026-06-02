@@ -1320,3 +1320,83 @@ def build_governed_turn_pipeline(
     from src.aais_ul_substrate import wrap_pipeline
 
     return wrap_pipeline(pipeline)
+
+
+def _utc_now_iso() -> str:
+    return datetime.now(UTC).replace(microsecond=0).isoformat()
+
+
+def to_pipeline_envelope(
+    pipeline: dict[str, Any],
+    *,
+    cisiv_stage: str = "implementation",
+    claim_label: str = "asserted",
+) -> dict[str, Any]:
+    """Map a governed turn pipeline trace to governed_direct_pipeline.v1."""
+    now = _utc_now_iso()
+    active_lane = str(pipeline.get("active_lane") or DIRECT_COGNITIVE_LANE)
+    lanes = [
+        {
+            "lane_name": DIRECT_COGNITIVE_LANE,
+            "compact_channel": _compact_channel_for_lane(DIRECT_COGNITIVE_LANE),
+            "claim_label": claim_label,
+        },
+        {
+            "lane_name": SERVICE_TOOL_LANE,
+            "compact_channel": _compact_channel_for_lane(SERVICE_TOOL_LANE),
+            "claim_label": claim_label,
+        },
+    ]
+    packets = []
+    for packet in [
+        *(pipeline.get("forward_packets") or []),
+        *(pipeline.get("service_packets") or []),
+        *(pipeline.get("return_packets") or []),
+    ]:
+        if not isinstance(packet, dict):
+            continue
+        state_value = packet.get("state")
+        if isinstance(state_value, dict):
+            state_code = int(state_value.get("code") or 0)
+        elif isinstance(state_value, (int, float)):
+            state_code = int(state_value)
+        else:
+            state_code = STATE_CODES.get(str(state_value or "").strip().lower(), 0)
+        packets.append(
+            {
+                "packet_id": str(packet.get("packet_id") or ""),
+                "lane_name": str(packet.get("lane") or active_lane),
+                "operation": str(packet.get("intent") or ""),
+                "source_node": _node_label(str(packet.get("source") or "")),
+                "target_node": _node_label(str(packet.get("target") or "")),
+                "priority": str(packet.get("priority") or "normal"),
+                "state_code": state_code,
+                "intent": str(packet.get("intent") or ""),
+                "claim_label": claim_label,
+            }
+        )
+    feed = dict(pipeline.get("realtime_signal_feed") or {})
+    immune = dict(pipeline.get("immune_protocol") or {})
+    risk = str(feed.get("risk_level") or "low").strip().lower()
+    if risk not in {"low", "medium", "high", "critical"}:
+        risk = "medium"
+    signal_feed = {
+        "feed_id": str(feed.get("feed_id") or pipeline.get("pipeline_id") or ""),
+        "risk_level": risk,
+        "system_state": str(feed.get("system_state") or pipeline.get("traffic_class") or ""),
+        "immune_response": str(immune.get("response") or "ALLOW"),
+        "claim_label": claim_label,
+    }
+    return {
+        "governed_direct_pipeline_version": "governed_direct_pipeline.v1",
+        "pipeline_id": str(pipeline.get("pipeline_id") or PIPELINE_ID),
+        "pipeline_version": str(pipeline.get("version") or PIPELINE_VERSION),
+        "turn_id": str(pipeline.get("pipeline_id") or ""),
+        "lanes": lanes,
+        "packets": packets,
+        "signal_feed": signal_feed,
+        "cisiv_stage": cisiv_stage,
+        "claim_label": claim_label,
+        "created_at_utc": now,
+        "updated_at_utc": now,
+    }

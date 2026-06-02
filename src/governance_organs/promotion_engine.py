@@ -26,6 +26,11 @@ GENE_GATES: dict[str, str] = {
     "cisiv_operator_lineage_console": "lineage-gate",
     "safety_envelope_organ": "safety-envelope-gate",
     "operator_profile_organ": "operator-profile-gate",
+    "reflection_runtime_organ": "reflection-runtime-gate",
+    "memory_runtime_organ": "memory-runtime-gate",
+    "capability_service_bridge": "capability-bridge-gate",
+    "jarvis_memory_board": "memory-board-gate",
+    "governed_direct_pipeline": "governed-pipeline-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -41,9 +46,20 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     "genome-gate": ["tools/governance/check_subsystem_genome.py"],
     "safety-envelope-gate": [".github/scripts/check-safety-envelope-governance.py"],
     "operator-profile-gate": [".github/scripts/check-operator-profile-governance.py"],
+    "reflection-runtime-gate": [".github/scripts/check-reflection-runtime-governance.py"],
+    "memory-runtime-gate": [".github/scripts/check-memory-runtime-governance.py"],
+    "capability-bridge-gate": [".github/scripts/check-capability-bridge-governance.py"],
+    "memory-board-gate": [".github/scripts/check-memory-board-governance.py"],
+    "governed-pipeline-gate": [".github/scripts/check-governed-pipeline-governance.py"],
 }
 
-PROTOTYPE_GATE_STUB_GENES = frozenset(GENE_GATES.keys())
+PROTOTYPE_GATE_STUB_GENES = frozenset(GENE_GATES.keys()) | frozenset(
+    {
+        "capability_service_bridge",
+        "jarvis_memory_board",
+        "governed_direct_pipeline",
+    }
+)
 
 MUTATION_CONTRACT = "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md"
 RETIREMENT_CONTRACT = "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"

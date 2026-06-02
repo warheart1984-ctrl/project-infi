@@ -2,7 +2,11 @@
 
 import unittest
 
-from src.capability_service_bridge import CapabilityServiceBridge
+from src.capability_service_bridge import (
+    MAX_AUDIT_EVENTS,
+    CapabilityServiceBridge,
+    to_bridge_envelope,
+)
 from src.phase_gate import Phase, demote_component, reset_registry
 
 
@@ -162,6 +166,27 @@ class TestCapabilityServiceBridge(unittest.TestCase):
         self.assertEqual(result["phase_gate"]["component"]["phase"], "validated")
         self.assertEqual(result["phase_gate"]["runtime_context"], "operator_runtime")
         self.assertEqual(result["tool_result"]["status"], "completed")
+
+    def test_bridge_envelope_matches_schema_shape(self):
+        """Bridge snapshots should map to capability_service_bridge.v1."""
+        bridge = self._build_bridge()
+        bridge.handle_tool_request("v9_core", {"input": "Continue the scene."})
+        envelope = to_bridge_envelope(bridge.snapshot())
+        self.assertEqual(envelope["capability_service_bridge_version"], "capability_service_bridge.v1")
+        self.assertEqual(envelope["component_id"], "jarvis.capability_service_bridge")
+        self.assertIn(envelope["governance_mode"], {"strict", "assist", "experimental"})
+        self.assertGreaterEqual(len(envelope["service_path"]), 1)
+        self.assertIn("capability_call", envelope)
+
+    def test_audit_ring_is_bounded(self):
+        """Audit events must stay within MAX_AUDIT_EVENTS."""
+        bridge = self._build_bridge()
+        for index in range(MAX_AUDIT_EVENTS + 5):
+            bridge.handle_tool_request(
+                "v9_core",
+                {"input": f"Scene beat {index}."},
+            )
+        self.assertLessEqual(bridge.snapshot()["event_count"], MAX_AUDIT_EVENTS)
 
 
 if __name__ == "__main__":

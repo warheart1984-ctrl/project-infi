@@ -63,7 +63,9 @@
   "lineage": {
     "parents": [
       "mission_board",
-      "chat_turn_governance"
+      "chat_turn_governance",
+      "capability_service_bridge",
+      "jarvis_memory_board"
     ],
     "children": [
       "forensic_triangulation"

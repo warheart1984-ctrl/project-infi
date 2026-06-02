@@ -91,7 +91,13 @@ class AdaptiveEngine:
         gene: str | None = None,
     ) -> ContextualGateResult:
         reg = GenomeEngine.registry()
-        genes = [gene] if gene else list(reg.genomes.keys())
+        genes: list[str] = []
+        if gene:
+            genes = [gene]
+        elif capability_id:
+            resolved = GenomeEngine.resolve_gene(capability_id)
+            if resolved:
+                genes = [resolved]
         ctx = runtime_context.replace("-", "_").strip().lower()
         cap = (capability_id or "").replace("-", "_").strip().lower()
 

@@ -58,6 +58,10 @@ GENE_ALIASES: dict[str, str] = {
     "safety_envelope_organ": "safety_envelope_organ",
     "operator_profile": "operator_profile_organ",
     "operator_profile_organ": "operator_profile_organ",
+    "reflection_runtime": "reflection_runtime_organ",
+    "reflection_runtime_organ": "reflection_runtime_organ",
+    "memory_runtime": "memory_runtime_organ",
+    "memory_runtime_organ": "memory_runtime_organ",
 }
 
 
@@ -388,9 +392,11 @@ class GenomeEngine:
         if normalized in GENE_ALIASES:
             return GENE_ALIASES[normalized]
         for gene, data in cls.registry().genomes.items():
+            if normalized == gene or normalized in gene.split("_"):
+                return gene
             for entry in (data.get("runtime") or {}).get("surface") or []:
                 path = str((entry or {}).get("path") or "").lower()
-                if normalized in path or gene in path:
+                if normalized in path:
                     return gene
         return GENE_ALIASES.get(normalized)
 

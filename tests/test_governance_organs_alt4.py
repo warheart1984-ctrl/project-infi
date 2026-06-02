@@ -130,12 +130,30 @@ ORIGINAL_SIX = frozenset(
     }
 )
 
+ALT5_GENES = frozenset(
+    {
+        "safety_envelope_organ",
+        "operator_profile_organ",
+        "reflection_runtime_organ",
+        "memory_runtime_organ",
+    }
+)
+
 
 def test_all_six_genomes_governed():
     from src.governance_organs import GenomeEngine
 
     reg = GenomeEngine.reload(REPO)
     for gene in ORIGINAL_SIX:
+        stage = (reg.genomes[gene].get("identity") or {}).get("stage")
+        assert stage == "governed", f"{gene} expected governed, got {stage}"
+
+
+def test_all_alt5_genomes_governed():
+    from src.governance_organs import GenomeEngine
+
+    reg = GenomeEngine.reload(REPO)
+    for gene in ALT5_GENES:
         stage = (reg.genomes[gene].get("identity") or {}).get("stage")
         assert stage == "governed", f"{gene} expected governed, got {stage}"
 

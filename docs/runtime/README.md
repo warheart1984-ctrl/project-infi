@@ -38,6 +38,8 @@ reference doc that sits above raw code but below vague planning notes.
 - [UL_LINEAGE_CONSOLE.md](./UL_LINEAGE_CONSOLE.md)
   - CISIV operator lineage graph (partial live MVP)
 - Promoted MVP ideas index: [../_future/ideas_pending/README.md](../_future/ideas_pending/README.md)
+- Governed Direct Pipeline: [GOVERNED_DIRECT_PIPELINE.md](./GOVERNED_DIRECT_PIPELINE.md)
+- Barebones summon wave (governed): [../subsystems/platform/CAPABILITY_SERVICE_BRIDGE.md](../subsystems/platform/CAPABILITY_SERVICE_BRIDGE.md), [../subsystems/platform/JARVIS_MEMORY_BOARD.md](../subsystems/platform/JARVIS_MEMORY_BOARD.md), [GOVERNED_DIRECT_PIPELINE.md](./GOVERNED_DIRECT_PIPELINE.md)
 
 ## Canonical Rule
 

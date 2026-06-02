@@ -3,7 +3,7 @@
   "identity": {
     "gene": "safety_envelope_organ",
     "version": "0.1.0-concept",
-    "stage": "mvp",
+    "stage": "governed",
     "display_name": "Safety Envelope Organ"
   },
   "governance": {
@@ -11,7 +11,9 @@
       "docs/contracts/AAIS_SSP_PROTOCOL.md",
       "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
       "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
-      "docs/contracts/SWARM_LAW.md"
+      "docs/contracts/SWARM_LAW.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
     ],
     "invariants": [
       "Read-only v1 \u2014 no write path from envelope organ",
@@ -21,7 +23,7 @@
   },
   "schema": {
     "ref": "schemas/safety_envelope_organ.v1.json",
-    "frozen": false
+    "frozen": true
   },
   "runtime": {
     "surface": [
@@ -43,7 +45,7 @@
     "bundles": [
       "docs/proof/platform/SAFETY_ENVELOPE_V1_PROOF.md"
     ],
-    "posture": "mvp",
+    "posture": "governed",
     "target_bundles": [
       "docs/proof/platform/SAFETY_ENVELOPE_V1_PROOF.md"
     ]
@@ -53,7 +55,9 @@
       "jarvis",
       "immune_system"
     ],
-    "children": []
+    "children": [
+      "reflection_runtime_organ"
+    ]
   },
   "activation": {
     "order": 1,
@@ -61,7 +65,7 @@
     "notes": "Alt-5 wave 1 \u2014 foundational guard"
   },
   "retirement": {
-    "path": null
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
   },
   "mutation": {
     "history": []

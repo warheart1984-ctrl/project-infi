@@ -1179,10 +1179,15 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | Recipe Module | governed | [../subsystems/platform/RECIPE_MODULE.md](../subsystems/platform/RECIPE_MODULE.md) | [../proof/platform/RECIPE_MODULE_V1_PROOF.md](../proof/platform/RECIPE_MODULE_V1_PROOF.md) |
 | Imagine Generator | governed | [../subsystems/storyforge/IMAGINE_GENERATOR.md](../subsystems/storyforge/IMAGINE_GENERATOR.md) | [../proof/storyforge/IMAGINE_GENERATOR_V1_PROOF.md](../proof/storyforge/IMAGINE_GENERATOR_V1_PROOF.md) |
 | Human Voice Extraction | governed | [../subsystems/speakers/HUMAN_VOICE_EXTRACTION.md](../subsystems/speakers/HUMAN_VOICE_EXTRACTION.md) | [../proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md](../proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md) |
-| Safety Envelope Organ | partial | [../subsystems/platform/SAFETY_ENVELOPE_ORGAN.md](../subsystems/platform/SAFETY_ENVELOPE_ORGAN.md) | [../proof/platform/SAFETY_ENVELOPE_V1_PROOF.md](../proof/platform/SAFETY_ENVELOPE_V1_PROOF.md) |
-| Operator Profile Organ | partial | [../subsystems/platform/OPERATOR_PROFILE_ORGAN.md](../subsystems/platform/OPERATOR_PROFILE_ORGAN.md) | [../proof/platform/OPERATOR_PROFILE_V1_PROOF.md](../proof/platform/OPERATOR_PROFILE_V1_PROOF.md) |
+| Safety Envelope Organ | governed | [../subsystems/platform/SAFETY_ENVELOPE_ORGAN.md](../subsystems/platform/SAFETY_ENVELOPE_ORGAN.md) | [../proof/platform/SAFETY_ENVELOPE_V1_PROOF.md](../proof/platform/SAFETY_ENVELOPE_V1_PROOF.md) |
+| Operator Profile Organ | governed | [../subsystems/platform/OPERATOR_PROFILE_ORGAN.md](../subsystems/platform/OPERATOR_PROFILE_ORGAN.md) | [../proof/platform/OPERATOR_PROFILE_V1_PROOF.md](../proof/platform/OPERATOR_PROFILE_V1_PROOF.md) |
+| Reflection Runtime Organ | governed | [../subsystems/nova/REFLECTION_RUNTIME_ORGAN.md](../subsystems/nova/REFLECTION_RUNTIME_ORGAN.md) | [../proof/cognitive_runtime/REFLECTION_RUNTIME_ORGAN_V1_PROOF.md](../proof/cognitive_runtime/REFLECTION_RUNTIME_ORGAN_V1_PROOF.md) |
+| Memory Runtime Organ | governed | [../subsystems/nova/MEMORY_RUNTIME_ORGAN.md](../subsystems/nova/MEMORY_RUNTIME_ORGAN.md) | [../proof/cognitive_runtime/MEMORY_RUNTIME_ORGAN_V1_PROOF.md](../proof/cognitive_runtime/MEMORY_RUNTIME_ORGAN_V1_PROOF.md) |
+| Capability Service Bridge | governed | [../subsystems/platform/CAPABILITY_SERVICE_BRIDGE.md](../subsystems/platform/CAPABILITY_SERVICE_BRIDGE.md) | [../proof/platform/CAPABILITY_SERVICE_BRIDGE_V1_PROOF.md](../proof/platform/CAPABILITY_SERVICE_BRIDGE_V1_PROOF.md) |
+| Jarvis Memory Board | governed | [../subsystems/platform/JARVIS_MEMORY_BOARD.md](../subsystems/platform/JARVIS_MEMORY_BOARD.md) | [../proof/platform/JARVIS_MEMORY_BOARD_V1_PROOF.md](../proof/platform/JARVIS_MEMORY_BOARD_V1_PROOF.md) |
+| Governed Direct Pipeline | governed | [GOVERNED_DIRECT_PIPELINE.md](./GOVERNED_DIRECT_PIPELINE.md) | [../proof/platform/GOVERNED_DIRECT_PIPELINE_V1_PROOF.md](../proof/platform/GOVERNED_DIRECT_PIPELINE_V1_PROOF.md) |
 
-Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate`
+Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate`
 
 ## 9. Concept Pending (SSP)
 

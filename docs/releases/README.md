@@ -10,7 +10,7 @@ Project Infinity ships **two independent release tracks**. Do not conflate them.
 |---|---|
 | Version | `pyproject.toml` (`aais` package) |
 | History | [CHANGELOG.md](../../CHANGELOG.md) |
-| Tag format | `v0.2.0` (recommended) or `aais-v0.2.0` |
+| Tag format | `v1.1.0` (latest Infinity 1 complete), `v0.2.0`, or `aais-v0.2.0` |
 | GitHub Release | Manual or release-drafter; body = CHANGELOG section for that version |
 
 ### Publishing an AAIS release (maintainer)

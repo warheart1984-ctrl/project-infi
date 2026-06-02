@@ -285,6 +285,27 @@ Every major entry should name its CISIV stage explicitly.
 
 ## 2026-06-02
 
+### Alt-5 Organs — Governed Promotion (Constitutional Layer)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `safety_envelope_organ`, `operator_profile_organ`, `reflection_runtime_organ`, `memory_runtime_organ` `mvp` → `governed`; lifecycle contracts injected; §8 partial → governed for all four Alt-5 rows
+- outcome: all four Alt-5 organs at `governed`; thirteen registered genomes; reproducible via `tools/governance/alt5_promote_governed.py`
+- verification note: `make alt5-gate`; `make genome-gate`; `make alt4-gate`; `python -m pytest tests/test_safety_envelope_organ.py tests/test_operator_profile_organ.py tests/test_reflection_runtime_organ.py tests/test_memory_runtime_organ.py -q`
+
+### Alt-5 Summon Wave 2 — MVP Promotion (Reflection + Memory Runtime)
+
+- CISIV stage: `verification`
+- scope: MVP runtime for `reflection_runtime_organ` and `memory_runtime_organ` — modules, API routes, gates, proof packets; genomes at `mvp`; lineage wired to Alt-5 wave 1 organs
+- outcome: thirteen registered genomes (eleven prior + two Alt-5 wave 2 mvp); §8 partial-live table extended; batch `alt5-summon-wave-2-2026-06`
+- verification note: `make alt5-gate`; `make genome-gate`; `python -m pytest tests/test_reflection_runtime_organ.py tests/test_memory_runtime_organ.py -q`
+
+### Alt-5 Summon Wave 2 — Concept Admission (Reflection + Memory Runtime)
+
+- CISIV stage: `concept`
+- scope: SSP Steps 1–7 for `reflection_runtime_organ` and `memory_runtime_organ`; batch `alt5-summon-wave-2-2026-06`; schemas, concept specs, MVP plans, genomes at `stage: concept`
+- outcome: Nova cortex lobe organs admitted (deferred wave 2 from Governance Wave plan); activation order 1→2 (reflection → memory)
+- verification note: `make ssp-gate`; `make genome-gate`
+
 ### Repo Steward Cleanup And Manual Purge
 
 - CISIV stage: `structure`
@@ -436,4 +457,120 @@ Every major entry should name its CISIV stage explicitly.
 - CISIV stage: `verification`
 - scope: Promotion Engine full-auto — `operator_profile_organ` `prototype` via Alt-4 runtime organ
 - outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+
+### Barebones Summon Wave — Concept Admission (SSP Alt-4)
+
+- CISIV stage: `concept`
+- scope: SSP Steps 1–7 for `capability_service_bridge`, `jarvis_memory_board`, and `governed_direct_pipeline`; batch `barebones-summon-wave-2026-06`; schemas, concept specs, MVP plans, genomes at `stage: concept`; lineage symmetry with `cisiv_operator_lineage_console`
+- outcome: three repo-grounded barebones fabrics admitted as governed subsystem families; §9 Concept Pending populated; activation order 1→2→3 (bridge → memory → pipeline); no runtime code changed
+- verification note: `make ssp-gate`; `make genome-gate`
+
+### Barebones Summon Wave — Governed Promotion (Runtime + Gates)
+
+- CISIV stage: `verification`
+- scope: schema envelopes (`to_bridge_envelope`, `to_memory_board_envelope`, `to_pipeline_envelope`); status APIs; `make capability-bridge-gate`, `memory-board-gate`, `governed-pipeline-gate`, `barebones-gate`; proof packets; active docs; Promotion Engine `concept → prototype → mvp → governed` via `tools/governance/barebones_promote_governed.py`; genome-engine `resolve_gene` and adaptive contextual gate fixes
+- outcome: all three barebones genomes at `governed`; §8 constitutional layer extended; §9 concept pending cleared for barebones families
+- verification note: `make barebones-gate`; `make alt4-gate`; `python -m pytest tests/test_capability_service_bridge.py tests/test_jarvis_memory_board.py tests/test_governed_direct_pipeline.py -q`
+### Capability Service Bridge — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `capability_service_bridge` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Capability Service Bridge — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `capability_service_bridge` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Capability Service Bridge — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `capability_service_bridge` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Jarvis Memory Board — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `jarvis_memory_board` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Jarvis Memory Board — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `jarvis_memory_board` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Jarvis Memory Board — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `jarvis_memory_board` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Governed Direct Pipeline — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `governed_direct_pipeline` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Governed Direct Pipeline — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `governed_direct_pipeline` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Governed Direct Pipeline — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `governed_direct_pipeline` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Reflection Runtime Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `reflection_runtime_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Reflection Runtime Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `reflection_runtime_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Memory Runtime Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `memory_runtime_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Memory Runtime Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `memory_runtime_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Safety Envelope Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `safety_envelope_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Operator Profile Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `operator_profile_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Reflection Runtime Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `reflection_runtime_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Memory Runtime Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `memory_runtime_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
 - verification note: `make genome-gate`; `make alt4-gate`

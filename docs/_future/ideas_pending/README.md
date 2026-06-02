@@ -29,12 +29,22 @@ Concept-origin specs (historical):
 - [IMAGINE_GENERATOR.md](./IMAGINE_GENERATOR.md)
 - [HUMAN_VOICE_EXTRACTION.md](./HUMAN_VOICE_EXTRACTION.md)
 
+## Promoted to Governed (Barebones Wave)
+
+| Idea | Active doc | Concept spec | Proof |
+|------|------------|--------------|-------|
+| Capability Service Bridge | [../../subsystems/platform/CAPABILITY_SERVICE_BRIDGE.md](../../subsystems/platform/CAPABILITY_SERVICE_BRIDGE.md) | [CAPABILITY_SERVICE_BRIDGE.md](./CAPABILITY_SERVICE_BRIDGE.md) | [../../proof/platform/CAPABILITY_SERVICE_BRIDGE_V1_PROOF.md](../../proof/platform/CAPABILITY_SERVICE_BRIDGE_V1_PROOF.md) |
+| Jarvis Memory Board | [../../subsystems/platform/JARVIS_MEMORY_BOARD.md](../../subsystems/platform/JARVIS_MEMORY_BOARD.md) | [JARVIS_MEMORY_BOARD.md](./JARVIS_MEMORY_BOARD.md) | [../../proof/platform/JARVIS_MEMORY_BOARD_V1_PROOF.md](../../proof/platform/JARVIS_MEMORY_BOARD_V1_PROOF.md) |
+| Governed Direct Pipeline | [../../runtime/GOVERNED_DIRECT_PIPELINE.md](../../runtime/GOVERNED_DIRECT_PIPELINE.md) | [GOVERNED_DIRECT_PIPELINE.md](./GOVERNED_DIRECT_PIPELINE.md) | [../../proof/platform/GOVERNED_DIRECT_PIPELINE_V1_PROOF.md](../../proof/platform/GOVERNED_DIRECT_PIPELINE_V1_PROOF.md) |
+
 ## Pending Ideas (Concept)
 
 | Idea | Concept spec | MVP plan | Schema |
 |------|--------------|----------|--------|
 | Safety Envelope Organ | [SAFETY_ENVELOPE_ORGAN.md](./SAFETY_ENVELOPE_ORGAN.md) | [SAFETY_ENVELOPE_ORGAN_MVP_PLAN.md](./SAFETY_ENVELOPE_ORGAN_MVP_PLAN.md) | [schemas/safety_envelope_organ.v1.json](./schemas/safety_envelope_organ.v1.json) |
 | Operator Profile Organ | [OPERATOR_PROFILE_ORGAN.md](./OPERATOR_PROFILE_ORGAN.md) | [OPERATOR_PROFILE_ORGAN_MVP_PLAN.md](./OPERATOR_PROFILE_ORGAN_MVP_PLAN.md) | [schemas/operator_profile_organ.v1.json](./schemas/operator_profile_organ.v1.json) |
+| Reflection Runtime Organ | [REFLECTION_RUNTIME_ORGAN.md](./REFLECTION_RUNTIME_ORGAN.md) | [REFLECTION_RUNTIME_ORGAN_MVP_PLAN.md](./REFLECTION_RUNTIME_ORGAN_MVP_PLAN.md) | [schemas/reflection_runtime_organ.v1.json](./schemas/reflection_runtime_organ.v1.json) |
+| Memory Runtime Organ | [MEMORY_RUNTIME_ORGAN.md](./MEMORY_RUNTIME_ORGAN.md) | [MEMORY_RUNTIME_ORGAN_MVP_PLAN.md](./MEMORY_RUNTIME_ORGAN_MVP_PLAN.md) | [schemas/memory_runtime_organ.v1.json](./schemas/memory_runtime_organ.v1.json) |
 
 ## Promotion Rule
 
@@ -54,6 +64,11 @@ Full SSP bundle required at concept admission: concept spec + schema + MVP plan 
 - [schemas/triangulation.v1.json](./schemas/triangulation.v1.json)
 - [schemas/ul_lineage_graph.v1.json](./schemas/ul_lineage_graph.v1.json)
 - [schemas/narrative_trust_pack.v1.json](./schemas/narrative_trust_pack.v1.json)
+- [schemas/capability_service_bridge.v1.json](./schemas/capability_service_bridge.v1.json)
+- [schemas/jarvis_memory_board.v1.json](./schemas/jarvis_memory_board.v1.json)
+- [schemas/governed_direct_pipeline.v1.json](./schemas/governed_direct_pipeline.v1.json)
+- [schemas/reflection_runtime_organ.v1.json](./schemas/reflection_runtime_organ.v1.json)
+- [schemas/memory_runtime_organ.v1.json](./schemas/memory_runtime_organ.v1.json)
 
 Runtime copies also live under `schemas/`, `triangulation/schemas/`.
 

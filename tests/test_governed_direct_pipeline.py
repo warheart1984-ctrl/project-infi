@@ -10,6 +10,7 @@ from src.governed_direct_pipeline import (
     DIRECT_COGNITIVE_LANE,
     SERVICE_TOOL_LANE,
     build_governed_turn_pipeline,
+    to_pipeline_envelope,
 )
 from src.jarvis_detachment_guard import jarvis_detachment_guard
 from src.module_governance import module_governance
@@ -330,3 +331,22 @@ class TestGovernedDirectPipeline(unittest.TestCase):
         self.assertEqual(governed_event["status"], "blocked")
         self.assertIsInstance(governed_event["immune_action"], dict)
         self.assertTrue(pipeline["validation"]["governed_event_valid"])
+
+    def test_pipeline_envelope_matches_schema_shape(self):
+        """Governed turn traces should map to governed_direct_pipeline.v1."""
+        pipeline = build_governed_turn_pipeline(
+            response_mode="think",
+            contract="gather_plan_answer",
+            god_brain={
+                "strategy_label": "Council Deliberation",
+                "action_bias": "deliberate_then_answer",
+                "surface_identity": "jarvis",
+            },
+            model_route={"id": "local_fast", "label": "Local Fast Route"},
+        )
+        envelope = to_pipeline_envelope(pipeline)
+        self.assertEqual(envelope["governed_direct_pipeline_version"], "governed_direct_pipeline.v1")
+        self.assertEqual(envelope["turn_id"], pipeline["pipeline_id"])
+        self.assertGreaterEqual(len(envelope["lanes"]), 1)
+        self.assertGreaterEqual(len(envelope["packets"]), 1)
+        self.assertIn(envelope["signal_feed"]["risk_level"], {"low", "medium", "high", "critical"})

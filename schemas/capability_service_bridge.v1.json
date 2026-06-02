@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capability_service_bridge.v1",
+  "title": "Capability Service Bridge v1",
+  "description": "Governed execution-governance envelope for AAIS capability module admission, phase context, and auditable service-lane calls.",
+  "type": "object",
+  "required": [
+    "capability_service_bridge_version",
+    "bridge_id",
+    "component_id",
+    "governance_mode",
+    "service_path",
+    "cisiv_stage",
+    "claim_label",
+    "created_at_utc"
+  ],
+  "properties": {
+    "capability_service_bridge_version": { "const": "capability_service_bridge.v1" },
+    "bridge_id": { "type": "string", "minLength": 1 },
+    "component_id": { "type": "string", "minLength": 1 },
+    "bridge_version": { "type": "string" },
+    "governance_mode": {
+      "enum": ["strict", "assist", "experimental"]
+    },
+    "phase_context": { "type": "string" },
+    "service_path": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "capability_call": { "$ref": "#/$defs/capability_call_record" },
+    "phase_events": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/phase_event" }
+    },
+    "cisiv_stage": {
+      "enum": ["concept", "identity", "structure", "implementation", "verification"]
+    },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] },
+    "created_at_utc": { "type": "string", "format": "date-time" },
+    "updated_at_utc": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "capability_call_record": {
+      "type": "object",
+      "required": ["capability_id", "outcome", "claim_label"],
+      "properties": {
+        "capability_id": { "type": "string", "minLength": 1 },
+        "module_path": { "type": "string" },
+        "outcome": {
+          "enum": ["allowed", "blocked", "degraded", "error"]
+        },
+        "phase_context": { "type": "string" },
+        "audit_event_count": { "type": "integer", "minimum": 0 },
+        "claim_label": { "enum": ["asserted", "proven", "rejected"] }
+      },
+      "additionalProperties": false
+    },
+    "phase_event": {
+      "type": "object",
+      "required": ["event_id", "phase", "claim_label"],
+      "properties": {
+        "event_id": { "type": "string", "minLength": 1 },
+        "phase": { "type": "string" },
+        "component_id": { "type": "string" },
+        "context": { "type": "string" },
+        "claim_label": { "enum": ["asserted", "proven", "rejected"] }
+      },
+      "additionalProperties": false
+    }
+  }
+}

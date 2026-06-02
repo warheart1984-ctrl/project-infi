@@ -131,6 +131,12 @@ Batch-admit new subsystem families via the [subsystem-summoner skill](../../.cur
 
 Wave 1 (2026-06): `safety_envelope_organ`, `operator_profile_organ`.
 
+Wave 2 (2026-06): `reflection_runtime_organ`, `memory_runtime_organ` (Nova cortex lobes;
+batch `alt5-summon-wave-2-2026-06`; promotion via `tools/governance/alt5_promote_wave2_mvp.py`).
+
+All four Alt-5 organs may be promoted `mvp` → `governed` via
+`tools/governance/alt5_promote_governed.py` or per-gene `promotion_engine --apply`.
+
 ## Activation Rule
 
 Subsystems move through stages per

@@ -1,0 +1,81 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "capability_service_bridge",
+    "version": "0.1.0-concept",
+    "stage": "governed",
+    "display_name": "Capability Service Bridge"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/AAIS_MODULE_GOVERNANCE_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    ],
+    "invariants": [
+      "Unregistered capability execute paths return blocked outcome when bridge is authoritative",
+      "governance_mode is explicit in every exported bridge snapshot",
+      "Phase violations surface auditable phase events without silent continue"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/capability_service_bridge.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/capability_service_bridge.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/capability-bridge"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/capability-bridge/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make capability-bridge-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/platform/CAPABILITY_SERVICE_BRIDGE_V1_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/platform/CAPABILITY_SERVICE_BRIDGE_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [],
+    "children": [
+      "cisiv_operator_lineage_console",
+      "governed_direct_pipeline"
+    ]
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "barebones-summon-wave-2026-06",
+    "notes": "Barebones wave \u2014 execution governance fabric"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/CAPABILITY_SERVICE_BRIDGE.md",
+    "mvp_plan": "docs/_future/ideas_pending/CAPABILITY_SERVICE_BRIDGE_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/platform/CAPABILITY_SERVICE_BRIDGE.md"
+  }
+}

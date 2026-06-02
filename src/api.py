@@ -89,7 +89,9 @@ from src.forge_eval_client import VALID_MODES as FORGE_EVAL_VALID_MODES, forge_e
 from src.generation_utils import DEFAULT_CHAT_CONTEXT_LIMIT, resolve_input_token_limit
 from src.governance_layer import governance_layer
 from src.god_brain import build_god_brain_trace
-from src.governed_direct_pipeline import build_governed_turn_pipeline
+from src.capability_service_bridge import to_bridge_envelope
+from src.governed_direct_pipeline import build_governed_turn_pipeline, to_pipeline_envelope
+from src.jarvis_memory_board import to_memory_board_envelope
 from src.immune_system import immune_system
 from src.jarvis_operator import jarvis_operator
 from src.jarvis_modular import (
@@ -2490,6 +2492,13 @@ def _observe_continuity_witness(session, response_trace):
     session.metadata["continuity_witness"] = dict(observation)
     response_trace["continuity_witness"] = dict(observation)
     governed_pipeline["continuity_witness"] = dict(observation)
+    history = list(session.metadata.get("governed_pipeline_history") or [])
+    pipeline_id = str(governed_pipeline.get("pipeline_id") or "").strip()
+    if pipeline_id and not any(
+        str(entry.get("pipeline_id") or "") == pipeline_id for entry in history
+    ):
+        history.append(dict(governed_pipeline))
+        session.metadata["governed_pipeline_history"] = history[-20:]
     if observation.get("trajectory_status") != "STABLE":
         _append_response_trace_step(
             response_trace,
@@ -8506,11 +8515,13 @@ def get_jarvis_memory_board():
         )
         if not security_result["decision"]["allowed"]:
             return _build_security_block_response(security_result)
+        board_snapshot = jarvis_operator.memory_enforcer.get_memory_board_snapshot(
+            truth_scope=truth_scope
+        )
         return jsonify(
             {
-                "memory_board": jarvis_operator.memory_enforcer.get_memory_board_snapshot(
-                    truth_scope=truth_scope
-                ),
+                "memory_board": board_snapshot,
+                "jarvis_memory_board": to_memory_board_envelope(board_snapshot),
                 "truth_scope": truth_scope,
                 "memory_enforcer": jarvis_operator.memory_enforcer.last_audit(),
             }
@@ -8617,12 +8628,86 @@ def swap_jarvis_memory_board_module():
 
 
 @app.route("/api/jarvis/capability-bridge", methods=["GET"])
+@app.route("/api/jarvis/capability-bridge/status", methods=["GET"])
 def get_capability_bridge():
     """Expose the governed capability bridge registry and recent audit events."""
     try:
-        return jsonify(jarvis_operator.capability_bridge_snapshot())
+        snapshot = jarvis_operator.capability_bridge_snapshot()
+        return jsonify(
+            {
+                **snapshot,
+                "capability_service_bridge": to_bridge_envelope(snapshot),
+            }
+        )
     except Exception as e:
         logger.error(f"Error reading capability bridge snapshot: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/pipeline/<turn_id>", methods=["GET"])
+def get_governed_pipeline_inspect(turn_id: str):
+    """Return a schema-shaped governed pipeline trace for one turn."""
+    try:
+        session_id = str(request.args.get("session_id") or "").strip()
+        if not session_id:
+            return (
+                jsonify(
+                    {
+                        "error": "session_id query parameter is required",
+                        "claim_label": "asserted",
+                    }
+                ),
+                400,
+            )
+        session = conversation_memory.get_session(session_id)
+        if session is None:
+            return (
+                jsonify(
+                    {
+                        "error": "session not found",
+                        "claim_label": "asserted",
+                    }
+                ),
+                404,
+            )
+        response_trace = dict(session.metadata.get("response_trace") or {})
+        governed_pipeline = dict(response_trace.get("governed_pipeline") or {})
+        normalized_turn = str(turn_id or "").strip().lower()
+        if normalized_turn in {"latest", "current", "last"}:
+            pipeline_trace = governed_pipeline
+        elif str(governed_pipeline.get("pipeline_id") or "") == turn_id:
+            pipeline_trace = governed_pipeline
+        else:
+            history = list(session.metadata.get("governed_pipeline_history") or [])
+            pipeline_trace = next(
+                (
+                    dict(entry)
+                    for entry in history
+                    if str(entry.get("pipeline_id") or "") == turn_id
+                ),
+                {},
+            )
+        if not pipeline_trace:
+            return (
+                jsonify(
+                    {
+                        "error": "governed pipeline trace not found for turn",
+                        "turn_id": turn_id,
+                        "claim_label": "asserted",
+                    }
+                ),
+                404,
+            )
+        return jsonify(
+            {
+                "governed_pipeline": pipeline_trace,
+                "governed_direct_pipeline": to_pipeline_envelope(pipeline_trace),
+                "session_id": session_id,
+                "turn_id": str(pipeline_trace.get("pipeline_id") or turn_id),
+            }
+        )
+    except Exception as e:
+        logger.error(f"Error reading governed pipeline trace: {e}")
         return jsonify({"error": str(e)}), 500
 
 
@@ -11469,6 +11554,32 @@ def get_operator_profile():
         )
     except Exception as e:
         logger.error(f"Error reading operator profile: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/reflection-runtime/status", methods=["GET"])
+def get_reflection_runtime_status():
+    """Read-only Reflection Runtime organ snapshot (Alt-5 wave 2)."""
+    try:
+        from src.reflection_runtime_organ import build_reflection_runtime_status
+
+        return jsonify(
+            attach_ul_substrate({"reflection_runtime": build_reflection_runtime_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading reflection runtime status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/memory-runtime/status", methods=["GET"])
+def get_memory_runtime_status():
+    """Read-only Memory Runtime organ snapshot (Alt-5 wave 2)."""
+    try:
+        from src.memory_runtime_organ import build_memory_runtime_status
+
+        return jsonify(attach_ul_substrate({"memory_runtime": build_memory_runtime_status()}))
+    except Exception as e:
+        logger.error(f"Error reading memory runtime status: {e}")
         return jsonify({"error": str(e)}), 500
 
 

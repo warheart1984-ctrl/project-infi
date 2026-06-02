@@ -3,6 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field, replace
+from datetime import datetime
+from typing import Any
+
+from src.datetime_compat import UTC
 
 
 class MemoryBoardViolation(ValueError):
@@ -461,4 +465,58 @@ def build_memory_board_snapshot(controller: MemoryController) -> dict[str, objec
         "installed_slots": installed_slots,
         "reserved_slots": len(controller.slots) - active_slots,
         "slots": slots,
+    }
+
+
+def _utc_now_iso() -> str:
+    return datetime.now(UTC).replace(microsecond=0).isoformat()
+
+
+def to_memory_board_envelope(
+    snapshot: dict[str, object],
+    *,
+    cisiv_stage: str = "implementation",
+    claim_label: str = "asserted",
+) -> dict[str, Any]:
+    """Map a memory board snapshot to jarvis_memory_board.v1."""
+    now = _utc_now_iso()
+    board = dict(snapshot.get("board") or {})
+    slot_rows = []
+    for slot in list(snapshot.get("slots") or []):
+        if not isinstance(slot, dict):
+            continue
+        installed = slot.get("module")
+        slot_row: dict[str, Any] = {
+            "slot_id": str(slot.get("slot_id") or ""),
+            "slot_name": str(slot.get("slot_name") or ""),
+            "accepted_class": str(slot.get("accepted_class") or ""),
+            "active": bool(slot.get("active")),
+            "claim_label": claim_label,
+        }
+        if isinstance(installed, dict):
+            slot_row["installed_module"] = {
+                "module_id": str(installed.get("module_id") or ""),
+                "module_version": str(installed.get("module_version") or ""),
+                "module_class": str(installed.get("module_class") or ""),
+                "supported_slot": str(installed.get("supported_slot") or ""),
+                "trust_class": str(installed.get("trust_class") or ""),
+                "enabled": bool(installed.get("enabled", True)),
+                "claim_label": claim_label,
+            }
+        slot_rows.append(slot_row)
+
+    return {
+        "jarvis_memory_board_version": "jarvis_memory_board.v1",
+        "board_id": str(board.get("board_id") or "jarvis.memory_board"),
+        "profile_name": str(board.get("board_label") or ""),
+        "slots": slot_rows,
+        "controller_state": {
+            "approval_required": True,
+            "claim_label": claim_label,
+        },
+        "migrations": [],
+        "cisiv_stage": cisiv_stage,
+        "claim_label": claim_label,
+        "created_at_utc": now,
+        "updated_at_utc": now,
     }

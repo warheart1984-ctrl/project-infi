@@ -1,0 +1,10 @@
+{
+  "slot_id": "slot_01",
+  "module": {
+    "module_id": "test_module",
+    "module_class": "foundation",
+    "supported_slot": "slot_99"
+  },
+  "controller_approved": false,
+  "expected_error": "MemoryBoardViolation"
+}

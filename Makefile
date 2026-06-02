@@ -183,7 +183,27 @@ safety-envelope-gate:
 operator-profile-gate:
 	python3 .github/scripts/check-operator-profile-governance.py
 
-alt5-gate: safety-envelope-gate operator-profile-gate genome-gate
+capability-bridge-gate:
+	python3 .github/scripts/check-capability-bridge-governance.py
+
+memory-board-gate:
+	python3 .github/scripts/check-memory-board-governance.py
+
+governed-pipeline-gate:
+	python3 .github/scripts/check-governed-pipeline-governance.py
+
+barebones-gate: genome-gate capability-bridge-gate memory-board-gate governed-pipeline-gate
+
+barebones-promote-governed:
+	python3 tools/governance/barebones_promote_governed.py
+
+reflection-runtime-gate:
+	python3 .github/scripts/check-reflection-runtime-governance.py
+
+memory-runtime-gate:
+	python3 .github/scripts/check-memory-runtime-governance.py
+
+alt5-gate: safety-envelope-gate operator-profile-gate reflection-runtime-gate memory-runtime-gate genome-gate
 
 tier5-gate:
 	python3 tools/governance/check_adaptive_governance.py

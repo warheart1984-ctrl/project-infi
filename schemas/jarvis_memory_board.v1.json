@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "jarvis_memory_board.v1",
+  "title": "Jarvis Memory Board v1",
+  "description": "Modular memory-governance snapshot: fixed slots, controller-approved installs, and lawful migration records.",
+  "type": "object",
+  "required": [
+    "jarvis_memory_board_version",
+    "board_id",
+    "slots",
+    "controller_state",
+    "cisiv_stage",
+    "claim_label",
+    "created_at_utc"
+  ],
+  "properties": {
+    "jarvis_memory_board_version": { "const": "jarvis_memory_board.v1" },
+    "board_id": { "type": "string", "minLength": 1 },
+    "profile_name": { "type": "string" },
+    "slots": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/memory_slot_snapshot" }
+    },
+    "controller_state": { "$ref": "#/$defs/controller_state" },
+    "migrations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/migration_record" }
+    },
+    "cisiv_stage": {
+      "enum": ["concept", "identity", "structure", "implementation", "verification"]
+    },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] },
+    "created_at_utc": { "type": "string", "format": "date-time" },
+    "updated_at_utc": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "memory_module_ref": {
+      "type": "object",
+      "required": ["module_id", "module_class", "supported_slot", "claim_label"],
+      "properties": {
+        "module_id": { "type": "string", "minLength": 1 },
+        "module_version": { "type": "string" },
+        "module_class": { "type": "string" },
+        "supported_slot": { "type": "string" },
+        "trust_class": { "type": "string" },
+        "enabled": { "type": "boolean" },
+        "claim_label": { "enum": ["asserted", "proven", "rejected"] }
+      },
+      "additionalProperties": false
+    },
+    "memory_slot_snapshot": {
+      "type": "object",
+      "required": ["slot_id", "accepted_class", "active", "claim_label"],
+      "properties": {
+        "slot_id": { "type": "string", "minLength": 1 },
+        "slot_name": { "type": "string" },
+        "accepted_class": { "type": "string" },
+        "active": { "type": "boolean" },
+        "installed_module": { "$ref": "#/$defs/memory_module_ref" },
+        "claim_label": { "enum": ["asserted", "proven", "rejected"] }
+      },
+      "additionalProperties": false
+    },
+    "controller_state": {
+      "type": "object",
+      "required": ["approval_required", "claim_label"],
+      "properties": {
+        "approval_required": { "type": "boolean" },
+        "pending_swap_slot": { "type": "string" },
+        "claim_label": { "enum": ["asserted", "proven", "rejected"] }
+      },
+      "additionalProperties": false
+    },
+    "migration_record": {
+      "type": "object",
+      "required": ["record_id", "source_slot", "target_slot", "trust_class_preserved", "claim_label"],
+      "properties": {
+        "record_id": { "type": "string", "minLength": 1 },
+        "source_slot": { "type": "string" },
+        "target_slot": { "type": "string" },
+        "trust_class_preserved": { "type": "boolean" },
+        "claim_label": { "enum": ["asserted", "proven", "rejected"] }
+      },
+      "additionalProperties": false
+    }
+  }
+}

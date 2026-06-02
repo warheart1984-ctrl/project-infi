@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "memory_runtime_organ.v1",
+  "title": "Memory Runtime Organ v1",
+  "type": "object",
+  "required": [
+    "memory_runtime_organ_version",
+    "runtime_id",
+    "runtime_version",
+    "stages",
+    "cisiv_stage",
+    "claim_label"
+  ],
+  "properties": {
+    "memory_runtime_organ_version": { "const": "memory_runtime_organ.v1" },
+    "runtime_id": { "type": "string", "minLength": 1 },
+    "runtime_version": { "type": "string", "minLength": 1 },
+    "stages": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "summary": { "type": "string" },
+    "cisiv_stage": {
+      "enum": ["concept", "identity", "structure", "implementation", "verification"]
+    },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] },
+    "read_only": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}

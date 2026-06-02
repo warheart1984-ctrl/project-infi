@@ -1,6 +1,6 @@
 # Safety Envelope Organ
 
-Status: **partial live MVP** (Alt-5 summon wave)
+Status: **governed** (Alt-5 summon wave 1)
 
 ## Runtime
 

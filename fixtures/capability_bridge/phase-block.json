@@ -1,0 +1,9 @@
+{
+  "tool": "mystic_reading",
+  "args": {
+    "input": "I need direction."
+  },
+  "runtime_context": "live_runtime",
+  "expected_status": "blocked",
+  "expected_phase_decision": "BLOCK"
+}

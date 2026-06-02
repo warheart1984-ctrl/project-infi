@@ -9,6 +9,7 @@ from src.jarvis_memory_board import (
     MemoryController,
     MemoryModule,
     default_memory_slots,
+    to_memory_board_envelope,
 )
 
 
@@ -180,6 +181,14 @@ class TestJarvisMemoryBoard(unittest.TestCase):
         self.assertEqual(self.controller.slots["slot_02"].retired_modules[0].module_id, "operational_v1")
         self.assertFalse(self.controller.slots["slot_02"].retired_modules[0].enabled)
         self.assertEqual(self.controller.migration_log[0]["migrated_record_count"], 1)
+
+    def test_memory_board_envelope_matches_schema_shape(self):
+        """Board snapshots should map to jarvis_memory_board.v1."""
+        controller = build_default_memory_controller()
+        envelope = to_memory_board_envelope(build_memory_board_snapshot(controller))
+        self.assertEqual(envelope["jarvis_memory_board_version"], "jarvis_memory_board.v1")
+        self.assertGreaterEqual(len(envelope["slots"]), 1)
+        self.assertTrue(envelope["controller_state"]["approval_required"])
 
 
 if __name__ == "__main__":

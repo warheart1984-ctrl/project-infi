@@ -48,5 +48,9 @@ If Nova docs conflict with runtime code, runtime code wins.
 
 ## Pending Future Ideas
 
+- [Reflection Runtime Organ](../../_future/ideas_pending/REFLECTION_RUNTIME_ORGAN.md)
+  — Alt-5 wave 2; active doc [REFLECTION_RUNTIME_ORGAN.md](./REFLECTION_RUNTIME_ORGAN.md)
+- [Memory Runtime Organ](../../_future/ideas_pending/MEMORY_RUNTIME_ORGAN.md)
+  — Alt-5 wave 2; active doc [MEMORY_RUNTIME_ORGAN.md](./MEMORY_RUNTIME_ORGAN.md)
 - [Human Voice Extraction](../../_future/ideas_pending/HUMAN_VOICE_EXTRACTION.md)
   — concept origin; active doc under [../speakers/HUMAN_VOICE_EXTRACTION.md](../speakers/HUMAN_VOICE_EXTRACTION.md)

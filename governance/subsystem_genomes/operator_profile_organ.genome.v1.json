@@ -2,15 +2,17 @@
   "subsystem_genome_version": "subsystem_genome.v1",
   "identity": {
     "gene": "operator_profile_organ",
-    "version": "1.0.0-mvp",
-    "stage": "mvp",
+    "version": "1.0.0-governed",
+    "stage": "governed",
     "display_name": "Operator Profile Organ"
   },
   "governance": {
     "contracts": [
       "docs/contracts/AAIS_SSP_PROTOCOL.md",
       "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
-      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md"
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
     ],
     "invariants": [
       "profile_id never empty on live path",
@@ -20,7 +22,7 @@
   },
   "schema": {
     "ref": "schemas/operator_profile_organ.v1.json",
-    "frozen": false
+    "frozen": true
   },
   "runtime": {
     "surface": [
@@ -42,7 +44,7 @@
     "bundles": [
       "docs/proof/platform/OPERATOR_PROFILE_V1_PROOF.md"
     ],
-    "posture": "mvp",
+    "posture": "governed",
     "target_bundles": [
       "docs/proof/platform/OPERATOR_PROFILE_V1_PROOF.md"
     ]
@@ -52,15 +54,17 @@
       "jarvis",
       "knowledge_authority"
     ],
-    "children": []
+    "children": [
+      "reflection_runtime_organ"
+    ]
   },
   "activation": {
     "order": 2,
     "batch_id": "alt5-summon-wave-2026-06",
-    "notes": "Alt-5 wave 2 — operator identity lane"
+    "notes": "Alt-5 wave 2 \u2014 operator identity lane"
   },
   "retirement": {
-    "path": null
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
   },
   "mutation": {
     "history": []

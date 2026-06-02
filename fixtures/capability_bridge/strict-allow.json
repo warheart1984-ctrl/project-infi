@@ -1,0 +1,13 @@
+{
+  "capability": "v9_core",
+  "action": "generate_scene",
+  "args": {
+    "input": "Continue the scene.",
+    "location": "Throne Room"
+  },
+  "execution_profile": {
+    "governance_mode": "strict",
+    "provider_mode": "deterministic"
+  },
+  "expected_outcome": "allowed"
+}

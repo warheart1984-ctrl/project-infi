@@ -13,6 +13,35 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.1.0] - 2026-06-02 — Infinity 1 (complete)
+
+**Infinity 1 (complete)** — thirteen governed subsystem genomes, Alt-5 waves 1–2 (four organs at `governed`), barebones summon wave (bridge, memory board, governed pipeline), and reproducible promotion scripts.
+
+### Added
+
+- **Alt-5 Summon Wave 2** — `reflection_runtime_organ`, `memory_runtime_organ` at `governed`; `GET /api/jarvis/reflection-runtime/status`, `GET /api/jarvis/memory-runtime/status`; `tools/governance/alt5_promote_wave2_mvp.py`
+- **Alt-5 governed promotion** — all four Alt-5 organs (`safety_envelope_organ`, `operator_profile_organ`, reflection, memory) at `governed`; `tools/governance/alt5_promote_governed.py`
+- **Barebones summon wave** — `capability_service_bridge`, `jarvis_memory_board`, `governed_direct_pipeline` at `governed`; status APIs and `make barebones-gate`; `tools/governance/barebones_promote_governed.py`
+- **Governance gates** — `reflection-runtime-gate`, `memory-runtime-gate`, capability-bridge, memory-board, governed-pipeline checks
+
+### Changed
+
+- Thirteen registered subsystem genomes (all at `governed`); [AAIS_SUBSYSTEM_SPEC.md](docs/runtime/AAIS_SUBSYSTEM_SPEC.md) §8 constitutional layer extended
+- [AAIS_SSP_PROTOCOL.md](docs/contracts/AAIS_SSP_PROTOCOL.md) — Alt-5 wave 2 + governed promotion path
+- `make alt5-gate` includes wave 2 organ gates
+
+### Verification (v1.1.0)
+
+```bash
+make genome-gate alt4-gate alt5-gate barebones-gate tier5-gate
+python -m pytest tests/test_safety_envelope_organ.py tests/test_operator_profile_organ.py \
+  tests/test_reflection_runtime_organ.py tests/test_memory_runtime_organ.py \
+  tests/test_governance_organs_alt4.py tests/test_adaptive_governance.py -q
+python tools/governance/alt5_promote_governed.py  # idempotent when already governed
+```
+
+[1.1.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.1.0
+
 ## [1.0.0] - 2026-06-02 — Infinity 1
 
 **Infinity 1** — self-governing runtime: Alt-4 lifecycle organs, constitutional layer (six governed genomes), Alt-5 summon wave (two new organs), Governance Tier 5 adaptive layer.
@@ -35,6 +64,8 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 make genome-gate alt4-gate alt5-gate tier5-gate
 python -m pytest tests/test_governance_organs_alt4.py tests/test_adaptive_governance.py tests/test_safety_envelope_organ.py tests/test_operator_profile_organ.py -q
 ```
+
+[1.0.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.0.0
 
 ## [0.4.0] - 2026-06-02
 

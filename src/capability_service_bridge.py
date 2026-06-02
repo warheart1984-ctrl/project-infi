@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any, Callable
+
+from src.datetime_compat import UTC
 
 from src.capability_module import AAISCapabilityModule
 from src.phase_gate import (
@@ -814,14 +817,30 @@ class CapabilityServiceBridge:
     ) -> dict[str, Any]:
         from src.governance_organs import GenomeEngine, GenomeValidationError
 
+        bridge_stage = (
+            (GenomeEngine.registry().genomes.get("capability_service_bridge") or {})
+            .get("identity", {})
+            .get("stage", "")
+        )
+        if bridge_stage in {"mvp", "governed"}:
+            try:
+                GenomeEngine.assert_gene_callable("capability_service_bridge", stage_min="mvp")
+            except GenomeValidationError as exc:
+                return self._build_genome_block(spec, str(exc), args=args)
+
         gene_hint = spec.get("gene") or spec.get("capability_id") or spec.get("module")
         if isinstance(gene_hint, object) and hasattr(gene_hint, "module_name"):
             gene_hint = getattr(gene_hint, "module_name", gene_hint)
         gene = GenomeEngine.resolve_gene(str(gene_hint or ""))
-        try:
-            GenomeEngine.assert_gene_callable(gene, stage_min="mvp")
-        except GenomeValidationError as exc:
-            return self._build_genome_block(spec, str(exc), args=args)
+        if gene and gene != "capability_service_bridge":
+            gene_stage = (
+                (GenomeEngine.registry().genomes.get(gene) or {}).get("identity", {}).get("stage", "")
+            )
+            if gene_stage in {"mvp", "governed"}:
+                try:
+                    GenomeEngine.assert_gene_callable(gene, stage_min="mvp")
+                except GenomeValidationError as exc:
+                    return self._build_genome_block(spec, str(exc), args=args)
 
         from src.governance_organs.adaptive_engine import AdaptiveEngine
 
@@ -1833,3 +1852,73 @@ class CapabilityServiceBridge:
             execution_profile=execution_profile,
             phase_gate=phase_gate,
         )
+
+
+def _utc_now_iso() -> str:
+    return datetime.now(UTC).replace(microsecond=0).isoformat()
+
+
+def to_bridge_envelope(
+    snapshot: dict[str, Any],
+    *,
+    cisiv_stage: str = "implementation",
+    claim_label: str = "asserted",
+) -> dict[str, Any]:
+    """Map a bridge snapshot to capability_service_bridge.v1."""
+    now = _utc_now_iso()
+    recent_events = list(snapshot.get("recent_events") or [])
+    last_event = recent_events[-1] if recent_events else {}
+    governance_mode = str(
+        last_event.get("governance_mode")
+        or (snapshot.get("phase_gate") or {}).get("bridge", {}).get("governance_mode")
+        or "strict"
+    ).strip().lower()
+    if governance_mode not in DEFAULT_GOVERNANCE_MODES:
+        governance_mode = "strict"
+
+    capability_call = None
+    if last_event:
+        capability_call = {
+            "capability_id": str(last_event.get("capability_id") or last_event.get("tool_type") or ""),
+            "module_path": str(last_event.get("module") or ""),
+            "outcome": "allowed" if last_event.get("ok") else "error",
+            "phase_context": OPERATOR_PHASE_CONTEXT,
+            "audit_event_count": int(snapshot.get("event_count") or len(recent_events)),
+            "claim_label": claim_label,
+        }
+
+    phase_events = []
+    for index, event in enumerate((snapshot.get("phase_gate") or {}).get("recent_events") or []):
+        if not isinstance(event, dict):
+            continue
+        phase_events.append(
+            {
+                "event_id": str(event.get("event_id") or f"phase-{index + 1}"),
+                "phase": str(event.get("phase") or event.get("to_phase") or ""),
+                "component_id": str(event.get("component_id") or BRIDGE_COMPONENT_ID),
+                "context": str(event.get("context") or event.get("runtime_context") or DEFAULT_PHASE_CONTEXT),
+                "claim_label": claim_label,
+            }
+        )
+
+    envelope: dict[str, Any] = {
+        "capability_service_bridge_version": "capability_service_bridge.v1",
+        "bridge_id": str(snapshot.get("bridge_id") or BRIDGE_ID),
+        "component_id": BRIDGE_COMPONENT_ID,
+        "bridge_version": str(snapshot.get("version") or BRIDGE_VERSION),
+        "governance_mode": governance_mode,
+        "phase_context": str(
+            (snapshot.get("phase_gate") or {}).get("bridge", {}).get("runtime_context")
+            or DEFAULT_PHASE_CONTEXT
+        ),
+        "service_path": list(DEFAULT_SERVICE_PATH),
+        "cisiv_stage": cisiv_stage,
+        "claim_label": claim_label,
+        "created_at_utc": now,
+        "updated_at_utc": now,
+    }
+    if capability_call:
+        envelope["capability_call"] = capability_call
+    if phase_events:
+        envelope["phase_events"] = phase_events
+    return envelope
