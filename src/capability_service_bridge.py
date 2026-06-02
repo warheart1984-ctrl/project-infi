@@ -145,6 +145,21 @@ class CapabilityServiceBridge:
             required_fields_by_action={"generate_scene": ("status", "location")},
             handlers={"generate_scene": self._execute_v10},
         )
+        self._recipe_module = ConfiguredCapabilityModule(
+            module_name="recipe_module",
+            provider_name="aais_recipe",
+            supported_actions={"create_mission"},
+        )
+        self._imagine_module = ConfiguredCapabilityModule(
+            module_name="imagine_generator",
+            provider_name="aais_imagine",
+            supported_actions={"emit", "handoff", "grok_render"},
+        )
+        self._human_voice_module = ConfiguredCapabilityModule(
+            module_name="human_voice_extraction",
+            provider_name="aais_human_voice",
+            supported_actions={"extract", "signoff", "handoff"},
+        )
 
         self._route_specs = [
             {
@@ -329,6 +344,217 @@ class CapabilityServiceBridge:
                         "type": "text",
                         "required": False,
                         "placeholder": "Queen Seris, Captain Vale",
+                    },
+                ),
+            },
+            {
+                "capability_id": "recipe_module",
+                "capability_label": "Recipe Module",
+                "capability_summary": "Create a Mission Board mission from a governed recipe pack.",
+                "tool": "recipe_module",
+                "tool_label": "Recipe Module",
+                "action": "create_mission",
+                "action_label": "Create Mission",
+                "module": self._recipe_module,
+                "aliases": ("recipe_module", "recipe_create_mission"),
+                "handler": self._handle_recipe_module_create_mission,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "recipe_id",
+                        "label": "Recipe Id",
+                        "type": "text",
+                        "required": True,
+                        "default": "onboarding-v1",
+                    },
+                    {
+                        "id": "signoff_ack",
+                        "label": "Human Signoff Ack",
+                        "type": "boolean",
+                        "required": True,
+                        "default": True,
+                    },
+                ),
+            },
+            {
+                "capability_id": "imagine_generator",
+                "capability_label": "Imagine Generator",
+                "capability_summary": "Emit a governed imagination pattern artifact.",
+                "tool": "imagine_generator_emit",
+                "tool_label": "Imagine Emit",
+                "action": "emit",
+                "action_label": "Emit Pattern",
+                "module": self._imagine_module,
+                "aliases": ("imagine_emit", "imagine_generator_emit"),
+                "handler": self._handle_imagine_emit,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "fixture",
+                        "label": "Fixture",
+                        "type": "text",
+                        "required": False,
+                        "default": "scene-seed-demo",
+                    },
+                    {
+                        "id": "prompt_frame",
+                        "label": "Prompt Frame",
+                        "type": "textarea",
+                        "required": False,
+                    },
+                    {
+                        "id": "pattern_type",
+                        "label": "Pattern Type",
+                        "type": "text",
+                        "required": False,
+                        "default": "scene_seed",
+                    },
+                ),
+            },
+            {
+                "capability_id": "imagine_generator",
+                "capability_label": "Imagine Generator",
+                "capability_summary": "Admit an imagine pattern to the Story Forge handoff path.",
+                "tool": "imagine_generator_handoff",
+                "tool_label": "Imagine Handoff",
+                "action": "handoff",
+                "action_label": "Story Forge Handoff",
+                "module": self._imagine_module,
+                "aliases": ("imagine_handoff", "imagine_generator_handoff"),
+                "handler": self._handle_imagine_handoff,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "pattern_id",
+                        "label": "Pattern Id",
+                        "type": "text",
+                        "required": True,
+                    },
+                ),
+            },
+            {
+                "capability_id": "imagine_generator",
+                "capability_label": "Imagine Generator",
+                "capability_summary": "Render pattern via xAI Grok (requires env API key).",
+                "tool": "imagine_generator_grok_render",
+                "tool_label": "Imagine Grok Render",
+                "action": "grok_render",
+                "action_label": "Grok Render",
+                "module": self._imagine_module,
+                "aliases": ("imagine_grok_render", "imagine_generator_grok"),
+                "handler": self._handle_imagine_grok_render,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "pattern_id",
+                        "label": "Pattern Id",
+                        "type": "text",
+                        "required": True,
+                    },
+                ),
+            },
+            {
+                "capability_id": "human_voice_extraction",
+                "capability_label": "Human Voice Extraction",
+                "capability_summary": "Extract governed voice traits from human notes.",
+                "tool": "human_voice_extract",
+                "tool_label": "Extract Voice",
+                "action": "extract",
+                "action_label": "Extract",
+                "module": self._human_voice_module,
+                "aliases": ("human_voice_extract", "human_voice_extraction"),
+                "handler": self._handle_human_voice_extract,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "fixture",
+                        "label": "Fixture",
+                        "type": "text",
+                        "required": False,
+                        "default": "notes-demo-redacted",
+                    },
+                    {
+                        "id": "notes_text",
+                        "label": "Notes Text",
+                        "type": "textarea",
+                        "required": False,
+                    },
+                ),
+            },
+            {
+                "capability_id": "human_voice_extraction",
+                "capability_label": "Human Voice Extraction",
+                "capability_summary": "Apply operator signoff to a voice extraction pack.",
+                "tool": "human_voice_signoff",
+                "tool_label": "Voice Signoff",
+                "action": "signoff",
+                "action_label": "Signoff",
+                "module": self._human_voice_module,
+                "aliases": ("human_voice_signoff",),
+                "handler": self._handle_human_voice_signoff,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "extraction_id",
+                        "label": "Extraction Id",
+                        "type": "text",
+                        "required": True,
+                    },
+                    {
+                        "id": "signoff_by",
+                        "label": "Signoff By",
+                        "type": "text",
+                        "required": False,
+                        "default": "operator",
+                    },
+                ),
+            },
+            {
+                "capability_id": "human_voice_extraction",
+                "capability_label": "Human Voice Extraction",
+                "capability_summary": "Admit voice constraints to the Speakers lane.",
+                "tool": "human_voice_handoff",
+                "tool_label": "Speakers Handoff",
+                "action": "handoff",
+                "action_label": "Handoff",
+                "module": self._human_voice_module,
+                "aliases": ("human_voice_handoff",),
+                "handler": self._handle_human_voice_handoff,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "extraction_id",
+                        "label": "Extraction Id",
+                        "type": "text",
+                        "required": True,
                     },
                 ),
             },
@@ -1153,6 +1379,396 @@ class CapabilityServiceBridge:
                     "characters": payload["characters"],
                     "error": capability_result.get("message", "Unknown error"),
                 },
+            },
+            capability_result=capability_result,
+            response=response,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _alt3_runtime_context(self, phase_gate: dict[str, Any] | None) -> str:
+        return _normalize_runtime_context(
+            (phase_gate or {}).get("runtime_context"),
+            OPERATOR_PHASE_CONTEXT,
+        )
+
+    def _alt3_execution_profile_fields(
+        self, execution_profile: dict[str, Any] | None
+    ) -> dict[str, Any]:
+        profile = dict(execution_profile or {})
+        fields: dict[str, Any] = {}
+        for key in (
+            "session_id",
+            "mission_id",
+            "imagine_root",
+            "story_forge_root",
+            "extraction_root",
+            "speakers_root",
+            "recipe_root",
+        ):
+            if profile.get(key):
+                fields[key] = profile[key]
+        return fields
+
+    def _alt3_capability_result(
+        self,
+        cap: dict[str, Any],
+    ) -> dict[str, Any]:
+        return {
+            "ok": bool(cap.get("ok")),
+            "data": cap,
+            "message": cap.get("message") or cap.get("error_type") or "",
+        }
+
+    def _handle_recipe_module_create_mission(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        spec = self._selection_routes[("recipe_module", "create_mission")]
+        payload = dict(args or {})
+        recipe_id = str(payload.get("recipe_id") or "").strip()
+        signoff_ack = _coerce_bool(payload.get("signoff_ack"))
+        if signoff_ack is None:
+            signoff_ack = False
+        try:
+            from src.mission_board import mission_board
+
+            profile = self._alt3_execution_profile_fields(execution_profile)
+            snapshot = mission_board.create_from_recipe(
+                recipe_id,
+                session_id=profile.get("session_id"),
+                signoff_ack=signoff_ack,
+                recipe_root=profile.get("recipe_root"),
+            )
+            active = snapshot.get("active_mission") or {}
+            response = f"Recipe mission created: {active.get('title', recipe_id)}"
+            capability_result = {"ok": True, "data": {"mission_board": snapshot}}
+            return self._finalize_result(
+                spec=spec,
+                tool_result={
+                    "type": spec["tool"],
+                    "tool": spec["tool"],
+                    "status": "completed",
+                    "recipe_id": recipe_id,
+                    "result": {"active_mission_id": active.get("id"), "title": active.get("title")},
+                },
+                capability_result=capability_result,
+                response=response,
+                execution_profile=execution_profile,
+                result_payload={"recipe_id": recipe_id, "mission_id": active.get("id")},
+                phase_gate=phase_gate,
+            )
+        except Exception as exc:  # noqa: BLE001
+            response = f"Recipe module could not create mission: {exc}"
+            return self._finalize_result(
+                spec=spec,
+                tool_result={
+                    "type": spec["tool"],
+                    "tool": spec["tool"],
+                    "status": "failed",
+                    "recipe_id": recipe_id,
+                    "result": {"error": str(exc)},
+                },
+                capability_result={"ok": False, "message": str(exc)},
+                response=response,
+                execution_profile=execution_profile,
+                phase_gate=phase_gate,
+            )
+
+    def _handle_imagine_emit(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        spec = self._selection_routes[("imagine_generator", "emit")]
+        from src.capabilities.imagine_generator import run_imagine_generator_capability
+
+        request = {
+            "action": "emit",
+            "runtime_context": self._alt3_runtime_context(phase_gate),
+            **self._alt3_execution_profile_fields(execution_profile),
+            **dict(args or {}),
+        }
+        cap = run_imagine_generator_capability(request)
+        capability_result = self._alt3_capability_result(cap)
+        if cap.get("ok"):
+            pattern = cap.get("pattern") or {}
+            response = f"Imagine pattern emitted: {pattern.get('pattern_id', '')}"
+            return self._finalize_result(
+                spec=spec,
+                tool_result={
+                    "type": spec["tool"],
+                    "tool": spec["tool"],
+                    "status": "completed",
+                    "result": pattern,
+                },
+                capability_result=capability_result,
+                response=response,
+                execution_profile=execution_profile,
+                result_payload=pattern,
+                phase_gate=phase_gate,
+            )
+        response = f"Imagine emit failed: {cap.get('message', 'unknown')}"
+        return self._finalize_result(
+            spec=spec,
+            tool_result={
+                "type": spec["tool"],
+                "tool": spec["tool"],
+                "status": "failed",
+                "result": cap,
+            },
+            capability_result=capability_result,
+            response=response,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_imagine_handoff(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        spec = self._selection_routes[("imagine_generator", "handoff")]
+        from src.capabilities.imagine_generator import run_imagine_generator_capability
+
+        request = {
+            "action": "handoff",
+            "runtime_context": self._alt3_runtime_context(phase_gate),
+            **self._alt3_execution_profile_fields(execution_profile),
+            **dict(args or {}),
+        }
+        cap = run_imagine_generator_capability(request)
+        capability_result = self._alt3_capability_result(cap)
+        if cap.get("ok"):
+            response = "Imagine pattern admitted to Story Forge."
+            return self._finalize_result(
+                spec=spec,
+                tool_result={
+                    "type": spec["tool"],
+                    "tool": spec["tool"],
+                    "status": "completed",
+                    "result": cap.get("result") or {},
+                },
+                capability_result=capability_result,
+                response=response,
+                execution_profile=execution_profile,
+                result_payload=cap.get("result"),
+                phase_gate=phase_gate,
+            )
+        response = f"Imagine handoff failed: {cap.get('message', 'unknown')}"
+        return self._finalize_result(
+            spec=spec,
+            tool_result={
+                "type": spec["tool"],
+                "tool": spec["tool"],
+                "status": "failed",
+                "result": cap,
+            },
+            capability_result=capability_result,
+            response=response,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_imagine_grok_render(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        spec = self._selection_routes[("imagine_generator", "grok_render")]
+        from src.capabilities.imagine_generator import run_imagine_generator_capability
+
+        request = {
+            "action": "grok_render",
+            "runtime_context": self._alt3_runtime_context(phase_gate),
+            **self._alt3_execution_profile_fields(execution_profile),
+            **dict(args or {}),
+        }
+        cap = run_imagine_generator_capability(request)
+        capability_result = self._alt3_capability_result(cap)
+        if cap.get("ok"):
+            response = "Grok render completed for imagine pattern."
+            return self._finalize_result(
+                spec=spec,
+                tool_result={
+                    "type": spec["tool"],
+                    "tool": spec["tool"],
+                    "status": "completed",
+                    "result": cap.get("result") or cap.get("artifact") or {},
+                },
+                capability_result=capability_result,
+                response=response,
+                execution_profile=execution_profile,
+                result_payload=cap,
+                phase_gate=phase_gate,
+            )
+        err = cap.get("message") or cap.get("error_type") or "unknown"
+        status = "blocked" if cap.get("error_type") == "KeysRequired" else "failed"
+        response = f"Imagine grok render failed: {err}"
+        return self._finalize_result(
+            spec=spec,
+            tool_result={
+                "type": spec["tool"],
+                "tool": spec["tool"],
+                "status": status,
+                "result": cap,
+            },
+            capability_result=capability_result,
+            response=response,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_human_voice_extract(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        spec = self._selection_routes[("human_voice_extraction", "extract")]
+        from src.capabilities.human_voice_extraction import run_human_voice_extraction_capability
+
+        request = {
+            "action": "extract",
+            "runtime_context": self._alt3_runtime_context(phase_gate),
+            **self._alt3_execution_profile_fields(execution_profile),
+            **dict(args or {}),
+        }
+        cap = run_human_voice_extraction_capability(request)
+        capability_result = self._alt3_capability_result(cap)
+        if cap.get("ok"):
+            extraction = cap.get("extraction") or {}
+            response = f"Voice extraction complete: {extraction.get('extraction_id', '')}"
+            return self._finalize_result(
+                spec=spec,
+                tool_result={
+                    "type": spec["tool"],
+                    "tool": spec["tool"],
+                    "status": "completed",
+                    "result": extraction,
+                },
+                capability_result=capability_result,
+                response=response,
+                execution_profile=execution_profile,
+                result_payload=extraction,
+                phase_gate=phase_gate,
+            )
+        response = f"Human voice extract failed: {cap.get('message', 'unknown')}"
+        return self._finalize_result(
+            spec=spec,
+            tool_result={
+                "type": spec["tool"],
+                "tool": spec["tool"],
+                "status": "failed",
+                "result": cap,
+            },
+            capability_result=capability_result,
+            response=response,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_human_voice_signoff(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        spec = self._selection_routes[("human_voice_extraction", "signoff")]
+        from src.capabilities.human_voice_extraction import run_human_voice_extraction_capability
+
+        request = {
+            "action": "signoff",
+            "runtime_context": self._alt3_runtime_context(phase_gate),
+            **self._alt3_execution_profile_fields(execution_profile),
+            **dict(args or {}),
+        }
+        cap = run_human_voice_extraction_capability(request)
+        capability_result = self._alt3_capability_result(cap)
+        if cap.get("ok"):
+            response = "Voice extraction signed off."
+            return self._finalize_result(
+                spec=spec,
+                tool_result={
+                    "type": spec["tool"],
+                    "tool": spec["tool"],
+                    "status": "completed",
+                    "result": cap.get("extraction") or {},
+                },
+                capability_result=capability_result,
+                response=response,
+                execution_profile=execution_profile,
+                result_payload=cap.get("extraction"),
+                phase_gate=phase_gate,
+            )
+        response = f"Human voice signoff failed: {cap.get('message', 'unknown')}"
+        return self._finalize_result(
+            spec=spec,
+            tool_result={
+                "type": spec["tool"],
+                "tool": spec["tool"],
+                "status": "failed",
+                "result": cap,
+            },
+            capability_result=capability_result,
+            response=response,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_human_voice_handoff(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        spec = self._selection_routes[("human_voice_extraction", "handoff")]
+        from src.capabilities.human_voice_extraction import run_human_voice_extraction_capability
+
+        request = {
+            "action": "handoff",
+            "runtime_context": self._alt3_runtime_context(phase_gate),
+            **self._alt3_execution_profile_fields(execution_profile),
+            **dict(args or {}),
+        }
+        cap = run_human_voice_extraction_capability(request)
+        capability_result = self._alt3_capability_result(cap)
+        if cap.get("ok"):
+            response = "Voice constraints admitted to Speakers lane."
+            return self._finalize_result(
+                spec=spec,
+                tool_result={
+                    "type": spec["tool"],
+                    "tool": spec["tool"],
+                    "status": "completed",
+                    "result": cap.get("result") or {},
+                },
+                capability_result=capability_result,
+                response=response,
+                execution_profile=execution_profile,
+                result_payload=cap.get("result"),
+                phase_gate=phase_gate,
+            )
+        response = f"Human voice handoff failed: {cap.get('message', 'unknown')}"
+        return self._finalize_result(
+            spec=spec,
+            tool_result={
+                "type": spec["tool"],
+                "tool": spec["tool"],
+                "status": "failed",
+                "result": cap,
             },
             capability_result=capability_result,
             response=response,

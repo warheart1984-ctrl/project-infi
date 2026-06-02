@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "human_voice_extraction.v1",
+  "title": "Human Voice Extraction v1",
+  "description": "Governed voice-profile constraints extracted from human notes or samples for Speakers handoff.",
+  "type": "object",
+  "required": [
+    "human_voice_extraction_version",
+    "extraction_id",
+    "source_kind",
+    "voice_profile",
+    "retention_policy",
+    "cisiv_stage",
+    "claim_label",
+    "created_at_utc"
+  ],
+  "properties": {
+    "human_voice_extraction_version": { "const": "human_voice_extraction.v1" },
+    "extraction_id": { "type": "string", "minLength": 1 },
+    "source_kind": {
+      "enum": ["human_notes", "voice_sample_ref", "operator_transcript"]
+    },
+    "source_ref": { "type": "string" },
+    "content_hash": { "type": "string", "minLength": 1 },
+    "session_id": { "type": "string" },
+    "mission_id": { "type": "string" },
+    "voice_profile": { "$ref": "#/$defs/voice_profile" },
+    "retention_policy": { "$ref": "#/$defs/retention_policy" },
+    "speakers_handoff": { "$ref": "#/$defs/speakers_handoff" },
+    "cisiv_stage": {
+      "enum": ["concept", "identity", "structure", "implementation", "verification"]
+    },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] },
+    "created_at_utc": { "type": "string", "format": "date-time" },
+    "updated_at_utc": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "voice_profile": {
+      "type": "object",
+      "required": ["profile_id", "traits"],
+      "properties": {
+        "profile_id": { "type": "string", "minLength": 1 },
+        "display_name": { "type": "string" },
+        "traits": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/voice_trait" }
+        },
+        "prosody_notes": { "type": "string", "maxLength": 2000 },
+        "claim_label": { "enum": ["asserted", "proven", "rejected"] }
+      },
+      "additionalProperties": false
+    },
+    "voice_trait": {
+      "type": "object",
+      "required": ["trait_id", "trait_kind", "value"],
+      "properties": {
+        "trait_id": { "type": "string", "minLength": 1 },
+        "trait_kind": {
+          "enum": ["pace", "register", "vocabulary", "emotion_range", "signature_phrase"]
+        },
+        "value": { "type": "string" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "retention_policy": {
+      "type": "object",
+      "required": ["store_raw_source", "ttl_hours"],
+      "properties": {
+        "store_raw_source": { "type": "boolean", "const": false },
+        "ttl_hours": { "type": "integer", "minimum": 0 },
+        "redaction_applied": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "speakers_handoff": {
+      "type": "object",
+      "required": ["handoff_ready"],
+      "properties": {
+        "handoff_ready": { "type": "boolean" },
+        "target_lane": { "type": "string" },
+        "signoff_by": { "type": "string" },
+        "signoff_at_utc": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

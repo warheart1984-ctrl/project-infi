@@ -28,7 +28,7 @@ Authoritative references:
 
 This repository is also **Project Infi** — constitutional engineering where claims require proof, not intent.
 
-**License:** [Apache 2.0](LICENSE) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v0.3.0](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.3.0) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -83,6 +83,27 @@ flowchart LR
 Optional subsystems (Platform, Wolf-CoG-OS ISO forge, forge/evolve contractors) attach at the edges — core chat works without them.
 
 Deep dives: [`docs/runtime/AAIS_SUBSYSTEM_SPEC.md`](docs/runtime/AAIS_SUBSYSTEM_SPEC.md), [`docs/operations/FULL_STACK_PILOT_INTEGRATION.md`](docs/operations/FULL_STACK_PILOT_INTEGRATION.md).
+
+### Alt-3 partial-live subsystems (v0.3.0)
+
+Three archive families from Audit Alt-3 are now **partial live** — governed MVPs with API routes, capability bridge actions, UL lineage, and proof packets:
+
+| Subsystem | Capability bridge | Key API | Proof |
+|---|---|---|---|
+| **Recipe Module** | `recipe_module` / `create_mission` | `POST /api/jarvis/missions/from-recipe` | [RECIPE_MODULE_V1_PROOF](docs/proof/platform/RECIPE_MODULE_V1_PROOF.md) |
+| **Imagine Generator** | `imagine_generator` / `emit`, `handoff`, `grok_render` | `POST /api/jarvis/imagine/emit`, `/handoff`, `/grok-render`; `GET .../keys-status` | [IMAGINE_GENERATOR_V1_PROOF](docs/proof/storyforge/IMAGINE_GENERATOR_V1_PROOF.md) |
+| **Human Voice Extraction** | `human_voice_extraction` / `extract`, `signoff`, `handoff` | `POST /api/jarvis/human-voice/extract`, `/signoff`, `/handoff` | [HUMAN_VOICE_EXTRACTION_V1_PROOF](docs/proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md) |
+
+Grok imagine render requires `STORY_FORGE_XAI_API_KEY` or `XAI_API_KEY` in the environment (no request-body keys). Active docs: [RECIPE_MODULE](docs/subsystems/platform/RECIPE_MODULE.md), [IMAGINE_GENERATOR](docs/subsystems/storyforge/IMAGINE_GENERATOR.md), [HUMAN_VOICE_EXTRACTION](docs/subsystems/speakers/HUMAN_VOICE_EXTRACTION.md).
+
+**Verification:**
+
+```bash
+make alt3-gate
+# or: python .github/scripts/check-recipe-module-governance.py
+#     python .github/scripts/check-imagine-generator-governance.py
+#     python .github/scripts/check-human-voice-extraction-governance.py
+```
 
 ---
 
@@ -191,6 +212,12 @@ python -m tools.ul.smoke
 python -m pytest tests/test_cisiv.py tests/test_chat_turn_governance.py tests/test_forge_repo_governance.py -q
 ```
 
+**Alt-3 subsystem gate (v0.3.0+):**
+
+```bash
+make alt3-gate
+```
+
 ### 6. Optional contractor lanes
 
 These are isolated HTTP services — start only when you need forge/evolve features:
@@ -216,6 +243,8 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
+| Latest tag | [`v0.3.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.3.0) — Audit Alt-3 partial-live (Recipe, Imagine, Human Voice) |
+| Prior tag | [`v0.2.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.2.0) — initial public AAIS release |
 | License | [LICENSE](LICENSE) (Apache 2.0) |
 | Changelog | [CHANGELOG.md](CHANGELOG.md) |
 | Security | [SECURITY.md](SECURITY.md) |
@@ -241,6 +270,10 @@ platform/          Multi-tenant Platform Membrane (ops ingress :8090)
 wolf-cog-os/       CoGOS ISO/rootfs forge (scripts tracked; outputs local-only)
 deploy/            Docker compose stacks (pilot | platform | ugr)
 tools/ul/          UL drift + smoke verification
+tools/recipe/      Recipe Module CLI + fixtures
+tools/imagine/     Imagine Generator fixtures
+tools/human_voice/ Human Voice Extraction fixtures
+tools/governance/  SSP completeness and genome gates
 docs/              Contracts, subsystem spec, proof packets
 tests/             Pytest suite
 external/          Vendored third-party integrations (see each package)

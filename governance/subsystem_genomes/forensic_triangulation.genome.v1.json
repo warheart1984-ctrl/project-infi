@@ -1,0 +1,61 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "forensic_triangulation",
+    "version": "1.0.0-mvp",
+    "stage": "mvp",
+    "display_name": "Forensic Triangulation Ledger"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/TRUST_BUNDLE_SPEC.md"
+    ],
+    "invariants": [
+      "Triangulation reads subsystem-native ledgers; does not bypass Mechanic, Scorpion, or Slingshot authority",
+      "No auto-apply or repo mutation",
+      "Slingshot launch_blocked true MUST NOT downgrade block reason",
+      "Missing required source emits partial correlator with claim_label asserted",
+      "Conflicting claim labels across sources surface both; no auto-resolve"
+    ]
+  },
+  "schema": {
+    "ref": "triangulation/schemas/triangulation.v1.json",
+    "frozen": false
+  },
+  "runtime": {
+    "surface": [
+      { "kind": "package", "path": "triangulation/" },
+      { "kind": "cli", "path": "python -m triangulation correlate --case-id" },
+      { "kind": "gate", "path": "make triangulation-gate" }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/forensics/TRIANGULATION_V1_PROOF.md"
+    ],
+    "posture": "mvp"
+  },
+  "lineage": {
+    "parents": ["mechanic", "scorpion", "cisiv_operator_lineage_console"],
+    "children": []
+  },
+  "activation": {
+    "order": 2,
+    "batch_id": "three-ideas-2026-06-02",
+    "notes": "After Lineage Console; requires Mechanic + Scorpion ledgers"
+  },
+  "retirement": {
+    "path": null
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/FORENSIC_TRIANGULATION.md",
+    "mvp_plan": "docs/_future/ideas_pending/FORENSIC_TRIANGULATION_MVP_PLAN.md",
+    "active_doc": "docs/subsystems/forensics/TRIANGULATION.md",
+    "summon_eligible": false
+  }
+}

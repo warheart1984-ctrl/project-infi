@@ -26,6 +26,7 @@ govern AAIS behavior.
 - evolve, forge, and capability contracts
 - cloud forge rail scheduler (`cloud-forge-rail-contract.md`)
 - subsystem summoner pattern for CISIV concept admission (`AAIS_SSP_PROTOCOL.md`)
+- SSP Alt-4 promotion, retirement, mutation, and subsystem genome (`AAIS_SSP_PROMOTION_PROTOCOL.md`, `AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md`, `AAIS_SUBSYSTEM_MUTATION_PATH.md`, `AAIS_SUBSYSTEM_GENOME.md`)
 
 ## Canonical Rule
 

@@ -1,4 +1,4 @@
-.PHONY: run worker test governance-check rootfs iso-tree rootfs-forge iso-tree-forge forge-installer forge-shippable-gate forge-platform-gate forge-dashboard forge-nightly-evolution forge-nightly-build installer-smoke installer-integration sign-artifacts verify-artifacts ugr-cloud-gate ugr-ingestion-gate ugr-platform-gate ugr-graph-index-gate ugr-embryo-gate ugr-causal-graph-gate ugr-llm-provider-gate ugr-cogos-write-path-gate ugr-graph-backend-gate ugr-trust-bundle-gate ugr-operator-console-gate forge-clean forge-rocky forge-rocky-fallback fetch-rocky-substrate ai-factory-build ai-factory-gate synthetic-mind-gate repo-hygiene-gate lab-init lab-gate mechanic-gate slingshot-gate lineage-gate triangulation-gate narrative-gate ssp-gate platform-gate platform-smoke platform-up
+.PHONY: run worker test governance-check rootfs iso-tree rootfs-forge iso-tree-forge forge-installer forge-shippable-gate forge-platform-gate forge-dashboard forge-nightly-evolution forge-nightly-build installer-smoke installer-integration sign-artifacts verify-artifacts ugr-cloud-gate ugr-ingestion-gate ugr-platform-gate ugr-graph-index-gate ugr-embryo-gate ugr-causal-graph-gate ugr-llm-provider-gate ugr-cogos-write-path-gate ugr-graph-backend-gate ugr-trust-bundle-gate ugr-operator-console-gate forge-clean forge-rocky forge-rocky-fallback fetch-rocky-substrate ai-factory-build ai-factory-gate synthetic-mind-gate repo-hygiene-gate lab-init lab-gate mechanic-gate slingshot-gate lineage-gate triangulation-gate narrative-gate recipe-module-gate imagine-generator-gate human-voice-extraction-gate alt3-gate ssp-gate genome-gate platform-gate platform-smoke platform-up
 
 REPO_HYGIENE_MODE ?= fail
 
@@ -160,8 +160,22 @@ triangulation-gate:
 narrative-gate:
 	python3 .github/scripts/check-narrative-governance.py
 
+recipe-module-gate:
+	python3 .github/scripts/check-recipe-module-governance.py
+
+imagine-generator-gate:
+	python3 .github/scripts/check-imagine-generator-governance.py
+
+human-voice-extraction-gate:
+	python3 .github/scripts/check-human-voice-extraction-governance.py
+
+alt3-gate: recipe-module-gate imagine-generator-gate human-voice-extraction-gate
+
 ssp-gate:
 	python3 tools/governance/check_ssp_completeness.py
+
+genome-gate:
+	python3 tools/governance/check_subsystem_genome.py
 
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py

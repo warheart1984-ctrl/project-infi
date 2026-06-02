@@ -24,6 +24,8 @@ Beatbox and Speakers may express that truth, but they do not replace it.
   - stage map for Story Forge plus Beatbox and Speakers handoffs
 - [NARRATIVE_TRUST_PACK.md](./NARRATIVE_TRUST_PACK.md)
   - governed creative export pack (partial live MVP)
+- [IMAGINE_GENERATOR.md](./IMAGINE_GENERATOR.md)
+  - governed imagination patterns + Story Forge admission (partial live MVP)
 
 ## Current Runtime Status
 
@@ -48,4 +50,6 @@ If Story Forge docs conflict with runtime code, runtime code wins.
 ## Pending Future Ideas
 
 - [Narrative Trust Pack (NTP)](../../_future/ideas_pending/NARRATIVE_TRUST_PACK.md)
-  — governed export bundle with signoff gate for the audio chain (concept)
+  — concept origin for promoted NTP MVP
+- [Imagine Generator](../../_future/ideas_pending/IMAGINE_GENERATOR.md)
+  — concept origin for promoted Imagine Generator MVP

@@ -1,0 +1,56 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "recipe_module",
+    "version": "0.1.0-concept",
+    "stage": "concept",
+    "display_name": "Recipe Module"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md"
+    ],
+    "invariants": [
+      "Recipes propose missions and steps; no auto-apply repo mutations",
+      "signoff_required defaults true on recipe packs",
+      "No sovereign subsystem front door — admission via Mission Board",
+      "No secrets or credentials embedded in recipe packs"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/recipe_module.v1.json",
+    "frozen": false
+  },
+  "runtime": {
+    "surface": []
+  },
+  "proof": {
+    "bundles": [],
+    "posture": "asserted",
+    "target_bundles": [
+      "docs/proof/platform/RECIPE_MODULE_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": ["mission_board", "jarvis"],
+    "children": ["imagine_generator"]
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "audit-alt-3-2026-06-02",
+    "notes": "Workflow templates before creative/voice lanes"
+  },
+  "retirement": {
+    "path": null
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/RECIPE_MODULE.md",
+    "mvp_plan": "docs/_future/ideas_pending/RECIPE_MODULE_MVP_PLAN.md",
+    "summon_eligible": true
+  }
+}

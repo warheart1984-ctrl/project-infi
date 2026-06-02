@@ -1,0 +1,56 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "human_voice_extraction",
+    "version": "0.1.0-concept",
+    "stage": "concept",
+    "display_name": "Human Voice Extraction"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md"
+    ],
+    "invariants": [
+      "Voice extraction requires explicit operator consent envelope",
+      "No biometric storage beyond governed retention policy",
+      "Outputs default claim_label asserted until proven signoff",
+      "Subordinate to Speakers lane and Story Forge chain authority"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/human_voice_extraction.v1.json",
+    "frozen": false
+  },
+  "runtime": {
+    "surface": []
+  },
+  "proof": {
+    "bundles": [],
+    "posture": "asserted",
+    "target_bundles": [
+      "docs/proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": ["imagine_generator", "speakers", "story_forge"],
+    "children": []
+  },
+  "activation": {
+    "order": 3,
+    "batch_id": "audit-alt-3-2026-06-02",
+    "notes": "Last in batch — highest privacy/safety bar"
+  },
+  "retirement": {
+    "path": null
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/HUMAN_VOICE_EXTRACTION.md",
+    "mvp_plan": "docs/_future/ideas_pending/HUMAN_VOICE_EXTRACTION_MVP_PLAN.md",
+    "summon_eligible": true
+  }
+}

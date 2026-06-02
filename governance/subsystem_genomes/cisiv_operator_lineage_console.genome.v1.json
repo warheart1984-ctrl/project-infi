@@ -1,0 +1,64 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "cisiv_operator_lineage_console",
+    "version": "1.0.0-mvp",
+    "stage": "mvp",
+    "display_name": "CISIV Operator Lineage Console"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_UL_DOCTRINE.md"
+    ],
+    "invariants": [
+      "Read-only in v1 — graph observes runtime envelopes; no write path from UI",
+      "Append-only DAG per mission — nodes never deleted or mutated in place",
+      "Each node carries cisiv_stage at emission time and claim_label where applicable",
+      "Missing mission yields empty graph with explicit claim_label asserted",
+      "Drift failure surfaces as visible regression marker without blocking live chat"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/ul_lineage_graph.v1.json",
+    "frozen": false
+  },
+  "runtime": {
+    "surface": [
+      { "kind": "module", "path": "src/ul_lineage.py" },
+      { "kind": "api", "path": "GET /api/jarvis/lineage/{mission_id}" },
+      { "kind": "ui", "path": "frontend/src/pages/JarvisConsole.jsx#LineageConsoleCard" },
+      { "kind": "cli", "path": "python -m tools.ul.smoke --lineage-graph" },
+      { "kind": "tool", "path": "python -m tools.ul.drift --lane lineage" },
+      { "kind": "gate", "path": "make lineage-gate" }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md"
+    ],
+    "posture": "mvp"
+  },
+  "lineage": {
+    "parents": ["mission_board", "chat_turn_governance"],
+    "children": ["forensic_triangulation"]
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "three-ideas-2026-06-02",
+    "notes": "Most foundational — governance visibility layer"
+  },
+  "retirement": {
+    "path": null
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/CISIV_OPERATOR_LINEAGE_CONSOLE.md",
+    "mvp_plan": "docs/_future/ideas_pending/CISIV_OPERATOR_LINEAGE_CONSOLE_MVP_PLAN.md",
+    "active_doc": "docs/runtime/UL_LINEAGE_CONSOLE.md",
+    "summon_eligible": false
+  }
+}

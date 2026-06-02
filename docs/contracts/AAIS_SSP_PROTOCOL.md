@@ -42,7 +42,7 @@ Optional: dependency hints, target subsystem README, proof subdirectory.
 | Audit entry | `docs/audit/LOGBOOK.md` |
 | Proof posture | §8 in concept spec; claims default `none_yet` |
 
-## Six-Step Pipeline
+## Seven-Step Pipeline (SSP + Alt-4)
 
 | Step | Action |
 |------|--------|
@@ -52,6 +52,7 @@ Optional: dependency hints, target subsystem README, proof subdirectory.
 | 4 | Add audit entry (CISIV stage `concept`) |
 | 5 | Generate MVP plan |
 | 6 | (Optional) Scaffold code stubs — no full logic unless asked |
+| 7 | Generate subsystem genome at `governance/subsystem_genomes/<gene>.genome.v1.json` |
 
 Full execution checklist: [.cursor/skills/subsystem-summoner/SKILL.md](../../.cursor/skills/subsystem-summoner/SKILL.md)
 
@@ -64,12 +65,30 @@ No subsystem becomes real until it has **all** of:
 3. Proof posture table
 4. MVP plan
 5. Doc tree wiring
+6. Subsystem genome (Alt-4)
 
-Enforced by `make ssp-gate` (`tools/governance/check_ssp_completeness.py`).
+Enforced by `make ssp-gate` and `make genome-gate` (every admitted family has a genome record).
+
+## SSP Alt-4 (Governance-of-Governance)
+
+Alt-4 adds lifecycle contracts, mutation/retirement paths, and the **Subsystem
+Genome** meta-schema:
+
+| Artifact | Path |
+|----------|------|
+| Promotion protocol | [AAIS_SSP_PROMOTION_PROTOCOL.md](./AAIS_SSP_PROMOTION_PROTOCOL.md) |
+| Retirement protocol | [AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md](./AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md) |
+| Mutation path | [AAIS_SUBSYSTEM_MUTATION_PATH.md](./AAIS_SUBSYSTEM_MUTATION_PATH.md) |
+| Subsystem genome | [AAIS_SUBSYSTEM_GENOME.md](./AAIS_SUBSYSTEM_GENOME.md) |
+| Meta-schema | [schemas/subsystem_genome.v1.json](../../schemas/subsystem_genome.v1.json) |
+| Genome registry | [governance/subsystem_genomes/](../../governance/subsystem_genomes/) |
+
+Gates: `make ssp-gate` + `make genome-gate`
 
 ## Activation Rule
 
-Subsystems move through stages:
+Subsystems move through stages per
+[AAIS_SSP_PROMOTION_PROTOCOL.md](./AAIS_SSP_PROMOTION_PROTOCOL.md):
 
 ```text
 concept → prototype → mvp → governed
@@ -82,6 +101,7 @@ Promotion from `docs/_future/ideas_pending/` requires (per
 2. Runtime code backs the claimed behavior
 3. Proof packet exists under `docs/proof/` with appropriate claim labels
 4. Passing tests, schema validation, and make gate
+5. Genome record updated (`governance/subsystem_genomes/<gene>.genome.v1.json`)
 
 ## Proof Posture Terminology
 
@@ -120,6 +140,10 @@ When admitting N ideas in one pass, assign order by:
 
 ## Related
 
+- [AAIS_SSP_PROMOTION_PROTOCOL.md](./AAIS_SSP_PROMOTION_PROTOCOL.md)
+- [AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md](./AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md)
+- [AAIS_SUBSYSTEM_MUTATION_PATH.md](./AAIS_SUBSYSTEM_MUTATION_PATH.md)
+- [AAIS_SUBSYSTEM_GENOME.md](./AAIS_SUBSYSTEM_GENOME.md)
 - [AAIS_MODULE_GOVERNANCE_PROTOCOL.md](./AAIS_MODULE_GOVERNANCE_PROTOCOL.md)
 - [AAIS_SUBSYSTEM_SPEC.md](../runtime/AAIS_SUBSYSTEM_SPEC.md)
 - [AAIS_DOC_PROTOCOL.md](./AAIS_DOC_PROTOCOL.md)

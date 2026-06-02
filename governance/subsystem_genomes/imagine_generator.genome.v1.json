@@ -1,0 +1,56 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "imagine_generator",
+    "version": "0.1.0-concept",
+    "stage": "concept",
+    "display_name": "Imagine Generator"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md"
+    ],
+    "invariants": [
+      "Generator outputs are asserted until human signoff promotes claim_label",
+      "No auto-publish of generated media without governed pack wrapper",
+      "Subordinate to Platform membrane and Jarvis capability routing",
+      "Archive corpus references are provenance only — not live authority"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/imagine_generator.v1.json",
+    "frozen": false
+  },
+  "runtime": {
+    "surface": []
+  },
+  "proof": {
+    "bundles": [],
+    "posture": "asserted",
+    "target_bundles": [
+      "docs/proof/platform/IMAGINE_GENERATOR_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": ["recipe_module", "platform"],
+    "children": ["human_voice_extraction"]
+  },
+  "activation": {
+    "order": 2,
+    "batch_id": "audit-alt-3-2026-06-02",
+    "notes": "After Recipe Module; before Human Voice Extraction"
+  },
+  "retirement": {
+    "path": null
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/IMAGINE_GENERATOR.md",
+    "mvp_plan": "docs/_future/ideas_pending/IMAGINE_GENERATOR_MVP_PLAN.md",
+    "summon_eligible": true
+  }
+}

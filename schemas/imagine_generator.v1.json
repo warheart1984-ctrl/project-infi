@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "imagine_generator.v1",
+  "title": "Imagine Generator v1",
+  "description": "Governed imagination pattern artifact for creative downstream lanes (Story Forge handoff).",
+  "type": "object",
+  "required": [
+    "imagine_generator_version",
+    "pattern_id",
+    "pattern_type",
+    "prompt_frame",
+    "constraints",
+    "cisiv_stage",
+    "claim_label",
+    "created_at_utc"
+  ],
+  "properties": {
+    "imagine_generator_version": { "const": "imagine_generator.v1" },
+    "pattern_id": { "type": "string", "minLength": 1 },
+    "pattern_type": {
+      "enum": ["scene_seed", "character_beat", "visual_motif", "audio_cue", "world_texture"]
+    },
+    "session_id": { "type": "string" },
+    "mission_id": { "type": "string" },
+    "prompt_frame": { "type": "string", "minLength": 1, "maxLength": 8000 },
+    "constraints": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/pattern_constraint" }
+    },
+    "downstream_hints": {
+      "type": "object",
+      "properties": {
+        "story_forge_lane": { "type": "string" },
+        "adapter_lineage": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "ul_substrate": { "type": "object" },
+    "cisiv_stage": {
+      "enum": ["concept", "identity", "structure", "implementation", "verification"]
+    },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] },
+    "created_at_utc": { "type": "string", "format": "date-time" },
+    "updated_at_utc": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "pattern_constraint": {
+      "type": "object",
+      "required": ["constraint_id", "constraint_kind", "value"],
+      "properties": {
+        "constraint_id": { "type": "string", "minLength": 1 },
+        "constraint_kind": {
+          "enum": ["forbidden_term", "required_element", "tone", "rating_cap", "length_cap"]
+        },
+        "value": { "type": "string" },
+        "claim_label": { "enum": ["asserted", "proven", "rejected"] }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -306,3 +306,31 @@ Every major entry should name its CISIV stage explicitly.
 - scope: implemented CISIV Lineage Console (`src/ul_lineage.py`, API, UI), Forensic Triangulation (`triangulation/`), Narrative Trust Pack (`src/capabilities/narrative_trust_pack.py`, `tools/narrative/`); governance gates and proof packets for all three
 - outcome: all three ideas at partial-live MVP with pytest + make gates; promoted active docs under `docs/runtime/`, `docs/subsystems/forensics/`, `docs/subsystems/storyforge/`
 - verification note: `make lineage-gate triangulation-gate narrative-gate`; `python -m pytest tests/test_ul_lineage.py tests/test_triangulation.py tests/test_narrative_trust_pack.py -q`
+
+### Audit Alt-3 Ideas — Concept Admission
+
+- CISIV stage: `concept`
+- scope: admitted Recipe Module, Imagine Generator, and Human Voice Extraction into `docs/_future/ideas_pending/` with CISIV concept specs, JSON schemas (canonical + concept-origin copies), MVP plans, and proof posture tables; cross-linked from `AAIS_SUBSYSTEM_SPEC.md` §9, platform/storyforge/speakers/nova READMEs, and active docs map
+- outcome: three archive-only corpus families documented as pending with recommended activation order 1) Recipe Module, 2) Imagine Generator, 3) Human Voice Extraction; no runtime code changed
+- verification note: doc-only pass; schema files validated as JSON; `make ssp-gate` passes
+
+### Audit Alt-3 Ideas — MVP + Proof Build
+
+- CISIV stage: `verification`
+- scope: implemented Recipe Module (`src/recipe_module.py`, `mission_board.create_from_recipe`, `POST /api/jarvis/missions/from-recipe`), Imagine Generator (`src/imagine_generator.py`, Story Forge admissions, imagine API), Human Voice Extraction (`src/human_voice_extraction.py`, Speakers voice constraints, human-voice API); governance gates and proof packets for all three
+- outcome: all three ideas at partial-live MVP with pytest + make gates; promoted active docs under `docs/subsystems/platform/`, `docs/subsystems/storyforge/`, `docs/subsystems/speakers/`
+- verification note: `make alt3-gate` (or individual recipe/imagine/human-voice gates); `python -m pytest tests/test_recipe_module.py tests/test_imagine_generator.py tests/test_human_voice_extraction.py -q`
+
+### Audit Alt-3 — Deferred Bridge, Lineage, Grok
+
+- CISIV stage: `verification`
+- scope: capability bridge catalog (7 actions), `src/alt3_lineage.py`, `src/imagine_grok.py` (env-only xAI keys), imagine `grok_render` API/bridge action, proof packet promotion for bridge/lineage/grok claims
+- outcome: Alt-3 families callable from Jarvis capability bridge with subsystem-specific UL lineage; Grok render fails closed without `STORY_FORGE_XAI_API_KEY` or `XAI_API_KEY`
+- verification note: `make alt3-gate`; `python -m pytest tests/test_capability_bridge_alt3.py tests/test_alt3_lineage.py tests/test_imagine_grok.py -q`
+
+### SSP Alt-4 — Genome, Promotion, Retirement, Mutation
+
+- CISIV stage: `structure`
+- scope: admitted SSP Alt-4 governance tier — promotion protocol, retirement protocol, mutation path, subsystem genome meta-schema (`subsystem_genome.v1.json`), genome registry for six families (three MVP + three concept), `genome-gate`, `docs/_retired/` bucket, mutation proposal bucket
+- outcome: governance-of-governance layer active; lifecycle `concept → prototype → mvp → governed` formalized; DNA validator enforces genome genes, proof bundles, invariants, and lineage symmetry among registered subsystems
+- verification note: `make ssp-gate`; `make genome-gate`; doc-only pass; no runtime code changed

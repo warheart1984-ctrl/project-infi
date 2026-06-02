@@ -1176,16 +1176,19 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | CISIV Operator Lineage Console | partial | [UL_LINEAGE_CONSOLE.md](./UL_LINEAGE_CONSOLE.md) | [../proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md](../proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md) |
 | Forensic Triangulation Ledger | partial | [../subsystems/forensics/TRIANGULATION.md](../subsystems/forensics/TRIANGULATION.md) | [../proof/forensics/TRIANGULATION_V1_PROOF.md](../proof/forensics/TRIANGULATION_V1_PROOF.md) |
 | Narrative Trust Pack | partial | [../subsystems/storyforge/NARRATIVE_TRUST_PACK.md](../subsystems/storyforge/NARRATIVE_TRUST_PACK.md) | [../proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md](../proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md) |
+| Recipe Module | partial | [../subsystems/platform/RECIPE_MODULE.md](../subsystems/platform/RECIPE_MODULE.md) | [../proof/platform/RECIPE_MODULE_V1_PROOF.md](../proof/platform/RECIPE_MODULE_V1_PROOF.md) |
+| Imagine Generator | partial | [../subsystems/storyforge/IMAGINE_GENERATOR.md](../subsystems/storyforge/IMAGINE_GENERATOR.md) | [../proof/storyforge/IMAGINE_GENERATOR_V1_PROOF.md](../proof/storyforge/IMAGINE_GENERATOR_V1_PROOF.md) |
+| Human Voice Extraction | partial | [../subsystems/speakers/HUMAN_VOICE_EXTRACTION.md](../subsystems/speakers/HUMAN_VOICE_EXTRACTION.md) | [../proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md](../proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md) |
 
-Gates: `make lineage-gate triangulation-gate narrative-gate`
+Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate`
 
 ## 9. Concept Pending (SSP)
 
 Ideas at CISIV **concept** stage per [AAIS_SSP_PROTOCOL.md](../contracts/AAIS_SSP_PROTOCOL.md).
 Nothing here is live until promoted per [ideas_pending/README.md](../_future/ideas_pending/README.md).
 
-| Idea | Status | Concept spec | MVP plan |
-|------|--------|--------------|----------|
-| *(none)* | — | — | — |
+| Idea | Status | Concept spec | MVP plan | Genome |
+|------|--------|--------------|----------|--------|
+| *(none)* | — | — | — | — |
 
-New admissions via SSP update this table. Graduated ideas move to §8.
+New admissions via SSP (Step 7) update this table. Graduated ideas move to §8. Genome contract: [AAIS_SUBSYSTEM_GENOME.md](../contracts/AAIS_SUBSYSTEM_GENOME.md).

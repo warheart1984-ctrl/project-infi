@@ -11521,6 +11521,264 @@ def create_mission_from_preset():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/missions/from-recipe", methods=["POST"])
+def create_mission_from_recipe():
+    """Create a mission from a governed Recipe Module pack (distinct from presets)."""
+    try:
+        data = request.json or {}
+        recipe_id = data.get("recipe_id")
+        if not recipe_id:
+            return jsonify({"error": "recipe_id is required"}), 400
+        snapshot = mission_board.create_from_recipe(
+            str(recipe_id),
+            session_id=data.get("session_id"),
+            focus=bool(data.get("focus", True)),
+            signoff_ack=bool(data.get("signoff_ack", False)),
+            title=data.get("title"),
+            objective=data.get("objective"),
+            next_step=data.get("next_step"),
+            cisiv_stage=data.get("cisiv_stage"),
+        )
+        return jsonify({"mission_board": snapshot}), 201
+    except FileNotFoundError:
+        return jsonify({"error": "Recipe pack not found"}), 404
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        logger.error(f"Error creating mission from recipe: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/imagine/emit", methods=["POST"])
+def imagine_emit():
+    """Emit a governed imagine pattern artifact."""
+    try:
+        from src.imagine_generator import build_pattern, build_pattern_from_fixture, persist_pattern
+
+        data = request.json or {}
+        if data.get("fixture"):
+            pattern = build_pattern_from_fixture(str(data["fixture"]))
+        else:
+            pattern = build_pattern(
+                pattern_type=str(data.get("pattern_type") or "scene_seed"),
+                prompt_frame=str(data.get("prompt_frame") or ""),
+                constraints=data.get("constraints"),
+                mission_id=data.get("mission_id"),
+                session_id=data.get("session_id"),
+            )
+        if pattern.get("claim_label") == "rejected":
+            return jsonify({"error": "constraint_violation", "pattern": pattern}), 400
+        path = persist_pattern(pattern)
+        try:
+            from src.alt3_lineage import record_alt3_lineage
+
+            record_alt3_lineage(
+                subsystem="imagine_generator",
+                action="emit",
+                mission_id=data.get("mission_id"),
+                session_id=data.get("session_id"),
+                payload={"pattern_id": pattern.get("pattern_id")},
+            )
+        except Exception:
+            pass
+        return jsonify({"pattern": pattern, "pattern_path": str(path)}), 201
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except FileNotFoundError:
+        return jsonify({"error": "fixture not found"}), 404
+    except Exception as e:
+        logger.error(f"Error emitting imagine pattern: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/imagine/handoff", methods=["POST"])
+def imagine_handoff():
+    """Admit an imagine pattern to the Story Forge admission path."""
+    try:
+        from src.imagine_generator import admit_to_story_forge, load_pattern
+
+        data = request.json or {}
+        pattern_id = data.get("pattern_id")
+        pattern = data.get("pattern")
+        if pattern is None:
+            if not pattern_id:
+                return jsonify({"error": "pattern_id or pattern is required"}), 400
+            pattern = load_pattern(str(pattern_id))
+        result = admit_to_story_forge(pattern)
+        if result.get("status") != "admitted":
+            return jsonify(result), 400
+        try:
+            from src.alt3_lineage import record_alt3_lineage
+
+            record_alt3_lineage(
+                subsystem="imagine_generator",
+                action="handoff",
+                mission_id=data.get("mission_id"),
+                session_id=data.get("session_id"),
+                payload={"pattern_id": pattern.get("pattern_id")},
+            )
+        except Exception:
+            pass
+        return jsonify(result), 200
+    except FileNotFoundError:
+        return jsonify({"error": "pattern not found"}), 404
+    except Exception as e:
+        logger.error(f"Error in imagine handoff: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/imagine/keys-status", methods=["GET"])
+def imagine_keys_status():
+    """Report whether xAI API keys are configured (never exposes key material)."""
+    from src.imagine_grok import keys_status
+
+    return jsonify(keys_status())
+
+
+@app.route("/api/jarvis/imagine/grok-render", methods=["POST"])
+def imagine_grok_render():
+    """Render an imagine pattern via xAI Grok; requires env API key."""
+    try:
+        from src.imagine_grok import KeysRequiredError
+        from src.capabilities.imagine_generator import run_imagine_generator_capability
+
+        data = request.json or {}
+        cap = run_imagine_generator_capability(
+            {
+                "action": "grok_render",
+                "runtime_context": "operator_runtime",
+                "pattern_id": data.get("pattern_id"),
+                "pattern": data.get("pattern"),
+                "mission_id": data.get("mission_id"),
+                "session_id": data.get("session_id"),
+            }
+        )
+        if not cap.get("ok"):
+            if cap.get("error_type") == "KeysRequired":
+                return jsonify({"error": "keys_required", "message": cap.get("message")}), 428
+            return jsonify({"error": cap.get("message") or "grok_render_failed"}), 400
+        return jsonify(cap), 200
+    except KeysRequiredError as exc:
+        return jsonify({"error": "keys_required", "message": str(exc)}), 428
+    except FileNotFoundError:
+        return jsonify({"error": "pattern not found"}), 404
+    except Exception as e:
+        logger.error(f"Error in imagine grok render: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/human-voice/extract", methods=["POST"])
+def human_voice_extract():
+    """Extract governed voice profile constraints from human notes."""
+    try:
+        from src.human_voice_extraction import extract_from_fixture, extract_from_notes, persist_extraction
+
+        data = request.json or {}
+        if data.get("fixture"):
+            pack = extract_from_fixture(str(data["fixture"]))
+        else:
+            notes = data.get("notes_text")
+            if not notes:
+                return jsonify({"error": "notes_text or fixture is required"}), 400
+            pack = extract_from_notes(
+                str(notes),
+                source_kind=str(data.get("source_kind") or "human_notes"),
+                mission_id=data.get("mission_id"),
+            )
+        path = persist_extraction(pack)
+        try:
+            from src.alt3_lineage import record_alt3_lineage
+
+            record_alt3_lineage(
+                subsystem="human_voice_extraction",
+                action="extract",
+                mission_id=data.get("mission_id"),
+                session_id=data.get("session_id"),
+                payload={"extraction_id": pack.get("extraction_id")},
+            )
+        except Exception:
+            pass
+        return jsonify({"extraction": pack, "path": str(path)}), 201
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except FileNotFoundError:
+        return jsonify({"error": "fixture not found"}), 404
+    except Exception as e:
+        logger.error(f"Error in human voice extract: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/human-voice/signoff", methods=["POST"])
+def human_voice_signoff():
+    """Apply operator signoff to an extraction pack."""
+    try:
+        from src.human_voice_extraction import apply_signoff, load_extraction, persist_extraction
+
+        data = request.json or {}
+        extraction_id = data.get("extraction_id")
+        pack = data.get("extraction")
+        if pack is None:
+            if not extraction_id:
+                return jsonify({"error": "extraction_id or extraction is required"}), 400
+            pack = load_extraction(str(extraction_id))
+        signed = apply_signoff(pack, str(data.get("signoff_by") or "operator"))
+        path = persist_extraction(signed)
+        try:
+            from src.alt3_lineage import record_alt3_lineage
+
+            record_alt3_lineage(
+                subsystem="human_voice_extraction",
+                action="signoff",
+                mission_id=data.get("mission_id"),
+                session_id=data.get("session_id"),
+                payload={"extraction_id": signed.get("extraction_id")},
+            )
+        except Exception:
+            pass
+        return jsonify({"extraction": signed, "path": str(path)}), 200
+    except FileNotFoundError:
+        return jsonify({"error": "extraction not found"}), 404
+    except Exception as e:
+        logger.error(f"Error in human voice signoff: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/human-voice/handoff", methods=["POST"])
+def human_voice_handoff():
+    """Admit voice constraints to Speakers lane."""
+    try:
+        from src.human_voice_extraction import admit_speakers_constraints, load_extraction
+
+        data = request.json or {}
+        extraction_id = data.get("extraction_id")
+        pack = data.get("extraction")
+        if pack is None:
+            if not extraction_id:
+                return jsonify({"error": "extraction_id or extraction is required"}), 400
+            pack = load_extraction(str(extraction_id))
+        result = admit_speakers_constraints(pack)
+        if result.get("status") != "admitted":
+            return jsonify(result), 400
+        try:
+            from src.alt3_lineage import record_alt3_lineage
+
+            record_alt3_lineage(
+                subsystem="human_voice_extraction",
+                action="handoff",
+                mission_id=data.get("mission_id"),
+                session_id=data.get("session_id"),
+                payload={"extraction_id": pack.get("extraction_id")},
+            )
+        except Exception:
+            pass
+        return jsonify(result), 200
+    except FileNotFoundError:
+        return jsonify({"error": "extraction not found"}), 404
+    except Exception as e:
+        logger.error(f"Error in human voice handoff: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/<mission_id>", methods=["PATCH"])
 def update_mission(mission_id):
     """Update an existing mission."""

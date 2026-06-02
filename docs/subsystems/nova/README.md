@@ -45,3 +45,8 @@ The active canonical doc in this folder is
 [TINY_NOVA_CANONICAL.md](./TINY_NOVA_CANONICAL.md).
 
 If Nova docs conflict with runtime code, runtime code wins.
+
+## Pending Future Ideas
+
+- [Human Voice Extraction](../../_future/ideas_pending/HUMAN_VOICE_EXTRACTION.md)
+  — concept origin; active doc under [../speakers/HUMAN_VOICE_EXTRACTION.md](../speakers/HUMAN_VOICE_EXTRACTION.md)

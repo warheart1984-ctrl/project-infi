@@ -1,0 +1,61 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "narrative_trust_pack",
+    "version": "1.0.0-mvp",
+    "stage": "mvp",
+    "display_name": "Narrative Trust Pack"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/TRUST_BUNDLE_SPEC.md"
+    ],
+    "invariants": [
+      "NTP is subordinate to Jarvis capability routing; no sovereign creative subsystem",
+      "export_ready true only when claim_label proven and human signoff recorded",
+      "Tampered intermediate artifact blocks signoff; emit rejected",
+      "Missing stage artifact yields partial pack with claim_label asserted",
+      "No auto-publish without human signoff on proven exports"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/narrative_trust_pack.v1.json",
+    "frozen": false
+  },
+  "runtime": {
+    "surface": [
+      { "kind": "module", "path": "src/capabilities/narrative_trust_pack.py" },
+      { "kind": "cli", "path": "python -m tools.narrative pack|verify|signoff" },
+      { "kind": "gate", "path": "make narrative-gate" }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md"
+    ],
+    "posture": "mvp"
+  },
+  "lineage": {
+    "parents": ["story_forge", "beatbox", "speakers"],
+    "children": []
+  },
+  "activation": {
+    "order": 3,
+    "batch_id": "three-ideas-2026-06-02",
+    "notes": "After Lineage Console and Triangulation; wraps creative pipeline"
+  },
+  "retirement": {
+    "path": null
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/NARRATIVE_TRUST_PACK.md",
+    "mvp_plan": "docs/_future/ideas_pending/NARRATIVE_TRUST_PACK_MVP_PLAN.md",
+    "active_doc": "docs/subsystems/storyforge/NARRATIVE_TRUST_PACK.md",
+    "summon_eligible": false
+  }
+}

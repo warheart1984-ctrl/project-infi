@@ -377,6 +377,72 @@ class MissionBoardController:
             cisiv_stage=cisiv_stage,
         )
 
+    def create_from_recipe(
+        self,
+        recipe_id: str,
+        *,
+        session_id: str | None = None,
+        focus: bool = True,
+        signoff_ack: bool = False,
+        title: str | None = None,
+        objective: str | None = None,
+        next_step: str | None = None,
+        cisiv_stage: str | None = None,
+        recipe_root: str | Path | None = None,
+    ) -> dict:
+        from src.recipe_module import (
+            append_ledger,
+            draft_mission_fields,
+            evaluate_gates,
+            load_recipe_by_id,
+        )
+
+        root = Path(recipe_root).expanduser() if recipe_root else None
+        pack = load_recipe_by_id(str(recipe_id or "").strip(), root=root)
+        gate_result = evaluate_gates(pack, {"signoff_ack": signoff_ack})
+        if not gate_result.get("passed"):
+            failed = [g for g in gate_result.get("gates") or [] if not g.get("passed")]
+            reasons = ", ".join(
+                f"{g.get('gate_id')}:{g.get('reason')}" for g in failed
+            ) or "gate_failed"
+            raise ValueError(f"Recipe gates not satisfied: {reasons}")
+
+        fields = draft_mission_fields(pack)
+        snapshot = self.create_mission(
+            title=title or fields["title"],
+            objective=objective or fields["objective"],
+            next_step=next_step or fields["next_step"],
+            session_id=session_id,
+            tags=fields.get("tags"),
+            focus=focus,
+            status="active",
+            cisiv_stage=cisiv_stage or fields.get("cisiv_stage"),
+        )
+        append_ledger(
+            str(pack["recipe_id"]),
+            {
+                "event": "mission_created",
+                "mission_id": snapshot.get("active_mission", {}).get("id"),
+                "signoff_ack": signoff_ack,
+                "gate_result": gate_result,
+            },
+            root=root,
+        )
+        active = snapshot.get("active_mission") or {}
+        try:
+            from src.alt3_lineage import record_alt3_lineage
+
+            record_alt3_lineage(
+                subsystem="recipe_module",
+                action="create_mission",
+                mission_id=active.get("id"),
+                session_id=session_id,
+                payload={"recipe_id": str(pack["recipe_id"])},
+            )
+        except Exception:
+            pass
+        return snapshot
+
     def update_mission(self, mission_id: str, **updates) -> dict:
         with self._lock:
             mission = self._find_mission_locked(mission_id)

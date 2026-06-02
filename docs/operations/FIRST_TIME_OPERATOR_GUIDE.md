@@ -18,6 +18,8 @@ For constitutional law and proof requirements, see the root README governance se
 
 Optional everywhere: Node.js 18+ (rebuild frontend), Redis (Celery worker), provider API keys.
 
+**Imagine Generator (Grok render):** To use `POST /api/jarvis/imagine/grok-render` or the capability bridge action `imagine_generator` / `grok_render`, set `STORY_FORGE_XAI_API_KEY` (preferred) or `XAI_API_KEY` in the environment before starting AAIS. Keys are read only from env — never from request bodies. Check readiness with `GET /api/jarvis/imagine/keys-status`.
+
 ### Presets
 
 | Preset | Use when |

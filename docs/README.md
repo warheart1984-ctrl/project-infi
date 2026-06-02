@@ -27,8 +27,10 @@ Use it to answer four questions quickly:
     [contracts/ARIS_RUNTIME_CONTRACT.md](./contracts/ARIS_RUNTIME_CONTRACT.md)
   - includes the active swarm doctrine in
     [contracts/SWARM_LAW.md](./contracts/SWARM_LAW.md)
-  - includes the Subsystem Summoner Pattern (SSP) in
-    [contracts/AAIS_SSP_PROTOCOL.md](./contracts/AAIS_SSP_PROTOCOL.md)
+  - includes the Subsystem Summoner Pattern (SSP) and Alt-4 genome lifecycle in
+    [contracts/AAIS_SSP_PROTOCOL.md](./contracts/AAIS_SSP_PROTOCOL.md),
+    [contracts/AAIS_SSP_PROMOTION_PROTOCOL.md](./contracts/AAIS_SSP_PROMOTION_PROTOCOL.md),
+    [contracts/AAIS_SUBSYSTEM_GENOME.md](./contracts/AAIS_SUBSYSTEM_GENOME.md)
 - [subsystems/](./subsystems/)
   - admitted or documented subsystem packs such as Nova
 - [audit/](./audit/)
@@ -46,7 +48,8 @@ Use it to answer four questions quickly:
   - planned or bounded future material that is not live yet
   - pending concept-stage ideas in
     [_future/ideas_pending/](./_future/ideas_pending/)
-    (Forensic Triangulation, CISIV Lineage Console, Narrative Trust Pack)
+    (six partial-live MVPs: Lineage Console, Triangulation, NTP, Recipe Module,
+    Imagine Generator, Human Voice Extraction — see [ideas_pending/README.md](./_future/ideas_pending/README.md))
 
 ## Fastest Reading Path
 
