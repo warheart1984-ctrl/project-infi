@@ -86,17 +86,13 @@ Deep dives: [`docs/runtime/AAIS_SUBSYSTEM_SPEC.md`](docs/runtime/AAIS_SUBSYSTEM_
 
 ---
 
-## Choose Your Path
+## How to start operations
 
 | Path | Time | Start here | Outcome |
 |---|---|---|---|
-| **Tier 1 — AAIS local** | ~10 min | [First-Time Operator Guide §1](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-1-run-aais-locally-10-minutes) + **How to Make It Work** below | Mock Jarvis on `:8000` |
+| **Tier 1 — AAIS local** | ~10 min | [First-Time Operator Guide §1](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-1-run-aais-locally-10-minutes) + steps below | Mock Jarvis on `:8000` |
 | **Tier 2 — Infinity Pilot** | ~15 min | [Guide §2](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-2-infinity-pilot-docker-15-minutes) + [Early Adopter Guide](docs/operations/INFINITY_PILOT_EARLY_ADOPTER.md) | Docker stack: Platform + UGR + AAIS |
 | **Tier 3 — Full monorepo** | Advanced | [Guide §3](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-3-advanced-subsystems) + [Wolf-CoG-OS forge](wolf-cog-os/forge/README.md) | ISO forge, Platform v6+, subsystems |
-
----
-
-## How to Make It Work
 
 ### Prerequisites
 
@@ -106,7 +102,9 @@ Deep dives: [`docs/runtime/AAIS_SUBSYSTEM_SPEC.md`](docs/runtime/AAIS_SUBSYSTEM_
 - Optional: **Redis** — for Celery background jobs (`make worker`)
 - Optional: provider API keys — OpenAI / Anthropic (local/mock presets work without them)
 
-### 1. Clone and install
+### Initialization Steps
+
+#### Clone and install
 
 ```bash
 git clone https://github.com/warheart1984-ctrl/Project-Infinity1.git
@@ -121,7 +119,7 @@ cp .env.example .env
 # Edit .env — OPENAI_API_KEY / ANTHROPIC_API_KEY optional for mock or laptop presets
 ```
 
-### 2. Prepare runtime data (first run)
+#### Prepare runtime data (first run)
 
 ```bash
 python -m aais prepare --data-dir ./.runtime/aais-data
@@ -130,7 +128,9 @@ python -m aais doctor --data-dir ./.runtime/aais-data
 
 `prepare` stages the packaged UI into `app/static/`. A prebuilt bundle ships with the repo; use `--force-build` only after `npm install` in `frontend/`.
 
-### 3. Start AAIS
+### Operational Entry Point
+
+#### Start AAIS
 
 **Recommended (cross-platform launcher):**
 
@@ -153,7 +153,7 @@ make run
 # equivalent: uvicorn app.main:app --reload
 ```
 
-### 4. Open operator surfaces
+#### Open operator surfaces
 
 | Surface | URL |
 |---|---|
@@ -162,7 +162,7 @@ make run
 | Jarvis console | http://127.0.0.1:8000/app/jarvis |
 | Legacy Jarvis API (Flask) | mounted at `/legacy_api` via FastAPI bridge |
 
-### 5. Verify it is working
+### Verification Step
 
 ```bash
 curl -fsS http://127.0.0.1:8000/health
@@ -203,6 +203,12 @@ These are isolated HTTP services — start only when you need forge/evolve featu
 
 Without them, core chat and patch-review paths still work; explicit forge routes return routing errors until the contractor is up.
 
+### Failsafe Notes
+
+- Stop foreground runtime with `Ctrl+C`.
+- Do not delete `.runtime/aais-data` during active sessions.
+- Missing proof or constitutional ambiguity is a **stop condition** — see governance section below.
+
 ---
 
 ## GitHub
@@ -220,12 +226,6 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 Pull requests to `main` run governance gates (CoGOS CI, documentation baseline, UGR trust bundle, operator console, Forgekeeper, Scorpion). Significant claims in PRs must include proof posture (`asserted` / `proven` / `rejected`) per [`REPO_PROOF_LAW.md`](REPO_PROOF_LAW.md).
 
 **Do not commit:** ISO images, `.runtime/`, `wolf-cog-os/output/`, or duplicate import folders (`*-main/`).
-
-### Failsafe notes
-
-- Stop foreground runtime with `Ctrl+C`.
-- Do not delete `.runtime/aais-data` during active sessions.
-- Missing proof or constitutional ambiguity is a **stop condition** — see governance section below.
 
 ---
 
