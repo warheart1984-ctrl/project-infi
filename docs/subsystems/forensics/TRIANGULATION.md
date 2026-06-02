@@ -1,6 +1,6 @@
 # Forensic Triangulation
 
-Status: **partial live** — CLI correlator MVP; Jarvis tool route deferred.
+Status: **partial live** — CLI correlator + Jarvis bridge/API.
 
 CISIV stage: **implementation** (verification proof: `docs/proof/forensics/TRIANGULATION_V1_PROOF.md`)
 
@@ -14,6 +14,8 @@ Correlate Mechanic, Scorpion, and optional Slingshot diagnostic claims per share
 |---------|----------|
 | Package | `triangulation/` |
 | CLI | `python -m triangulation correlate --case-id <id> [--fixture tri-demo-001]` |
+| API | `POST /api/jarvis/triangulation/correlate` |
+| Bridge | `forensic_triangulation` / `correlate` |
 | Output | `.runtime/triangulation/<case_id>/triangulation.v1.json` |
 | Bridge map | `triangulation/bridge_map.json` |
 | Fixture | `triangulation/fixtures/tri-demo-001/` |
@@ -24,11 +26,11 @@ Correlate Mechanic, Scorpion, and optional Slingshot diagnostic claims per share
 ```bash
 make triangulation-gate
 python -m triangulation correlate --case-id tri-demo-001 --fixture tri-demo-001
+python -m pytest tests/test_capability_bridge_alt3.py -q
 ```
 
 ## Deferred
 
-- Jarvis `forensic_triangulation` tool envelope (MECH-CHAT-01)
 - Cross-machine replay manifests
 
 ## Related

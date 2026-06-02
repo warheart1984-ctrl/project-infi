@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
+
+import pytest
 
 from src.governance_organs.genome_engine import GenomeEngine
 from src.governance_organs.mutation_engine import MutationEngine
@@ -36,6 +39,13 @@ def test_mp_alo_001_apply_and_rollback(monkeypatch):
     monkeypatch.setenv("AAIS_REPO_ROOT", str(Path(__file__).resolve().parents[1]))
     engine = MutationEngine()
     genome_path = GenomeEngine.registry().paths["adaptive_lane_organ"]
+    data = json.loads(genome_path.read_text(encoding="utf-8"))
+    history = (data.get("mutation") or {}).get("history") or []
+    if any(
+        entry.get("proposal_id") == "MP-ALO-001" and entry.get("status") == "promoted"
+        for entry in history
+    ):
+        pytest.skip("MP-ALO-001 already promoted in live genome")
     before = genome_path.read_text(encoding="utf-8")
     result = engine.apply(
         "adaptive_lane_organ",

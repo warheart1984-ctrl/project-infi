@@ -13,6 +13,34 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.3.1] - 2026-06-02 — Close Loops
+
+**Close Loops** — live MP-ALO-001 lane DNA + MP-NTP-001 invariant mutations; Triangulation and Narrative Trust Pack Jarvis bridge/API routes; retirement lineage `migration_proof` on Alt-5/6/7 dependents.
+
+### Added
+
+- **MP-ALO-001 live** — `audit_lane_mutation` on operator lane; post-apply wake + alt6 fabric re-validation
+- **MP-NTP-001 bundle** — dedicated mutation gate, proof doc, post-apply `narrative-gate` hook; live invariant append
+- **Forensic Triangulation Jarvis route** — `forensic_triangulation` / `correlate`; `POST /api/jarvis/triangulation/correlate`
+- **NTP Jarvis routes** — `narrative_trust_pack` pack/verify/signoff; `POST /api/jarvis/narrative/{pack,verify,signoff}`
+
+### Changed
+
+- Governance gates include bridge tests for triangulation and narrative
+- Dependent genomes (`adaptive_lane_organ`, `operator_cognition_coherence_fabric`, `reflection_runtime_organ`) carry `retirement.migration_proof` for `operator_profile_organ` lineage gate
+- Mutation apply/rollback tests skip when live genome already promoted
+
+### Verification (v1.3.1)
+
+```bash
+make adaptive-lane-mutation-gate narrative-trust-pack-mutation-gate
+make triangulation-gate narrative-gate genome-gate
+python -m pytest tests/test_capability_bridge_alt3.py tests/test_governance_organs_alt4.py \
+  tests/test_adaptive_lane_organ_mutation_MP_ALO_001.py tests/test_narrative_trust_pack_mutation_MP_NTP_001.py -q
+```
+
+[1.3.1]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.1
+
 ## [1.3.0] - 2026-06-02 — Infinity 1 · Alt-7
 
 **Infinity 1 · Alt-7** — fifteenth governed genome (`operator_cognition_coherence_fabric`); cross-plane coherence snapshot joins profile, lanes, and envelopes; capability bridge execute-path enforcement when fabric is misaligned or policy caps run under non-strict posture. Includes Alt-6.1 lane mutation golden path (MP-ALO-001).

@@ -10,8 +10,9 @@ Project Infinity ships **two independent release tracks**. Do not conflate them.
 |---|---|
 | Version | `pyproject.toml` (`aais` package) |
 | History | [CHANGELOG.md](../../CHANGELOG.md) |
-| Tag format | `v1.3.0` (latest — Infinity 1 · Alt-7), `v1.2.0`, `v1.1.0`, `v0.2.0`, or `aais-v0.2.0` |
+| Tag format | `v1.3.1` (latest — Close Loops), `v1.3.0`, `v1.2.0`, `v1.1.0`, `v0.2.0`, or `aais-v0.2.0` |
 | GitHub Release | Manual or release-drafter; body = CHANGELOG section for that version |
+| v1.3.1 notes | [v1.3.1-close-loops.md](./v1.3.1-close-loops.md) |
 | v1.3.0 notes | [v1.3.0-alt7-coherence-fabric.md](./v1.3.0-alt7-coherence-fabric.md) |
 | v1.2.0 notes | [v1.2.0-alt6-adaptive-lanes.md](./v1.2.0-alt6-adaptive-lanes.md) |
 | v1.1.0 notes | [v1.1.0-infinity-complete.md](./v1.1.0-infinity-complete.md) |

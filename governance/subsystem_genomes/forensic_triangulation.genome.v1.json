@@ -37,6 +37,14 @@
         "path": "python -m triangulation correlate --case-id"
       },
       {
+        "kind": "api",
+        "path": "POST /api/jarvis/triangulation/correlate"
+      },
+      {
+        "kind": "tool",
+        "path": "forensic_triangulation / correlate"
+      },
+      {
         "kind": "gate",
         "path": "make triangulation-gate"
       }

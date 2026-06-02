@@ -633,6 +633,20 @@ Every major entry should name its CISIV stage explicitly.
 - outcome: cross-plane enforcement on bridge execute; `operator_cognition_coherence_fabric` promoted to `governed` via `alt7_promote_governed.py`
 - verification note: `make alt7-governed-gate`; `python tools/governance/alt7_promote_governed.py`
 
+### MP-ALO-001 Live Promotion — Lane DNA Mutation
+
+- CISIV stage: `verification`
+- scope: Apply MP-ALO-001 to live `adaptive_lane_organ` genome; operator lane gains `audit_lane_mutation`; post-apply wake + alt6 fabric re-validation
+- outcome: `mutation.history[]` status `promoted`; genome version `1.0.1`; lane DNA change under frozen schema (no schema file edit)
+- verification note: `make adaptive-lane-mutation-gate`; `make alt6-governed-gate`
+
+### MP-NTP-001 Live Promotion — Alt-4 Invariant Mutation
+
+- CISIV stage: `verification`
+- scope: Apply MP-NTP-001 to live `narrative_trust_pack` genome; invariant-only MP-X with post-apply `narrative-gate`
+- outcome: `mutation.history[]` status `promoted`; genome version `1.0.1`; schema delta reference-only under frozen schema
+- verification note: `make narrative-trust-pack-mutation-gate`; `make narrative-gate`
+
 ### Adaptive Lane Organ — Prototype Promotion (Alt-4 Runtime)
 
 - CISIV stage: `verification`

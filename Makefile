@@ -259,7 +259,7 @@ recipe-module-mutation-gate:
 	python3 tools/governance/mutation_gate.py recipe_module MP-PLACEHOLDER
 
 narrative-trust-pack-mutation-gate:
-	python3 tools/governance/mutation_gate.py narrative_trust_pack MP-NTP-001
+	python3 tools/governance/check_narrative_trust_pack_mutation.py
 
 adaptive-lane-mutation-gate:
 	python3 tools/governance/check_adaptive_lane_mutation.py

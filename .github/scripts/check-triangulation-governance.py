@@ -66,6 +66,18 @@ def main() -> int:
         print("[triangulation-gate] FAIL: no proven edge")
         return 1
 
+    print("[triangulation-gate] running bridge tests")
+    bridge = subprocess.run(
+        [python, "-m", "pytest", "tests/test_capability_bridge_alt3.py::TestCapabilityBridgeAlt3::test_forensic_triangulation_correlate_via_bridge", "-q"],
+        cwd=root,
+        capture_output=True,
+        text=True,
+    )
+    if bridge.returncode != 0:
+        print(bridge.stdout)
+        print(bridge.stderr)
+        return 1
+
     print("[triangulation-gate] OK")
     return 0
 

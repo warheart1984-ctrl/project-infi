@@ -259,6 +259,9 @@ class MutationEngine:
             if fabric_overlap:
                 script = self.root / "tools/governance/check_alt6_governed_eligibility.py"
                 failures.extend(self._run_subprocess(script, label="alt6-governed-gate"))
+        elif proposal.post_apply_gate == "narrative-gate":
+            script = self.root / ".github/scripts/check-narrative-governance.py"
+            failures.extend(self._run_subprocess(script, label="narrative-gate"))
         return failures
 
     def verify(self, gene: str, mp_id: str) -> MutationResult:

@@ -28,7 +28,7 @@ Authoritative references:
 
 This repository is also **Project Infi** — constitutional engineering where claims require proof, not intent.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.3.0 — Infinity 1 · Alt-7](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.0) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.3.1 — Close Loops](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.1) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -140,11 +140,11 @@ Operator guide: [AAIS_ALT4_RUNTIME_OPERATOR_GUIDE](docs/contracts/AAIS_ALT4_RUNT
 
 Three repo-grounded ideas promoted from concept to **partial live** — runtime modules, governance gates, and proof packets:
 
-| Subsystem | Entry | Key surface | Proof |
+| Subsystem | Capability bridge | Key API | Proof |
 |---|---|---|---|
-| **CISIV Lineage Console** | `src/ul_lineage.py` | `GET /api/jarvis/lineage/<mission_id>`; Operator → CISIV Lineage panel | [UL_LINEAGE_CONSOLE_V1_PROOF](docs/proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md) |
-| **Forensic Triangulation** | `python -m triangulation correlate` | Correlates Mechanic + Scorpion + Slingshot per `case_id` | [TRIANGULATION_V1_PROOF](docs/proof/forensics/TRIANGULATION_V1_PROOF.md) |
-| **Narrative Trust Pack** | `python -m tools.narrative pack` | Story Forge → Beatbox → Speakers hash + signoff export | [NARRATIVE_TRUST_PACK_V1_PROOF](docs/proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md) |
+| **CISIV Lineage Console** | — | `GET /api/jarvis/lineage/<mission_id>`; Operator → CISIV Lineage panel | [UL_LINEAGE_CONSOLE_V1_PROOF](docs/proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md) |
+| **Forensic Triangulation** | `forensic_triangulation` / `correlate` | `POST /api/jarvis/triangulation/correlate` | [TRIANGULATION_V1_PROOF](docs/proof/forensics/TRIANGULATION_V1_PROOF.md) |
+| **Narrative Trust Pack** | `narrative_trust_pack` / `pack`, `verify`, `signoff` | `POST /api/jarvis/narrative/pack`, `/verify`, `/signoff` | [NARRATIVE_TRUST_PACK_V1_PROOF](docs/proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md) |
 
 Active docs: [UL_LINEAGE_CONSOLE](docs/runtime/UL_LINEAGE_CONSOLE.md), [TRIANGULATION](docs/subsystems/forensics/TRIANGULATION.md), [NARRATIVE_TRUST_PACK](docs/subsystems/storyforge/NARRATIVE_TRUST_PACK.md).
 
@@ -300,8 +300,9 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
-| Latest tag | [`v1.3.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.0) — **Infinity 1 · Alt-7** — 15 governed genomes, coherence fabric snapshot, bridge cross-plane enforcement |
-| Prior tag | [`v1.2.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.2.0) — Infinity 1 · Alt-6 — 14 governed genomes, adaptive lanes fabric, Tier 5 wake |
+| Latest tag | [`v1.3.1`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.1) — **Close Loops** — MP-ALO-001 + MP-NTP-001 live, Triangulation/NTP Jarvis routes |
+| Prior tag | [`v1.3.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.0) — Infinity 1 · Alt-7 — 15 governed genomes, coherence fabric, bridge enforcement |
+| Earlier | [`v1.2.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.2.0) — Infinity 1 · Alt-6 — 14 governed genomes, adaptive lanes fabric, Tier 5 wake |
 | Earlier | [`v1.1.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.1.0) — Infinity 1 (complete) — 13 governed genomes, Alt-5 waves 1–2, barebones wave |
 | Earlier | [`v1.0.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.0.0) — Infinity 1 initial (Alt-4, Tier 5, Alt-5 wave 1 MVP) |
 | Earlier | [`v0.4.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v0.4.0) — Three Ideas MVP (Lineage, Triangulation, NTP) |

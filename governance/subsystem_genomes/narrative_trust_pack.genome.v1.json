@@ -2,7 +2,7 @@
   "subsystem_genome_version": "subsystem_genome.v1",
   "identity": {
     "gene": "narrative_trust_pack",
-    "version": "1.0.0-governed",
+    "version": "1.0.1",
     "stage": "governed",
     "display_name": "Narrative Trust Pack"
   },
@@ -19,7 +19,8 @@
       "export_ready true only when claim_label proven and human signoff recorded",
       "Tampered intermediate artifact blocks signoff; emit rejected",
       "Missing stage artifact yields partial pack with claim_label asserted",
-      "No auto-publish without human signoff on proven exports"
+      "No auto-publish without human signoff on proven exports",
+      "Alt-4 Mutation Engine may append governance invariants via MP-X"
     ]
   },
   "schema": {
@@ -35,6 +36,14 @@
       {
         "kind": "cli",
         "path": "python -m tools.narrative pack|verify|signoff"
+      },
+      {
+        "kind": "api",
+        "path": "POST /api/jarvis/narrative/pack"
+      },
+      {
+        "kind": "tool",
+        "path": "narrative_trust_pack / pack|verify|signoff"
       },
       {
         "kind": "gate",
@@ -67,7 +76,14 @@
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
   },
   "mutation": {
-    "history": []
+    "history": [
+      {
+        "proposal_id": "MP-NTP-001",
+        "status": "promoted",
+        "schema_delta_ref": "schemas/deltas/narrative_trust_pack_MP-NTP-001.json",
+        "notes": "backup: .runtime\\governance\\mutation_backups\\narrative_trust_pack_20260602T232155Z.genome.v1.json"
+      }
+    ]
   },
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/NARRATIVE_TRUST_PACK.md",

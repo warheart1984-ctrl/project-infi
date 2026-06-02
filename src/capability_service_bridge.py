@@ -163,6 +163,16 @@ class CapabilityServiceBridge:
             provider_name="aais_human_voice",
             supported_actions={"extract", "signoff", "handoff"},
         )
+        self._forensic_triangulation_module = ConfiguredCapabilityModule(
+            module_name="forensic_triangulation",
+            provider_name="aais_triangulation",
+            supported_actions={"correlate"},
+        )
+        self._narrative_trust_pack_module = ConfiguredCapabilityModule(
+            module_name="narrative_trust_pack",
+            provider_name="aais_narrative",
+            supported_actions={"pack", "verify", "signoff"},
+        )
 
         self._route_specs = [
             {
@@ -556,6 +566,125 @@ class CapabilityServiceBridge:
                     {
                         "id": "extraction_id",
                         "label": "Extraction Id",
+                        "type": "text",
+                        "required": True,
+                    },
+                ),
+            },
+            {
+                "capability_id": "forensic_triangulation",
+                "capability_label": "Forensic Triangulation",
+                "capability_summary": "Correlate Mechanic, Scorpion, and Slingshot claims per case_id.",
+                "tool": "forensic_triangulation",
+                "tool_label": "Forensic Triangulation",
+                "action": "correlate",
+                "action_label": "Correlate Case",
+                "module": self._forensic_triangulation_module,
+                "aliases": ("forensic_triangulation", "triangulation_correlate"),
+                "handler": self._handle_forensic_triangulation_correlate,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "case_id",
+                        "label": "Case Id",
+                        "type": "text",
+                        "required": True,
+                    },
+                    {
+                        "id": "fixture",
+                        "label": "Fixture",
+                        "type": "text",
+                        "required": False,
+                        "placeholder": "tri-demo-001",
+                    },
+                ),
+            },
+            {
+                "capability_id": "narrative_trust_pack",
+                "capability_label": "Narrative Trust Pack",
+                "capability_summary": "Build, verify, and sign off governed narrative export packs.",
+                "tool": "narrative_trust_pack_pack",
+                "tool_label": "NTP Pack",
+                "action": "pack",
+                "action_label": "Build Pack",
+                "module": self._narrative_trust_pack_module,
+                "aliases": ("narrative_trust_pack", "narrative_pack"),
+                "handler": self._handle_narrative_trust_pack_pack,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "pack_id",
+                        "label": "Pack Id",
+                        "type": "text",
+                        "required": True,
+                    },
+                    {
+                        "id": "from_capability_result",
+                        "label": "Capability Result Path",
+                        "type": "text",
+                        "required": False,
+                    },
+                ),
+            },
+            {
+                "capability_id": "narrative_trust_pack",
+                "capability_label": "Narrative Trust Pack",
+                "capability_summary": "Verify stage artifact hashes in a narrative trust pack.",
+                "tool": "narrative_trust_pack_verify",
+                "tool_label": "NTP Verify",
+                "action": "verify",
+                "action_label": "Verify Pack",
+                "module": self._narrative_trust_pack_module,
+                "aliases": ("narrative_trust_pack_verify",),
+                "handler": self._handle_narrative_trust_pack_verify,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "pack_id",
+                        "label": "Pack Id",
+                        "type": "text",
+                        "required": True,
+                    },
+                ),
+            },
+            {
+                "capability_id": "narrative_trust_pack",
+                "capability_label": "Narrative Trust Pack",
+                "capability_summary": "Apply human signoff to a verified narrative trust pack.",
+                "tool": "narrative_trust_pack_signoff",
+                "tool_label": "NTP Signoff",
+                "action": "signoff",
+                "action_label": "Sign Off Pack",
+                "module": self._narrative_trust_pack_module,
+                "aliases": ("narrative_trust_pack_signoff",),
+                "handler": self._handle_narrative_trust_pack_signoff,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "pack_id",
+                        "label": "Pack Id",
+                        "type": "text",
+                        "required": True,
+                    },
+                    {
+                        "id": "signoff_by",
+                        "label": "Signoff By",
                         "type": "text",
                         "required": True,
                     },
@@ -1518,6 +1647,11 @@ class CapabilityServiceBridge:
             "extraction_root",
             "speakers_root",
             "recipe_root",
+            "triangulation_root",
+            "mechanic_root",
+            "scorpion_root",
+            "slingshot_root",
+            "narrative_root",
         ):
             if profile.get(key):
                 fields[key] = profile[key]
@@ -1875,6 +2009,209 @@ class CapabilityServiceBridge:
                 phase_gate=phase_gate,
             )
         response = f"Human voice handoff failed: {cap.get('message', 'unknown')}"
+        return self._finalize_result(
+            spec=spec,
+            tool_result={
+                "type": spec["tool"],
+                "tool": spec["tool"],
+                "status": "failed",
+                "result": cap,
+            },
+            capability_result=capability_result,
+            response=response,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_forensic_triangulation_correlate(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        spec = self._selection_routes[("forensic_triangulation", "correlate")]
+        from src.capabilities.forensic_triangulation import run_forensic_triangulation_capability
+
+        request = {
+            "action": "correlate",
+            "runtime_context": self._alt3_runtime_context(phase_gate),
+            **self._alt3_execution_profile_fields(execution_profile),
+            **dict(args or {}),
+        }
+        cap = run_forensic_triangulation_capability(request)
+        capability_result = self._alt3_capability_result(cap)
+        if cap.get("ok"):
+            triangulation = cap.get("triangulation") or {}
+            response = (
+                f"Triangulation complete for {cap.get('case_id')}: "
+                f"{cap.get('edge_count', 0)} correlation edge(s)"
+            )
+            return self._finalize_result(
+                spec=spec,
+                tool_result={
+                    "type": spec["tool"],
+                    "tool": spec["tool"],
+                    "status": "completed",
+                    "case_id": cap.get("case_id"),
+                    "result": triangulation,
+                },
+                capability_result=capability_result,
+                response=response,
+                execution_profile=execution_profile,
+                result_payload=triangulation,
+                phase_gate=phase_gate,
+            )
+        response = f"Forensic triangulation failed: {cap.get('message', 'unknown')}"
+        return self._finalize_result(
+            spec=spec,
+            tool_result={
+                "type": spec["tool"],
+                "tool": spec["tool"],
+                "status": "failed",
+                "result": cap,
+            },
+            capability_result=capability_result,
+            response=response,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_narrative_trust_pack_pack(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        spec = self._selection_routes[("narrative_trust_pack", "pack")]
+        from src.capabilities.narrative_trust_pack import run_narrative_trust_pack_capability
+
+        request = {
+            "action": "pack",
+            "runtime_context": self._alt3_runtime_context(phase_gate),
+            **self._alt3_execution_profile_fields(execution_profile),
+            **dict(args or {}),
+        }
+        cap = run_narrative_trust_pack_capability(request)
+        capability_result = self._alt3_capability_result(cap)
+        if cap.get("ok"):
+            pack = cap.get("pack") or {}
+            response = f"Narrative trust pack created: {pack.get('pack_id', '')}"
+            return self._finalize_result(
+                spec=spec,
+                tool_result={
+                    "type": spec["tool"],
+                    "tool": spec["tool"],
+                    "status": "completed",
+                    "result": pack,
+                },
+                capability_result=capability_result,
+                response=response,
+                execution_profile=execution_profile,
+                result_payload=pack,
+                phase_gate=phase_gate,
+            )
+        response = f"Narrative trust pack build failed: {cap.get('message', 'unknown')}"
+        return self._finalize_result(
+            spec=spec,
+            tool_result={
+                "type": spec["tool"],
+                "tool": spec["tool"],
+                "status": "failed",
+                "result": cap,
+            },
+            capability_result=capability_result,
+            response=response,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_narrative_trust_pack_verify(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        spec = self._selection_routes[("narrative_trust_pack", "verify")]
+        from src.capabilities.narrative_trust_pack import run_narrative_trust_pack_capability
+
+        request = {
+            "action": "verify",
+            "runtime_context": self._alt3_runtime_context(phase_gate),
+            **self._alt3_execution_profile_fields(execution_profile),
+            **dict(args or {}),
+        }
+        cap = run_narrative_trust_pack_capability(request)
+        capability_result = self._alt3_capability_result(cap)
+        if cap.get("ok"):
+            response = f"Narrative trust pack verified: {cap.get('pack_id', '')}"
+            return self._finalize_result(
+                spec=spec,
+                tool_result={
+                    "type": spec["tool"],
+                    "tool": spec["tool"],
+                    "status": "completed",
+                    "result": cap,
+                },
+                capability_result=capability_result,
+                response=response,
+                execution_profile=execution_profile,
+                result_payload=cap,
+                phase_gate=phase_gate,
+            )
+        response = f"Narrative trust pack verify failed: {cap.get('message', 'unknown')}"
+        return self._finalize_result(
+            spec=spec,
+            tool_result={
+                "type": spec["tool"],
+                "tool": spec["tool"],
+                "status": "failed",
+                "result": cap,
+            },
+            capability_result=capability_result,
+            response=response,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_narrative_trust_pack_signoff(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        spec = self._selection_routes[("narrative_trust_pack", "signoff")]
+        from src.capabilities.narrative_trust_pack import run_narrative_trust_pack_capability
+
+        request = {
+            "action": "signoff",
+            "runtime_context": self._alt3_runtime_context(phase_gate),
+            **self._alt3_execution_profile_fields(execution_profile),
+            **dict(args or {}),
+        }
+        cap = run_narrative_trust_pack_capability(request)
+        capability_result = self._alt3_capability_result(cap)
+        if cap.get("ok"):
+            pack = cap.get("pack") or {}
+            response = f"Narrative trust pack signed off: {pack.get('pack_id', '')}"
+            return self._finalize_result(
+                spec=spec,
+                tool_result={
+                    "type": spec["tool"],
+                    "tool": spec["tool"],
+                    "status": "completed",
+                    "result": pack,
+                },
+                capability_result=capability_result,
+                response=response,
+                execution_profile=execution_profile,
+                result_payload=pack,
+                phase_gate=phase_gate,
+            )
+        response = f"Narrative trust pack signoff failed: {cap.get('message', 'unknown')}"
         return self._finalize_result(
             spec=spec,
             tool_result={

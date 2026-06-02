@@ -11968,6 +11968,99 @@ def human_voice_handoff():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/triangulation/correlate", methods=["POST"])
+def triangulation_correlate():
+    """Correlate forensic claims into triangulation.v1 for a case_id."""
+    try:
+        from src.capabilities.forensic_triangulation import run_forensic_triangulation_capability
+
+        data = request.json or {}
+        cap = run_forensic_triangulation_capability(
+            {
+                "action": "correlate",
+                "runtime_context": "operator_runtime",
+                **data,
+            }
+        )
+        if not cap.get("ok"):
+            status = 400 if cap.get("error_type") == "ValidationError" else 500
+            return jsonify(cap), status
+        return jsonify({"triangulation": cap.get("triangulation"), "case_id": cap.get("case_id")}), 201
+    except Exception as e:
+        logger.error(f"Error in triangulation correlate: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/narrative/pack", methods=["POST"])
+def narrative_trust_pack_pack():
+    """Build a governed narrative trust pack from capability output."""
+    try:
+        from src.capabilities.narrative_trust_pack import run_narrative_trust_pack_capability
+
+        data = request.json or {}
+        cap = run_narrative_trust_pack_capability(
+            {
+                "action": "pack",
+                "runtime_context": "operator_runtime",
+                **data,
+            }
+        )
+        if not cap.get("ok"):
+            return jsonify(cap), 400
+        return jsonify({"pack": cap.get("pack")}), 201
+    except Exception as e:
+        logger.error(f"Error in narrative pack: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/narrative/verify", methods=["POST"])
+def narrative_trust_pack_verify():
+    """Verify artifact hashes in a narrative trust pack."""
+    try:
+        from src.capabilities.narrative_trust_pack import run_narrative_trust_pack_capability
+
+        data = request.json or {}
+        cap = run_narrative_trust_pack_capability(
+            {
+                "action": "verify",
+                "runtime_context": "operator_runtime",
+                **data,
+            }
+        )
+        if not cap.get("ok"):
+            return jsonify(cap), 400
+        return jsonify(cap), 200
+    except FileNotFoundError:
+        return jsonify({"error": "pack not found"}), 404
+    except Exception as e:
+        logger.error(f"Error in narrative verify: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/narrative/signoff", methods=["POST"])
+def narrative_trust_pack_signoff():
+    """Apply human signoff to a verified narrative trust pack."""
+    try:
+        from src.capabilities.narrative_trust_pack import run_narrative_trust_pack_capability
+
+        data = request.json or {}
+        cap = run_narrative_trust_pack_capability(
+            {
+                "action": "signoff",
+                "runtime_context": "operator_runtime",
+                **data,
+            }
+        )
+        if not cap.get("ok"):
+            return jsonify(cap), 400
+        return jsonify({"pack": cap.get("pack")}), 200
+    except FileNotFoundError:
+        return jsonify({"error": "pack not found"}), 404
+    except Exception as e:
+        logger.error(f"Error in narrative signoff: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/<mission_id>", methods=["PATCH"])
 def update_mission(mission_id):
     """Update an existing mission."""

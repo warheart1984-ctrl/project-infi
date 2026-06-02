@@ -155,6 +155,8 @@ MP-X proposal → verify (genome-gate + delta + tests) → apply → optional ro
 make narrative-trust-pack-mutation-gate
 make adaptive-lane-mutation-gate
 python3 -m src.governance_organs.mutation_engine --gene narrative_trust_pack --mp-id MP-NTP-001 --verify
+python3 -m src.governance_organs.mutation_engine --gene narrative_trust_pack --mp-id MP-NTP-001 --apply --invariant "Alt-4 Mutation Engine may append governance invariants via MP-X"
+python3 -m src.governance_organs.mutation_engine --gene narrative_trust_pack --mp-id MP-NTP-001 --rollback
 python3 -m src.governance_organs.mutation_engine --gene adaptive_lane_organ --mp-id MP-ALO-001 --verify
 python3 -m src.governance_organs.mutation_engine --gene adaptive_lane_organ --mp-id MP-ALO-001 --apply --invariant "Lane DNA mutations require MP-X, fabric re-validation, and post-apply wake"
 python3 -m src.governance_organs.mutation_engine --gene adaptive_lane_organ --mp-id MP-ALO-001 --rollback

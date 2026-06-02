@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from mechanic.common import derive_claim_status, sha256_file
+from src.alt3_lineage import record_alt3_lineage
 
 PACK_VERSION = "narrative_trust_pack.v1"
 DEFAULT_NARRATIVE_ROOT = Path(".runtime/narrative")
@@ -180,3 +181,154 @@ def apply_signoff(
     pack["export_ready"] = True
     pack.pop("signoff_error", None)
     return pack
+
+
+def run_narrative_trust_pack_capability(request: dict[str, Any]) -> dict[str, Any]:
+    """Dispatch pack / verify / signoff for bridge and API routes."""
+    from copy import deepcopy
+
+    from src.phase_gate import (
+        ComponentNotRegisteredError,
+        GovernedComponent,
+        Phase,
+        PhaseViolationError,
+        assert_executable,
+        get_component,
+        register_component,
+    )
+
+    component_id = "jarvis.capability.narrative_trust_pack"
+    capability_meta = {
+        "name": "narrative_trust_pack",
+        "version": "v1",
+        "actions": ["pack", "verify", "signoff"],
+    }
+
+    try:
+        get_component(component_id)
+    except ComponentNotRegisteredError:
+        register_component(
+            GovernedComponent(
+                component_id=component_id,
+                name="Narrative Trust Pack Capability",
+                component_type="capability",
+                phase=Phase.VALIDATED,
+                allowed_contexts=["operator_runtime", "test_harness"],
+                notes="Governed Story Forge → Beatbox → Speakers export wrapper.",
+                validation_metadata=deepcopy(capability_meta),
+            )
+        )
+
+    runtime_context = str((request or {}).get("runtime_context") or "operator_runtime")
+    try:
+        assert_executable(component_id, runtime_context)
+    except PhaseViolationError as exc:
+        return {
+            "ok": False,
+            "status": "rejected",
+            "error_type": "AuthorityRejected",
+            "message": str(exc),
+        }
+
+    action = str((request or {}).get("action") or "pack").strip().lower()
+    root = Path((request or {}).get("narrative_root")).expanduser() if (request or {}).get("narrative_root") else None
+
+    try:
+        if action == "pack":
+            output = request.get("capability_output")
+            if output is None and request.get("from_capability_result"):
+                result_path = Path(str(request["from_capability_result"])).expanduser().resolve()
+                output = json.loads(result_path.read_text(encoding="utf-8"))
+            if not isinstance(output, dict):
+                return {
+                    "ok": False,
+                    "status": "rejected",
+                    "error_type": "ValidationError",
+                    "message": "capability_output or from_capability_result is required",
+                }
+            pack_id = str((request or {}).get("pack_id") or "").strip()
+            if not pack_id:
+                return {
+                    "ok": False,
+                    "status": "rejected",
+                    "error_type": "ValidationError",
+                    "message": "pack_id is required",
+                }
+            pack = build_pack_from_capability_output(
+                output,
+                pack_id=pack_id,
+                author=str((request or {}).get("author") or "operator"),
+                story_forge_artifact_path=(request or {}).get("story_forge_artifact"),
+                root=root,
+            )
+            record_alt3_lineage(
+                subsystem="narrative_trust_pack",
+                action="pack",
+                mission_id=(request or {}).get("mission_id"),
+                session_id=(request or {}).get("session_id") or pack.get("session_id"),
+                payload={"pack_id": pack_id},
+            )
+            return {"ok": True, "status": "completed", "pack": pack}
+
+        if action == "verify":
+            pack_id = str((request or {}).get("pack_id") or "").strip()
+            if not pack_id:
+                return {
+                    "ok": False,
+                    "status": "rejected",
+                    "error_type": "ValidationError",
+                    "message": "pack_id is required",
+                }
+            pack = load_pack(pack_id, root=root)
+            verify = verify_pack_integrity(pack)
+            return {
+                "ok": bool(verify.get("ok")),
+                "status": "completed" if verify.get("ok") else "failed",
+                "pack_id": pack_id,
+                **verify,
+            }
+
+        if action == "signoff":
+            pack_id = str((request or {}).get("pack_id") or "").strip()
+            signoff_by = str((request or {}).get("signoff_by") or "").strip()
+            if not pack_id or not signoff_by:
+                return {
+                    "ok": False,
+                    "status": "rejected",
+                    "error_type": "ValidationError",
+                    "message": "pack_id and signoff_by are required",
+                }
+            pack = load_pack(pack_id, root=root)
+            pack = apply_signoff(
+                pack,
+                signoff_by=signoff_by,
+                notes=str((request or {}).get("notes") or ""),
+            )
+            persist_pack(pack, root=root)
+            if pack.get("claim_label") == "proven":
+                record_alt3_lineage(
+                    subsystem="narrative_trust_pack",
+                    action="signoff",
+                    mission_id=(request or {}).get("mission_id"),
+                    session_id=(request or {}).get("session_id") or pack.get("session_id"),
+                    payload={"pack_id": pack_id, "claim_label": "proven"},
+                )
+            return {
+                "ok": pack.get("claim_label") == "proven",
+                "status": "completed" if pack.get("claim_label") == "proven" else "failed",
+                "pack": pack,
+            }
+
+        return {
+            "ok": False,
+            "status": "rejected",
+            "error_type": "UnsupportedAction",
+            "message": f"unsupported action: {action}",
+        }
+    except Exception as exc:  # noqa: BLE001
+        return {
+            "ok": False,
+            "status": "failed",
+            "error_type": type(exc).__name__,
+            "message": str(exc),
+        }

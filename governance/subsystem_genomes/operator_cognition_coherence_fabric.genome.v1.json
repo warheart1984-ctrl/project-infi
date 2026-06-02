@@ -80,7 +80,8 @@
     "notes": "Alt-7 \u2014 operator profile, lanes, and envelopes co-stabilize behavior"
   },
   "retirement": {
-    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md",
+    "migration_proof": "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
   },
   "mutation": {
     "history": []

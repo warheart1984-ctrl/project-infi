@@ -1,7 +1,7 @@
 # MP-ALO-001: adaptive_lane_organ — Lane mutation golden path
 
 - gene: adaptive_lane_organ
-- status: proposed
+- status: promoted
 - backward_compatible: true
 - mutation_kind: lane_dna
 - operator_lanes_delta_ref: schemas/deltas/adaptive_lane_organ_MP-ALO-001.json
