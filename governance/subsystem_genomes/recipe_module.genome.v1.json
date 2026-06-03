@@ -84,9 +84,12 @@
   },
   "proof": {
     "bundles": [
-      "docs/proof/platform/RECIPE_MODULE_V1_PROOF.md"
+      "docs/proof/platform/RECIPE_MODULE_GOVERNED_PROOF.md"
     ],
-    "posture": "governed"
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/platform/RECIPE_MODULE_V1_PROOF.md"
+    ]
   },
   "lineage": {
     "parents": [
@@ -99,9 +102,9 @@
     ]
   },
   "activation": {
-    "order": 1,
-    "batch_id": "audit-alt-3-2026-06-02",
-    "notes": "Workflow templates before creative/voice lanes"
+    "order": 6,
+    "batch_id": "alt27-summon-wave-2026-06",
+    "notes": "Release 27 wave 6"
   },
   "retirement": {
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
@@ -112,8 +115,8 @@
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/RECIPE_MODULE.md",
     "mvp_plan": "docs/_future/ideas_pending/RECIPE_MODULE_MVP_PLAN.md",
-    "active_doc": "docs/subsystems/platform/RECIPE_MODULE.md",
     "summon_eligible": false,
+    "active_doc": "docs/subsystems/platform/RECIPE_MODULE.md",
     "engineering_class": "RecipeModuleEngine",
     "mythic_label": "Recipe module",
     "linguistic_version": "1.0.0"

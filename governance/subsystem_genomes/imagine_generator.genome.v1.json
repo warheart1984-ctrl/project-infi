@@ -63,9 +63,12 @@
   },
   "proof": {
     "bundles": [
-      "docs/proof/storyforge/IMAGINE_GENERATOR_V1_PROOF.md"
+      "docs/proof/storyforge/IMAGINE_GENERATOR_GOVERNED_PROOF.md"
     ],
-    "posture": "governed"
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/storyforge/IMAGINE_GENERATOR_V1_PROOF.md"
+    ]
   },
   "lineage": {
     "parents": [
@@ -75,13 +78,14 @@
     ],
     "children": [
       "human_voice_extraction",
-      "imagine_generator_organ"
+      "imagine_generator_organ",
+      "narrative_trust_pack"
     ]
   },
   "activation": {
-    "order": 2,
-    "batch_id": "audit-alt-3-2026-06-02",
-    "notes": "After Recipe Module; before Human Voice Extraction"
+    "order": 7,
+    "batch_id": "alt27-summon-wave-2026-06",
+    "notes": "Release 27 wave 7"
   },
   "retirement": {
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
@@ -92,8 +96,8 @@
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/IMAGINE_GENERATOR.md",
     "mvp_plan": "docs/_future/ideas_pending/IMAGINE_GENERATOR_MVP_PLAN.md",
-    "active_doc": "docs/subsystems/storyforge/IMAGINE_GENERATOR.md",
     "summon_eligible": false,
+    "active_doc": "docs/subsystems/storyforge/IMAGINE_GENERATOR.md",
     "engineering_class": "ImagineGeneratorEngine",
     "mythic_label": "Imagine generator",
     "linguistic_version": "1.0.0"

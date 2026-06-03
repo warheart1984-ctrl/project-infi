@@ -23,7 +23,7 @@
     ]
   },
   "schema": {
-    "ref": "schemas/ul_lineage_graph.v1.json",
+    "ref": "schemas/cisiv_operator_lineage_console.v1.json",
     "frozen": true
   },
   "runtime": {
@@ -56,9 +56,12 @@
   },
   "proof": {
     "bundles": [
-      "docs/proof/aais-ul/UL_LINEAGE_CONSOLE_V1_PROOF.md"
+      "docs/proof/aais-ul/CISIV_OPERATOR_LINEAGE_CONSOLE_GOVERNED_PROOF.md"
     ],
-    "posture": "governed"
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/aais-ul/CISIV_OPERATOR_LINEAGE_CONSOLE_V1_PROOF.md"
+    ]
   },
   "lineage": {
     "parents": [
@@ -76,8 +79,8 @@
   },
   "activation": {
     "order": 1,
-    "batch_id": "three-ideas-2026-06-02",
-    "notes": "Most foundational \u2014 governance visibility layer"
+    "batch_id": "alt27-summon-wave-2026-06",
+    "notes": "Release 27 wave 1"
   },
   "retirement": {
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
@@ -88,8 +91,8 @@
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/CISIV_OPERATOR_LINEAGE_CONSOLE.md",
     "mvp_plan": "docs/_future/ideas_pending/CISIV_OPERATOR_LINEAGE_CONSOLE_MVP_PLAN.md",
-    "active_doc": "docs/runtime/UL_LINEAGE_CONSOLE.md",
     "summon_eligible": false,
+    "active_doc": "docs/runtime/UL_LINEAGE_CONSOLE.md",
     "engineering_class": "CisivOperatorLineageConsole",
     "mythic_label": "CISIV operator lineage console",
     "linguistic_version": "1.0.0"

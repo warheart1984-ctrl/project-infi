@@ -6,6 +6,45 @@ Every major entry should name its CISIV stage explicitly.
 
 ## 2026-06-03
 
+### Release 27 Governed Promotion — CISIV Early Ideas Bundle
+
+- CISIV stage: `verification`
+- scope: nine Release 27 subsystems batch-stamped at `governed`; Coherence Layer v1.22; Wave 18 early ideas bundle
+- outcome: one hundred sixty-three governed subsystem schemas; Release 27 complete at governed
+- verification note: `make alt27-governed-gate`; `python tools/governance/alt27_promote_governed.py`
+
+### Release 27.2 — CISIV Early Ideas Bundle Closure
+
+- CISIV stage: `verification`
+- scope: `CISIV_EARLY_IDEAS_BUNDLE_V1_PROOF` + Wave 18 layer tests
+- verification note: `make alt27-2-gate`
+
+### Release 27.1 — Coherence v1.22
+
+- CISIV stage: `implementation`
+- scope: snapshot v1.22 `cisiv_lineage_triangulation_layer[]`, `constitutional_bridge_layer[]`, `creative_trust_chain_layer[]`, `cisiv_early_ideas_bundle_aligned`
+- verification note: `python tools/governance/_alt27_coherence_v122.py`; `make alt27-1-gate`
+
+### Release 27 MVP — CISIV Early Ideas Organs
+
+- CISIV stage: `implementation`
+- scope: SSP bootstrap batch `alt27-summon-wave-2026-06`; runtime surfaces and gates
+- verification note: `make alt27-gate`; `python tools/governance/alt27_promote_mvp.py`
+
+### Wave 18 — CISIV Early Ideas, Constitutional Bridge, Release 27
+
+- CISIV stage: `implementation`
+- scope: lineage console, triangulation, barebones trio, recipe/imagine/NTP/HVE chain; coherence v1.22
+- outcome: `cisiv_early_ideas_bundle_aligned` joins operational closure layers
+- verification note: `make lineage-gate triangulation-gate barebones-gate`
+
+### Release 27 — CISIV Early Ideas Bundle (Concept)
+
+- CISIV stage: `concept`
+- scope: SSP Steps 1–7 for nine Release 27 subsystems; batch `alt27-summon-wave-2026-06` orders 1→9
+- outcome: CISIV lineage, triangulation, bridge, memory board, pipeline, recipe, imagine, NTP, HVE documented with Release 27 batch
+- verification note: `make ssp-gate`; `make genome-gate`; `python tools/governance/_alt27_ssp_bootstrap.py`
+
 ### Release 26 — Operational Closure Organs (Concept)
 
 - CISIV stage: `concept`

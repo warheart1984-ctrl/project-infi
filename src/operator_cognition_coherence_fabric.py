@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.21"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.22"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -2059,6 +2059,92 @@ def _build_linguistic_retention_history_layer(root: Path) -> list[dict[str, Any]
     ]
 
 
+def _build_cisiv_lineage_triangulation_layer(root: Path) -> list[dict[str, Any]]:
+    from src.forensic_triangulation_organ import build_forensic_triangulation_status
+    from src.ul_lineage_console_organ import build_ul_lineage_console_status
+
+    lineage_snap = build_ul_lineage_console_status()
+    lineage_engine = (root / "src" / "ul_lineage.py").is_file()
+    return [
+        _organ_posture_item(
+            "cisiv_operator_lineage_console",
+            {
+                **lineage_snap,
+                "cisiv_stage": str(lineage_snap.get("cisiv_stage") or "implementation"),
+                "claim_label": str(lineage_snap.get("claim_label") or "asserted"),
+                "lineage_engine_present": lineage_engine,
+            },
+            read_only=True,
+        ),
+        _organ_posture_item(
+            "forensic_triangulation_organ",
+            build_forensic_triangulation_status(),
+            read_only=True,
+        ),
+    ]
+
+
+def _build_constitutional_bridge_layer(root: Path) -> list[dict[str, Any]]:
+    makefile = root / "Makefile"
+    m_text = makefile.read_text(encoding="utf-8") if makefile.is_file() else ""
+    bridge_snap = {
+        "cisiv_stage": "implementation",
+        "claim_label": "asserted",
+        "bridge_module_present": (root / "src/capability_service_bridge.py").is_file(),
+        "bridge_gate_in_makefile": "capability-bridge-gate:" in m_text,
+        "read_only": True,
+    }
+    board_snap = {
+        "cisiv_stage": "implementation",
+        "claim_label": "asserted",
+        "memory_board_module_present": (root / "src/jarvis_memory_board.py").is_file(),
+        "memory_board_gate_in_makefile": "memory-board-gate:" in m_text,
+        "read_only": True,
+    }
+    pipeline_snap = {
+        "cisiv_stage": "implementation",
+        "claim_label": "asserted",
+        "pipeline_module_present": (root / "src/governed_direct_pipeline.py").is_file(),
+        "pipeline_gate_in_makefile": "governed-pipeline-gate:" in m_text,
+        "read_only": True,
+    }
+    return [
+        _organ_posture_item("capability_service_bridge", bridge_snap, read_only=True),
+        _organ_posture_item("jarvis_memory_board", board_snap, read_only=True),
+        _organ_posture_item("governed_direct_pipeline", pipeline_snap, read_only=True),
+    ]
+
+
+def _build_creative_trust_chain_layer() -> list[dict[str, Any]]:
+    from src.human_voice_extraction_organ import build_human_voice_extraction_status
+    from src.imagine_generator_organ import build_imagine_generator_status
+    from src.narrative_trust_pack_organ import build_narrative_trust_pack_status
+    from src.recipe_module_organ import build_recipe_module_status
+
+    return [
+        _organ_posture_item(
+            "recipe_module_organ",
+            build_recipe_module_status(),
+            read_only=True,
+        ),
+        _organ_posture_item(
+            "imagine_generator_organ",
+            build_imagine_generator_status(),
+            read_only=True,
+        ),
+        _organ_posture_item(
+            "narrative_trust_pack_organ",
+            build_narrative_trust_pack_status(),
+            read_only=True,
+        ),
+        _organ_posture_item(
+            "human_voice_extraction_organ",
+            build_human_voice_extraction_status(),
+            read_only=True,
+        ),
+    ]
+
+
 def _compute_linguistic_enforcement_ready(
     root: Path,
     *,
@@ -2210,6 +2296,9 @@ def build_coherence_fabric_status(
     linguistic_promotion_layer = _build_linguistic_promotion_layer()
     linguistic_operator_day_layer = _build_linguistic_operator_day_layer(root)
     linguistic_retention_history_layer = _build_linguistic_retention_history_layer(root)
+    cisiv_lineage_triangulation_layer = _build_cisiv_lineage_triangulation_layer(root)
+    constitutional_bridge_layer = _build_constitutional_bridge_layer(root)
+    creative_trust_chain_layer = _build_creative_trust_chain_layer()
 
     linguistic_governed_lifecycle_aligned = (
         _layer_aligned(linguistic_forecast_layer, minimum=3)
@@ -2245,6 +2334,21 @@ def build_coherence_fabric_status(
         linguistic_governed_lifecycle_aligned
         and linguistic_operator_day_aligned
         and linguistic_retention_history_aligned
+    )
+    cisiv_lineage_triangulation_aligned = _layer_aligned(
+        cisiv_lineage_triangulation_layer, minimum=2
+    )
+    constitutional_bridge_aligned = _layer_aligned(
+        constitutional_bridge_layer, minimum=3
+    )
+    creative_trust_chain_aligned = _layer_aligned(
+        creative_trust_chain_layer, minimum=4
+    )
+    cisiv_early_ideas_bundle_aligned = (
+        cisiv_lineage_triangulation_aligned
+        and constitutional_bridge_aligned
+        and creative_trust_chain_aligned
+        and linguistic_operational_closure_aligned
     )
 
     payload: dict[str, Any] = {
@@ -2459,6 +2563,13 @@ def build_coherence_fabric_status(
         "linguistic_retention_history_aligned": linguistic_retention_history_aligned,
         "linguistic_enforcement_ready": linguistic_enforcement_ready,
         "linguistic_operational_closure_aligned": linguistic_operational_closure_aligned,
+        "cisiv_lineage_triangulation_layer": cisiv_lineage_triangulation_layer,
+        "cisiv_lineage_triangulation_aligned": cisiv_lineage_triangulation_aligned,
+        "constitutional_bridge_layer": constitutional_bridge_layer,
+        "constitutional_bridge_aligned": constitutional_bridge_aligned,
+        "creative_trust_chain_layer": creative_trust_chain_layer,
+        "creative_trust_chain_aligned": creative_trust_chain_aligned,
+        "cisiv_early_ideas_bundle_aligned": cisiv_early_ideas_bundle_aligned,
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,
         "safety_envelope_halt": safety_halt,

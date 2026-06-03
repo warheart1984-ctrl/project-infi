@@ -54,7 +54,7 @@
   },
   "proof": {
     "bundles": [
-      "docs/proof/platform/GOVERNED_DIRECT_PIPELINE_V1_PROOF.md"
+      "docs/proof/platform/GOVERNED_DIRECT_PIPELINE_GOVERNED_PROOF.md"
     ],
     "posture": "governed",
     "target_bundles": [
@@ -80,9 +80,9 @@
     ]
   },
   "activation": {
-    "order": 3,
-    "batch_id": "barebones-summon-wave-2026-06",
-    "notes": "Barebones wave \u2014 packet and lane fabric"
+    "order": 5,
+    "batch_id": "alt27-summon-wave-2026-06",
+    "notes": "Release 27 wave 5"
   },
   "retirement": {
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"

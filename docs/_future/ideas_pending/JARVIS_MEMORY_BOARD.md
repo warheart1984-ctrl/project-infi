@@ -2,105 +2,67 @@
 
 CISIV stage: **concept**
 
-Status: pending — not yet integrated into active AAIS doc tree as a first-class subsystem family.
+Status: pending — Release 27 (`alt27-summon-wave-2026-06`).
 
 ## 1. Purpose
 
-Formalize the **seeded memory-governance fabric** in
-[`src/jarvis_memory_board.py`](../../../src/jarvis_memory_board.py) as a governed
-subsystem family: fixed-purpose slots, controller-approved installs, lawful
-migration, and board snapshots consumable by lineage and operator surfaces.
+Read-only Jarvis memory board layout and module card posture.
 
-Live reference behavior exists (`GET /api/jarvis/memory/board`); this admission
-aligns doctrine, schema, genome, and proof posture for Alt-4 promotion.
+Wraps: [`src/jarvis_memory_board.py`](../../src/jarvis_memory_board.py).
 
 ## 2. Authority And Precedence
 
-Law > Blueprint > Contract > Implementation > Pipeline > Tool
-
-Canonical doctrine: [JARVIS_MEMORY_BOARD_DOCTRINE.md](../../contracts/JARVIS_MEMORY_BOARD_DOCTRINE.md).
-The memory controller is the sole approval path for slot install or swap.
+Law > Blueprint > Contract > Implementation. Read-only subsystem surface; no mutation authority.
 
 ## 3. Non-Goals
 
-- No flat undifferentiated memory bank
-- No direct slot install without `controller_approved`
-- No trust-class downgrade during migration
-- No replacement for conversation RAG or document intelligence subsystems
+- No usurpation of reasoning_executive_organ OODA authority
+- No expansion of safety_envelope or capability bridge execute paths
+- No autonomous law or patch authority via subsystem API
 
-## 4. Board Contract
+## 4. Subsystem Contract
 
 Schema: [schemas/jarvis_memory_board.v1.json](./schemas/jarvis_memory_board.v1.json)
 
-| Component | Role |
-|-----------|------|
-| `MemorySlot` | Fixed `accepted_class`; one active module |
-| `MemoryModule` | Installable card with `supported_slot` binding |
-| `MemoryController` | Approve install, swap, migration |
-| `MigrationRecord` | Lawful moves preserving trust class |
-| `build_memory_board_snapshot` | Operator/API snapshot builder |
+| Field | Role |
+|-------|------|
+| `module_id` | `AAIS-JMB-01` |
+| `status_summary` | Bounded subsystem snapshot |
 
-Default slot families (implementation reference): foundation, operational, session,
-archive, signal, preference — see doctrine for canonical card ids.
+## 5. Runtime (Proposed)
 
-## 5. Snapshot And API Integration
+- `GET /api/jarvis/memory/board` — read-only status
+- Runtime module per MVP plan
 
-| Surface | Path |
-|---------|------|
-| Live snapshot | `build_memory_board_snapshot(controller)` |
-| Operator API | `GET /api/jarvis/memory/board` |
-| Lineage node type | `memory_promotion` → [CISIV_OPERATOR_LINEAGE_CONSOLE.md](./CISIV_OPERATOR_LINEAGE_CONSOLE.md) |
-| Regression tests | `tests/test_jarvis_memory_board.py` |
+## 6. Failsafe
 
-## 6. Migration And Failsafe Rules
+Idle or missing upstream returns bounded snapshot with `claim_label` asserted.
 
-- Slot purpose is immutable — upgrades swap modules, not slot class
-- Occupied slot rejects direct install; controller swap required
-- Inactive or reserved slots reject install with `MemoryBoardViolation`
-- Migration without `trust_class_preserved` is rejected at controller boundary
-
-## 7. Failsafe
-
-- Controller rejection surfaces explicit violation text; no partial silent install
-- Empty board snapshot still returns schema-valid envelope with `claim_label: asserted`
-- Retired modules remain in slot history for audit; never deleted in place
-
-## 8. Proof Posture (Concept)
+## 7. Proof Posture (Concept)
 
 | Claim | Label | Evidence |
 |-------|-------|----------|
-| Schema covers slots, controller state, and migration records | `asserted` | Schema + doctrine + this document |
-| API board snapshot matches controller state | `none_yet` | Requires verification gate |
-| All memory promotion paths emit lineage nodes | `none_yet` | Requires implementation |
-| Dedicated governance gate passes in CI | `none_yet` | Requires implementation |
+| Schema covers required subsystem fields | `asserted` | Schema + this document |
+| Status API returns snapshot | `none_yet` | Requires MVP |
 
-Target proof packet: `docs/proof/platform/JARVIS_MEMORY_BOARD_V1_PROOF.md` (not yet created).
+Target proof packet: `docs/proof/platform/JARVIS_MEMORY_BOARD_V1_PROOF.md`
 
-## 9. CISIV Path
+## 8. CISIV Path
 
 | Stage | Deliverable |
 |-------|-------------|
-| Concept | This document + schema + MVP plan + genome |
-| Identity | Slot taxonomy + default profile frozen in active doc |
-| Structure | Governance gate + lineage lane extension |
-| Implementation | Universal board governance on memory promotion paths |
-| Verification | V1 proof + `make memory-board-gate` |
+| Concept | This document + schema + MVP plan |
+| Structure | Runtime status surface |
+| Implementation | API route + gate |
+| Verification | V1 proof + subsystem gate |
 
-## 10. Related
+## 9. Related
 
-- [JARVIS_MEMORY_BOARD_DOCTRINE.md](../../contracts/JARVIS_MEMORY_BOARD_DOCTRINE.md)
-- [JARVIS_PROTOCOL.md](../../contracts/JARVIS_PROTOCOL.md)
-- [CISIV_OPERATOR_LINEAGE_CONSOLE.md](./CISIV_OPERATOR_LINEAGE_CONSOLE.md)
-- [AAIS_SUBSYSTEM_SPEC.md](../../runtime/AAIS_SUBSYSTEM_SPEC.md) § Memory Governance Stack
+- [AAIS_SSP_PROTOCOL.md](../../contracts/AAIS_SSP_PROTOCOL.md)
+- [AAIS_META_LINGUISTIC_GOVERNANCE.md](../../contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md)
 
-## 11. Activation Order Notes And Minimal Invariants
+## 10. Activation Order
 
-**Recommended activation order (batch):** **2** of 3 (`barebones-summon-wave-2026-06`)
+**Release:** `alt27-summon-wave-2026-06` — order **4**
 
-**Depends on:** Jarvis operator runtime (live); benefits from **Capability Service Bridge** (order 1) for governed execute context
-
-**Minimal invariants:**
-
-- `controller_approved` required for every install
-- `supported_slot` must match target slot id
-- Migrations preserve trust class and slot role
+**Depends on:** `capability_service_bridge`, `cisiv_operator_lineage_console`

@@ -1055,6 +1055,18 @@ alt26-2-gate: alt26-1-gate alt26-closure-gate
 alt26-governed-gate:
 	python3 tools/governance/check_alt26_governed_eligibility.py
 
+alt27-gate: lineage-gate triangulation-gate narrative-gate barebones-gate ul-lineage-console-organ-gate recipe-module-organ-gate imagine-generator-organ-gate human-voice-extraction-organ-gate narrative-trust-pack-organ-gate genome-gate
+
+alt27-1-gate: alt27-gate alt26-2-gate
+
+alt27-closure-gate:
+	python3 tools/governance/check_alt27_closure.py
+
+alt27-2-gate: alt27-1-gate alt27-closure-gate
+
+alt27-governed-gate:
+	python3 tools/governance/check_alt27_governed_eligibility.py
+
 alt23-1-gate: alt23-gate alt22-1-gate
 
 alt23-closure-gate:

@@ -53,9 +53,12 @@
   },
   "proof": {
     "bundles": [
-      "docs/proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md"
+      "docs/proof/storyforge/NARRATIVE_TRUST_PACK_GOVERNED_PROOF.md"
     ],
-    "posture": "governed"
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md"
+    ]
   },
   "lineage": {
     "parents": [
@@ -64,33 +67,27 @@
       "speakers"
     ],
     "children": [
+      "human_voice_extraction",
       "imagine_generator",
       "narrative_trust_pack_organ"
     ]
   },
   "activation": {
-    "order": 3,
-    "batch_id": "three-ideas-2026-06-02",
-    "notes": "After Lineage Console and Triangulation; wraps creative pipeline"
+    "order": 8,
+    "batch_id": "alt27-summon-wave-2026-06",
+    "notes": "Release 27 wave 8"
   },
   "retirement": {
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
   },
   "mutation": {
-    "history": [
-      {
-        "proposal_id": "MP-NTP-001",
-        "status": "promoted",
-        "schema_delta_ref": "schemas/deltas/narrative_trust_pack_MP-NTP-001.json",
-        "notes": "backup: .runtime\\governance\\mutation_backups\\narrative_trust_pack_20260602T232155Z.genome.v1.json"
-      }
-    ]
+    "history": []
   },
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/NARRATIVE_TRUST_PACK.md",
     "mvp_plan": "docs/_future/ideas_pending/NARRATIVE_TRUST_PACK_MVP_PLAN.md",
-    "active_doc": "docs/subsystems/storyforge/NARRATIVE_TRUST_PACK.md",
     "summon_eligible": false,
+    "active_doc": "docs/subsystems/storyforge/NARRATIVE_TRUST_PACK.md",
     "engineering_class": "NarrativeTrustPackEngine",
     "mythic_label": "Narrative trust pack",
     "linguistic_version": "1.0.0"

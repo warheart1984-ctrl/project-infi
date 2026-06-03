@@ -40,10 +40,11 @@ def main() -> int:
     if version not in {
         "operator_cognition_coherence_fabric.v1.19",
         "operator_cognition_coherence_fabric.v1.20",
+        "operator_cognition_coherence_fabric.v1.22",
         "operator_cognition_coherence_fabric.v1.21",
     }:
         print(
-            f"[alt24-closure-gate] FAIL: coherence fabric must be v1.19–v1.21 (got {version})"
+            f"[alt24-closure-gate] FAIL: coherence fabric must be v1.19–v1.22 (got {version})"
         )
         return 1
     for key in (

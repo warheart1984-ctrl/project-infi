@@ -57,6 +57,8 @@
     ],
     "children": [
       "aais_composed_runtime_organ",
+      "capability_service_bridge",
+      "cisiv_operator_lineage_console",
       "dashboard_surface_organ",
       "meta_linguistic_governance_organ",
       "naming_protocol_organ",

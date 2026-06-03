@@ -58,7 +58,7 @@
   },
   "proof": {
     "bundles": [
-      "docs/proof/platform/CAPABILITY_SERVICE_BRIDGE_V1_PROOF.md"
+      "docs/proof/platform/CAPABILITY_SERVICE_BRIDGE_GOVERNED_PROOF.md"
     ],
     "posture": "governed",
     "target_bundles": [
@@ -74,27 +74,29 @@
       "capability_module_organ",
       "cisiv_operator_lineage_console",
       "cogos_runtime_bridge_organ",
+      "creative_capability_bridge_organ",
       "document_vision_organ",
       "forge_contractor_organ",
       "governed_direct_pipeline",
+      "jarvis_memory_board",
       "jarvis_protocol_organ",
       "launcher_organ",
       "mechanic_handoff_organ",
       "operator_cognition_coherence_fabric",
       "operator_workspace_organ",
       "phase_gate_organ",
+      "recipe_module",
       "story_forge_lane_organ",
-      "verification_gate_organ",
-      "workflow_shell_organ",
-      "v9_core_organ",
       "v10_core_organ",
-      "creative_capability_bridge_organ"
+      "v9_core_organ",
+      "verification_gate_organ",
+      "workflow_shell_organ"
     ]
   },
   "activation": {
-    "order": 1,
-    "batch_id": "barebones-summon-wave-2026-06",
-    "notes": "Barebones wave \u2014 execution governance fabric"
+    "order": 3,
+    "batch_id": "alt27-summon-wave-2026-06",
+    "notes": "Release 27 wave 3"
   },
   "retirement": {
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"

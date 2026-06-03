@@ -1,79 +1,44 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "narrative_trust_pack.v1",
-  "title": "Narrative Trust Pack v1",
-  "description": "Governed export bundle for Story Forge, Beatbox, and Speakers pipeline stages.",
+  "title": "narrative_trust_pack v1",
   "type": "object",
   "required": [
-    "pack_version",
-    "pack_id",
-    "stages",
-    "claim_label",
-    "export_ready",
-    "created_at_utc"
+    "narrative_trust_pack_version",
+    "module_id",
+    "cisiv_stage",
+    "claim_label"
   ],
   "properties": {
-    "pack_version": { "const": "narrative_trust_pack.v1" },
-    "pack_id": { "type": "string", "minLength": 1 },
-    "session_id": { "type": "string" },
-    "stages": {
-      "type": "array",
-      "minItems": 1,
-      "items": { "$ref": "#/$defs/stage_envelope" }
+    "narrative_trust_pack_version": {
+      "const": "narrative_trust_pack.v1"
     },
-    "signoff": { "$ref": "#/$defs/signoff_record" },
-    "claim_label": { "enum": ["asserted", "proven", "rejected"] },
-    "export_ready": { "type": "boolean" },
-    "created_at_utc": { "type": "string", "format": "date-time" },
-    "updated_at_utc": { "type": "string", "format": "date-time" }
+    "module_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status_summary": {
+      "type": "string"
+    },
+    "cisiv_stage": {
+      "enum": [
+        "concept",
+        "identity",
+        "structure",
+        "implementation",
+        "verification"
+      ]
+    },
+    "claim_label": {
+      "enum": [
+        "asserted",
+        "proven",
+        "rejected"
+      ]
+    },
+    "read_only": {
+      "type": "boolean"
+    }
   },
-  "allOf": [
-    {
-      "if": {
-        "properties": { "claim_label": { "const": "proven" } },
-        "required": ["claim_label"]
-      },
-      "then": {
-        "required": ["signoff"],
-        "properties": { "export_ready": { "const": true } }
-      }
-    }
-  ],
-  "$defs": {
-    "stage_envelope": {
-      "type": "object",
-      "required": [
-        "stage_id",
-        "stage_name",
-        "artifact_hash",
-        "claim_label",
-        "author",
-        "created_at_utc"
-      ],
-      "properties": {
-        "stage_id": { "type": "string", "minLength": 1 },
-        "stage_name": {
-          "enum": ["story_forge", "beatbox", "speakers"]
-        },
-        "artifact_hash": { "type": "string", "minLength": 1 },
-        "artifact_path": { "type": "string" },
-        "ul_substrate": { "type": "object" },
-        "claim_label": { "enum": ["asserted", "proven", "rejected"] },
-        "author": { "type": "string", "minLength": 1 },
-        "created_at_utc": { "type": "string", "format": "date-time" }
-      },
-      "additionalProperties": false
-    },
-    "signoff_record": {
-      "type": "object",
-      "required": ["signoff_by", "signoff_at_utc"],
-      "properties": {
-        "signoff_by": { "type": "string", "minLength": 1 },
-        "signoff_at_utc": { "type": "string", "format": "date-time" },
-        "override_command": { "type": "string" },
-        "notes": { "type": "string", "maxLength": 500 }
-      },
-      "additionalProperties": false
-    }
-  }
+  "additionalProperties": true
 }

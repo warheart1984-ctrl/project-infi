@@ -55,7 +55,7 @@ def build_linguistic_governed_lifecycle_fabric_status(
         build_linguistic_closed_loop_fabric_status(root=root),
     ]
     aligned = all(c.get("claim_label") == "asserted" for c in checks)
-    coherence = (root / "schemas" / "operator_cognition_coherence_fabric.v1.21.json").is_file()
+    coherence = (root / "schemas" / "operator_cognition_coherence_fabric.v1.22.json").is_file()
 
     return {
         "linguistic_governed_lifecycle_fabric_organ_version": ORGAN_VERSION,

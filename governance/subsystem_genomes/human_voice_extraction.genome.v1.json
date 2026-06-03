@@ -59,9 +59,12 @@
   },
   "proof": {
     "bundles": [
-      "docs/proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md"
+      "docs/proof/speakers/HUMAN_VOICE_EXTRACTION_GOVERNED_PROOF.md"
     ],
-    "posture": "governed"
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/speakers/HUMAN_VOICE_EXTRACTION_V1_PROOF.md"
+    ]
   },
   "lineage": {
     "parents": [
@@ -74,9 +77,9 @@
     ]
   },
   "activation": {
-    "order": 3,
-    "batch_id": "audit-alt-3-2026-06-02",
-    "notes": "Last in batch \u2014 highest privacy/safety bar"
+    "order": 9,
+    "batch_id": "alt27-summon-wave-2026-06",
+    "notes": "Release 27 wave 9"
   },
   "retirement": {
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
@@ -87,8 +90,8 @@
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/HUMAN_VOICE_EXTRACTION.md",
     "mvp_plan": "docs/_future/ideas_pending/HUMAN_VOICE_EXTRACTION_MVP_PLAN.md",
-    "active_doc": "docs/subsystems/speakers/HUMAN_VOICE_EXTRACTION.md",
     "summon_eligible": false,
+    "active_doc": "docs/subsystems/speakers/HUMAN_VOICE_EXTRACTION.md",
     "engineering_class": "HumanVoiceExtractionEngine",
     "mythic_label": "Human voice extraction",
     "linguistic_version": "1.0.0"

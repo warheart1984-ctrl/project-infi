@@ -410,6 +410,22 @@ make alt26-2-gate
 make alt26-governed-gate
 ```
 
+## 25. CISIV early ideas bundle (Wave 18 / Release 27)
+
+| Wave / Release | Tool | Purpose |
+|----------------|------|---------|
+| **18** | `_alt27_ssp_bootstrap.py` | Nine CISIV/barebones/creative-trust subsystems |
+| **27.1** | `_alt27_coherence_v122.py` | Coherence snapshot v1.22 + early ideas layers |
+| **27.2** | `check_alt27_closure.py` | CISIV early ideas bundle proof |
+| **27 governed** | `alt27_promote_governed.py` | Batch-stamp nine Release 27 genes at `governed` |
+
+```bash
+make alt27-gate
+python tools/governance/_alt27_coherence_v122.py
+make alt27-2-gate
+make alt27-governed-gate
+```
+
 ---
 
 ## 14. Verification

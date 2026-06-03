@@ -1,84 +1,44 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "governed_direct_pipeline.v1",
-  "title": "Governed Direct Pipeline v1",
-  "description": "Inspectable packet and lane trace for AAIS direct cognitive traffic vs service/tool lanes.",
+  "title": "governed_direct_pipeline v1",
   "type": "object",
   "required": [
     "governed_direct_pipeline_version",
-    "pipeline_id",
-    "turn_id",
-    "lanes",
-    "packets",
+    "module_id",
     "cisiv_stage",
-    "claim_label",
-    "created_at_utc"
+    "claim_label"
   ],
   "properties": {
-    "governed_direct_pipeline_version": { "const": "governed_direct_pipeline.v1" },
-    "pipeline_id": { "type": "string", "minLength": 1 },
-    "pipeline_version": { "type": "string" },
-    "turn_id": { "type": "string", "minLength": 1 },
-    "lanes": {
-      "type": "array",
-      "minItems": 1,
-      "items": { "$ref": "#/$defs/lane_descriptor" }
+    "governed_direct_pipeline_version": {
+      "const": "governed_direct_pipeline.v1"
     },
-    "packets": {
-      "type": "array",
-      "items": { "$ref": "#/$defs/pipeline_packet" }
+    "module_id": {
+      "type": "string",
+      "minLength": 1
     },
-    "signal_feed": { "$ref": "#/$defs/realtime_signal_feed" },
+    "status_summary": {
+      "type": "string"
+    },
     "cisiv_stage": {
-      "enum": ["concept", "identity", "structure", "implementation", "verification"]
+      "enum": [
+        "concept",
+        "identity",
+        "structure",
+        "implementation",
+        "verification"
+      ]
     },
-    "claim_label": { "enum": ["asserted", "proven", "rejected"] },
-    "created_at_utc": { "type": "string", "format": "date-time" },
-    "updated_at_utc": { "type": "string", "format": "date-time" }
-  },
-  "additionalProperties": false,
-  "$defs": {
-    "lane_descriptor": {
-      "type": "object",
-      "required": ["lane_name", "claim_label"],
-      "properties": {
-        "lane_name": {
-          "enum": ["direct_cognitive", "service_tools"]
-        },
-        "compact_channel": { "type": "string" },
-        "claim_label": { "enum": ["asserted", "proven", "rejected"] }
-      },
-      "additionalProperties": false
+    "claim_label": {
+      "enum": [
+        "asserted",
+        "proven",
+        "rejected"
+      ]
     },
-    "pipeline_packet": {
-      "type": "object",
-      "required": ["packet_id", "lane_name", "operation", "source_node", "target_node", "claim_label"],
-      "properties": {
-        "packet_id": { "type": "string", "minLength": 1 },
-        "lane_name": { "type": "string" },
-        "operation": { "type": "string" },
-        "source_node": { "type": "string" },
-        "target_node": { "type": "string" },
-        "priority": { "type": "string" },
-        "state_code": { "type": "integer" },
-        "intent": { "type": "string" },
-        "claim_label": { "enum": ["asserted", "proven", "rejected"] }
-      },
-      "additionalProperties": false
-    },
-    "realtime_signal_feed": {
-      "type": "object",
-      "required": ["feed_id", "risk_level", "claim_label"],
-      "properties": {
-        "feed_id": { "type": "string", "minLength": 1 },
-        "risk_level": {
-          "enum": ["low", "medium", "high", "critical"]
-        },
-        "system_state": { "type": "string" },
-        "immune_response": { "type": "string" },
-        "claim_label": { "enum": ["asserted", "proven", "rejected"] }
-      },
-      "additionalProperties": false
+    "read_only": {
+      "type": "boolean"
     }
-  }
+  },
+  "additionalProperties": true
 }

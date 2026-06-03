@@ -1,91 +1,44 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "recipe_module.v1",
-  "title": "Recipe Module v1",
-  "description": "Governed repeatable workflow recipe pack admissible to Mission Board and operator workflows.",
+  "title": "recipe_module v1",
   "type": "object",
   "required": [
     "recipe_module_version",
-    "recipe_id",
-    "recipe_name",
-    "steps",
-    "gates",
+    "module_id",
     "cisiv_stage",
-    "claim_label",
-    "created_at_utc"
+    "claim_label"
   ],
   "properties": {
-    "recipe_module_version": { "const": "recipe_module.v1" },
-    "recipe_id": { "type": "string", "minLength": 1 },
-    "recipe_name": { "type": "string", "minLength": 1 },
-    "mission_template_id": { "type": "string" },
-    "description": { "type": "string", "maxLength": 2000 },
-    "steps": {
-      "type": "array",
-      "minItems": 1,
-      "items": { "$ref": "#/$defs/recipe_step" }
+    "recipe_module_version": {
+      "const": "recipe_module.v1"
     },
-    "inputs": {
-      "type": "array",
-      "items": { "$ref": "#/$defs/recipe_input" }
+    "module_id": {
+      "type": "string",
+      "minLength": 1
     },
-    "gates": {
-      "type": "array",
-      "items": { "$ref": "#/$defs/recipe_gate" }
+    "status_summary": {
+      "type": "string"
     },
-    "signoff_required": { "type": "boolean", "default": true },
     "cisiv_stage": {
-      "enum": ["concept", "identity", "structure", "implementation", "verification"]
+      "enum": [
+        "concept",
+        "identity",
+        "structure",
+        "implementation",
+        "verification"
+      ]
     },
-    "claim_label": { "enum": ["asserted", "proven", "rejected"] },
-    "created_at_utc": { "type": "string", "format": "date-time" },
-    "updated_at_utc": { "type": "string", "format": "date-time" }
-  },
-  "additionalProperties": false,
-  "$defs": {
-    "recipe_step": {
-      "type": "object",
-      "required": ["step_id", "step_order", "action", "claim_label"],
-      "properties": {
-        "step_id": { "type": "string", "minLength": 1 },
-        "step_order": { "type": "integer", "minimum": 0 },
-        "action": { "type": "string", "minLength": 1 },
-        "inputs_ref": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "gate_ids": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "claim_label": { "enum": ["asserted", "proven", "rejected"] }
-      },
-      "additionalProperties": false
+    "claim_label": {
+      "enum": [
+        "asserted",
+        "proven",
+        "rejected"
+      ]
     },
-    "recipe_input": {
-      "type": "object",
-      "required": ["input_id", "input_type", "required"],
-      "properties": {
-        "input_id": { "type": "string", "minLength": 1 },
-        "input_type": {
-          "enum": ["string", "mission_id", "session_id", "artifact_ref", "boolean"]
-        },
-        "required": { "type": "boolean" },
-        "default_value": {}
-      },
-      "additionalProperties": false
-    },
-    "recipe_gate": {
-      "type": "object",
-      "required": ["gate_id", "gate_type"],
-      "properties": {
-        "gate_id": { "type": "string", "minLength": 1 },
-        "gate_type": {
-          "enum": ["human_signoff", "schema_valid", "make_target", "cisiv_stage_min"]
-        },
-        "parameters": { "type": "object" }
-      },
-      "additionalProperties": false
+    "read_only": {
+      "type": "boolean"
     }
-  }
+  },
+  "additionalProperties": true
 }

@@ -23,7 +23,7 @@
     ]
   },
   "schema": {
-    "ref": "triangulation/schemas/triangulation.v1.json",
+    "ref": "schemas/forensic_triangulation.v1.json",
     "frozen": true
   },
   "runtime": {
@@ -52,9 +52,12 @@
   },
   "proof": {
     "bundles": [
-      "docs/proof/forensics/TRIANGULATION_V1_PROOF.md"
+      "docs/proof/forensics/FORENSIC_TRIANGULATION_GOVERNED_PROOF.md"
     ],
-    "posture": "governed"
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/forensics/FORENSIC_TRIANGULATION_V1_PROOF.md"
+    ]
   },
   "lineage": {
     "parents": [
@@ -69,8 +72,8 @@
   },
   "activation": {
     "order": 2,
-    "batch_id": "three-ideas-2026-06-02",
-    "notes": "After Lineage Console; requires Mechanic + Scorpion ledgers"
+    "batch_id": "alt27-summon-wave-2026-06",
+    "notes": "Release 27 wave 2"
   },
   "retirement": {
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
@@ -81,8 +84,8 @@
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/FORENSIC_TRIANGULATION.md",
     "mvp_plan": "docs/_future/ideas_pending/FORENSIC_TRIANGULATION_MVP_PLAN.md",
-    "active_doc": "docs/subsystems/forensics/TRIANGULATION.md",
     "summon_eligible": false,
+    "active_doc": "docs/subsystems/forensics/TRIANGULATION.md",
     "engineering_class": "ForensicTriangulationEngine",
     "mythic_label": "Forensic triangulation ledger",
     "linguistic_version": "1.0.0"

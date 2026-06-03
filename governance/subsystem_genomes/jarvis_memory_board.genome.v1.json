@@ -44,7 +44,7 @@
   },
   "proof": {
     "bundles": [
-      "docs/proof/platform/JARVIS_MEMORY_BOARD_V1_PROOF.md"
+      "docs/proof/platform/JARVIS_MEMORY_BOARD_GOVERNED_PROOF.md"
     ],
     "posture": "governed",
     "target_bundles": [
@@ -65,9 +65,9 @@
     ]
   },
   "activation": {
-    "order": 2,
-    "batch_id": "barebones-summon-wave-2026-06",
-    "notes": "Barebones wave \u2014 memory governance fabric"
+    "order": 4,
+    "batch_id": "alt27-summon-wave-2026-06",
+    "notes": "Release 27 wave 4"
   },
   "retirement": {
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"

@@ -882,6 +882,38 @@ Depends on: Release 24 attested closed-loop; Wave 14 archive/work-order engines.
 | MVP surfaces | `tools/governance/alt26_promote_mvp.py` |
 | Governed promotion | `tools/governance/alt26_promote_governed.py` + `make alt26-governed-gate` |
 
+## Release 27 — Wave 18 CISIV Early Ideas Bundle
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt27-summon-wave-2026-06` in LOGBOOK |
+| Bootstrap | `tools/governance/_alt27_ssp_bootstrap.py` |
+| Gates | `make alt27-gate` |
+| Organs | `cisiv_operator_lineage_console`, `forensic_triangulation`, `capability_service_bridge`, `jarvis_memory_board`, `governed_direct_pipeline`, `recipe_module`, `imagine_generator`, `narrative_trust_pack`, `human_voice_extraction` |
+
+## Release 27.1 — Coherence Early Ideas Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt27-1-summon-wave-2026-06` in LOGBOOK |
+| Schema tool | `tools/governance/_alt27_coherence_v122.py` |
+| Gate | `make alt27-1-gate` |
+| Snapshot | `operator_cognition_coherence_fabric.v1.22` + CISIV/bridge/creative trust layers |
+
+## Release 27.2 — CISIV Early Ideas Bundle Closure
+
+| Convention | Value |
+|------------|-------|
+| Proof | `docs/proof/platform/CISIV_EARLY_IDEAS_BUNDLE_V1_PROOF.md` |
+| Gate | `make alt27-2-gate` |
+
+## Release 27 Governed Promotion
+
+| Convention | Value |
+|------------|-------|
+| MVP surfaces | `tools/governance/alt27_promote_mvp.py` |
+| Governed promotion | `tools/governance/alt27_promote_governed.py` + `make alt27-governed-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per

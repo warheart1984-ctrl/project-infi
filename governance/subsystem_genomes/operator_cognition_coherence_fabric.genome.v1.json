@@ -39,7 +39,7 @@
     ]
   },
   "schema": {
-    "ref": "schemas/operator_cognition_coherence_fabric.v1.21.json",
+    "ref": "schemas/operator_cognition_coherence_fabric.v1.22.json",
     "frozen": true
   },
   "runtime": {
@@ -78,6 +78,8 @@
     ],
     "children": [
       "ai_factory_organ",
+      "capability_service_bridge",
+      "cisiv_operator_lineage_console",
       "continuity_witness_organ",
       "forge_contractor_organ",
       "jarvis_protocol_organ",

@@ -57,11 +57,15 @@ def check_eligibility(root: Path | None = None) -> list[str]:
     fabric = build_coherence_fabric_status(root=root)
     version = fabric.get("operator_cognition_coherence_fabric_version")
     if version not in {
+        "operator_cognition_coherence_fabric.v1.22",
         "operator_cognition_coherence_fabric.v1.21",
         "operator_cognition_coherence_fabric.v1.20",
     }:
-        errors.append(f"coherence layer must be v1.21 (got {version})")
-    if version == "operator_cognition_coherence_fabric.v1.21":
+        errors.append(f"coherence layer must be v1.21+ (got {version})")
+    if version in {
+        "operator_cognition_coherence_fabric.v1.21",
+        "operator_cognition_coherence_fabric.v1.22",
+    }:
         if len(fabric.get("linguistic_operator_day_layer") or []) < 2:
             errors.append("expected 2 linguistic_operator_day_layer entries")
         if len(fabric.get("linguistic_retention_history_layer") or []) < 3:

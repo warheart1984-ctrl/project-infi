@@ -10,8 +10,9 @@ Project Infinity ships **two independent release tracks**. Do not conflate them.
 |---|---|
 | Version | `pyproject.toml` (`aais` package) |
 | History | [CHANGELOG.md](../../CHANGELOG.md) |
-| Tag format | `v1.22.0` (latest — Release 26), `v1.21.0`, `v1.20.0`, `v1.19.0`, `v1.18.0`, `v1.17.0`, `v1.16.0`, `v1.15.0`, `v1.14.0`, `v1.13.0`, `v1.12.0`, `v1.11.0`, `v1.10.0`, `v1.9.0`, `v1.8.0`, `v1.7.0`, `v1.6.0`, `v1.5.0`, `v1.4.0`, `v1.3.3`, `v1.3.2`, `v1.3.1`, `v1.3.0`, `v1.2.0`, `v1.1.0`, `v0.2.0`, or `aais-v0.2.0` |
+| Tag format | `v1.23.0` (latest — Release 27), `v1.22.0`, `v1.21.0`, `v1.20.0`, `v1.19.0`, `v1.18.0`, `v1.17.0`, `v1.16.0`, `v1.15.0`, `v1.14.0`, `v1.13.0`, `v1.12.0`, `v1.11.0`, `v1.10.0`, `v1.9.0`, `v1.8.0`, `v1.7.0`, `v1.6.0`, `v1.5.0`, `v1.4.0`, `v1.3.3`, `v1.3.2`, `v1.3.1`, `v1.3.0`, `v1.2.0`, `v1.1.0`, `v0.2.0`, or `aais-v0.2.0` |
 | GitHub Release | Manual or release-drafter; body = CHANGELOG section for that version |
+| v1.23.0 notes | [v1.23.0-release27-cisiv-early-ideas-fabric.md](./v1.23.0-release27-cisiv-early-ideas-fabric.md) |
 | v1.22.0 notes | [v1.22.0-release26-operational-closure.md](./v1.22.0-release26-operational-closure.md) |
 | v1.21.0 notes | [v1.21.0-release25-governed-linguistic-lifecycle.md](./v1.21.0-release25-governed-linguistic-lifecycle.md) |
 | v1.20.0 notes | [v1.20.0-release24-attested-linguistic-closed-loop.md](./v1.20.0-release24-attested-linguistic-closed-loop.md) |

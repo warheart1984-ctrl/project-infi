@@ -13,6 +13,33 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.23.0] - 2026-06-03 — Release 27 CISIV Early Ideas Fabric
+
+**Release 27** — nine governed subsystems batch-stamped at `alt27-summon-wave-2026-06`; Coherence Layer v1.22 with CISIV/bridge/creative trust layers; Wave 18 early ideas bundle aligned with operational closure.
+
+### Added
+
+- **Release 27.0** — `cisiv_operator_lineage_console`, `forensic_triangulation`, `capability_service_bridge`, `jarvis_memory_board`, `governed_direct_pipeline`, `recipe_module`, `imagine_generator`, `narrative_trust_pack`, `human_voice_extraction`; `make alt27-gate`; `tools/governance/alt27_promote_mvp.py`
+- **Release 27.1** — Coherence Layer v1.22 + `cisiv_lineage_triangulation_layer`, `constitutional_bridge_layer`, `creative_trust_chain_layer`, `cisiv_early_ideas_bundle_aligned`; `make alt27-1-gate`
+- **Release 27.2** — `CISIV_EARLY_IDEAS_BUNDLE_V1_PROOF`; `make alt27-2-gate`
+- **Governed promotion** — `tools/governance/alt27_promote_governed.py`; `make alt27-governed-gate`
+
+### Changed
+
+- Schema registry: **163 governed** subsystem schemas (unchanged count; Release 27 batch formalization)
+- `operator_cognition_coherence_fabric` runtime schema → v1.22
+- `check_alt24_closure` / `check_alt25_governed_eligibility` / `check_alt26_governed_eligibility` accept coherence v1.19–v1.22 cumulatively
+
+### Verification (v1.23.0)
+
+```bash
+make alt27-gate alt27-1-gate alt27-2-gate alt27-governed-gate
+python tools/governance/_alt27_coherence_v122.py
+python -m pytest tests/test_operator_cognition_coherence_fabric.py::test_alt27_early_ideas_layers_at_v122 -q
+```
+
+[1.23.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.23.0
+
 ## [1.22.0] - 2026-06-03 — Release 26 Operational Closure
 
 **Release 26** — three read-only subsystems at governed; Coherence Layer v1.21 with operator day and retention history layers; Wave 17 operational closure; naming-gate clean (0 warnings).
