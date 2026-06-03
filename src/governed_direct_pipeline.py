@@ -10,6 +10,9 @@ the fast lane.
 # Engineering: GovernedDirectPipelineEngine
 from __future__ import annotations
 
+import copy
+import os
+import time
 from datetime import datetime
 from src.datetime_compat import UTC
 from typing import Any
@@ -1017,6 +1020,277 @@ def _service_packets(
     ]
 
 
+_GOVERNED_PIPELINE_CACHE: dict[str, tuple[float, dict[str, Any]]] = {}
+
+
+def _governed_pipeline_cache_ttl_sec() -> float:
+    """Seconds to reuse a governed pipeline skeleton (0 disables). Default 45 for chat."""
+    raw = os.environ.get("AAIS_GOVERNED_PIPELINE_CACHE_SEC", "45").strip()
+    try:
+        return max(0.0, float(raw))
+    except ValueError:
+        return 45.0
+
+
+def clear_governed_pipeline_cache() -> None:
+    """Clear in-process governed pipeline cache (tests)."""
+    _GOVERNED_PIPELINE_CACHE.clear()
+
+
+def _governed_pipeline_cache_key(
+    *,
+    response_mode: str,
+    contract: str,
+    surface_node: str,
+    runtime_context: str,
+    active_lane: str,
+    model_route: dict[str, Any] | None,
+    has_god_brain: bool,
+) -> str:
+    route_id = str((model_route or {}).get("id") or "").strip().lower()
+    return "|".join(
+        (
+            response_mode,
+            contract,
+            surface_node,
+            runtime_context,
+            active_lane,
+            route_id,
+            "gb" if has_god_brain else "no_gb",
+        )
+    )
+
+
+def _pipeline_without_ul_wrap(pipeline: dict[str, Any]) -> dict[str, Any]:
+    stripped = copy.deepcopy(pipeline)
+    stripped.pop("ul_substrate", None)
+    stripped.pop("ul_trace", None)
+    return stripped
+
+
+def _refresh_governed_pipeline_turn_layer(
+    pipeline: dict[str, Any],
+    *,
+    normalized_mode: str,
+    active_contract: str,
+    normalized_runtime_context: str,
+    active_lane: str,
+    traffic_class: str,
+    surface_node: str,
+    surface_identity: str | None,
+    direct_route: list[str],
+    return_route: list[str],
+    forward_packets: list[dict[str, Any]],
+    service_packets: list[dict[str, Any]],
+    return_packets: list[dict[str, Any]],
+    immune_protocol: dict[str, Any],
+    god_brain: dict[str, Any] | None,
+    model_route: dict[str, Any] | None,
+    tool_result: dict[str, Any] | None,
+    operator_text: str | None,
+    previous_pipeline: dict[str, Any] | None,
+) -> dict[str, Any]:
+    """Apply per-turn ids, observability, bridge hops, and validation to a cached skeleton."""
+    from src.realtime_event_cause_predictor import (
+        interpret_realtime_signal_feed,
+        validate_interpreted_event_state,
+    )
+    from src.governed_event_chain import (
+        governed_event,
+        validate_governed_event_result,
+    )
+    from src.operator_health_sentinel import (
+        observe_operator_health,
+        validate_operator_health_snapshot,
+    )
+    from src.cognitive_bridge import route_to_bridge
+    from src.jarvis_detachment_guard import build_bridge_attestation
+
+    refreshed = copy.deepcopy(pipeline)
+    pipeline_id = f"gdp_{uuid4().hex}"
+    realtime_signal_feed = _build_realtime_signal_feed(
+        pipeline_id=pipeline_id,
+        runtime_context=normalized_runtime_context,
+        response_mode=normalized_mode,
+        contract=active_contract,
+        active_lane=active_lane,
+        traffic_class=traffic_class,
+        surface_node=surface_node,
+        forward_packets=forward_packets,
+        service_packets=service_packets,
+        return_packets=return_packets,
+        tool_result=tool_result,
+        god_brain=god_brain,
+        immune_protocol=immune_protocol,
+        previous_pipeline=previous_pipeline,
+    )
+    realtime_event_cause_predictor = interpret_realtime_signal_feed(
+        realtime_signal_feed,
+        runtime_context=normalized_runtime_context,
+    )
+    governed_event_guard = governed_event(
+        realtime_signal_feed,
+        prediction=realtime_event_cause_predictor,
+        runtime_context=normalized_runtime_context,
+    )
+    operator_health_sentinel = observe_operator_health(
+        {
+            "runtime_context": normalized_runtime_context,
+            "realtime_signal_feed": realtime_signal_feed,
+            "realtime_event_cause_predictor": realtime_event_cause_predictor,
+            "governed_event": governed_event_guard,
+        },
+        runtime_context=normalized_runtime_context,
+        operator_text=operator_text,
+        previous_pipeline=previous_pipeline,
+    )
+    bridge_hops = []
+    if god_brain:
+        bridge_hops.append(
+            route_to_bridge(
+                {
+                    "source": "swarm",
+                    "type": "deliberation_request",
+                    "payload": {
+                        "pipeline_id": pipeline_id,
+                        "strategy_label": (god_brain or {}).get("strategy_label"),
+                        "action_bias": (god_brain or {}).get("action_bias"),
+                        "contract": active_contract,
+                        "intent": (
+                            (god_brain or {}).get("strategy_label")
+                            or active_contract
+                            or "governed_direct_pipeline_deliberation"
+                        ),
+                        "execution_intent": "route",
+                        "bridge_attestation": build_bridge_attestation(
+                            ingress="governed_direct_pipeline",
+                            surface="swarm_deliberation",
+                            source_id=pipeline_id,
+                            route="governed_direct_pipeline.swarm_deliberation",
+                            intent="route",
+                            runtime_context=normalized_runtime_context,
+                            packet_type="deliberation_request",
+                        ),
+                    },
+                    "requires_approval": False,
+                    "risk": "medium" if active_lane == SERVICE_TOOL_LANE else "low",
+                },
+                runtime_context=normalized_runtime_context,
+            )
+        )
+    bridge_hops.append(
+        route_to_bridge(
+            {
+                "source": "service_lane" if tool_result else "llm",
+                "type": "tool_result_observation" if tool_result else "generation_request",
+                "payload": {
+                    "pipeline_id": pipeline_id,
+                    "contract": active_contract,
+                    "response_mode": normalized_mode,
+                    "tool_type": (tool_result or {}).get("type"),
+                    "route_id": (model_route or {}).get("id"),
+                    "execution_intent": "observe" if tool_result else "respond",
+                    "bridge_attestation": build_bridge_attestation(
+                        ingress="governed_direct_pipeline",
+                        surface="service_observation" if tool_result else "llm_generation",
+                        source_id=pipeline_id,
+                        route="governed_direct_pipeline.service_observation"
+                        if tool_result
+                        else "governed_direct_pipeline.llm_generation",
+                        intent="observe" if tool_result else "respond",
+                        runtime_context=normalized_runtime_context,
+                        packet_type="tool_result_observation"
+                        if tool_result
+                        else "generation_request",
+                    ),
+                },
+                "requires_approval": False,
+                "risk": "medium" if tool_result else "low",
+            },
+            runtime_context=normalized_runtime_context,
+        )
+    )
+    bridge_hops.append(
+        route_to_bridge(
+            {
+                "source": "predictor",
+                "type": "signal_evaluation",
+                "payload": {
+                    "pipeline_id": pipeline_id,
+                    "active_lane": active_lane,
+                    "traffic_class": traffic_class,
+                    "signal_count": realtime_signal_feed.get("signal_count"),
+                    "execution_intent": "observe",
+                    "bridge_attestation": build_bridge_attestation(
+                        ingress="governed_direct_pipeline",
+                        surface="predictor_signal",
+                        source_id=pipeline_id,
+                        route="governed_direct_pipeline.predictor_signal",
+                        intent="observe",
+                        runtime_context=normalized_runtime_context,
+                        packet_type="signal_evaluation",
+                    ),
+                },
+                "requires_approval": False,
+                "risk": "low",
+            },
+            runtime_context=normalized_runtime_context,
+        )
+    )
+    refreshed.update(
+        {
+            "pipeline_id": pipeline_id,
+            "surface_identity": str(
+                surface_identity or (god_brain or {}).get("surface_identity") or "jarvis"
+            ).strip()
+            or "jarvis",
+            "bridge_hops": bridge_hops,
+            "realtime_signal_feed": realtime_signal_feed,
+            "realtime_event_cause_predictor": realtime_event_cause_predictor,
+            "governed_event": governed_event_guard,
+            "operator_health_sentinel": operator_health_sentinel,
+            "model_route": {
+                "id": (model_route or {}).get("id"),
+                "label": (model_route or {}).get("label"),
+            },
+            "validation": {
+                **dict(refreshed.get("validation") or {}),
+                "realtime_signal_feed_valid": all(
+                    ok
+                    for ok in realtime_signal_feed["validation"].values()
+                    if isinstance(ok, bool)
+                ),
+                "realtime_event_cause_predictor_valid": all(
+                    ok
+                    for ok in validate_interpreted_event_state(
+                        realtime_event_cause_predictor
+                    ).values()
+                    if isinstance(ok, bool)
+                ),
+                "governed_event_valid": all(
+                    ok
+                    for ok in validate_governed_event_result(governed_event_guard).values()
+                    if isinstance(ok, bool)
+                ),
+                "operator_health_sentinel_valid": all(
+                    ok
+                    for ok in validate_operator_health_snapshot(
+                        operator_health_sentinel
+                    ).values()
+                    if isinstance(ok, bool)
+                ),
+                "bridge_hops_routed": all(
+                    hop.get("decision") in {"ALLOW", "DEGRADE"} for hop in bridge_hops
+                ),
+            },
+        }
+    )
+    refreshed["continuity_witness_input"] = build_continuity_witness_input(refreshed)
+    from src.aais_ul_substrate import wrap_pipeline
+
+    return wrap_pipeline(refreshed)
+
+
 def build_governed_turn_pipeline(
     *,
     response_mode: str,
@@ -1126,151 +1400,45 @@ def build_governed_turn_pipeline(
         summary = f"{summary} Coherence response: {coherence_protocol['response']}."
     if immune_protocol["response"] != "ALLOW":
         summary = f"{summary} Immune response: {immune_protocol['response']}."
-    pipeline_id = f"gdp_{uuid4().hex}"
-    realtime_signal_feed = _build_realtime_signal_feed(
-        pipeline_id=pipeline_id,
-        runtime_context=normalized_runtime_context,
+
+    cache_key = _governed_pipeline_cache_key(
         response_mode=normalized_mode,
         contract=active_contract,
-        active_lane=active_lane,
-        traffic_class=traffic_class,
         surface_node=surface_node,
-        forward_packets=forward_packets,
-        service_packets=service_packets,
-        return_packets=return_packets,
-        tool_result=tool_result,
-        god_brain=god_brain,
-        immune_protocol=immune_protocol,
-        previous_pipeline=previous_pipeline,
-    )
-    from src.realtime_event_cause_predictor import (
-        interpret_realtime_signal_feed,
-        validate_interpreted_event_state,
-    )
-    from src.governed_event_chain import (
-        governed_event,
-        validate_governed_event_result,
-    )
-    from src.operator_health_sentinel import (
-        observe_operator_health,
-        validate_operator_health_snapshot,
-    )
-
-    realtime_event_cause_predictor = interpret_realtime_signal_feed(
-        realtime_signal_feed,
         runtime_context=normalized_runtime_context,
+        active_lane=active_lane,
+        model_route=model_route,
+        has_god_brain=bool(god_brain),
     )
-    governed_event_guard = governed_event(
-        realtime_signal_feed,
-        prediction=realtime_event_cause_predictor,
-        runtime_context=normalized_runtime_context,
-    )
-    operator_health_sentinel = observe_operator_health(
-        {
-            "runtime_context": normalized_runtime_context,
-            "realtime_signal_feed": realtime_signal_feed,
-            "realtime_event_cause_predictor": realtime_event_cause_predictor,
-            "governed_event": governed_event_guard,
-        },
-        runtime_context=normalized_runtime_context,
-        operator_text=operator_text,
-        previous_pipeline=previous_pipeline,
-    )
-    from src.cognitive_bridge import route_to_bridge
-    from src.jarvis_detachment_guard import build_bridge_attestation
+    ttl = _governed_pipeline_cache_ttl_sec()
+    cache_eligible = ttl > 0 and not tool_result and not cloud_forge_context
+    refresh_kwargs = {
+        "normalized_mode": normalized_mode,
+        "active_contract": active_contract,
+        "normalized_runtime_context": normalized_runtime_context,
+        "active_lane": active_lane,
+        "traffic_class": traffic_class,
+        "surface_node": surface_node,
+        "surface_identity": surface_identity,
+        "direct_route": direct_route,
+        "return_route": return_route,
+        "forward_packets": forward_packets,
+        "service_packets": service_packets,
+        "return_packets": return_packets,
+        "immune_protocol": immune_protocol,
+        "god_brain": god_brain,
+        "model_route": model_route,
+        "tool_result": tool_result,
+        "operator_text": operator_text,
+        "previous_pipeline": previous_pipeline,
+    }
+    if cache_eligible:
+        cached = _GOVERNED_PIPELINE_CACHE.get(cache_key)
+        if cached and (time.monotonic() - cached[0]) < ttl:
+            return _refresh_governed_pipeline_turn_layer(cached[1], **refresh_kwargs)
 
-    bridge_hops = []
-    if god_brain:
-        bridge_hops.append(
-            route_to_bridge(
-                {
-                    "source": "swarm",
-                    "type": "deliberation_request",
-                    "payload": {
-                        "pipeline_id": pipeline_id,
-                        "strategy_label": (god_brain or {}).get("strategy_label"),
-                        "action_bias": (god_brain or {}).get("action_bias"),
-                        "contract": active_contract,
-                        "intent": (
-                            (god_brain or {}).get("strategy_label")
-                            or active_contract
-                            or "governed_direct_pipeline_deliberation"
-                        ),
-                        "execution_intent": "route",
-                        "bridge_attestation": build_bridge_attestation(
-                            ingress="governed_direct_pipeline",
-                            surface="swarm_deliberation",
-                            source_id=pipeline_id,
-                            route="governed_direct_pipeline.swarm_deliberation",
-                            intent="route",
-                            runtime_context=normalized_runtime_context,
-                            packet_type="deliberation_request",
-                        ),
-                    },
-                    "requires_approval": False,
-                    "risk": "medium" if active_lane == SERVICE_TOOL_LANE else "low",
-                },
-                runtime_context=normalized_runtime_context,
-            )
-        )
-    bridge_hops.append(
-        route_to_bridge(
-            {
-                "source": "service_lane" if tool_result else "llm",
-                "type": "tool_result_observation" if tool_result else "generation_request",
-                "payload": {
-                    "pipeline_id": pipeline_id,
-                    "contract": active_contract,
-                    "response_mode": normalized_mode,
-                    "tool_type": (tool_result or {}).get("type"),
-                    "route_id": (model_route or {}).get("id"),
-                    "execution_intent": "observe" if tool_result else "respond",
-                    "bridge_attestation": build_bridge_attestation(
-                        ingress="governed_direct_pipeline",
-                        surface="service_observation" if tool_result else "llm_generation",
-                        source_id=pipeline_id,
-                        route="governed_direct_pipeline.service_observation" if tool_result else "governed_direct_pipeline.llm_generation",
-                        intent="observe" if tool_result else "respond",
-                        runtime_context=normalized_runtime_context,
-                        packet_type="tool_result_observation" if tool_result else "generation_request",
-                    ),
-                },
-                "requires_approval": False,
-                "risk": "medium" if tool_result else "low",
-            },
-            runtime_context=normalized_runtime_context,
-        )
-    )
-    bridge_hops.append(
-        route_to_bridge(
-            {
-                "source": "predictor",
-                "type": "signal_evaluation",
-                "payload": {
-                    "pipeline_id": pipeline_id,
-                    "active_lane": active_lane,
-                    "traffic_class": traffic_class,
-                    "signal_count": realtime_signal_feed.get("signal_count"),
-                    "execution_intent": "observe",
-                    "bridge_attestation": build_bridge_attestation(
-                        ingress="governed_direct_pipeline",
-                        surface="predictor_signal",
-                        source_id=pipeline_id,
-                        route="governed_direct_pipeline.predictor_signal",
-                        intent="observe",
-                        runtime_context=normalized_runtime_context,
-                        packet_type="signal_evaluation",
-                    ),
-                },
-                "requires_approval": False,
-                "risk": "low",
-            },
-            runtime_context=normalized_runtime_context,
-        )
-    )
-
-    pipeline = {
-        "pipeline_id": pipeline_id,
+    skeleton = {
+        "pipeline_id": f"gdp_{uuid4().hex}",
         "protocol_id": PIPELINE_ID,
         "version": PIPELINE_VERSION,
         "name": "Governed Direct Pipeline",
@@ -1284,7 +1452,6 @@ def build_governed_turn_pipeline(
         "runtime_context": normalized_runtime_context,
         "active_lane": active_lane,
         "traffic_class": traffic_class,
-        "surface_identity": str(surface_identity or (god_brain or {}).get("surface_identity") or "jarvis").strip() or "jarvis",
         "surface_node": surface_node,
         "direct_route": direct_route,
         "return_route": return_route,
@@ -1293,71 +1460,56 @@ def build_governed_turn_pipeline(
         "return_packets": return_packets,
         "immune_protocol": immune_protocol,
         "coherence_protocol": coherence_protocol,
-        "bridge_hops": bridge_hops,
-        "realtime_signal_feed": realtime_signal_feed,
-        "realtime_event_cause_predictor": realtime_event_cause_predictor,
-        "governed_event": governed_event_guard,
-        "operator_health_sentinel": operator_health_sentinel,
+        "tool_type": (tool_result or {}).get("type"),
+        "capability": dict((tool_result or {}).get("capability") or {}) or None,
         "validation": {
             "uniform_packet_shape": all(
                 all(
                     key in packet
-                    for key in ("packet_id", "timestamp", "source", "target", "lane", "priority", "intent", "state", "payload", "trace", "compact")
+                    for key in (
+                        "packet_id",
+                        "timestamp",
+                        "source",
+                        "target",
+                        "lane",
+                        "priority",
+                        "intent",
+                        "state",
+                        "payload",
+                        "trace",
+                        "compact",
+                    )
                 )
                 for packet in [*forward_packets, *service_packets, *return_packets]
             ),
-            "god_brain_in_path": any(packet["source"] == "gb" or packet["target"] == "gb" for packet in [*forward_packets, *return_packets]),
-            "jarvis_authority_preserved": any(packet["source"] == "jar" for packet in [*forward_packets, *service_packets]),
-            "tool_traffic_isolated": all(packet["lane"] == SERVICE_TOOL_LANE for packet in service_packets),
+            "god_brain_in_path": any(
+                packet["source"] == "gb" or packet["target"] == "gb"
+                for packet in [*forward_packets, *return_packets]
+            ),
+            "jarvis_authority_preserved": any(
+                packet["source"] == "jar" for packet in [*forward_packets, *service_packets]
+            ),
+            "tool_traffic_isolated": all(
+                packet["lane"] == SERVICE_TOOL_LANE for packet in service_packets
+            ),
             "direct_lane_tool_free": all(
                 packet["intent"] not in {"tool_call", "tool_result"}
                 for packet in [*forward_packets, *return_packets]
             ),
             "immune_traffic_allowed": immune_protocol["traffic_allowed"],
-            "realtime_signal_feed_valid": all(
-                ok for ok in realtime_signal_feed["validation"].values() if isinstance(ok, bool)
-            ),
-            "realtime_event_cause_predictor_valid": all(
-                ok
-                for ok in validate_interpreted_event_state(
-                    realtime_event_cause_predictor
-                ).values()
-                if isinstance(ok, bool)
-            ),
-            "governed_event_valid": all(
-                ok
-                for ok in validate_governed_event_result(
-                    governed_event_guard
-                ).values()
-                if isinstance(ok, bool)
-            ),
-            "operator_health_sentinel_valid": all(
-                ok
-                for ok in validate_operator_health_snapshot(
-                    operator_health_sentinel
-                ).values()
-                if isinstance(ok, bool)
-            ),
-            "bridge_hops_routed": all(
-                hop.get("decision") in {"ALLOW", "DEGRADE"}
-                for hop in bridge_hops
-            ),
         },
-        "model_route": {
-            "id": (model_route or {}).get("id"),
-            "label": (model_route or {}).get("label"),
-        },
-        "tool_type": (tool_result or {}).get("type"),
-        "capability": dict((tool_result or {}).get("capability") or {}) or None,
     }
-    pipeline["continuity_witness_input"] = build_continuity_witness_input(pipeline)
+    pipeline = _refresh_governed_pipeline_turn_layer(skeleton, **refresh_kwargs)
     if cloud_forge_context:
         from src.cloud_forge.rails import attach_cloud_forge_to_pipeline
 
         pipeline = attach_cloud_forge_to_pipeline(pipeline, cloud_forge_context)
-    from src.aais_ul_substrate import wrap_pipeline
-
-    return wrap_pipeline(pipeline)
+    if cache_eligible:
+        _GOVERNED_PIPELINE_CACHE[cache_key] = (
+            time.monotonic(),
+            _pipeline_without_ul_wrap(pipeline),
+        )
+    return pipeline
 
 
 def _utc_now_iso() -> str:

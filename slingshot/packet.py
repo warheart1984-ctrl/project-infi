@@ -13,9 +13,12 @@ from slingshot.common import (
     DEFAULT_PACKET_TTL_MINUTES,
     DEFAULT_SLINGSHOT_ROOT,
     PACKET_VERSION,
+    _slingshot_cache_get,
+    _slingshot_cache_put,
     hash_text,
     json_stable,
     packet_path,
+    slingshot_json_cache_key,
 )
 from slingshot.frame import load_slingshot_frame
 
@@ -116,9 +119,14 @@ def load_slingshot_packet(case_id: str, *, runtime_root: Path | None = None) -> 
     path = packet_path(case_id, runtime_root=runtime_root)
     if not path.is_file():
         raise FileNotFoundError(f"SLINGSHOT_PACKET not found for case {case_id}")
+    cache_key = slingshot_json_cache_key("packet", path)
+    cached = _slingshot_cache_get(cache_key)
+    if cached is not None:
+        return cached
     payload = json.loads(path.read_text(encoding="utf-8"))
     if str(payload.get("packet_version") or "") != PACKET_VERSION:
         raise ValueError("invalid slingshot packet version")
+    _slingshot_cache_put(cache_key, payload)
     return payload
 
 

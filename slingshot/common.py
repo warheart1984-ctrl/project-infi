@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
+import os
+import time
 from pathlib import Path
 from typing import Any, Literal
 
@@ -59,3 +62,47 @@ def ledger_path(case_id: str, *, runtime_root: Path | None = None) -> Path:
 
 def receipts_dir(case_id: str, *, runtime_root: Path | None = None) -> Path:
     return slingshot_case_dir(case_id, runtime_root=runtime_root) / "receipts"
+
+
+_SLINGSHOT_JSON_CACHE: dict[str, tuple[float, dict[str, Any]]] = {}
+
+
+def slingshot_cache_ttl_sec() -> float:
+    """Seconds to reuse slingshot frame/packet JSON loads (0 disables). Default 30."""
+    raw = os.environ.get("AAIS_SLINGSHOT_CACHE_SEC", "30").strip()
+    try:
+        return max(0.0, float(raw))
+    except ValueError:
+        return 30.0
+
+
+def clear_slingshot_json_cache() -> None:
+    """Clear in-process slingshot JSON cache (tests)."""
+    _SLINGSHOT_JSON_CACHE.clear()
+
+
+def _slingshot_cache_get(cache_key: str) -> dict[str, Any] | None:
+    ttl = slingshot_cache_ttl_sec()
+    if ttl <= 0:
+        return None
+    cached = _SLINGSHOT_JSON_CACHE.get(cache_key)
+    if not cached or (time.monotonic() - cached[0]) >= ttl:
+        return None
+    return copy.deepcopy(cached[1])
+
+
+def _slingshot_cache_put(cache_key: str, payload: dict[str, Any]) -> None:
+    ttl = slingshot_cache_ttl_sec()
+    if ttl <= 0:
+        return
+    _SLINGSHOT_JSON_CACHE[cache_key] = (time.monotonic(), copy.deepcopy(payload))
+
+
+def slingshot_json_cache_key(kind: str, path: Path) -> str:
+    """Build a cache key that invalidates when the on-disk artifact changes."""
+    resolved = path.resolve()
+    try:
+        mtime_ns = resolved.stat().st_mtime_ns
+    except OSError:
+        mtime_ns = 0
+    return f"{kind}|{resolved}|{mtime_ns}"

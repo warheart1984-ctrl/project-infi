@@ -1,0 +1,80 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "story_forge_launcher_organ",
+    "version": "1.0.0-mvp",
+    "stage": "mvp",
+    "display_name": "Story Forge Launcher"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md",
+      "docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md",
+      "docs/runtime/AAIS_RUNTIME_GUIDE.md",
+      "docs/subsystems/storyforge/STORYFORGE_CANONICAL.md"
+    ],
+    "invariants": [
+      "Read-only v1 \u2014 organ does not mutate upstream authority",
+      "module_id frozen per Release 28"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/story_forge_launcher_organ.v1.json",
+    "frozen": false
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/story_forge_launcher_organ.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/story-forge-launcher/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make story-forge-launcher-organ-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/storyforge/STORY_FORGE_LAUNCHER_ORGAN_V1_PROOF.md"
+    ],
+    "posture": "asserted",
+    "target_bundles": [
+      "docs/proof/storyforge/STORY_FORGE_LAUNCHER_ORGAN_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "story_forge_lane_organ"
+    ],
+    "children": [
+      "game_front_door_organ",
+      "movie_renderer_lane_organ",
+      "text_game_to_video_organ"
+    ]
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "alt28-summon-wave-2026-06",
+    "notes": "Release 28 wave 1"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/STORY_FORGE_LAUNCHER_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/STORY_FORGE_LAUNCHER_ORGAN_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/storyforge/STORY_FORGE_LAUNCHER.md"
+  }
+}

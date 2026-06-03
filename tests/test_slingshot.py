@@ -3,12 +3,21 @@
 from __future__ import annotations
 
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
-from slingshot.common import FRAME_VERSION, PACKET_VERSION, frame_path, packet_path
+from slingshot.common import (
+    FRAME_VERSION,
+    PACKET_VERSION,
+    _SLINGSHOT_JSON_CACHE,
+    clear_slingshot_json_cache,
+    frame_path,
+    packet_path,
+)
 from slingshot.frame import build_slingshot_frame, load_slingshot_frame
 from slingshot.impact import build_impact_receipt, persist_impact_receipt, verify_slingshot_case
 from slingshot.launch import admit_slingshot_turn, resolve_slingshot_turn_config
@@ -31,6 +40,32 @@ TRACE_CLEAN = FIXTURE_CLEAN / "traces" / "session.ndjson"
 
 
 class TestSlingshotPreload(unittest.TestCase):
+    def test_load_frame_uses_json_cache(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            shot_root = Path(tmp) / "slingshot"
+            mech_root = Path(tmp) / "mechanic"
+            build_slingshot_frame(
+                case_id="cache-case",
+                repo_path=FIXTURE_CLEAN.resolve(),
+                trace_path=str(TRACE_CLEAN),
+                slingshot_root=shot_root,
+                mechanic_root=mech_root,
+            )
+            with patch.dict(os.environ, {"AAIS_SLINGSHOT_CACHE_SEC": "60"}, clear=False):
+                clear_slingshot_json_cache()
+                first = load_slingshot_frame("cache-case", runtime_root=shot_root)
+                second = load_slingshot_frame("cache-case", runtime_root=shot_root)
+                self.assertEqual(second.get("drift_count"), first.get("drift_count"))
+                self.assertEqual(len(_SLINGSHOT_JSON_CACHE), 1)
+
+                path = frame_path("cache-case", runtime_root=shot_root)
+                path.write_text(
+                    json.dumps({**first, "drift_count": 999}, sort_keys=True, indent=2),
+                    encoding="utf-8",
+                )
+                third = load_slingshot_frame("cache-case", runtime_root=shot_root)
+                self.assertEqual(third.get("drift_count"), 999)
+
     def test_preload_v2_fixture_launch_blocked(self):
         with tempfile.TemporaryDirectory() as tmp:
             shot_root = Path(tmp) / "slingshot"

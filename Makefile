@@ -1067,6 +1067,36 @@ alt27-2-gate: alt27-1-gate alt27-closure-gate
 alt27-governed-gate:
 	python3 tools/governance/check_alt27_governed_eligibility.py
 
+story-forge-launcher-organ-gate:
+	python3 .github/scripts/check-story-forge-launcher-organ-governance.py
+
+movie-renderer-lane-organ-gate:
+	python3 .github/scripts/check-movie-renderer-lane-organ-governance.py
+
+text-game-to-video-organ-gate:
+	python3 .github/scripts/check-text-game-to-video-organ-governance.py
+
+game-front-door-organ-gate:
+	python3 .github/scripts/check-game-front-door-organ-governance.py
+
+text-to-3d-world-lane-organ-gate:
+	python3 .github/scripts/check-text-to-3d-world-lane-organ-governance.py
+
+world-pack-lane-organ-gate:
+	python3 .github/scripts/check-world-pack-lane-organ-governance.py
+
+alt28-gate: story-forge-launcher-organ-gate movie-renderer-lane-organ-gate text-game-to-video-organ-gate game-front-door-organ-gate text-to-3d-world-lane-organ-gate world-pack-lane-organ-gate genome-gate
+
+alt28-1-gate: alt28-gate alt27-2-gate
+
+alt28-closure-gate:
+	python3 tools/governance/check_alt28_closure.py
+
+alt28-2-gate: alt28-1-gate alt28-closure-gate
+
+alt28-governed-gate:
+	python3 tools/governance/check_alt28_governed_eligibility.py
+
 alt23-1-gate: alt23-gate alt22-1-gate
 
 alt23-closure-gate:

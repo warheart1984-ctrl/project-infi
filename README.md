@@ -41,7 +41,7 @@ Architecture is unchanged; documentation and gates use standard engineering lang
 | Fabric | **Coherence Layer** |
 | Summon wave | **Release** |
 
-**Linguistic naming schema** — each governed subsystem schema carries mythic and engineering names on its SSP block (163 schemas at **v1.23.0**):
+**Linguistic naming schema** — each governed subsystem schema carries mythic and engineering names on its SSP block (169 genomes at **v1.24.0**, 163 governed at Release 27):
 
 | SSP field | Example (Release 22) | Role |
 |-----------|----------------------|------|
@@ -59,7 +59,7 @@ make translate-mythic MYTHIC='V9 runtime steward'   # mythic → engineering_cla
 
 **Codex / Cursor naming (new code):** [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md) · **Meta-linguistic governance:** [AAIS_META_LINGUISTIC_GOVERNANCE.md](docs/contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md) — mythic in comments, engineering in identifiers; legacy `*_organ` / `*_fabric` paths grandfathered until Wave 4 MP-X rename.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.23.0 — Release 27 CISIV Early Ideas Fabric](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.23.0) (tag on GitHub) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.24.0 — Release 28 Story Forge Expansion Fabric](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.24.0) (tag on GitHub) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -108,7 +108,7 @@ flowchart LR
 1. Operator turn enters `/legacy_api/api/chat/...` (Flask Jarvis).
 2. **Chat turn governance** and **AAIS-UL substrate** adapt the outward payload.
 3. **Project Infi law** admits or filters the reply.
-4. **Provider registry** routes to mock, laptop, local, OpenAI, Anthropic, or OpenRouter.
+4. **Provider registry** routes to local, mock/laptop, or any configured frontier adapter (OpenAI, Claude, Gemini, Nemotron, OpenRouter, and others — see [Installing API keys](#installing-api-keys-frontier-models)).
 5. Response includes `ul_substrate`, `modular_preview`, `law_enforcement`, and `cisiv_stage`.
 
 Optional subsystems (Platform, Wolf-CoG-OS ISO forge, forge/evolve contractors) attach at the edges — core chat works without them.
@@ -166,8 +166,9 @@ Self-governing AAIS with executable **Alt-4 lifecycle subsystems**, **one hundre
 | **Release 25 (9)** | Linguistic Forecast Archive, Linguistic Drift Report, Linguistic Governance Work Order, Linguistic Governance Cadence, Linguistic Forecast Calibration Report, Linguistic Full Governance Cycle History, Meta-Linguistic Registry, Linguistic Subsystem Promotion, Linguistic Governed Lifecycle Fabric | `GET /api/jarvis/linguistic-forecast-archive/status`, `GET /api/jarvis/linguistic-drift-report/status`, `GET /api/jarvis/linguistic-governance-work-order/status`, `GET /api/jarvis/linguistic-governance-cadence/status`, `GET /api/jarvis/linguistic-forecast-calibration-report/status`, `GET /api/jarvis/linguistic-full-governance-cycle-history/status`, `GET /api/jarvis/meta-linguistic-registry/status`, `GET /api/jarvis/linguistic-subsystem-promotion/status`, `GET /api/jarvis/linguistic-governed-lifecycle-fabric/status` |
 | **Release 26 (3)** | Linguistic Governance Day, Linguistic Work Order History, Linguistic Attestation History | `GET /api/jarvis/linguistic-governance-day/status`, `GET /api/jarvis/linguistic-work-order-history/status`, `GET /api/jarvis/linguistic-attestation-history/status` |
 | **Release 27 (9)** | CISIV Lineage Console, Forensic Triangulation, Capability Bridge, Memory Board, Governed Pipeline, Recipe Module, Imagine Generator, Narrative Trust Pack, Human Voice Extraction | `GET /api/jarvis/ul-lineage-console/status`, `GET /api/jarvis/forensic-triangulation/status`, `GET /api/jarvis/capability-bridge/status`, `GET /api/jarvis/memory/board`, `GET /api/jarvis/pipeline/{turn_id}`, `GET /api/jarvis/recipe-module/status`, `GET /api/jarvis/imagine-generator/status`, `GET /api/jarvis/narrative-trust-pack/status`, `GET /api/jarvis/human-voice-extraction/status` |
+| **Release 28 (6)** | Story Forge Launcher, Movie Renderer Lane, Text-Game-to-Video, Game Front Door, Text-to-3D World Lane, World Pack Lane | `GET /api/jarvis/story-forge-launcher/status`, `GET /api/jarvis/movie-renderer-lane/status`, `GET /api/jarvis/text-game-to-video/status`, `GET /api/jarvis/game-front-door/status`, `GET /api/jarvis/text-to-3d-world-lane/status`, `GET /api/jarvis/world-pack-lane/status` |
 
-Promotion scripts: `tools/governance/alt5_promote_wave2_mvp.py`, `alt5_promote_governed.py`, `barebones_promote_governed.py`, `alt6_promote_governed.py`, `alt7_promote_governed.py`, `alt8_promote_mvp.py`, `alt8_promote_governed.py`, `alt9_promote_mvp.py`, `alt9_promote_governed.py`, `alt10_promote_mvp.py`, `alt10_promote_governed.py`, `alt11_promote_mvp.py`, `alt11_promote_governed.py`, `alt12_promote_mvp.py`, `alt12_promote_governed.py`, `alt13_promote_mvp.py`, `alt13_promote_governed.py`, `alt14_promote_mvp.py`, `alt14_promote_governed.py`, `alt15_promote_mvp.py`, `alt15_promote_governed.py`, `alt16_promote_mvp.py`, `alt16_promote_governed.py`, `alt17_promote_mvp.py`, `alt17_promote_governed.py`, `alt18_promote_mvp.py`, `alt18_promote_governed.py`, `alt19_promote_mvp.py`, `alt19_promote_governed.py`, `alt20_promote_mvp.py`, `alt20_promote_governed.py`, `alt21_promote_mvp.py`, `alt21_promote_governed.py`, `alt22_promote_mvp.py`, `alt22_promote_governed.py`, `alt25_promote_mvp.py`, `alt25_promote_governed.py`, `alt26_promote_mvp.py`, `alt26_promote_governed.py`, `alt27_promote_mvp.py`, `alt27_promote_governed.py`.
+Promotion scripts: `tools/governance/alt5_promote_wave2_mvp.py`, `alt5_promote_governed.py`, `barebones_promote_governed.py`, `alt6_promote_governed.py`, `alt7_promote_governed.py`, `alt8_promote_mvp.py`, `alt8_promote_governed.py`, `alt9_promote_mvp.py`, `alt9_promote_governed.py`, `alt10_promote_mvp.py`, `alt10_promote_governed.py`, `alt11_promote_mvp.py`, `alt11_promote_governed.py`, `alt12_promote_mvp.py`, `alt12_promote_governed.py`, `alt13_promote_mvp.py`, `alt13_promote_governed.py`, `alt14_promote_mvp.py`, `alt14_promote_governed.py`, `alt15_promote_mvp.py`, `alt15_promote_governed.py`, `alt16_promote_mvp.py`, `alt16_promote_governed.py`, `alt17_promote_mvp.py`, `alt17_promote_governed.py`, `alt18_promote_mvp.py`, `alt18_promote_governed.py`, `alt19_promote_mvp.py`, `alt19_promote_governed.py`, `alt20_promote_mvp.py`, `alt20_promote_governed.py`, `alt21_promote_mvp.py`, `alt21_promote_governed.py`, `alt22_promote_mvp.py`, `alt22_promote_governed.py`, `alt25_promote_mvp.py`, `alt25_promote_governed.py`, `alt26_promote_mvp.py`, `alt26_promote_governed.py`, `alt27_promote_mvp.py`, `alt27_promote_governed.py`, `alt28_promote_mvp.py`, `alt28_promote_governed.py`.
 
 **Verification:**
 
@@ -222,7 +223,7 @@ python -m tools.ul.smoke --lineage-graph tools/ul/fixtures/lineage_multi_hop.jso
 - **Git**
 - **Node.js 18+** and **npm** — only if you need to rebuild the frontend (`frontend/`)
 - Optional: **Redis** — for Celery background jobs (`make worker`)
-- Optional: provider API keys — OpenAI / Anthropic (local/mock presets work without them)
+- Optional: frontier provider API keys (local/mock presets work without them — see [Installing API keys](#installing-api-keys-frontier-models))
 
 ### Initialization Steps
 
@@ -234,12 +235,60 @@ cd Project-Infinity1
 python -m pip install -e ".[dev]"
 ```
 
-Copy environment template and set keys only for routes you use:
+Copy environment template and set keys only for providers you want:
 
 ```bash
 cp .env.example .env
-# Edit .env — OPENAI_API_KEY / ANTHROPIC_API_KEY optional for mock or laptop presets
+# Edit .env — see "Installing API keys" below; mock/laptop presets need no keys
 ```
+
+### Installing API keys (frontier models)
+
+Release 28 registers **every major frontier adapter** in the Jarvis provider picker. Adapters stay **off** until you add the matching key to `.env` and restart AAIS.
+
+**Steps**
+
+1. Copy the template: `cp .env.example .env`
+2. Uncomment or set only the keys for providers you use (never commit `.env`).
+3. Restart AAIS: `python -m aais start --data-dir ./.runtime/aais-data --preset default --no-browser`
+4. Confirm in the UI or API:
+   - `GET http://127.0.0.1:8000/legacy_api/api/jarvis/providers` — each entry shows `available: true` when configured
+   - Set chat/session `preferred_provider` to the provider `id` (e.g. `openai`, `claude`, `nvidia`, `google`)
+
+**Common keys** (full list in `.env.example` and [docs/providers/FRONTIER_MODEL_ADAPTERS.md](docs/providers/FRONTIER_MODEL_ADAPTERS.md)):
+
+| Pick this provider | Set in `.env` | Notes |
+|--------------------|---------------|--------|
+| `local` | *(none)* | Default on-laptop path; use `--preset laptop` for small real model |
+| `claude` | `ANTHROPIC_API_KEY` | Optional `AAIS_CLAUDE_MODEL` |
+| `openai` | `OPENAI_API_KEY` | Optional `AAIS_OPENAI_MODEL` (default `gpt-4o-mini`) |
+| `openrouter` | `OPENROUTER_API_KEY` | Free/paid routed models; `AAIS_OPENROUTER_MODEL` |
+| `google` | `GOOGLE_API_KEY` or `GEMINI_API_KEY` | Gemini via OpenAI-compatible endpoint |
+| `nvidia` | `NVIDIA_API_KEY` | **Nemotron 3 Nano** — [build.nvidia.com](https://build.nvidia.com); default `nvidia/nemotron-3-nano-30b-a3b` |
+| `mistral` | `MISTRAL_API_KEY` | |
+| `deepseek` | `DEEPSEEK_API_KEY` | |
+| `xai` | `XAI_API_KEY` | Grok |
+| `groq` | `GROQ_API_KEY` | Fast hosted open models |
+| `perplexity` | `PERPLEXITY_API_KEY` | Sonar |
+| `together` | `TOGETHER_API_KEY` | Model hub |
+| `fireworks` | `FIREWORKS_API_KEY` | |
+| `azure_openai` | `AZURE_OPENAI_API_KEY` + `AAIS_AZURE_OPENAI_ENDPOINT` + deployment name | |
+| `moonshot` | `MOONSHOT_API_KEY` | Kimi |
+| `ai21` | `AI21_API_KEY` | Jamba |
+
+**NVIDIA Nemotron (new)** — Nemotron 3 Nano is the current open agentic frontier line; optional chain-of-thought: `AAIS_NVIDIA_ENABLE_THINKING=1`. Self-hosted NIM: set `AAIS_NVIDIA_BASE_URL` to your `http://host:8000/v1/chat/completions`.
+
+**Mock dev (no keys)** — `--preset mock` uses `MockMultiModalAI`; frontier providers still appear in the list as unavailable until keyed.
+
+**Optional chat speed** (after keys or for local mock):
+
+```env
+AAIS_COHERENCE_FABRIC_CACHE_SEC=45
+AAIS_GOVERNED_PIPELINE_CACHE_SEC=45
+AAIS_SLINGSHOT_CACHE_SEC=30
+```
+
+Set any cache to `0` to disable.
 
 #### Prepare runtime data (first run)
 
@@ -350,7 +399,9 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
-| Latest tag | [`v1.23.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.23.0) — **Release 27** (shipped) — 163 governed schemas, CISIV early ideas bundle, Coherence Layer v1.22 ([release notes](docs/releases/v1.23.0-release27-cisiv-early-ideas-fabric.md), [CHANGELOG](CHANGELOG.md) §1.23.0) |
+| Latest tag | [`v1.24.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.24.0) — **Release 28** — Story Forge expansion (6 organs), 169 genomes, frontier provider catalog, Coherence v1.23 ([release notes](docs/releases/v1.24.0-release28-storyforge-expansion-fabric.md), [CHANGELOG](CHANGELOG.md) §1.24.0) |
+| Summon wave | [`alt28-summon-wave-2026-06`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/alt28-summon-wave-2026-06) — Release 28 batch marker (same commit as `v1.24.0`) |
+| Prior tag | [`v1.23.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.23.0) — **Release 27** — 163 governed schemas, CISIV early ideas bundle, Coherence Layer v1.22 ([release notes](docs/releases/v1.23.0-release27-cisiv-early-ideas-fabric.md), [CHANGELOG](CHANGELOG.md) §1.23.0) |
 | Prior tag | [`v1.22.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.22.0) — **Release 26** — 163 governed schemas, operational closure, Coherence Layer v1.21 ([release notes](docs/releases/v1.22.0-release26-operational-closure.md), [CHANGELOG](CHANGELOG.md) §1.22.0) |
 | Prior tag | [`v1.21.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.21.0) — **Release 25** — 160 governed schemas, governed linguistic lifecycle fabric, Coherence Layer v1.20 ([release notes](docs/releases/v1.21.0-release25-governed-linguistic-lifecycle.md), [CHANGELOG](CHANGELOG.md) §1.21.0) |
 | Prior tag | [`v1.20.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.20.0) — **Release 24** — 151 governed schemas, attested linguistic closed-loop, Coherence Layer v1.19 ([release notes](docs/releases/v1.20.0-release24-attested-linguistic-closed-loop.md), [CHANGELOG](CHANGELOG.md) §1.20.0) |

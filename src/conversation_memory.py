@@ -639,9 +639,13 @@ def normalize_response_mode(mode: str | None) -> str:
 
 def normalize_provider_identifier(provider: str | None, default: str = "local") -> str:
     """Normalize provider identifiers to the shared Jarvis naming shape."""
+    from src.providers.frontier_catalog import resolve_provider_alias
+
     cleaned = " ".join(str(provider or "").lower().split()).strip().replace("-", "_")
     if cleaned in {"automatic", "best", "best_provider", "best_available", "auto_best"}:
         cleaned = "auto"
+    else:
+        cleaned = resolve_provider_alias(cleaned)
     return cleaned or default
 
 
@@ -656,6 +660,12 @@ def normalize_provider_mode_identifier(mode: str | None, default: str = "local_f
         cleaned = "openrouter_first"
     elif cleaned == "claude":
         cleaned = "claude_first"
+    elif cleaned == "nvidia":
+        cleaned = "nvidia_first"
+    elif cleaned == "openai":
+        cleaned = "openai_first"
+    elif cleaned == "google":
+        cleaned = "google_first"
     return cleaned or default
 
 

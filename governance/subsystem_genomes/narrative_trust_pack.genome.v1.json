@@ -62,9 +62,10 @@
   },
   "lineage": {
     "parents": [
-      "story_forge",
       "beatbox",
-      "speakers"
+      "imagine_generator",
+      "speakers",
+      "story_forge"
     ],
     "children": [
       "human_voice_extraction",

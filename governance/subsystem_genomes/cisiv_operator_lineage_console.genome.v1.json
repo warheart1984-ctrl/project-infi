@@ -65,10 +65,12 @@
   },
   "lineage": {
     "parents": [
-      "mission_board",
-      "chat_turn_governance",
       "capability_service_bridge",
-      "jarvis_memory_board"
+      "chat_turn_governance",
+      "governance_layer_organ",
+      "jarvis_memory_board",
+      "mission_board",
+      "operator_cognition_coherence_fabric"
     ],
     "children": [
       "aais_ul_substrate_organ",

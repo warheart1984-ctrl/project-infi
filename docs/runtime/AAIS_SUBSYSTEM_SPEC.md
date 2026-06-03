@@ -1334,6 +1334,11 @@ Nothing here is live until promoted per [ideas_pending/README.md](../_future/ide
 
 | Idea | Status | Concept spec | MVP plan | Genome |
 |------|--------|--------------|----------|--------|
-| *(none — Release 27 graduated to §8)* | — | — | — | — |
+| Story Forge Launcher | concept | [STORY_FORGE_LAUNCHER_ORGAN.md](../_future/ideas_pending/STORY_FORGE_LAUNCHER_ORGAN.md) | [STORY_FORGE_LAUNCHER_ORGAN_MVP_PLAN.md](../_future/ideas_pending/STORY_FORGE_LAUNCHER_ORGAN_MVP_PLAN.md) | `story_forge_launcher_organ` |
+| Movie Renderer Lane | concept | [MOVIE_RENDERER_LANE_ORGAN.md](../_future/ideas_pending/MOVIE_RENDERER_LANE_ORGAN.md) | [MOVIE_RENDERER_LANE_ORGAN_MVP_PLAN.md](../_future/ideas_pending/MOVIE_RENDERER_LANE_ORGAN_MVP_PLAN.md) | `movie_renderer_lane_organ` |
+| Text-Game-to-Video Front Door | concept | [TEXT_GAME_TO_VIDEO_ORGAN.md](../_future/ideas_pending/TEXT_GAME_TO_VIDEO_ORGAN.md) | [TEXT_GAME_TO_VIDEO_ORGAN_MVP_PLAN.md](../_future/ideas_pending/TEXT_GAME_TO_VIDEO_ORGAN_MVP_PLAN.md) | `text_game_to_video_organ` |
+| Game Front Door | concept | [GAME_FRONT_DOOR_ORGAN.md](../_future/ideas_pending/GAME_FRONT_DOOR_ORGAN.md) | [GAME_FRONT_DOOR_ORGAN_MVP_PLAN.md](../_future/ideas_pending/GAME_FRONT_DOOR_ORGAN_MVP_PLAN.md) | `game_front_door_organ` |
+| Text-to-3D World Lane | concept | [TEXT_TO_3D_WORLD_LANE_ORGAN.md](../_future/ideas_pending/TEXT_TO_3D_WORLD_LANE_ORGAN.md) | [TEXT_TO_3D_WORLD_LANE_ORGAN_MVP_PLAN.md](../_future/ideas_pending/TEXT_TO_3D_WORLD_LANE_ORGAN_MVP_PLAN.md) | `text_to_3d_world_lane_organ` |
+| World Pack Lane | concept | [WORLD_PACK_LANE_ORGAN.md](../_future/ideas_pending/WORLD_PACK_LANE_ORGAN.md) | [WORLD_PACK_LANE_ORGAN_MVP_PLAN.md](../_future/ideas_pending/WORLD_PACK_LANE_ORGAN_MVP_PLAN.md) | `world_pack_lane_organ` |
 
 New admissions via SSP (Step 7) update this table. Graduated ideas move to §8. Genome contract: [AAIS_SUBSYSTEM_GENOME.md](../contracts/AAIS_SUBSYSTEM_GENOME.md).

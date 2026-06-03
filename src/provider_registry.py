@@ -128,44 +128,47 @@ class ProviderRegistry(BaseProviderRegistry):
                 ),
                 adapter=None,
             )
-            return
+        else:
+            try:
+                adapter = ClaudeProvider(api_key=api_key)
+                self.register(
+                    ProviderConfig(
+                        name="claude",
+                        display_name="Claude — First Sister",
+                        enabled=True,
+                        supports_stream=True,
+                        meta={
+                            "kind": "remote",
+                            "summary": "Calm, precise external sister model through Anthropic.",
+                            "reason": "Anthropic provider is configured.",
+                            "model": adapter.model,
+                            "activation_hint": "",
+                        },
+                    ),
+                    adapter=adapter,
+                )
+            except Exception as exc:  # pragma: no cover - depends on optional SDK/env
+                logger.warning(f"Claude provider unavailable: {exc}")
+                self.register(
+                    ProviderConfig(
+                        name="claude",
+                        display_name="Claude — First Sister",
+                        enabled=False,
+                        supports_stream=True,
+                        meta={
+                            "kind": "remote",
+                            "summary": "Calm, precise external sister model through Anthropic.",
+                            "reason": str(exc),
+                            "model": claude_model,
+                            "activation_hint": "Install the Anthropic SDK and verify ANTHROPIC_API_KEY to activate.",
+                        },
+                    ),
+                    adapter=None,
+                )
 
-        try:
-            adapter = ClaudeProvider(api_key=api_key)
-            self.register(
-                ProviderConfig(
-                    name="claude",
-                    display_name="Claude — First Sister",
-                    enabled=True,
-                    supports_stream=True,
-                    meta={
-                        "kind": "remote",
-                        "summary": "Calm, precise external sister model through Anthropic.",
-                        "reason": "Anthropic provider is configured.",
-                        "model": adapter.model,
-                        "activation_hint": "",
-                    },
-                ),
-                adapter=adapter,
-            )
-        except Exception as exc:  # pragma: no cover - depends on optional SDK/env
-            logger.warning(f"Claude provider unavailable: {exc}")
-            self.register(
-                ProviderConfig(
-                    name="claude",
-                    display_name="Claude — First Sister",
-                    enabled=False,
-                    supports_stream=True,
-                    meta={
-                        "kind": "remote",
-                        "summary": "Calm, precise external sister model through Anthropic.",
-                        "reason": str(exc),
-                        "model": claude_model,
-                        "activation_hint": "Install the Anthropic SDK and verify ANTHROPIC_API_KEY to activate.",
-                    },
-                ),
-                adapter=None,
-            )
+        from src.providers.registry_bootstrap import register_frontier_providers
+
+        register_frontier_providers(self)
 
     def can_invoke(self, provider_id: str | None) -> bool:
         normalized = str(provider_id or "local").strip().lower()

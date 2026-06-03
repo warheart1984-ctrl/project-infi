@@ -75,6 +75,12 @@ GENE_GATES: dict[str, str] = {
     "speakers_lane_organ": "speakers-lane-organ-gate",
     "human_voice_extraction_organ": "human-voice-extraction-organ-gate",
     "narrative_trust_pack_organ": "narrative-trust-pack-organ-gate",
+    "story_forge_launcher_organ": "story-forge-launcher-organ-gate",
+    "movie_renderer_lane_organ": "movie-renderer-lane-organ-gate",
+    "text_game_to_video_organ": "text-game-to-video-organ-gate",
+    "game_front_door_organ": "game-front-door-organ-gate",
+    "text_to_3d_world_lane_organ": "text-to-3d-world-lane-organ-gate",
+    "world_pack_lane_organ": "world-pack-lane-organ-gate",
     "document_vision_organ": "document-vision-organ-gate",
     "ui_vision_organ": "ui-vision-organ-gate",
     "perception_gateway_organ": "perception-gateway-organ-gate",
@@ -294,6 +300,24 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     ],
     "narrative-trust-pack-organ-gate": [
         ".github/scripts/check-narrative-trust-pack-organ-governance.py"
+    ],
+    "story-forge-launcher-organ-gate": [
+        ".github/scripts/check-story-forge-launcher-organ-governance.py"
+    ],
+    "movie-renderer-lane-organ-gate": [
+        ".github/scripts/check-movie-renderer-lane-organ-governance.py"
+    ],
+    "text-game-to-video-organ-gate": [
+        ".github/scripts/check-text-game-to-video-organ-governance.py"
+    ],
+    "game-front-door-organ-gate": [
+        ".github/scripts/check-game-front-door-organ-governance.py"
+    ],
+    "text-to-3d-world-lane-organ-gate": [
+        ".github/scripts/check-text-to-3d-world-lane-organ-governance.py"
+    ],
+    "world-pack-lane-organ-gate": [
+        ".github/scripts/check-world-pack-lane-organ-governance.py"
     ],
     "document-vision-organ-gate": [
         ".github/scripts/check-document-vision-organ-governance.py"

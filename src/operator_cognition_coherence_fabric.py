@@ -4,13 +4,15 @@
 # Engineering: OperatorCognitionCoherenceLayer
 from __future__ import annotations
 
+import copy
 import importlib.util
 import os
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.22"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.23"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -2115,6 +2117,48 @@ def _build_constitutional_bridge_layer(root: Path) -> list[dict[str, Any]]:
     ]
 
 
+def _build_story_forge_expansion_layer() -> list[dict[str, Any]]:
+    from src.game_front_door_organ import build_game_front_door_status
+    from src.movie_renderer_lane_organ import build_movie_renderer_lane_status
+    from src.story_forge_launcher_organ import build_story_forge_launcher_status
+    from src.text_game_to_video_organ import build_text_game_to_video_status
+    from src.text_to_3d_world_lane_organ import build_text_to_3d_world_lane_status
+    from src.world_pack_lane_organ import build_world_pack_lane_status
+
+    return [
+        _organ_posture_item(
+            "story_forge_launcher_organ",
+            build_story_forge_launcher_status(),
+            read_only=True,
+        ),
+        _organ_posture_item(
+            "movie_renderer_lane_organ",
+            build_movie_renderer_lane_status(),
+            read_only=True,
+        ),
+        _organ_posture_item(
+            "text_game_to_video_organ",
+            build_text_game_to_video_status(),
+            read_only=True,
+        ),
+        _organ_posture_item(
+            "game_front_door_organ",
+            build_game_front_door_status(),
+            read_only=True,
+        ),
+        _organ_posture_item(
+            "text_to_3d_world_lane_organ",
+            build_text_to_3d_world_lane_status(),
+            read_only=True,
+        ),
+        _organ_posture_item(
+            "world_pack_lane_organ",
+            build_world_pack_lane_status(),
+            read_only=True,
+        ),
+    ]
+
+
 def _build_creative_trust_chain_layer() -> list[dict[str, Any]]:
     from src.human_voice_extraction_organ import build_human_voice_extraction_status
     from src.imagine_generator_organ import build_imagine_generator_status
@@ -2180,6 +2224,18 @@ def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
 
+_COHERENCE_SNAPSHOT_CACHE: dict[str, tuple[float, dict[str, Any]]] = {}
+
+
+def _coherence_fabric_cache_ttl_sec() -> float:
+    """Seconds to reuse a full fabric snapshot (0 disables). Default 45 for chat latency."""
+    raw = os.environ.get("AAIS_COHERENCE_FABRIC_CACHE_SEC", "45").strip()
+    try:
+        return max(0.0, float(raw))
+    except ValueError:
+        return 45.0
+
+
 def build_coherence_fabric_status(
     *,
     root: Path | None = None,
@@ -2188,6 +2244,13 @@ def build_coherence_fabric_status(
 ) -> dict[str, Any]:
     """Join profile, lane, and envelope posture into one inspectable snapshot."""
     root = _root(root)
+    ttl = _coherence_fabric_cache_ttl_sec()
+    cache_key = str(root.resolve())
+    use_cache = ttl > 0 and bridge_snapshot is None and pipeline_trace is None
+    if use_cache:
+        cached = _COHERENCE_SNAPSHOT_CACHE.get(cache_key)
+        if cached and (time.monotonic() - cached[0]) < ttl:
+            return copy.deepcopy(cached[1])
     profile = build_operator_profile()
     authority_lane = str(profile.get("authority_lane") or "operator")
     lane_report = load_awakened_lanes(root)
@@ -2299,6 +2362,7 @@ def build_coherence_fabric_status(
     cisiv_lineage_triangulation_layer = _build_cisiv_lineage_triangulation_layer(root)
     constitutional_bridge_layer = _build_constitutional_bridge_layer(root)
     creative_trust_chain_layer = _build_creative_trust_chain_layer()
+    story_forge_expansion_layer = _build_story_forge_expansion_layer()
 
     linguistic_governed_lifecycle_aligned = (
         _layer_aligned(linguistic_forecast_layer, minimum=3)
@@ -2349,6 +2413,13 @@ def build_coherence_fabric_status(
         and constitutional_bridge_aligned
         and creative_trust_chain_aligned
         and linguistic_operational_closure_aligned
+    )
+    story_forge_expansion_aligned = _layer_aligned(
+        story_forge_expansion_layer, minimum=6
+    )
+    story_forge_expansion_bundle_aligned = (
+        story_forge_expansion_aligned
+        and cisiv_early_ideas_bundle_aligned
     )
 
     payload: dict[str, Any] = {
@@ -2569,6 +2640,9 @@ def build_coherence_fabric_status(
         "constitutional_bridge_aligned": constitutional_bridge_aligned,
         "creative_trust_chain_layer": creative_trust_chain_layer,
         "creative_trust_chain_aligned": creative_trust_chain_aligned,
+        "story_forge_expansion_layer": story_forge_expansion_layer,
+        "story_forge_expansion_aligned": story_forge_expansion_aligned,
+        "story_forge_expansion_bundle_aligned": story_forge_expansion_bundle_aligned,
         "cisiv_early_ideas_bundle_aligned": cisiv_early_ideas_bundle_aligned,
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,
@@ -2583,6 +2657,8 @@ def build_coherence_fabric_status(
         payload["last_coherence_response"] = protocol["response"]
         if protocol["reason"]:
             payload["last_coherence_reason"] = protocol["reason"]
+    if use_cache:
+        _COHERENCE_SNAPSHOT_CACHE[cache_key] = (time.monotonic(), copy.deepcopy(payload))
     return payload
 
 

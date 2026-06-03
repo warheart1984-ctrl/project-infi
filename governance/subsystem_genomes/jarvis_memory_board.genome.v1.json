@@ -52,7 +52,9 @@
     ]
   },
   "lineage": {
-    "parents": [],
+    "parents": [
+      "capability_service_bridge"
+    ],
     "children": [
       "cisiv_operator_lineage_console",
       "conversation_memory_organ",

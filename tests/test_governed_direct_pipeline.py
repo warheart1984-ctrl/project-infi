@@ -1,5 +1,6 @@
 """Tests for the governed direct pipeline packet contract."""
 
+import os
 from pathlib import Path
 import shutil
 import tempfile
@@ -9,7 +10,9 @@ from unittest.mock import patch
 from src.governed_direct_pipeline import (
     DIRECT_COGNITIVE_LANE,
     SERVICE_TOOL_LANE,
+    _GOVERNED_PIPELINE_CACHE,
     build_governed_turn_pipeline,
+    clear_governed_pipeline_cache,
     to_pipeline_envelope,
 )
 from src.jarvis_detachment_guard import jarvis_detachment_guard
@@ -350,3 +353,41 @@ class TestGovernedDirectPipeline(unittest.TestCase):
         self.assertGreaterEqual(len(envelope["lanes"]), 1)
         self.assertGreaterEqual(len(envelope["packets"]), 1)
         self.assertIn(envelope["signal_feed"]["risk_level"], {"low", "medium", "high", "critical"})
+
+
+class TestGovernedPipelineCache(unittest.TestCase):
+    """TTL cache reuses skeleton; per-turn fields still refresh."""
+
+    def setUp(self):
+        clear_governed_pipeline_cache()
+
+    def tearDown(self):
+        clear_governed_pipeline_cache()
+
+    def test_cache_refreshes_pipeline_id_and_operator_health(self):
+        with patch.dict(os.environ, {"AAIS_GOVERNED_PIPELINE_CACHE_SEC": "60"}, clear=False):
+            clear_governed_pipeline_cache()
+            common = dict(
+                response_mode="tiny",
+                contract="tiny_companion",
+                god_brain={"strategy_label": "companion", "surface_identity": "nova"},
+                model_route={"id": "mock_local", "label": "Mock"},
+                surface_identity="nova",
+            )
+            first = build_governed_turn_pipeline(**common, operator_text="hello")
+            second = build_governed_turn_pipeline(**common, operator_text="world")
+            self.assertNotEqual(first["pipeline_id"], second["pipeline_id"])
+            self.assertTrue(first["validation"]["operator_health_sentinel_valid"])
+            self.assertTrue(second["validation"]["operator_health_sentinel_valid"])
+
+    def test_cache_disabled_when_ttl_zero(self):
+        with patch.dict(os.environ, {"AAIS_GOVERNED_PIPELINE_CACHE_SEC": "0"}, clear=False):
+            clear_governed_pipeline_cache()
+            kwargs = dict(
+                response_mode="fast",
+                contract="direct_answer",
+                model_route={"id": "local_fast"},
+            )
+            build_governed_turn_pipeline(**kwargs)
+            build_governed_turn_pipeline(**kwargs)
+            self.assertEqual(len(_GOVERNED_PIPELINE_CACHE), 0)

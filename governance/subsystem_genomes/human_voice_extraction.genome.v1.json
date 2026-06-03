@@ -69,6 +69,7 @@
   "lineage": {
     "parents": [
       "imagine_generator",
+      "narrative_trust_pack",
       "speakers",
       "story_forge"
     ],

@@ -13,19 +13,28 @@ from __future__ import annotations
 import os
 
 
+from src.providers.frontier_catalog import (
+    frontier_default_models,
+    frontier_model_envs,
+    frontier_remote_labels,
+)
+
 REMOTE_PROVIDER_LABELS = {
     "claude": "Claude — First Sister",
     "openrouter": "OpenRouter — Free Relay",
+    **frontier_remote_labels(),
 }
 
 REMOTE_PROVIDER_MODEL_ENVS = {
     "claude": "AAIS_CLAUDE_MODEL",
     "openrouter": "AAIS_OPENROUTER_MODEL",
+    **frontier_model_envs(),
 }
 
 REMOTE_PROVIDER_DEFAULT_MODELS = {
     "claude": "claude-3-7-sonnet-20250219",
     "openrouter": "openrouter/free",
+    **frontier_default_models(),
 }
 
 

@@ -8,51 +8,12 @@ import os
 from typing import Any
 from urllib import error, request
 
-from src.jarvis_protocol import JarvisMessage, ProviderResponse, ToolResult
+from src.jarvis_protocol import JarvisMessage, ProviderResponse
+from src.providers.http_chat_provider import extract_text_content, parse_tool_calls
 
 
 DEFAULT_OPENROUTER_MODEL = "openrouter/free"
 DEFAULT_OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-
-
-def _extract_text_content(content: Any) -> str:
-    if isinstance(content, str):
-        return content.strip()
-    if isinstance(content, list):
-        chunks: list[str] = []
-        for item in content:
-            if isinstance(item, dict):
-                if item.get("type") == "text" and item.get("text"):
-                    chunks.append(str(item.get("text")))
-                elif item.get("content"):
-                    chunks.append(str(item.get("content")))
-            elif item is not None:
-                chunks.append(str(item))
-        return "".join(chunks).strip()
-    return str(content or "").strip()
-
-
-def _parse_tool_calls(message: dict[str, Any] | None) -> list[ToolResult] | None:
-    tool_calls = (message or {}).get("tool_calls") or []
-    normalized: list[ToolResult] = []
-    for item in tool_calls:
-        function_payload = item.get("function") or {}
-        arguments = function_payload.get("arguments") or {}
-        if isinstance(arguments, str):
-            try:
-                arguments = json.loads(arguments)
-            except json.JSONDecodeError:
-                arguments = {"raw": arguments}
-        normalized.append(
-            ToolResult(
-                id=item.get("id"),
-                name=function_payload.get("name") or item.get("name"),
-                arguments=dict(arguments or {}),
-                provider="openrouter",
-                kind=str(item.get("type") or "tool_call"),
-            )
-        )
-    return normalized or None
 
 
 class OpenRouterProvider:
@@ -133,8 +94,8 @@ class OpenRouterProvider:
         response = await asyncio.to_thread(self.client, request_payload, headers)
         choice = ((response.get("choices") or [None])[0]) or {}
         message = choice.get("message") or {}
-        content = _extract_text_content(message.get("content"))
-        tool_calls = _parse_tool_calls(message)
+        content = extract_text_content(message.get("content"))
+        tool_calls = parse_tool_calls(message, provider_id="openrouter")
         usage = response.get("usage") or {}
         finish_reason = str(choice.get("finish_reason") or "").strip().lower() or None
 

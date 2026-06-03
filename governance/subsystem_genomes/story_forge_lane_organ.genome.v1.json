@@ -55,7 +55,13 @@
     ],
     "children": [
       "beatbox_lane_organ",
-      "narrative_trust_pack_organ"
+      "game_front_door_organ",
+      "movie_renderer_lane_organ",
+      "narrative_trust_pack_organ",
+      "story_forge_launcher_organ",
+      "text_game_to_video_organ",
+      "text_to_3d_world_lane_organ",
+      "world_pack_lane_organ"
     ]
   },
   "activation": {

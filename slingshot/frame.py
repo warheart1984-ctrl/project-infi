@@ -14,10 +14,13 @@ from slingshot.common import (
     DEFAULT_MECHANIC_ROOT,
     DEFAULT_SLINGSHOT_ROOT,
     FRAME_VERSION,
+    _slingshot_cache_get,
+    _slingshot_cache_put,
     frame_path,
     json_stable,
     mechanic_case_dir,
     slingshot_case_dir,
+    slingshot_json_cache_key,
 )
 
 
@@ -122,7 +125,12 @@ def load_slingshot_frame(case_id: str, *, runtime_root: Path | None = None) -> d
     path = frame_path(case_id, runtime_root=runtime_root)
     if not path.is_file():
         raise FileNotFoundError(f"SLINGSHOT_FRAME not found for case {case_id}")
+    cache_key = slingshot_json_cache_key("frame", path)
+    cached = _slingshot_cache_get(cache_key)
+    if cached is not None:
+        return cached
     payload = json.loads(path.read_text(encoding="utf-8"))
     if str(payload.get("frame_version") or "") != FRAME_VERSION:
         raise ValueError("invalid slingshot frame version")
+    _slingshot_cache_put(cache_key, payload)
     return payload

@@ -6563,6 +6563,12 @@ def _default_new_session_provider(*, requested_provider_mode: str | None = None,
         return "claude" if provider_registry.can_invoke("claude") else (provider_registry.get_default_name() or "local")
     if normalized_provider_mode == "openrouter_first":
         return "openrouter" if provider_registry.can_invoke("openrouter") else (provider_registry.get_default_name() or "local")
+    if normalized_provider_mode == "nvidia_first":
+        return "nvidia" if provider_registry.can_invoke("nvidia") else (provider_registry.get_default_name() or "local")
+    if normalized_provider_mode == "openai_first":
+        return "openai" if provider_registry.can_invoke("openai") else (provider_registry.get_default_name() or "local")
+    if normalized_provider_mode == "google_first":
+        return "google" if provider_registry.can_invoke("google") else (provider_registry.get_default_name() or "local")
     if normalized_provider_mode == "local_first":
         return provider_registry.get_default_name() or "local"
     if prefer_new_session_default and provider_registry.can_invoke("openrouter"):
@@ -12327,6 +12333,98 @@ def get_human_voice_extraction_organ_status():
         )
     except Exception as e:
         logger.error(f"Error reading human voice extraction organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/story-forge-launcher/status", methods=["GET"])
+def get_story_forge_launcher_organ_status():
+    """Read-only Story Forge launcher organ snapshot (Release 28)."""
+    try:
+        from src.story_forge_launcher_organ import build_story_forge_launcher_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"story_forge_launcher": build_story_forge_launcher_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading story forge launcher status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/movie-renderer-lane/status", methods=["GET"])
+def get_movie_renderer_lane_organ_status():
+    """Read-only movie renderer lane organ snapshot (Release 28)."""
+    try:
+        from src.movie_renderer_lane_organ import build_movie_renderer_lane_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"movie_renderer_lane": build_movie_renderer_lane_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading movie renderer lane status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/text-game-to-video/status", methods=["GET"])
+def get_text_game_to_video_organ_status():
+    """Read-only text-game-to-video front door snapshot (Release 28)."""
+    try:
+        from src.text_game_to_video_organ import build_text_game_to_video_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"text_game_to_video": build_text_game_to_video_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading text-game-to-video status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/game-front-door/status", methods=["GET"])
+def get_game_front_door_organ_status():
+    """Read-only game front door organ snapshot (Release 28)."""
+    try:
+        from src.game_front_door_organ import build_game_front_door_status
+
+        return jsonify(
+            attach_ul_substrate({"game_front_door": build_game_front_door_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading game front door status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/text-to-3d-world-lane/status", methods=["GET"])
+def get_text_to_3d_world_lane_organ_status():
+    """Read-only text-to-3D world lane organ snapshot (Release 28)."""
+    try:
+        from src.text_to_3d_world_lane_organ import build_text_to_3d_world_lane_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"text_to_3d_world_lane": build_text_to_3d_world_lane_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading text-to-3d world lane status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/world-pack-lane/status", methods=["GET"])
+def get_world_pack_lane_organ_status():
+    """Read-only world pack lane organ snapshot (Release 28)."""
+    try:
+        from src.world_pack_lane_organ import build_world_pack_lane_status
+
+        return jsonify(
+            attach_ul_substrate({"world_pack_lane": build_world_pack_lane_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading world pack lane status: {e}")
         return jsonify({"error": str(e)}), 500
 
 

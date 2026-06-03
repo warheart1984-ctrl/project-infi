@@ -13,6 +13,37 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.24.0] - 2026-06-03 — Release 28 Story Forge Expansion Fabric
+
+**Release 28** (`alt28-summon-wave-2026-06`) — six Story Forge expansion subsystems; Coherence Layer v1.23; frontier model provider catalog; chat latency caches; genome lineage symmetry fixes for boot.
+
+### Added
+
+- **Release 28.0** — `story_forge_launcher_organ`, `movie_renderer_lane_organ`, `text_game_to_video_organ`, `game_front_door_organ`, `text_to_3d_world_lane_organ`, `world_pack_lane_organ`; status APIs; `make alt28-gate`; `tools/governance/alt28_promote_mvp.py`
+- **Release 28.1** — Coherence Layer v1.23 + `story_forge_expansion_layer`, `story_forge_expansion_bundle_aligned`; `make alt28-1-gate`
+- **Release 28.2** — `STORYFORGE_EXPANSION_BUNDLE_V1_PROOF`; `make alt28-2-gate`
+- **Governed promotion** — `tools/governance/alt28_promote_governed.py`; `make alt28-governed-gate`
+- **Frontier providers** — twelve OpenAI-compatible adapters (OpenAI, Google Gemini, Mistral, DeepSeek, xAI, Groq, Together, Fireworks, Perplexity, **NVIDIA Nemotron 3**, Azure OpenAI, Moonshot, AI21); catalog in `src/providers/frontier_catalog.py`
+- **Runtime caches** — `AAIS_COHERENCE_FABRIC_CACHE_SEC`, `AAIS_GOVERNED_PIPELINE_CACHE_SEC`, `AAIS_SLINGSHOT_CACHE_SEC` (Slingshot frame/packet JSON)
+
+### Changed
+
+- Schema registry: **169** subsystem genomes at MVP batch (163 prior governed + 6 Release 28)
+- `operator_cognition_coherence_fabric` runtime schema → v1.23
+- Genome `parents` symmetry for `capability_service_bridge`, `jarvis_memory_board`, `recipe_module`, and related lineage (fixes `aais start` genome-gate boot failures)
+- Provider registry lists all frontier adapters disabled until API keys are set (see `.env.example`)
+
+### Verification (v1.24.0)
+
+```bash
+python tools/governance/_alt28_ssp_bootstrap.py
+python tools/governance/_alt28_coherence_v123.py
+make alt28-gate alt28-1-gate alt28-2-gate alt28-governed-gate
+python -m pytest tests/test_story_forge_launcher_organ.py tests/test_frontier_catalog.py -q
+```
+
+[1.24.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.24.0
+
 ## [1.23.0] - 2026-06-03 — Release 27 CISIV Early Ideas Fabric
 
 **Release 27** — nine governed subsystems batch-stamped at `alt27-summon-wave-2026-06`; Coherence Layer v1.22 with CISIV/bridge/creative trust layers; Wave 18 early ideas bundle aligned with operational closure.
