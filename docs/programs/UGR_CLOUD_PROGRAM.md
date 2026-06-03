@@ -35,7 +35,64 @@ The novelty is the **runtime**, not a bigger model.
 | Substrate orchestration | Forge platform gate (`make forge-platform-gate`) |
 | OS host | Wolf CoG / cogos runtime |
 
+## Stack naming (URG vs AAIS)
+
+| Layer | Role |
+|-------|------|
+| **AAIS** | Governed cognitive runtime — per-turn bridge, lanes, operator shell |
+| **URG** | Unified runtime governance — lawbook + switchboard for many AAIS instances and LLM providers (**not a model**) |
+
+Doctrine: [URG_STACK_DOCTRINE.md](../contracts/URG_STACK_DOCTRINE.md)
+
 ## Program Phases
+
+### Mission v1 — Governed super-router demo (current slice)
+
+**Goal:** Prove mission-level governance: one mission, three provider organs, cost + risk + region constraints, fully ledgered.
+
+Deliverables:
+
+- [x] Stack doctrine + cloud invariant lift ([URG_STACK_DOCTRINE.md](../contracts/URG_STACK_DOCTRINE.md), [URG_CLOUD_INVARIANTS.md](../contracts/URG_CLOUD_INVARIANTS.md))
+- [x] Provider organ registry \(O_i = (I,E,F,K)\) — `deploy/ugr/provider-organs.json`, `src/ugr/mission/provider_organ.py`
+- [x] Ingress law — `src/ugr/mission/ingress.py`
+- [x] Mission runtime — `src/ugr/mission/mission_runtime.py`, `POST /api/ugr/mission/run`
+- [x] Demo config — `deploy/ugr/mission-demo.json`, `tools/proof/run_ugr_mission_demo.py`
+- [x] Gate: `make ugr-mission-gate`
+
+Acceptance:
+
+- Three steps route to `local`, `openrouter`, `openai` organs (proposal-only)
+- `missions.jsonl` records `action_id` chain with `prior_action_id`
+- Wrong region or cost budget blocks mission with `status: blocked`
+
+### Mission v1.2 — AAIS bridge, auto-assign, HMAC receipt
+
+**Goal:** GCM drives real AAIS work per step; organs auto-matched; operator-bound receipt MAC.
+
+Deliverables:
+
+- [x] `src/ugr/mission/aais_step_bridge.py` — `llm_bridge` (default) + `full_deliberate`
+- [x] `src/ugr/mission/organ_matcher.py` — tier/cost/region auto-assign
+- [x] `src/ugr/mission/receipt_signing.py` — HMAC + `verify_mission_receipt`
+- [x] `deploy/ugr/mission-demo-auto.json`
+- [x] Contract [URG_MISSION_RECEIPT_SIGNING.md](../contracts/URG_MISSION_RECEIPT_SIGNING.md)
+
+Acceptance:
+
+- Default mission steps include `aais_deliberation.bridge` with ALLOW/DEGRADE
+- Auto demo assigns three providers without explicit `organ_id`
+- `mission_receipt.receipt_mac` when `URG_OPERATOR_RECEIPT_KEY` set
+
+### Mission v1.3 — MissionReceipt schema
+
+**Goal:** Formal forensic receipt with goal_hash, Merkle ledger_root, dual operator/URG signatures, UUID mission_id.
+
+Deliverables:
+
+- [x] `docs/contracts/URG_MISSION_RECEIPT_SCHEMA.md`, `schemas/urg_mission_receipt.v1.json`
+- [x] `src/ugr/mission/mission_receipt.py`, `src/ugr/mission/ledger_merkle.py`
+- [x] Dual signing: `URG_RECEIPT_SIGNING_KEY` + `URG_OPERATOR_RECEIPT_KEY`
+- [x] API field `mission_receipt_schema` alongside legacy `mission_receipt`
 
 ### Phase 0 — Walking skeleton
 
@@ -200,6 +257,38 @@ Acceptance:
 - Trust bundle status reflects local `proof_bundle.json` when present
 - Debt register lists UGR-D* and CF-D5 with claim labels
 
+### Mission v1.5 — Cloud invariant layer
+
+**Goal:** Super-cloud manifold \(I_{cloud}\), \(B_{cloud}\), fail-closed ledger, governance mutations, execution lifecycle.
+
+Deliverables:
+
+- [x] `src/ugr/invariants/` — `cloud_manifold.py`, `cloud_invariants.py`, `execution_safety.py`
+- [x] Phase ledger: `mission_ingress`, `organ_assignment`, `provider_dispatch`, `provider_ack`
+- [x] Execution modes: `DRY_RUN`, `SHADOW_EXECUTION`, `LIVE_EXECUTION`
+- [x] `tests/test_ugr_cloud_invariants.py`, `tests/test_ugr_execution_policy.py`
+
+### Mission v1.6 — URG Cloud Platform trilogy
+
+**Goal:** Multi-tenant isolation, cost-aware routing, governed provider marketplace.
+
+Deliverables:
+
+- [x] [URG_CLOUD_PLATFORM.md](../URG_CLOUD_PLATFORM.md) — operator README for this release
+- [x] `src/ugr/mission/tenant_manifold.py` — tenant gate, federation grants, partitioned stores
+- [x] `src/ugr/mission/cost_routing.py` — `MissionBudget`, organ cost rank, `BUDGET_EXCEEDED`
+- [x] `src/ugr/mission/marketplace.py`, `organ_trust.py` — admit/suspend/evict, trust-gated execution
+- [x] `tests/test_ugr_tenant_isolation.py`, `test_ugr_cost_routing.py`, `test_ugr_marketplace.py`
+- [x] Runtime **1.6**, GCM **1.6**
+
+Acceptance:
+
+- Two tenants: isolated ledger/receipt paths under `tenant:acme` / `tenant:contoso`
+- Auto-assign minimizes estimated cost within `mission_budget` and tenant ceiling
+- `URG_GOVERNANCE_APPLY=1` + `organ_admit` writes tenant overlay; low trust forces SHADOW for LIVE
+
+Tag: **`urg-cloud-platform-v1.6`**
+
 ## v1 Invariants (non-negotiable)
 
 1. Single path of authority — all UGR traffic through Cognitive Bridge
@@ -244,6 +333,8 @@ make ugr-cogos-write-path-gate
 make ugr-graph-backend-gate
 make ugr-trust-bundle-gate
 make ugr-operator-console-gate
+make ugr-mission-gate
+py -3.12 -m pytest tests/test_ugr_tenant_isolation.py tests/test_ugr_cost_routing.py tests/test_ugr_marketplace.py tests/test_ugr_cloud_invariants.py tests/test_ugr_mission_demo.py tests/test_ugr_execution_policy.py -q
 py -3.12 -m pytest tests/test_ugr_runtime.py tests/test_unified_pattern_ledger.py tests/test_invariant_engine.py tests/test_ugr_cloud.py tests/test_ugr_ingestion.py tests/test_ugr_llm_lane.py tests/test_ugr_cloud_forge_bridge.py tests/test_ugr_graph_index.py tests/test_ugr_embryo.py tests/test_ugr_causal_graph.py tests/test_ugr_governed_llm_executor.py tests/test_ugr_cogos_pattern_bridge.py tests/test_ugr_graph_backend.py -q
 ```
 

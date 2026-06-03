@@ -1,0 +1,24 @@
+{
+  "mission": {
+    "intent": "governed_super_router_demo",
+    "objective": "Single-step live provider organ mission (requires UGR_LLM_EXECUTE=1)",
+    "operator_id": "mission-demo-operator",
+    "tenant_id": "tenant-us",
+    "aais_instance_id": "aais-primary",
+    "region_id": "tenant-us",
+    "aais_step_bridge": true,
+    "halt_on_failure": true,
+    "constraints": {
+      "max_total_cost_units": 12,
+      "risk_ceiling": "medium"
+    },
+    "steps": [
+      {
+        "step_id": "live-openrouter",
+        "objective": "Governed explain step via OpenRouter mid organ",
+        "organ_id": "organ-openrouter-mid",
+        "tier": "mid"
+      }
+    ]
+  }
+}

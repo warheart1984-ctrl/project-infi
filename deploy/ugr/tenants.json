@@ -1,26 +1,44 @@
 {
-  "config_version": "0.1",
+  "config_version": "1.0",
   "tenants": {
     "global": {
       "label": "Global shared knowledge",
       "enabled": true,
       "shard_id": "shard-global",
       "overlay_global": false,
-      "max_claims_per_query": 100
+      "max_claims_per_query": 100,
+      "allowed_regions": ["local-primary", "tenant-us", "tenant-eu"],
+      "allowed_providers": ["local", "openrouter", "openai"],
+      "cost_ceiling": { "hard_ceil": 500 },
+      "invariant_profile": "default",
+      "receipt_key_id": "global",
+      "federation_grants": []
     },
     "tenant:acme": {
       "label": "Acme Corp overlay",
       "enabled": true,
       "shard_id": "shard-tenant-acme",
       "overlay_global": true,
-      "max_claims_per_query": 50
+      "max_claims_per_query": 50,
+      "allowed_regions": ["tenant-us", "local-primary"],
+      "allowed_providers": ["local", "openrouter", "openai"],
+      "cost_ceiling": { "hard_ceil": 100 },
+      "invariant_profile": "default",
+      "receipt_key_id": "tenant-acme",
+      "federation_grants": []
     },
     "tenant:contoso": {
       "label": "Contoso overlay",
       "enabled": true,
       "shard_id": "shard-tenant-contoso",
       "overlay_global": true,
-      "max_claims_per_query": 50
+      "max_claims_per_query": 50,
+      "allowed_regions": ["tenant-eu", "local-primary"],
+      "allowed_providers": ["local", "openrouter"],
+      "cost_ceiling": { "hard_ceil": 80 },
+      "invariant_profile": "default",
+      "receipt_key_id": "tenant-contoso",
+      "federation_grants": []
     }
   }
 }

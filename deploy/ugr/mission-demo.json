@@ -1,0 +1,38 @@
+{
+  "demo_version": "1.0",
+  "authority": "docs/contracts/URG_MISSION_CONTRACT.md",
+  "mission": {
+    "operator_id": "operator-demo",
+    "tenant_id": "tenant:acme",
+    "aais_instance_id": "aais-local-1",
+    "region_id": "tenant-us",
+    "intent": "governed_super_router_demo",
+    "objective": "One mission, three provider organs, cost + risk + region constraints, fully ledgered.",
+    "constraints": {
+      "max_total_cost_units": 25,
+      "risk_ceiling": "medium",
+      "required_region": "tenant-us"
+    },
+    "context": {
+      "forbid_express": true
+    },
+    "steps": [
+      {
+        "step_id": "scout",
+        "objective": "Bounded local scout pass",
+        "organ_id": "organ-local-tiny"
+      },
+      {
+        "step_id": "relay",
+        "objective": "Mid-tier relay pass",
+        "organ_id": "organ-openrouter-mid"
+      },
+      {
+        "step_id": "synth",
+        "objective": "High-tier synthesis pass",
+        "organ_id": "organ-openai-big"
+      }
+    ],
+    "halt_on_failure": true
+  }
+}

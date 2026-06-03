@@ -61,7 +61,7 @@ make translate-mythic MYTHIC='V9 runtime steward'   # mythic → engineering_cla
 
 **Codex / Cursor naming (new code):** [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md) · **Meta-linguistic governance:** [AAIS_META_LINGUISTIC_GOVERNANCE.md](docs/contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md) — mythic in comments, engineering in identifiers; legacy `*_organ` / `*_fabric` paths grandfathered until Wave 4 MP-X rename.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.26.1 — Release 30.1 OTEM Level 10 Safe Activation](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.1) (tag on GitHub) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.26.1 — Release 30.1 OTEM Level 10 Safe Activation](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.1) (tag on GitHub) · **URG Cloud Platform:** [docs/URG_CLOUD_PLATFORM.md](docs/URG_CLOUD_PLATFORM.md) · tag [`urg-cloud-platform-v1.6`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/urg-cloud-platform-v1.6) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 

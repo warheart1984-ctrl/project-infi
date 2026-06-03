@@ -1,0 +1,16 @@
+{
+  "registry_version": "1.0",
+  "authority": "docs/contracts/URG_MISSION_CONTRACT.md",
+  "instances": {
+    "aais-primary": {
+      "runtime_dir": ".runtime",
+      "bridge": "default",
+      "label": "Primary AAIS instance"
+    },
+    "aais-secondary": {
+      "runtime_dir": ".runtime/aais-secondary",
+      "bridge": "default",
+      "label": "Secondary AAIS instance"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "registry_version": "1.0",
+  "organs": {
+    "organ-test-admit": {
+      "organ_id": "organ-test-admit",
+      "identity": {
+        "organ_id": "organ-test-admit",
+        "tier": "tiny",
+        "label": "Test Admit Organ"
+      },
+      "envelope": {
+        "proposal_only": true,
+        "execution_backend": "local"
+      },
+      "function": {
+        "capabilities": [
+          "governed_super_router_demo"
+        ]
+      },
+      "contract": {
+        "provider": "local",
+        "max_cost_units": 1,
+        "allowed_regions": [
+          "tenant-us"
+        ],
+        "allowed_domains": [
+          "governed_super_router_demo"
+        ],
+        "admissible_rails": [
+          "SAFE"
+        ],
+        "cost_contract": {
+          "cost_per_call": 1.0,
+          "cost_per_token": null,
+          "region_multiplier": {}
+        }
+      },
+      "tenant_scope": "tenant:acme",
+      "status": "admitted",
+      "governance_tier": "standard",
+      "trust_score": 0.5,
+      "admission_receipt_id": null
+    }
+  }
+}

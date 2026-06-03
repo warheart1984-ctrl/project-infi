@@ -11163,6 +11163,87 @@ def clear_detachment_guard_review_hold(source_id):
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/ugr/mission/receipt/<mission_id>", methods=["GET"])
+def ugr_mission_receipt_get(mission_id: str):
+    """Retrieve persisted MissionReceipt by mission_id (tenant-scoped)."""
+    try:
+        from src.ugr.mission.mission_receipt_store import MissionReceiptStore, receipt_admin_enabled
+        from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+        tenant_raw = request.args.get("tenant_id") or request.headers.get("X-URG-Tenant-Id")
+        if not tenant_raw and not receipt_admin_enabled():
+            return jsonify({"error": "tenant_id query parameter required"}), 400
+        tenant_norm = normalize_tenant_id(tenant_raw or "global")
+        record = MissionReceiptStore(tenant_id=tenant_norm).get_receipt(mission_id, tenant_id=tenant_norm)
+        if not record:
+            return jsonify({"error": "receipt_not_found", "mission_id": mission_id}), 404
+        stored_tenant = normalize_tenant_id(record.get("tenant_id") or tenant_norm)
+        if stored_tenant != tenant_norm and not receipt_admin_enabled():
+            return jsonify({"error": "tenant_mismatch", "mission_id": mission_id}), 403
+        return jsonify(record), 200
+    except Exception as e:
+        logger.error(f"Error fetching URG mission receipt: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/marketplace/organs", methods=["GET"])
+def ugr_marketplace_organs_query():
+    """Public organ catalog for a tenant (no auth)."""
+    try:
+        from src.ugr.mission.marketplace import query_organs
+
+        tenant_id = request.args.get("tenant_id") or "global"
+        include_suspended = request.args.get("include_suspended", "").lower() in {"1", "true", "yes"}
+        return jsonify(query_organs(tenant_id=tenant_id, include_suspended=include_suspended)), 200
+    except Exception as e:
+        logger.error(f"Error querying URG marketplace organs: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/mission/governance", methods=["POST"])
+def ugr_mission_governance():
+    """Run a governance mutation mission under cloud_mutation law."""
+    try:
+        from src.ugr.mission.mission_runtime import build_mission_runtime
+
+        data = request.get_json(silent=True) or {}
+        mission_payload = dict(data.get("mission") or data)
+        mission_payload["mission_kind"] = "governance_mutation"
+        if not str(mission_payload.get("operator_id") or "").strip():
+            return jsonify({"error": "operator_id is required"}), 400
+        if not str(mission_payload.get("mutation_target") or "").strip():
+            return jsonify({"error": "mutation_target is required"}), 400
+        result = build_mission_runtime().run_mission(mission_payload)
+        status_code = 200 if result.get("status") in {"ok", "blocked", "rejected"} else 500
+        return jsonify(result), status_code
+    except Exception as e:
+        logger.error(f"Error running URG governance mission: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/mission/run", methods=["POST"])
+def ugr_mission_run():
+    """Run a URG mission — multi-step routing across provider organs under cloud invariants."""
+    try:
+        from src.ugr.mission.mission_runtime import build_mission_runtime
+
+        data = request.get_json(silent=True) or {}
+        mission_payload = dict(data.get("mission") or data)
+        steps = list(mission_payload.get("steps") or [])
+        if not steps:
+            return jsonify({"error": "mission.steps is required (at least one step)"}), 400
+        if not str(mission_payload.get("operator_id") or "").strip():
+            return jsonify({"error": "operator_id is required"}), 400
+        if not str(mission_payload.get("aais_instance_id") or "").strip():
+            return jsonify({"error": "aais_instance_id is required"}), 400
+        result = build_mission_runtime().run_mission(mission_payload)
+        status_code = 200 if result.get("status") in {"ok", "blocked", "rejected"} else 500
+        return jsonify(result), status_code
+    except Exception as e:
+        logger.error(f"Error running URG mission: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/ugr/deliberate", methods=["POST"])
 def ugr_deliberate():
     """Run a governed multi-lane deliberation through the Unified Governed Runtime."""
