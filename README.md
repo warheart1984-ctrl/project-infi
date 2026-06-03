@@ -22,7 +22,7 @@ Think of it in three cooperating layers:
 
 Authoritative references:
 
-- Subsystem map: [`docs/runtime/AAIS_SUBSYSTEM_SPEC.md`](docs/runtime/AAIS_SUBSYSTEM_SPEC.md)
+- Subsystem map: [`docs/runtime/AAIS_SUBSYSTEM_SPEC.md`](docs/runtime/AAIS_SUBSYSTEM_SPEC.md) · Remaining work: [`docs/runtime/SUBSYSTEMS_REMAINING_MAP.md`](docs/runtime/SUBSYSTEMS_REMAINING_MAP.md)
 - UL doctrine: [`docs/contracts/AAIS_UL_DOCTRINE.md`](docs/contracts/AAIS_UL_DOCTRINE.md)
 - Latest UL/CISIV proof: [`docs/proof/aais-ul/UL_CISIV_PHASES_1_5_PROOF.md`](docs/proof/aais-ul/UL_CISIV_PHASES_1_5_PROOF.md)
 
@@ -41,7 +41,7 @@ Architecture is unchanged; documentation and gates use standard engineering lang
 | Fabric | **Coherence Layer** |
 | Summon wave | **Release** |
 
-**Linguistic naming schema** — each governed subsystem schema carries mythic and engineering names on its SSP block (169 genomes at **v1.24.0**, 163 governed at Release 27):
+**Linguistic naming schema** — each governed subsystem schema carries mythic and engineering names on its SSP block (**170 governed** genomes at **v1.25.0**):
 
 | SSP field | Example (Release 22) | Role |
 |-----------|----------------------|------|
@@ -59,7 +59,7 @@ make translate-mythic MYTHIC='V9 runtime steward'   # mythic → engineering_cla
 
 **Codex / Cursor naming (new code):** [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md) · **Meta-linguistic governance:** [AAIS_META_LINGUISTIC_GOVERNANCE.md](docs/contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md) — mythic in comments, engineering in identifiers; legacy `*_organ` / `*_fabric` paths grandfathered until Wave 4 MP-X rename.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.24.0 — Release 28 Story Forge Expansion Fabric](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.24.0) (tag on GitHub) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.25.0 — Release 29 Integration and Story Forge Execution Fabric](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.25.0) (tag on GitHub) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -399,8 +399,8 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
-| Latest tag | [`v1.24.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.24.0) — **Release 28** — Story Forge expansion (6 organs), 169 genomes, frontier provider catalog, Coherence v1.23 ([release notes](docs/releases/v1.24.0-release28-storyforge-expansion-fabric.md), [CHANGELOG](CHANGELOG.md) §1.24.0) |
-| Summon wave | [`alt28-summon-wave-2026-06`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/alt28-summon-wave-2026-06) — Release 28 batch marker (same commit as `v1.24.0`) |
+| Latest tag | [`v1.25.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.25.0) — **Release 29** — Story Forge execution fabric, universal integration proof, media processor bridge, 170 governed genomes, Coherence v1.24 ([release notes](docs/releases/v1.25.0-release29-integration-storyforge-execution.md), [CHANGELOG](CHANGELOG.md) §1.25.0) |
+| Summon wave | [`alt29-summon-wave-2026-06`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/alt29-summon-wave-2026-06) — Release 29 batch marker (same commit as `v1.25.0`) |
 | Prior tag | [`v1.23.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.23.0) — **Release 27** — 163 governed schemas, CISIV early ideas bundle, Coherence Layer v1.22 ([release notes](docs/releases/v1.23.0-release27-cisiv-early-ideas-fabric.md), [CHANGELOG](CHANGELOG.md) §1.23.0) |
 | Prior tag | [`v1.22.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.22.0) — **Release 26** — 163 governed schemas, operational closure, Coherence Layer v1.21 ([release notes](docs/releases/v1.22.0-release26-operational-closure.md), [CHANGELOG](CHANGELOG.md) §1.22.0) |
 | Prior tag | [`v1.21.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.21.0) — **Release 25** — 160 governed schemas, governed linguistic lifecycle fabric, Coherence Layer v1.20 ([release notes](docs/releases/v1.21.0-release25-governed-linguistic-lifecycle.md), [CHANGELOG](CHANGELOG.md) §1.21.0) |

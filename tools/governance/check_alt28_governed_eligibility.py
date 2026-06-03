@@ -54,8 +54,11 @@ def check_eligibility(root: Path | None = None) -> list[str]:
 
     fabric = build_coherence_fabric_status(root=root)
     version = fabric.get("operator_cognition_coherence_fabric_version")
-    if version != "operator_cognition_coherence_fabric.v1.23":
-        errors.append(f"coherence layer must be v1.23 (got {version})")
+    if version not in {
+        "operator_cognition_coherence_fabric.v1.23",
+        "operator_cognition_coherence_fabric.v1.24",
+    }:
+        errors.append(f"coherence layer must be v1.23+ (got {version})")
     if len(fabric.get("story_forge_expansion_layer") or []) < 6:
         errors.append("expected 6 story_forge_expansion_layer entries")
     if not fabric.get("story_forge_expansion_bundle_aligned"):

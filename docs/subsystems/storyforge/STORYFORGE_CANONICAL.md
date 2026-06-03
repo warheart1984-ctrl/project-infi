@@ -94,15 +94,19 @@ Live or exercised today:
 - Speakers voice/mix path
 - final movie assembly path through the governed capability
 
-## 7. What Is Not Yet Admitted As A First-Class AAIS Surface
+## 7. Narrow Status vs Full Execution (Release 28 → 29)
 
-Not yet admitted as broad AAIS runtime surfaces:
+**Release 28 (Alt28)** admitted six Story Forge expansion organs at **governed status**
+with read-only `GET .../status` posture APIs.
 
-- the standalone Story Forge launcher
-- the full movie renderer as a direct operator lane
-- the text-game-to-video front door
-- the game front door
-- the text-to-3D world lane as an AAIS live lane
+**Release 29 (Alt29)** adds **governed execution paths** via `capability_service_bridge`
+for each organ (intake, propose render, session admit, world-lane stub, pack inspect).
+Coherence Layer **v1.24** tracks `story_forge_execution_layer` and execution proofs.
+
+Still not broad AAIS runtime surfaces:
+
+- full standalone Story Forge operator product UI
+- ungoverned writes from text-to-3D or world-pack lanes
 - broad direct provider use outside the governed capability boundary
 
 ## 8. Expansion Rule

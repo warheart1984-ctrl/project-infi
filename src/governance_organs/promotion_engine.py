@@ -81,6 +81,7 @@ GENE_GATES: dict[str, str] = {
     "game_front_door_organ": "game-front-door-organ-gate",
     "text_to_3d_world_lane_organ": "text-to-3d-world-lane-organ-gate",
     "world_pack_lane_organ": "world-pack-lane-organ-gate",
+    "media_processor_bridge_organ": "media-processor-bridge-organ-gate",
     "document_vision_organ": "document-vision-organ-gate",
     "ui_vision_organ": "ui-vision-organ-gate",
     "perception_gateway_organ": "perception-gateway-organ-gate",
@@ -302,22 +303,25 @@ GATE_SCRIPTS: dict[str, list[str]] = {
         ".github/scripts/check-narrative-trust-pack-organ-governance.py"
     ],
     "story-forge-launcher-organ-gate": [
-        ".github/scripts/check-story-forge-launcher-organ-governance.py"
+        ".github/scripts/check-story-forge-launcher-organ-gate-governance.py"
     ],
     "movie-renderer-lane-organ-gate": [
-        ".github/scripts/check-movie-renderer-lane-organ-governance.py"
+        ".github/scripts/check-movie-renderer-lane-organ-gate-governance.py"
     ],
     "text-game-to-video-organ-gate": [
-        ".github/scripts/check-text-game-to-video-organ-governance.py"
+        ".github/scripts/check-text-game-to-video-organ-gate-governance.py"
     ],
     "game-front-door-organ-gate": [
-        ".github/scripts/check-game-front-door-organ-governance.py"
+        ".github/scripts/check-game-front-door-organ-gate-governance.py"
     ],
     "text-to-3d-world-lane-organ-gate": [
-        ".github/scripts/check-text-to-3d-world-lane-organ-governance.py"
+        ".github/scripts/check-text-to-3d-world-lane-organ-gate-governance.py"
     ],
     "world-pack-lane-organ-gate": [
-        ".github/scripts/check-world-pack-lane-organ-governance.py"
+        ".github/scripts/check-world-pack-lane-organ-gate-governance.py"
+    ],
+    "media-processor-bridge-organ-gate": [
+        ".github/scripts/check-media-processor-bridge-organ-gate-governance.py"
     ],
     "document-vision-organ-gate": [
         ".github/scripts/check-document-vision-organ-governance.py"

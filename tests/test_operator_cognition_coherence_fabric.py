@@ -451,11 +451,22 @@ def test_alt27_early_ideas_layers_at_v122():
 def test_alt28_story_forge_expansion_layers_at_v123():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status["operator_cognition_coherence_fabric_version"] == (
-        "operator_cognition_coherence_fabric.v1.23"
+        "operator_cognition_coherence_fabric.v1.24"
     )
     assert len(status.get("story_forge_expansion_layer") or []) == 6
     assert status.get("story_forge_expansion_aligned") is True
     assert status.get("story_forge_expansion_bundle_aligned") is True
+
+
+def test_alt29_story_forge_execution_layers_at_v124():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    assert status["operator_cognition_coherence_fabric_version"] == (
+        "operator_cognition_coherence_fabric.v1.24"
+    )
+    assert len(status.get("story_forge_execution_layer") or []) == 6
+    assert status.get("story_forge_execution_aligned") is True
+    assert status.get("story_forge_execution_bundle_aligned") is True
+    assert status.get("integration_universal_bundle_aligned") is True
 
 
 def test_alt18_project_infi_law_planes_at_v113():

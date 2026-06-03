@@ -7,6 +7,20 @@ Nothing here is live system truth unless promoted per the rule below.
 
 SSP governs new admissions — see [../../contracts/AAIS_SSP_PROTOCOL.md](../../contracts/AAIS_SSP_PROTOCOL.md).
 
+## Promoted to Governed (Release 28 MVP / Release 29 execution)
+
+| Idea | Active doc | Concept spec | Proof |
+|------|------------|--------------|-------|
+| Story Forge Launcher Organ | [../../subsystems/storyforge/STORY_FORGE_LAUNCHER.md](../../subsystems/storyforge/STORY_FORGE_LAUNCHER.md) | [STORY_FORGE_LAUNCHER_ORGAN.md](./STORY_FORGE_LAUNCHER_ORGAN.md) | [../../proof/storyforge/STORY_FORGE_LAUNCHER_ORGAN_GOVERNED_PROOF.md](../../proof/storyforge/STORY_FORGE_LAUNCHER_ORGAN_GOVERNED_PROOF.md) |
+| Movie Renderer Lane Organ | [../../subsystems/storyforge/MOVIE_RENDERER_LANE.md](../../subsystems/storyforge/MOVIE_RENDERER_LANE.md) | [MOVIE_RENDERER_LANE_ORGAN.md](./MOVIE_RENDERER_LANE_ORGAN.md) | [../../proof/storyforge/MOVIE_RENDERER_LANE_ORGAN_GOVERNED_PROOF.md](../../proof/storyforge/MOVIE_RENDERER_LANE_ORGAN_GOVERNED_PROOF.md) |
+| Text-Game-to-Video Organ | [../../subsystems/storyforge/TEXT_GAME_TO_VIDEO.md](../../subsystems/storyforge/TEXT_GAME_TO_VIDEO.md) | [TEXT_GAME_TO_VIDEO_ORGAN.md](./TEXT_GAME_TO_VIDEO_ORGAN.md) | [../../proof/storyforge/TEXT_GAME_TO_VIDEO_ORGAN_GOVERNED_PROOF.md](../../proof/storyforge/TEXT_GAME_TO_VIDEO_ORGAN_GOVERNED_PROOF.md) |
+| Game Front Door Organ | [../../subsystems/storyforge/GAME_FRONT_DOOR.md](../../subsystems/storyforge/GAME_FRONT_DOOR.md) | [GAME_FRONT_DOOR_ORGAN.md](./GAME_FRONT_DOOR_ORGAN.md) | [../../proof/storyforge/GAME_FRONT_DOOR_ORGAN_GOVERNED_PROOF.md](../../proof/storyforge/GAME_FRONT_DOOR_ORGAN_GOVERNED_PROOF.md) |
+| Text-to-3D World Lane Organ | [../../subsystems/storyforge/TEXT_TO_3D_WORLD_LANE.md](../../subsystems/storyforge/TEXT_TO_3D_WORLD_LANE.md) | [TEXT_TO_3D_WORLD_LANE_ORGAN.md](./TEXT_TO_3D_WORLD_LANE_ORGAN.md) | [../../proof/storyforge/TEXT_TO_3D_WORLD_LANE_ORGAN_GOVERNED_PROOF.md](../../proof/storyforge/TEXT_TO_3D_WORLD_LANE_ORGAN_GOVERNED_PROOF.md) |
+| World Pack Lane Organ | [../../subsystems/storyforge/WORLD_PACK_LANE.md](../../subsystems/storyforge/WORLD_PACK_LANE.md) | [WORLD_PACK_LANE_ORGAN.md](./WORLD_PACK_LANE_ORGAN.md) | [../../proof/storyforge/WORLD_PACK_LANE_ORGAN_GOVERNED_PROOF.md](../../proof/storyforge/WORLD_PACK_LANE_ORGAN_GOVERNED_PROOF.md) |
+| Media Processor Bridge Organ | [../../subsystems/platform/MEDIA_PROCESSOR_BRIDGE_ORGAN.md](../../subsystems/platform/MEDIA_PROCESSOR_BRIDGE_ORGAN.md) | [MEDIA_PROCESSOR_BRIDGE_ORGAN.md](./MEDIA_PROCESSOR_BRIDGE_ORGAN.md) | [../../proof/platform/MEDIA_PROCESSOR_BRIDGE_ORGAN_GOVERNED_PROOF.md](../../proof/platform/MEDIA_PROCESSOR_BRIDGE_ORGAN_GOVERNED_PROOF.md) |
+
+Execution proofs (Release 29): `docs/proof/storyforge/*_EXECUTION_V1_PROOF.md`, `INTEGRATION_UNIVERSAL_BUNDLE_V1_PROOF.md`.
+
 ## Promoted to Governed (Release 27)
 
 | Idea | Active doc | Concept spec | Proof |

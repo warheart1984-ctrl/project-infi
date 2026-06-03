@@ -13,6 +13,34 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.25.0] - 2026-06-03 — Release 29 Integration and Story Forge Execution Fabric
+
+**Release 29** (`alt29-summon-wave-2026-06`) — Alt28 six-pack governed; Story Forge execution bridge; coherence v1.24; universal integration proof; `media_processor_bridge_organ` (170 governed).
+
+### Added
+
+- **Release 29.0** — `media_processor_bridge_organ`; `GET /api/jarvis/media-processor-bridge/status`; `make alt29-gate`; `tools/governance/alt29_promote_mvp.py`, `alt29_promote_governed.py`
+- **Story Forge execution** — bridge actions for six Alt28 organs; `*_EXECUTION_V1_PROOF.md`; `story_forge_execution_layer` in coherence v1.24
+- **Integration universal** — `src/alt29_platform_integration.py`, `INTEGRATION_UNIVERSAL_BUNDLE_V1_PROOF.md`, `perception_gateway_organ.route_perception_entry`
+- **Docs** — [SUBSYSTEMS_REMAINING_MAP.md](docs/runtime/SUBSYSTEMS_REMAINING_MAP.md); §8/§9 and `STORYFORGE_CANONICAL` §7 updates
+
+### Changed
+
+- **170 governed** genomes (169 + media bridge)
+- `operator_cognition_coherence_fabric` runtime schema → v1.24
+- Capability bridge rejects unregistered `(capability_id, action)` pairs
+- Promotion engine gate script paths fixed for Alt28 organ gates (`*-gate-governance.py`)
+- `ModuleGovernanceError` restored for module entry gate imports
+
+### Verification (v1.25.0)
+
+```bash
+make alt29-gate alt29-1-gate alt29-2-gate alt29-governed-gate
+python -m pytest tests/test_story_forge_* tests/test_media_processor_bridge_organ.py tests/test_alt29*.py -q
+```
+
+[1.25.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.25.0
+
 ## [1.24.0] - 2026-06-03 — Release 28 Story Forge Expansion Fabric
 
 **Release 28** (`alt28-summon-wave-2026-06`) — six Story Forge expansion subsystems; Coherence Layer v1.23; frontier model provider catalog; chat latency caches; genome lineage symmetry fixes for boot.

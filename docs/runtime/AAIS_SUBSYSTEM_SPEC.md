@@ -1324,6 +1324,13 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | Linguistic Governance Day Subsystem | governed | [../subsystems/platform/LINGUISTIC_GOVERNANCE_DAY_ORGAN.md](../subsystems/platform/LINGUISTIC_GOVERNANCE_DAY_ORGAN.md) | [../proof/platform/LINGUISTIC_GOVERNANCE_DAY_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_GOVERNANCE_DAY_ORGAN_V1_PROOF.md) |
 | Linguistic Work Order History Subsystem | governed | [../subsystems/platform/LINGUISTIC_WORK_ORDER_HISTORY_ORGAN.md](../subsystems/platform/LINGUISTIC_WORK_ORDER_HISTORY_ORGAN.md) | [../proof/platform/LINGUISTIC_WORK_ORDER_HISTORY_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_WORK_ORDER_HISTORY_ORGAN_V1_PROOF.md) |
 | Linguistic Attestation History Subsystem | governed | [../subsystems/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN.md](../subsystems/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN.md) | [../proof/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN_V1_PROOF.md) |
+| Story Forge Launcher Organ | governed | [../subsystems/storyforge/STORY_FORGE_LAUNCHER.md](../subsystems/storyforge/STORY_FORGE_LAUNCHER.md) | [../proof/storyforge/STORY_FORGE_LAUNCHER_ORGAN_GOVERNED_PROOF.md](../proof/storyforge/STORY_FORGE_LAUNCHER_ORGAN_GOVERNED_PROOF.md) |
+| Movie Renderer Lane Organ | governed | [../subsystems/storyforge/MOVIE_RENDERER_LANE.md](../subsystems/storyforge/MOVIE_RENDERER_LANE.md) | [../proof/storyforge/MOVIE_RENDERER_LANE_ORGAN_GOVERNED_PROOF.md](../proof/storyforge/MOVIE_RENDERER_LANE_ORGAN_GOVERNED_PROOF.md) |
+| Text-Game-to-Video Organ | governed | [../subsystems/storyforge/TEXT_GAME_TO_VIDEO.md](../subsystems/storyforge/TEXT_GAME_TO_VIDEO.md) | [../proof/storyforge/TEXT_GAME_TO_VIDEO_ORGAN_GOVERNED_PROOF.md](../proof/storyforge/TEXT_GAME_TO_VIDEO_ORGAN_GOVERNED_PROOF.md) |
+| Game Front Door Organ | governed | [../subsystems/storyforge/GAME_FRONT_DOOR.md](../subsystems/storyforge/GAME_FRONT_DOOR.md) | [../proof/storyforge/GAME_FRONT_DOOR_ORGAN_GOVERNED_PROOF.md](../proof/storyforge/GAME_FRONT_DOOR_ORGAN_GOVERNED_PROOF.md) |
+| Text-to-3D World Lane Organ | governed | [../subsystems/storyforge/TEXT_TO_3D_WORLD_LANE.md](../subsystems/storyforge/TEXT_TO_3D_WORLD_LANE.md) | [../proof/storyforge/TEXT_TO_3D_WORLD_LANE_ORGAN_GOVERNED_PROOF.md](../proof/storyforge/TEXT_TO_3D_WORLD_LANE_ORGAN_GOVERNED_PROOF.md) |
+| World Pack Lane Organ | governed | [../subsystems/storyforge/WORLD_PACK_LANE.md](../subsystems/storyforge/WORLD_PACK_LANE.md) | [../proof/storyforge/WORLD_PACK_LANE_ORGAN_GOVERNED_PROOF.md](../proof/storyforge/WORLD_PACK_LANE_ORGAN_GOVERNED_PROOF.md) |
+| Media Processor Bridge Organ | governed | [../subsystems/platform/MEDIA_PROCESSOR_BRIDGE_ORGAN.md](../subsystems/platform/MEDIA_PROCESSOR_BRIDGE_ORGAN.md) | [../proof/platform/MEDIA_PROCESSOR_BRIDGE_ORGAN_GOVERNED_PROOF.md](../proof/platform/MEDIA_PROCESSOR_BRIDGE_ORGAN_GOVERNED_PROOF.md) |
 
 Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate alt13-governed-gate alt14-governed-gate alt15-governed-gate alt16-governed-gate alt17-governed-gate alt18-governed-gate alt19-governed-gate alt20-governed-gate alt21-governed-gate alt22-governed-gate alt23-governed-gate alt26-governed-gate alt27-governed-gate`
 
@@ -1332,13 +1339,11 @@ Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate 
 Ideas at CISIV **concept** stage per [AAIS_SSP_PROTOCOL.md](../contracts/AAIS_SSP_PROTOCOL.md).
 Nothing here is live until promoted per [ideas_pending/README.md](../_future/ideas_pending/README.md).
 
+Release 28 Story Forge expansion organs and Release 29 `media_processor_bridge_organ` graduated to §8.
+See [SUBSYSTEMS_REMAINING_MAP.md](./SUBSYSTEMS_REMAINING_MAP.md) for genome queue and partial→live families.
+
 | Idea | Status | Concept spec | MVP plan | Genome |
 |------|--------|--------------|----------|--------|
-| Story Forge Launcher | concept | [STORY_FORGE_LAUNCHER_ORGAN.md](../_future/ideas_pending/STORY_FORGE_LAUNCHER_ORGAN.md) | [STORY_FORGE_LAUNCHER_ORGAN_MVP_PLAN.md](../_future/ideas_pending/STORY_FORGE_LAUNCHER_ORGAN_MVP_PLAN.md) | `story_forge_launcher_organ` |
-| Movie Renderer Lane | concept | [MOVIE_RENDERER_LANE_ORGAN.md](../_future/ideas_pending/MOVIE_RENDERER_LANE_ORGAN.md) | [MOVIE_RENDERER_LANE_ORGAN_MVP_PLAN.md](../_future/ideas_pending/MOVIE_RENDERER_LANE_ORGAN_MVP_PLAN.md) | `movie_renderer_lane_organ` |
-| Text-Game-to-Video Front Door | concept | [TEXT_GAME_TO_VIDEO_ORGAN.md](../_future/ideas_pending/TEXT_GAME_TO_VIDEO_ORGAN.md) | [TEXT_GAME_TO_VIDEO_ORGAN_MVP_PLAN.md](../_future/ideas_pending/TEXT_GAME_TO_VIDEO_ORGAN_MVP_PLAN.md) | `text_game_to_video_organ` |
-| Game Front Door | concept | [GAME_FRONT_DOOR_ORGAN.md](../_future/ideas_pending/GAME_FRONT_DOOR_ORGAN.md) | [GAME_FRONT_DOOR_ORGAN_MVP_PLAN.md](../_future/ideas_pending/GAME_FRONT_DOOR_ORGAN_MVP_PLAN.md) | `game_front_door_organ` |
-| Text-to-3D World Lane | concept | [TEXT_TO_3D_WORLD_LANE_ORGAN.md](../_future/ideas_pending/TEXT_TO_3D_WORLD_LANE_ORGAN.md) | [TEXT_TO_3D_WORLD_LANE_ORGAN_MVP_PLAN.md](../_future/ideas_pending/TEXT_TO_3D_WORLD_LANE_ORGAN_MVP_PLAN.md) | `text_to_3d_world_lane_organ` |
-| World Pack Lane | concept | [WORLD_PACK_LANE_ORGAN.md](../_future/ideas_pending/WORLD_PACK_LANE_ORGAN.md) | [WORLD_PACK_LANE_ORGAN_MVP_PLAN.md](../_future/ideas_pending/WORLD_PACK_LANE_ORGAN_MVP_PLAN.md) | `world_pack_lane_organ` |
+| *(none — queue empty for summon genes)* | — | — | — | — |
 
 New admissions via SSP (Step 7) update this table. Graduated ideas move to §8. Genome contract: [AAIS_SUBSYSTEM_GENOME.md](../contracts/AAIS_SUBSYSTEM_GENOME.md).

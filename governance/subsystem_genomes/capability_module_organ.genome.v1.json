@@ -55,6 +55,7 @@
       "aris_boundary_organ"
     ],
     "children": [
+      "media_processor_bridge_organ",
       "patchforge_organ",
       "perception_gateway_organ"
     ]

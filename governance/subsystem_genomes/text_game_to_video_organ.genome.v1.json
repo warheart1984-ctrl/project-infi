@@ -2,8 +2,8 @@
   "subsystem_genome_version": "subsystem_genome.v1",
   "identity": {
     "gene": "text_game_to_video_organ",
-    "version": "1.0.0-mvp",
-    "stage": "mvp",
+    "version": "1.0.0-governed",
+    "stage": "governed",
     "display_name": "Text-Game-to-Video Front Door"
   },
   "governance": {
@@ -14,7 +14,9 @@
       "docs/contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md",
       "docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md",
       "docs/runtime/AAIS_RUNTIME_GUIDE.md",
-      "docs/subsystems/storyforge/STORYFORGE_CANONICAL.md"
+      "docs/subsystems/storyforge/STORYFORGE_CANONICAL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
     ],
     "invariants": [
       "Read-only v1 \u2014 organ does not mutate upstream authority",
@@ -23,7 +25,7 @@
   },
   "schema": {
     "ref": "schemas/text_game_to_video_organ.v1.json",
-    "frozen": false
+    "frozen": true
   },
   "runtime": {
     "surface": [
@@ -43,9 +45,9 @@
   },
   "proof": {
     "bundles": [
-      "docs/proof/storyforge/TEXT_GAME_TO_VIDEO_ORGAN_V1_PROOF.md"
+      "docs/proof/storyforge/TEXT_GAME_TO_VIDEO_ORGAN_GOVERNED_PROOF.md"
     ],
-    "posture": "asserted",
+    "posture": "governed",
     "target_bundles": [
       "docs/proof/storyforge/TEXT_GAME_TO_VIDEO_ORGAN_V1_PROOF.md"
     ]
@@ -63,7 +65,7 @@
   "activation": {
     "order": 3,
     "batch_id": "alt28-summon-wave-2026-06",
-    "notes": "Release 28 wave 3"
+    "notes": "Release 28 wave 3; alt29-execution-wave"
   },
   "retirement": {
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"

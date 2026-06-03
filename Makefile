@@ -285,6 +285,24 @@ capability-bridge-gate:
 memory-board-gate:
 	python3 .github/scripts/check-memory-board-governance.py
 
+coding-organs-gate:
+	python3 .github/scripts/check-subsystem-mvp-integration-governance.py
+
+otem-execution-substrate-gate:
+	python3 .github/scripts/check-subsystem-mvp-integration-governance.py
+
+aris-standalone-gate:
+	python3 .github/scripts/check-subsystem-mvp-integration-governance.py
+
+media-processor-gate:
+	python3 .github/scripts/check-subsystem-mvp-integration-governance.py
+
+dreamspace-organ-gate:
+	python3 .github/scripts/check-subsystem-mvp-integration-governance.py
+
+subsystem-mvp-gate:
+	python3 .github/scripts/check-subsystem-mvp-integration-governance.py
+
 governed-pipeline-gate:
 	python3 .github/scripts/check-governed-pipeline-governance.py
 
@@ -1096,6 +1114,21 @@ alt28-2-gate: alt28-1-gate alt28-closure-gate
 
 alt28-governed-gate:
 	python3 tools/governance/check_alt28_governed_eligibility.py
+
+media-processor-bridge-organ-gate:
+	python3 .github/scripts/check-media-processor-bridge-organ-gate-governance.py
+
+alt29-gate: alt28-governed-gate media-processor-bridge-organ-gate genome-gate
+
+alt29-1-gate: alt29-gate alt28-2-gate
+
+alt29-closure-gate:
+	python3 tools/governance/check_alt29_closure.py
+
+alt29-2-gate: alt29-1-gate alt29-closure-gate
+
+alt29-governed-gate:
+	python3 tools/governance/check_alt29_governed_eligibility.py
 
 alt23-1-gate: alt23-gate alt22-1-gate
 

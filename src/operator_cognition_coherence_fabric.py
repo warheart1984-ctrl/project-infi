@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.23"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.24"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -419,6 +419,7 @@ def _build_memory_governance_posture() -> list[dict[str, Any]]:
                 "stage": str(status.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
                 "claim_label": str(status.get("claim_label") or "asserted")[:32],
                 "paths_documented": organ_id == "memory_path_governance_organ",
+                "memory_paths_aligned": bool(status.get("memory_paths_aligned")),
             }
         )
     return posture
@@ -430,6 +431,8 @@ def _memory_paths_aligned(memory_posture: list[dict[str, Any]]) -> bool:
     for item in memory_posture:
         if str(item.get("claim_label") or "") == "rejected":
             return False
+        if item.get("organ_id") == "memory_path_governance_organ":
+            return bool(item.get("memory_paths_aligned"))
     return True
 
 
@@ -2117,6 +2120,41 @@ def _build_constitutional_bridge_layer(root: Path) -> list[dict[str, Any]]:
     ]
 
 
+def _story_forge_execution_proof_ready(root: Path, gene: str) -> bool:
+    proof = root / f"docs/proof/storyforge/{gene.upper()}_EXECUTION_V1_PROOF.md"
+    return proof.is_file()
+
+
+def _build_story_forge_execution_layer(root: Path) -> list[dict[str, Any]]:
+    from src.game_front_door_organ import build_game_front_door_status
+    from src.movie_renderer_lane_organ import build_movie_renderer_lane_status
+    from src.story_forge_launcher_organ import build_story_forge_launcher_status
+    from src.text_game_to_video_organ import build_text_game_to_video_status
+    from src.text_to_3d_world_lane_organ import build_text_to_3d_world_lane_status
+    from src.world_pack_lane_organ import build_world_pack_lane_status
+
+    genes = (
+        ("story_forge_launcher_organ", build_story_forge_launcher_status),
+        ("movie_renderer_lane_organ", build_movie_renderer_lane_status),
+        ("text_game_to_video_organ", build_text_game_to_video_status),
+        ("game_front_door_organ", build_game_front_door_status),
+        ("text_to_3d_world_lane_organ", build_text_to_3d_world_lane_status),
+        ("world_pack_lane_organ", build_world_pack_lane_status),
+    )
+    layer: list[dict[str, Any]] = []
+    for gene, builder in genes:
+        snap = builder(root=root)
+        snap["execution_proof_present"] = _story_forge_execution_proof_ready(root, gene)
+        layer.append(
+            _organ_posture_item(
+                gene,
+                snap,
+                read_only=bool(snap.get("read_only", True)),
+            )
+        )
+    return layer
+
+
 def _build_story_forge_expansion_layer() -> list[dict[str, Any]]:
     from src.game_front_door_organ import build_game_front_door_status
     from src.movie_renderer_lane_organ import build_movie_renderer_lane_status
@@ -2363,6 +2401,14 @@ def build_coherence_fabric_status(
     constitutional_bridge_layer = _build_constitutional_bridge_layer(root)
     creative_trust_chain_layer = _build_creative_trust_chain_layer()
     story_forge_expansion_layer = _build_story_forge_expansion_layer()
+    story_forge_execution_layer = _build_story_forge_execution_layer(root)
+
+    from src.alt29_platform_integration import (
+        build_integration_universal_posture,
+        integration_universal_aligned,
+    )
+
+    integration_posture = build_integration_universal_posture(root=root)
 
     linguistic_governed_lifecycle_aligned = (
         _layer_aligned(linguistic_forecast_layer, minimum=3)
@@ -2421,6 +2467,27 @@ def build_coherence_fabric_status(
         story_forge_expansion_aligned
         and cisiv_early_ideas_bundle_aligned
     )
+    story_forge_execution_aligned = _layer_aligned(
+        story_forge_execution_layer,
+        minimum=6,
+    ) and all(
+        _story_forge_execution_proof_ready(root, str(item.get("organ_id") or ""))
+        for item in story_forge_execution_layer
+        if isinstance(item, dict)
+    )
+    story_forge_execution_bundle_aligned = (
+        story_forge_execution_aligned
+        and story_forge_expansion_bundle_aligned
+    )
+    memory_governance_universal_aligned = bool(
+        integration_posture.get("memory_governance_universal_ready")
+    )
+    capability_bridge_universal_aligned = bool(
+        integration_posture.get("capability_bridge_universal_ready")
+    )
+    pipeline_transport_aligned = bool(integration_posture.get("pipeline_transport_ready"))
+    perception_router_aligned = bool(integration_posture.get("perception_router_ready"))
+    integration_universal_bundle_aligned = integration_universal_aligned(root=root)
 
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
@@ -2643,6 +2710,15 @@ def build_coherence_fabric_status(
         "story_forge_expansion_layer": story_forge_expansion_layer,
         "story_forge_expansion_aligned": story_forge_expansion_aligned,
         "story_forge_expansion_bundle_aligned": story_forge_expansion_bundle_aligned,
+        "story_forge_execution_layer": story_forge_execution_layer,
+        "story_forge_execution_aligned": story_forge_execution_aligned,
+        "story_forge_execution_bundle_aligned": story_forge_execution_bundle_aligned,
+        "integration_universal_posture": integration_posture,
+        "memory_governance_universal_aligned": memory_governance_universal_aligned,
+        "capability_bridge_universal_aligned": capability_bridge_universal_aligned,
+        "pipeline_transport_aligned": pipeline_transport_aligned,
+        "perception_router_aligned": perception_router_aligned,
+        "integration_universal_bundle_aligned": integration_universal_bundle_aligned,
         "cisiv_early_ideas_bundle_aligned": cisiv_early_ideas_bundle_aligned,
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,

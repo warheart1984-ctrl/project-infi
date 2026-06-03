@@ -22,6 +22,10 @@ from src.cisiv import CISIV_STAGE_LABELS, CISIV_STAGE_SEQUENCE
 PROTOCOL_ID = "aais.module_governance"
 PROTOCOL_VERSION = "1.1"
 
+
+class ModuleGovernanceError(RuntimeError):
+    """Raised when module governance blocks admission or execution."""
+
 CORE_LINES = [
     "Privacy is not a feature. It is a requirement for existence.",
     "The system may serve the user, but it must never possess the user.",

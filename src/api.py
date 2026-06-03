@@ -8075,8 +8075,12 @@ def extract_image_text():
 
         image_file = request.files["image"]
         image = Image.open(image_file.stream).convert("RGB")
-        result = document_vision.extract_document_text(image)
-        return jsonify(result)
+        from src.perception_gateway_organ import route_perception_entry
+
+        result = route_perception_entry("document_vision", {"image": image})
+        if not result.get("ok"):
+            return jsonify({"error": result.get("error", "perception route failed")}), 503
+        return jsonify(result.get("result") or result)
     except DocumentVisionUnavailable as e:
         logger.warning(f"Document vision unavailable: {str(e)}")
         return jsonify({"error": str(e)}), 503
@@ -12425,6 +12429,22 @@ def get_world_pack_lane_organ_status():
         )
     except Exception as e:
         logger.error(f"Error reading world pack lane status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/media-processor-bridge/status", methods=["GET"])
+def get_media_processor_bridge_organ_status():
+    """Read-only media processor bridge organ snapshot (Release 29)."""
+    try:
+        from src.media_processor_bridge_organ import build_media_processor_bridge_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"media_processor_bridge": build_media_processor_bridge_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading media processor bridge status: {e}")
         return jsonify({"error": str(e)}), 500
 
 

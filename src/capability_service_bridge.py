@@ -175,6 +175,36 @@ class CapabilityServiceBridge:
             provider_name="aais_narrative",
             supported_actions={"pack", "verify", "signoff"},
         )
+        self._story_forge_launcher_module = ConfiguredCapabilityModule(
+            module_name="story_forge_launcher",
+            provider_name="aais_story_forge",
+            supported_actions={"intake"},
+        )
+        self._movie_renderer_lane_module = ConfiguredCapabilityModule(
+            module_name="movie_renderer_lane",
+            provider_name="aais_story_forge",
+            supported_actions={"propose_render"},
+        )
+        self._text_game_to_video_module = ConfiguredCapabilityModule(
+            module_name="text_game_to_video",
+            provider_name="aais_story_forge",
+            supported_actions={"propose_render_plan"},
+        )
+        self._game_front_door_module = ConfiguredCapabilityModule(
+            module_name="game_front_door",
+            provider_name="aais_story_forge",
+            supported_actions={"admit_session"},
+        )
+        self._text_to_3d_world_lane_module = ConfiguredCapabilityModule(
+            module_name="text_to_3d_world_lane",
+            provider_name="aais_story_forge",
+            supported_actions={"world_lane_route"},
+        )
+        self._world_pack_lane_module = ConfiguredCapabilityModule(
+            module_name="world_pack_lane",
+            provider_name="aais_story_forge",
+            supported_actions={"inspect_manifest"},
+        )
 
         self._route_specs = [
             {
@@ -692,6 +722,155 @@ class CapabilityServiceBridge:
                     },
                 ),
             },
+            {
+                "capability_id": "story_forge_launcher",
+                "capability_label": "Story Forge Launcher",
+                "capability_summary": "Structured Story Forge source intake (governed admission gate).",
+                "tool": "story_forge_launcher_intake",
+                "tool_label": "Story Forge Intake",
+                "action": "intake",
+                "action_label": "Intake Source",
+                "module": self._story_forge_launcher_module,
+                "aliases": ("story_forge_launcher_intake", "story_forge_intake"),
+                "handler": self._handle_story_forge_launcher_intake,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "source_ref",
+                        "label": "Structured Source Ref",
+                        "type": "text",
+                        "required": True,
+                    },
+                ),
+            },
+            {
+                "capability_id": "movie_renderer_lane",
+                "capability_label": "Movie Renderer Lane",
+                "capability_summary": "Propose movie render step post-BackendBuildArtifact.",
+                "tool": "movie_renderer_lane_propose",
+                "tool_label": "Propose Render",
+                "action": "propose_render",
+                "action_label": "Propose Render",
+                "module": self._movie_renderer_lane_module,
+                "aliases": ("movie_renderer_propose", "movie_renderer_lane"),
+                "handler": self._handle_movie_renderer_lane_propose,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "backend_build_artifact_ref",
+                        "label": "Backend Build Artifact Ref",
+                        "type": "text",
+                        "required": True,
+                    },
+                ),
+            },
+            {
+                "capability_id": "text_game_to_video",
+                "capability_label": "Text-Game-to-Video",
+                "capability_summary": "Propose governed render plan (proposal-only).",
+                "tool": "text_game_to_video_plan",
+                "tool_label": "Propose Plan",
+                "action": "propose_render_plan",
+                "action_label": "Propose Render Plan",
+                "module": self._text_game_to_video_module,
+                "aliases": ("text_game_to_video_plan",),
+                "handler": self._handle_text_game_to_video_plan,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "script_ref",
+                        "label": "Script Ref",
+                        "type": "text",
+                        "required": True,
+                    },
+                ),
+            },
+            {
+                "capability_id": "game_front_door",
+                "capability_label": "Game Front Door",
+                "capability_summary": "Operator-gated game session admission.",
+                "tool": "game_front_door_admit",
+                "tool_label": "Admit Session",
+                "action": "admit_session",
+                "action_label": "Admit Session",
+                "module": self._game_front_door_module,
+                "aliases": ("game_front_door_admit",),
+                "handler": self._handle_game_front_door_admit,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "session_id",
+                        "label": "Session Id",
+                        "type": "text",
+                        "required": True,
+                    },
+                    {
+                        "id": "operator_ack",
+                        "label": "Operator Ack",
+                        "type": "checkbox",
+                        "required": True,
+                    },
+                ),
+            },
+            {
+                "capability_id": "text_to_3d_world_lane",
+                "capability_label": "Text-to-3D World Lane",
+                "capability_summary": "Read-only world lane route (stub until configured).",
+                "tool": "text_to_3d_world_route",
+                "tool_label": "World Lane Route",
+                "action": "world_lane_route",
+                "action_label": "World Lane Route",
+                "module": self._text_to_3d_world_lane_module,
+                "aliases": ("text_to_3d_world_route",),
+                "handler": self._handle_text_to_3d_world_route,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (),
+            },
+            {
+                "capability_id": "world_pack_lane",
+                "capability_label": "World Pack Lane",
+                "capability_summary": "Inspect world pack manifest (bounded read-only).",
+                "tool": "world_pack_lane_inspect",
+                "tool_label": "Inspect Manifest",
+                "action": "inspect_manifest",
+                "action_label": "Inspect Manifest",
+                "module": self._world_pack_lane_module,
+                "aliases": ("world_pack_inspect", "world_pack_lane"),
+                "handler": self._handle_world_pack_lane_inspect,
+                "endpoint": "/api/jarvis/capability-bridge/execute",
+                "provider_modes": ("deterministic",),
+                "default_provider_mode": "deterministic",
+                "governance_modes": DEFAULT_GOVERNANCE_MODES,
+                "default_governance_mode": "strict",
+                "input_fields": (
+                    {
+                        "id": "pack_id",
+                        "label": "Pack Id",
+                        "type": "text",
+                        "required": False,
+                    },
+                ),
+            },
         ]
         self._routes = {
             _normalize_name(alias): spec
@@ -972,6 +1151,14 @@ class CapabilityServiceBridge:
                     GenomeEngine.assert_gene_callable(gene, stage_min="mvp")
                 except GenomeValidationError as exc:
                     return self._build_genome_block(spec, str(exc), args=args)
+
+        route_key = (spec["capability_id"], spec["action"])
+        if route_key not in self._selection_routes:
+            return self._build_genome_block(
+                spec,
+                f"unregistered bridge action: {spec['capability_id']}/{spec['action']}",
+                args=args,
+            )
 
         from src.governance_organs.adaptive_engine import AdaptiveEngine
 
@@ -2224,6 +2411,151 @@ class CapabilityServiceBridge:
             },
             capability_result=capability_result,
             response=response,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_story_forge_organ_action(
+        self,
+        spec_key: tuple[str, str],
+        runner: Callable[[dict[str, Any]], dict[str, Any]],
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        spec = self._selection_routes[spec_key]
+        cap = runner(dict(args or {}))
+        capability_result = self._alt3_capability_result(cap)
+        if cap.get("ok"):
+            response = str(cap.get("message") or "Story Forge organ action completed")
+            return self._finalize_result(
+                spec=spec,
+                tool_result={
+                    "type": spec["tool"],
+                    "tool": spec["tool"],
+                    "status": "completed",
+                    "result": cap,
+                },
+                capability_result=capability_result,
+                response=response,
+                execution_profile=execution_profile,
+                result_payload=cap,
+                phase_gate=phase_gate,
+            )
+        response = str(cap.get("message") or "Story Forge organ action blocked")
+        return self._finalize_result(
+            spec=spec,
+            tool_result={
+                "type": spec["tool"],
+                "tool": spec["tool"],
+                "status": "failed",
+                "result": cap,
+            },
+            capability_result=capability_result,
+            response=response,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_story_forge_launcher_intake(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        from src.story_forge_launcher_organ import execute_story_forge_launcher_intake
+
+        return self._handle_story_forge_organ_action(
+            ("story_forge_launcher", "intake"),
+            execute_story_forge_launcher_intake,
+            args,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_movie_renderer_lane_propose(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        from src.movie_renderer_lane_organ import execute_movie_renderer_lane_render
+
+        return self._handle_story_forge_organ_action(
+            ("movie_renderer_lane", "propose_render"),
+            execute_movie_renderer_lane_render,
+            args,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_text_game_to_video_plan(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        from src.text_game_to_video_organ import execute_text_game_to_video_plan
+
+        return self._handle_story_forge_organ_action(
+            ("text_game_to_video", "propose_render_plan"),
+            execute_text_game_to_video_plan,
+            args,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_game_front_door_admit(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        from src.game_front_door_organ import execute_game_front_door_admit
+
+        return self._handle_story_forge_organ_action(
+            ("game_front_door", "admit_session"),
+            execute_game_front_door_admit,
+            args,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_text_to_3d_world_route(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        from src.text_to_3d_world_lane_organ import execute_text_to_3d_world_lane_route
+
+        return self._handle_story_forge_organ_action(
+            ("text_to_3d_world_lane", "world_lane_route"),
+            execute_text_to_3d_world_lane_route,
+            args,
+            execution_profile=execution_profile,
+            phase_gate=phase_gate,
+        )
+
+    def _handle_world_pack_lane_inspect(
+        self,
+        args: dict[str, Any],
+        *,
+        execution_profile: dict[str, Any] | None = None,
+        phase_gate: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        from src.world_pack_lane_organ import execute_world_pack_lane_inspect
+
+        return self._handle_story_forge_organ_action(
+            ("world_pack_lane", "inspect_manifest"),
+            execute_world_pack_lane_inspect,
+            args,
             execution_profile=execution_profile,
             phase_gate=phase_gate,
         )
