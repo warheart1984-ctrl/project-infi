@@ -10,7 +10,7 @@ from src.operator_cognition_coherence_fabric import build_coherence_fabric_statu
 def test_build_coherence_fabric_status_schema_fields():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status["operator_cognition_coherence_fabric_version"] == (
-        "operator_cognition_coherence_fabric.v1.6"
+        "operator_cognition_coherence_fabric.v1.8"
     )
     assert status["read_only"] is True
     assert status["authority_lane"] == "operator"
@@ -248,3 +248,68 @@ def test_evaluate_bridge_coherence_blocks_policy_cap_non_strict():
     )
     assert not result.allowed
     assert "strict" in (result.reason or "")
+
+
+def test_otem_lane_posture_includes_alt12_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("otem_lane_posture") or []}
+    assert organs == {
+        "otem_bounded_organ",
+        "direct_challenge_organ",
+        "orchestration_spine_organ",
+    }
+    assert status.get("otem_lane_aligned") is True
+
+
+def test_predictive_lane_posture_includes_alt12_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("predictive_lane_posture") or []}
+    assert organs == {
+        "operator_health_sentinel_organ",
+        "governed_realtime_lane_organ",
+        "v8_runtime_organ",
+    }
+    assert status.get("predictive_lane_aligned") is True
+
+
+def test_execution_depth_posture_includes_alt12_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("execution_depth_posture") or []}
+    assert organs == {
+        "patch_apply_organ",
+        "patch_execution_preview_organ",
+        "run_ledger_organ",
+    }
+    assert status.get("execution_depth_aligned") is True
+
+
+def test_constitutional_creative_posture_includes_alt13_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("constitutional_creative_posture") or []}
+    assert organs == {
+        "ul_lineage_console_organ",
+        "recipe_module_organ",
+        "imagine_generator_organ",
+        "human_voice_extraction_organ",
+        "narrative_trust_pack_organ",
+    }
+    assert status.get("constitutional_creative_aligned") is True
+
+
+def test_story_chain_posture_includes_alt13_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("story_chain_posture") or []}
+    assert organs == {
+        "story_forge_lane_organ",
+        "beatbox_lane_organ",
+        "speakers_lane_organ",
+    }
+    assert status.get("story_chain_aligned") is True
+    assert status.get("creative_chain_aligned") is True
+
+
+def test_module_governance_posture_includes_alt13_organ():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("module_governance_posture") or []}
+    assert organs == {"module_governance_organ"}
+    assert status.get("module_governance_aligned") is True

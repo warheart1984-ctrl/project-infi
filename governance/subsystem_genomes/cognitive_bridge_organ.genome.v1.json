@@ -58,6 +58,7 @@
       "aris_boundary_organ",
       "governed_event_chain_organ",
       "mission_board_organ",
+      "otem_bounded_organ",
       "tracing_spine_organ"
     ]
   },

@@ -1211,8 +1211,17 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | Patchforge Organ | governed | [../subsystems/platform/PATCHFORGE_ORGAN.md](../subsystems/platform/PATCHFORGE_ORGAN.md) | [../proof/platform/PATCHFORGE_ORGAN_V1_PROOF.md](../proof/platform/PATCHFORGE_ORGAN_V1_PROOF.md) |
 | Change Scope Organ | governed | [../subsystems/platform/CHANGE_SCOPE_ORGAN.md](../subsystems/platform/CHANGE_SCOPE_ORGAN.md) | [../proof/platform/CHANGE_SCOPE_ORGAN_V1_PROOF.md](../proof/platform/CHANGE_SCOPE_ORGAN_V1_PROOF.md) |
 | Patch Verification Organ | governed | [../subsystems/platform/PATCH_VERIFICATION_ORGAN.md](../subsystems/platform/PATCH_VERIFICATION_ORGAN.md) | [../proof/platform/PATCH_VERIFICATION_ORGAN_V1_PROOF.md](../proof/platform/PATCH_VERIFICATION_ORGAN_V1_PROOF.md) |
+| OTEM Bounded Organ | governed | [../subsystems/platform/OTEM_BOUNDED_ORGAN.md](../subsystems/platform/OTEM_BOUNDED_ORGAN.md) | [../proof/platform/OTEM_BOUNDED_ORGAN_V1_PROOF.md](../proof/platform/OTEM_BOUNDED_ORGAN_V1_PROOF.md) |
+| Direct Challenge Organ | governed | [../subsystems/platform/DIRECT_CHALLENGE_ORGAN.md](../subsystems/platform/DIRECT_CHALLENGE_ORGAN.md) | [../proof/platform/DIRECT_CHALLENGE_ORGAN_V1_PROOF.md](../proof/platform/DIRECT_CHALLENGE_ORGAN_V1_PROOF.md) |
+| Orchestration Spine Organ | governed | [../subsystems/platform/ORCHESTRATION_SPINE_ORGAN.md](../subsystems/platform/ORCHESTRATION_SPINE_ORGAN.md) | [../proof/platform/ORCHESTRATION_SPINE_ORGAN_V1_PROOF.md](../proof/platform/ORCHESTRATION_SPINE_ORGAN_V1_PROOF.md) |
+| Operator Health Sentinel Organ | governed | [../subsystems/platform/OPERATOR_HEALTH_SENTINEL_ORGAN.md](../subsystems/platform/OPERATOR_HEALTH_SENTINEL_ORGAN.md) | [../proof/platform/OPERATOR_HEALTH_SENTINEL_ORGAN_V1_PROOF.md](../proof/platform/OPERATOR_HEALTH_SENTINEL_ORGAN_V1_PROOF.md) |
+| Governed Realtime Lane Organ | governed | [../subsystems/platform/GOVERNED_REALTIME_LANE_ORGAN.md](../subsystems/platform/GOVERNED_REALTIME_LANE_ORGAN.md) | [../proof/platform/GOVERNED_REALTIME_LANE_ORGAN_V1_PROOF.md](../proof/platform/GOVERNED_REALTIME_LANE_ORGAN_V1_PROOF.md) |
+| V8 Runtime Organ | governed | [../subsystems/platform/V8_RUNTIME_ORGAN.md](../subsystems/platform/V8_RUNTIME_ORGAN.md) | [../proof/platform/V8_RUNTIME_ORGAN_V1_PROOF.md](../proof/platform/V8_RUNTIME_ORGAN_V1_PROOF.md) |
+| Patch Apply Organ | governed | [../subsystems/platform/PATCH_APPLY_ORGAN.md](../subsystems/platform/PATCH_APPLY_ORGAN.md) | [../proof/platform/PATCH_APPLY_ORGAN_V1_PROOF.md](../proof/platform/PATCH_APPLY_ORGAN_V1_PROOF.md) |
+| Patch Execution Preview Organ | governed | [../subsystems/platform/PATCH_EXECUTION_PREVIEW_ORGAN.md](../subsystems/platform/PATCH_EXECUTION_PREVIEW_ORGAN.md) | [../proof/platform/PATCH_EXECUTION_PREVIEW_ORGAN_V1_PROOF.md](../proof/platform/PATCH_EXECUTION_PREVIEW_ORGAN_V1_PROOF.md) |
+| Run Ledger Organ | governed | [../subsystems/platform/RUN_LEDGER_ORGAN.md](../subsystems/platform/RUN_LEDGER_ORGAN.md) | [../proof/platform/RUN_LEDGER_ORGAN_V1_PROOF.md](../proof/platform/RUN_LEDGER_ORGAN_V1_PROOF.md) |
 
-Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate`
+Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate`
 
 ## 9. Concept Pending (SSP)
 
@@ -1221,6 +1230,6 @@ Nothing here is live until promoted per [ideas_pending/README.md](../_future/ide
 
 | Idea | Status | Concept spec | MVP plan | Genome |
 |------|--------|--------------|----------|--------|
-| *(none)* | — | — | — | — |
+| *(none — Alt-12 graduated to §8)* | — | — | — | — |
 
 New admissions via SSP (Step 7) update this table. Graduated ideas move to §8. Genome contract: [AAIS_SUBSYSTEM_GENOME.md](../contracts/AAIS_SUBSYSTEM_GENOME.md).

@@ -1,0 +1,78 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "story_forge_lane_organ",
+    "version": "0.1.0-concept",
+    "stage": "mvp",
+    "display_name": "Story Forge Lane Organ"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    ],
+    "invariants": [
+      "Read-only v1 \u2014 organ does not mutate upstream authority",
+      "module_id frozen to AAIS-SFL-01"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/story_forge_lane_organ.v1.json",
+    "frozen": false
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/story_forge_lane_organ.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/story-forge-lane/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make story-forge-lane-organ-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/storyforge/STORY_FORGE_LANE_ORGAN_V1_PROOF.md"
+    ],
+    "posture": "mvp",
+    "target_bundles": [
+      "docs/proof/storyforge/STORY_FORGE_LANE_ORGAN_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "imagine_generator_organ",
+      "capability_service_bridge"
+    ],
+    "children": [
+      "beatbox_lane_organ",
+      "narrative_trust_pack_organ"
+    ]
+  },
+  "activation": {
+    "order": 5,
+    "batch_id": "alt13-summon-wave-2026-06",
+    "notes": "Alt-13 wave 5"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/STORY_FORGE_LANE_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/STORY_FORGE_LANE_ORGAN_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/storyforge/STORY_FORGE_LANE_ORGAN.md"
+  }
+}

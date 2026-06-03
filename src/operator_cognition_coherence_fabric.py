@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.6"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.8"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -593,6 +593,251 @@ def _coding_stack_aligned(coding_posture: list[dict[str, Any]]) -> bool:
     return True
 
 
+def _build_otem_lane_posture() -> list[dict[str, Any]]:
+    from src.direct_challenge_organ import build_direct_challenge_status
+    from src.orchestration_spine_organ import build_orchestration_spine_status
+    from src.otem_bounded_organ import build_otem_bounded_status
+
+    posture: list[dict[str, Any]] = []
+    otem = build_otem_bounded_status()
+    posture.append(
+        {
+            "organ_id": "otem_bounded_organ",
+            "stage": str(otem.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(otem.get("claim_label") or "asserted")[:32],
+            "proposal_only": bool(otem.get("proposal_only")),
+        }
+    )
+    dc = build_direct_challenge_status()
+    posture.append(
+        {
+            "organ_id": "direct_challenge_organ",
+            "stage": str(dc.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(dc.get("claim_label") or "asserted")[:32],
+            "proposal_only": True,
+        }
+    )
+    spine = build_orchestration_spine_status()
+    posture.append(
+        {
+            "organ_id": "orchestration_spine_organ",
+            "stage": str(spine.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(spine.get("claim_label") or "asserted")[:32],
+            "proposal_only": bool(spine.get("routing_read_only")),
+        }
+    )
+    return posture
+
+
+def _otem_lane_aligned(otem_lane_posture: list[dict[str, Any]]) -> bool:
+    if len(otem_lane_posture) < 3:
+        return False
+    for item in otem_lane_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("proposal_only"):
+            return False
+    return True
+
+
+def _build_predictive_lane_posture(
+    *,
+    pipeline_trace: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
+    from src.governed_realtime_lane_organ import build_governed_realtime_lane_status
+    from src.operator_health_sentinel_organ import build_operator_health_sentinel_organ_status
+    from src.v8_runtime_organ import build_v8_runtime_status
+
+    posture: list[dict[str, Any]] = []
+    sentinel = build_operator_health_sentinel_organ_status()
+    posture.append(
+        {
+            "organ_id": "operator_health_sentinel_organ",
+            "stage": str(sentinel.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(sentinel.get("claim_label") or "asserted")[:32],
+            "advisory_only": bool(sentinel.get("advisory_only")),
+        }
+    )
+    lane = build_governed_realtime_lane_status(governed_pipeline=pipeline_trace)
+    posture.append(
+        {
+            "organ_id": "governed_realtime_lane_organ",
+            "stage": str(lane.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(lane.get("claim_label") or "asserted")[:32],
+            "advisory_only": True,
+        }
+    )
+    v8 = build_v8_runtime_status()
+    posture.append(
+        {
+            "organ_id": "v8_runtime_organ",
+            "stage": str(v8.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(v8.get("claim_label") or "asserted")[:32],
+            "advisory_only": True,
+        }
+    )
+    return posture
+
+
+def _predictive_lane_aligned(predictive_lane_posture: list[dict[str, Any]]) -> bool:
+    if len(predictive_lane_posture) < 3:
+        return False
+    for item in predictive_lane_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("advisory_only"):
+            return False
+    return True
+
+
+def _build_execution_depth_posture() -> list[dict[str, Any]]:
+    from src.patch_apply_organ import build_patch_apply_status
+    from src.patch_execution_preview_organ import build_patch_execution_preview_status
+    from src.run_ledger_organ import build_run_ledger_status
+
+    posture: list[dict[str, Any]] = []
+    apply_status = build_patch_apply_status()
+    posture.append(
+        {
+            "organ_id": "patch_apply_organ",
+            "stage": str(apply_status.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(apply_status.get("claim_label") or "asserted")[:32],
+            "operator_gated": bool(apply_status.get("operator_gated")),
+        }
+    )
+    preview = build_patch_execution_preview_status()
+    posture.append(
+        {
+            "organ_id": "patch_execution_preview_organ",
+            "stage": str(preview.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(preview.get("claim_label") or "asserted")[:32],
+            "operator_gated": True,
+        }
+    )
+    ledger = build_run_ledger_status()
+    posture.append(
+        {
+            "organ_id": "run_ledger_organ",
+            "stage": str(ledger.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(ledger.get("claim_label") or "asserted")[:32],
+            "operator_gated": True,
+        }
+    )
+    return posture
+
+
+def _execution_depth_aligned(execution_depth_posture: list[dict[str, Any]]) -> bool:
+    if len(execution_depth_posture) < 3:
+        return False
+    for item in execution_depth_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("operator_gated"):
+            return False
+    return True
+
+
+def _build_constitutional_creative_posture() -> list[dict[str, Any]]:
+    from src.human_voice_extraction_organ import build_human_voice_extraction_status
+    from src.imagine_generator_organ import build_imagine_generator_status
+    from src.narrative_trust_pack_organ import build_narrative_trust_pack_status
+    from src.recipe_module_organ import build_recipe_module_status
+    from src.ul_lineage_console_organ import build_ul_lineage_console_status
+
+    posture: list[dict[str, Any]] = []
+    for organ_id, builder in (
+        ("ul_lineage_console_organ", build_ul_lineage_console_status),
+        ("recipe_module_organ", build_recipe_module_status),
+        ("imagine_generator_organ", build_imagine_generator_status),
+        ("human_voice_extraction_organ", build_human_voice_extraction_status),
+        ("narrative_trust_pack_organ", build_narrative_trust_pack_status),
+    ):
+        snap = builder()
+        posture.append(
+            {
+                "organ_id": organ_id,
+                "stage": str(snap.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+                "claim_label": str(snap.get("claim_label") or "asserted")[:32],
+                "bridge_safe": bool(snap.get("bridge_safe")),
+                "proposal_only": bool(snap.get("proposal_only")),
+            }
+        )
+    return posture
+
+
+def _constitutional_creative_aligned(
+    constitutional_creative_posture: list[dict[str, Any]],
+) -> bool:
+    if len(constitutional_creative_posture) < 5:
+        return False
+    for item in constitutional_creative_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("bridge_safe"):
+            return False
+        if not item.get("proposal_only"):
+            return False
+    return True
+
+
+def _build_story_chain_posture() -> list[dict[str, Any]]:
+    from src.beatbox_lane_organ import build_beatbox_lane_status
+    from src.speakers_lane_organ import build_speakers_lane_status
+    from src.story_forge_lane_organ import build_story_forge_lane_status
+
+    posture: list[dict[str, Any]] = []
+    for organ_id, builder, signoff in (
+        ("story_forge_lane_organ", build_story_forge_lane_status, False),
+        ("beatbox_lane_organ", build_beatbox_lane_status, False),
+        ("speakers_lane_organ", build_speakers_lane_status, False),
+    ):
+        snap = builder()
+        posture.append(
+            {
+                "organ_id": organ_id,
+                "stage": str(snap.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+                "claim_label": str(snap.get("claim_label") or "asserted")[:32],
+                "bridge_safe": bool(snap.get("bridge_safe")),
+                "signoff_required": signoff,
+            }
+        )
+    return posture
+
+
+def _story_chain_aligned(story_chain_posture: list[dict[str, Any]]) -> bool:
+    if len(story_chain_posture) < 3:
+        return False
+    for item in story_chain_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("bridge_safe"):
+            return False
+    return True
+
+
+def _build_module_governance_posture() -> list[dict[str, Any]]:
+    from src.module_governance_organ import build_module_governance_status
+
+    snap = build_module_governance_status()
+    return [
+        {
+            "organ_id": "module_governance_organ",
+            "stage": str(snap.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(snap.get("claim_label") or "asserted")[:32],
+            "major_violation_disable_module": bool(snap.get("major_violation_disable_module")),
+        }
+    ]
+
+
+def _module_governance_aligned(module_governance_posture: list[dict[str, Any]]) -> bool:
+    if len(module_governance_posture) < 1:
+        return False
+    item = module_governance_posture[0]
+    if str(item.get("claim_label") or "") == "rejected":
+        return False
+    return bool(item.get("major_violation_disable_module"))
+
+
 def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
@@ -669,6 +914,12 @@ def build_coherence_fabric_status(
     authority_trace_posture = _build_authority_trace_posture()
     mission_boundary_posture = _build_mission_boundary_posture()
     coding_posture = _build_coding_posture()
+    otem_lane_posture = _build_otem_lane_posture()
+    predictive_lane_posture = _build_predictive_lane_posture(pipeline_trace=pipeline_source)
+    execution_depth_posture = _build_execution_depth_posture()
+    constitutional_creative_posture = _build_constitutional_creative_posture()
+    story_chain_posture = _build_story_chain_posture()
+    module_governance_posture = _build_module_governance_posture()
 
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
@@ -697,6 +948,24 @@ def build_coherence_fabric_status(
         "mission_boundary_aligned": _mission_boundary_aligned(mission_boundary_posture),
         "coding_posture": coding_posture,
         "coding_stack_aligned": _coding_stack_aligned(coding_posture),
+        "otem_lane_posture": otem_lane_posture,
+        "otem_lane_aligned": _otem_lane_aligned(otem_lane_posture),
+        "predictive_lane_posture": predictive_lane_posture,
+        "predictive_lane_aligned": _predictive_lane_aligned(predictive_lane_posture),
+        "execution_depth_posture": execution_depth_posture,
+        "execution_depth_aligned": _execution_depth_aligned(execution_depth_posture),
+        "constitutional_creative_posture": constitutional_creative_posture,
+        "constitutional_creative_aligned": _constitutional_creative_aligned(
+            constitutional_creative_posture
+        ),
+        "story_chain_posture": story_chain_posture,
+        "story_chain_aligned": _story_chain_aligned(story_chain_posture),
+        "module_governance_posture": module_governance_posture,
+        "module_governance_aligned": _module_governance_aligned(
+            module_governance_posture
+        ),
+        "creative_chain_aligned": _story_chain_aligned(story_chain_posture)
+        and _constitutional_creative_aligned(constitutional_creative_posture),
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,
         "safety_envelope_halt": safety_halt,

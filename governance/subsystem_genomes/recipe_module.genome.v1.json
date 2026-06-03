@@ -94,7 +94,8 @@
       "jarvis"
     ],
     "children": [
-      "imagine_generator"
+      "imagine_generator",
+      "recipe_module_organ"
     ]
   },
   "activation": {

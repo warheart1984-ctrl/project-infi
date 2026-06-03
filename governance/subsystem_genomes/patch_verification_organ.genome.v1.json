@@ -53,7 +53,9 @@
       "change_scope_organ",
       "patchforge_organ"
     ],
-    "children": []
+    "children": [
+      "patch_apply_organ"
+    ]
   },
   "activation": {
     "order": 9,

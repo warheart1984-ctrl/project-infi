@@ -59,7 +59,9 @@
     "children": [
       "cognitive_bridge_organ",
       "immune_observe_organ",
+      "module_governance_organ",
       "operator_cognition_coherence_fabric",
+      "otem_bounded_organ",
       "reflection_runtime_organ"
     ]
   },

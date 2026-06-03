@@ -411,6 +411,86 @@ alt11-2-gate: alt11-1-gate alt11-closure-gate
 alt11-governed-gate:
 	python3 tools/governance/check_alt11_governed_eligibility.py
 
+otem-bounded-organ-gate:
+	python3 .github/scripts/check-otem-bounded-organ-governance.py
+
+direct-challenge-organ-gate:
+	python3 .github/scripts/check-direct-challenge-organ-governance.py
+
+orchestration-spine-organ-gate:
+	python3 .github/scripts/check-orchestration-spine-organ-governance.py
+
+operator-health-sentinel-organ-gate:
+	python3 .github/scripts/check-operator-health-sentinel-organ-governance.py
+
+governed-realtime-lane-organ-gate:
+	python3 .github/scripts/check-governed-realtime-lane-organ-governance.py
+
+v8-runtime-organ-gate:
+	python3 .github/scripts/check-v8-runtime-organ-governance.py
+
+patch-apply-organ-gate:
+	python3 .github/scripts/check-patch-apply-organ-governance.py
+
+patch-execution-preview-organ-gate:
+	python3 .github/scripts/check-patch-execution-preview-organ-governance.py
+
+run-ledger-organ-gate:
+	python3 .github/scripts/check-run-ledger-organ-governance.py
+
+alt12-gate: otem-bounded-organ-gate direct-challenge-organ-gate orchestration-spine-organ-gate operator-health-sentinel-organ-gate governed-realtime-lane-organ-gate v8-runtime-organ-gate patch-apply-organ-gate patch-execution-preview-organ-gate run-ledger-organ-gate genome-gate
+
+alt12-1-gate: alt12-gate alt11-1-gate
+	python3 -m pytest tests/test_otem_bounded_organ.py tests/test_direct_challenge_organ.py tests/test_orchestration_spine_organ.py tests/test_operator_health_sentinel_organ.py tests/test_governed_realtime_lane_organ.py tests/test_v8_runtime_organ.py tests/test_patch_apply_organ.py tests/test_patch_execution_preview_organ.py tests/test_run_ledger_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+
+alt12-closure-gate:
+	python3 tools/governance/check_alt12_closure.py
+
+alt12-2-gate: alt12-1-gate alt12-closure-gate
+
+alt12-governed-gate:
+	python3 tools/governance/check_alt12_governed_eligibility.py
+
+ul-lineage-console-organ-gate:
+	python3 .github/scripts/check-ul-lineage-console-organ-governance.py
+
+module-governance-organ-gate:
+	python3 .github/scripts/check-module-governance-organ-governance.py
+
+recipe-module-organ-gate:
+	python3 .github/scripts/check-recipe-module-organ-governance.py
+
+imagine-generator-organ-gate:
+	python3 .github/scripts/check-imagine-generator-organ-governance.py
+
+story-forge-lane-organ-gate:
+	python3 .github/scripts/check-story-forge-lane-organ-governance.py
+
+beatbox-lane-organ-gate:
+	python3 .github/scripts/check-beatbox-lane-organ-governance.py
+
+speakers-lane-organ-gate:
+	python3 .github/scripts/check-speakers-lane-organ-governance.py
+
+human-voice-extraction-organ-gate:
+	python3 .github/scripts/check-human-voice-extraction-organ-governance.py
+
+narrative-trust-pack-organ-gate:
+	python3 .github/scripts/check-narrative-trust-pack-organ-governance.py
+
+alt13-gate: ul-lineage-console-organ-gate module-governance-organ-gate recipe-module-organ-gate imagine-generator-organ-gate story-forge-lane-organ-gate beatbox-lane-organ-gate speakers-lane-organ-gate human-voice-extraction-organ-gate narrative-trust-pack-organ-gate genome-gate
+
+alt13-1-gate: alt13-gate alt12-1-gate
+	python3 -m pytest tests/test_ul_lineage_console_organ.py tests/test_module_governance_organ.py tests/test_recipe_module_organ.py tests/test_imagine_generator_organ.py tests/test_story_forge_lane_organ.py tests/test_beatbox_lane_organ.py tests/test_speakers_lane_organ.py tests/test_human_voice_extraction_organ.py tests/test_narrative_trust_pack_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+
+alt13-closure-gate:
+	python3 tools/governance/check_alt13_closure.py
+
+alt13-2-gate: alt13-1-gate alt13-closure-gate
+
+alt13-governed-gate:
+	python3 tools/governance/check_alt13_governed_eligibility.py
+
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py
 

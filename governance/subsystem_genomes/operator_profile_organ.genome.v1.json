@@ -69,9 +69,12 @@
     "children": [
       "adaptive_lane_organ",
       "cognitive_bridge_organ",
+      "direct_challenge_organ",
       "knowledge_authority_organ",
       "operator_cognition_coherence_fabric",
-      "reflection_runtime_organ"
+      "otem_bounded_organ",
+      "reflection_runtime_organ",
+      "ul_lineage_console_organ"
     ]
   },
   "activation": {

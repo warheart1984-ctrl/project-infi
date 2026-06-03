@@ -59,6 +59,7 @@
       "governed_event_chain_organ",
       "immune_observe_organ",
       "invariant_engine_organ",
+      "operator_health_sentinel_organ",
       "predictor_immune_bridge_organ"
     ]
   },

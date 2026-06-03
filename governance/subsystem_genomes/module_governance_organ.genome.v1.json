@@ -1,0 +1,77 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "module_governance_organ",
+    "version": "0.1.0-concept",
+    "stage": "mvp",
+    "display_name": "Module Governance Organ"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    ],
+    "invariants": [
+      "Read-only v1 \u2014 organ does not mutate upstream authority",
+      "module_id frozen to AAIS-MGO-01"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/module_governance_organ.v1.json",
+    "frozen": false
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/module_governance_organ.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/module-governance/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make module-governance-organ-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/platform/MODULE_GOVERNANCE_ORGAN_V1_PROOF.md"
+    ],
+    "posture": "mvp",
+    "target_bundles": [
+      "docs/proof/platform/MODULE_GOVERNANCE_ORGAN_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "ul_lineage_console_organ",
+      "safety_envelope_organ"
+    ],
+    "children": [
+      "recipe_module_organ"
+    ]
+  },
+  "activation": {
+    "order": 2,
+    "batch_id": "alt13-summon-wave-2026-06",
+    "notes": "Alt-13 wave 2"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/MODULE_GOVERNANCE_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/MODULE_GOVERNANCE_ORGAN_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/platform/MODULE_GOVERNANCE_ORGAN.md"
+  }
+}

@@ -12086,6 +12086,262 @@ def get_patch_verification_organ_status():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/otem-bounded/status", methods=["GET"])
+def get_otem_bounded_organ_status():
+    """Read-only OTEM Bounded organ snapshot (Alt-12 wave)."""
+    try:
+        from src.otem_bounded_organ import build_otem_bounded_status
+
+        return jsonify(attach_ul_substrate({"otem_bounded": build_otem_bounded_status()}))
+    except Exception as e:
+        logger.error(f"Error reading otem bounded status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/direct-challenge/status", methods=["GET"])
+def get_direct_challenge_organ_status():
+    """Read-only Direct Challenge organ snapshot (Alt-12 wave)."""
+    try:
+        from src.direct_challenge_organ import build_direct_challenge_status
+
+        return jsonify(
+            attach_ul_substrate({"direct_challenge": build_direct_challenge_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading direct challenge status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/orchestration-spine/status", methods=["GET"])
+def get_orchestration_spine_organ_status():
+    """Read-only Orchestration Spine organ snapshot (Alt-12 wave)."""
+    try:
+        from src.orchestration_spine_organ import build_orchestration_spine_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"orchestration_spine": build_orchestration_spine_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading orchestration spine status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/operator-health-sentinel/status", methods=["GET"])
+def get_operator_health_sentinel_organ_status():
+    """Read-only Operator Health Sentinel organ snapshot (Alt-12 wave)."""
+    try:
+        from src.operator_health_sentinel_organ import (
+            build_operator_health_sentinel_organ_status,
+        )
+
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "operator_health_sentinel": (
+                        build_operator_health_sentinel_organ_status()
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading operator health sentinel status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/governed-realtime-lane/status", methods=["GET"])
+def get_governed_realtime_lane_organ_status():
+    """Read-only Governed Realtime Lane organ snapshot (Alt-12 wave)."""
+    try:
+        from src.governed_realtime_lane_organ import build_governed_realtime_lane_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"governed_realtime_lane": build_governed_realtime_lane_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading governed realtime lane status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/v8-runtime/status", methods=["GET"])
+def get_v8_runtime_organ_status():
+    """Read-only V8 Runtime organ snapshot (Alt-12 wave)."""
+    try:
+        from src.v8_runtime_organ import build_v8_runtime_status
+
+        return jsonify(attach_ul_substrate({"v8_runtime": build_v8_runtime_status()}))
+    except Exception as e:
+        logger.error(f"Error reading v8 runtime status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/patch-apply/status", methods=["GET"])
+def get_patch_apply_organ_status():
+    """Read-only Patch Apply organ snapshot (Alt-12 wave)."""
+    try:
+        from src.patch_apply_organ import build_patch_apply_status
+
+        return jsonify(attach_ul_substrate({"patch_apply": build_patch_apply_status()}))
+    except Exception as e:
+        logger.error(f"Error reading patch apply status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/patch-execution-preview/status", methods=["GET"])
+def get_patch_execution_preview_organ_status():
+    """Read-only Patch Execution Preview organ snapshot (Alt-12 wave)."""
+    try:
+        from src.patch_execution_preview_organ import build_patch_execution_preview_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "patch_execution_preview": build_patch_execution_preview_status()
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading patch execution preview status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/run-ledger/status", methods=["GET"])
+def get_run_ledger_organ_status():
+    """Read-only Run Ledger organ snapshot (Alt-12 wave)."""
+    try:
+        from src.run_ledger_organ import build_run_ledger_status
+
+        return jsonify(attach_ul_substrate({"run_ledger": build_run_ledger_status()}))
+    except Exception as e:
+        logger.error(f"Error reading run ledger status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/ul-lineage-console/status", methods=["GET"])
+def get_ul_lineage_console_organ_status():
+    """Read-only UL Lineage Console organ snapshot (Alt-13 wave)."""
+    try:
+        from src.ul_lineage_console_organ import build_ul_lineage_console_status
+
+        return jsonify(
+            attach_ul_substrate({"ul_lineage_console": build_ul_lineage_console_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading ul lineage console status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/module-governance/status", methods=["GET"])
+def get_module_governance_organ_status():
+    """Read-only Module Governance organ snapshot (Alt-13 wave)."""
+    try:
+        from src.module_governance_organ import build_module_governance_status
+
+        return jsonify(
+            attach_ul_substrate({"module_governance": build_module_governance_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading module governance status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/recipe-module/status", methods=["GET"])
+def get_recipe_module_organ_status():
+    """Read-only Recipe Module organ snapshot (Alt-13 wave)."""
+    try:
+        from src.recipe_module_organ import build_recipe_module_status
+
+        return jsonify(attach_ul_substrate({"recipe_module": build_recipe_module_status()}))
+    except Exception as e:
+        logger.error(f"Error reading recipe module organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/imagine-generator/status", methods=["GET"])
+def get_imagine_generator_organ_status():
+    """Read-only Imagine Generator organ snapshot (Alt-13 wave)."""
+    try:
+        from src.imagine_generator_organ import build_imagine_generator_status
+
+        return jsonify(
+            attach_ul_substrate({"imagine_generator": build_imagine_generator_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading imagine generator organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/story-forge-lane/status", methods=["GET"])
+def get_story_forge_lane_organ_status():
+    """Read-only Story Forge lane organ snapshot (Alt-13 wave)."""
+    try:
+        from src.story_forge_lane_organ import build_story_forge_lane_status
+
+        return jsonify(
+            attach_ul_substrate({"story_forge_lane": build_story_forge_lane_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading story forge lane status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/beatbox-lane/status", methods=["GET"])
+def get_beatbox_lane_organ_status():
+    """Read-only Beatbox lane organ snapshot (Alt-13 wave)."""
+    try:
+        from src.beatbox_lane_organ import build_beatbox_lane_status
+
+        return jsonify(attach_ul_substrate({"beatbox_lane": build_beatbox_lane_status()}))
+    except Exception as e:
+        logger.error(f"Error reading beatbox lane status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/speakers-lane/status", methods=["GET"])
+def get_speakers_lane_organ_status():
+    """Read-only Speakers lane organ snapshot (Alt-13 wave)."""
+    try:
+        from src.speakers_lane_organ import build_speakers_lane_status
+
+        return jsonify(attach_ul_substrate({"speakers_lane": build_speakers_lane_status()}))
+    except Exception as e:
+        logger.error(f"Error reading speakers lane status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/human-voice-extraction/status", methods=["GET"])
+def get_human_voice_extraction_organ_status():
+    """Read-only Human Voice Extraction organ snapshot (Alt-13 wave)."""
+    try:
+        from src.human_voice_extraction_organ import build_human_voice_extraction_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"human_voice_extraction": build_human_voice_extraction_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading human voice extraction organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/narrative-trust-pack/status", methods=["GET"])
+def get_narrative_trust_pack_organ_status():
+    """Read-only Narrative Trust Pack organ snapshot (Alt-13 wave)."""
+    try:
+        from src.narrative_trust_pack_organ import build_narrative_trust_pack_status
+
+        return jsonify(
+            attach_ul_substrate({"narrative_trust_pack": build_narrative_trust_pack_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading narrative trust pack organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/reset", methods=["POST"])
 def reset_mission_board():
     """Reset Mission Board state with an optional backup and seeded current objectives."""

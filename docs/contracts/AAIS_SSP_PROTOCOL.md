@@ -395,6 +395,66 @@ Depends on: Alt-10 governed memory/forensics/immune fabric; AAIS_TRACING_PROTOCO
 | Proof | `docs/proof/platform/TRACING_SPINE_V1_PROOF.md`, `docs/proof/platform/CODING_ORGANS_V1_PROOF.md`, `docs/proof/platform/MEMORY_PATH_CLOSURE_V1_PROOF.md` |
 | Gate | `make alt11-2-gate` |
 
+## Alt-12 Summon Wave — OTEM, Predictive Lane & Execution Depth Fabric
+
+Batch-admit nine read-only organs across OTEM bounded reasoning, predictive realtime lanes, and execution-depth patch posture.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt12-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `otem_bounded_organ` → `direct_challenge_organ` → `orchestration_spine_organ` → `operator_health_sentinel_organ` → `governed_realtime_lane_organ` → `v8_runtime_organ` → `patch_apply_organ` → `patch_execution_preview_organ` → `run_ledger_organ` |
+| MVP promotion | `tools/governance/alt12_promote_mvp.py` |
+| Gates | `make alt12-gate` |
+| Governed promotion | `tools/governance/alt12_promote_governed.py` + `make alt12-governed-gate` |
+
+Depends on: Alt-11 governed authority/coding fabric; live `otem_runtime.py`; `operator_health_sentinel.py`; Alt-9 predictor substrate.
+
+## Alt-12.1 Coherence Fabric OTEM/Predictive/Execution Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt12-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.7` + `otem_lane_posture[]`, `predictive_lane_posture[]`, `execution_depth_posture[]` |
+| Gate | `make alt12-1-gate` |
+
+## Alt-12.2 OTEM & Predictive Lane Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt12-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/platform/OTEM_BOUNDED_V1_PROOF.md`, `docs/proof/platform/PREDICTIVE_LANE_V1_PROOF.md`, `docs/proof/platform/EXECUTION_DEPTH_V1_PROOF.md` |
+| Gate | `make alt12-2-gate` |
+
+## Alt-13 Summon Wave — Creative Chain & Constitutional Closure Fabric
+
+Batch-admit nine read-only organs across constitutional creative genomes, Story Forge → Beatbox → Speakers chain lanes, and module governance posture.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt13-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `ul_lineage_console_organ` → `module_governance_organ` → `recipe_module_organ` → `imagine_generator_organ` → `story_forge_lane_organ` → `beatbox_lane_organ` → `speakers_lane_organ` → `human_voice_extraction_organ` → `narrative_trust_pack_organ` |
+| MVP promotion | `tools/governance/alt13_promote_mvp.py` |
+| Gates | `make alt13-gate` |
+| Governed promotion | `tools/governance/alt13_promote_governed.py` + `make alt13-governed-gate` |
+
+Depends on: Alt-12 governed OTEM/predictive/execution fabric; governed constitutional genomes (`recipe_module`, `imagine_generator`, `narrative_trust_pack`, `human_voice_extraction`, `cisiv_operator_lineage_console`); live `story_forge_audio` admission path.
+
+## Alt-13.1 Coherence Fabric Creative/Constitutional Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt13-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.8` + `constitutional_creative_posture[]`, `story_chain_posture[]`, `module_governance_posture[]` |
+| Gate | `make alt13-1-gate` |
+
+## Alt-13.2 Creative Chain & Module Governance Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt13-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/storyforge/STORY_CHAIN_V1_PROOF.md`, `docs/proof/platform/CONSTITUTIONAL_CREATIVE_V1_PROOF.md`, `docs/proof/platform/MODULE_GOVERNANCE_ORGAN_V1_PROOF.md` |
+| Gate | `make alt13-2-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per

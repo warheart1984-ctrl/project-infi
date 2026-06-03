@@ -69,7 +69,9 @@
       "speakers",
       "story_forge"
     ],
-    "children": []
+    "children": [
+      "human_voice_extraction_organ"
+    ]
   },
   "activation": {
     "order": 3,

@@ -64,7 +64,8 @@
       "speakers"
     ],
     "children": [
-      "imagine_generator"
+      "imagine_generator",
+      "narrative_trust_pack_organ"
     ]
   },
   "activation": {

@@ -13,6 +13,31 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.8.0] - 2026-06-02 — Alt-12 OTEM, Predictive Lane & Execution Depth Fabric
+
+**Alt-12** — nine read-only organs at governed; coherence fabric v1.7 with OTEM lane, predictive lane, and execution-depth posture planes.
+
+### Added
+
+- **Alt-12.0** — `otem_bounded_organ`, `direct_challenge_organ`, `orchestration_spine_organ`, `operator_health_sentinel_organ`, `governed_realtime_lane_organ`, `v8_runtime_organ`, `patch_apply_organ`, `patch_execution_preview_organ`, `run_ledger_organ`; status APIs; `make alt12-gate`; `tools/governance/alt12_promote_mvp.py`
+- **Alt-12.1** — coherence snapshot v1.7 + `otem_lane_aligned`, `predictive_lane_aligned`, `execution_depth_aligned` in Tier 5; `make alt12-1-gate`
+- **Alt-12.2** — `OTEM_BOUNDED_V1_PROOF` + `PREDICTIVE_LANE_V1_PROOF` + `EXECUTION_DEPTH_V1_PROOF`; `make alt12-2-gate`
+- **Governed promotion** — `tools/governance/alt12_promote_governed.py`; `make alt12-governed-gate`
+
+### Changed
+
+- Genome registry: **48 governed** subsystem genomes (39 prior + 9 Alt-12)
+- `operator_cognition_coherence_fabric` schema ref → v1.7
+
+### Verification (v1.8.0)
+
+```bash
+make alt12-gate alt12-1-gate alt12-2-gate alt12-governed-gate
+python -m pytest tests/test_otem_bounded_organ.py tests/test_direct_challenge_organ.py tests/test_orchestration_spine_organ.py tests/test_operator_health_sentinel_organ.py tests/test_governed_realtime_lane_organ.py tests/test_v8_runtime_organ.py tests/test_patch_apply_organ.py tests/test_patch_execution_preview_organ.py tests/test_run_ledger_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.8.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.8.0
+
 ## [1.7.0] - 2026-06-02 — Alt-11 Authority Trace, Boundary & Coding Fabric
 
 **Alt-11** — nine read-only organs at governed; coherence fabric v1.6 with authority trace, mission boundary, and coding posture planes.

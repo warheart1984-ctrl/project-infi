@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "direct_challenge_organ.v1",
+  "title": "direct_challenge_organ v1",
+  "type": "object",
+  "required": [
+    "direct_challenge_organ_version",
+    "module_id",
+    "cisiv_stage",
+    "claim_label"
+  ],
+  "properties": {
+    "direct_challenge_organ_version": {
+      "const": "direct_challenge_organ.v1"
+    },
+    "module_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status_summary": {
+      "type": "string"
+    },
+    "cisiv_stage": {
+      "enum": [
+        "concept",
+        "identity",
+        "structure",
+        "implementation",
+        "verification"
+      ]
+    },
+    "claim_label": {
+      "enum": [
+        "asserted",
+        "proven",
+        "rejected"
+      ]
+    },
+    "read_only": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": true
+}

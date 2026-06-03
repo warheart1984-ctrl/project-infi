@@ -57,6 +57,24 @@ GENE_GATES: dict[str, str] = {
     "patchforge_organ": "patchforge-organ-gate",
     "change_scope_organ": "change-scope-organ-gate",
     "patch_verification_organ": "patch-verification-organ-gate",
+    "otem_bounded_organ": "otem-bounded-organ-gate",
+    "direct_challenge_organ": "direct-challenge-organ-gate",
+    "orchestration_spine_organ": "orchestration-spine-organ-gate",
+    "operator_health_sentinel_organ": "operator-health-sentinel-organ-gate",
+    "governed_realtime_lane_organ": "governed-realtime-lane-organ-gate",
+    "v8_runtime_organ": "v8-runtime-organ-gate",
+    "patch_apply_organ": "patch-apply-organ-gate",
+    "patch_execution_preview_organ": "patch-execution-preview-organ-gate",
+    "run_ledger_organ": "run-ledger-organ-gate",
+    "ul_lineage_console_organ": "ul-lineage-console-organ-gate",
+    "module_governance_organ": "module-governance-organ-gate",
+    "recipe_module_organ": "recipe-module-organ-gate",
+    "imagine_generator_organ": "imagine-generator-organ-gate",
+    "story_forge_lane_organ": "story-forge-lane-organ-gate",
+    "beatbox_lane_organ": "beatbox-lane-organ-gate",
+    "speakers_lane_organ": "speakers-lane-organ-gate",
+    "human_voice_extraction_organ": "human-voice-extraction-organ-gate",
+    "narrative_trust_pack_organ": "narrative-trust-pack-organ-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -130,6 +148,46 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     "change-scope-organ-gate": [".github/scripts/check-change-scope-organ-governance.py"],
     "patch-verification-organ-gate": [
         ".github/scripts/check-patch-verification-organ-governance.py"
+    ],
+    "otem-bounded-organ-gate": [".github/scripts/check-otem-bounded-organ-governance.py"],
+    "direct-challenge-organ-gate": [
+        ".github/scripts/check-direct-challenge-organ-governance.py"
+    ],
+    "orchestration-spine-organ-gate": [
+        ".github/scripts/check-orchestration-spine-organ-governance.py"
+    ],
+    "operator-health-sentinel-organ-gate": [
+        ".github/scripts/check-operator-health-sentinel-organ-governance.py"
+    ],
+    "governed-realtime-lane-organ-gate": [
+        ".github/scripts/check-governed-realtime-lane-organ-governance.py"
+    ],
+    "v8-runtime-organ-gate": [".github/scripts/check-v8-runtime-organ-governance.py"],
+    "patch-apply-organ-gate": [".github/scripts/check-patch-apply-organ-governance.py"],
+    "patch-execution-preview-organ-gate": [
+        ".github/scripts/check-patch-execution-preview-organ-governance.py"
+    ],
+    "run-ledger-organ-gate": [".github/scripts/check-run-ledger-organ-governance.py"],
+    "ul-lineage-console-organ-gate": [
+        ".github/scripts/check-ul-lineage-console-organ-governance.py"
+    ],
+    "module-governance-organ-gate": [
+        ".github/scripts/check-module-governance-organ-governance.py"
+    ],
+    "recipe-module-organ-gate": [".github/scripts/check-recipe-module-organ-governance.py"],
+    "imagine-generator-organ-gate": [
+        ".github/scripts/check-imagine-generator-organ-governance.py"
+    ],
+    "story-forge-lane-organ-gate": [
+        ".github/scripts/check-story-forge-lane-organ-governance.py"
+    ],
+    "beatbox-lane-organ-gate": [".github/scripts/check-beatbox-lane-organ-governance.py"],
+    "speakers-lane-organ-gate": [".github/scripts/check-speakers-lane-organ-governance.py"],
+    "human-voice-extraction-organ-gate": [
+        ".github/scripts/check-human-voice-extraction-organ-governance.py"
+    ],
+    "narrative-trust-pack-organ-gate": [
+        ".github/scripts/check-narrative-trust-pack-organ-governance.py"
     ],
 }
 

@@ -74,7 +74,8 @@
       "platform"
     ],
     "children": [
-      "human_voice_extraction"
+      "human_voice_extraction",
+      "imagine_generator_organ"
     ]
   },
   "activation": {

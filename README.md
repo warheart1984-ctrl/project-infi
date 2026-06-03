@@ -28,7 +28,7 @@ Authoritative references:
 
 This repository is also **Project Infi** — constitutional engineering where claims require proof, not intent.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.7.0 — Alt-11 Authority Trace, Boundary & Coding Fabric](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.7.0) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.8.0 — Alt-12 OTEM, Predictive Lane & Execution Depth Fabric](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.8.0) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -306,7 +306,7 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
-| Latest tag | [`v1.7.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.7.0) — **Alt-11** — 39 governed genomes, authority trace/boundary/coding organs, coherence v1.6 (see [CHANGELOG](CHANGELOG.md) §1.7.0) |
+| Latest tag | [`v1.8.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.8.0) — **Alt-12** — 48 governed genomes, OTEM/predictive/execution-depth organs, coherence v1.7 (see [CHANGELOG](CHANGELOG.md) §1.8.0) |
 | Prior tag | [`v1.6.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.6.0) — **Alt-10** — 30 governed genomes, memory/forensics/immune observe organs, coherence v1.5 (see [CHANGELOG](CHANGELOG.md) §1.6.0) |
 | Prior tag | [`v1.5.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.5.0) — **Alt-9** — infrastructure fabric (see [CHANGELOG](CHANGELOG.md) §1.5.0) |
 | Prior tag | [`v1.3.3`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.3) — Alt-7.2 + Alt-7.1 — enforcement closure, MP-OPO-001 |

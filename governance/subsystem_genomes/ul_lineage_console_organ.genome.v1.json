@@ -1,0 +1,77 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "ul_lineage_console_organ",
+    "version": "0.1.0-concept",
+    "stage": "governed",
+    "display_name": "UL Lineage Console Organ"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    ],
+    "invariants": [
+      "Read-only v1 \u2014 organ does not mutate upstream authority",
+      "module_id frozen to AAIS-ULC-01"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/ul_lineage_console_organ.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/ul_lineage_console_organ.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/ul-lineage-console/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make ul-lineage-console-organ-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/aais-ul/UL_LINEAGE_CONSOLE_ORGAN_V1_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/aais-ul/UL_LINEAGE_CONSOLE_ORGAN_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "cisiv_operator_lineage_console",
+      "operator_profile_organ"
+    ],
+    "children": [
+      "module_governance_organ"
+    ]
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "alt13-summon-wave-2026-06",
+    "notes": "Alt-13 wave 1"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/UL_LINEAGE_CONSOLE_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/UL_LINEAGE_CONSOLE_ORGAN_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/aais-ul/UL_LINEAGE_CONSOLE_ORGAN.md"
+  }
+}

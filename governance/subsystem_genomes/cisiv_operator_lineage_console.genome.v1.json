@@ -68,7 +68,8 @@
       "jarvis_memory_board"
     ],
     "children": [
-      "forensic_triangulation"
+      "forensic_triangulation",
+      "ul_lineage_console_organ"
     ]
   },
   "activation": {

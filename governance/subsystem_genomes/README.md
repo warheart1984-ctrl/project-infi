@@ -61,6 +61,24 @@ make alt7-governed-gate
 | `patchforge_organ` | governed | [patchforge_organ.genome.v1.json](./patchforge_organ.genome.v1.json) |
 | `change_scope_organ` | governed | [change_scope_organ.genome.v1.json](./change_scope_organ.genome.v1.json) |
 | `patch_verification_organ` | governed | [patch_verification_organ.genome.v1.json](./patch_verification_organ.genome.v1.json) |
+| `otem_bounded_organ` | governed | [otem_bounded_organ.genome.v1.json](./otem_bounded_organ.genome.v1.json) |
+| `direct_challenge_organ` | governed | [direct_challenge_organ.genome.v1.json](./direct_challenge_organ.genome.v1.json) |
+| `orchestration_spine_organ` | governed | [orchestration_spine_organ.genome.v1.json](./orchestration_spine_organ.genome.v1.json) |
+| `operator_health_sentinel_organ` | governed | [operator_health_sentinel_organ.genome.v1.json](./operator_health_sentinel_organ.genome.v1.json) |
+| `governed_realtime_lane_organ` | governed | [governed_realtime_lane_organ.genome.v1.json](./governed_realtime_lane_organ.genome.v1.json) |
+| `v8_runtime_organ` | governed | [v8_runtime_organ.genome.v1.json](./v8_runtime_organ.genome.v1.json) |
+| `patch_apply_organ` | governed | [patch_apply_organ.genome.v1.json](./patch_apply_organ.genome.v1.json) |
+| `patch_execution_preview_organ` | governed | [patch_execution_preview_organ.genome.v1.json](./patch_execution_preview_organ.genome.v1.json) |
+| `run_ledger_organ` | governed | [run_ledger_organ.genome.v1.json](./run_ledger_organ.genome.v1.json) |
+| `ul_lineage_console_organ` | concept | [ul_lineage_console_organ.genome.v1.json](./ul_lineage_console_organ.genome.v1.json) |
+| `module_governance_organ` | concept | [module_governance_organ.genome.v1.json](./module_governance_organ.genome.v1.json) |
+| `recipe_module_organ` | concept | [recipe_module_organ.genome.v1.json](./recipe_module_organ.genome.v1.json) |
+| `imagine_generator_organ` | concept | [imagine_generator_organ.genome.v1.json](./imagine_generator_organ.genome.v1.json) |
+| `story_forge_lane_organ` | concept | [story_forge_lane_organ.genome.v1.json](./story_forge_lane_organ.genome.v1.json) |
+| `beatbox_lane_organ` | concept | [beatbox_lane_organ.genome.v1.json](./beatbox_lane_organ.genome.v1.json) |
+| `speakers_lane_organ` | concept | [speakers_lane_organ.genome.v1.json](./speakers_lane_organ.genome.v1.json) |
+| `human_voice_extraction_organ` | concept | [human_voice_extraction_organ.genome.v1.json](./human_voice_extraction_organ.genome.v1.json) |
+| `narrative_trust_pack_organ` | concept | [narrative_trust_pack_organ.genome.v1.json](./narrative_trust_pack_organ.genome.v1.json) |
 
 ## Adding a Genome
 

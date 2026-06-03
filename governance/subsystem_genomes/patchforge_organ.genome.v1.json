@@ -55,7 +55,8 @@
     ],
     "children": [
       "change_scope_organ",
-      "patch_verification_organ"
+      "patch_verification_organ",
+      "run_ledger_organ"
     ]
   },
   "activation": {
