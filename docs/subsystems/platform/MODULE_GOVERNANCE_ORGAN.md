@@ -1,6 +1,6 @@
 # Module Governance Organ
 
-Status: **mvp** (Alt-13 summon wave `alt13-summon-wave-2026-06`)
+Status: **governed** (Alt-13 summon wave `alt13-summon-wave-2026-06`; promoted v1.9.0)
 
 ## Runtime
 

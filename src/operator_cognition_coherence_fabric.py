@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.8"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.9"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -838,6 +838,139 @@ def _module_governance_aligned(module_governance_posture: list[dict[str, Any]]) 
     return bool(item.get("major_violation_disable_module"))
 
 
+def _organ_posture_item(organ_id: str, snap: dict[str, Any], **extra: Any) -> dict[str, Any]:
+    item: dict[str, Any] = {
+        "organ_id": organ_id,
+        "stage": str(snap.get("cisiv_stage") or "implementation"),
+        "claim_label": str(snap.get("claim_label") or "asserted"),
+    }
+    item.update(extra)
+    return item
+
+
+def _build_perception_posture() -> list[dict[str, Any]]:
+    from src.document_vision_organ import build_document_vision_status
+    from src.perception_gateway_organ import build_perception_gateway_status
+    from src.ui_vision_organ import build_ui_vision_status
+
+    doc = build_document_vision_status()
+    ui = build_ui_vision_status()
+    gateway = build_perception_gateway_status()
+    return [
+        _organ_posture_item(
+            "document_vision_organ",
+            doc,
+            bridge_safe=bool(doc.get("bridge_safe")),
+            env_gated=True,
+        ),
+        _organ_posture_item(
+            "ui_vision_organ",
+            ui,
+            bridge_safe=bool(ui.get("bridge_safe")),
+            env_gated=True,
+        ),
+        _organ_posture_item(
+            "perception_gateway_organ",
+            gateway,
+            bridge_safe=bool(gateway.get("bridge_safe")),
+            env_gated=True,
+        ),
+    ]
+
+
+def _perception_aligned(perception_posture: list[dict[str, Any]]) -> bool:
+    if len(perception_posture) < 3:
+        return False
+    for item in perception_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("bridge_safe"):
+            return False
+    return True
+
+
+def _build_spatial_symbolic_posture() -> list[dict[str, Any]]:
+    from src.mystic_engine_organ import build_mystic_engine_status
+    from src.perception_lane_organ import build_perception_lane_status
+    from src.spatial_reasoning_organ import build_spatial_reasoning_status
+
+    spatial = build_spatial_reasoning_status()
+    mystic = build_mystic_engine_status()
+    lane = build_perception_lane_status()
+    return [
+        _organ_posture_item(
+            "spatial_reasoning_organ",
+            spatial,
+            bridge_safe=bool(spatial.get("bridge_safe")),
+            operator_gated=bool(spatial.get("operator_gated")),
+        ),
+        _organ_posture_item(
+            "mystic_engine_organ",
+            mystic,
+            bridge_safe=bool(mystic.get("bridge_safe")),
+            operator_gated=bool(mystic.get("operator_gated")),
+        ),
+        _organ_posture_item(
+            "perception_lane_organ",
+            lane,
+            bridge_safe=bool(lane.get("bridge_safe")),
+            operator_gated=bool(lane.get("operator_gated")),
+        ),
+    ]
+
+
+def _spatial_symbolic_aligned(spatial_symbolic_posture: list[dict[str, Any]]) -> bool:
+    if len(spatial_symbolic_posture) < 3:
+        return False
+    for item in spatial_symbolic_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("bridge_safe") or not item.get("operator_gated"):
+            return False
+    return True
+
+
+def _build_route_choice_posture() -> list[dict[str, Any]]:
+    from src.provider_route_organ import build_provider_route_status
+    from src.route_choice_organ import build_route_choice_status
+    from src.specialist_route_organ import build_specialist_route_status
+
+    route = build_route_choice_status()
+    specialist = build_specialist_route_status()
+    provider = build_provider_route_status()
+    return [
+        _organ_posture_item(
+            "route_choice_organ",
+            route,
+            advisory_only=bool(route.get("advisory_only")),
+            routing_read_only=bool(route.get("routing_read_only")),
+        ),
+        _organ_posture_item(
+            "specialist_route_organ",
+            specialist,
+            advisory_only=bool(specialist.get("advisory_only")),
+            routing_read_only=bool(specialist.get("routing_read_only")),
+        ),
+        _organ_posture_item(
+            "provider_route_organ",
+            provider,
+            advisory_only=bool(provider.get("advisory_only")),
+            routing_read_only=bool(provider.get("routing_read_only")),
+        ),
+    ]
+
+
+def _route_choice_aligned(route_choice_posture: list[dict[str, Any]]) -> bool:
+    if len(route_choice_posture) < 3:
+        return False
+    for item in route_choice_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("advisory_only") or not item.get("routing_read_only"):
+            return False
+    return True
+
+
 def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
@@ -920,6 +1053,9 @@ def build_coherence_fabric_status(
     constitutional_creative_posture = _build_constitutional_creative_posture()
     story_chain_posture = _build_story_chain_posture()
     module_governance_posture = _build_module_governance_posture()
+    perception_posture = _build_perception_posture()
+    spatial_symbolic_posture = _build_spatial_symbolic_posture()
+    route_choice_posture = _build_route_choice_posture()
 
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
@@ -966,6 +1102,12 @@ def build_coherence_fabric_status(
         ),
         "creative_chain_aligned": _story_chain_aligned(story_chain_posture)
         and _constitutional_creative_aligned(constitutional_creative_posture),
+        "perception_posture": perception_posture,
+        "perception_aligned": _perception_aligned(perception_posture),
+        "spatial_symbolic_posture": spatial_symbolic_posture,
+        "spatial_symbolic_aligned": _spatial_symbolic_aligned(spatial_symbolic_posture),
+        "route_choice_posture": route_choice_posture,
+        "route_choice_aligned": _route_choice_aligned(route_choice_posture),
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,
         "safety_envelope_halt": safety_halt,

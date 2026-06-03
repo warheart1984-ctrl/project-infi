@@ -59,6 +59,7 @@
       "governed_event_chain_organ",
       "mission_board_organ",
       "otem_bounded_organ",
+      "provider_route_organ",
       "tracing_spine_organ"
     ]
   },

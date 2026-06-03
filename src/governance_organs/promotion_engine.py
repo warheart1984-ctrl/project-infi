@@ -75,6 +75,15 @@ GENE_GATES: dict[str, str] = {
     "speakers_lane_organ": "speakers-lane-organ-gate",
     "human_voice_extraction_organ": "human-voice-extraction-organ-gate",
     "narrative_trust_pack_organ": "narrative-trust-pack-organ-gate",
+    "document_vision_organ": "document-vision-organ-gate",
+    "ui_vision_organ": "ui-vision-organ-gate",
+    "perception_gateway_organ": "perception-gateway-organ-gate",
+    "spatial_reasoning_organ": "spatial-reasoning-organ-gate",
+    "mystic_engine_organ": "mystic-engine-organ-gate",
+    "perception_lane_organ": "perception-lane-organ-gate",
+    "route_choice_organ": "route-choice-organ-gate",
+    "specialist_route_organ": "specialist-route-organ-gate",
+    "provider_route_organ": "provider-route-organ-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -189,6 +198,25 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     "narrative-trust-pack-organ-gate": [
         ".github/scripts/check-narrative-trust-pack-organ-governance.py"
     ],
+    "document-vision-organ-gate": [
+        ".github/scripts/check-document-vision-organ-governance.py"
+    ],
+    "ui-vision-organ-gate": [".github/scripts/check-ui-vision-organ-governance.py"],
+    "perception-gateway-organ-gate": [
+        ".github/scripts/check-perception-gateway-organ-governance.py"
+    ],
+    "spatial-reasoning-organ-gate": [
+        ".github/scripts/check-spatial-reasoning-organ-governance.py"
+    ],
+    "mystic-engine-organ-gate": [".github/scripts/check-mystic-engine-organ-governance.py"],
+    "perception-lane-organ-gate": [
+        ".github/scripts/check-perception-lane-organ-governance.py"
+    ],
+    "route-choice-organ-gate": [".github/scripts/check-route-choice-organ-governance.py"],
+    "specialist-route-organ-gate": [
+        ".github/scripts/check-specialist-route-organ-governance.py"
+    ],
+    "provider-route-organ-gate": [".github/scripts/check-provider-route-organ-governance.py"],
 }
 
 PROTOTYPE_GATE_STUB_GENES = frozenset(GENE_GATES.keys()) | frozenset(

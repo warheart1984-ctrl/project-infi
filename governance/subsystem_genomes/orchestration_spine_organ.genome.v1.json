@@ -54,7 +54,8 @@
       "governed_direct_pipeline"
     ],
     "children": [
-      "operator_health_sentinel_organ"
+      "operator_health_sentinel_organ",
+      "route_choice_organ"
     ]
   },
   "activation": {

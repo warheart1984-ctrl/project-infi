@@ -55,7 +55,8 @@
       "aris_boundary_organ"
     ],
     "children": [
-      "patchforge_organ"
+      "patchforge_organ",
+      "perception_gateway_organ"
     ]
   },
   "activation": {

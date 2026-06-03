@@ -3,7 +3,7 @@
   "identity": {
     "gene": "narrative_trust_pack_organ",
     "version": "0.1.0-concept",
-    "stage": "mvp",
+    "stage": "governed",
     "display_name": "Narrative Trust Pack Organ"
   },
   "governance": {
@@ -21,7 +21,7 @@
   },
   "schema": {
     "ref": "schemas/narrative_trust_pack_organ.v1.json",
-    "frozen": false
+    "frozen": true
   },
   "runtime": {
     "surface": [
@@ -41,9 +41,9 @@
   },
   "proof": {
     "bundles": [
-      "docs/proof/storyforge/NARRATIVE_TRUST_PACK_ORGAN_V1_PROOF.md"
+      "docs/proof/storyforge/NARRATIVE_TRUST_PACK_ORGAN_GOVERNED_PROOF.md"
     ],
-    "posture": "mvp",
+    "posture": "governed",
     "target_bundles": [
       "docs/proof/storyforge/NARRATIVE_TRUST_PACK_ORGAN_V1_PROOF.md"
     ]
@@ -54,7 +54,9 @@
       "narrative_trust_pack",
       "story_forge_lane_organ"
     ],
-    "children": []
+    "children": [
+      "document_vision_organ"
+    ]
   },
   "activation": {
     "order": 9,

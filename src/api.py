@@ -12342,6 +12342,128 @@ def get_narrative_trust_pack_organ_status():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/document-vision/status", methods=["GET"])
+def get_document_vision_organ_status():
+    """Read-only Document Vision organ snapshot (Alt-14 wave)."""
+    try:
+        from src.document_vision_organ import build_document_vision_status
+
+        return jsonify(
+            attach_ul_substrate({"document_vision": build_document_vision_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading document vision organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/ui-vision/status", methods=["GET"])
+def get_ui_vision_organ_status():
+    """Read-only UI Vision organ snapshot (Alt-14 wave)."""
+    try:
+        from src.ui_vision_organ import build_ui_vision_status
+
+        return jsonify(attach_ul_substrate({"ui_vision": build_ui_vision_status()}))
+    except Exception as e:
+        logger.error(f"Error reading ui vision organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/perception-gateway/status", methods=["GET"])
+def get_perception_gateway_organ_status():
+    """Read-only Perception Gateway organ snapshot (Alt-14 wave)."""
+    try:
+        from src.perception_gateway_organ import build_perception_gateway_status
+
+        return jsonify(
+            attach_ul_substrate({"perception_gateway": build_perception_gateway_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading perception gateway organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/spatial-reasoning/status", methods=["GET"])
+def get_spatial_reasoning_organ_status():
+    """Read-only Spatial Reasoning organ snapshot (Alt-14 wave)."""
+    try:
+        from src.spatial_reasoning_organ import build_spatial_reasoning_status
+
+        return jsonify(
+            attach_ul_substrate({"spatial_reasoning": build_spatial_reasoning_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading spatial reasoning organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/mystic-engine/status", methods=["GET"])
+def get_mystic_engine_organ_status():
+    """Read-only Mystic Engine organ snapshot (Alt-14 wave)."""
+    try:
+        from src.mystic_engine_organ import build_mystic_engine_status
+
+        return jsonify(
+            attach_ul_substrate({"mystic_engine": build_mystic_engine_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading mystic engine organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/perception-lane/status", methods=["GET"])
+def get_perception_lane_organ_status():
+    """Read-only Perception Lane organ snapshot (Alt-14 wave)."""
+    try:
+        from src.perception_lane_organ import build_perception_lane_status
+
+        return jsonify(
+            attach_ul_substrate({"perception_lane": build_perception_lane_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading perception lane organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/route-choice/status", methods=["GET"])
+def get_route_choice_organ_status():
+    """Read-only Route Choice organ snapshot (Alt-14 wave)."""
+    try:
+        from src.route_choice_organ import build_route_choice_status
+
+        return jsonify(attach_ul_substrate({"route_choice": build_route_choice_status()}))
+    except Exception as e:
+        logger.error(f"Error reading route choice organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/specialist-route/status", methods=["GET"])
+def get_specialist_route_organ_status():
+    """Read-only Specialist Route organ snapshot (Alt-14 wave)."""
+    try:
+        from src.specialist_route_organ import build_specialist_route_status
+
+        return jsonify(
+            attach_ul_substrate({"specialist_route": build_specialist_route_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading specialist route organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/provider-route/status", methods=["GET"])
+def get_provider_route_organ_status():
+    """Read-only Provider Route organ snapshot (Alt-14 wave)."""
+    try:
+        from src.provider_route_organ import build_provider_route_status
+
+        return jsonify(
+            attach_ul_substrate({"provider_route": build_provider_route_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading provider route organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/reset", methods=["POST"])
 def reset_mission_board():
     """Reset Mission Board state with an optional backup and seeded current objectives."""

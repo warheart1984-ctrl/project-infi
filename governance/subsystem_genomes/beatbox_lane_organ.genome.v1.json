@@ -3,7 +3,7 @@
   "identity": {
     "gene": "beatbox_lane_organ",
     "version": "0.1.0-concept",
-    "stage": "mvp",
+    "stage": "governed",
     "display_name": "Beatbox Lane Organ"
   },
   "governance": {
@@ -21,7 +21,7 @@
   },
   "schema": {
     "ref": "schemas/beatbox_lane_organ.v1.json",
-    "frozen": false
+    "frozen": true
   },
   "runtime": {
     "surface": [
@@ -41,9 +41,9 @@
   },
   "proof": {
     "bundles": [
-      "docs/proof/storyforge/BEATBOX_LANE_ORGAN_V1_PROOF.md"
+      "docs/proof/storyforge/BEATBOX_LANE_ORGAN_GOVERNED_PROOF.md"
     ],
-    "posture": "mvp",
+    "posture": "governed",
     "target_bundles": [
       "docs/proof/storyforge/BEATBOX_LANE_ORGAN_V1_PROOF.md"
     ]

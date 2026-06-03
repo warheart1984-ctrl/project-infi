@@ -41,7 +41,7 @@
   },
   "proof": {
     "bundles": [
-      "docs/proof/aais-ul/UL_LINEAGE_CONSOLE_ORGAN_V1_PROOF.md"
+      "docs/proof/aais-ul/UL_LINEAGE_CONSOLE_ORGAN_GOVERNED_PROOF.md"
     ],
     "posture": "governed",
     "target_bundles": [

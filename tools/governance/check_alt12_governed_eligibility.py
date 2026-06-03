@@ -28,6 +28,23 @@ GOVERNED_PROOFS = {
     for gene in ALT12_GENES
 }
 
+_FABRIC_VERSION_PREFIX = "operator_cognition_coherence_fabric.v"
+
+
+def _fabric_supports_alt12_planes(version: str) -> bool:
+    if not str(version or "").startswith(_FABRIC_VERSION_PREFIX):
+        return False
+    suffix = str(version)[len(_FABRIC_VERSION_PREFIX) :]
+    try:
+        parts = [int(part) for part in suffix.split(".")]
+    except ValueError:
+        return False
+    if not parts or parts[0] < 1:
+        return False
+    if parts[0] > 1:
+        return True
+    return len(parts) >= 2 and parts[1] >= 7
+
 
 def check_eligibility(root: Path | None = None) -> list[str]:
     root = root or _ROOT
@@ -53,10 +70,12 @@ def check_eligibility(root: Path | None = None) -> list[str]:
             errors.append(f"missing governed proof: {proof_path.relative_to(root)}")
 
     fabric = build_coherence_fabric_status(root=root)
-    if fabric.get("operator_cognition_coherence_fabric_version") != (
-        "operator_cognition_coherence_fabric.v1.7"
-    ):
-        errors.append("coherence fabric must be v1.7")
+    fabric_version = str(fabric.get("operator_cognition_coherence_fabric_version") or "")
+    if not _fabric_supports_alt12_planes(fabric_version):
+        errors.append(
+            "coherence fabric must be v1.7+ with Alt-12 planes "
+            f"(got {fabric_version or 'missing'})"
+        )
     if len(fabric.get("otem_lane_posture") or []) != 3:
         errors.append("expected 3 otem_lane_posture entries")
     if len(fabric.get("predictive_lane_posture") or []) != 3:

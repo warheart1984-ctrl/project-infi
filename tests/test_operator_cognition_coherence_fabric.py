@@ -10,7 +10,7 @@ from src.operator_cognition_coherence_fabric import build_coherence_fabric_statu
 def test_build_coherence_fabric_status_schema_fields():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status["operator_cognition_coherence_fabric_version"] == (
-        "operator_cognition_coherence_fabric.v1.8"
+        "operator_cognition_coherence_fabric.v1.9"
     )
     assert status["read_only"] is True
     assert status["authority_lane"] == "operator"
@@ -313,3 +313,61 @@ def test_module_governance_posture_includes_alt13_organ():
     organs = {item["organ_id"] for item in status.get("module_governance_posture") or []}
     assert organs == {"module_governance_organ"}
     assert status.get("module_governance_aligned") is True
+
+
+def test_alt12_planes_aligned_at_v19_alongside_alt13_and_alt14():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    assert status.get("operator_cognition_coherence_fabric_version") == (
+        "operator_cognition_coherence_fabric.v1.9"
+    )
+    assert len(status.get("otem_lane_posture") or []) == 3
+    assert len(status.get("predictive_lane_posture") or []) == 3
+    assert len(status.get("execution_depth_posture") or []) == 3
+    assert status.get("otem_lane_aligned") is True
+    assert status.get("predictive_lane_aligned") is True
+    assert status.get("execution_depth_aligned") is True
+    assert len(status.get("constitutional_creative_posture") or []) == 5
+    assert len(status.get("story_chain_posture") or []) == 3
+    assert len(status.get("module_governance_posture") or []) == 1
+    assert status.get("constitutional_creative_aligned") is True
+    assert status.get("story_chain_aligned") is True
+    assert status.get("module_governance_aligned") is True
+    assert len(status.get("perception_posture") or []) == 3
+    assert len(status.get("spatial_symbolic_posture") or []) == 3
+    assert len(status.get("route_choice_posture") or []) == 3
+    assert status.get("perception_aligned") is True
+    assert status.get("spatial_symbolic_aligned") is True
+    assert status.get("route_choice_aligned") is True
+
+
+def test_perception_posture_includes_alt14_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("perception_posture") or []}
+    assert organs == {
+        "document_vision_organ",
+        "ui_vision_organ",
+        "perception_gateway_organ",
+    }
+    assert status.get("perception_aligned") is True
+
+
+def test_spatial_symbolic_posture_includes_alt14_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("spatial_symbolic_posture") or []}
+    assert organs == {
+        "spatial_reasoning_organ",
+        "mystic_engine_organ",
+        "perception_lane_organ",
+    }
+    assert status.get("spatial_symbolic_aligned") is True
+
+
+def test_route_choice_posture_includes_alt14_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("route_choice_posture") or []}
+    assert organs == {
+        "route_choice_organ",
+        "specialist_route_organ",
+        "provider_route_organ",
+    }
+    assert status.get("route_choice_aligned") is True

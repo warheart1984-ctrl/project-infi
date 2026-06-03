@@ -1220,8 +1220,17 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | Patch Apply Organ | governed | [../subsystems/platform/PATCH_APPLY_ORGAN.md](../subsystems/platform/PATCH_APPLY_ORGAN.md) | [../proof/platform/PATCH_APPLY_ORGAN_V1_PROOF.md](../proof/platform/PATCH_APPLY_ORGAN_V1_PROOF.md) |
 | Patch Execution Preview Organ | governed | [../subsystems/platform/PATCH_EXECUTION_PREVIEW_ORGAN.md](../subsystems/platform/PATCH_EXECUTION_PREVIEW_ORGAN.md) | [../proof/platform/PATCH_EXECUTION_PREVIEW_ORGAN_V1_PROOF.md](../proof/platform/PATCH_EXECUTION_PREVIEW_ORGAN_V1_PROOF.md) |
 | Run Ledger Organ | governed | [../subsystems/platform/RUN_LEDGER_ORGAN.md](../subsystems/platform/RUN_LEDGER_ORGAN.md) | [../proof/platform/RUN_LEDGER_ORGAN_V1_PROOF.md](../proof/platform/RUN_LEDGER_ORGAN_V1_PROOF.md) |
+| UL Lineage Console Organ | governed | [../subsystems/aais-ul/UL_LINEAGE_CONSOLE_ORGAN.md](../subsystems/aais-ul/UL_LINEAGE_CONSOLE_ORGAN.md) | [../proof/aais-ul/UL_LINEAGE_CONSOLE_ORGAN_V1_PROOF.md](../proof/aais-ul/UL_LINEAGE_CONSOLE_ORGAN_V1_PROOF.md) |
+| Module Governance Organ | governed | [../subsystems/platform/MODULE_GOVERNANCE_ORGAN.md](../subsystems/platform/MODULE_GOVERNANCE_ORGAN.md) | [../proof/platform/MODULE_GOVERNANCE_ORGAN_V1_PROOF.md](../proof/platform/MODULE_GOVERNANCE_ORGAN_V1_PROOF.md) |
+| Recipe Module Organ | governed | [../subsystems/platform/RECIPE_MODULE_ORGAN.md](../subsystems/platform/RECIPE_MODULE_ORGAN.md) | [../proof/platform/RECIPE_MODULE_ORGAN_V1_PROOF.md](../proof/platform/RECIPE_MODULE_ORGAN_V1_PROOF.md) |
+| Imagine Generator Organ | governed | [../subsystems/storyforge/IMAGINE_GENERATOR_ORGAN.md](../subsystems/storyforge/IMAGINE_GENERATOR_ORGAN.md) | [../proof/storyforge/IMAGINE_GENERATOR_ORGAN_V1_PROOF.md](../proof/storyforge/IMAGINE_GENERATOR_ORGAN_V1_PROOF.md) |
+| Story Forge Lane Organ | governed | [../subsystems/storyforge/STORY_FORGE_LANE_ORGAN.md](../subsystems/storyforge/STORY_FORGE_LANE_ORGAN.md) | [../proof/storyforge/STORY_FORGE_LANE_ORGAN_V1_PROOF.md](../proof/storyforge/STORY_FORGE_LANE_ORGAN_V1_PROOF.md) |
+| Beatbox Lane Organ | governed | [../subsystems/storyforge/BEATBOX_LANE_ORGAN.md](../subsystems/storyforge/BEATBOX_LANE_ORGAN.md) | [../proof/storyforge/BEATBOX_LANE_ORGAN_V1_PROOF.md](../proof/storyforge/BEATBOX_LANE_ORGAN_V1_PROOF.md) |
+| Speakers Lane Organ | governed | [../subsystems/speakers/SPEAKERS_LANE_ORGAN.md](../subsystems/speakers/SPEAKERS_LANE_ORGAN.md) | [../proof/speakers/SPEAKERS_LANE_ORGAN_V1_PROOF.md](../proof/speakers/SPEAKERS_LANE_ORGAN_V1_PROOF.md) |
+| Human Voice Extraction Organ | governed | [../subsystems/speakers/HUMAN_VOICE_EXTRACTION_ORGAN.md](../subsystems/speakers/HUMAN_VOICE_EXTRACTION_ORGAN.md) | [../proof/speakers/HUMAN_VOICE_EXTRACTION_ORGAN_V1_PROOF.md](../proof/speakers/HUMAN_VOICE_EXTRACTION_ORGAN_V1_PROOF.md) |
+| Narrative Trust Pack Organ | governed | [../subsystems/storyforge/NARRATIVE_TRUST_PACK_ORGAN.md](../subsystems/storyforge/NARRATIVE_TRUST_PACK_ORGAN.md) | [../proof/storyforge/NARRATIVE_TRUST_PACK_ORGAN_V1_PROOF.md](../proof/storyforge/NARRATIVE_TRUST_PACK_ORGAN_V1_PROOF.md) |
 
-Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate`
+Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate alt13-governed-gate`
 
 ## 9. Concept Pending (SSP)
 
@@ -1230,6 +1239,6 @@ Nothing here is live until promoted per [ideas_pending/README.md](../_future/ide
 
 | Idea | Status | Concept spec | MVP plan | Genome |
 |------|--------|--------------|----------|--------|
-| *(none — Alt-12 graduated to §8)* | — | — | — | — |
+| *(none — Alt-13 graduated to §8)* | — | — | — | — |
 
 New admissions via SSP (Step 7) update this table. Graduated ideas move to §8. Genome contract: [AAIS_SUBSYSTEM_GENOME.md](../contracts/AAIS_SUBSYSTEM_GENOME.md).

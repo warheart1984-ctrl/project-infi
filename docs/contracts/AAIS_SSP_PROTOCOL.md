@@ -455,6 +455,36 @@ Depends on: Alt-12 governed OTEM/predictive/execution fabric; governed constitut
 | Proof | `docs/proof/storyforge/STORY_CHAIN_V1_PROOF.md`, `docs/proof/platform/CONSTITUTIONAL_CREATIVE_V1_PROOF.md`, `docs/proof/platform/MODULE_GOVERNANCE_ORGAN_V1_PROOF.md` |
 | Gate | `make alt13-2-gate` |
 
+## Alt-14 Summon Wave — Route Choice & Perception Fabric
+
+Batch-admit nine read-only organs across perception gateway, spatial/mystic lanes, and turn-level route-choice posture.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt14-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `document_vision_organ` → `ui_vision_organ` → `perception_gateway_organ` → `spatial_reasoning_organ` → `mystic_engine_organ` → `perception_lane_organ` → `route_choice_organ` → `specialist_route_organ` → `provider_route_organ` |
+| MVP promotion | `tools/governance/alt14_promote_mvp.py` |
+| Gates | `make alt14-gate` |
+| Governed promotion | `tools/governance/alt14_promote_governed.py` + `make alt14-governed-gate` |
+
+Depends on: Alt-13 governed creative chain; live `document_vision`, `ui_vision`, `Spatial_reasoning`, `mystic_engine`, `model_routing`, `specialist_registry`, `provider_mind`; capability bridge spatial/mystic paths.
+
+## Alt-14.1 Coherence Fabric Perception/Route Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt14-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.9` + `perception_posture[]`, `spatial_symbolic_posture[]`, `route_choice_posture[]` |
+| Gate | `make alt14-1-gate` |
+
+## Alt-14.2 Route Choice & Perception Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt14-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/platform/PERCEPTION_GATEWAY_V1_PROOF.md`, `docs/proof/platform/ROUTE_CHOICE_V1_PROOF.md`, `docs/proof/platform/SPATIAL_SYMBOLIC_V1_PROOF.md` |
+| Gate | `make alt14-2-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per

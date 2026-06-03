@@ -6,12 +6,47 @@ Every major entry should name its CISIV stage explicitly.
 
 ## 2026-06-02
 
+### Alt-14 Summon Wave — Route Choice & Perception (Concept)
+
+- CISIV stage: `concept`
+- scope: SSP Steps 1–7 for nine Alt-14 organs; batch `alt14-summon-wave-2026-06` orders 1→9
+- outcome: concept specs, schemas, MVP plans, genomes at `concept`
+- verification note: `make ssp-gate`; `make genome-gate`
+
 ### Alt-13 Summon Wave — Creative Chain & Constitutional Closure (Concept)
 
 - CISIV stage: `concept`
 - scope: SSP Steps 1–7 for nine Alt-13 organs; batch `alt13-summon-wave-2026-06` orders 1→9
 - outcome: concept specs, schemas, MVP plans, genomes at `concept`
 - verification note: `make ssp-gate`; `make genome-gate`
+
+### Alt-13 Summon Wave — Organs (MVP)
+
+- CISIV stage: `implementation`
+- scope: organ wrappers, status APIs, gates, proof packets; `tools/governance/alt13_promote_mvp.py`
+- outcome: fifty-seven registered genomes (forty-eight prior + nine Alt-13 mvp)
+- verification note: `make alt13-gate`; `python tools/governance/alt13_promote_mvp.py`
+
+### Alt-13.1 — Coherence Fabric Creative/Constitutional Join
+
+- CISIV stage: `implementation`
+- scope: snapshot v1.8 `constitutional_creative_posture[]`, `story_chain_posture[]`, `module_governance_posture[]`
+- outcome: coherence fabric joins Alt-13 organ planes
+- verification note: `make alt13-1-gate`
+
+### Alt-13.2 — Creative Chain & Module Governance Closure
+
+- CISIV stage: `verification`
+- scope: `STORY_CHAIN_V1_PROOF` + `CONSTITUTIONAL_CREATIVE_V1_PROOF` + `MODULE_GOVERNANCE_ORGAN_V1_PROOF`
+- outcome: story chain bridge-safe posture and module governance fail-closed attested
+- verification note: `make alt13-2-gate`
+
+### Alt-13 Governed Promotion — Creative Chain & Constitutional Closure Organs
+
+- CISIV stage: `verification`
+- scope: nine Alt-13 organs promoted to `governed`
+- outcome: fifty-seven governed subsystem genomes; Alt-13 wave complete at governed
+- verification note: `make alt13-governed-gate`; `python tools/governance/alt13_promote_governed.py`
 
 ### Alt-12 Summon Wave — OTEM, Predictive Lane & Execution Depth (Concept)
 
@@ -1601,4 +1636,214 @@ Every major entry should name its CISIV stage explicitly.
 - CISIV stage: `verification`
 - scope: Promotion Engine full-auto — `narrative_trust_pack_organ` `mvp` via Alt-4 runtime organ
 - outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Module Governance Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `module_governance_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Recipe Module Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `recipe_module_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Imagine Generator Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `imagine_generator_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Story Forge Lane Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `story_forge_lane_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Beatbox Lane Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `beatbox_lane_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Speakers Lane Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `speakers_lane_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Human Voice Extraction Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `human_voice_extraction_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Narrative Trust Pack Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `narrative_trust_pack_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Document Vision Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `document_vision_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Document Vision Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `document_vision_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Document Vision Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `document_vision_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### UI Vision Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `ui_vision_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### UI Vision Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `ui_vision_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Perception Gateway Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `perception_gateway_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Perception Gateway Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `perception_gateway_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Spatial Reasoning Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `spatial_reasoning_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Spatial Reasoning Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `spatial_reasoning_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Mystic Engine Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `mystic_engine_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Mystic Engine Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `mystic_engine_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Perception Lane Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `perception_lane_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Perception Lane Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `perception_lane_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Route Choice Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `route_choice_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Route Choice Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `route_choice_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Specialist Route Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `specialist_route_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Specialist Route Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `specialist_route_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Provider Route Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `provider_route_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Provider Route Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `provider_route_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### UI Vision Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `ui_vision_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Perception Gateway Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `perception_gateway_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Spatial Reasoning Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `spatial_reasoning_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Mystic Engine Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `mystic_engine_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Perception Lane Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `perception_lane_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Route Choice Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `route_choice_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Specialist Route Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `specialist_route_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Provider Route Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `provider_route_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
 - verification note: `make genome-gate`; `make alt4-gate`

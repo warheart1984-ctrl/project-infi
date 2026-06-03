@@ -2,7 +2,7 @@
 
 CISIV stage: **implementation**
 
-Status: **governed** (Alt-7 / Alt-7.1 / Alt-7.2 / Alt-8.1 / Alt-9.1 / Alt-10.1 / Alt-11.1 / Alt-12.1 batches through `alt12-1-summon-wave-2026-06`)
+Status: **governed** (Alt-7 / Alt-7.1 / Alt-7.2 / Alt-8.1 / Alt-9.1 / Alt-10.1 / Alt-11.1 / Alt-12.1 / Alt-13.1 batches through `alt13-1-summon-wave-2026-06`)
 
 ## Purpose
 
@@ -12,7 +12,7 @@ wake without adding execution authority.
 
 ## Contract
 
-Schema: [schemas/operator_cognition_coherence_fabric.v1.7.json](../../../schemas/operator_cognition_coherence_fabric.v1.7.json)
+Schema: [schemas/operator_cognition_coherence_fabric.v1.8.json](../../../schemas/operator_cognition_coherence_fabric.v1.8.json)
 
 Parent law: [AAIS_ADAPTIVE_GOVERNANCE.md](../../contracts/AAIS_ADAPTIVE_GOVERNANCE.md)
 
@@ -35,6 +35,9 @@ Parent law: [AAIS_ADAPTIVE_GOVERNANCE.md](../../contracts/AAIS_ADAPTIVE_GOVERNAN
 | OTEM lane posture | Alt-12 OTEM bounded + direct challenge + orchestration spine organs | `otem_lane_posture[]` |
 | Predictive lane posture | Alt-12 health sentinel + realtime lane + V8 runtime organs | `predictive_lane_posture[]` |
 | Execution depth posture | Alt-12 patch apply + execution preview + run ledger organs | `execution_depth_posture[]` |
+| Constitutional creative posture | Alt-13 UL lineage + recipe + imagine + HVE + NTP organs | `constitutional_creative_posture[]` |
+| Story chain posture | Alt-13 Story Forge + Beatbox + Speakers lane organs | `story_chain_posture[]` |
+| Module governance posture | Alt-13 module governance organ | `module_governance_posture[]` |
 
 ## Runtime Surface
 

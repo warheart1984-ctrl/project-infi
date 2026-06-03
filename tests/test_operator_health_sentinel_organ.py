@@ -10,3 +10,4 @@ def test_build_status():
     assert status["operator_health_sentinel_organ_version"] == "operator_health_sentinel_organ.v1"
     assert status["read_only"] is True
     assert status["module_id"]
+    assert status["advisory_only"] is True

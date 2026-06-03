@@ -13,6 +13,31 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.9.0] - 2026-06-02 — Alt-13 Creative Chain & Constitutional Closure Fabric
+
+**Alt-13** — nine read-only organs at governed; coherence fabric v1.8 with constitutional creative, story chain, and module governance posture planes.
+
+### Added
+
+- **Alt-13.0** — `ul_lineage_console_organ`, `module_governance_organ`, `recipe_module_organ`, `imagine_generator_organ`, `story_forge_lane_organ`, `beatbox_lane_organ`, `speakers_lane_organ`, `human_voice_extraction_organ`, `narrative_trust_pack_organ`; status APIs; `make alt13-gate`; `tools/governance/alt13_promote_mvp.py`
+- **Alt-13.1** — coherence snapshot v1.8 + `constitutional_creative_aligned`, `story_chain_aligned`, `module_governance_aligned` in Tier 5; `make alt13-1-gate`
+- **Alt-13.2** — `STORY_CHAIN_V1_PROOF` + `CONSTITUTIONAL_CREATIVE_V1_PROOF` + `MODULE_GOVERNANCE_ORGAN_V1_PROOF`; `make alt13-2-gate`
+- **Governed promotion** — `tools/governance/alt13_promote_governed.py`; `make alt13-governed-gate`
+
+### Changed
+
+- Genome registry: **57 governed** subsystem genomes (48 prior + 9 Alt-13)
+- `operator_cognition_coherence_fabric` schema ref → v1.8
+
+### Verification (v1.9.0)
+
+```bash
+make alt13-gate alt13-1-gate alt13-2-gate alt13-governed-gate
+python -m pytest tests/test_ul_lineage_console_organ.py tests/test_module_governance_organ.py tests/test_recipe_module_organ.py tests/test_imagine_generator_organ.py tests/test_story_forge_lane_organ.py tests/test_beatbox_lane_organ.py tests/test_speakers_lane_organ.py tests/test_human_voice_extraction_organ.py tests/test_narrative_trust_pack_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.9.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.9.0
+
 ## [1.8.0] - 2026-06-02 — Alt-12 OTEM, Predictive Lane & Execution Depth Fabric
 
 **Alt-12** — nine read-only organs at governed; coherence fabric v1.7 with OTEM lane, predictive lane, and execution-depth posture planes.

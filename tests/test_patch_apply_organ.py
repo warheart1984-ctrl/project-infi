@@ -10,3 +10,5 @@ def test_build_status():
     assert status["patch_apply_organ_version"] == "patch_apply_organ.v1"
     assert status["read_only"] is True
     assert status["module_id"]
+    assert status["operator_gated"] is True
+    assert status["silent_apply_allowed"] is False

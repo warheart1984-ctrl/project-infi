@@ -491,6 +491,46 @@ alt13-2-gate: alt13-1-gate alt13-closure-gate
 alt13-governed-gate:
 	python3 tools/governance/check_alt13_governed_eligibility.py
 
+document-vision-organ-gate:
+	python3 .github/scripts/check-document-vision-organ-governance.py
+
+ui-vision-organ-gate:
+	python3 .github/scripts/check-ui-vision-organ-governance.py
+
+perception-gateway-organ-gate:
+	python3 .github/scripts/check-perception-gateway-organ-governance.py
+
+spatial-reasoning-organ-gate:
+	python3 .github/scripts/check-spatial-reasoning-organ-governance.py
+
+mystic-engine-organ-gate:
+	python3 .github/scripts/check-mystic-engine-organ-governance.py
+
+perception-lane-organ-gate:
+	python3 .github/scripts/check-perception-lane-organ-governance.py
+
+route-choice-organ-gate:
+	python3 .github/scripts/check-route-choice-organ-governance.py
+
+specialist-route-organ-gate:
+	python3 .github/scripts/check-specialist-route-organ-governance.py
+
+provider-route-organ-gate:
+	python3 .github/scripts/check-provider-route-organ-governance.py
+
+alt14-gate: document-vision-organ-gate ui-vision-organ-gate perception-gateway-organ-gate spatial-reasoning-organ-gate mystic-engine-organ-gate perception-lane-organ-gate route-choice-organ-gate specialist-route-organ-gate provider-route-organ-gate genome-gate
+
+alt14-1-gate: alt14-gate alt13-1-gate
+	python3 -m pytest tests/test_document_vision_organ.py tests/test_ui_vision_organ.py tests/test_perception_gateway_organ.py tests/test_spatial_reasoning_organ.py tests/test_mystic_engine_organ.py tests/test_perception_lane_organ.py tests/test_route_choice_organ.py tests/test_specialist_route_organ.py tests/test_provider_route_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+
+alt14-closure-gate:
+	python3 tools/governance/check_alt14_closure.py
+
+alt14-2-gate: alt14-1-gate alt14-closure-gate
+
+alt14-governed-gate:
+	python3 tools/governance/check_alt14_governed_eligibility.py
+
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py
 

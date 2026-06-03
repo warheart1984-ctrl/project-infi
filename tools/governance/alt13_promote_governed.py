@@ -53,6 +53,10 @@ def main() -> int:
 
     engine = PromotionEngine(_ROOT)
     for gene, proof in ALT13_GOVERNED.items():
+        current = (_load(gene).get("identity") or {}).get("stage", "")
+        if current == "governed":
+            print(f"[alt13-governed] {gene} already governed")
+            continue
         prepare_governed(gene, proof)
         decision = engine.evaluate(gene, run_gates=True)
         if not decision.passed or decision.target_stage != "governed":
