@@ -28,7 +28,7 @@ Authoritative references:
 
 This repository is also **Project Infi** — constitutional engineering where claims require proof, not intent.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.12.0 — Alt-16 Factory & Kinetic Fabric](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.12.0) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.15.0 — Alt-19 Operator Product Shell Fabric](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.15.0) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -147,7 +147,7 @@ python -m pytest tests/test_governance_organs_alt4.py tests/test_adaptive_govern
 
 Operator guide: [AAIS_ALT4_RUNTIME_OPERATOR_GUIDE](docs/contracts/AAIS_ALT4_RUNTIME_OPERATOR_GUIDE.md) · Adaptive law: [AAIS_ADAPTIVE_GOVERNANCE](docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md) · Adaptive lanes: [ADAPTIVE_LANE_ORGAN](docs/subsystems/platform/ADAPTIVE_LANE_ORGAN.md) · Coherence fabric: [OPERATOR_COGNITION_COHERENCE_FABRIC](docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md) · Genome registry: [governance/subsystem_genomes/README.md](governance/subsystem_genomes/README.md)
 
-> **v1.0.0** shipped the initial Infinity 1 slice (Alt-4, Tier 5, Alt-5 wave 1 at MVP). **v1.1.0** completes the constitutional layer (barebones wave + Alt-5 wave 2). **v1.2.0** adds Alt-6 adaptive lanes at `governed`. **v1.3.0** adds Alt-7 coherence fabric with cross-plane bridge enforcement. **v1.4.0** adds Alt-8 mind-plane organs and coherence fabric v1.3. **v1.5.0** adds Alt-9 infrastructure organs and coherence fabric v1.4. **v1.6.0** adds Alt-10 memory/forensics/immune observe organs and coherence fabric v1.5. **v1.7.0** adds Alt-11 authority trace/boundary/coding organs and coherence fabric v1.6. **v1.8.0** adds Alt-12 OTEM/predictive/execution-depth organs and coherence fabric v1.7. **v1.9.0** adds Alt-13 creative chain/constitutional closure organs and coherence fabric v1.8. **v1.10.0** adds Alt-14 route choice/perception organs and coherence fabric v1.9. **v1.11.0** adds Alt-15 Nova cortex lobe and voice organs and coherence fabric v1.10. **v1.12.0** adds Alt-16 factory and kinetic organs and coherence fabric v1.11.
+> **v1.0.0** shipped the initial Infinity 1 slice (Alt-4, Tier 5, Alt-5 wave 1 at MVP). **v1.1.0** completes the constitutional layer (barebones wave + Alt-5 wave 2). **v1.2.0** adds Alt-6 adaptive lanes at `governed`. **v1.3.0** adds Alt-7 coherence fabric with cross-plane bridge enforcement. **v1.4.0** adds Alt-8 mind-plane organs and coherence fabric v1.3. **v1.5.0** adds Alt-9 infrastructure organs and coherence fabric v1.4. **v1.6.0** adds Alt-10 memory/forensics/immune observe organs and coherence fabric v1.5. **v1.7.0** adds Alt-11 authority trace/boundary/coding organs and coherence fabric v1.6. **v1.8.0** adds Alt-12 OTEM/predictive/execution-depth organs and coherence fabric v1.7. **v1.9.0** adds Alt-13 creative chain/constitutional closure organs and coherence fabric v1.8. **v1.10.0** adds Alt-14 route choice/perception organs and coherence fabric v1.9. **v1.11.0** adds Alt-15 Nova cortex lobe and voice organs and coherence fabric v1.10. **v1.12.0** adds Alt-16 factory and kinetic organs and coherence fabric v1.11. **v1.13.0** adds Alt-17 authority shell and protocol organs and coherence fabric v1.12. **v1.14.0** adds Alt-18 Project Infi law organs and coherence fabric v1.13. **v1.15.0** adds Alt-19 operator product shell organs and coherence fabric v1.14.
 
 ### Three Ideas MVP partial-live subsystems (v0.4.0)
 
@@ -313,7 +313,10 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
-| Latest tag | [`v1.12.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.12.0) — **Alt-16** — 84 governed genomes, factory/kinetic organs, coherence v1.11 (see [CHANGELOG](CHANGELOG.md) §1.12.0) |
+| Latest tag | [`v1.15.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.15.0) — **Alt-19** — 111 governed genomes, operator product shell organs, coherence v1.14 (see [CHANGELOG](CHANGELOG.md) §1.15.0) |
+| Prior tag | [`v1.14.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.14.0) — **Alt-18** — 102 governed genomes, Project Infi law organs, coherence v1.13 (see [CHANGELOG](CHANGELOG.md) §1.14.0) |
+| Prior tag | [`v1.13.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.13.0) — **Alt-17** — 93 governed genomes, authority/protocol organs, coherence v1.12 (see [CHANGELOG](CHANGELOG.md) §1.13.0) |
+| Prior tag | [`v1.12.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.12.0) — **Alt-16** — 84 governed genomes, factory/kinetic organs, coherence v1.11 (see [CHANGELOG](CHANGELOG.md) §1.12.0) |
 | Prior tag | [`v1.11.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.11.0) — **Alt-15** — 75 governed genomes, Nova lobe/voice organs, coherence v1.10 (see [CHANGELOG](CHANGELOG.md) §1.11.0) |
 | Prior tag | [`v1.10.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.10.0) — **Alt-14** — 66 governed genomes, route choice/perception organs, coherence v1.9 (see [CHANGELOG](CHANGELOG.md) §1.10.0) |
 | Prior tag | [`v1.9.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.9.0) — **Alt-13** — 57 governed genomes, creative chain/constitutional closure organs, coherence v1.8 (see [CHANGELOG](CHANGELOG.md) §1.9.0) |
