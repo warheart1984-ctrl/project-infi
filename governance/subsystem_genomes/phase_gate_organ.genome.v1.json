@@ -56,6 +56,8 @@
       "governed_direct_pipeline"
     ],
     "children": [
+      "capability_module_organ",
+      "governed_event_chain_organ",
       "policy_gate_organ",
       "realtime_event_cause_predictor_organ"
     ]

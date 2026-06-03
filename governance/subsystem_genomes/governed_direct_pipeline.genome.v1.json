@@ -67,11 +67,13 @@
       "jarvis_memory_board"
     ],
     "children": [
+      "cognitive_bridge_organ",
       "continuity_witness_organ",
       "operator_cognition_coherence_fabric",
       "phase_gate_organ",
       "realtime_event_cause_predictor_organ",
-      "scorpion_bridge_organ"
+      "scorpion_bridge_organ",
+      "tracing_spine_organ"
     ]
   },
   "activation": {

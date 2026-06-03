@@ -57,6 +57,7 @@
       "immune_system"
     ],
     "children": [
+      "cognitive_bridge_organ",
       "immune_observe_organ",
       "operator_cognition_coherence_fabric",
       "reflection_runtime_organ"

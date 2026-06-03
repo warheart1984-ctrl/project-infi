@@ -68,6 +68,7 @@
     ],
     "children": [
       "adaptive_lane_organ",
+      "cognitive_bridge_organ",
       "knowledge_authority_organ",
       "operator_cognition_coherence_fabric",
       "reflection_runtime_organ"

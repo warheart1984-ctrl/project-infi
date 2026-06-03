@@ -11953,6 +11953,139 @@ def get_predictor_immune_bridge_status():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/cognitive-bridge/status", methods=["GET"])
+def get_cognitive_bridge_organ_status():
+    """Read-only Cognitive Bridge organ snapshot (Alt-11 wave)."""
+    try:
+        from src.cognitive_bridge_organ import build_cognitive_bridge_status
+
+        return jsonify(
+            attach_ul_substrate({"cognitive_bridge": build_cognitive_bridge_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading cognitive bridge status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/governed-event-chain/status", methods=["GET"])
+def get_governed_event_chain_organ_status():
+    """Read-only Governed Event Chain organ snapshot (Alt-11 wave)."""
+    try:
+        from src.governed_event_chain_organ import build_governed_event_chain_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"governed_event_chain": build_governed_event_chain_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading governed event chain status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/tracing-spine/status", methods=["GET"])
+def get_tracing_spine_organ_status():
+    """Read-only Tracing Spine organ snapshot (Alt-11 wave)."""
+    try:
+        from src.tracing_spine_organ import build_tracing_spine_status
+
+        return jsonify(
+            attach_ul_substrate({"tracing_spine": build_tracing_spine_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading tracing spine status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/mission-board/status", methods=["GET"])
+def get_mission_board_organ_status():
+    """Read-only Mission Board organ snapshot (Alt-11 wave)."""
+    try:
+        from src.mission_board_organ import build_mission_board_status
+
+        session_id = str(request.args.get("session_id") or "").strip() or None
+        return jsonify(
+            attach_ul_substrate(
+                {"mission_board": build_mission_board_status(session_id=session_id)}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading mission board organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/aris-boundary/status", methods=["GET"])
+def get_aris_boundary_organ_status():
+    """Read-only ARIS Boundary organ snapshot (Alt-11 wave)."""
+    try:
+        from src.aris_boundary_organ import build_aris_boundary_status
+
+        return jsonify(
+            attach_ul_substrate({"aris_boundary": build_aris_boundary_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading ARIS boundary status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/capability-module/status", methods=["GET"])
+def get_capability_module_organ_status():
+    """Read-only Capability Module organ snapshot (Alt-11 wave)."""
+    try:
+        from src.capability_module_organ import build_capability_module_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"capability_module": build_capability_module_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading capability module status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/patchforge/status", methods=["GET"])
+def get_patchforge_organ_status():
+    """Read-only Patchforge organ snapshot (Alt-11 wave)."""
+    try:
+        from src.patchforge_organ import build_patchforge_status
+
+        return jsonify(attach_ul_substrate({"patchforge": build_patchforge_status()}))
+    except Exception as e:
+        logger.error(f"Error reading patchforge organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/change-scope/status", methods=["GET"])
+def get_change_scope_organ_status():
+    """Read-only Change Scope organ snapshot (Alt-11 wave)."""
+    try:
+        from src.change_scope_organ import build_change_scope_status
+
+        return jsonify(
+            attach_ul_substrate({"change_scope": build_change_scope_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading change scope status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/patch-verification/status", methods=["GET"])
+def get_patch_verification_organ_status():
+    """Read-only Patch Verification organ snapshot (Alt-11 wave)."""
+    try:
+        from src.patch_verification_organ import build_patch_verification_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"patch_verification": build_patch_verification_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading patch verification status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/reset", methods=["POST"])
 def reset_mission_board():
     """Reset Mission Board state with an optional backup and seeded current objectives."""

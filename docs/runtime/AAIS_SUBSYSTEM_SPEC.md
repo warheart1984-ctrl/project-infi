@@ -1202,8 +1202,17 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | Immune Observe Organ | governed | [../subsystems/nova/IMMUNE_OBSERVE_ORGAN.md](../subsystems/nova/IMMUNE_OBSERVE_ORGAN.md) | [../proof/nova/IMMUNE_OBSERVE_ORGAN_V1_PROOF.md](../proof/nova/IMMUNE_OBSERVE_ORGAN_V1_PROOF.md) |
 | Policy Gate Organ | governed | [../subsystems/nova/POLICY_GATE_ORGAN.md](../subsystems/nova/POLICY_GATE_ORGAN.md) | [../proof/nova/POLICY_GATE_ORGAN_V1_PROOF.md](../proof/nova/POLICY_GATE_ORGAN_V1_PROOF.md) |
 | Predictor Immune Bridge Organ | governed | [../subsystems/nova/PREDICTOR_IMMUNE_BRIDGE_ORGAN.md](../subsystems/nova/PREDICTOR_IMMUNE_BRIDGE_ORGAN.md) | [../proof/nova/PREDICTOR_IMMUNE_BRIDGE_ORGAN_V1_PROOF.md](../proof/nova/PREDICTOR_IMMUNE_BRIDGE_ORGAN_V1_PROOF.md) |
+| Cognitive Bridge Organ | governed | [../subsystems/platform/COGNITIVE_BRIDGE_ORGAN.md](../subsystems/platform/COGNITIVE_BRIDGE_ORGAN.md) | [../proof/platform/COGNITIVE_BRIDGE_ORGAN_V1_PROOF.md](../proof/platform/COGNITIVE_BRIDGE_ORGAN_V1_PROOF.md) |
+| Governed Event Chain Organ | governed | [../subsystems/platform/GOVERNED_EVENT_CHAIN_ORGAN.md](../subsystems/platform/GOVERNED_EVENT_CHAIN_ORGAN.md) | [../proof/platform/GOVERNED_EVENT_CHAIN_ORGAN_V1_PROOF.md](../proof/platform/GOVERNED_EVENT_CHAIN_ORGAN_V1_PROOF.md) |
+| Tracing Spine Organ | governed | [../subsystems/platform/TRACING_SPINE_ORGAN.md](../subsystems/platform/TRACING_SPINE_ORGAN.md) | [../proof/platform/TRACING_SPINE_V1_PROOF.md](../proof/platform/TRACING_SPINE_V1_PROOF.md) |
+| Mission Board Organ | governed | [../subsystems/platform/MISSION_BOARD_ORGAN.md](../subsystems/platform/MISSION_BOARD_ORGAN.md) | [../proof/platform/MISSION_BOARD_ORGAN_V1_PROOF.md](../proof/platform/MISSION_BOARD_ORGAN_V1_PROOF.md) |
+| ARIS Boundary Organ | governed | [../subsystems/platform/ARIS_BOUNDARY_ORGAN.md](../subsystems/platform/ARIS_BOUNDARY_ORGAN.md) | [../proof/platform/ARIS_BOUNDARY_ORGAN_V1_PROOF.md](../proof/platform/ARIS_BOUNDARY_ORGAN_V1_PROOF.md) |
+| Capability Module Organ | governed | [../subsystems/platform/CAPABILITY_MODULE_ORGAN.md](../subsystems/platform/CAPABILITY_MODULE_ORGAN.md) | [../proof/platform/CAPABILITY_MODULE_ORGAN_V1_PROOF.md](../proof/platform/CAPABILITY_MODULE_ORGAN_V1_PROOF.md) |
+| Patchforge Organ | governed | [../subsystems/platform/PATCHFORGE_ORGAN.md](../subsystems/platform/PATCHFORGE_ORGAN.md) | [../proof/platform/PATCHFORGE_ORGAN_V1_PROOF.md](../proof/platform/PATCHFORGE_ORGAN_V1_PROOF.md) |
+| Change Scope Organ | governed | [../subsystems/platform/CHANGE_SCOPE_ORGAN.md](../subsystems/platform/CHANGE_SCOPE_ORGAN.md) | [../proof/platform/CHANGE_SCOPE_ORGAN_V1_PROOF.md](../proof/platform/CHANGE_SCOPE_ORGAN_V1_PROOF.md) |
+| Patch Verification Organ | governed | [../subsystems/platform/PATCH_VERIFICATION_ORGAN.md](../subsystems/platform/PATCH_VERIFICATION_ORGAN.md) | [../proof/platform/PATCH_VERIFICATION_ORGAN_V1_PROOF.md](../proof/platform/PATCH_VERIFICATION_ORGAN_V1_PROOF.md) |
 
-Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate`
+Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate`
 
 ## 9. Concept Pending (SSP)
 

@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.5"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.6"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -462,6 +462,137 @@ def _immune_observe_aligned(
     return True
 
 
+def _build_authority_trace_posture() -> list[dict[str, Any]]:
+    from src.cognitive_bridge_organ import build_cognitive_bridge_status
+    from src.governed_event_chain_organ import build_governed_event_chain_status
+    from src.tracing_spine_organ import build_tracing_spine_status
+
+    posture: list[dict[str, Any]] = []
+    for organ_id, builder in (
+        ("cognitive_bridge_organ", build_cognitive_bridge_status),
+        ("governed_event_chain_organ", build_governed_event_chain_status),
+        ("tracing_spine_organ", build_tracing_spine_status),
+    ):
+        status = builder()
+        trace_attested = organ_id != "tracing_spine_organ" or bool(
+            status.get("canonical_stages_present")
+        )
+        posture.append(
+            {
+                "organ_id": organ_id,
+                "stage": str(status.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+                "claim_label": str(status.get("claim_label") or "asserted")[:32],
+                "trace_attested": trace_attested,
+            }
+        )
+    return posture
+
+
+def _authority_trace_aligned(authority_trace_posture: list[dict[str, Any]]) -> bool:
+    if len(authority_trace_posture) < 3:
+        return False
+    for item in authority_trace_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("trace_attested"):
+            return False
+    return True
+
+
+def _build_mission_boundary_posture() -> list[dict[str, Any]]:
+    from src.aris_boundary_organ import build_aris_boundary_status
+    from src.capability_module_organ import build_capability_module_status
+    from src.mission_board_organ import build_mission_board_status
+
+    posture: list[dict[str, Any]] = []
+    mission = build_mission_board_status()
+    posture.append(
+        {
+            "organ_id": "mission_board_organ",
+            "stage": str(mission.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(mission.get("claim_label") or "asserted")[:32],
+            "boundary_attested": mission.get("verification_gate_decision") is not None,
+        }
+    )
+    aris = build_aris_boundary_status()
+    posture.append(
+        {
+            "organ_id": "aris_boundary_organ",
+            "stage": str(aris.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(aris.get("claim_label") or "asserted")[:32],
+            "boundary_attested": bool(aris.get("non_copy_allowed")),
+        }
+    )
+    cap = build_capability_module_status()
+    posture.append(
+        {
+            "organ_id": "capability_module_organ",
+            "stage": str(cap.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(cap.get("claim_label") or "asserted")[:32],
+            "boundary_attested": bool(cap.get("capability_module_present")),
+        }
+    )
+    return posture
+
+
+def _mission_boundary_aligned(mission_boundary_posture: list[dict[str, Any]]) -> bool:
+    if len(mission_boundary_posture) < 3:
+        return False
+    for item in mission_boundary_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("boundary_attested"):
+            return False
+    return True
+
+
+def _build_coding_posture() -> list[dict[str, Any]]:
+    from src.change_scope_organ import build_change_scope_status
+    from src.patch_verification_organ import build_patch_verification_status
+    from src.patchforge_organ import build_patchforge_status
+
+    posture: list[dict[str, Any]] = []
+    pf = build_patchforge_status()
+    posture.append(
+        {
+            "organ_id": "patchforge_organ",
+            "stage": str(pf.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(pf.get("claim_label") or "asserted")[:32],
+            "proposal_only": bool(pf.get("proposal_only")),
+        }
+    )
+    cs = build_change_scope_status()
+    posture.append(
+        {
+            "organ_id": "change_scope_organ",
+            "stage": str(cs.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(cs.get("claim_label") or "asserted")[:32],
+            "proposal_only": True,
+        }
+    )
+    pv = build_patch_verification_status()
+    posture.append(
+        {
+            "organ_id": "patch_verification_organ",
+            "stage": str(pv.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(pv.get("claim_label") or "asserted")[:32],
+            "proposal_only": not bool(pv.get("silent_apply_allowed")),
+        }
+    )
+    return posture
+
+
+def _coding_stack_aligned(coding_posture: list[dict[str, Any]]) -> bool:
+    if len(coding_posture) < 3:
+        return False
+    for item in coding_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("proposal_only"):
+            return False
+    return True
+
+
 def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
@@ -535,6 +666,9 @@ def build_coherence_fabric_status(
     memory_posture = _build_memory_governance_posture()
     forensics_posture = _build_forensics_posture()
     immune_posture = _build_immune_observe_posture(pipeline_trace=pipeline_source)
+    authority_trace_posture = _build_authority_trace_posture()
+    mission_boundary_posture = _build_mission_boundary_posture()
+    coding_posture = _build_coding_posture()
 
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
@@ -557,6 +691,12 @@ def build_coherence_fabric_status(
             immune_posture,
             require_bridge=bool(pipeline_source),
         ),
+        "authority_trace_posture": authority_trace_posture,
+        "authority_trace_aligned": _authority_trace_aligned(authority_trace_posture),
+        "mission_boundary_posture": mission_boundary_posture,
+        "mission_boundary_aligned": _mission_boundary_aligned(mission_boundary_posture),
+        "coding_posture": coding_posture,
+        "coding_stack_aligned": _coding_stack_aligned(coding_posture),
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,
         "safety_envelope_halt": safety_halt,
@@ -614,6 +754,12 @@ def build_governance_coherence_projection(
         "forensics_handoff_aligned": bool(snapshot.get("forensics_handoff_aligned")),
         "immune_observe_posture": list(snapshot.get("immune_observe_posture") or [])[:4],
         "immune_observe_aligned": bool(snapshot.get("immune_observe_aligned")),
+        "authority_trace_posture": list(snapshot.get("authority_trace_posture") or [])[:4],
+        "authority_trace_aligned": bool(snapshot.get("authority_trace_aligned")),
+        "mission_boundary_posture": list(snapshot.get("mission_boundary_posture") or [])[:4],
+        "mission_boundary_aligned": bool(snapshot.get("mission_boundary_aligned")),
+        "coding_posture": list(snapshot.get("coding_posture") or [])[:4],
+        "coding_stack_aligned": bool(snapshot.get("coding_stack_aligned")),
     }
 
 

@@ -371,6 +371,46 @@ alt10-2-gate: alt10-1-gate immune-observe-closure-gate
 alt10-governed-gate:
 	python3 tools/governance/check_alt10_governed_eligibility.py
 
+cognitive-bridge-organ-gate:
+	python3 .github/scripts/check-cognitive-bridge-organ-governance.py
+
+governed-event-chain-organ-gate:
+	python3 .github/scripts/check-governed-event-chain-organ-governance.py
+
+tracing-spine-organ-gate:
+	python3 .github/scripts/check-tracing-spine-organ-governance.py
+
+mission-board-organ-gate:
+	python3 .github/scripts/check-mission-board-organ-governance.py
+
+aris-boundary-organ-gate:
+	python3 .github/scripts/check-aris-boundary-organ-governance.py
+
+capability-module-organ-gate:
+	python3 .github/scripts/check-capability-module-organ-governance.py
+
+patchforge-organ-gate:
+	python3 .github/scripts/check-patchforge-organ-governance.py
+
+change-scope-organ-gate:
+	python3 .github/scripts/check-change-scope-organ-governance.py
+
+patch-verification-organ-gate:
+	python3 .github/scripts/check-patch-verification-organ-governance.py
+
+alt11-gate: cognitive-bridge-organ-gate governed-event-chain-organ-gate tracing-spine-organ-gate mission-board-organ-gate aris-boundary-organ-gate capability-module-organ-gate patchforge-organ-gate change-scope-organ-gate patch-verification-organ-gate genome-gate
+
+alt11-1-gate: alt11-gate alt10-1-gate
+	python3 -m pytest tests/test_cognitive_bridge_organ.py tests/test_governed_event_chain_organ.py tests/test_tracing_spine_organ.py tests/test_mission_board_organ.py tests/test_aris_boundary_organ.py tests/test_capability_module_organ.py tests/test_patchforge_organ.py tests/test_change_scope_organ.py tests/test_patch_verification_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+
+alt11-closure-gate:
+	python3 tools/governance/check_alt11_closure.py
+
+alt11-2-gate: alt11-1-gate alt11-closure-gate
+
+alt11-governed-gate:
+	python3 tools/governance/check_alt11_governed_eligibility.py
+
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py
 

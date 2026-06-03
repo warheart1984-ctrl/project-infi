@@ -54,7 +54,8 @@
       "capability_service_bridge"
     ],
     "children": [
-      "memory_path_governance_organ"
+      "memory_path_governance_organ",
+      "mission_board_organ"
     ]
   },
   "activation": {

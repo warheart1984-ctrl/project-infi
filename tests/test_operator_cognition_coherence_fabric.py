@@ -10,7 +10,7 @@ from src.operator_cognition_coherence_fabric import build_coherence_fabric_statu
 def test_build_coherence_fabric_status_schema_fields():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status["operator_cognition_coherence_fabric_version"] == (
-        "operator_cognition_coherence_fabric.v1.5"
+        "operator_cognition_coherence_fabric.v1.6"
     )
     assert status["read_only"] is True
     assert status["authority_lane"] == "operator"
@@ -196,6 +196,39 @@ def test_evaluate_bridge_coherence_blocks_misaligned_fabric():
     )
     assert not result.allowed
     assert result.reason == "coherence fabric misaligned"
+
+
+def test_authority_trace_posture_includes_alt11_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("authority_trace_posture") or []}
+    assert organs == {
+        "cognitive_bridge_organ",
+        "governed_event_chain_organ",
+        "tracing_spine_organ",
+    }
+    assert status.get("authority_trace_aligned") is True
+
+
+def test_mission_boundary_posture_includes_alt11_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("mission_boundary_posture") or []}
+    assert organs == {
+        "mission_board_organ",
+        "aris_boundary_organ",
+        "capability_module_organ",
+    }
+    assert status.get("mission_boundary_aligned") is True
+
+
+def test_coding_posture_includes_alt11_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("coding_posture") or []}
+    assert organs == {
+        "patchforge_organ",
+        "change_scope_organ",
+        "patch_verification_organ",
+    }
+    assert status.get("coding_stack_aligned") is True
 
 
 def test_evaluate_bridge_coherence_blocks_policy_cap_non_strict():

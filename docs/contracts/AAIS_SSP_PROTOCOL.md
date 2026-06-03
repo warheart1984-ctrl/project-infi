@@ -365,6 +365,36 @@ Depends on: Alt-9 governed infrastructure fabric; existing `forensic_triangulati
 | Proof | `docs/proof/nova/IMMUNE_OBSERVE_V1_PROOF.md`, `docs/proof/platform/MEMORY_PATH_GOVERNANCE_V1_PROOF.md` |
 | Gate | `make alt10-2-gate` |
 
+## Alt-11 Summon Wave — Authority Trace, Boundary & Coding Fabric
+
+Batch-admit nine read-only organs across authority/trace spine, mission/boundary closure, and coding/patch verification.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt11-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `cognitive_bridge_organ` → `governed_event_chain_organ` → `tracing_spine_organ` → `mission_board_organ` → `aris_boundary_organ` → `capability_module_organ` → `patchforge_organ` → `change_scope_organ` → `patch_verification_organ` |
+| MVP promotion | `tools/governance/alt11_promote_mvp.py` |
+| Gates | `make alt11-gate` |
+| Governed promotion | `tools/governance/alt11_promote_governed.py` + `make alt11-governed-gate` |
+
+Depends on: Alt-10 governed memory/forensics/immune fabric; AAIS_TRACING_PROTOCOL; live cognitive bridge and coding stack modules.
+
+## Alt-11.1 Authority, Mission & Coding Coherence Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt11-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.6` + `authority_trace_posture[]`, `mission_boundary_posture[]`, `coding_posture[]` |
+| Gate | `make alt11-1-gate` |
+
+## Alt-11.2 Tracing & Coding Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt11-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/platform/TRACING_SPINE_V1_PROOF.md`, `docs/proof/platform/CODING_ORGANS_V1_PROOF.md`, `docs/proof/platform/MEMORY_PATH_CLOSURE_V1_PROOF.md` |
+| Gate | `make alt11-2-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per

@@ -13,6 +13,31 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.7.0] - 2026-06-02 — Alt-11 Authority Trace, Boundary & Coding Fabric
+
+**Alt-11** — nine read-only organs at governed; coherence fabric v1.6 with authority trace, mission boundary, and coding posture planes.
+
+### Added
+
+- **Alt-11.0** — `cognitive_bridge_organ`, `governed_event_chain_organ`, `tracing_spine_organ`, `mission_board_organ`, `aris_boundary_organ`, `capability_module_organ`, `patchforge_organ`, `change_scope_organ`, `patch_verification_organ`; status APIs; `make alt11-gate`; `tools/governance/alt11_promote_mvp.py`
+- **Alt-11.1** — coherence snapshot v1.6 + `authority_trace_aligned`, `mission_boundary_aligned`, `coding_stack_aligned` in Tier 5; `make alt11-1-gate`
+- **Alt-11.2** — `TRACING_SPINE_V1_PROOF` + `CODING_ORGANS_V1_PROOF` + `MEMORY_PATH_CLOSURE_V1_PROOF`; `make alt11-2-gate`
+- **Governed promotion** — `tools/governance/alt11_promote_governed.py`; `make alt11-governed-gate`
+
+### Changed
+
+- Genome registry: **39 governed** subsystem genomes (30 prior + 9 Alt-11)
+- `operator_cognition_coherence_fabric` schema ref → v1.6
+
+### Verification (v1.7.0)
+
+```bash
+make alt11-gate alt11-1-gate alt11-2-gate alt11-governed-gate
+python -m pytest tests/test_cognitive_bridge_organ.py tests/test_governed_event_chain_organ.py tests/test_tracing_spine_organ.py tests/test_mission_board_organ.py tests/test_aris_boundary_organ.py tests/test_capability_module_organ.py tests/test_patchforge_organ.py tests/test_change_scope_organ.py tests/test_patch_verification_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.7.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.7.0
+
 ## [1.6.0] - 2026-06-02 — Alt-10 Memory, Forensics & Immune Observe Fabric
 
 **Alt-10** — nine read-only organs at governed; coherence fabric v1.5 with memory, forensics, and immune observe posture planes.

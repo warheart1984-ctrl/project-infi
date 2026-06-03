@@ -2,7 +2,7 @@
 
 CISIV stage: **implementation**
 
-Status: **governed** (Alt-7 / Alt-7.1 / Alt-7.2 / Alt-8.1 / Alt-9.1 / Alt-10.1 batches through `alt10-1-summon-wave-2026-06`)
+Status: **governed** (Alt-7 / Alt-7.1 / Alt-7.2 / Alt-8.1 / Alt-9.1 / Alt-10.1 / Alt-11.1 batches through `alt11-1-summon-wave-2026-06`)
 
 ## Purpose
 
@@ -12,7 +12,7 @@ wake without adding execution authority.
 
 ## Contract
 
-Schema: [schemas/operator_cognition_coherence_fabric.v1.5.json](../../../schemas/operator_cognition_coherence_fabric.v1.5.json)
+Schema: [schemas/operator_cognition_coherence_fabric.v1.6.json](../../../schemas/operator_cognition_coherence_fabric.v1.6.json)
 
 Parent law: [AAIS_ADAPTIVE_GOVERNANCE.md](../../contracts/AAIS_ADAPTIVE_GOVERNANCE.md)
 
@@ -29,6 +29,9 @@ Parent law: [AAIS_ADAPTIVE_GOVERNANCE.md](../../contracts/AAIS_ADAPTIVE_GOVERNAN
 | Memory governance posture | Alt-10 verification + memory path + knowledge authority organs | `memory_governance_posture[]` |
 | Forensics posture | Alt-10 scorpion + mechanic + triangulation organs | `forensics_posture[]` |
 | Immune observe posture | Alt-10 immune observe + policy + predictor bridge organs | `immune_observe_posture[]` |
+| Authority trace posture | Alt-11 cognitive bridge + event chain + tracing spine organs | `authority_trace_posture[]` |
+| Mission boundary posture | Alt-11 mission board + ARIS boundary + capability module organs | `mission_boundary_posture[]` |
+| Coding posture | Alt-11 patchforge + change scope + patch verification organs | `coding_posture[]` |
 
 ## Runtime Surface
 

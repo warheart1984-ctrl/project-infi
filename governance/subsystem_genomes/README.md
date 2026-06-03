@@ -52,6 +52,15 @@ make alt7-governed-gate
 | `immune_observe_organ` | governed | [immune_observe_organ.genome.v1.json](./immune_observe_organ.genome.v1.json) |
 | `policy_gate_organ` | governed | [policy_gate_organ.genome.v1.json](./policy_gate_organ.genome.v1.json) |
 | `predictor_immune_bridge_organ` | governed | [predictor_immune_bridge_organ.genome.v1.json](./predictor_immune_bridge_organ.genome.v1.json) |
+| `cognitive_bridge_organ` | governed | [cognitive_bridge_organ.genome.v1.json](./cognitive_bridge_organ.genome.v1.json) |
+| `governed_event_chain_organ` | governed | [governed_event_chain_organ.genome.v1.json](./governed_event_chain_organ.genome.v1.json) |
+| `tracing_spine_organ` | governed | [tracing_spine_organ.genome.v1.json](./tracing_spine_organ.genome.v1.json) |
+| `mission_board_organ` | governed | [mission_board_organ.genome.v1.json](./mission_board_organ.genome.v1.json) |
+| `aris_boundary_organ` | governed | [aris_boundary_organ.genome.v1.json](./aris_boundary_organ.genome.v1.json) |
+| `capability_module_organ` | governed | [capability_module_organ.genome.v1.json](./capability_module_organ.genome.v1.json) |
+| `patchforge_organ` | governed | [patchforge_organ.genome.v1.json](./patchforge_organ.genome.v1.json) |
+| `change_scope_organ` | governed | [change_scope_organ.genome.v1.json](./change_scope_organ.genome.v1.json) |
+| `patch_verification_organ` | governed | [patch_verification_organ.genome.v1.json](./patch_verification_organ.genome.v1.json) |
 
 ## Adding a Genome
 

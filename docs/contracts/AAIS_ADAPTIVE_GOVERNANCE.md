@@ -298,6 +298,21 @@ Snapshot v1.5 adds `memory_governance_posture[]`, `forensics_posture[]`, and
 | Batch | `alt10-2-summon-wave-2026-06` |
 | Proof | `docs/proof/nova/IMMUNE_OBSERVE_V1_PROOF.md`, `docs/proof/platform/MEMORY_PATH_GOVERNANCE_V1_PROOF.md` |
 
+## Alt-11.1 Authority, Mission & Coding Coherence Join
+
+Snapshot v1.6 adds `authority_trace_posture[]`, `mission_boundary_posture[]`, and
+`coding_posture[]`. Tier 5 health includes `authority_trace_aligned`,
+`mission_boundary_aligned`, and `coding_stack_aligned`.
+
+| Gate | `make alt11-1-gate` |
+| Batch | `alt11-1-summon-wave-2026-06` |
+
+## Alt-11.2 Tracing & Coding Closure
+
+| Gate | `make alt11-2-gate` |
+| Batch | `alt11-2-summon-wave-2026-06` |
+| Proof | `docs/proof/platform/TRACING_SPINE_V1_PROOF.md`, `docs/proof/platform/CODING_ORGANS_V1_PROOF.md`, `docs/proof/platform/MEMORY_PATH_CLOSURE_V1_PROOF.md` |
+
 ## Related
 
 - [AAIS_SSP_PROTOCOL.md](./AAIS_SSP_PROTOCOL.md)

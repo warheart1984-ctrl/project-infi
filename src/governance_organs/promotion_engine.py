@@ -48,6 +48,15 @@ GENE_GATES: dict[str, str] = {
     "immune_observe_organ": "immune-observe-organ-gate",
     "policy_gate_organ": "policy-gate-organ-gate",
     "predictor_immune_bridge_organ": "predictor-immune-bridge-organ-gate",
+    "cognitive_bridge_organ": "cognitive-bridge-organ-gate",
+    "governed_event_chain_organ": "governed-event-chain-organ-gate",
+    "tracing_spine_organ": "tracing-spine-organ-gate",
+    "mission_board_organ": "mission-board-organ-gate",
+    "aris_boundary_organ": "aris-boundary-organ-gate",
+    "capability_module_organ": "capability-module-organ-gate",
+    "patchforge_organ": "patchforge-organ-gate",
+    "change_scope_organ": "change-scope-organ-gate",
+    "patch_verification_organ": "patch-verification-organ-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -104,6 +113,23 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     "policy-gate-organ-gate": [".github/scripts/check-policy-gate-organ-governance.py"],
     "predictor-immune-bridge-organ-gate": [
         ".github/scripts/check-predictor-immune-bridge-organ-governance.py"
+    ],
+    "cognitive-bridge-organ-gate": [
+        ".github/scripts/check-cognitive-bridge-organ-governance.py"
+    ],
+    "governed-event-chain-organ-gate": [
+        ".github/scripts/check-governed-event-chain-organ-governance.py"
+    ],
+    "tracing-spine-organ-gate": [".github/scripts/check-tracing-spine-organ-governance.py"],
+    "mission-board-organ-gate": [".github/scripts/check-mission-board-organ-governance.py"],
+    "aris-boundary-organ-gate": [".github/scripts/check-aris-boundary-organ-governance.py"],
+    "capability-module-organ-gate": [
+        ".github/scripts/check-capability-module-organ-governance.py"
+    ],
+    "patchforge-organ-gate": [".github/scripts/check-patchforge-organ-governance.py"],
+    "change-scope-organ-gate": [".github/scripts/check-change-scope-organ-governance.py"],
+    "patch-verification-organ-gate": [
+        ".github/scripts/check-patch-verification-organ-governance.py"
     ],
 }
 

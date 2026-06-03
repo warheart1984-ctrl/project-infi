@@ -69,6 +69,7 @@
     "parents": [],
     "children": [
       "adaptive_lane_organ",
+      "capability_module_organ",
       "cisiv_operator_lineage_console",
       "governed_direct_pipeline",
       "mechanic_handoff_organ",
