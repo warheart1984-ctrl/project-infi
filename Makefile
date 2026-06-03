@@ -531,6 +531,86 @@ alt14-2-gate: alt14-1-gate alt14-closure-gate
 alt14-governed-gate:
 	python3 tools/governance/check_alt14_governed_eligibility.py
 
+reasoning-executive-organ-gate:
+	python3 .github/scripts/check-reasoning-executive-organ-governance.py
+
+attention-organ-gate:
+	python3 .github/scripts/check-attention-organ-governance.py
+
+coherence-projection-organ-gate:
+	python3 .github/scripts/check-coherence-projection-organ-governance.py
+
+deliberation-organ-gate:
+	python3 .github/scripts/check-deliberation-organ-governance.py
+
+planning-organ-gate:
+	python3 .github/scripts/check-planning-organ-governance.py
+
+cortex-arcs-organ-gate:
+	python3 .github/scripts/check-cortex-arcs-organ-governance.py
+
+cognitive-execution-organ-gate:
+	python3 .github/scripts/check-cognitive-execution-organ-governance.py
+
+speaking-runtime-organ-gate:
+	python3 .github/scripts/check-speaking-runtime-organ-governance.py
+
+nova-face-organ-gate:
+	python3 .github/scripts/check-nova-face-organ-governance.py
+
+alt15-gate: reasoning-executive-organ-gate attention-organ-gate coherence-projection-organ-gate deliberation-organ-gate planning-organ-gate cortex-arcs-organ-gate cognitive-execution-organ-gate speaking-runtime-organ-gate nova-face-organ-gate genome-gate
+
+alt15-1-gate: alt15-gate alt14-1-gate
+	python3 -m pytest tests/test_reasoning_executive_organ.py tests/test_attention_organ.py tests/test_coherence_projection_organ.py tests/test_deliberation_organ.py tests/test_planning_organ.py tests/test_cortex_arcs_organ.py tests/test_cognitive_execution_organ.py tests/test_speaking_runtime_organ.py tests/test_nova_face_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+
+alt15-closure-gate:
+	python3 tools/governance/check_alt15_closure.py
+
+alt15-2-gate: alt15-1-gate alt15-closure-gate
+
+alt15-governed-gate:
+	python3 tools/governance/check_alt15_governed_eligibility.py
+
+ai-factory-organ-gate:
+	python3 .github/scripts/check-ai-factory-organ-governance.py
+
+cogos-runtime-bridge-organ-gate:
+	python3 .github/scripts/check-cogos-runtime-bridge-organ-governance.py
+
+wolf-rehydration-organ-gate:
+	python3 .github/scripts/check-wolf-rehydration-organ-governance.py
+
+forge-contractor-organ-gate:
+	python3 .github/scripts/check-forge-contractor-organ-governance.py
+
+forge-eval-organ-gate:
+	python3 .github/scripts/check-forge-eval-organ-governance.py
+
+evolve-engine-organ-gate:
+	python3 .github/scripts/check-evolve-engine-organ-governance.py
+
+slingshot-organ-gate:
+	python3 .github/scripts/check-slingshot-organ-governance.py
+
+operator-workbench-organ-gate:
+	python3 .github/scripts/check-operator-workbench-organ-governance.py
+
+workflow-shell-organ-gate:
+	python3 .github/scripts/check-workflow-shell-organ-governance.py
+
+alt16-gate: ai-factory-organ-gate cogos-runtime-bridge-organ-gate wolf-rehydration-organ-gate forge-contractor-organ-gate forge-eval-organ-gate evolve-engine-organ-gate slingshot-organ-gate operator-workbench-organ-gate workflow-shell-organ-gate genome-gate
+
+alt16-1-gate: alt16-gate alt15-1-gate
+	python3 -m pytest tests/test_ai_factory_organ.py tests/test_cogos_runtime_bridge_organ.py tests/test_wolf_rehydration_organ.py tests/test_forge_contractor_organ.py tests/test_forge_eval_organ.py tests/test_evolve_engine_organ.py tests/test_slingshot_organ.py tests/test_operator_workbench_organ.py tests/test_workflow_shell_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+
+alt16-closure-gate:
+	python3 tools/governance/check_alt16_closure.py
+
+alt16-2-gate: alt16-1-gate alt16-closure-gate
+
+alt16-governed-gate:
+	python3 tools/governance/check_alt16_governed_eligibility.py
+
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py
 

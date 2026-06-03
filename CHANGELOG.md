@@ -13,6 +13,56 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.12.0] - 2026-06-02 — Alt-16 Factory & Kinetic Fabric
+
+**Alt-16** — nine read-only organs at governed; coherence fabric v1.11 with factory fabrication, contractor lane, and kinetic shell posture planes.
+
+### Added
+
+- **Alt-16.0** — `ai_factory_organ`, `cogos_runtime_bridge_organ`, `wolf_rehydration_organ`, `forge_contractor_organ`, `forge_eval_organ`, `evolve_engine_organ`, `slingshot_organ`, `operator_workbench_organ`, `workflow_shell_organ`; status APIs; `make alt16-gate`; `tools/governance/alt16_promote_mvp.py`
+- **Alt-16.1** — coherence snapshot v1.11 + `factory_fabrication_aligned`, `contractor_lanes_aligned`, `kinetic_shell_aligned`, `factory_kinetic_aligned`; `make alt16-1-gate`
+- **Alt-16.2** — `FACTORY_KINETIC_V1_PROOF` + `AI_FACTORY_ORGAN_V1_PROOF` + `SLINGSHOT_ORGAN_V1_PROOF`; `make alt16-2-gate`
+- **Governed promotion** — `tools/governance/alt16_promote_governed.py`; `make alt16-governed-gate`
+
+### Changed
+
+- Genome registry: **84 governed** subsystem genomes (75 prior + 9 Alt-16)
+- `operator_cognition_coherence_fabric` schema ref → v1.11
+
+### Verification (v1.12.0)
+
+```bash
+make alt16-gate alt16-1-gate alt16-2-gate alt16-governed-gate
+python -m pytest tests/test_ai_factory_organ.py tests/test_cogos_runtime_bridge_organ.py tests/test_wolf_rehydration_organ.py tests/test_forge_contractor_organ.py tests/test_forge_eval_organ.py tests/test_evolve_engine_organ.py tests/test_slingshot_organ.py tests/test_operator_workbench_organ.py tests/test_workflow_shell_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.12.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.12.0
+
+## [1.11.0] - 2026-06-02 — Alt-15 Nova Cortex Lobe & Voice Fabric
+
+**Alt-15** — nine read-only organs at governed; coherence fabric v1.10 with executive/attention, deliberation/planning, and voice/execution posture planes.
+
+### Added
+
+- **Alt-15.0** — `reasoning_executive_organ`, `attention_organ`, `coherence_projection_organ`, `deliberation_organ`, `planning_organ`, `cortex_arcs_organ`, `cognitive_execution_organ`, `speaking_runtime_organ`, `nova_face_organ`; status APIs; `make alt15-gate`; `tools/governance/alt15_promote_mvp.py`
+- **Alt-15.1** — coherence snapshot v1.10 + `executive_attention_aligned`, `deliberation_planning_aligned`, `voice_execution_aligned`, `nova_lobe_voice_aligned`; `make alt15-1-gate`
+- **Alt-15.2** — `NOVA_LOBE_V1_PROOF` + `COHERENCE_PROJECTION_ORGAN_V1_PROOF` + `SPEAKING_RUNTIME_ORGAN_V1_PROOF`; `make alt15-2-gate`
+- **Governed promotion** — `tools/governance/alt15_promote_governed.py`; `make alt15-governed-gate`
+
+### Changed
+
+- Genome registry: **75 governed** subsystem genomes (66 prior + 9 Alt-15)
+- `operator_cognition_coherence_fabric` schema ref → v1.10
+
+### Verification (v1.11.0)
+
+```bash
+make alt15-gate alt15-1-gate alt15-2-gate alt15-governed-gate
+python -m pytest tests/test_reasoning_executive_organ.py tests/test_attention_organ.py tests/test_coherence_projection_organ.py tests/test_deliberation_organ.py tests/test_planning_organ.py tests/test_cortex_arcs_organ.py tests/test_cognitive_execution_organ.py tests/test_speaking_runtime_organ.py tests/test_nova_face_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.11.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.11.0
+
 ## [1.10.0] - 2026-06-02 — Alt-14 Route Choice & Perception Fabric
 
 **Alt-14** — nine read-only organs at governed; coherence fabric v1.9 with perception, spatial/symbolic, and route-choice posture planes.

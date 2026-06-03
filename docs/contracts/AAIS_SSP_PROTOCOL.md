@@ -485,6 +485,66 @@ Depends on: Alt-13 governed creative chain; live `document_vision`, `ui_vision`,
 | Proof | `docs/proof/platform/PERCEPTION_GATEWAY_V1_PROOF.md`, `docs/proof/platform/ROUTE_CHOICE_V1_PROOF.md`, `docs/proof/platform/SPATIAL_SYMBOLIC_V1_PROOF.md` |
 | Gate | `make alt14-2-gate` |
 
+## Alt-15 Summon Wave — Nova Cortex Lobe & Voice Fabric
+
+Batch-admit nine read-only organs across executive/attention, deliberation/planning/arcs, and voice/execution/face posture.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt15-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `reasoning_executive_organ` → `attention_organ` → `coherence_projection_organ` → `deliberation_organ` → `planning_organ` → `cortex_arcs_organ` → `cognitive_execution_organ` → `speaking_runtime_organ` → `nova_face_organ` |
+| MVP promotion | `tools/governance/alt15_promote_mvp.py` |
+| Gates | `make alt15-gate` |
+| Governed promotion | `tools/governance/alt15_promote_governed.py` + `make alt15-governed-gate` |
+
+Depends on: Alt-14 governed route/perception fabric; Alt-8 mind-plane organs; Alt-5 reflection/memory runtime organs; live Nova cortex lobes and coherence projection.
+
+## Alt-15.1 Coherence Fabric Lobe/Voice Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt15-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.10` + `executive_attention_posture[]`, `deliberation_planning_posture[]`, `voice_execution_posture[]` |
+| Gate | `make alt15-1-gate` |
+
+## Alt-15.2 Nova Lobe & Voice Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt15-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/cognitive_runtime/NOVA_LOBE_V1_PROOF.md`, `docs/proof/cognitive_runtime/COHERENCE_PROJECTION_ORGAN_V1_PROOF.md`, `docs/proof/cognitive_runtime/SPEAKING_RUNTIME_ORGAN_V1_PROOF.md` |
+| Gate | `make alt15-2-gate` |
+
+## Alt-16 Summon Wave — Factory & Kinetic Fabric
+
+Batch-admit nine read-only organs across mind fabrication, contractor lanes, and kinetic/shell posture.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt16-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `ai_factory_organ` → `cogos_runtime_bridge_organ` → `wolf_rehydration_organ` → `forge_contractor_organ` → `forge_eval_organ` → `evolve_engine_organ` → `slingshot_organ` → `operator_workbench_organ` → `workflow_shell_organ` |
+| MVP promotion | `tools/governance/alt16_promote_mvp.py` |
+| Gates | `make alt16-gate` |
+| Governed promotion | `tools/governance/alt16_promote_governed.py` + `make alt16-governed-gate` |
+
+Depends on: Alt-15 governed Nova lobe/voice fabric; Alt-11 coding stack; Alt-10 forensics for Slingshot; live AI Factory, Slingshot, Forge/Evolve clients, CoGOS bridge, workflow shell.
+
+## Alt-16.1 Coherence Fabric Factory/Kinetic Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt16-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.11` + `factory_fabrication_posture[]`, `contractor_lane_posture[]`, `kinetic_shell_posture[]` |
+| Gate | `make alt16-1-gate` |
+
+## Alt-16.2 Factory & Kinetic Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt16-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/platform/FACTORY_KINETIC_V1_PROOF.md`, `docs/proof/ai_factory/AI_FACTORY_ORGAN_V1_PROOF.md`, `docs/proof/platform/SLINGSHOT_ORGAN_V1_PROOF.md` |
+| Gate | `make alt16-2-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per

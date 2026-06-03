@@ -55,6 +55,8 @@
     ],
     "children": [
       "change_scope_organ",
+      "forge_contractor_organ",
+      "operator_workbench_organ",
       "patch_verification_organ",
       "run_ledger_organ"
     ]

@@ -54,6 +54,8 @@
       "orchestration_spine_organ"
     ],
     "children": [
+      "deliberation_organ",
+      "slingshot_organ",
       "specialist_route_organ"
     ]
   },

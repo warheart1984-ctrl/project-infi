@@ -56,8 +56,10 @@
       "operator_profile_organ"
     ],
     "children": [
+      "attention_organ",
+      "intent_agency_organ",
       "memory_runtime_organ",
-      "intent_agency_organ"
+      "planning_organ"
     ]
   },
   "activation": {

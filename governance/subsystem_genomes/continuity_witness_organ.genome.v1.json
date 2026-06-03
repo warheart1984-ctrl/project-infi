@@ -56,8 +56,9 @@
       "operator_cognition_coherence_fabric"
     ],
     "children": [
-      "narrative_continuity_organ",
-      "invariant_engine_organ"
+      "cortex_arcs_organ",
+      "invariant_engine_organ",
+      "narrative_continuity_organ"
     ]
   },
   "activation": {

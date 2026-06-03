@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.9"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.11"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -971,6 +971,270 @@ def _route_choice_aligned(route_choice_posture: list[dict[str, Any]]) -> bool:
     return True
 
 
+def _build_executive_attention_posture() -> list[dict[str, Any]]:
+    from src.attention_organ import build_attention_status
+    from src.coherence_projection_organ import build_coherence_projection_status
+    from src.reasoning_executive_organ import build_reasoning_executive_status
+
+    reasoning = build_reasoning_executive_status()
+    attention = build_attention_status()
+    projection = build_coherence_projection_status()
+    return [
+        _organ_posture_item(
+            "reasoning_executive_organ",
+            reasoning,
+            read_only=bool(reasoning.get("read_only")),
+            routing_usurpation=bool(reasoning.get("routing_usurpation")),
+        ),
+        _organ_posture_item(
+            "attention_organ",
+            attention,
+            read_only=bool(attention.get("read_only")),
+        ),
+        _organ_posture_item(
+            "coherence_projection_organ",
+            projection,
+            read_only=bool(projection.get("read_only")),
+            exports_bounded_state=bool(projection.get("exports_bounded_state")),
+        ),
+    ]
+
+
+def _executive_attention_aligned(posture: list[dict[str, Any]]) -> bool:
+    if len(posture) < 3:
+        return False
+    for item in posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("read_only"):
+            return False
+        if item.get("organ_id") == "reasoning_executive_organ" and item.get(
+            "routing_usurpation"
+        ):
+            return False
+    return True
+
+
+def _build_deliberation_planning_posture() -> list[dict[str, Any]]:
+    from src.cortex_arcs_organ import build_cortex_arcs_status
+    from src.deliberation_organ import build_deliberation_status
+    from src.planning_organ import build_planning_status
+
+    deliberation = build_deliberation_status()
+    planning = build_planning_status()
+    arcs = build_cortex_arcs_status()
+    return [
+        _organ_posture_item(
+            "deliberation_organ",
+            deliberation,
+            read_only=bool(deliberation.get("read_only")),
+        ),
+        _organ_posture_item(
+            "planning_organ",
+            planning,
+            read_only=bool(planning.get("read_only")),
+        ),
+        _organ_posture_item(
+            "cortex_arcs_organ",
+            arcs,
+            read_only=bool(arcs.get("read_only")),
+        ),
+    ]
+
+
+def _deliberation_planning_aligned(posture: list[dict[str, Any]]) -> bool:
+    if len(posture) < 3:
+        return False
+    for item in posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("read_only"):
+            return False
+    return True
+
+
+def _build_voice_execution_posture() -> list[dict[str, Any]]:
+    from src.cognitive_execution_organ import build_cognitive_execution_status
+    from src.nova_face_organ import build_nova_face_status
+    from src.speaking_runtime_organ import build_speaking_runtime_status
+
+    execution = build_cognitive_execution_status()
+    speaking = build_speaking_runtime_status()
+    face = build_nova_face_status()
+    return [
+        _organ_posture_item(
+            "cognitive_execution_organ",
+            execution,
+            read_only=bool(execution.get("read_only")),
+            patch_execution_depth=bool(execution.get("patch_execution_depth")),
+        ),
+        _organ_posture_item(
+            "speaking_runtime_organ",
+            speaking,
+            read_only=bool(speaking.get("read_only")),
+        ),
+        _organ_posture_item(
+            "nova_face_organ",
+            face,
+            read_only=bool(face.get("read_only")),
+            authority_lane=str(face.get("authority_lane") or ""),
+        ),
+    ]
+
+
+def _voice_execution_aligned(posture: list[dict[str, Any]]) -> bool:
+    if len(posture) < 3:
+        return False
+    for item in posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("read_only"):
+            return False
+        if item.get("organ_id") == "cognitive_execution_organ" and item.get(
+            "patch_execution_depth"
+        ):
+            return False
+        if item.get("organ_id") == "nova_face_organ" and str(
+            item.get("authority_lane") or ""
+        ) != "jarvis":
+            return False
+    return True
+
+
+def _build_factory_fabrication_posture() -> list[dict[str, Any]]:
+    from src.ai_factory_organ import build_ai_factory_status
+    from src.cogos_runtime_bridge_organ import build_cogos_runtime_bridge_status
+    from src.wolf_rehydration_organ import build_wolf_rehydration_status
+
+    factory = build_ai_factory_status()
+    bridge = build_cogos_runtime_bridge_status()
+    wolf = build_wolf_rehydration_status()
+    return [
+        _organ_posture_item(
+            "ai_factory_organ",
+            factory,
+            read_only=bool(factory.get("read_only")),
+            deploy_authority_via_organ=bool(
+                factory.get("deploy_authority_via_organ")
+            ),
+        ),
+        _organ_posture_item(
+            "cogos_runtime_bridge_organ",
+            bridge,
+            read_only=bool(bridge.get("read_only")),
+            family_valid=bool(bridge.get("family_valid")),
+        ),
+        _organ_posture_item(
+            "wolf_rehydration_organ",
+            wolf,
+            read_only=bool(wolf.get("read_only")),
+        ),
+    ]
+
+
+def _factory_fabrication_aligned(posture: list[dict[str, Any]]) -> bool:
+    if len(posture) < 3:
+        return False
+    for item in posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("read_only"):
+            return False
+        if item.get("organ_id") == "ai_factory_organ" and item.get(
+            "deploy_authority_via_organ"
+        ):
+            return False
+    return True
+
+
+def _build_contractor_lane_posture() -> list[dict[str, Any]]:
+    from src.evolve_engine_organ import build_evolve_engine_status
+    from src.forge_contractor_organ import build_forge_contractor_status
+    from src.forge_eval_organ import build_forge_eval_status
+
+    forge = build_forge_contractor_status()
+    eval_lane = build_forge_eval_status()
+    evolve = build_evolve_engine_status()
+    return [
+        _organ_posture_item(
+            "forge_contractor_organ",
+            forge,
+            proposal_only=bool(forge.get("proposal_only")),
+        ),
+        _organ_posture_item(
+            "forge_eval_organ",
+            eval_lane,
+            read_only=bool(eval_lane.get("read_only")),
+        ),
+        _organ_posture_item(
+            "evolve_engine_organ",
+            evolve,
+            special_review_only=bool(evolve.get("special_review_only")),
+            direct_patch_authority=bool(evolve.get("direct_patch_authority")),
+        ),
+    ]
+
+
+def _contractor_lanes_aligned(posture: list[dict[str, Any]]) -> bool:
+    if len(posture) < 3:
+        return False
+    for item in posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if item.get("organ_id") == "forge_contractor_organ" and not item.get(
+            "proposal_only"
+        ):
+            return False
+        if item.get("organ_id") == "evolve_engine_organ" and item.get(
+            "direct_patch_authority"
+        ):
+            return False
+    return True
+
+
+def _build_kinetic_shell_posture() -> list[dict[str, Any]]:
+    from src.operator_workbench_organ import build_operator_workbench_status
+    from src.slingshot_organ import build_slingshot_status
+    from src.workflow_shell_organ import build_workflow_shell_status
+
+    slingshot = build_slingshot_status()
+    workbench = build_operator_workbench_status()
+    shell = build_workflow_shell_status()
+    return [
+        _organ_posture_item(
+            "slingshot_organ",
+            slingshot,
+            read_only=bool(slingshot.get("read_only")),
+            ma13_enforced=bool(slingshot.get("ma13_enforced")),
+        ),
+        _organ_posture_item(
+            "operator_workbench_organ",
+            workbench,
+            proposal_only=bool(workbench.get("proposal_only")),
+        ),
+        _organ_posture_item(
+            "workflow_shell_organ",
+            shell,
+            read_only=bool(shell.get("read_only")),
+        ),
+    ]
+
+
+def _kinetic_shell_aligned(posture: list[dict[str, Any]]) -> bool:
+    if len(posture) < 3:
+        return False
+    for item in posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if item.get("organ_id") == "operator_workbench_organ" and not item.get(
+            "proposal_only"
+        ):
+            return False
+        if item.get("organ_id") == "slingshot_organ" and not item.get("ma13_enforced"):
+            return False
+    return True
+
+
 def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
@@ -1056,6 +1320,12 @@ def build_coherence_fabric_status(
     perception_posture = _build_perception_posture()
     spatial_symbolic_posture = _build_spatial_symbolic_posture()
     route_choice_posture = _build_route_choice_posture()
+    executive_attention_posture = _build_executive_attention_posture()
+    deliberation_planning_posture = _build_deliberation_planning_posture()
+    voice_execution_posture = _build_voice_execution_posture()
+    factory_fabrication_posture = _build_factory_fabrication_posture()
+    contractor_lane_posture = _build_contractor_lane_posture()
+    kinetic_shell_posture = _build_kinetic_shell_posture()
 
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
@@ -1108,6 +1378,34 @@ def build_coherence_fabric_status(
         "spatial_symbolic_aligned": _spatial_symbolic_aligned(spatial_symbolic_posture),
         "route_choice_posture": route_choice_posture,
         "route_choice_aligned": _route_choice_aligned(route_choice_posture),
+        "executive_attention_posture": executive_attention_posture,
+        "executive_attention_aligned": _executive_attention_aligned(
+            executive_attention_posture
+        ),
+        "deliberation_planning_posture": deliberation_planning_posture,
+        "deliberation_planning_aligned": _deliberation_planning_aligned(
+            deliberation_planning_posture
+        ),
+        "voice_execution_posture": voice_execution_posture,
+        "voice_execution_aligned": _voice_execution_aligned(voice_execution_posture),
+        "nova_lobe_voice_aligned": (
+            _executive_attention_aligned(executive_attention_posture)
+            and _deliberation_planning_aligned(deliberation_planning_posture)
+            and _voice_execution_aligned(voice_execution_posture)
+        ),
+        "factory_fabrication_posture": factory_fabrication_posture,
+        "factory_fabrication_aligned": _factory_fabrication_aligned(
+            factory_fabrication_posture
+        ),
+        "contractor_lane_posture": contractor_lane_posture,
+        "contractor_lanes_aligned": _contractor_lanes_aligned(contractor_lane_posture),
+        "kinetic_shell_posture": kinetic_shell_posture,
+        "kinetic_shell_aligned": _kinetic_shell_aligned(kinetic_shell_posture),
+        "factory_kinetic_aligned": (
+            _factory_fabrication_aligned(factory_fabrication_posture)
+            and _contractor_lanes_aligned(contractor_lane_posture)
+            and _kinetic_shell_aligned(kinetic_shell_posture)
+        ),
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,
         "safety_envelope_halt": safety_halt,

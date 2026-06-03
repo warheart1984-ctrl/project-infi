@@ -39,7 +39,7 @@
     ]
   },
   "schema": {
-    "ref": "schemas/operator_cognition_coherence_fabric.v1.9.json",
+    "ref": "schemas/operator_cognition_coherence_fabric.v1.11.json",
     "frozen": true
   },
   "runtime": {
@@ -77,7 +77,10 @@
       "governed_direct_pipeline"
     ],
     "children": [
-      "continuity_witness_organ"
+      "ai_factory_organ",
+      "continuity_witness_organ",
+      "forge_contractor_organ",
+      "reasoning_executive_organ"
     ]
   },
   "activation": {

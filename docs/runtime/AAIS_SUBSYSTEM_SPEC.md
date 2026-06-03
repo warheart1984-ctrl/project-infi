@@ -1238,8 +1238,26 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | Route Choice Organ | governed | [../subsystems/platform/ROUTE_CHOICE_ORGAN.md](../subsystems/platform/ROUTE_CHOICE_ORGAN.md) | [../proof/platform/ROUTE_CHOICE_ORGAN_V1_PROOF.md](../proof/platform/ROUTE_CHOICE_ORGAN_V1_PROOF.md) |
 | Specialist Route Organ | governed | [../subsystems/platform/SPECIALIST_ROUTE_ORGAN.md](../subsystems/platform/SPECIALIST_ROUTE_ORGAN.md) | [../proof/platform/SPECIALIST_ROUTE_ORGAN_V1_PROOF.md](../proof/platform/SPECIALIST_ROUTE_ORGAN_V1_PROOF.md) |
 | Provider Route Organ | governed | [../subsystems/platform/PROVIDER_ROUTE_ORGAN.md](../subsystems/platform/PROVIDER_ROUTE_ORGAN.md) | [../proof/platform/PROVIDER_ROUTE_ORGAN_V1_PROOF.md](../proof/platform/PROVIDER_ROUTE_ORGAN_V1_PROOF.md) |
+| Reasoning Executive Organ | governed | [../subsystems/nova/REASONING_EXECUTIVE_ORGAN.md](../subsystems/nova/REASONING_EXECUTIVE_ORGAN.md) | [../proof/nova/REASONING_EXECUTIVE_ORGAN_V1_PROOF.md](../proof/nova/REASONING_EXECUTIVE_ORGAN_V1_PROOF.md) |
+| Attention Organ | governed | [../subsystems/nova/ATTENTION_ORGAN.md](../subsystems/nova/ATTENTION_ORGAN.md) | [../proof/nova/ATTENTION_ORGAN_V1_PROOF.md](../proof/nova/ATTENTION_ORGAN_V1_PROOF.md) |
+| Coherence Projection Organ | governed | [../subsystems/nova/COHERENCE_PROJECTION_ORGAN.md](../subsystems/nova/COHERENCE_PROJECTION_ORGAN.md) | [../proof/nova/COHERENCE_PROJECTION_ORGAN_V1_PROOF.md](../proof/nova/COHERENCE_PROJECTION_ORGAN_V1_PROOF.md) |
+| Deliberation Organ | governed | [../subsystems/nova/DELIBERATION_ORGAN.md](../subsystems/nova/DELIBERATION_ORGAN.md) | [../proof/nova/DELIBERATION_ORGAN_V1_PROOF.md](../proof/nova/DELIBERATION_ORGAN_V1_PROOF.md) |
+| Planning Organ | governed | [../subsystems/nova/PLANNING_ORGAN.md](../subsystems/nova/PLANNING_ORGAN.md) | [../proof/nova/PLANNING_ORGAN_V1_PROOF.md](../proof/nova/PLANNING_ORGAN_V1_PROOF.md) |
+| Cortex Arcs Organ | governed | [../subsystems/nova/CORTEX_ARCS_ORGAN.md](../subsystems/nova/CORTEX_ARCS_ORGAN.md) | [../proof/nova/CORTEX_ARCS_ORGAN_V1_PROOF.md](../proof/nova/CORTEX_ARCS_ORGAN_V1_PROOF.md) |
+| Cognitive Execution Organ | governed | [../subsystems/nova/COGNITIVE_EXECUTION_ORGAN.md](../subsystems/nova/COGNITIVE_EXECUTION_ORGAN.md) | [../proof/nova/COGNITIVE_EXECUTION_ORGAN_V1_PROOF.md](../proof/nova/COGNITIVE_EXECUTION_ORGAN_V1_PROOF.md) |
+| Speaking Runtime Organ | governed | [../subsystems/nova/SPEAKING_RUNTIME_ORGAN.md](../subsystems/nova/SPEAKING_RUNTIME_ORGAN.md) | [../proof/nova/SPEAKING_RUNTIME_ORGAN_V1_PROOF.md](../proof/nova/SPEAKING_RUNTIME_ORGAN_V1_PROOF.md) |
+| Nova Face Organ | governed | [../subsystems/nova/NOVA_FACE_ORGAN.md](../subsystems/nova/NOVA_FACE_ORGAN.md) | [../proof/nova/NOVA_FACE_ORGAN_V1_PROOF.md](../proof/nova/NOVA_FACE_ORGAN_V1_PROOF.md) |
+| AI Factory Organ | governed | [../subsystems/platform/AI_FACTORY_ORGAN.md](../subsystems/platform/AI_FACTORY_ORGAN.md) | [../proof/ai_factory/AI_FACTORY_ORGAN_V1_PROOF.md](../proof/ai_factory/AI_FACTORY_ORGAN_V1_PROOF.md) |
+| CoGOS Runtime Bridge Organ | governed | [../subsystems/platform/COGOS_RUNTIME_BRIDGE_ORGAN.md](../subsystems/platform/COGOS_RUNTIME_BRIDGE_ORGAN.md) | [../proof/platform/COGOS_RUNTIME_BRIDGE_ORGAN_V1_PROOF.md](../proof/platform/COGOS_RUNTIME_BRIDGE_ORGAN_V1_PROOF.md) |
+| Wolf Rehydration Organ | governed | [../subsystems/platform/WOLF_REHYDRATION_ORGAN.md](../subsystems/platform/WOLF_REHYDRATION_ORGAN.md) | [../proof/platform/WOLF_REHYDRATION_ORGAN_V1_PROOF.md](../proof/platform/WOLF_REHYDRATION_ORGAN_V1_PROOF.md) |
+| Forge Contractor Organ | governed | [../subsystems/platform/FORGE_CONTRACTOR_ORGAN.md](../subsystems/platform/FORGE_CONTRACTOR_ORGAN.md) | [../proof/platform/FORGE_CONTRACTOR_ORGAN_V1_PROOF.md](../proof/platform/FORGE_CONTRACTOR_ORGAN_V1_PROOF.md) |
+| ForgeEval Organ | governed | [../subsystems/platform/FORGE_EVAL_ORGAN.md](../subsystems/platform/FORGE_EVAL_ORGAN.md) | [../proof/platform/FORGE_EVAL_ORGAN_V1_PROOF.md](../proof/platform/FORGE_EVAL_ORGAN_V1_PROOF.md) |
+| Evolve Engine Organ | governed | [../subsystems/platform/EVOLVE_ENGINE_ORGAN.md](../subsystems/platform/EVOLVE_ENGINE_ORGAN.md) | [../proof/platform/EVOLVE_ENGINE_ORGAN_V1_PROOF.md](../proof/platform/EVOLVE_ENGINE_ORGAN_V1_PROOF.md) |
+| Slingshot Organ | governed | [../subsystems/platform/SLINGSHOT_ORGAN.md](../subsystems/platform/SLINGSHOT_ORGAN.md) | [../proof/platform/SLINGSHOT_ORGAN_V1_PROOF.md](../proof/platform/SLINGSHOT_ORGAN_V1_PROOF.md) |
+| Operator Workbench Organ | governed | [../subsystems/platform/OPERATOR_WORKBENCH_ORGAN.md](../subsystems/platform/OPERATOR_WORKBENCH_ORGAN.md) | [../proof/platform/OPERATOR_WORKBENCH_ORGAN_V1_PROOF.md](../proof/platform/OPERATOR_WORKBENCH_ORGAN_V1_PROOF.md) |
+| Workflow Shell Organ | governed | [../subsystems/platform/WORKFLOW_SHELL_ORGAN.md](../subsystems/platform/WORKFLOW_SHELL_ORGAN.md) | [../proof/platform/WORKFLOW_SHELL_ORGAN_V1_PROOF.md](../proof/platform/WORKFLOW_SHELL_ORGAN_V1_PROOF.md) |
 
-Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate alt13-governed-gate alt14-governed-gate`
+Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate alt13-governed-gate alt14-governed-gate alt15-governed-gate alt16-governed-gate`
 
 ## 9. Concept Pending (SSP)
 
@@ -1248,6 +1266,6 @@ Nothing here is live until promoted per [ideas_pending/README.md](../_future/ide
 
 | Idea | Status | Concept spec | MVP plan | Genome |
 |------|--------|--------------|----------|--------|
-| *(none — Alt-14 graduated to §8)* | — | — | — | — |
+| *(none — Alt-16 graduated to §8)* | — | — | — | — |
 
 New admissions via SSP (Step 7) update this table. Graduated ideas move to §8. Genome contract: [AAIS_SUBSYSTEM_GENOME.md](../contracts/AAIS_SUBSYSTEM_GENOME.md).

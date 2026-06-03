@@ -53,7 +53,9 @@
       "mechanic_handoff_organ",
       "forensic_triangulation"
     ],
-    "children": []
+    "children": [
+      "slingshot_organ"
+    ]
   },
   "activation": {
     "order": 6,

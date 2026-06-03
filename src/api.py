@@ -12464,6 +12464,253 @@ def get_provider_route_organ_status():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/reasoning-executive/status", methods=["GET"])
+def get_reasoning_executive_organ_status():
+    """Read-only Reasoning Executive organ snapshot (Alt-15 wave)."""
+    try:
+        from src.reasoning_executive_organ import build_reasoning_executive_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"reasoning_executive": build_reasoning_executive_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading reasoning executive organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/attention/status", methods=["GET"])
+def get_attention_organ_status():
+    """Read-only Attention organ snapshot (Alt-15 wave)."""
+    try:
+        from src.attention_organ import build_attention_status
+
+        return jsonify(attach_ul_substrate({"attention": build_attention_status()}))
+    except Exception as e:
+        logger.error(f"Error reading attention organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/coherence-projection/status", methods=["GET"])
+def get_coherence_projection_organ_status():
+    """Read-only Coherence Projection organ snapshot (Alt-15 wave)."""
+    try:
+        from src.coherence_projection_organ import build_coherence_projection_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"coherence_projection": build_coherence_projection_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading coherence projection organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/deliberation/status", methods=["GET"])
+def get_deliberation_organ_status():
+    """Read-only Deliberation organ snapshot (Alt-15 wave)."""
+    try:
+        from src.deliberation_organ import build_deliberation_status
+
+        return jsonify(attach_ul_substrate({"deliberation": build_deliberation_status()}))
+    except Exception as e:
+        logger.error(f"Error reading deliberation organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/planning/status", methods=["GET"])
+def get_planning_organ_status():
+    """Read-only Planning organ snapshot (Alt-15 wave)."""
+    try:
+        from src.planning_organ import build_planning_status
+
+        return jsonify(attach_ul_substrate({"planning": build_planning_status()}))
+    except Exception as e:
+        logger.error(f"Error reading planning organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/cortex-arcs/status", methods=["GET"])
+def get_cortex_arcs_organ_status():
+    """Read-only Cortex Arcs organ snapshot (Alt-15 wave)."""
+    try:
+        from src.cortex_arcs_organ import build_cortex_arcs_status
+
+        return jsonify(attach_ul_substrate({"cortex_arcs": build_cortex_arcs_status()}))
+    except Exception as e:
+        logger.error(f"Error reading cortex arcs organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/cognitive-execution/status", methods=["GET"])
+def get_cognitive_execution_organ_status():
+    """Read-only Cognitive Execution organ snapshot (Alt-15 wave)."""
+    try:
+        from src.cognitive_execution_organ import build_cognitive_execution_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"cognitive_execution": build_cognitive_execution_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading cognitive execution organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/speaking-runtime/status", methods=["GET"])
+def get_speaking_runtime_organ_status():
+    """Read-only Speaking Runtime organ snapshot (Alt-15 wave)."""
+    try:
+        from src.speaking_runtime_organ import build_speaking_runtime_status
+
+        return jsonify(
+            attach_ul_substrate({"speaking_runtime": build_speaking_runtime_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading speaking runtime organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/nova-face/status", methods=["GET"])
+def get_nova_face_organ_status():
+    """Read-only Nova Face organ snapshot (Alt-15 wave)."""
+    try:
+        from src.nova_face_organ import build_nova_face_status
+
+        return jsonify(attach_ul_substrate({"nova_face": build_nova_face_status()}))
+    except Exception as e:
+        logger.error(f"Error reading nova face organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/ai-factory/status", methods=["GET"])
+def get_ai_factory_organ_status():
+    """Read-only AI Factory organ snapshot (Alt-16 wave)."""
+    try:
+        from src.ai_factory_organ import build_ai_factory_status
+
+        return jsonify(attach_ul_substrate({"ai_factory": build_ai_factory_status()}))
+    except Exception as e:
+        logger.error(f"Error reading ai factory organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/cogos-runtime-bridge/status", methods=["GET"])
+def get_cogos_runtime_bridge_organ_status():
+    """Read-only CoGOS runtime bridge organ snapshot (Alt-16 wave)."""
+    try:
+        from src.cogos_runtime_bridge_organ import build_cogos_runtime_bridge_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"cogos_runtime_bridge": build_cogos_runtime_bridge_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading cogos runtime bridge organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/wolf-rehydration/status", methods=["GET"])
+def get_wolf_rehydration_organ_status():
+    """Read-only Wolf rehydration organ snapshot (Alt-16 wave)."""
+    try:
+        from src.wolf_rehydration_organ import build_wolf_rehydration_status
+
+        return jsonify(
+            attach_ul_substrate({"wolf_rehydration": build_wolf_rehydration_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading wolf rehydration organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/forge-contractor/status", methods=["GET"])
+def get_forge_contractor_organ_status():
+    """Read-only Forge contractor organ snapshot (Alt-16 wave)."""
+    try:
+        from src.forge_contractor_organ import build_forge_contractor_status
+
+        return jsonify(
+            attach_ul_substrate({"forge_contractor": build_forge_contractor_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading forge contractor organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/forge-eval/status", methods=["GET"])
+def get_forge_eval_organ_status():
+    """Read-only ForgeEval organ snapshot (Alt-16 wave)."""
+    try:
+        from src.forge_eval_organ import build_forge_eval_status
+
+        return jsonify(attach_ul_substrate({"forge_eval": build_forge_eval_status()}))
+    except Exception as e:
+        logger.error(f"Error reading forge eval organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/evolve-engine/status", methods=["GET"])
+def get_evolve_engine_organ_status():
+    """Read-only Evolve Engine organ snapshot (Alt-16 wave)."""
+    try:
+        from src.evolve_engine_organ import build_evolve_engine_status
+
+        return jsonify(attach_ul_substrate({"evolve_engine": build_evolve_engine_status()}))
+    except Exception as e:
+        logger.error(f"Error reading evolve engine organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/slingshot/status", methods=["GET"])
+def get_slingshot_organ_status():
+    """Read-only Slingshot organ snapshot (Alt-16 wave)."""
+    try:
+        from src.slingshot_organ import build_slingshot_status
+
+        case_id = (request.args.get("case_id") or "").strip() or None
+        return jsonify(
+            attach_ul_substrate({"slingshot": build_slingshot_status(case_id=case_id)})
+        )
+    except Exception as e:
+        logger.error(f"Error reading slingshot organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/operator-workbench/status", methods=["GET"])
+def get_operator_workbench_organ_status():
+    """Read-only operator workbench organ snapshot (Alt-16 wave)."""
+    try:
+        from src.operator_workbench_organ import build_operator_workbench_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"operator_workbench": build_operator_workbench_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading operator workbench organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/workflow-shell/status", methods=["GET"])
+def get_workflow_shell_organ_status():
+    """Read-only workflow shell organ snapshot (Alt-16 wave)."""
+    try:
+        from src.workflow_shell_organ import build_workflow_shell_status
+
+        return jsonify(
+            attach_ul_substrate({"workflow_shell": build_workflow_shell_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading workflow shell organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/reset", methods=["POST"])
 def reset_mission_board():
     """Reset Mission Board state with an optional backup and seeded current objectives."""

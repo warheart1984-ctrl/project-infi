@@ -84,6 +84,24 @@ GENE_GATES: dict[str, str] = {
     "route_choice_organ": "route-choice-organ-gate",
     "specialist_route_organ": "specialist-route-organ-gate",
     "provider_route_organ": "provider-route-organ-gate",
+    "reasoning_executive_organ": "reasoning-executive-organ-gate",
+    "attention_organ": "attention-organ-gate",
+    "coherence_projection_organ": "coherence-projection-organ-gate",
+    "deliberation_organ": "deliberation-organ-gate",
+    "planning_organ": "planning-organ-gate",
+    "cortex_arcs_organ": "cortex-arcs-organ-gate",
+    "cognitive_execution_organ": "cognitive-execution-organ-gate",
+    "speaking_runtime_organ": "speaking-runtime-organ-gate",
+    "nova_face_organ": "nova-face-organ-gate",
+    "ai_factory_organ": "ai-factory-organ-gate",
+    "cogos_runtime_bridge_organ": "cogos-runtime-bridge-organ-gate",
+    "wolf_rehydration_organ": "wolf-rehydration-organ-gate",
+    "forge_contractor_organ": "forge-contractor-organ-gate",
+    "forge_eval_organ": "forge-eval-organ-gate",
+    "evolve_engine_organ": "evolve-engine-organ-gate",
+    "slingshot_organ": "slingshot-organ-gate",
+    "operator_workbench_organ": "operator-workbench-organ-gate",
+    "workflow_shell_organ": "workflow-shell-organ-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -217,6 +235,40 @@ GATE_SCRIPTS: dict[str, list[str]] = {
         ".github/scripts/check-specialist-route-organ-governance.py"
     ],
     "provider-route-organ-gate": [".github/scripts/check-provider-route-organ-governance.py"],
+    "reasoning-executive-organ-gate": [
+        ".github/scripts/check-reasoning-executive-organ-governance.py"
+    ],
+    "attention-organ-gate": [".github/scripts/check-attention-organ-governance.py"],
+    "coherence-projection-organ-gate": [
+        ".github/scripts/check-coherence-projection-organ-governance.py"
+    ],
+    "deliberation-organ-gate": [".github/scripts/check-deliberation-organ-governance.py"],
+    "planning-organ-gate": [".github/scripts/check-planning-organ-governance.py"],
+    "cortex-arcs-organ-gate": [".github/scripts/check-cortex-arcs-organ-governance.py"],
+    "cognitive-execution-organ-gate": [
+        ".github/scripts/check-cognitive-execution-organ-governance.py"
+    ],
+    "speaking-runtime-organ-gate": [
+        ".github/scripts/check-speaking-runtime-organ-governance.py"
+    ],
+    "nova-face-organ-gate": [".github/scripts/check-nova-face-organ-governance.py"],
+    "ai-factory-organ-gate": [".github/scripts/check-ai-factory-organ-governance.py"],
+    "cogos-runtime-bridge-organ-gate": [
+        ".github/scripts/check-cogos-runtime-bridge-organ-governance.py"
+    ],
+    "wolf-rehydration-organ-gate": [
+        ".github/scripts/check-wolf-rehydration-organ-governance.py"
+    ],
+    "forge-contractor-organ-gate": [
+        ".github/scripts/check-forge-contractor-organ-governance.py"
+    ],
+    "forge-eval-organ-gate": [".github/scripts/check-forge-eval-organ-governance.py"],
+    "evolve-engine-organ-gate": [".github/scripts/check-evolve-engine-organ-governance.py"],
+    "slingshot-organ-gate": [".github/scripts/check-slingshot-organ-governance.py"],
+    "operator-workbench-organ-gate": [
+        ".github/scripts/check-operator-workbench-organ-governance.py"
+    ],
+    "workflow-shell-organ-gate": [".github/scripts/check-workflow-shell-organ-governance.py"],
 }
 
 PROTOTYPE_GATE_STUB_GENES = frozenset(GENE_GATES.keys()) | frozenset(

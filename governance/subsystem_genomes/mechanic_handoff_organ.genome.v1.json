@@ -54,7 +54,8 @@
       "capability_service_bridge"
     ],
     "children": [
-      "forensic_triangulation_organ"
+      "forensic_triangulation_organ",
+      "slingshot_organ"
     ]
   },
   "activation": {

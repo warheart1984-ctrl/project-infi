@@ -55,7 +55,8 @@
       "reflection_runtime_organ"
     ],
     "children": [
-      "narrative_continuity_organ"
+      "narrative_continuity_organ",
+      "wolf_rehydration_organ"
     ]
   },
   "activation": {

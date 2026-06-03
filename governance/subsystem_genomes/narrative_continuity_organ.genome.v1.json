@@ -56,6 +56,7 @@
       "memory_runtime_organ"
     ],
     "children": [
+      "coherence_projection_organ",
       "intent_agency_organ"
     ]
   },

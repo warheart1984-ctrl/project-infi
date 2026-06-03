@@ -55,7 +55,9 @@
       "narrative_continuity_organ",
       "reflection_runtime_organ"
     ],
-    "children": []
+    "children": [
+      "coherence_projection_organ"
+    ]
   },
   "activation": {
     "order": 3,

@@ -53,6 +53,7 @@
       "patchforge_organ"
     ],
     "children": [
+      "operator_workbench_organ",
       "patch_apply_organ",
       "patch_verification_organ"
     ]

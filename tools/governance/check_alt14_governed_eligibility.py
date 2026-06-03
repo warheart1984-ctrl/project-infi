@@ -63,10 +63,13 @@ def check_eligibility(root: Path | None = None) -> list[str]:
             errors.append(f"missing governed proof: {proof_path.relative_to(root)}")
 
     fabric = build_coherence_fabric_status(root=root)
-    if fabric.get("operator_cognition_coherence_fabric_version") != (
-        "operator_cognition_coherence_fabric.v1.9"
+    fabric_version = fabric.get("operator_cognition_coherence_fabric_version")
+    if fabric_version not in (
+        "operator_cognition_coherence_fabric.v1.9",
+        "operator_cognition_coherence_fabric.v1.10",
+        "operator_cognition_coherence_fabric.v1.11",
     ):
-        errors.append("coherence fabric must be v1.9")
+        errors.append("coherence fabric must be v1.9, v1.10, or v1.11")
     if len(fabric.get("perception_posture") or []) != 3:
         errors.append("expected 3 perception_posture entries")
     if len(fabric.get("spatial_symbolic_posture") or []) != 3:

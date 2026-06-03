@@ -10,7 +10,7 @@ from src.operator_cognition_coherence_fabric import build_coherence_fabric_statu
 def test_build_coherence_fabric_status_schema_fields():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status["operator_cognition_coherence_fabric_version"] == (
-        "operator_cognition_coherence_fabric.v1.9"
+        "operator_cognition_coherence_fabric.v1.11"
     )
     assert status["read_only"] is True
     assert status["authority_lane"] == "operator"
@@ -315,10 +315,32 @@ def test_module_governance_posture_includes_alt13_organ():
     assert status.get("module_governance_aligned") is True
 
 
-def test_alt12_planes_aligned_at_v19_alongside_alt13_and_alt14():
+def test_alt16_factory_kinetic_planes_at_v111():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    assert len(status.get("factory_fabrication_posture") or []) == 3
+    assert len(status.get("contractor_lane_posture") or []) == 3
+    assert len(status.get("kinetic_shell_posture") or []) == 3
+    assert status.get("factory_fabrication_aligned") is True
+    assert status.get("contractor_lanes_aligned") is True
+    assert status.get("kinetic_shell_aligned") is True
+    assert status.get("factory_kinetic_aligned") is True
+
+
+def test_alt15_lobe_voice_planes_at_v111():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    assert len(status.get("executive_attention_posture") or []) == 3
+    assert len(status.get("deliberation_planning_posture") or []) == 3
+    assert len(status.get("voice_execution_posture") or []) == 3
+    assert status.get("executive_attention_aligned") is True
+    assert status.get("deliberation_planning_aligned") is True
+    assert status.get("voice_execution_aligned") is True
+    assert status.get("nova_lobe_voice_aligned") is True
+
+
+def test_alt12_planes_aligned_at_v111_alongside_alt13_and_alt14():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status.get("operator_cognition_coherence_fabric_version") == (
-        "operator_cognition_coherence_fabric.v1.9"
+        "operator_cognition_coherence_fabric.v1.11"
     )
     assert len(status.get("otem_lane_posture") or []) == 3
     assert len(status.get("predictive_lane_posture") or []) == 3
