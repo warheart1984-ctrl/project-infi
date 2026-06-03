@@ -268,6 +268,21 @@ python -m src.governance_organs.mutation_engine --gene safety_envelope_organ --m
 
 **Alt-8.2 batch:** `alt8-2-summon-wave-2026-06`
 
+## Alt-9.1 Infrastructure Coherence Join
+
+Snapshot v1.4 adds `infrastructure_posture[]` for `phase_gate_organ`,
+`realtime_event_cause_predictor_organ`, and `invariant_engine_organ`. Tier 5 health
+includes `infrastructure_substrate_aligned`.
+
+| Gate | `make alt9-1-gate` |
+| Batch | `alt9-1-summon-wave-2026-06` |
+
+## Alt-9.2 Immune Substrate Closure
+
+| Gate | `make alt9-2-gate` |
+| Batch | `alt9-2-summon-wave-2026-06` |
+| Proof | `docs/proof/nova/IMMUNE_SUBSTRATE_V1_PROOF.md` |
+
 ## Related
 
 - [AAIS_SSP_PROTOCOL.md](./AAIS_SSP_PROTOCOL.md)

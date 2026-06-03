@@ -36,6 +36,9 @@ GENE_GATES: dict[str, str] = {
     "continuity_witness_organ": "continuity-witness-gate",
     "narrative_continuity_organ": "narrative-continuity-gate",
     "intent_agency_organ": "intent-agency-gate",
+    "phase_gate_organ": "phase-gate-organ-gate",
+    "realtime_event_cause_predictor_organ": "realtime-predictor-organ-gate",
+    "invariant_engine_organ": "invariant-engine-organ-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -61,6 +64,13 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     "continuity-witness-gate": [".github/scripts/check-continuity-witness-governance.py"],
     "narrative-continuity-gate": [".github/scripts/check-narrative-continuity-governance.py"],
     "intent-agency-gate": [".github/scripts/check-intent-agency-governance.py"],
+    "phase-gate-organ-gate": [".github/scripts/check-phase-gate-organ-governance.py"],
+    "realtime-predictor-organ-gate": [
+        ".github/scripts/check-realtime-predictor-organ-governance.py"
+    ],
+    "invariant-engine-organ-gate": [
+        ".github/scripts/check-invariant-engine-organ-governance.py"
+    ],
 }
 
 PROTOTYPE_GATE_STUB_GENES = frozenset(GENE_GATES.keys()) | frozenset(

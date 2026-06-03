@@ -40,6 +40,9 @@ make alt7-governed-gate
 | `continuity_witness_organ` | governed | [continuity_witness_organ.genome.v1.json](./continuity_witness_organ.genome.v1.json) |
 | `narrative_continuity_organ` | governed | [narrative_continuity_organ.genome.v1.json](./narrative_continuity_organ.genome.v1.json) |
 | `intent_agency_organ` | governed | [intent_agency_organ.genome.v1.json](./intent_agency_organ.genome.v1.json) |
+| `phase_gate_organ` | governed | [phase_gate_organ.genome.v1.json](./phase_gate_organ.genome.v1.json) |
+| `realtime_event_cause_predictor_organ` | governed | [realtime_event_cause_predictor_organ.genome.v1.json](./realtime_event_cause_predictor_organ.genome.v1.json) |
+| `invariant_engine_organ` | governed | [invariant_engine_organ.genome.v1.json](./invariant_engine_organ.genome.v1.json) |
 
 ## Adding a Genome
 

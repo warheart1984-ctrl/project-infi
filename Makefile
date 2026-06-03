@@ -309,6 +309,28 @@ alt8-2-gate: alt8-1-gate safety-envelope-mutation-gate
 alt8-governed-gate:
 	python3 tools/governance/check_alt8_governed_eligibility.py
 
+phase-gate-organ-gate:
+	python3 .github/scripts/check-phase-gate-organ-governance.py
+
+realtime-predictor-organ-gate:
+	python3 .github/scripts/check-realtime-predictor-organ-governance.py
+
+invariant-engine-organ-gate:
+	python3 .github/scripts/check-invariant-engine-organ-governance.py
+
+alt9-gate: phase-gate-organ-gate realtime-predictor-organ-gate invariant-engine-organ-gate genome-gate
+
+alt9-1-gate: alt9-gate alt8-1-gate
+	python3 -m pytest tests/test_operator_cognition_coherence_fabric.py tests/test_phase_gate_organ.py tests/test_realtime_event_cause_predictor_organ.py tests/test_invariant_engine_organ.py -q
+
+immune-substrate-gate:
+	python3 tools/governance/check_immune_substrate.py
+
+alt9-2-gate: alt9-1-gate immune-substrate-gate
+
+alt9-governed-gate:
+	python3 tools/governance/check_alt9_governed_eligibility.py
+
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py
 

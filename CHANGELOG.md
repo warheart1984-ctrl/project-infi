@@ -13,6 +13,32 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.5.0] - 2026-06-02 — Alt-9 Infrastructure Fabric
+
+**Alt-9** — three infrastructure organs at governed; coherence fabric v1.4 `infrastructure_posture[]`; immune substrate closure.
+
+### Added
+
+- **Alt-9.0** — `phase_gate_organ`, `realtime_event_cause_predictor_organ`, `invariant_engine_organ`; status APIs; `make alt9-gate`; `tools/governance/alt9_promote_mvp.py`
+- **Alt-9.1** — coherence snapshot v1.4 + `infrastructure_substrate_aligned` in Tier 5; `make alt9-1-gate`
+- **Alt-9.2** — `IMMUNE_SUBSTRATE_V1_PROOF` + Nova doc substrate language; `make alt9-2-gate`
+- **Governed promotion** — `tools/governance/alt9_promote_governed.py`; `make alt9-governed-gate`
+- **Nova hook** — `compare_nova_runtime_invariants()` on companion turns
+
+### Changed
+
+- Genome registry: **21 governed** subsystem genomes (18 prior + 3 Alt-9)
+- `operator_cognition_coherence_fabric` schema ref → v1.4
+
+### Verification (v1.5.0)
+
+```bash
+make alt9-gate alt9-1-gate alt9-2-gate alt9-governed-gate
+python -m pytest tests/test_phase_gate_organ.py tests/test_realtime_event_cause_predictor_organ.py tests/test_invariant_engine_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.5.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.5.0
+
 ## [1.4.0] - 2026-06-02 — Alt-8 Cognitive Continuity & Witness
 
 **Alt-8** — three mind-plane organs at governed; coherence fabric v1.3 `mind_posture[]`; MP-SE-001 safety envelope MP-X path.

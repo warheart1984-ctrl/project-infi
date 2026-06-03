@@ -3209,6 +3209,22 @@ def _attach_session_mission_context(session):
     return mission_context
 
 
+def _attach_nova_invariant_consumer_snapshot(session):
+    """Read-only Nova invariant comparison via invariant engine organ (Alt-9)."""
+    from src.invariant_engine_organ import compare_nova_runtime_invariants
+
+    lane = companion_lane_identity(
+        session.metadata.get("persona_mode"),
+        session.metadata.get("response_mode"),
+    )
+    snapshot = compare_nova_runtime_invariants(
+        companion_lane=lane,
+        governed_pipeline=_previous_governed_pipeline(session),
+    )
+    session.metadata["nova_invariant_consumer"] = snapshot
+    return snapshot
+
+
 def _resolve_provider_mind(session, user_message: str, response_mode: str):
     """Resolve the high-level Jarvis engine path for one turn."""
     resolved_voice = (session.metadata.get("mode_guidance") or {}).get("resolved_voice")
@@ -11719,6 +11735,76 @@ def get_intent_agency_status():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/phase-gate/status", methods=["GET"])
+def get_phase_gate_status():
+    """Read-only Phase Gate organ snapshot (Alt-9 wave)."""
+    try:
+        from src.phase_gate_organ import build_phase_gate_status
+
+        return jsonify(attach_ul_substrate({"phase_gate": build_phase_gate_status()}))
+    except Exception as e:
+        logger.error(f"Error reading phase gate status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/realtime-predictor/status", methods=["GET"])
+def get_realtime_predictor_status():
+    """Read-only Realtime Predictor organ snapshot (Alt-9 wave)."""
+    try:
+        from src.realtime_event_cause_predictor_organ import build_realtime_predictor_status
+
+        pipeline_trace = None
+        session_id = str(request.args.get("session_id") or "").strip()
+        if session_id:
+            session = conversation_memory.get_session(session_id)
+            if session:
+                pipeline_trace = _previous_governed_pipeline(session)
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "realtime_predictor": build_realtime_predictor_status(
+                        governed_pipeline=pipeline_trace
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading realtime predictor status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/invariant-engine/status", methods=["GET"])
+def get_invariant_engine_status():
+    """Read-only Invariant Engine organ snapshot (Alt-9 wave)."""
+    try:
+        from src.invariant_engine_organ import build_invariant_engine_status
+
+        pipeline_trace = None
+        companion_lane = None
+        session_id = str(request.args.get("session_id") or "").strip()
+        if session_id:
+            session = conversation_memory.get_session(session_id)
+            if session:
+                pipeline_trace = _previous_governed_pipeline(session)
+                companion_lane = companion_lane_identity(
+                    session.metadata.get("persona_mode"),
+                    session.metadata.get("response_mode"),
+                )
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "invariant_engine": build_invariant_engine_status(
+                        companion_lane=companion_lane,
+                        governed_pipeline=pipeline_trace,
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading invariant engine status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/reset", methods=["POST"])
 def reset_mission_board():
     """Reset Mission Board state with an optional backup and seeded current objectives."""
@@ -13143,6 +13229,8 @@ def chat_message(session_id):
         companion_turn = _session_uses_companion_lane(session)
         super_nova_turn = _session_uses_super_nova(session)
         _attach_session_mission_context(session)
+        if companion_turn:
+            _attach_nova_invariant_consumer_snapshot(session)
 
         if not user_message:
             return jsonify({"error": "Message is required"}), 400

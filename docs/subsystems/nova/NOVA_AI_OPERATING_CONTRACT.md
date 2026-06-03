@@ -227,15 +227,14 @@ That means:
 - Nova may not authorize her own escalation
 - Nova may not convert shield failure into direct hidden control
 
-Broader predictive or autonomous immune coupling still remains blocked until
-both of these are true in live runtime code:
+The **immune substrate is installed** (Alt-9.2): the predictor organ attests a
+live pipeline producer and the invariant engine organ performs read-only Nova
+comparison on companion turns.
 
-1. the realtime event-cause predictor is installed as a real runtime producer
-2. the invariant engine is wired into Nova runtime comparison as a real
-   consumer
-
-Do not treat observe-only immune coupling as proof that the broader immune stack
-is complete.
+**Broader predictive or autonomous immune coupling still remains blocked** until
+explicit policy authorizes escalation beyond `observe_protocol_signal`. Do not
+treat substrate attestation or observe-only immune coupling as proof that the
+broader immune stack is complete.
 
 ## Input Surface Rule
 

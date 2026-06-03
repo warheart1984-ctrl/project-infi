@@ -208,23 +208,24 @@ claims.
 
 ## 6.1.1 Immune Coupling Block Rule
 
-Super Nova must not be coupled directly into the immune system yet.
+Super Nova must not be coupled directly into the immune system for **broader
+predictive or autonomous** coupling.
 
-That coupling remains blocked until both of these are true in the live runtime:
+Alt-9.2 installs the **immune substrate** in live runtime:
 
-1. the realtime event-cause predictor is installed as a real runtime producer,
-   not only as a concept or trace seed
-2. the invariant engine is wired as an actual runtime consumer for Nova anchor
-   and invariant comparison, not only as a standalone library
+1. the realtime event-cause predictor is attested as a live runtime producer on
+   the governed direct pipeline path
+2. the invariant engine is wired as a read-only Nova runtime consumer for anchor
+   and bounded invariant comparison on companion turns
 
-Until those conditions are met:
+Until explicit policy MP-X authorizes escalation:
 
-- Nova shields and wards may define invariants
-- local gate and watchdog checks may enforce dormant Super Nova law
-- immune-system integration must remain unhooked
+- immune-system integration beyond `observe_protocol_signal` remains blocked
+- Super Nova live execution remains blocked
+- Nova shields and wards may define invariants; local gate and watchdog checks
+  may enforce dormant Super Nova law
 
-This prevents premature coupling to immune logic without the event and
-invariant substrate needed to explain and justify the response.
+Substrate installation does not authorize autonomous immune escalation.
 
 ## 6.2 Edge-Case Rule
 

@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.3"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.4"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -268,6 +268,59 @@ def _mind_planes_aligned(mind_posture: list[dict[str, Any]]) -> bool:
     return True
 
 
+def _build_infrastructure_posture(
+    *,
+    pipeline_trace: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
+    from src.invariant_engine_organ import build_invariant_engine_status
+    from src.phase_gate_organ import build_phase_gate_status
+    from src.realtime_event_cause_predictor_organ import build_realtime_predictor_status
+
+    posture: list[dict[str, Any]] = []
+    phase = build_phase_gate_status()
+    posture.append(
+        {
+            "organ_id": "phase_gate_organ",
+            "stage": str(phase.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(phase.get("claim_label") or "asserted")[:32],
+            "producer_attested": False,
+            "consumer_attested": False,
+        }
+    )
+    predictor = build_realtime_predictor_status(governed_pipeline=pipeline_trace)
+    posture.append(
+        {
+            "organ_id": "realtime_event_cause_predictor_organ",
+            "stage": str(predictor.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(predictor.get("claim_label") or "asserted")[:32],
+            "producer_attested": bool(predictor.get("live_runtime_producer")),
+            "consumer_attested": False,
+        }
+    )
+    invariant = build_invariant_engine_status(governed_pipeline=pipeline_trace)
+    posture.append(
+        {
+            "organ_id": "invariant_engine_organ",
+            "stage": str(invariant.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(invariant.get("claim_label") or "asserted")[:32],
+            "producer_attested": False,
+            "consumer_attested": bool(invariant.get("nova_runtime_consumer")),
+        }
+    )
+    return posture
+
+
+def _infrastructure_substrate_aligned(infrastructure_posture: list[dict[str, Any]]) -> bool:
+    if len(infrastructure_posture) < 3:
+        return False
+    producer_ok = any(item.get("producer_attested") for item in infrastructure_posture)
+    consumer_ok = any(item.get("consumer_attested") for item in infrastructure_posture)
+    for item in infrastructure_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+    return producer_ok and consumer_ok
+
+
 def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
@@ -337,6 +390,7 @@ def build_coherence_fabric_status(
         pipeline_allowed = False
 
     mind_posture = _build_mind_posture(pipeline_trace=pipeline_source)
+    infrastructure_posture = _build_infrastructure_posture(pipeline_trace=pipeline_source)
 
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
@@ -346,6 +400,10 @@ def build_coherence_fabric_status(
         "runtime_posture": _build_runtime_posture(),
         "mind_posture": mind_posture,
         "mind_planes_aligned": _mind_planes_aligned(mind_posture),
+        "infrastructure_posture": infrastructure_posture,
+        "infrastructure_substrate_aligned": _infrastructure_substrate_aligned(
+            infrastructure_posture
+        ),
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,
         "safety_envelope_halt": safety_halt,
@@ -392,6 +450,10 @@ def build_governance_coherence_projection(
         "envelope_governance_modes": clipped_modes,
         "runtime_posture": list(snapshot.get("runtime_posture") or [])[:4],
         "mind_posture": list(snapshot.get("mind_posture") or [])[:4],
+        "infrastructure_posture": list(snapshot.get("infrastructure_posture") or [])[:4],
+        "infrastructure_substrate_aligned": bool(
+            snapshot.get("infrastructure_substrate_aligned")
+        ),
         "mind_planes_aligned": bool(snapshot.get("mind_planes_aligned")),
     }
 

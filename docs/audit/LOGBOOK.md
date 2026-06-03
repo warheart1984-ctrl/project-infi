@@ -731,6 +731,41 @@ Every major entry should name its CISIV stage explicitly.
 - outcome: eighteen governed subsystem genomes; Alt-8 wave complete at governed
 - verification note: `make alt8-governed-gate`; `python tools/governance/alt8_promote_governed.py`
 
+### Alt-9 Summon Wave — Infrastructure Organs (Concept)
+
+- CISIV stage: `concept`
+- scope: SSP Steps 1–7 for `phase_gate_organ`, `realtime_event_cause_predictor_organ`, `invariant_engine_organ`; batch `alt9-summon-wave-2026-06` orders 1→3
+- outcome: concept specs, schemas, MVP plans, genomes at `concept`
+- verification note: `make ssp-gate`; `make genome-gate`
+
+### Alt-9 Summon Wave — Infrastructure Organs (MVP)
+
+- CISIV stage: `implementation`
+- scope: organ wrappers, status APIs, gates, proof packets; `tools/governance/alt9_promote_mvp.py`
+- outcome: twenty-one registered genomes (eighteen prior + three Alt-9 mvp); live producer/consumer attestation surfaces
+- verification note: `make alt9-gate`; `python tools/governance/alt9_promote_mvp.py`
+
+### Alt-9.1 — Coherence Fabric Infrastructure Join
+
+- CISIV stage: `implementation`
+- scope: snapshot v1.4 `infrastructure_posture[]`; Tier 5 `infrastructure_substrate_aligned`
+- outcome: coherence fabric joins phase gate, predictor, and invariant engine planes
+- verification note: `make alt9-1-gate`
+
+### Alt-9.2 — Immune Substrate Closure
+
+- CISIV stage: `verification`
+- scope: `IMMUNE_SUBSTRATE_V1_PROOF`; Nova/Super Nova blocker language updated to substrate-installed + observe-only coupling
+- outcome: immune substrate attested; broader autonomous coupling still blocked
+- verification note: `make alt9-2-gate`
+
+### Alt-9 Governed Promotion — Infrastructure Organs
+
+- CISIV stage: `verification`
+- scope: `phase_gate_organ`, `realtime_event_cause_predictor_organ`, `invariant_engine_organ` promoted to `governed`
+- outcome: twenty-one governed subsystem genomes; Alt-9 wave complete at governed
+- verification note: `make alt9-governed-gate`; `python tools/governance/alt9_promote_governed.py`
+
 ### Alt-7.2 — Coherence Enforcement Closure
 
 - CISIV stage: `implementation`
@@ -797,5 +832,59 @@ Every major entry should name its CISIV stage explicitly.
 
 - CISIV stage: `verification`
 - scope: Promotion Engine full-auto — `intent_agency_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Phase Gate Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `phase_gate_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Phase Gate Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `phase_gate_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Realtime Event Cause Predictor Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `realtime_event_cause_predictor_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Realtime Event Cause Predictor Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `realtime_event_cause_predictor_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Invariant Engine Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `invariant_engine_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Invariant Engine Organ — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `invariant_engine_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Phase Gate Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `phase_gate_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Realtime Event Cause Predictor Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `realtime_event_cause_predictor_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Invariant Engine Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `invariant_engine_organ` `governed` via Alt-4 runtime organ
 - outcome: genome `identity.stage` and `proof.posture` set to `governed`
 - verification note: `make genome-gate`; `make alt4-gate`

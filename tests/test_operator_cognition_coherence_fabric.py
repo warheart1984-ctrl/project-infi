@@ -10,7 +10,7 @@ from src.operator_cognition_coherence_fabric import build_coherence_fabric_statu
 def test_build_coherence_fabric_status_schema_fields():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status["operator_cognition_coherence_fabric_version"] == (
-        "operator_cognition_coherence_fabric.v1.3"
+        "operator_cognition_coherence_fabric.v1.4"
     )
     assert status["read_only"] is True
     assert status["authority_lane"] == "operator"
@@ -63,6 +63,37 @@ def test_mind_posture_includes_alt8_organs():
         "intent_agency_organ",
     }
     assert status.get("mind_planes_aligned") is True
+
+
+def test_infrastructure_posture_includes_alt9_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("infrastructure_posture") or []}
+    assert organs == {
+        "phase_gate_organ",
+        "realtime_event_cause_predictor_organ",
+        "invariant_engine_organ",
+    }
+
+
+def test_infrastructure_substrate_aligned_with_pipeline():
+    trace = {
+        "realtime_event_cause_predictor": {
+            "status": "bounded_inference",
+            "runtime_context": "operator_runtime",
+            "recommended_state": "observe",
+            "cause_class": "steady_state",
+            "advisory_only": True,
+            "supporting_signals": [],
+            "signal_count": 0,
+            "phase_gate": {"decision": "ALLOW"},
+        },
+        "validation": {"realtime_event_cause_predictor_valid": True},
+    }
+    status = build_coherence_fabric_status(
+        root=Path(__file__).resolve().parents[1],
+        pipeline_trace=trace,
+    )
+    assert status.get("infrastructure_substrate_aligned") is True
 
 
 def test_evaluate_pipeline_coherence_blocks_misaligned():

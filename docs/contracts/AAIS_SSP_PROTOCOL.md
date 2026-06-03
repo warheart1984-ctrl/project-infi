@@ -305,6 +305,36 @@ Depends on: Alt-7.2 governed coherence fabric; Nova v3 narrative and intent proo
 | Golden proposal | `MP-SE-001` for `safety_envelope_organ` |
 | Gate | `make alt8-2-gate` |
 
+## Alt-9 Summon Wave — Admission, Prediction & Invariant Fabric
+
+Batch-admit infrastructure organs as read-only governance shells over seeded runtime.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt9-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `phase_gate_organ` → `realtime_event_cause_predictor_organ` → `invariant_engine_organ` |
+| MVP promotion | `tools/governance/alt9_promote_mvp.py` |
+| Gates | `make alt9-gate` |
+| Governed promotion | `tools/governance/alt9_promote_governed.py` + `make alt9-governed-gate` |
+
+Depends on: Alt-8 governed mind-plane organs; live governed direct pipeline predictor path; Nova anchor scaffold for invariant consumer attestation.
+
+## Alt-9.1 Coherence Fabric Infrastructure Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt9-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.4` + `infrastructure_posture[]` |
+| Gate | `make alt9-1-gate` |
+
+## Alt-9.2 Immune Substrate Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt9-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/nova/IMMUNE_SUBSTRATE_V1_PROOF.md` |
+| Gate | `make alt9-2-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per

@@ -179,14 +179,18 @@ The live guarded Super Nova lane now requires all of the following:
 - Project Infi final-truth admission before reply completion
 - verification and regression tests
 
-### Broader Future Requirements
+### Immune Substrate (Alt-9.2)
 
-The following are still future-expansion requirements, not prerequisites for the
-current guarded lane:
+The **immune substrate is installed** for constitutional attestation:
 
-- realtime event-cause predictor as a broader live immune producer
-- invariant engine as a broader live Nova-runtime consumer
-- anything beyond observe-only immune signaling
+- `realtime_event_cause_predictor_organ` attests a live runtime producer on the
+  governed direct pipeline path
+- `invariant_engine_organ` attests a read-only Nova runtime consumer on companion
+  turns via `compare_nova_runtime_invariants()`
+
+**Broader predictive or autonomous immune coupling remains blocked** until an
+explicit policy MP-X authorizes escalation beyond `observe_protocol_signal`.
+Super Nova live execution and touch surfaces remain out of scope.
 
 ## Current Runtime Source Map
 

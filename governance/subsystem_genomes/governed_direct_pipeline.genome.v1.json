@@ -65,7 +65,9 @@
     ],
     "children": [
       "operator_cognition_coherence_fabric",
-      "continuity_witness_organ"
+      "continuity_witness_organ",
+      "phase_gate_organ",
+      "realtime_event_cause_predictor_organ"
     ]
   },
   "activation": {

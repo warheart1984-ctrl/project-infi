@@ -252,10 +252,9 @@ AAIS subsystems currently cluster into these architectural layers:
 - current implementation gaps:
   - Small Nova still carries the default home-surface bridge role even though
     Super Nova is available as a guarded lane
-  - Super Nova immune coupling is currently observe-only; broader
-    predictor/invariant-driven immune automation remains blocked until the
-    realtime event-cause predictor is installed in the live runtime path and
-    the invariant engine is wired as a Nova runtime consumer
+  - Super Nova immune coupling is observe-only; Alt-9.2 installed the immune
+    substrate (predictor producer + invariant Nova consumer attestation); broader
+    predictive/autonomous immune escalation remains blocked until explicit policy MP-X
   - there is no separate ARIS service in this repo; the active ARIS-equivalent
     enforcement at the Super Nova boundary is the shared Project Infi
     final-truth admission seam
@@ -393,10 +392,10 @@ AAIS subsystems currently cluster into these architectural layers:
 - invariants or doctrine surfaces:
   - `docs/contracts/REALTIME_EVENT_CAUSE_PREDICTION_MODULE.md`
 - current implementation gaps:
-  - no live sensor or session producer is wired into the runtime
-  - not yet sufficient as the installed event substrate for Nova immune coupling
-- integration risk: `medium_high`
-- recommended priority: `P2 blocked by feed infrastructure`
+  - no live external sensor feed; governed pipeline path attests producer via Alt-9 organ
+  - immune substrate installed (Alt-9.2); broader autonomous immune coupling still blocked
+- integration risk: `medium`
+- recommended priority: `P1 expand feed infrastructure`
 
 ### Perception, Spatial, And Mystic Toolkit
 
@@ -615,10 +614,10 @@ AAIS subsystems currently cluster into these architectural layers:
 - invariants or doctrine surfaces:
   - code and tests only
 - current implementation gaps:
-  - no clear canonical runtime consumer
-  - not yet wired to Nova anchor and invariant comparison at runtime
+  - Nova runtime consumer attested on companion turns via `invariant_engine_organ`
+  - bridge paths remain primary for deliberation/generation invariant checks
 - integration risk: `medium`
-- recommended priority: `P3 dormant`
+- recommended priority: `P1 expand Nova comparison surfaces`
 
 ### Project Scorpion (OS Anomaly Extractor)
 
@@ -1187,8 +1186,15 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | Jarvis Memory Board | governed | [../subsystems/platform/JARVIS_MEMORY_BOARD.md](../subsystems/platform/JARVIS_MEMORY_BOARD.md) | [../proof/platform/JARVIS_MEMORY_BOARD_V1_PROOF.md](../proof/platform/JARVIS_MEMORY_BOARD_V1_PROOF.md) |
 | Governed Direct Pipeline | governed | [GOVERNED_DIRECT_PIPELINE.md](./GOVERNED_DIRECT_PIPELINE.md) | [../proof/platform/GOVERNED_DIRECT_PIPELINE_V1_PROOF.md](../proof/platform/GOVERNED_DIRECT_PIPELINE_V1_PROOF.md) |
 | Adaptive Lane Organ | governed | [../subsystems/platform/ADAPTIVE_LANE_ORGAN.md](../subsystems/platform/ADAPTIVE_LANE_ORGAN.md) | [../proof/platform/ADAPTIVE_LANE_GOVERNED_PROOF.md](../proof/platform/ADAPTIVE_LANE_GOVERNED_PROOF.md) |
+| Operator Cognition Coherence Fabric | governed | [../subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md](../subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md) | [../proof/platform/OPERATOR_COGNITION_COHERENCE_FABRIC_V1_PROOF.md](../proof/platform/OPERATOR_COGNITION_COHERENCE_FABRIC_V1_PROOF.md) |
+| Continuity Witness Organ | governed | [../subsystems/nova/CONTINUITY_WITNESS_ORGAN.md](../subsystems/nova/CONTINUITY_WITNESS_ORGAN.md) | [../proof/cognitive_runtime/CONTINUITY_WITNESS_ORGAN_V1_PROOF.md](../proof/cognitive_runtime/CONTINUITY_WITNESS_ORGAN_V1_PROOF.md) |
+| Narrative Continuity Organ | governed | [../subsystems/nova/NARRATIVE_CONTINUITY_ORGAN.md](../subsystems/nova/NARRATIVE_CONTINUITY_ORGAN.md) | [../proof/cognitive_runtime/NARRATIVE_CONTINUITY_ORGAN_V1_PROOF.md](../proof/cognitive_runtime/NARRATIVE_CONTINUITY_ORGAN_V1_PROOF.md) |
+| Intent Agency Organ | governed | [../subsystems/nova/INTENT_AGENCY_ORGAN.md](../subsystems/nova/INTENT_AGENCY_ORGAN.md) | [../proof/cognitive_runtime/INTENT_AGENCY_ORGAN_V1_PROOF.md](../proof/cognitive_runtime/INTENT_AGENCY_ORGAN_V1_PROOF.md) |
+| Phase Gate Organ | governed | [../subsystems/platform/PHASE_GATE_ORGAN.md](../subsystems/platform/PHASE_GATE_ORGAN.md) | [../proof/platform/PHASE_GATE_ORGAN_V1_PROOF.md](../proof/platform/PHASE_GATE_ORGAN_V1_PROOF.md) |
+| Realtime Event Cause Predictor Organ | governed | [../subsystems/platform/REALTIME_EVENT_CAUSE_PREDICTOR_ORGAN.md](../subsystems/platform/REALTIME_EVENT_CAUSE_PREDICTOR_ORGAN.md) | [../proof/platform/REALTIME_EVENT_CAUSE_PREDICTOR_ORGAN_V1_PROOF.md](../proof/platform/REALTIME_EVENT_CAUSE_PREDICTOR_ORGAN_V1_PROOF.md) |
+| Invariant Engine Organ | governed | [../subsystems/platform/INVARIANT_ENGINE_ORGAN.md](../subsystems/platform/INVARIANT_ENGINE_ORGAN.md) | [../proof/platform/INVARIANT_ENGINE_ORGAN_V1_PROOF.md](../proof/platform/INVARIANT_ENGINE_ORGAN_V1_PROOF.md) |
 
-Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate`
+Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate`
 
 ## 9. Concept Pending (SSP)
 
