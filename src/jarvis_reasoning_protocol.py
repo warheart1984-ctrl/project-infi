@@ -568,7 +568,21 @@ def build_otem_plan(restated_task: str) -> list[dict[str, Any]]:
             "status": "pending",
         },
     ]
-    return steps[: max(3, min(len(steps), 7))]
+    from src.otem_capability import get_otem_capability_level, max_plan_steps
+
+    cap = max_plan_steps(get_otem_capability_level())
+    if cap > len(steps) and segments:
+        extra = segments[2 : 2 + (cap - len(steps))]
+        for index, segment in enumerate(extra, start=len(steps) + 1):
+            steps.append(
+                {
+                    "index": index,
+                    "title": f"Detail Unit {index - len(steps)}",
+                    "description": f"Bounded work unit: {segment[:160]}.",
+                    "status": "pending",
+                }
+            )
+    return steps[:cap]
 
 
 def generate_otem_reason_only_answer(restated_task: str, plan: list[dict[str, Any]]) -> str:
@@ -1180,7 +1194,7 @@ def build_constraints(objective: str) -> list[ReasoningConstraint]:
                 ReasoningConstraint(
                     name="tool_cold",
                     value=True,
-                    reason="OTEM may suggest tool use but may not execute tools in v5.",
+                    reason="OTEM may suggest tool use but may not execute tools directly in chat.",
                 ),
                 ReasoningConstraint(
                     name="no_trace_output",
@@ -1224,7 +1238,7 @@ def build_output_contract(objective: str) -> OutputContract:
             verbosity="concise",
             proposal_only=True,
             include_repo_grounding=False,
-            metadata={"guard": "otem_v5_tool_cold"},
+            metadata={"guard": "otem_governed_tool_cold"},
         )
 
     return OutputContract(

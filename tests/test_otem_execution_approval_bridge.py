@@ -72,6 +72,16 @@ class OtemExecutionApprovalBridgeTests(unittest.TestCase):
         otem_pending = [item for item in pending if item.get("step_type") == OTEM_EXECUTION_STEP_TYPE]
         self.assertEqual(len(otem_pending), 1)
 
+    def test_resolve_approve_rejects_stale_substrate_after_restart(self):
+        queue_meta = maybe_enqueue_otem_execution_approval("session-otem-stale", self._handoff_otem_result())
+        approval = db.get_workflow_approval(queue_meta["approval_id"])
+        substrate = get_otem_execution_substrate()
+        substrate._workflows.pop(queue_meta["otem_execution_workflow_id"], None)
+
+        with self.assertRaises(KeyError) as ctx:
+            resolve_otem_execution_approval(approval, "approve")
+        self.assertIn("stale after restart", str(ctx.exception))
+
     def test_resolve_approve_runs_substrate_through_ledger(self):
         queue_meta = maybe_enqueue_otem_execution_approval("session-otem-2", self._handoff_otem_result())
         approval = db.get_workflow_approval(queue_meta["approval_id"])

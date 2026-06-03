@@ -173,6 +173,22 @@ Authority reminder: Jarvis (`src/api.py`) owns cognition; Platform is ops ingres
 
 Integration map: [FULL_STACK_PILOT_INTEGRATION.md](./FULL_STACK_PILOT_INTEGRATION.md).
 
+### OTEM Level 10 (execution via approvals)
+
+OTEM is **activated at capability level 10** by default (`AAIS_OTEM_CAPABILITY_LEVEL=10` in `.env`).
+
+| Step | Action |
+|---|---|
+| 1 | Run OTEM in Jarvis with a task that produces a **workflow handoff** (proposal-only in chat). |
+| 2 | Open **Workflow Approvals**: http://127.0.0.1:8000/workflows/approvals (or the Dashboard handoff link when pending). |
+| 3 | **Approve** or **reject** the OTEM execution item in the **same API process** that handled the OTEM turn. |
+
+Chat never executes tools or applies patches directly. Roll back to v5-frozen posture with `AAIS_OTEM_CAPABILITY_LEVEL=5` (disables auto-enqueue).
+
+**After restart:** Pending approvals may be stale if the in-memory substrate workflow was lost. Reject the stale row and re-run the OTEM handoff, or approve before restarting the server.
+
+Contract: [OTEM_EXECUTION_SUBSTRATE.md](../contracts/OTEM_EXECUTION_SUBSTRATE.md).
+
 ---
 
 ## Troubleshooting

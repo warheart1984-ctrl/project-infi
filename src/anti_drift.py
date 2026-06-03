@@ -206,7 +206,7 @@ def _drift_findings(text: str, thread_contract: dict[str, Any]) -> list[dict[str
                 "kind": "scope_drift",
                 "severity": 3,
                 "reason": "execution_claim_inside_reason_only_lane",
-                "detail": "OTEM v5 is proposal-only, but the reply implied execution or persistence.",
+                "detail": "OTEM chat lane is proposal-only, but the reply implied direct execution or persistence.",
             }
         )
 

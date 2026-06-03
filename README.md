@@ -61,7 +61,7 @@ make translate-mythic MYTHIC='V9 runtime steward'   # mythic → engineering_cla
 
 **Codex / Cursor naming (new code):** [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md) · **Meta-linguistic governance:** [AAIS_META_LINGUISTIC_GOVERNANCE.md](docs/contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md) — mythic in comments, engineering in identifiers; legacy `*_organ` / `*_fabric` paths grandfathered until Wave 4 MP-X rename.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.26.0 — Release 30 OTEM Execution Approval Bridge](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.0) (tag on GitHub) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.26.1 — Release 30.1 OTEM Level 10 Safe Activation](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.1) (tag on GitHub) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -101,7 +101,7 @@ flowchart LR
 | Plane | Owner | Role |
 |---|---|---|
 | **Cognition executive** | `src/api.py` | Jarvis sessions, chat turns, law admission, provider routing |
-| **Workflow shell** | `app/main.py` | Health, onboarding, static UI, Celery workflow, **`/workflows/approvals`** (including OTEM execution substrate approvals since v1.26.0) — does not replace Jarvis |
+| **Workflow shell** | `app/main.py` | Health, onboarding, static UI, Celery workflow, **`/workflows/approvals`** (OTEM L10 execution approvals; default since v1.26.1) — does not replace Jarvis |
 | **Ops membrane** | `platform/` | Multi-tenant jobs, ledger, artifacts — observe/actuate, not goal invention |
 | **Contractors** | `forge/`, `forge_eval/`, `evolve_engine/` | Isolated HTTP lanes for repo mutation and evaluation |
 
@@ -116,6 +116,40 @@ flowchart LR
 Optional subsystems (Platform, Wolf-CoG-OS ISO forge, forge/evolve contractors) attach at the edges — core chat works without them.
 
 Deep dives: [`docs/runtime/AAIS_SUBSYSTEM_SPEC.md`](docs/runtime/AAIS_SUBSYSTEM_SPEC.md), [`docs/operations/FULL_STACK_PILOT_INTEGRATION.md`](docs/operations/FULL_STACK_PILOT_INTEGRATION.md).
+
+### Using OTEM Level 10 (v1.26.1)
+
+OTEM is **activated at capability level 10** by default. The chat lane stays **proposal-only**; governed execution runs only after operator approval on the workflow shell.
+
+| Setting | Default | Purpose |
+|---|---|---|
+| `AAIS_OTEM_CAPABILITY_LEVEL` | `10` | Ceiling `v10_governed`, up to 10 plan steps, auto-enqueue execution approvals on `workflow_handoff` |
+| Rollback | `5` | Restores `v5_frozen` posture (no auto-enqueue) |
+
+**Operator flow**
+
+1. In Jarvis (`/app/jarvis`), run OTEM on a task that matches a workflow template (e.g. daily brief). The reply includes a **workflow handoff** proposal — no tools or patches run in chat.
+2. Open **Workflow Approvals**: http://127.0.0.1:8000/workflows/approvals (or use the Dashboard OTEM handoff link when `execution_approval_queue` is pending).
+3. **Approve** or **reject** in the **same API process** that handled the OTEM turn (`approve` runs substrate `approve()` + `apply()`).
+
+**Configure** (optional — default is already 10):
+
+```bash
+# In .env (see .env.example)
+AAIS_OTEM_CAPABILITY_LEVEL=10
+```
+
+**Check posture:**
+
+```bash
+curl -s http://127.0.0.1:8000/legacy_api/api/jarvis/otem-bounded/status | python -m json.tool
+```
+
+Expect `otem_runtime_version`: `v10_governed`, `otem_capability_level`: `10`, `execution_via_workflow_approvals`: `true`.
+
+**After server restart:** Pending approvals may reference an in-memory substrate workflow that no longer exists. Reject the stale row and re-run the OTEM handoff, or approve before restarting. Substrate **persistence phase 2** is deferred until cross-restart durability is required.
+
+Contract: [OTEM_EXECUTION_SUBSTRATE.md](docs/contracts/OTEM_EXECUTION_SUBSTRATE.md) · Onboarding: [FIRST_TIME_OPERATOR_GUIDE.md](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md) § OTEM Level 10.
 
 ### Alt-3 partial-live subsystems (v0.3.0)
 
@@ -401,7 +435,8 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
-| Latest tag | [`v1.26.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.0) — **Release 30** — OTEM execution approval bridge (`/workflows/approvals`), auto-enqueue on session `workflow_handoff`, CI gate pause for AI Factory / CoGOS RC ([release notes](docs/releases/v1.26.0-release30-otem-execution-approval-bridge.md), [CHANGELOG](CHANGELOG.md) §1.26.0) |
+| Latest tag | [`v1.26.1`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.1) — **Release 30.1** — OTEM Level 10 safe activation (`AAIS_OTEM_CAPABILITY_LEVEL=10`, proposal-only chat, execution via approvals; persistence phase 2 deferred) ([release notes](docs/releases/v1.26.1-release30-1-otem-level-10-activation.md), [CHANGELOG](CHANGELOG.md) §1.26.1) |
+| Prior tag | [`v1.26.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.0) — **Release 30** — OTEM execution approval bridge ([release notes](docs/releases/v1.26.0-release30-otem-execution-approval-bridge.md), [CHANGELOG](CHANGELOG.md) §1.26.0) |
 | Prior tag | [`v1.25.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.25.0) — **Release 29** — Story Forge execution fabric, universal integration proof, media processor bridge, 170 governed genomes, Coherence v1.24 ([release notes](docs/releases/v1.25.0-release29-integration-storyforge-execution.md), [CHANGELOG](CHANGELOG.md) §1.25.0) |
 | Summon wave | [`alt29-summon-wave-2026-06`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/alt29-summon-wave-2026-06) — Release 29 batch marker (same commit as `v1.25.0`) |
 | Prior tag | [`v1.23.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.23.0) — **Release 27** — 163 governed schemas, CISIV early ideas bundle, Coherence Layer v1.22 ([release notes](docs/releases/v1.23.0-release27-cisiv-early-ideas-fabric.md), [CHANGELOG](CHANGELOG.md) §1.23.0) |

@@ -159,5 +159,8 @@ def test_otem_smoke():
     assert result["status"] in {"active", "complete", "rejected"}
 
 
-def test_otem_runtime_is_frozen_to_v5():
-    assert OTEM_VERSION == "v5_frozen"
+def test_otem_runtime_ceiling_is_governed_at_level_10():
+    from src.otem_runtime import get_frozen_otem_version
+
+    assert get_frozen_otem_version() == "v10_governed"
+    assert OTEM_VERSION == "v10_governed"

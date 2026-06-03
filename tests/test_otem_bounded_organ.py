@@ -12,4 +12,6 @@ def test_build_status():
     assert status["module_id"]
     assert status["proposal_only"] is True
     assert status["execution_allowed"] is False
-    assert status["otem_runtime_version"] == "v5_frozen"
+    assert status["otem_runtime_version"] == "v10_governed"
+    assert status["otem_capability_level"] == 10
+    assert status["execution_via_workflow_approvals"] is True

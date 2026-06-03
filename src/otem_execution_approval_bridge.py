@@ -230,6 +230,15 @@ def maybe_enqueue_otem_execution_approval(
     }
 
 
+def _substrate_workflow_exists(otem_execution_workflow_id: str) -> bool:
+    substrate = get_otem_execution_substrate()
+    try:
+        substrate.get_workflow(otem_execution_workflow_id)
+        return True
+    except KeyError:
+        return False
+
+
 def resolve_otem_execution_approval(approval: dict[str, Any], action: str) -> dict[str, Any]:
     """Approve or reject an OTEM execution substrate approval without Celery resume."""
     if str(approval.get("step_type") or "") != OTEM_EXECUTION_STEP_TYPE:
@@ -258,6 +267,12 @@ def resolve_otem_execution_approval(approval: dict[str, Any], action: str) -> di
 
     if not otem_execution_workflow_id:
         raise ValueError("Missing otem_execution_workflow_id in approval payload")
+
+    if not _substrate_workflow_exists(otem_execution_workflow_id):
+        raise KeyError(
+            "OTEM execution workflow not found in this process (stale after restart). "
+            "Reject this approval and re-run the OTEM handoff in the same session."
+        )
 
     substrate = get_otem_execution_substrate()
     approved = substrate.approve(

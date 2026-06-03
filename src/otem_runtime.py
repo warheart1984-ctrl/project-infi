@@ -21,12 +21,16 @@ def _wrap_ul_payload(payload: dict) -> dict:
 import re
 from typing import Any
 
-OTEM_VERSION = "v5_frozen"
+OTEM_VERSION = "v10_governed"
 
 
 def get_frozen_otem_version() -> str:
-    version = str(OTEM_VERSION or "").strip()
-    assert version == "v5_frozen", f"Unexpected OTEM runtime version: {version!r}"
+    from src.otem_capability import get_otem_version_ceiling
+
+    version = get_otem_version_ceiling()
+    assert version in {"v5_frozen", "v10_governed"} or version.endswith("_bounded"), (
+        f"Unexpected OTEM runtime version: {version!r}"
+    )
     return version
 
 
@@ -100,7 +104,7 @@ SPECIAL_TOOL_REGISTRY = (
             "reason about visibility and proximity",
         ],
         "constraints": [
-            "proposal only in OTEM v5",
+            "proposal only in OTEM governed lane",
             "no direct tool execution",
         ],
     },
@@ -113,7 +117,7 @@ SPECIAL_TOOL_REGISTRY = (
             "reflective framing",
         ],
         "constraints": [
-            "proposal only in OTEM v5",
+            "proposal only in OTEM governed lane",
             "not appropriate for operator-state execution",
         ],
     },
@@ -126,7 +130,7 @@ SPECIAL_TOOL_REGISTRY = (
             "bounded runtime event logging",
         ],
         "constraints": [
-            "proposal only in OTEM v5",
+            "proposal only in OTEM governed lane",
             "not used for OTEM execution",
         ],
     },
@@ -139,7 +143,7 @@ SPECIAL_TOOL_REGISTRY = (
             "bounded runtime event logging",
         ],
         "constraints": [
-            "proposal only in OTEM v5",
+            "proposal only in OTEM governed lane",
             "not used for OTEM execution",
         ],
     },
@@ -202,7 +206,7 @@ def build_tool_registry(actions: list[dict[str, Any]] | None) -> list[dict[str, 
         if not action_id or action_id in seen:
             continue
         seen.add(action_id)
-        constraints = ["proposal only in OTEM v5"]
+        constraints = ["proposal only in OTEM governed lane"]
         if action.get("requires_approval"):
             constraints.append("operator approval required before execution")
         registry.append(

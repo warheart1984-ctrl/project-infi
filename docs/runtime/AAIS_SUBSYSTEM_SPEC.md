@@ -206,31 +206,39 @@ AAIS subsystems currently cluster into these architectural layers:
 
 ### OTEM Bounded Reasoning Lane
 
-- status: `partial`
+- status: `live` (Level 10 activated — special review for execution ingress)
 - primary purpose: explicit operator task framing, decomposition, and
-  proposal-only reasoning
+  proposal-only reasoning in chat; governed execution via workflow approvals
 - architectural layer: authority and cognition
 - dependencies:
   - `src/jarvis_reasoning_protocol.py`
   - `src/otem_runtime.py`
+  - `src/otem_capability.py`
+  - `src/otem_execution_approval_bridge.py`
+  - `src/otem_execution_substrate.py`
   - `src/jarvis_operator.py`
   - `src/api.py`
+  - `app/main.py` (workflow approvals)
 - governed inputs and outputs:
   - input: explicit OTEM invocation plus task clauses and signal clauses
-  - output: bounded OTEM plan/proposal, OTEM metadata, no direct execution
+  - output: bounded OTEM plan/proposal, OTEM metadata, no direct chat execution;
+    at capability level 10 with `workflow_handoff`, optional `execution_approval_queue`
 - related files/modules:
   - `src/otem_runtime.py`
+  - `src/otem_capability.py`
+  - `src/otem_execution_approval_bridge.py`
+  - `docs/contracts/OTEM_EXECUTION_SUBSTRATE.md`
   - `src/jarvis_reasoning_protocol.py`
   - `src/jarvis_operator.py`
 - invariants or doctrine surfaces:
   - `README.md`
   - `docs/spine/AAIS_MASTER_SPEC.md`
+  - `docs/contracts/OTEM_EXECUTION_SUBSTRATE.md`
 - current implementation gaps:
-  - explicit ceiling remains `v5`
-  - no durable execution layer
-  - no autonomous workflow creation
+  - substrate workflow store is in-process only (phase 2 durability deferred)
+  - no autonomous workflow creation from chat
 - integration risk: `high`
-- recommended priority: `P2 after infrastructure`
+- recommended priority: `special_review_only` for execution path changes
 
 ### Nova Companion Line
 
@@ -1049,11 +1057,18 @@ AAIS subsystems currently cluster into these architectural layers:
 - Perception, spatial, and mystic toolkit through the capability bridge
 - Workflow shell simplification and operator-surface alignment
 
+### Activated With Special Review
+
+- OTEM Level 10 (`v10_governed`, default `AAIS_OTEM_CAPABILITY_LEVEL=10`) —
+  proposal-only chat; execution ingress via `/workflows/approvals` and
+  `src/otem_execution_substrate.py` (v1.26.0 bridge + v1.26.1 capability ceiling)
+- OTEM execution substrate durable store (phase 2) — only when cross-restart
+  enqueue→approve or build-persistence-memory integration is required
+
 ### Blocked By Missing Infrastructure
 
 - Realtime event-cause predictor
 - Governed direct pipeline as a full runtime transport substrate
-- OTEM beyond the current bounded ceiling
 - Invariant engine as a runtime subsystem
 - a distinct standalone ARIS service beyond the current embedded AAIS profile
 

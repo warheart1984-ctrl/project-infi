@@ -13,6 +13,37 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.26.1] - 2026-06-03 — OTEM Level 10 Safe Activation
+
+**Release 30.1** — activates OTEM capability level 10 (default); defers substrate persistence phase 2.
+
+### Added
+
+- **`src/otem_capability.py`** — `AAIS_OTEM_CAPABILITY_LEVEL` (1–10, default **10**); `v10_governed` ceiling, plan depth, gated execution-approval enqueue
+- **Tests** — `tests/test_otem_capability.py`; stale-substrate guard on approve after restart
+
+### Changed
+
+- **OTEM runtime** — default ceiling `v10_governed`; bounded organ status includes capability level and `execution_via_workflow_approvals`
+- **Operator hook** — auto-enqueue only when `allows_execution_approval_path()`; `otem_capability` on turn results
+- **Docs** — activation vs durability split in [OTEM_EXECUTION_SUBSTRATE.md](docs/contracts/OTEM_EXECUTION_SUBSTRATE.md); [AAIS_SUBSYSTEM_SPEC.md](docs/runtime/AAIS_SUBSYSTEM_SPEC.md) § OTEM; [FIRST_TIME_OPERATOR_GUIDE.md](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+
+### Not in this release
+
+- Substrate workflow **persistence phase 2** (cross-restart enqueue→approve; build-persistence-memory integration)
+
+### Verification (v1.26.1)
+
+```bash
+AAIS_GENOME_BOOT=warn python -m pytest \
+  tests/test_otem_capability.py \
+  tests/test_otem_bounded_organ.py \
+  tests/test_otem_execution_approval_bridge.py \
+  tests/otem/test_otem_stabilization.py -q
+```
+
+[1.26.1]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.1
+
 ## [1.26.0] - 2026-06-03 — OTEM Execution Approval Bridge
 
 **Release 30** — wires session-bound OTEM `workflow_handoff` into existing `/workflows/approvals`; operator approve runs OTEM execution substrate `approve()` + `apply()` without Celery.
