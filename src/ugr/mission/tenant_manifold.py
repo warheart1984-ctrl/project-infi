@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from hashlib import sha256
 import json
 import time
+from pathlib import Path
 from typing import Any
 
 from src.ugr.platform.tenant_registry import TenantRegistry, TenantSpec, normalize_tenant_id
@@ -72,7 +73,16 @@ class TenantManifoldState:
         }
 
 
-def build_tenant_manifold(tenant_spec: TenantSpec) -> TenantManifoldState:
+def build_tenant_manifold(
+    tenant_spec: TenantSpec,
+    *,
+    federation_grants: tuple[dict[str, Any], ...] | None = None,
+) -> TenantManifoldState:
+    grants = (
+        federation_grants
+        if federation_grants is not None
+        else tuple(tenant_spec.federation_grants)
+    )
     digest = compute_tenant_manifold_digest(
         tenant_id=tenant_spec.tenant_id,
         allowed_regions=list(tenant_spec.allowed_regions),
@@ -89,7 +99,7 @@ def build_tenant_manifold(tenant_spec: TenantSpec) -> TenantManifoldState:
         cost_ceiling=dict(tenant_spec.cost_ceiling),
         invariant_profile=tenant_spec.invariant_profile,
         receipt_key_id=tenant_spec.receipt_key_id,
-        federation_grants=tuple(tenant_spec.federation_grants),
+        federation_grants=grants,
         stamped_at=int(time.time()),
     )
 
@@ -98,6 +108,7 @@ def validate_tenant_for_mission(
     request: dict[str, Any],
     *,
     registry: TenantRegistry | None = None,
+    runtime_dir: str | Path | None = None,
 ) -> tuple[TenantManifoldState | None, list[dict[str, Any]]]:
     """
     Resolve tenant spec and build manifold.
@@ -119,7 +130,10 @@ def validate_tenant_for_mission(
         results.append(_invariant("cloud_tenant_boundary", "hard_fail", f"tenant {normalized} disabled"))
         return None, results
 
-    manifold = build_tenant_manifold(spec)
+    from src.ugr.mission.federation_grants import merge_federation_grants_for_tenant
+
+    merged_grants = merge_federation_grants_for_tenant(spec, runtime_dir)
+    manifold = build_tenant_manifold(spec, federation_grants=merged_grants)
     results.extend(check_tenant_boundary(request, manifold))
     results.extend(check_tenant_federation(request, manifold))
     if has_hard_fail(results):
@@ -178,6 +192,9 @@ def check_tenant_federation(
         if normalize_tenant_id(grant.get("target_tenant") or "") != target_norm:
             continue
         if grant_id and str(grant.get("grant_id") or "") != grant_id:
+            continue
+        status = str(grant.get("status") or "accepted").strip().lower()
+        if status not in {"", "accepted"}:
             continue
         expires = grant.get("expires_at")
         if expires is not None and int(expires) < now:

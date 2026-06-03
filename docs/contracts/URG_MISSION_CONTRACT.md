@@ -138,7 +138,28 @@ First no-risk live mission: `deploy/ugr/mission-demo-healthcheck-embedding.json`
 - Receipts: `{runtime}/urg/receipts/{tenant-slug}/receipts.jsonl`
 - `GET /api/ugr/mission/receipt/<id>?tenant_id=` required (unless `URG_RECEIPT_ADMIN=1`)
 - Tenant organ overlay: `deploy/ugr/tenants/{tenant-slug}/provider-organs.json`
-- Federation: `federation_target_tenant` + `federation_grant_id` must match tenant `federation_grants[]`
+- Federation: `federation_target_tenant` + `federation_grant_id` must match tenant `federation_grants[]` (static + accepted runtime grants in `urg/federation/grants.jsonl`)
+
+## Federation v1.7–v1.9
+
+**Bilateral grants:** `POST /api/ugr/federation/issue` (pending) → grantee `POST /api/ugr/federation/accept` (accepted + inbound audit row).
+
+**Federated step** (home tenant owns mission):
+
+```json
+{
+  "step_id": "peer-relay",
+  "organ_id": "organ-local-tiny",
+  "federation_peer_tenant": "tenant:contoso",
+  "federation_grant_id": "fed-..."
+}
+```
+
+Ledger phases: home `federation_step`; peer `federation_inbound` (includes `home_mission_id`, `grant_id`).
+
+**Receipt v1.3:** `federation_digest`, `counterparty_receipt_ref` (peer stub under grantee receipts).
+
+**Governance:** `mutation_op` = `federation_organ_admit` | `federation_organ_suspend` requires grant capability `governance_cosign` and dual ledger rows when `URG_GOVERNANCE_APPLY=1`.
 
 ## Cost routing (v1.6)
 

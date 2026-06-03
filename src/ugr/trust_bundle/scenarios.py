@@ -327,9 +327,81 @@ def scenario_gate_manifest(*, machine_id: str, runtime_root: Path | None = None)
     )
 
 
+def scenario_federation_dual_ledger(
+    *,
+    machine_id: str,
+    runtime_root: Path | None = None,
+) -> ScenarioEvidence:
+    """v1.9 — bilateral grant, federated step, dual ledger hash witness."""
+    root = Path(runtime_root or Path(tempfile.mkdtemp(prefix="ugr-fed-scenario-")))
+    root.mkdir(parents=True, exist_ok=True)
+    original_runtime = os.environ.get("AAIS_RUNTIME_DIR")
+    os.environ["AAIS_RUNTIME_DIR"] = str(root)
+    os.environ.setdefault("URG_OPERATOR_RECEIPT_KEY", "trust-bundle-fed-op")
+    os.environ.setdefault("URG_RECEIPT_SIGNING_KEY", "trust-bundle-fed-urg")
+    try:
+        from src.ugr.mission.federation_grants import (
+            CAP_ROUTE_STEP,
+            FederationGrantStore,
+            compute_federation_digest,
+        )
+        from src.ugr.mission.mission_ledger import MissionLedger
+        from src.ugr.mission.mission_runtime import UGRMissionRuntime
+
+        demo_path = REPO_ROOT / "deploy" / "ugr" / "mission-demo-federation-v17.json"
+        mission = json.loads(demo_path.read_text(encoding="utf-8"))["mission"]
+        store = FederationGrantStore(root)
+        grant = store.issue(
+            issuer_tenant="tenant:acme",
+            grantee_tenant="tenant:contoso",
+            capabilities=[CAP_ROUTE_STEP],
+            operator_id="trust-bundle",
+        )
+        store.accept(
+            grant.grant_id,
+            accepting_tenant="tenant:contoso",
+            operator_id="trust-bundle",
+        )
+        for step in mission["steps"]:
+            if step.get("federation_grant_id") == "__GRANT_ID__":
+                step["federation_grant_id"] = grant.grant_id
+        result = UGRMissionRuntime(runtime_dir=root).run_mission(mission)
+        mission_id = str(result.get("mission_id") or "")
+        home_ledger = MissionLedger(runtime_dir=root, tenant_id="tenant:acme")
+        peer_ledger = MissionLedger(runtime_dir=root, tenant_id="tenant:contoso")
+        digest = compute_federation_digest(
+            home_rows=home_ledger.list_for_mission(mission_id),
+            peer_rows=peer_ledger.list_for_mission(mission_id),
+            grant_id=grant.grant_id,
+        )
+        ok = result.get("status") == "ok" and bool(digest)
+        payload = {
+            "grant_id": grant.grant_id,
+            "mission_id": mission_id,
+            "federation_digest": digest,
+            "status": result.get("status"),
+        }
+        return ScenarioEvidence(
+            scenario_id="federation_dual_ledger",
+            machine_id=machine_id,
+            status="pass" if ok else "fail",
+            summary="bilateral federated step dual ledger",
+            command="federation_dual_ledger",
+            exit_code=0 if ok else 1,
+            payload_sha256=sha256_text(stable_json(payload)),
+            details=payload,
+        )
+    finally:
+        if original_runtime is None:
+            os.environ.pop("AAIS_RUNTIME_DIR", None)
+        else:
+            os.environ["AAIS_RUNTIME_DIR"] = original_runtime
+
+
 SCENARIO_RUNNERS = {
     "mesh_parity": scenario_mesh_parity,
     "causal_rebuild": scenario_causal_rebuild,
     "llm_execution_smoke": scenario_llm_execution_smoke,
     "gate_manifest": scenario_gate_manifest,
+    "federation_dual_ledger": scenario_federation_dual_ledger,
 }

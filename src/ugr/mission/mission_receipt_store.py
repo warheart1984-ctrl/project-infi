@@ -28,6 +28,7 @@ class MissionReceiptStore:
 
     def __init__(self, runtime_dir: str | Path | None = None, *, tenant_id: str | None = None):
         root = Path(runtime_dir or _default_runtime_dir())
+        self.runtime_root = root
         self.tenant_id = normalize_tenant_id(tenant_id or "global")
         slug = tenant_path_slug(self.tenant_id)
         self.path = root / "urg" / "receipts" / slug / "receipts.jsonl"
@@ -107,3 +108,69 @@ class MissionReceiptStore:
                 continue
             latest = row
         return latest
+
+    def persist_federation_counterparty_stub(
+        self,
+        mission_id: str,
+        *,
+        home_tenant_id: str,
+        peer_tenant_id: str,
+        home_receipt_schema: dict[str, Any],
+        counterparty_receipt_ref: dict[str, Any],
+        federation_digest: str,
+    ) -> bool:
+        """Peer-tenant minimal receipt stub linking home mission receipt (v1.8)."""
+        from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+        peer_store = MissionReceiptStore(
+            runtime_dir=self.runtime_root,
+            tenant_id=normalize_tenant_id(peer_tenant_id),
+        )
+        mid = str(mission_id or "").strip()
+        if not mid:
+            return False
+        ledger_root = str(home_receipt_schema.get("ledger_root") or "")
+        record = {
+            "mission_id": mid,
+            "tenant_id": normalize_tenant_id(peer_tenant_id),
+            "kind": "federation_counterparty_stub",
+            "home_tenant_id": normalize_tenant_id(home_tenant_id),
+            "home_mission_id": mid,
+            "ledger_root": ledger_root,
+            "federation_digest": str(federation_digest or ""),
+            "counterparty_receipt_ref": dict(counterparty_receipt_ref or {}),
+            "home_receipt_issued_at": home_receipt_schema.get("issued_at"),
+        }
+        line = json.dumps(record, sort_keys=True, default=str)
+        with peer_store.path.open("a", encoding="utf-8") as handle:
+            handle.write(line + "\n")
+        return True
+
+    def get_federation_stub(
+        self,
+        mission_id: str,
+        *,
+        tenant_id: str | None = None,
+    ) -> dict[str, Any] | None:
+        mid = str(mission_id or "").strip()
+        tenant_norm = normalize_tenant_id(tenant_id or self.tenant_id)
+        for row in self._iter_records(tenant_norm=tenant_norm):
+            if row.get("mission_id") != mid:
+                continue
+            if row.get("kind") == "federation_counterparty_stub":
+                return row
+        return None
+
+    def resolve_counterparty_ref(
+        self,
+        counterparty_receipt_ref: dict[str, Any],
+    ) -> dict[str, Any] | None:
+        """Resolve counterparty_receipt_ref to a stored stub or receipt."""
+        ref = dict(counterparty_receipt_ref or {})
+        mid = str(ref.get("mission_id") or "").strip()
+        tenant = normalize_tenant_id(ref.get("tenant_id") or self.tenant_id)
+        peer_store = MissionReceiptStore(runtime_dir=self.runtime_root, tenant_id=tenant)
+        stub = peer_store.get_federation_stub(mid, tenant_id=tenant)
+        if stub:
+            return stub
+        return peer_store.get_receipt(mid, tenant_id=tenant)

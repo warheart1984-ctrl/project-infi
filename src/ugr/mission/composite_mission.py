@@ -11,12 +11,13 @@ from typing import Any
 from src.ugr.mission.provider_organ import ProviderOrgan, ProviderOrganRegistry
 
 
-URG_GCM_VERSION = "1.6"
+URG_GCM_VERSION = "1.9"
 CLOUD_INVARIANT_FAMILIES = (
     "cloud_identity",
     "cloud_boundary",
     "cloud_tenant_boundary",
     "cloud_tenant_federation",
+    "cloud_federation_governance",
     "cloud_continuity",
     "cloud_causality",
     "cloud_contract",
@@ -243,6 +244,7 @@ def issue_mission_receipt(
     request: dict[str, Any] | None = None,
     steps: list[dict[str, Any]] | None = None,
     rail: str = "NORMAL",
+    federation_context: list[dict[str, Any]] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """Phase 4 — legacy flat receipt + MissionReceipt schema v1."""
     from src.ugr.mission.mission_receipt import build_mission_receipt_v2
@@ -303,9 +305,31 @@ def issue_mission_receipt(
     from src.ugr.mission.execution_policy import is_shadow_execution, resolve_execution_mode
 
     exec_mode = resolve_execution_mode(req)
+    from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+    store_root = runtime_dir or os.getenv("AAIS_RUNTIME_DIR")
+    tenant_norm = normalize_tenant_id(
+        ingress.get("tenant_id") or (request or {}).get("tenant_id") or "global"
+    )
+    fed_ingress = dict(ingress)
+    if federation_context and store_root:
+        from pathlib import Path
+
+        from src.ugr.mission.mission_receipt import build_federation_receipt_fields
+
+        digest, cref = build_federation_receipt_fields(
+            runtime_dir=Path(store_root),
+            home_tenant_id=tenant_norm,
+            mission_id=str(gcm.get("mission_id") or ""),
+            federation_context=list(federation_context),
+        )
+        if digest:
+            fed_ingress["federation_digest"] = digest
+        if cref:
+            fed_ingress["counterparty_receipt_ref"] = cref
     schema_body = build_mission_receipt_v2(
         gcm=gcm,
-        ingress=ingress,
+        ingress=fed_ingress,
         ledger_rows=list(ledger_rows or []),
         block_context=block_context,
         request=request,
@@ -321,18 +345,25 @@ def issue_mission_receipt(
     )
     from src.ugr.mission.mission_receipt_store import MissionReceiptStore
 
-    from src.ugr.platform.tenant_registry import normalize_tenant_id
-
-    store_root = runtime_dir or os.getenv("AAIS_RUNTIME_DIR")
-    tenant_norm = normalize_tenant_id(
-        ingress.get("tenant_id") or (request or {}).get("tenant_id") or "global"
-    )
-    MissionReceiptStore(runtime_dir=store_root, tenant_id=tenant_norm).persist_receipt(
+    store = MissionReceiptStore(runtime_dir=store_root, tenant_id=tenant_norm)
+    store.persist_receipt(
         str(gcm.get("mission_id") or ""),
         legacy=legacy,
         schema=schema_signed,
         tenant_id=tenant_norm,
     )
+    if federation_context and fed_ingress.get("counterparty_receipt_ref"):
+        peer_tenant = normalize_tenant_id(
+            str(federation_context[0].get("peer_tenant") or "")
+        )
+        store.persist_federation_counterparty_stub(
+            str(gcm.get("mission_id") or ""),
+            home_tenant_id=tenant_norm,
+            peer_tenant_id=peer_tenant,
+            home_receipt_schema=schema_signed,
+            counterparty_receipt_ref=dict(fed_ingress.get("counterparty_receipt_ref") or {}),
+            federation_digest=str(fed_ingress.get("federation_digest") or ""),
+        )
     return legacy, schema_signed
 
 
@@ -352,6 +383,8 @@ def attach_gcm_to_response(
     block_context: dict[str, Any] | None = None,
     steps: list[dict[str, Any]] | None = None,
     rail: str = "NORMAL",
+    runtime_dir: str | None = None,
+    federation_context: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Attach GCM tuple and signed receipt to a mission runtime response."""
     mission_id = str(response.get("mission_id") or ingress.get("mission_id") or "")
@@ -379,22 +412,24 @@ def attach_gcm_to_response(
     )
     import os
 
-    runtime_dir = None
-    configured = os.getenv("AAIS_RUNTIME_DIR")
-    if configured:
-        runtime_dir = configured
+    resolved_runtime = runtime_dir
+    if not resolved_runtime:
+        configured = os.getenv("AAIS_RUNTIME_DIR")
+        if configured:
+            resolved_runtime = configured
     step_list = list(steps or response.get("steps") or [])
     legacy_receipt, schema_receipt = issue_mission_receipt(
         gcm,
         ingress=ingress,
         enforcement_summary=str(response.get("summary") or ""),
         aais_step_summaries=_collect_aais_step_summaries(step_list),
-        runtime_dir=runtime_dir,
+        runtime_dir=resolved_runtime,
         ledger_rows=ledger_rows,
         block_context=block_context,
         request=request,
         steps=step_list,
         rail=rail,
+        federation_context=federation_context,
     )
     updated = dict(response)
     updated["governed_composite_mission"] = gcm

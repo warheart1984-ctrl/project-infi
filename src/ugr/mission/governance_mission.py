@@ -29,7 +29,15 @@ MUTATION_PATHS = {
     "invariant_definitions": Path(__file__).resolve().parents[2] / "invariants" / "cloud_invariants.py",
 }
 
-MARKETPLACE_OPS = frozenset({"organ_admit", "organ_suspend", "organ_evict", "organ_query"})
+MARKETPLACE_OPS = frozenset({
+    "organ_admit",
+    "organ_suspend",
+    "organ_evict",
+    "organ_query",
+    "federation_organ_admit",
+    "federation_organ_suspend",
+})
+FEDERATION_GOVERNANCE_OPS = frozenset({"federation_organ_admit", "federation_organ_suspend"})
 
 
 def _stable_json(value: Any) -> str:
@@ -91,7 +99,10 @@ def run_governance_mission(
             "urg_ingress": ingress,
         }
 
-    tenant_manifold, tenant_results = validate_tenant_for_mission(payload)
+    runtime_dir = getattr(runtime, "runtime_dir", None)
+    tenant_manifold, tenant_results = validate_tenant_for_mission(
+        payload, runtime_dir=runtime_dir
+    )
     if tenant_manifold is None:
         from src.ugr.mission.mission_runtime import URG_MISSION_RUNTIME_ID, URG_MISSION_RUNTIME_VERSION
 
@@ -109,6 +120,10 @@ def run_governance_mission(
     ingress.update(tenant_manifold.to_dict())
 
     mission_id = ingress["mission_id"]
+    ledger = runtime.ledger if hasattr(runtime, "ledger") else MissionLedger(
+        runtime_dir=runtime_dir,
+        tenant_id=tenant_manifold.tenant_id,
+    )
     organs = ProviderOrganRegistry(tenant_id=tenant_manifold.tenant_id)
     manifold = build_cloud_manifold(
         request=payload,
@@ -132,7 +147,79 @@ def run_governance_mission(
         before_digest = _file_digest(overlay_path) or _file_digest(GOVERNANCE_DEPLOY_ROOT / "provider-organs.json")
         apply_note = "audit_only"
         after_digest = before_digest
-        if mutation_op != "organ_query":
+        peer_tenant = str(payload.get("federation_peer_tenant") or "").strip()
+        federation_grant_id = str(payload.get("federation_grant_id") or "").strip()
+        if mutation_op in FEDERATION_GOVERNANCE_OPS:
+            from src.ugr.mission.federation_grants import (
+                CAP_GOVERNANCE_COSIGN,
+                FederationGrantStore,
+            )
+
+            peer_norm = normalize_tenant_id(peer_tenant)
+            store = FederationGrantStore(runtime_dir)
+            _grant, grant_err = store.verify_step_capability(
+                home_tenant=tenant_manifold.tenant_id,
+                peer_tenant=peer_tenant,
+                grant_id=federation_grant_id,
+                capability=CAP_GOVERNANCE_COSIGN,
+            )
+            if grant_err:
+                return {
+                    "status": "blocked",
+                    "summary": grant_err,
+                    "mission_id": mission_id,
+                }
+            base_op = "organ_admit" if mutation_op == "federation_organ_admit" else "organ_suspend"
+            if mutation_op != "organ_query":
+                ok_apply, msg, after_digest = apply_provider_organ_mutation(
+                    tenant_id=tenant_manifold.tenant_id,
+                    mutation_op=base_op,
+                    organ_spec=dict(payload.get("organ_spec") or {}),
+                    organ_id=str(payload.get("organ_id") or ""),
+                )
+                apply_note = msg if ok_apply else f"apply_failed: {msg}"
+                if ok_apply and peer_tenant:
+                    ok_peer, msg_peer, _ = apply_provider_organ_mutation(
+                        tenant_id=peer_norm,
+                        mutation_op=base_op,
+                        organ_spec=dict(payload.get("organ_spec") or {}),
+                        organ_id=str(payload.get("organ_id") or ""),
+                    )
+                    apply_note = f"{apply_note}; peer: {msg_peer if ok_peer else msg_peer}"
+                if mutation_op in FEDERATION_GOVERNANCE_OPS and ok_apply:
+                    from src.ugr.mission.step_execution import (
+                        append_federation_governance_inbound_ledger,
+                        append_federation_governance_ledger,
+                    )
+
+                    peer_ledger = MissionLedger(runtime_dir=runtime_dir, tenant_id=peer_norm)
+                    fed_action = f"{mission_id}:governance-federation:1"
+                    append_federation_governance_ledger(
+                        ledger,
+                        mission_id=mission_id,
+                        action_id=fed_action,
+                        mutation_op=mutation_op,
+                        federation_grant_id=federation_grant_id,
+                        federation_peer_tenant=peer_norm,
+                        home_tenant_id=tenant_manifold.tenant_id,
+                        extra={"mutation_digest_after": after_digest},
+                    )
+                    append_federation_governance_inbound_ledger(
+                        peer_ledger,
+                        home_mission_id=mission_id,
+                        home_tenant_id=tenant_manifold.tenant_id,
+                        grant_id=federation_grant_id,
+                        mutation_op=mutation_op,
+                        peer_tenant_id=peer_norm,
+                        extra={"mutation_digest_after": after_digest},
+                    )
+                if not ok_apply and os.getenv("URG_GOVERNANCE_APPLY", "").strip().lower() in {"1", "true", "yes", "on"}:
+                    return {
+                        "status": "blocked",
+                        "summary": msg,
+                        "mission_id": mission_id,
+                    }
+        elif mutation_op != "organ_query":
             ok_apply, msg, after_digest = apply_provider_organ_mutation(
                 tenant_id=tenant_manifold.tenant_id,
                 mutation_op=mutation_op,
@@ -152,9 +239,6 @@ def run_governance_mission(
         after_digest = before_digest
         apply_note = "governance_mutation audit (whole-file target)"
 
-    ledger = runtime.ledger if hasattr(runtime, "ledger") else MissionLedger(
-        tenant_id=tenant_manifold.tenant_id
-    )
     action_id = f"{mission_id}:governance-mutation:1"
     ledger.append_governance_mutation(
         {

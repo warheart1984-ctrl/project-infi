@@ -46,11 +46,13 @@ REQUIRED_FILES = [
 
     "deploy/ugr/mission-demo-live.json",
     "deploy/ugr/mission-demo-healthcheck-embedding.json",
+    "deploy/ugr/mission-demo-federation-v17.json",
     "deploy/ugr/tenants.json",
     "deploy/ugr/tenants/tenant-acme/provider-organs.json",
     "src/ugr/mission/execution_policy.py",
     "src/ugr/mission/step_execution.py",
     "src/ugr/mission/tenant_manifold.py",
+    "src/ugr/mission/federation_grants.py",
     "src/ugr/mission/cost_routing.py",
     "src/ugr/mission/marketplace.py",
     "src/ugr/mission/organ_trust.py",

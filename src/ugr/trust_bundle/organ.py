@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -19,6 +20,13 @@ from src.ugr.trust_bundle.scenarios import SCENARIO_RUNNERS
 
 
 DEFAULT_SCENARIOS = ("mesh_parity", "causal_rebuild", "llm_execution_smoke", "gate_manifest")
+
+
+def default_scenarios() -> tuple[str, ...]:
+    scenarios = list(DEFAULT_SCENARIOS)
+    if os.getenv("URG_TRUST_BUNDLE_FEDERATION", "").strip().lower() in {"1", "true", "yes", "on"}:
+        scenarios.append("federation_dual_ledger")
+    return tuple(scenarios)
 CROSS_PROFILE_IDS = ("machine-a", "machine-b")
 
 
@@ -29,11 +37,11 @@ class TrustBundleOrgan:
         self,
         *,
         output_dir: str | Path | None = None,
-        scenarios: tuple[str, ...] = DEFAULT_SCENARIOS,
+        scenarios: tuple[str, ...] | None = None,
         machine_ids: tuple[str, ...] = CROSS_PROFILE_IDS,
     ):
         self.output_dir = Path(output_dir or Path(".runtime") / "trust-bundles" / "latest")
-        self.scenarios = scenarios
+        self.scenarios = scenarios if scenarios is not None else default_scenarios()
         self.machine_ids = machine_ids
 
     def run(self) -> dict[str, Any]:

@@ -325,3 +325,128 @@ def try_commit_execution(
     return True, EXECUTION_STATE_COMMITTED, safety
 
 
+def append_federation_step_ledger(
+    ledger: MissionLedger,
+    *,
+    mission_id: str,
+    step_id: str,
+    action_id: str,
+    federation_grant_id: str,
+    federation_peer_tenant: str,
+    organ_id: str,
+    provider: str,
+    home_tenant_id: str,
+) -> str:
+    """Home-tenant ledger row for a step routed through a peer manifold."""
+    fed_action_id = f"{mission_id}:{step_id}:federation:{action_id}"
+    record = build_ledger_phase_record(
+        phase="federation_step",
+        mission_id=mission_id,
+        action_id=fed_action_id,
+        step_id=step_id,
+        organ_id=organ_id,
+        provider=provider,
+        extra={
+            "federation_grant_id": federation_grant_id,
+            "federation_peer_tenant": federation_peer_tenant,
+            "home_tenant_id": home_tenant_id,
+            "linked_action_id": action_id,
+        },
+    )
+    return ledger.append_action(record)
+
+
+def append_federation_inbound_ledger(
+    peer_ledger: MissionLedger,
+    *,
+    home_mission_id: str,
+    home_tenant_id: str,
+    step_id: str,
+    grant_id: str,
+    organ_id: str,
+    provider: str,
+    peer_tenant_id: str,
+) -> str:
+    """Peer-tenant ledger row for inbound federated step execution."""
+    action_id = f"{home_mission_id}:{step_id}:federation_inbound"
+    record = build_ledger_phase_record(
+        phase="federation_inbound",
+        mission_id=home_mission_id,
+        action_id=action_id,
+        step_id=step_id,
+        organ_id=organ_id,
+        provider=provider,
+        extra={
+            "home_tenant_id": home_tenant_id,
+            "home_mission_id": home_mission_id,
+            "grant_id": grant_id,
+            "peer_tenant_id": peer_tenant_id,
+        },
+    )
+    return peer_ledger.append_action(record)
+
+
+def append_federation_governance_ledger(
+    ledger: MissionLedger,
+    *,
+    mission_id: str,
+    action_id: str,
+    mutation_op: str,
+    federation_grant_id: str,
+    federation_peer_tenant: str,
+    home_tenant_id: str,
+    extra: dict[str, Any] | None = None,
+) -> str:
+    body = dict(extra or {})
+    body.update(
+        {
+            "type": "governance_mutation",
+            "phase": "federation_governance",
+            "mutation_op": mutation_op,
+            "federation_grant_id": federation_grant_id,
+            "federation_peer_tenant": federation_peer_tenant,
+            "home_tenant_id": home_tenant_id,
+        }
+    )
+    record = build_ledger_phase_record(
+        phase="federation_governance",
+        mission_id=mission_id,
+        action_id=action_id,
+        step_id="governance",
+        extra=body,
+    )
+    return ledger.append_action(record)
+
+
+def append_federation_governance_inbound_ledger(
+    peer_ledger: MissionLedger,
+    *,
+    home_mission_id: str,
+    home_tenant_id: str,
+    grant_id: str,
+    mutation_op: str,
+    peer_tenant_id: str,
+    extra: dict[str, Any] | None = None,
+) -> str:
+    action_id = f"{home_mission_id}:governance:federation_inbound"
+    body = dict(extra or {})
+    body.update(
+        {
+            "type": "governance_mutation",
+            "home_tenant_id": home_tenant_id,
+            "home_mission_id": home_mission_id,
+            "grant_id": grant_id,
+            "mutation_op": mutation_op,
+            "peer_tenant_id": peer_tenant_id,
+        }
+    )
+    record = build_ledger_phase_record(
+        phase="federation_governance_inbound",
+        mission_id=home_mission_id,
+        action_id=action_id,
+        step_id="governance",
+        extra=body,
+    )
+    return peer_ledger.append_action(record)
+
+

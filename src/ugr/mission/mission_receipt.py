@@ -6,13 +6,13 @@ from hashlib import sha256
 import json
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any, Union
 
 from src.ugr.invariants.cloud_manifold import CLOUD_INVARIANT_SET_VERSION
 from src.ugr.mission.ledger_merkle import compute_ledger_merkle_root
 
 
-MISSION_RECEIPT_SCHEMA_VERSION = "1.2"
+MISSION_RECEIPT_SCHEMA_VERSION = "1.3"
 OUTCOME_COMPLETED = "completed"
 OUTCOME_FAILED = "failed"
 OUTCOME_VETOED = "vetoed"
@@ -336,4 +336,57 @@ def build_mission_receipt_v2(
         receipt["budget_digest"] = budget_digest
     if ingress.get("soft_ceil_breached") is not None:
         receipt["soft_ceil_breached"] = bool(ingress.get("soft_ceil_breached"))
+    federation_digest = str(ingress.get("federation_digest") or "")
+    if federation_digest:
+        receipt["federation_digest"] = federation_digest
+    counterparty_ref = ingress.get("counterparty_receipt_ref")
+    if counterparty_ref:
+        receipt["counterparty_receipt_ref"] = dict(counterparty_ref)
     return receipt
+
+
+def build_federation_receipt_fields(
+    *,
+    runtime_dir: Union[str, Path],
+    home_tenant_id: str,
+    mission_id: str,
+    federation_context: list[dict[str, Any]],
+) -> tuple[str | None, dict[str, Any] | None]:
+    """Compute federation_digest and counterparty_receipt_ref for v1.8 receipts."""
+    from src.ugr.mission.federation_grants import compute_federation_digest
+    from src.ugr.mission.mission_ledger import MissionLedger
+    from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+    if not federation_context:
+        return None, None
+    grant_id = str(federation_context[0].get("grant_id") or "")
+    peer_tenant = normalize_tenant_id(
+        str(federation_context[0].get("peer_tenant") or "")
+    )
+    root = Path(runtime_dir)
+    home_ledger = MissionLedger(runtime_dir=root, tenant_id=home_tenant_id)
+    peer_ledger = MissionLedger(runtime_dir=root, tenant_id=peer_tenant)
+    home_rows = home_ledger.list_for_mission(mission_id)
+    peer_rows = peer_ledger.list_for_mission(mission_id)
+    digest = compute_federation_digest(
+        home_rows=home_rows,
+        peer_rows=peer_rows,
+        grant_id=grant_id,
+    )
+    peer_rows_fed = [
+        r
+        for r in peer_rows
+        if r.get("phase") in {"federation_inbound", "federation_governance_inbound"}
+    ]
+    receipt_row_hash = ""
+    if peer_rows_fed:
+        receipt_row_hash = sha256(
+            _stable_json(peer_rows_fed[-1]).encode("utf-8")
+        ).hexdigest()
+    counterparty_ref = {
+        "tenant_id": peer_tenant,
+        "mission_id": mission_id,
+        "receipt_row_hash": receipt_row_hash,
+        "grant_id": grant_id,
+    }
+    return digest, counterparty_ref

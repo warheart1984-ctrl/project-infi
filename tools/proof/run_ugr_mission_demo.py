@@ -310,6 +310,38 @@ def _run_healthcheck(repo: Path) -> int:
 
 
 
+def _run_federation_v17(repo: Path) -> int:
+    from src.ugr.mission.federation_grants import CAP_ROUTE_STEP, FederationGrantStore
+    from src.ugr.mission.mission_runtime import UGRMissionRuntime
+
+    demo_path = repo / "deploy" / "ugr" / "mission-demo-federation-v17.json"
+    if not demo_path.exists():
+        print(f"error: missing {demo_path}")
+        return 1
+    mission = json.loads(demo_path.read_text(encoding="utf-8"))["mission"]
+    store = FederationGrantStore()
+    grant = store.issue(
+        issuer_tenant="tenant:acme",
+        grantee_tenant="tenant:contoso",
+        capabilities=[CAP_ROUTE_STEP],
+        operator_id=str(mission.get("operator_id") or "operator-federation-demo"),
+    )
+    store.accept(
+        grant.grant_id,
+        accepting_tenant="tenant:contoso",
+        operator_id="operator-contoso",
+    )
+    for step in mission.get("steps") or []:
+        if step.get("federation_grant_id") == "__GRANT_ID__":
+            step["federation_grant_id"] = grant.grant_id
+    result = UGRMissionRuntime().run_mission(mission)
+    if result.get("status") != "ok":
+        print(f"error: federation-v17 status={result.get('status')} {result.get('summary')}")
+        return 1
+    print("ugr mission federation-v17: PASS")
+    return 0
+
+
 def main() -> int:
 
     parser = argparse.ArgumentParser(description="URG mission proof demos")
@@ -336,6 +368,16 @@ def main() -> int:
 
     )
 
+    parser.add_argument(
+
+        "--federation-v17",
+
+        action="store_true",
+
+        help="Run bilateral federation demo (issue grant, accept, federated step dual ledger)",
+
+    )
+
     args = parser.parse_args()
 
 
@@ -357,6 +399,10 @@ def main() -> int:
     if getattr(args, "marketplace_admit", False):
 
         return _run_marketplace_admit(repo)
+
+    if getattr(args, "federation_v17", False):
+
+        return _run_federation_v17(repo)
 
 
 

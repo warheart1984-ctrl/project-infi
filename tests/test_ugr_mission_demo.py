@@ -121,7 +121,7 @@ class TestMissionDemo(unittest.TestCase):
         result = self._runtime().run_mission(self.demo)
         gcm = result["governed_composite_mission"]
         self.assertEqual(gcm["atomic_unit"], "governed_composite_mission")
-        self.assertEqual(gcm["gcm_version"], "1.6")
+        self.assertEqual(gcm["gcm_version"], "1.9")
         self.assertIn("goal", gcm)
         self.assertIn("constraints", gcm)
         self.assertIn("participating_organs", gcm)
@@ -214,7 +214,7 @@ class TestMissionDemo(unittest.TestCase):
     def test_mission_receipt_schema_fields(self):
         result = self._runtime().run_mission(self.demo)
         schema = result["mission_receipt_schema"]
-        self.assertEqual(schema["schema_version"], "1.2")
+        self.assertEqual(schema["schema_version"], "1.3")
         self.assertEqual(schema["urg_version"], URG_MISSION_RUNTIME_VERSION)
         self.assertEqual(schema["invariant_version"], "1.5")
         self.assertTrue(schema.get("cloud_identity_hash"))

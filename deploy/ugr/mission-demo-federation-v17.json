@@ -1,0 +1,35 @@
+{
+  "demo_version": "1.0",
+  "authority": "docs/contracts/URG_MISSION_CONTRACT.md",
+  "mission": {
+    "operator_id": "operator-federation-demo",
+    "tenant_id": "tenant:acme",
+    "aais_instance_id": "aais-local-1",
+    "region_id": "tenant-us",
+    "intent": "governed_super_router_demo",
+    "objective": "Bilateral federation demo: home step on acme, federated step on contoso manifold.",
+    "constraints": {
+      "max_total_cost_units": 25,
+      "risk_ceiling": "medium",
+      "required_region": "tenant-us"
+    },
+    "context": {
+      "forbid_express": true
+    },
+    "steps": [
+      {
+        "step_id": "home-scout",
+        "objective": "Home tenant scout pass",
+        "organ_id": "organ-local-tiny"
+      },
+      {
+        "step_id": "peer-relay",
+        "objective": "Federated step through contoso manifold",
+        "organ_id": "organ-local-tiny",
+        "federation_peer_tenant": "tenant:contoso",
+        "federation_grant_id": "__GRANT_ID__"
+      }
+    ],
+    "halt_on_failure": true
+  }
+}

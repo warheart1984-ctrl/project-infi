@@ -11163,6 +11163,72 @@ def clear_detachment_guard_review_hold(source_id):
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/ugr/federation/issue", methods=["POST"])
+def ugr_federation_issue():
+    """Issue a bilateral federation grant (pending until grantee accepts)."""
+    try:
+        from src.ugr.mission.federation_grants import FederationGrantStore
+
+        data = request.get_json(silent=True) or {}
+        issuer = str(data.get("issuer_tenant") or data.get("tenant_id") or "").strip()
+        grantee = str(data.get("grantee_tenant") or data.get("target_tenant") or "").strip()
+        operator_id = str(data.get("operator_id") or "").strip()
+        if not issuer or not grantee or not operator_id:
+            return jsonify({"error": "issuer_tenant, grantee_tenant, operator_id required"}), 400
+        caps = list(data.get("capabilities") or ["route_step"])
+        store = FederationGrantStore()
+        grant = store.issue(
+            issuer_tenant=issuer,
+            grantee_tenant=grantee,
+            capabilities=caps,
+            operator_id=operator_id,
+            expires_at=data.get("expires_at"),
+        )
+        return jsonify({"status": "ok", "grant": grant.to_dict()}), 200
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    except Exception as e:
+        logger.error(f"Error issuing URG federation grant: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/federation/accept", methods=["POST"])
+def ugr_federation_accept():
+    """Accept a pending federation grant (grantee only)."""
+    try:
+        from src.ugr.mission.federation_grants import FederationGrantStore
+
+        data = request.get_json(silent=True) or {}
+        grant_id = str(data.get("grant_id") or "").strip()
+        accepting_tenant = str(data.get("accepting_tenant") or data.get("tenant_id") or "").strip()
+        operator_id = str(data.get("operator_id") or "").strip()
+        if not grant_id or not accepting_tenant or not operator_id:
+            return jsonify({"error": "grant_id, accepting_tenant, operator_id required"}), 400
+        store = FederationGrantStore()
+        grant = store.accept(grant_id, accepting_tenant=accepting_tenant, operator_id=operator_id)
+        return jsonify({"status": "ok", "grant": grant.to_dict()}), 200
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    except Exception as e:
+        logger.error(f"Error accepting URG federation grant: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/federation/grants", methods=["GET"])
+def ugr_federation_grants_list():
+    """List federation grants visible to a tenant."""
+    try:
+        from src.ugr.mission.federation_grants import FederationGrantStore
+
+        tenant_id = request.args.get("tenant_id") or "global"
+        store = FederationGrantStore()
+        grants = [g.to_dict() for g in store.list_for_tenant(tenant_id)]
+        return jsonify({"tenant_id": tenant_id, "grants": grants}), 200
+    except Exception as e:
+        logger.error(f"Error listing URG federation grants: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/ugr/mission/receipt/<mission_id>", methods=["GET"])
 def ugr_mission_receipt_get(mission_id: str):
     """Retrieve persisted MissionReceipt by mission_id (tenant-scoped)."""

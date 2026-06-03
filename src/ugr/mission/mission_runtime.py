@@ -40,7 +40,7 @@ from src.ugr.unified_runtime import UnifiedGovernedRuntime
 
 
 URG_MISSION_RUNTIME_ID = "aais.urg.mission_runtime"
-URG_MISSION_RUNTIME_VERSION = "1.6"
+URG_MISSION_RUNTIME_VERSION = "1.9"
 
 
 def _runtime_dir(explicit: str | Path | None = None) -> Path:
@@ -76,6 +76,7 @@ class UGRMissionRuntime:
         self._ugr_runtime = ugr_runtime
         self.aais_registry = aais_registry or AaisInstanceRegistry()
         self._tenant_id: str | None = None
+        self._federation_context: list[dict[str, Any]] = []
 
     def _bind_tenant(self, tenant_id: str) -> None:
         """Scope ledger, organs, and invariants to one tenant partition."""
@@ -180,7 +181,10 @@ class UGRMissionRuntime:
         from src.ugr.mission.mission_receipt import FAILURE_REASON_GATE_REJECTION
         from src.ugr.mission.tenant_manifold import validate_tenant_for_mission
 
-        tenant_manifold, tenant_results = validate_tenant_for_mission(payload)
+        self._federation_context = []
+        tenant_manifold, tenant_results = validate_tenant_for_mission(
+            payload, runtime_dir=self.runtime_dir
+        )
         if tenant_manifold is None:
             return {
                 "runtime_id": URG_MISSION_RUNTIME_ID,
@@ -335,7 +339,57 @@ class UGRMissionRuntime:
             seen_step_ids.add(step_id)
 
             organ_id = str(step.get("organ_id") or "").strip()
-            organ = self.organs.get(organ_id)
+            peer_tenant_raw = str(step.get("federation_peer_tenant") or "").strip()
+            federation_grant_id = str(step.get("federation_grant_id") or "").strip()
+            step_organ_registry = self.organs
+            federation_peer_tenant: str | None = None
+            if peer_tenant_raw:
+                from src.ugr.mission.federation_grants import (
+                    CAP_ROUTE_STEP,
+                    FederationGrantStore,
+                )
+                from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+                store = FederationGrantStore(self.runtime_dir)
+                grant, grant_err = store.verify_step_capability(
+                    home_tenant=tenant_manifold.tenant_id,
+                    peer_tenant=peer_tenant_raw,
+                    grant_id=federation_grant_id,
+                    capability=CAP_ROUTE_STEP,
+                )
+                if grant_err:
+                    outcome = self._step_blocked(
+                        mission_id,
+                        step_id,
+                        ordinal,
+                        organ_id,
+                        prior_action_id,
+                        reason=grant_err,
+                    )
+                    step_outcomes.append(outcome)
+                    if halt_on_failure:
+                        return self._finalize(
+                            mission_id,
+                            ingress,
+                            open_results,
+                            step_outcomes,
+                            ledger_refs,
+                            cost_spent,
+                            status="blocked",
+                            summary=f"blocked at step {step_id}: {grant_err}",
+                            request=payload,
+                            decomposition=decomposition,
+                            assignment=assignment,
+                            block_context=self._build_block_context(
+                                summary=f"blocked at step {step_id}: federation",
+                                step_id=step_id,
+                            ),
+                        )
+                    continue
+                federation_peer_tenant = normalize_tenant_id(peer_tenant_raw)
+                step_organ_registry = ProviderOrganRegistry(tenant_id=federation_peer_tenant)
+
+            organ = step_organ_registry.get(organ_id)
             if organ is None:
                 outcome = self._step_blocked(
                     mission_id,
@@ -618,6 +672,44 @@ class UGRMissionRuntime:
                     )
                 try:
                     ref = self.ledger.append_action(ledger_record)
+                    if federation_peer_tenant and federation_grant_id:
+                        from src.ugr.mission.step_execution import (
+                            append_federation_inbound_ledger,
+                            append_federation_step_ledger,
+                        )
+
+                        peer_ledger = MissionLedger(
+                            runtime_dir=self.runtime_dir,
+                            tenant_id=federation_peer_tenant,
+                        )
+                        append_federation_step_ledger(
+                            self.ledger,
+                            mission_id=mission_id,
+                            step_id=step_id,
+                            action_id=action_id,
+                            federation_grant_id=federation_grant_id,
+                            federation_peer_tenant=federation_peer_tenant,
+                            organ_id=organ.organ_id,
+                            provider=organ.provider,
+                            home_tenant_id=tenant_manifold.tenant_id,
+                        )
+                        append_federation_inbound_ledger(
+                            peer_ledger,
+                            home_mission_id=mission_id,
+                            home_tenant_id=tenant_manifold.tenant_id,
+                            step_id=step_id,
+                            grant_id=federation_grant_id,
+                            organ_id=organ.organ_id,
+                            provider=organ.provider,
+                            peer_tenant_id=federation_peer_tenant,
+                        )
+                        self._federation_context.append(
+                            {
+                                "grant_id": federation_grant_id,
+                                "peer_tenant": federation_peer_tenant,
+                                "step_id": step_id,
+                            }
+                        )
                 except CloudCausalityFault as exc:
                     return self._blocked(
                         mission_id,
@@ -640,24 +732,26 @@ class UGRMissionRuntime:
                 )
                 prior_action_id = action_id
 
-            step_outcomes.append(
-                {
-                    "step_id": step_id,
-                    "action_id": action_id,
-                    "organ_id": organ.organ_id,
-                    "provider": organ.provider,
-                    "status": step_status,
-                    "cost_units": cost_units,
-                    "invariant_results": step_invariants,
-                    "prior_action_id": ledger_record.get("prior_action_id"),
-                    "proposal": proposal,
-                    "organ": organ.to_dict(),
-                    "aais_deliberation": aais_deliberation,
-                    "execution_state": execution_state,
-                    "execution_committed": execution_committed,
-                    "shadow": shadow_step,
-                }
-            )
+            step_outcome: dict[str, Any] = {
+                "step_id": step_id,
+                "action_id": action_id,
+                "organ_id": organ.organ_id,
+                "provider": organ.provider,
+                "status": step_status,
+                "cost_units": cost_units,
+                "invariant_results": step_invariants,
+                "prior_action_id": ledger_record.get("prior_action_id"),
+                "proposal": proposal,
+                "organ": organ.to_dict(),
+                "aais_deliberation": aais_deliberation,
+                "execution_state": execution_state,
+                "execution_committed": execution_committed,
+                "shadow": shadow_step,
+            }
+            if federation_peer_tenant:
+                step_outcome["federation_peer_tenant"] = federation_peer_tenant
+                step_outcome["federation_grant_id"] = federation_grant_id
+            step_outcomes.append(step_outcome)
 
             if step_status == "blocked" and halt_on_failure:
                 return self._finalize(
@@ -783,6 +877,8 @@ class UGRMissionRuntime:
         if cloud_manifold:
             response["cloud_manifold"] = cloud_manifold.to_dict()
         response["cloud_rail"] = rail
+        if self._federation_context:
+            ingress["federation_context"] = list(self._federation_context)
         return attach_gcm_to_response(
             response,
             request=payload,
@@ -794,6 +890,8 @@ class UGRMissionRuntime:
             block_context=block_context,
             steps=steps,
             rail=rail,
+            runtime_dir=str(self.runtime_dir),
+            federation_context=list(self._federation_context),
         )
 
     def _blocked(

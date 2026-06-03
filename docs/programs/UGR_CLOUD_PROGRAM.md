@@ -289,6 +289,63 @@ Acceptance:
 
 Tag: **`urg-cloud-platform-v1.6`**
 
+### Mission v1.7 — Bilateral federation grants + federated step
+
+**Goal:** Tenant-A issues grant to Tenant-B; B accepts; mission from A routes a step through B manifold; both ledgers record it.
+
+Deliverables:
+
+- [x] `src/ugr/mission/federation_grants.py` — `FederationGrantStore` (issue/accept/revoke), runtime `urg/federation/grants.jsonl`
+- [x] API `POST /api/ugr/federation/issue`, `POST /api/ugr/federation/accept`, `GET /api/ugr/federation/grants`
+- [x] Merged accepted grants in `tenant_manifold`; federated step via `federation_peer_tenant` + `federation_grant_id`
+- [x] Dual ledger phases `federation_step` / `federation_inbound`
+- [x] `tests/test_ugr_federation_v17_acceptance.py` (no mocks on grant/ledger paths)
+- [x] `deploy/ugr/mission-demo-federation-v17.json`
+
+Acceptance:
+
+- Real bilateral issue + accept; federated step writes acme + contoso `missions.jsonl`
+- Pending grant blocks federated step
+
+Tag: **`urg-cloud-platform-v1.7`**
+
+### Mission v1.8 — Paired MissionReceipt
+
+**Goal:** Home receipt binds peer ledger via `federation_digest` and resolvable `counterparty_receipt_ref`.
+
+Deliverables:
+
+- [x] Receipt schema **1.3** — `federation_digest`, `counterparty_receipt_ref`
+- [x] `compute_federation_digest`, peer `federation_counterparty_stub` in receipt store
+- [x] `tests/test_ugr_federation_v18_acceptance.py`
+
+Acceptance:
+
+- Recomputed digest from both ledger files matches receipt
+- Counterparty ref resolves peer stub without `URG_RECEIPT_ADMIN`
+
+Tag: **`urg-cloud-platform-v1.8`**
+
+### Mission v1.9 — Cross-tenant governance + proof witness
+
+**Goal:** Federation governance ops with dual ledger; trust bundle attests `federation_dual_ledger`.
+
+Deliverables:
+
+- [x] `federation_organ_admit` / `federation_organ_suspend` (requires `governance_cosign` grant)
+- [x] Dual governance ledger rows; invariant family `cloud_federation_governance`
+- [x] Trust scenario `federation_dual_ledger` (`URG_TRUST_BUNDLE_FEDERATION=1` optional in CI)
+- [x] `tests/test_ugr_federation_v19_acceptance.py`
+
+Acceptance:
+
+- Governance mission with bilateral grant writes both tenant ledgers
+- `TrustBundleOrgan` scenario `federation_dual_ledger` passes
+
+Tag: **`urg-cloud-platform-v1.9`**
+
+**Deferred post-v1.9:** Nova/Forge federated operator UI (display-only receipts); Platform Membrane IMXP HTTP (v45–46).
+
 ## v1 Invariants (non-negotiable)
 
 1. Single path of authority — all UGR traffic through Cognitive Bridge
@@ -317,7 +374,7 @@ Tag: **`urg-cloud-platform-v1.6`**
 | UGR-D2 | Graph DB not chosen; JSONL ledger is Phase 0 only | medium | architect | **partial** — SQLite query projection selected (`UGR_GRAPH_QUERY_BACKEND=sqlite`); Neo4j reserved for scale |
 | UGR-D3 | LLM lane uses bounded stub until governed provider wiring | low | runtime | **closed** — governed LLM lane v1 + execution commit (`UGR_LLM_EXECUTE=1`) |
 | UGR-D4 | Wolf CoG + AAIS ledger unification incomplete | high | runtime | **partial** — cogos write-path bridge + mesh endpoints; daemon hook deferred to deploy |
-| UGR-D5 | Cross-physical-machine / cross-OS trust bundle matrix | medium | operator | **open** — CI workflow added; attach artifact evidence to close |
+| UGR-D5 | Cross-physical-machine / cross-OS trust bundle matrix | medium | operator | **partial** — `federation_dual_ledger` scenario + CI matrix; attach cross-OS artifact to close |
 
 ## Verification
 
@@ -334,7 +391,7 @@ make ugr-graph-backend-gate
 make ugr-trust-bundle-gate
 make ugr-operator-console-gate
 make ugr-mission-gate
-py -3.12 -m pytest tests/test_ugr_tenant_isolation.py tests/test_ugr_cost_routing.py tests/test_ugr_marketplace.py tests/test_ugr_cloud_invariants.py tests/test_ugr_mission_demo.py tests/test_ugr_execution_policy.py -q
+py -3.12 -m pytest tests/test_ugr_tenant_isolation.py tests/test_ugr_cost_routing.py tests/test_ugr_marketplace.py tests/test_ugr_cloud_invariants.py tests/test_ugr_mission_demo.py tests/test_ugr_execution_policy.py tests/test_ugr_federation_v17_acceptance.py tests/test_ugr_federation_v18_acceptance.py tests/test_ugr_federation_v19_acceptance.py -q
 py -3.12 -m pytest tests/test_ugr_runtime.py tests/test_unified_pattern_ledger.py tests/test_invariant_engine.py tests/test_ugr_cloud.py tests/test_ugr_ingestion.py tests/test_ugr_llm_lane.py tests/test_ugr_cloud_forge_bridge.py tests/test_ugr_graph_index.py tests/test_ugr_embryo.py tests/test_ugr_causal_graph.py tests/test_ugr_governed_llm_executor.py tests/test_ugr_cogos_pattern_bridge.py tests/test_ugr_graph_backend.py -q
 ```
 
