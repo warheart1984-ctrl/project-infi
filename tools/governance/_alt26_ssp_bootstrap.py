@@ -36,7 +36,10 @@ ORGANS = [
         "gene": "linguistic_work_order_history_organ",
         "module_id": "AAIS-LWOH-01",
         "order": 2,
-        "parents": ["linguistic_governance_work_order_organ"],
+        "parents": [
+            "linguistic_governance_work_order_organ",
+            "linguistic_governed_lifecycle_fabric_organ",
+        ],
         "proof_subdir": "platform",
         "purpose": "Read-only work-order snapshot retention posture.",
         "wraps": "governance/linguistic_work_order_snapshots/",
@@ -47,7 +50,10 @@ ORGANS = [
         "gene": "linguistic_attestation_history_organ",
         "module_id": "AAIS-LAH-01",
         "order": 3,
-        "parents": ["linguistic_governance_attestation_organ"],
+        "parents": [
+            "linguistic_governance_attestation_organ",
+            "linguistic_governed_lifecycle_fabric_organ",
+        ],
         "proof_subdir": "platform",
         "purpose": "Read-only attestation cycle history posture.",
         "wraps": "governance/linguistic_attestation_cycles/",
@@ -101,11 +107,64 @@ CISIV stage: **concept**
 
 Status: pending — Release 26 (`{BATCH}`).
 
-## Purpose
+## 1. Purpose
 
 {o['purpose']}
 
 Wraps: [`{o['wraps']}`](../../{o['wraps']}).
+
+## 2. Authority And Precedence
+
+Law > Blueprint > Contract > Implementation. Read-only subsystem surface; no mutation authority.
+
+## 3. Non-Goals
+
+- No usurpation of reasoning_executive_organ OODA authority
+- No expansion of safety_envelope or capability bridge execute paths
+- No autonomous law or patch authority via subsystem API
+
+## 4. Subsystem Contract
+
+Schema: [schemas/{gene}.v1.json](./schemas/{gene}.v1.json)
+
+| Field | Role |
+|-------|------|
+| `module_id` | `{o['module_id']}` |
+| `status_summary` | Bounded subsystem snapshot |
+
+## 5. Runtime (Proposed)
+
+- `{o['api']}` — read-only status
+- `src/{gene}.py` — status builder
+
+## 6. Failsafe
+
+Idle or missing upstream returns bounded snapshot with `claim_label` asserted.
+
+## 7. Proof Posture (Concept)
+
+| Claim | Label | Evidence |
+|-------|-------|----------|
+| Schema covers required subsystem fields | `asserted` | Schema + this document |
+| Status API returns snapshot | `none_yet` | Requires MVP |
+
+Target proof packet: `docs/proof/{o['proof_subdir']}/{gene.upper()}_V1_PROOF.md`
+
+## 8. CISIV Path
+
+| Stage | Deliverable |
+|-------|-------------|
+| Concept | This document + schema + MVP plan |
+| Structure | `src/{gene}.py` |
+| Implementation | API route + gate |
+| Verification | V1 proof + subsystem gate |
+
+## 9. Related
+
+- [AAIS_SSP_PROTOCOL.md](../../contracts/AAIS_SSP_PROTOCOL.md)
+- [AAIS_META_LINGUISTIC_GOVERNANCE.md](../../contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md)
+
+## 10. Activation Order
 
 **Release:** `{BATCH}` — order **{o['order']}**
 
@@ -122,11 +181,25 @@ def mvp_md(o: dict) -> str:
     gate = _gate_slug(gene)
     return f"""# {o['display']} — MVP Plan
 
+CISIV stage: **structure**
+
 Release: `{BATCH}`
 
+## MVP Surface
+
+| Kind | Path |
+|------|------|
 | module | `src/{gene}.py` |
 | api | `{o['api']}` |
 | gate | `make {gate}-organ-gate` |
+
+## Proof
+
+`docs/proof/{o['proof_subdir']}/{gene.upper()}_V1_PROOF.md`
+
+## Promotion
+
+`concept → prototype → mvp` via `tools/governance/alt26_promote_mvp.py`.
 """
 
 

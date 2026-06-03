@@ -84,13 +84,19 @@ def main() -> int:
         if not d1.passed:
             print(f"[alt26] {gene} prototype blocked: {d1.failures}")
             return 1
-        engine.apply(d1)
+        d1_apply = engine.apply(d1)
+        if not d1_apply.passed:
+            print(f"[alt26] {gene} prototype apply failed: {d1_apply.failures}")
+            return 1
         prepare_mvp(gene, spec)
         d2 = engine.evaluate(gene)
         if not d2.passed:
             print(f"[alt26] {gene} mvp blocked: {d2.failures}")
             return 1
-        engine.apply(d2)
+        d2_apply = engine.apply(d2)
+        if not d2_apply.passed:
+            print(f"[alt26] {gene} mvp apply failed: {d2_apply.failures}")
+            return 1
         print(f"[alt26] {gene} promoted to mvp")
     return 0
 
