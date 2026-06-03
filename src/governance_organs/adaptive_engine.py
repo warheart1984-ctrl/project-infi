@@ -108,6 +108,9 @@ class AdaptiveEngine:
                 report["linguistic_attested_closed_loop_aligned"] = bool(
                     fabric.get("linguistic_attested_closed_loop_aligned")
                 )
+                report["linguistic_governed_lifecycle_aligned"] = bool(
+                    fabric.get("linguistic_governed_lifecycle_aligned")
+                )
                 try:
                     from src.governance_organs.linguistic_governance_attestation_engine import (
                         attestation_stale,
@@ -124,11 +127,26 @@ class AdaptiveEngine:
                     report["linguistic_attestation_stale"] = attestation_stale(self.root)
                     wo = work_order_summary(self.root)
                     report["linguistic_work_orders_pending"] = int(wo.get("pending", 0))
+                    reg_path = self.root / "governance/meta_linguistic_registry.v1.json"
+                    policy_mode = "observe"
+                    if reg_path.is_file():
+                        from tools.linguistic_genome_lib import load_json
+
+                        policy_mode = load_json(reg_path).get("policy_mode", "observe")
+                    report["linguistic_enforcement_ready"] = (
+                        policy_mode == "enforce"
+                        and att is not None
+                        and not attestation_stale(self.root)
+                        and bool(fabric.get("linguistic_attested_closed_loop_aligned"))
+                        and bool(fabric.get("linguistic_governed_lifecycle_aligned"))
+                    )
                 except Exception:
                     report["linguistic_closed_loop_score"] = 0
                     report["linguistic_attestation_stale"] = True
                     report["linguistic_work_orders_pending"] = 0
                     report["linguistic_attested_closed_loop_aligned"] = False
+                    report["linguistic_governed_lifecycle_aligned"] = False
+                    report["linguistic_enforcement_ready"] = False
             except Exception:
                 report["coherence_fabric_aligned"] = False
                 report["coherence_pipeline_allowed"] = False
@@ -139,6 +157,8 @@ class AdaptiveEngine:
                 report["forensics_handoff_aligned"] = False
                 report["immune_observe_aligned"] = False
                 report["linguistic_attested_closed_loop_aligned"] = False
+                report["linguistic_governed_lifecycle_aligned"] = False
+                report["linguistic_enforcement_ready"] = False
                 report["linguistic_closed_loop_score"] = 0
                 report["linguistic_attestation_stale"] = True
                 report["linguistic_work_orders_pending"] = 0

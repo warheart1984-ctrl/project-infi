@@ -14,6 +14,7 @@ from src.governance_organs.linguistic_governance_attestation_engine import (  # 
     load_cadence_policy,
 )
 from src.governance_organs.linguistic_governance_work_order_engine import (  # noqa: E402
+    list_work_order_snapshots,
     pending_urgent_stale,
 )
 from tools.linguistic_genome_lib import load_json  # noqa: E402
@@ -41,6 +42,12 @@ def main() -> int:
             errors.append(msg)
         else:
             warnings.append(msg)
+
+    reg = load_json(reg_path) if reg_path.is_file() else {}
+    if reg.get("last_work_order_sync_at") and not list_work_order_snapshots(root):
+        warnings.append(
+            "work order sync recorded but no snapshots (run: make linguistic-work-order-sync)"
+        )
 
     for w in warnings:
         print(f"WARNING: {w}", file=sys.stderr)

@@ -6,6 +6,38 @@ Every major entry should name its CISIV stage explicitly.
 
 ## 2026-06-03
 
+### Wave 17 — Operator Day, Enforcement v2, Release 26
+
+- CISIV stage: `implementation`
+- scope: operator day orchestrator, work-order history, stack gate, coherence v1.21, three Release 26 organs
+- outcome: `linguistic-governance-day`, `linguistic-governance-stack-gate`, `enforce_block_on_unaligned_governed_lifecycle`, operational closure layers
+- verification note: `make linguistic-governance-day-fast`; `pytest tests/test_linguistic_governance_day_engine.py tests/test_linguistic_work_order_history.py tests/test_attestation_coherence_enforcement.py -q`
+
+### Release 26 Governed Promotion (pending verification)
+
+- CISIV stage: `verification`
+- scope: three Release 26 subsystems — day, work-order history, attestation history
+- outcome: operational closure fabric at subsystem layer
+- verification note: `python tools/governance/alt26_promote_mvp.py`; `make alt26-governed-gate`
+
+### Release 26.2 — Linguistic Operational Closure
+
+- CISIV stage: `verification`
+- scope: `LINGUISTIC_OPERATIONAL_CLOSURE_V1_PROOF` + Wave 17 engine tests
+- verification note: `make alt26-2-gate`
+
+### Release 26.1 — Coherence v1.21
+
+- CISIV stage: `implementation`
+- scope: snapshot v1.21 `linguistic_operator_day_layer[]`, `linguistic_retention_history_layer[]`, `linguistic_operational_closure_aligned`
+- verification note: `python tools/governance/_alt26_coherence_v121.py`; `make alt26-1-gate`
+
+### Release 26 MVP — Operational Closure Organs
+
+- CISIV stage: `implementation`
+- scope: SSP bootstrap batch `alt26-summon-wave-2026-06`; runtime surfaces and gates
+- verification note: `make alt26-gate`; `python tools/governance/alt26_promote_mvp.py`
+
 ### Release 25 Governed Promotion — Governed Linguistic Lifecycle Fabric
 
 - CISIV stage: `verification`

@@ -57,7 +57,11 @@
       "meta_linguistic_registry_organ",
       "linguistic_closed_loop_fabric_organ"
     ],
-    "children": []
+    "children": [
+      "linguistic_attestation_history_organ",
+      "linguistic_governance_day_organ",
+      "linguistic_work_order_history_organ"
+    ]
   },
   "activation": {
     "order": 9,

@@ -850,6 +850,38 @@ Depends on: Release 24 attested closed-loop; Wave 14 archive/work-order engines.
 | MVP surfaces | `tools/governance/alt25_promote_mvp.py` |
 | Governed promotion | `tools/governance/alt25_promote_governed.py` + `make alt25-governed-gate` |
 
+## Release 26 — Wave 17 Operational Closure Subsystems
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt26-summon-wave-2026-06` in LOGBOOK |
+| Bootstrap | `tools/governance/_alt26_ssp_bootstrap.py` |
+| Gates | `make alt26-gate` |
+| Organs | `linguistic_governance_day_organ`, `linguistic_work_order_history_organ`, `linguistic_attestation_history_organ` |
+
+## Release 26.1 — Coherence Operational Closure Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt26-1-summon-wave-2026-06` in LOGBOOK |
+| Schema tool | `tools/governance/_alt26_coherence_v121.py` |
+| Gate | `make alt26-1-gate` |
+| Snapshot | `operator_cognition_coherence_fabric.v1.21` + operator day + retention history layers |
+
+## Release 26.2 — Linguistic Operational Closure
+
+| Convention | Value |
+|------------|-------|
+| Proof | `docs/proof/platform/LINGUISTIC_OPERATIONAL_CLOSURE_V1_PROOF.md` |
+| Gate | `make alt26-2-gate` |
+
+## Release 26 Governed Promotion
+
+| Convention | Value |
+|------------|-------|
+| MVP surfaces | `tools/governance/alt26_promote_mvp.py` |
+| Governed promotion | `tools/governance/alt26_promote_governed.py` + `make alt26-governed-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per

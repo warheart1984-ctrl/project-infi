@@ -65,3 +65,48 @@ def test_enforce_blocks_low_score(tmp_path: Path):
     result = evaluate_attestation_coherence(tmp_path)
     assert result.allowed is False
     assert "closed_loop_score" in (result.reason or "")
+
+
+def test_enforce_blocks_unaligned_governed_lifecycle(tmp_path: Path, monkeypatch):
+    reg = {
+        "meta_linguistic_registry_version": "meta_linguistic_registry.v1",
+        "policy_mode": "enforce",
+    }
+    gov = tmp_path / "governance"
+    gov.mkdir(parents=True)
+    (gov / "meta_linguistic_registry.v1.json").write_text(json.dumps(reg), encoding="utf-8")
+    (gov / "linguistic_governance_cadence_policy.v1.json").write_text(
+        json.dumps(
+            {
+                "version": "linguistic_governance_cadence_policy.v1",
+                "enforce_min_closed_loop_score": 0,
+                "enforce_block_on_stale_attestation": False,
+                "enforce_block_on_unaligned_attested_loop": False,
+                "enforce_block_on_unaligned_governed_lifecycle": True,
+            }
+        ),
+        encoding="utf-8",
+    )
+    (gov / "linguistic_governance_attestation.v1.json").write_text(
+        json.dumps(
+            {
+                "linguistic_governance_attestation_version": (
+                    "linguistic_governance_attestation.v1"
+                ),
+                "generated_at": "2026-06-01T12:00:00Z",
+                "closed_loop_score": 100,
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    def _fake_fabric(*, root=None, **kwargs):
+        return {"linguistic_governed_lifecycle_aligned": False}
+
+    monkeypatch.setattr(
+        "src.operator_cognition_coherence_fabric.build_coherence_fabric_status",
+        _fake_fabric,
+    )
+    result = evaluate_attestation_coherence(tmp_path)
+    assert result.allowed is False
+    assert "governed lifecycle" in (result.reason or "").lower()

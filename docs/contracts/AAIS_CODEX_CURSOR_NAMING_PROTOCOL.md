@@ -390,6 +390,28 @@ make alt25-governed-gate
 
 ---
 
+## 24. Operational closure (Wave 17 / Release 26)
+
+| Wave / Release | Tool | Purpose |
+|----------------|------|---------|
+| **17** | `run_linguistic_governance_day.py` | Unified operator day (cycle + gates + optional stack) |
+| **17** | `linguistic-governance-stack-gate` | meta-linguistic + alt24-2 + alt25-2 closure |
+| **17** | Work-order `--complete-top` / `--export-markdown` | Bulk complete and operator queue export |
+| **26** | `_alt26_ssp_bootstrap.py` | Three Wave 17 history/day subsystems |
+| **26.1** | `_alt26_coherence_v121.py` | Coherence snapshot v1.21 + operator day + retention layers |
+| **26.2** | `check_alt26_closure.py` | Operational closure proof |
+| **26 governed** | `alt26_promote_governed.py` | Promote three Release 26 organs to `governed` |
+
+```bash
+make linguistic-governance-day
+make linguistic-governance-stack-gate
+python tools/governance/_alt26_coherence_v121.py
+make alt26-2-gate
+make alt26-governed-gate
+```
+
+---
+
 ## 14. Verification
 
 ```bash

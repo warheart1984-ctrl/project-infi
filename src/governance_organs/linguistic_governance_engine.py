@@ -165,6 +165,19 @@ class LinguisticGovernanceEngine:
                         f"enforce: closed_loop_score {score} below minimum {min_score}"
                     )
                     report.passed = False
+
+            if cadence.get("enforce_block_on_unaligned_governed_lifecycle", True):
+                from src.operator_cognition_coherence_fabric import (
+                    build_coherence_fabric_status,
+                )
+
+                fabric = build_coherence_fabric_status(root=self.root)
+                if not fabric.get("linguistic_governed_lifecycle_aligned"):
+                    report.errors.append(
+                        "enforce: linguistic governed lifecycle not aligned "
+                        "(run: make linguistic-governance-day)"
+                    )
+                    report.passed = False
         elif not strict:
             pass
 

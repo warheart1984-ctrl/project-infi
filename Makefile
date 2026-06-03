@@ -264,6 +264,15 @@ linguistic-attestation-gate:
 linguistic-full-cycle-gate:
 	python3 tools/governance/check_linguistic_full_cycle_gate.py
 
+linguistic-governance-day:
+	python3 tools/governance/run_linguistic_governance_day.py
+
+linguistic-governance-day-fast:
+	python3 tools/governance/run_linguistic_governance_day.py --fast
+
+linguistic-governance-stack-gate:
+	python3 tools/governance/check_linguistic_governance_stack_gate.py
+
 safety-envelope-gate:
 	python3 .github/scripts/check-safety-envelope-governance.py
 
@@ -1024,6 +1033,27 @@ alt25-2-gate: alt25-1-gate alt25-closure-gate
 
 alt25-governed-gate:
 	python3 tools/governance/check_alt25_governed_eligibility.py
+
+linguistic-governance-day-organ-gate:
+	python3 .github/scripts/check-linguistic-governance-day-organ-governance.py
+
+linguistic-work-order-history-organ-gate:
+	python3 .github/scripts/check-linguistic-work-order-history-organ-governance.py
+
+linguistic-attestation-history-organ-gate:
+	python3 .github/scripts/check-linguistic-attestation-history-organ-governance.py
+
+alt26-gate: linguistic-governance-day-organ-gate linguistic-work-order-history-organ-gate linguistic-attestation-history-organ-gate genome-gate
+
+alt26-1-gate: alt26-gate alt25-2-gate
+
+alt26-closure-gate:
+	python3 tools/governance/check_alt26_closure.py
+
+alt26-2-gate: alt26-1-gate alt26-closure-gate
+
+alt26-governed-gate:
+	python3 tools/governance/check_alt26_governed_eligibility.py
 
 alt23-1-gate: alt23-gate alt22-1-gate
 

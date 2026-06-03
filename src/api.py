@@ -13968,6 +13968,63 @@ def get_linguistic_governed_lifecycle_fabric_organ_status():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/linguistic-governance-day/status", methods=["GET"])
+def get_linguistic_governance_day_organ_status():
+    try:
+        from src.linguistic_governance_day_organ import build_linguistic_governance_day_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"linguistic_governance_day": build_linguistic_governance_day_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading linguistic_governance_day_organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/linguistic-work-order-history/status", methods=["GET"])
+def get_linguistic_work_order_history_organ_status():
+    try:
+        from src.linguistic_work_order_history_organ import (
+            build_linguistic_work_order_history_status,
+        )
+
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "linguistic_work_order_history": (
+                        build_linguistic_work_order_history_status()
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading linguistic_work_order_history_organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/linguistic-attestation-history/status", methods=["GET"])
+def get_linguistic_attestation_history_organ_status():
+    try:
+        from src.linguistic_attestation_history_organ import (
+            build_linguistic_attestation_history_status,
+        )
+
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "linguistic_attestation_history": (
+                        build_linguistic_attestation_history_status()
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading linguistic_attestation_history_organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/reset", methods=["POST"])
 def reset_mission_board():
     """Reset Mission Board state with an optional backup and seeded current objectives."""

@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.20"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.21"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -164,12 +164,20 @@ def evaluate_attestation_coherence(root: Path | None = None) -> CoherenceExecute
             reason="linguistic attestation missing",
         )
 
+    fabric = build_coherence_fabric_status(root=root)
+
     if cadence.get("enforce_block_on_unaligned_attested_loop", True):
-        fabric = build_coherence_fabric_status(root=root)
         if not fabric.get("linguistic_attested_closed_loop_aligned"):
             return CoherenceExecuteResult(
                 allowed=False,
                 reason="linguistic attested closed-loop not aligned",
+            )
+
+    if cadence.get("enforce_block_on_unaligned_governed_lifecycle", True):
+        if not fabric.get("linguistic_governed_lifecycle_aligned"):
+            return CoherenceExecuteResult(
+                allowed=False,
+                reason="linguistic governed lifecycle not aligned",
             )
 
     if cadence.get("enforce_block_on_pending_work_orders", False):
@@ -2001,6 +2009,85 @@ def _build_linguistic_promotion_layer() -> list[dict[str, Any]]:
     ]
 
 
+def _build_linguistic_operator_day_layer(root: Path) -> list[dict[str, Any]]:
+    from src.linguistic_governance_day_organ import build_linguistic_governance_day_status
+
+    makefile = root / "Makefile"
+    m_text = makefile.read_text(encoding="utf-8") if makefile.is_file() else ""
+    stack_script = root / "tools/governance/check_linguistic_governance_stack_gate.py"
+    stack_snap = {
+        "cisiv_stage": "implementation",
+        "claim_label": "asserted",
+        "stack_gate_script_present": stack_script.is_file(),
+        "stack_gate_in_makefile": "linguistic-governance-stack-gate:" in m_text,
+    }
+    return [
+        _organ_posture_item(
+            "linguistic_governance_day_organ",
+            build_linguistic_governance_day_status(root=root),
+        ),
+        _organ_posture_item("linguistic_governance_stack_gate", stack_snap),
+    ]
+
+
+def _build_linguistic_retention_history_layer(root: Path) -> list[dict[str, Any]]:
+    from src.linguistic_attestation_history_organ import (
+        build_linguistic_attestation_history_status,
+    )
+    from src.linguistic_full_governance_cycle_history_organ import (
+        build_linguistic_full_governance_cycle_history_status,
+    )
+    from src.linguistic_work_order_history_organ import (
+        build_linguistic_work_order_history_status,
+    )
+
+    return [
+        _organ_posture_item(
+            "linguistic_attestation_history_organ",
+            build_linguistic_attestation_history_status(root=root),
+        ),
+        _organ_posture_item(
+            "linguistic_work_order_history_organ",
+            build_linguistic_work_order_history_status(root=root),
+        ),
+        _organ_posture_item(
+            "linguistic_full_governance_cycle_history_organ",
+            build_linguistic_full_governance_cycle_history_status(root=root),
+        ),
+    ]
+
+
+def _compute_linguistic_enforcement_ready(
+    root: Path,
+    *,
+    attested_aligned: bool,
+    governed_aligned: bool,
+) -> bool:
+    reg_path = root / "governance/meta_linguistic_registry.v1.json"
+    if not reg_path.is_file():
+        return False
+    from tools.linguistic_genome_lib import load_json
+
+    policy_mode = load_json(reg_path).get("policy_mode", "observe")
+    if policy_mode != "enforce":
+        return False
+    try:
+        from src.governance_organs.linguistic_governance_attestation_engine import (
+            attestation_stale,
+            load_attestation,
+        )
+
+        att = load_attestation(root)
+        return (
+            att is not None
+            and not attestation_stale(root)
+            and attested_aligned
+            and governed_aligned
+        )
+    except Exception:
+        return False
+
+
 def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
@@ -2119,6 +2206,44 @@ def build_coherence_fabric_status(
     linguistic_operator_execution_layer = _build_linguistic_operator_execution_layer()
     linguistic_lifecycle_artifact_layer = _build_linguistic_lifecycle_artifact_layer()
     linguistic_promotion_layer = _build_linguistic_promotion_layer()
+    linguistic_operator_day_layer = _build_linguistic_operator_day_layer(root)
+    linguistic_retention_history_layer = _build_linguistic_retention_history_layer(root)
+
+    linguistic_governed_lifecycle_aligned = (
+        _layer_aligned(linguistic_forecast_layer, minimum=3)
+        and _layer_aligned(linguistic_predictive_cycle_layer, minimum=3)
+        and _layer_aligned(linguistic_governance_cycle_layer, minimum=3)
+        and _layer_aligned(linguistic_calibration_layer, minimum=3)
+        and _layer_aligned(linguistic_governance_queue_layer, minimum=3)
+        and _layer_aligned(linguistic_attestation_layer, minimum=3)
+        and _layer_aligned(linguistic_operator_execution_layer, minimum=3)
+        and _layer_aligned(linguistic_lifecycle_artifact_layer, minimum=4)
+        and _layer_aligned(linguistic_promotion_layer, minimum=1)
+    )
+    linguistic_attested_closed_loop_aligned = (
+        _layer_aligned(linguistic_forecast_layer, minimum=3)
+        and _layer_aligned(linguistic_predictive_cycle_layer, minimum=3)
+        and _layer_aligned(linguistic_governance_cycle_layer, minimum=3)
+        and _layer_aligned(linguistic_calibration_layer, minimum=3)
+        and _layer_aligned(linguistic_governance_queue_layer, minimum=3)
+        and _layer_aligned(linguistic_attestation_layer, minimum=3)
+    )
+    linguistic_operator_day_aligned = _layer_aligned(
+        linguistic_operator_day_layer, minimum=2
+    )
+    linguistic_retention_history_aligned = _layer_aligned(
+        linguistic_retention_history_layer, minimum=3
+    )
+    linguistic_enforcement_ready = _compute_linguistic_enforcement_ready(
+        root,
+        attested_aligned=linguistic_attested_closed_loop_aligned,
+        governed_aligned=linguistic_governed_lifecycle_aligned,
+    )
+    linguistic_operational_closure_aligned = (
+        linguistic_governed_lifecycle_aligned
+        and linguistic_operator_day_aligned
+        and linguistic_retention_history_aligned
+    )
 
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
@@ -2312,14 +2437,7 @@ def build_coherence_fabric_status(
         "linguistic_attestation_aligned": _layer_aligned(
             linguistic_attestation_layer, minimum=3
         ),
-        "linguistic_attested_closed_loop_aligned": (
-            _layer_aligned(linguistic_forecast_layer, minimum=3)
-            and _layer_aligned(linguistic_predictive_cycle_layer, minimum=3)
-            and _layer_aligned(linguistic_governance_cycle_layer, minimum=3)
-            and _layer_aligned(linguistic_calibration_layer, minimum=3)
-            and _layer_aligned(linguistic_governance_queue_layer, minimum=3)
-            and _layer_aligned(linguistic_attestation_layer, minimum=3)
-        ),
+        "linguistic_attested_closed_loop_aligned": linguistic_attested_closed_loop_aligned,
         "linguistic_operator_execution_layer": linguistic_operator_execution_layer,
         "linguistic_operator_execution_aligned": _layer_aligned(
             linguistic_operator_execution_layer, minimum=3
@@ -2332,17 +2450,13 @@ def build_coherence_fabric_status(
         "linguistic_promotion_aligned": _layer_aligned(
             linguistic_promotion_layer, minimum=1
         ),
-        "linguistic_governed_lifecycle_aligned": (
-            _layer_aligned(linguistic_forecast_layer, minimum=3)
-            and _layer_aligned(linguistic_predictive_cycle_layer, minimum=3)
-            and _layer_aligned(linguistic_governance_cycle_layer, minimum=3)
-            and _layer_aligned(linguistic_calibration_layer, minimum=3)
-            and _layer_aligned(linguistic_governance_queue_layer, minimum=3)
-            and _layer_aligned(linguistic_attestation_layer, minimum=3)
-            and _layer_aligned(linguistic_operator_execution_layer, minimum=3)
-            and _layer_aligned(linguistic_lifecycle_artifact_layer, minimum=4)
-            and _layer_aligned(linguistic_promotion_layer, minimum=1)
-        ),
+        "linguistic_governed_lifecycle_aligned": linguistic_governed_lifecycle_aligned,
+        "linguistic_operator_day_layer": linguistic_operator_day_layer,
+        "linguistic_operator_day_aligned": linguistic_operator_day_aligned,
+        "linguistic_retention_history_layer": linguistic_retention_history_layer,
+        "linguistic_retention_history_aligned": linguistic_retention_history_aligned,
+        "linguistic_enforcement_ready": linguistic_enforcement_ready,
+        "linguistic_operational_closure_aligned": linguistic_operational_closure_aligned,
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,
         "safety_envelope_halt": safety_halt,

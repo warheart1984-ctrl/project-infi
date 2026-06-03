@@ -178,6 +178,9 @@ GENE_GATES: dict[str, str] = {
     "meta_linguistic_registry_organ": "meta-linguistic-registry-organ-gate",
     "linguistic_subsystem_promotion_organ": "linguistic-subsystem-promotion-organ-gate",
     "linguistic_governed_lifecycle_fabric_organ": "linguistic-governed-lifecycle-fabric-organ-gate",
+    "linguistic_governance_day_organ": "linguistic-governance-day-organ-gate",
+    "linguistic_work_order_history_organ": "linguistic-work-order-history-organ-gate",
+    "linguistic_attestation_history_organ": "linguistic-attestation-history-organ-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -556,6 +559,15 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     ],
     "linguistic-governed-lifecycle-fabric-organ-gate": [
         ".github/scripts/check-linguistic-governed-lifecycle-fabric-organ-governance.py"
+    ],
+    "linguistic-governance-day-organ-gate": [
+        ".github/scripts/check-linguistic-governance-day-organ-governance.py"
+    ],
+    "linguistic-work-order-history-organ-gate": [
+        ".github/scripts/check-linguistic-work-order-history-organ-governance.py"
+    ],
+    "linguistic-attestation-history-organ-gate": [
+        ".github/scripts/check-linguistic-attestation-history-organ-governance.py"
     ],
 }
 

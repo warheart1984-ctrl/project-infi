@@ -57,6 +57,7 @@
       "linguistic_closed_loop_fabric_organ"
     ],
     "children": [
+      "linguistic_attestation_history_organ",
       "linguistic_governance_cadence_organ",
       "linguistic_governed_lifecycle_fabric_organ"
     ]

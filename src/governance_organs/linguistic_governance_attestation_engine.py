@@ -39,9 +39,11 @@ def load_cadence_policy(root: Path | None = None) -> dict[str, Any]:
             "max_attestation_age_days": 7,
             "max_pending_work_order_days": 14,
             "retain_attestation_history": 12,
+            "retain_work_order_history": 24,
             "enforce_min_closed_loop_score": 60,
             "enforce_block_on_stale_attestation": True,
             "enforce_block_on_unaligned_attested_loop": True,
+            "enforce_block_on_unaligned_governed_lifecycle": True,
             "enforce_block_on_pending_work_orders": False,
         }
     return load_json(path)
@@ -274,6 +276,27 @@ def build_attestation(root: Path | None = None) -> dict[str, Any]:
         full_cycle=full_cycle,
     )
 
+    governed_lifecycle_summary: dict[str, Any] = {
+        "aligned": False,
+        "operator_execution_aligned": False,
+        "lifecycle_artifact_aligned": False,
+    }
+    try:
+        from src.operator_cognition_coherence_fabric import build_coherence_fabric_status
+
+        fabric = build_coherence_fabric_status(root=root)
+        governed_lifecycle_summary = {
+            "aligned": bool(fabric.get("linguistic_governed_lifecycle_aligned")),
+            "operator_execution_aligned": bool(
+                fabric.get("linguistic_operator_execution_aligned")
+            ),
+            "lifecycle_artifact_aligned": bool(
+                fabric.get("linguistic_lifecycle_artifact_aligned")
+            ),
+        }
+    except Exception:
+        pass
+
     return {
         "linguistic_governance_attestation_version": ATTESTATION_VERSION,
         "generated_at": now,
@@ -285,6 +308,7 @@ def build_attestation(root: Path | None = None) -> dict[str, Any]:
         "queue_summary": queue,
         "work_order_summary": work_orders,
         "full_cycle_summary": full_cycle,
+        "governed_lifecycle_summary": governed_lifecycle_summary,
         "meta_gate_summary": {
             "last_gate_run_at": reg.get("last_gate_run_at"),
         },

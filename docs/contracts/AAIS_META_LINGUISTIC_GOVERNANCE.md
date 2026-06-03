@@ -208,6 +208,39 @@ make alt25-governed-gate
 
 Closure proof: [docs/proof/platform/GOVERNED_LINGUISTIC_LIFECYCLE_V1_PROOF.md](../proof/platform/GOVERNED_LINGUISTIC_LIFECYCLE_V1_PROOF.md)
 
+## Wave 17 — Operator day, enforcement v2, Release 26
+
+Operator day: `governance/linguistic_governance_days/`; orchestrator runs full cycle, attestation refresh, work-order sync, meta gates, optional stack gate.
+
+Work-order history: `governance/linguistic_work_order_snapshots/` with `retain_work_order_history` in cadence policy.
+
+Enforcement v2 (when `policy_mode` is `enforce`):
+
+- `evaluate_attestation_coherence()` also blocks on `linguistic_governed_lifecycle_aligned`
+- Cadence flag `enforce_block_on_unaligned_governed_lifecycle` (default true)
+
+Coherence snapshot: `operator_cognition_coherence_fabric.v1.21` with:
+
+- `linguistic_operator_day_layer[]` — governance day + stack gate posture
+- `linguistic_retention_history_layer[]` — attestation, work-order, full-cycle history organs
+- `linguistic_enforcement_ready` — enforce mode + fresh attestation + alignment flags
+- `linguistic_operational_closure_aligned` — governed lifecycle + Wave 17 layers
+
+```bash
+make linguistic-governance-day
+make linguistic-governance-day-fast
+make linguistic-governance-stack-gate
+python tools/governance/linguistic_work_order.py --complete-top 5
+python tools/governance/linguistic_work_order.py --export-markdown governance/work_orders.md
+python tools/governance/_alt26_coherence_v121.py
+make alt26-2-gate
+python tools/governance/alt26_promote_mvp.py
+python tools/governance/alt26_promote_governed.py
+make alt26-governed-gate
+```
+
+Closure proof: [docs/proof/platform/LINGUISTIC_OPERATIONAL_CLOSURE_V1_PROOF.md](../proof/platform/LINGUISTIC_OPERATIONAL_CLOSURE_V1_PROOF.md)
+
 ## Verification
 
 ```bash

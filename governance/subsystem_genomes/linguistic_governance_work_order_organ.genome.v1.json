@@ -55,7 +55,9 @@
     "parents": [
       "linguistic_governance_queue_organ"
     ],
-    "children": []
+    "children": [
+      "linguistic_work_order_history_organ"
+    ]
   },
   "activation": {
     "order": 3,
