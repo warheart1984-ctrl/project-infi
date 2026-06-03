@@ -1229,8 +1229,17 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | Speakers Lane Organ | governed | [../subsystems/speakers/SPEAKERS_LANE_ORGAN.md](../subsystems/speakers/SPEAKERS_LANE_ORGAN.md) | [../proof/speakers/SPEAKERS_LANE_ORGAN_V1_PROOF.md](../proof/speakers/SPEAKERS_LANE_ORGAN_V1_PROOF.md) |
 | Human Voice Extraction Organ | governed | [../subsystems/speakers/HUMAN_VOICE_EXTRACTION_ORGAN.md](../subsystems/speakers/HUMAN_VOICE_EXTRACTION_ORGAN.md) | [../proof/speakers/HUMAN_VOICE_EXTRACTION_ORGAN_V1_PROOF.md](../proof/speakers/HUMAN_VOICE_EXTRACTION_ORGAN_V1_PROOF.md) |
 | Narrative Trust Pack Organ | governed | [../subsystems/storyforge/NARRATIVE_TRUST_PACK_ORGAN.md](../subsystems/storyforge/NARRATIVE_TRUST_PACK_ORGAN.md) | [../proof/storyforge/NARRATIVE_TRUST_PACK_ORGAN_V1_PROOF.md](../proof/storyforge/NARRATIVE_TRUST_PACK_ORGAN_V1_PROOF.md) |
+| Document Vision Organ | governed | [../subsystems/platform/DOCUMENT_VISION_ORGAN.md](../subsystems/platform/DOCUMENT_VISION_ORGAN.md) | [../proof/platform/DOCUMENT_VISION_ORGAN_V1_PROOF.md](../proof/platform/DOCUMENT_VISION_ORGAN_V1_PROOF.md) |
+| UI Vision Organ | governed | [../subsystems/platform/UI_VISION_ORGAN.md](../subsystems/platform/UI_VISION_ORGAN.md) | [../proof/platform/UI_VISION_ORGAN_V1_PROOF.md](../proof/platform/UI_VISION_ORGAN_V1_PROOF.md) |
+| Perception Gateway Organ | governed | [../subsystems/platform/PERCEPTION_GATEWAY_ORGAN.md](../subsystems/platform/PERCEPTION_GATEWAY_ORGAN.md) | [../proof/platform/PERCEPTION_GATEWAY_ORGAN_V1_PROOF.md](../proof/platform/PERCEPTION_GATEWAY_ORGAN_V1_PROOF.md) |
+| Spatial Reasoning Organ | governed | [../subsystems/platform/SPATIAL_REASONING_ORGAN.md](../subsystems/platform/SPATIAL_REASONING_ORGAN.md) | [../proof/platform/SPATIAL_REASONING_ORGAN_V1_PROOF.md](../proof/platform/SPATIAL_REASONING_ORGAN_V1_PROOF.md) |
+| Mystic Engine Organ | governed | [../subsystems/platform/MYSTIC_ENGINE_ORGAN.md](../subsystems/platform/MYSTIC_ENGINE_ORGAN.md) | [../proof/platform/MYSTIC_ENGINE_ORGAN_V1_PROOF.md](../proof/platform/MYSTIC_ENGINE_ORGAN_V1_PROOF.md) |
+| Perception Lane Organ | governed | [../subsystems/platform/PERCEPTION_LANE_ORGAN.md](../subsystems/platform/PERCEPTION_LANE_ORGAN.md) | [../proof/platform/PERCEPTION_LANE_ORGAN_V1_PROOF.md](../proof/platform/PERCEPTION_LANE_ORGAN_V1_PROOF.md) |
+| Route Choice Organ | governed | [../subsystems/platform/ROUTE_CHOICE_ORGAN.md](../subsystems/platform/ROUTE_CHOICE_ORGAN.md) | [../proof/platform/ROUTE_CHOICE_ORGAN_V1_PROOF.md](../proof/platform/ROUTE_CHOICE_ORGAN_V1_PROOF.md) |
+| Specialist Route Organ | governed | [../subsystems/platform/SPECIALIST_ROUTE_ORGAN.md](../subsystems/platform/SPECIALIST_ROUTE_ORGAN.md) | [../proof/platform/SPECIALIST_ROUTE_ORGAN_V1_PROOF.md](../proof/platform/SPECIALIST_ROUTE_ORGAN_V1_PROOF.md) |
+| Provider Route Organ | governed | [../subsystems/platform/PROVIDER_ROUTE_ORGAN.md](../subsystems/platform/PROVIDER_ROUTE_ORGAN.md) | [../proof/platform/PROVIDER_ROUTE_ORGAN_V1_PROOF.md](../proof/platform/PROVIDER_ROUTE_ORGAN_V1_PROOF.md) |
 
-Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate alt13-governed-gate`
+Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate alt13-governed-gate alt14-governed-gate`
 
 ## 9. Concept Pending (SSP)
 
@@ -1239,6 +1248,6 @@ Nothing here is live until promoted per [ideas_pending/README.md](../_future/ide
 
 | Idea | Status | Concept spec | MVP plan | Genome |
 |------|--------|--------------|----------|--------|
-| *(none — Alt-13 graduated to §8)* | — | — | — | — |
+| *(none — Alt-14 graduated to §8)* | — | — | — | — |
 
 New admissions via SSP (Step 7) update this table. Graduated ideas move to §8. Genome contract: [AAIS_SUBSYSTEM_GENOME.md](../contracts/AAIS_SUBSYSTEM_GENOME.md).

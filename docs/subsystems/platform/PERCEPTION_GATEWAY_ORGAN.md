@@ -1,6 +1,6 @@
 # Perception Gateway Organ
 
-Status: **mvp** (Alt-14 summon wave `alt14-summon-wave-2026-06`)
+Status: **governed** (Alt-14 summon wave `alt14-summon-wave-2026-06`; promoted v1.10.0)
 
 ## Runtime
 

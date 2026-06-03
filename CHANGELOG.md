@@ -13,6 +13,31 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.10.0] - 2026-06-02 — Alt-14 Route Choice & Perception Fabric
+
+**Alt-14** — nine read-only organs at governed; coherence fabric v1.9 with perception, spatial/symbolic, and route-choice posture planes.
+
+### Added
+
+- **Alt-14.0** — `document_vision_organ`, `ui_vision_organ`, `perception_gateway_organ`, `spatial_reasoning_organ`, `mystic_engine_organ`, `perception_lane_organ`, `route_choice_organ`, `specialist_route_organ`, `provider_route_organ`; status APIs; `make alt14-gate`; `tools/governance/alt14_promote_mvp.py`
+- **Alt-14.1** — coherence snapshot v1.9 + `perception_aligned`, `spatial_symbolic_aligned`, `route_choice_aligned` in Tier 5; `make alt14-1-gate`
+- **Alt-14.2** — `PERCEPTION_GATEWAY_V1_PROOF` + `ROUTE_CHOICE_V1_PROOF` + `SPATIAL_SYMBOLIC_V1_PROOF`; `make alt14-2-gate`
+- **Governed promotion** — `tools/governance/alt14_promote_governed.py`; `make alt14-governed-gate`
+
+### Changed
+
+- Genome registry: **66 governed** subsystem genomes (57 prior + 9 Alt-14)
+- `operator_cognition_coherence_fabric` schema ref → v1.9
+
+### Verification (v1.10.0)
+
+```bash
+make alt14-gate alt14-1-gate alt14-2-gate alt14-governed-gate
+python -m pytest tests/test_document_vision_organ.py tests/test_ui_vision_organ.py tests/test_perception_gateway_organ.py tests/test_spatial_reasoning_organ.py tests/test_mystic_engine_organ.py tests/test_perception_lane_organ.py tests/test_route_choice_organ.py tests/test_specialist_route_organ.py tests/test_provider_route_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.10.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.10.0
+
 ## [1.9.0] - 2026-06-02 — Alt-13 Creative Chain & Constitutional Closure Fabric
 
 **Alt-13** — nine read-only organs at governed; coherence fabric v1.8 with constitutional creative, story chain, and module governance posture planes.

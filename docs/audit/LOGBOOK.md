@@ -13,6 +13,34 @@ Every major entry should name its CISIV stage explicitly.
 - outcome: concept specs, schemas, MVP plans, genomes at `concept`
 - verification note: `make ssp-gate`; `make genome-gate`
 
+### Alt-14 Summon Wave — Organs (MVP)
+
+- CISIV stage: `implementation`
+- scope: organ wrappers, status APIs, gates, proof packets; `tools/governance/alt14_promote_mvp.py`
+- outcome: sixty-six registered genomes (fifty-seven prior + nine Alt-14 mvp)
+- verification note: `make alt14-gate`; `python tools/governance/alt14_promote_mvp.py`
+
+### Alt-14.1 — Coherence Fabric Perception/Route Join
+
+- CISIV stage: `implementation`
+- scope: snapshot v1.9 `perception_posture[]`, `spatial_symbolic_posture[]`, `route_choice_posture[]`
+- outcome: coherence fabric joins Alt-14 organ planes
+- verification note: `make alt14-1-gate`
+
+### Alt-14.2 — Route Choice & Perception Closure
+
+- CISIV stage: `verification`
+- scope: `PERCEPTION_GATEWAY_V1_PROOF` + `ROUTE_CHOICE_V1_PROOF` + `SPATIAL_SYMBOLIC_V1_PROOF`
+- outcome: env-gated perception and advisory route-choice lanes attested
+- verification note: `make alt14-2-gate`
+
+### Alt-14 Governed Promotion — Route Choice & Perception Organs
+
+- CISIV stage: `verification`
+- scope: nine Alt-14 organs promoted to `governed`
+- outcome: sixty-six governed subsystem genomes; Alt-14 wave complete at governed
+- verification note: `make alt14-governed-gate`; `python tools/governance/alt14_promote_governed.py`
+
 ### Alt-13 Summon Wave — Creative Chain & Constitutional Closure (Concept)
 
 - CISIV stage: `concept`
