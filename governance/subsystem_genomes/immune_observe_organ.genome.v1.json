@@ -1,0 +1,77 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "immune_observe_organ",
+    "version": "0.1.0-concept",
+    "stage": "governed",
+    "display_name": "Immune Observe Organ"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    ],
+    "invariants": [
+      "Read-only v1 \u2014 organ does not mutate upstream authority",
+      "module_id frozen to AAIS-IO-01"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/immune_observe_organ.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/immune_observe_organ.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/immune-observe/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make immune-observe-organ-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/nova/IMMUNE_OBSERVE_ORGAN_GOVERNED_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/nova/IMMUNE_OBSERVE_ORGAN_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "realtime_event_cause_predictor_organ",
+      "safety_envelope_organ"
+    ],
+    "children": [
+      "policy_gate_organ"
+    ]
+  },
+  "activation": {
+    "order": 7,
+    "batch_id": "alt10-summon-wave-2026-06",
+    "notes": "Alt-10 wave 7"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/IMMUNE_OBSERVE_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/IMMUNE_OBSERVE_ORGAN_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/nova/IMMUNE_OBSERVE_ORGAN.md"
+  }
+}

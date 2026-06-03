@@ -56,6 +56,7 @@
       "governed_direct_pipeline"
     ],
     "children": [
+      "policy_gate_organ",
       "realtime_event_cause_predictor_organ"
     ]
   },

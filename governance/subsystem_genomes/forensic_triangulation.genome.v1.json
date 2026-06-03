@@ -62,7 +62,10 @@
       "scorpion",
       "cisiv_operator_lineage_console"
     ],
-    "children": []
+    "children": [
+      "forensic_triangulation_organ",
+      "scorpion_bridge_organ"
+    ]
   },
   "activation": {
     "order": 2,

@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.4"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.5"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -321,6 +321,147 @@ def _infrastructure_substrate_aligned(infrastructure_posture: list[dict[str, Any
     return producer_ok and consumer_ok
 
 
+def _build_memory_governance_posture() -> list[dict[str, Any]]:
+    from src.knowledge_authority_organ import build_knowledge_authority_status
+    from src.memory_path_governance_organ import build_memory_path_governance_status
+    from src.verification_gate_organ import build_verification_gate_status
+
+    posture: list[dict[str, Any]] = []
+    for organ_id, builder in (
+        ("verification_gate_organ", build_verification_gate_status),
+        ("memory_path_governance_organ", build_memory_path_governance_status),
+        ("knowledge_authority_organ", build_knowledge_authority_status),
+    ):
+        status = builder()
+        posture.append(
+            {
+                "organ_id": organ_id,
+                "stage": str(status.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+                "claim_label": str(status.get("claim_label") or "asserted")[:32],
+                "paths_documented": organ_id == "memory_path_governance_organ",
+            }
+        )
+    return posture
+
+
+def _memory_paths_aligned(memory_posture: list[dict[str, Any]]) -> bool:
+    if len(memory_posture) < 3:
+        return False
+    for item in memory_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+    return True
+
+
+def _build_forensics_posture() -> list[dict[str, Any]]:
+    from src.forensic_triangulation_organ import build_forensic_triangulation_status
+    from src.mechanic_handoff_organ import build_mechanic_handoff_status
+    from src.scorpion_bridge_organ import build_scorpion_bridge_status
+
+    posture: list[dict[str, Any]] = []
+    scorpion = build_scorpion_bridge_status()
+    posture.append(
+        {
+            "organ_id": "scorpion_bridge_organ",
+            "stage": str(scorpion.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(scorpion.get("claim_label") or "asserted")[:32],
+            "handoff_attested": bool(scorpion.get("scorpion_claim_label")),
+        }
+    )
+    mechanic = build_mechanic_handoff_status()
+    posture.append(
+        {
+            "organ_id": "mechanic_handoff_organ",
+            "stage": str(mechanic.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(mechanic.get("claim_label") or "asserted")[:32],
+            "handoff_attested": True,
+        }
+    )
+    tri = build_forensic_triangulation_status()
+    posture.append(
+        {
+            "organ_id": "forensic_triangulation_organ",
+            "stage": str(tri.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(tri.get("claim_label") or "asserted")[:32],
+            "handoff_attested": bool(tri.get("triangulation_package_present")),
+        }
+    )
+    return posture
+
+
+def _forensics_handoff_aligned(forensics_posture: list[dict[str, Any]]) -> bool:
+    if len(forensics_posture) < 3:
+        return False
+    for item in forensics_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("handoff_attested"):
+            return False
+    return True
+
+
+def _build_immune_observe_posture(
+    *,
+    pipeline_trace: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
+    from src.immune_observe_organ import build_immune_observe_status
+    from src.policy_gate_organ import build_policy_gate_status
+    from src.predictor_immune_bridge_organ import build_predictor_immune_bridge_status
+
+    posture: list[dict[str, Any]] = []
+    immune = build_immune_observe_status()
+    posture.append(
+        {
+            "organ_id": "immune_observe_organ",
+            "stage": str(immune.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(immune.get("claim_label") or "asserted")[:32],
+            "observe_only": bool(immune.get("observe_protocol_only")),
+            "substrate_bridged": False,
+        }
+    )
+    policy = build_policy_gate_status()
+    posture.append(
+        {
+            "organ_id": "policy_gate_organ",
+            "stage": str(policy.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(policy.get("claim_label") or "asserted")[:32],
+            "observe_only": bool(policy.get("observe_protocol_only")),
+            "substrate_bridged": False,
+        }
+    )
+    bridge = build_predictor_immune_bridge_status(governed_pipeline=pipeline_trace)
+    posture.append(
+        {
+            "organ_id": "predictor_immune_bridge_organ",
+            "stage": str(bridge.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(bridge.get("claim_label") or "asserted")[:32],
+            "observe_only": bool(bridge.get("immune_observe_only")),
+            "substrate_bridged": bool(bridge.get("substrate_bridged")),
+        }
+    )
+    return posture
+
+
+def _immune_observe_aligned(
+    immune_posture: list[dict[str, Any]],
+    *,
+    require_bridge: bool = False,
+) -> bool:
+    if len(immune_posture) < 3:
+        return False
+    bridged = False
+    for item in immune_posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if not item.get("observe_only"):
+            return False
+        if item.get("substrate_bridged"):
+            bridged = True
+    if require_bridge:
+        return bridged
+    return True
+
+
 def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
@@ -391,6 +532,9 @@ def build_coherence_fabric_status(
 
     mind_posture = _build_mind_posture(pipeline_trace=pipeline_source)
     infrastructure_posture = _build_infrastructure_posture(pipeline_trace=pipeline_source)
+    memory_posture = _build_memory_governance_posture()
+    forensics_posture = _build_forensics_posture()
+    immune_posture = _build_immune_observe_posture(pipeline_trace=pipeline_source)
 
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
@@ -403,6 +547,15 @@ def build_coherence_fabric_status(
         "infrastructure_posture": infrastructure_posture,
         "infrastructure_substrate_aligned": _infrastructure_substrate_aligned(
             infrastructure_posture
+        ),
+        "memory_governance_posture": memory_posture,
+        "memory_paths_aligned": _memory_paths_aligned(memory_posture),
+        "forensics_posture": forensics_posture,
+        "forensics_handoff_aligned": _forensics_handoff_aligned(forensics_posture),
+        "immune_observe_posture": immune_posture,
+        "immune_observe_aligned": _immune_observe_aligned(
+            immune_posture,
+            require_bridge=bool(pipeline_source),
         ),
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,
@@ -455,6 +608,12 @@ def build_governance_coherence_projection(
             snapshot.get("infrastructure_substrate_aligned")
         ),
         "mind_planes_aligned": bool(snapshot.get("mind_planes_aligned")),
+        "memory_governance_posture": list(snapshot.get("memory_governance_posture") or [])[:4],
+        "memory_paths_aligned": bool(snapshot.get("memory_paths_aligned")),
+        "forensics_posture": list(snapshot.get("forensics_posture") or [])[:4],
+        "forensics_handoff_aligned": bool(snapshot.get("forensics_handoff_aligned")),
+        "immune_observe_posture": list(snapshot.get("immune_observe_posture") or [])[:4],
+        "immune_observe_aligned": bool(snapshot.get("immune_observe_aligned")),
     }
 
 

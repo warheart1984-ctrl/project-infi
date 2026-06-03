@@ -43,6 +43,15 @@ make alt7-governed-gate
 | `phase_gate_organ` | governed | [phase_gate_organ.genome.v1.json](./phase_gate_organ.genome.v1.json) |
 | `realtime_event_cause_predictor_organ` | governed | [realtime_event_cause_predictor_organ.genome.v1.json](./realtime_event_cause_predictor_organ.genome.v1.json) |
 | `invariant_engine_organ` | governed | [invariant_engine_organ.genome.v1.json](./invariant_engine_organ.genome.v1.json) |
+| `verification_gate_organ` | governed | [verification_gate_organ.genome.v1.json](./verification_gate_organ.genome.v1.json) |
+| `memory_path_governance_organ` | governed | [memory_path_governance_organ.genome.v1.json](./memory_path_governance_organ.genome.v1.json) |
+| `knowledge_authority_organ` | governed | [knowledge_authority_organ.genome.v1.json](./knowledge_authority_organ.genome.v1.json) |
+| `scorpion_bridge_organ` | governed | [scorpion_bridge_organ.genome.v1.json](./scorpion_bridge_organ.genome.v1.json) |
+| `mechanic_handoff_organ` | governed | [mechanic_handoff_organ.genome.v1.json](./mechanic_handoff_organ.genome.v1.json) |
+| `forensic_triangulation_organ` | governed | [forensic_triangulation_organ.genome.v1.json](./forensic_triangulation_organ.genome.v1.json) |
+| `immune_observe_organ` | governed | [immune_observe_organ.genome.v1.json](./immune_observe_organ.genome.v1.json) |
+| `policy_gate_organ` | governed | [policy_gate_organ.genome.v1.json](./policy_gate_organ.genome.v1.json) |
+| `predictor_immune_bridge_organ` | governed | [predictor_immune_bridge_organ.genome.v1.json](./predictor_immune_bridge_organ.genome.v1.json) |
 
 ## Adding a Genome
 

@@ -13,6 +13,31 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.6.0] - 2026-06-02 — Alt-10 Memory, Forensics & Immune Observe Fabric
+
+**Alt-10** — nine read-only organs at governed; coherence fabric v1.5 with memory, forensics, and immune observe posture planes.
+
+### Added
+
+- **Alt-10.0** — `verification_gate_organ`, `memory_path_governance_organ`, `knowledge_authority_organ`, `scorpion_bridge_organ`, `mechanic_handoff_organ`, `forensic_triangulation_organ`, `immune_observe_organ`, `policy_gate_organ`, `predictor_immune_bridge_organ`; status APIs; `make alt10-gate`; `tools/governance/alt10_promote_mvp.py`
+- **Alt-10.1** — coherence snapshot v1.5 + `memory_paths_aligned`, `forensics_handoff_aligned`, `immune_observe_aligned` in Tier 5; `make alt10-1-gate`
+- **Alt-10.2** — `IMMUNE_OBSERVE_V1_PROOF` + `MEMORY_PATH_GOVERNANCE_V1_PROOF`; `make alt10-2-gate`
+- **Governed promotion** — `tools/governance/alt10_promote_governed.py`; `make alt10-governed-gate`
+
+### Changed
+
+- Genome registry: **30 governed** subsystem genomes (21 prior + 9 Alt-10)
+- `operator_cognition_coherence_fabric` schema ref → v1.5
+
+### Verification (v1.6.0)
+
+```bash
+make alt10-gate alt10-1-gate alt10-2-gate alt10-governed-gate
+python -m pytest tests/test_verification_gate_organ.py tests/test_memory_path_governance_organ.py tests/test_knowledge_authority_organ.py tests/test_scorpion_bridge_organ.py tests/test_mechanic_handoff_organ.py tests/test_forensic_triangulation_organ.py tests/test_immune_observe_organ.py tests/test_policy_gate_organ.py tests/test_predictor_immune_bridge_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.6.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.6.0
+
 ## [1.5.0] - 2026-06-02 — Alt-9 Infrastructure Fabric
 
 **Alt-9** — three infrastructure organs at governed; coherence fabric v1.4 `infrastructure_posture[]`; immune substrate closure.

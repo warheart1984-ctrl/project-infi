@@ -335,6 +335,36 @@ Depends on: Alt-8 governed mind-plane organs; live governed direct pipeline pred
 | Proof | `docs/proof/nova/IMMUNE_SUBSTRATE_V1_PROOF.md` |
 | Gate | `make alt9-2-gate` |
 
+## Alt-10 Summon Wave — Memory, Forensics & Immune Observe Fabric
+
+Batch-admit nine read-only organs across memory/execution, forensics handoff, and bounded immune observe escalation.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt10-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `verification_gate_organ` → `memory_path_governance_organ` → `knowledge_authority_organ` → `scorpion_bridge_organ` → `mechanic_handoff_organ` → `forensic_triangulation_organ` → `immune_observe_organ` → `policy_gate_organ` → `predictor_immune_bridge_organ` |
+| MVP promotion | `tools/governance/alt10_promote_mvp.py` |
+| Gates | `make alt10-gate` |
+| Governed promotion | `tools/governance/alt10_promote_governed.py` + `make alt10-governed-gate` |
+
+Depends on: Alt-9 governed infrastructure fabric; existing `forensic_triangulation` genome; immune substrate (Alt-9.2).
+
+## Alt-10.1 Coherence Fabric Memory/Forensics/Immune Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt10-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.5` + `memory_governance_posture[]`, `forensics_posture[]`, `immune_observe_posture[]` |
+| Gate | `make alt10-1-gate` |
+
+## Alt-10.2 Immune Observe & Memory Path Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt10-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/nova/IMMUNE_OBSERVE_V1_PROOF.md`, `docs/proof/platform/MEMORY_PATH_GOVERNANCE_V1_PROOF.md` |
+| Gate | `make alt10-2-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per

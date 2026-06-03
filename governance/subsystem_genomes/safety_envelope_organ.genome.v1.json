@@ -57,8 +57,9 @@
       "immune_system"
     ],
     "children": [
-      "reflection_runtime_organ",
-      "operator_cognition_coherence_fabric"
+      "immune_observe_organ",
+      "operator_cognition_coherence_fabric",
+      "reflection_runtime_organ"
     ]
   },
   "activation": {

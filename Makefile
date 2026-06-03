@@ -331,6 +331,46 @@ alt9-2-gate: alt9-1-gate immune-substrate-gate
 alt9-governed-gate:
 	python3 tools/governance/check_alt9_governed_eligibility.py
 
+verification-gate-organ-gate:
+	python3 .github/scripts/check-verification-gate-organ-governance.py
+
+memory-path-governance-organ-gate:
+	python3 .github/scripts/check-memory-path-governance-organ-governance.py
+
+knowledge-authority-organ-gate:
+	python3 .github/scripts/check-knowledge-authority-organ-governance.py
+
+scorpion-bridge-organ-gate:
+	python3 .github/scripts/check-scorpion-bridge-organ-governance.py
+
+mechanic-handoff-organ-gate:
+	python3 .github/scripts/check-mechanic-handoff-organ-governance.py
+
+forensic-triangulation-organ-gate:
+	python3 .github/scripts/check-forensic-triangulation-organ-governance.py
+
+immune-observe-organ-gate:
+	python3 .github/scripts/check-immune-observe-organ-governance.py
+
+policy-gate-organ-gate:
+	python3 .github/scripts/check-policy-gate-organ-governance.py
+
+predictor-immune-bridge-organ-gate:
+	python3 .github/scripts/check-predictor-immune-bridge-organ-governance.py
+
+alt10-gate: verification-gate-organ-gate memory-path-governance-organ-gate knowledge-authority-organ-gate scorpion-bridge-organ-gate mechanic-handoff-organ-gate forensic-triangulation-organ-gate immune-observe-organ-gate policy-gate-organ-gate predictor-immune-bridge-organ-gate genome-gate
+
+alt10-1-gate: alt10-gate alt9-1-gate
+	python3 -m pytest tests/test_verification_gate_organ.py tests/test_memory_path_governance_organ.py tests/test_knowledge_authority_organ.py tests/test_scorpion_bridge_organ.py tests/test_mechanic_handoff_organ.py tests/test_forensic_triangulation_organ.py tests/test_immune_observe_organ.py tests/test_policy_gate_organ.py tests/test_predictor_immune_bridge_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+
+immune-observe-closure-gate:
+	python3 tools/governance/check_immune_observe_closure.py
+
+alt10-2-gate: alt10-1-gate immune-observe-closure-gate
+
+alt10-governed-gate:
+	python3 tools/governance/check_alt10_governed_eligibility.py
+
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py
 

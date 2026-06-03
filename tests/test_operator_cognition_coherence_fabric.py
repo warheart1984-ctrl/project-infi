@@ -10,7 +10,7 @@ from src.operator_cognition_coherence_fabric import build_coherence_fabric_statu
 def test_build_coherence_fabric_status_schema_fields():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status["operator_cognition_coherence_fabric_version"] == (
-        "operator_cognition_coherence_fabric.v1.4"
+        "operator_cognition_coherence_fabric.v1.5"
     )
     assert status["read_only"] is True
     assert status["authority_lane"] == "operator"
@@ -73,6 +73,59 @@ def test_infrastructure_posture_includes_alt9_organs():
         "realtime_event_cause_predictor_organ",
         "invariant_engine_organ",
     }
+
+
+def test_memory_governance_posture_includes_alt10_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("memory_governance_posture") or []}
+    assert organs == {
+        "verification_gate_organ",
+        "memory_path_governance_organ",
+        "knowledge_authority_organ",
+    }
+    assert status.get("memory_paths_aligned") is True
+
+
+def test_forensics_posture_includes_alt10_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("forensics_posture") or []}
+    assert organs == {
+        "scorpion_bridge_organ",
+        "mechanic_handoff_organ",
+        "forensic_triangulation_organ",
+    }
+    assert status.get("forensics_handoff_aligned") is True
+
+
+def test_immune_observe_posture_includes_alt10_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("immune_observe_posture") or []}
+    assert organs == {
+        "immune_observe_organ",
+        "policy_gate_organ",
+        "predictor_immune_bridge_organ",
+    }
+
+
+def test_immune_observe_aligned_with_pipeline():
+    trace = {
+        "realtime_event_cause_predictor": {
+            "status": "bounded_inference",
+            "runtime_context": "operator_runtime",
+            "recommended_state": "observe",
+            "cause_class": "steady_state",
+            "advisory_only": True,
+            "supporting_signals": [],
+            "signal_count": 0,
+            "phase_gate": {"decision": "ALLOW"},
+        },
+        "validation": {"realtime_event_cause_predictor_valid": True},
+    }
+    status = build_coherence_fabric_status(
+        root=Path(__file__).resolve().parents[1],
+        pipeline_trace=trace,
+    )
+    assert status.get("immune_observe_aligned") is True
 
 
 def test_infrastructure_substrate_aligned_with_pipeline():

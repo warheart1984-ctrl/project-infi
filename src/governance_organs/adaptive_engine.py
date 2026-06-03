@@ -100,12 +100,20 @@ class AdaptiveEngine:
                 report["infrastructure_substrate_aligned"] = bool(
                     fabric.get("infrastructure_substrate_aligned")
                 )
+                report["memory_paths_aligned"] = bool(fabric.get("memory_paths_aligned"))
+                report["forensics_handoff_aligned"] = bool(
+                    fabric.get("forensics_handoff_aligned")
+                )
+                report["immune_observe_aligned"] = bool(fabric.get("immune_observe_aligned"))
             except Exception:
                 report["coherence_fabric_aligned"] = False
                 report["coherence_pipeline_allowed"] = False
                 report["safety_envelope_halt"] = False
                 report["mind_planes_aligned"] = False
                 report["infrastructure_substrate_aligned"] = False
+                report["memory_paths_aligned"] = False
+                report["forensics_handoff_aligned"] = False
+                report["immune_observe_aligned"] = False
             out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         except Exception:
             report["adaptive_lanes_awakened"] = False

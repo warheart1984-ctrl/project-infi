@@ -2,7 +2,7 @@
 
 CISIV stage: **implementation**
 
-Status: **governed** (Alt-7 / Alt-7.1 / Alt-7.2 / Alt-8.1 / Alt-9.1 batches through `alt9-1-summon-wave-2026-06`)
+Status: **governed** (Alt-7 / Alt-7.1 / Alt-7.2 / Alt-8.1 / Alt-9.1 / Alt-10.1 batches through `alt10-1-summon-wave-2026-06`)
 
 ## Purpose
 
@@ -12,7 +12,7 @@ wake without adding execution authority.
 
 ## Contract
 
-Schema: [schemas/operator_cognition_coherence_fabric.v1.4.json](../../../schemas/operator_cognition_coherence_fabric.v1.4.json)
+Schema: [schemas/operator_cognition_coherence_fabric.v1.5.json](../../../schemas/operator_cognition_coherence_fabric.v1.5.json)
 
 Parent law: [AAIS_ADAPTIVE_GOVERNANCE.md](../../contracts/AAIS_ADAPTIVE_GOVERNANCE.md)
 
@@ -26,6 +26,9 @@ Parent law: [AAIS_ADAPTIVE_GOVERNANCE.md](../../contracts/AAIS_ADAPTIVE_GOVERNAN
 | Runtime posture | reflection + memory runtime organs | `runtime_posture[]` |
 | Mind posture | Alt-8 witness + narrative + intent organs | `mind_posture[]` |
 | Infrastructure posture | Alt-9 phase gate + predictor + invariant organs | `infrastructure_posture[]` |
+| Memory governance posture | Alt-10 verification + memory path + knowledge authority organs | `memory_governance_posture[]` |
+| Forensics posture | Alt-10 scorpion + mechanic + triangulation organs | `forensics_posture[]` |
+| Immune observe posture | Alt-10 immune observe + policy + predictor bridge organs | `immune_observe_posture[]` |
 
 ## Runtime Surface
 

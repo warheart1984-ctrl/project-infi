@@ -25,7 +25,10 @@
       {
         "lane_id": "operator",
         "weight": 1.0,
-        "capabilities": ["trace_direct_lane", "trace_service_lane"]
+        "capabilities": [
+          "trace_direct_lane",
+          "trace_service_lane"
+        ]
       }
     ]
   },
@@ -64,10 +67,11 @@
       "jarvis_memory_board"
     ],
     "children": [
-      "operator_cognition_coherence_fabric",
       "continuity_witness_organ",
+      "operator_cognition_coherence_fabric",
       "phase_gate_organ",
-      "realtime_event_cause_predictor_organ"
+      "realtime_event_cause_predictor_organ",
+      "scorpion_bridge_organ"
     ]
   },
   "activation": {

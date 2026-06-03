@@ -11805,6 +11805,154 @@ def get_invariant_engine_status():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/verification-gate/status", methods=["GET"])
+def get_verification_gate_organ_status():
+    """Read-only Verification Gate organ snapshot (Alt-10 wave)."""
+    try:
+        from src.verification_gate_organ import build_verification_gate_status
+
+        return jsonify(
+            attach_ul_substrate({"verification_gate": build_verification_gate_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading verification gate status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/memory-path-governance/status", methods=["GET"])
+def get_memory_path_governance_status():
+    """Read-only Memory Path Governance organ snapshot (Alt-10 wave)."""
+    try:
+        from src.memory_path_governance_organ import build_memory_path_governance_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"memory_path_governance": build_memory_path_governance_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading memory path governance status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/knowledge-authority/status", methods=["GET"])
+def get_knowledge_authority_organ_status():
+    """Read-only Knowledge Authority organ snapshot (Alt-10 wave)."""
+    try:
+        from src.knowledge_authority_organ import build_knowledge_authority_status
+
+        return jsonify(
+            attach_ul_substrate({"knowledge_authority": build_knowledge_authority_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading knowledge authority status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/scorpion-bridge/status", methods=["GET"])
+def get_scorpion_bridge_status():
+    """Read-only Scorpion Bridge organ snapshot (Alt-10 wave)."""
+    try:
+        from src.scorpion_bridge_organ import build_scorpion_bridge_status
+
+        return jsonify(attach_ul_substrate({"scorpion_bridge": build_scorpion_bridge_status()}))
+    except Exception as e:
+        logger.error(f"Error reading scorpion bridge status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/mechanic-handoff/status", methods=["GET"])
+def get_mechanic_handoff_status():
+    """Read-only Mechanic Handoff organ snapshot (Alt-10 wave)."""
+    try:
+        from src.mechanic_handoff_organ import build_mechanic_handoff_status
+
+        session_metadata = None
+        session_id = str(request.args.get("session_id") or "").strip()
+        if session_id:
+            session = conversation_memory.get_session(session_id)
+            if session:
+                session_metadata = dict(session.metadata or {})
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "mechanic_handoff": build_mechanic_handoff_status(
+                        session_metadata=session_metadata
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading mechanic handoff status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/forensic-triangulation/status", methods=["GET"])
+def get_forensic_triangulation_organ_status():
+    """Read-only Forensic Triangulation organ snapshot (Alt-10 wave)."""
+    try:
+        from src.forensic_triangulation_organ import build_forensic_triangulation_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"forensic_triangulation": build_forensic_triangulation_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading forensic triangulation organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/immune-observe/status", methods=["GET"])
+def get_immune_observe_status():
+    """Read-only Immune Observe organ snapshot (Alt-10 wave)."""
+    try:
+        from src.immune_observe_organ import build_immune_observe_status
+
+        return jsonify(attach_ul_substrate({"immune_observe": build_immune_observe_status()}))
+    except Exception as e:
+        logger.error(f"Error reading immune observe status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/policy-gate/status", methods=["GET"])
+def get_policy_gate_status():
+    """Read-only Policy Gate organ snapshot (Alt-10 wave)."""
+    try:
+        from src.policy_gate_organ import build_policy_gate_status
+
+        return jsonify(attach_ul_substrate({"policy_gate": build_policy_gate_status()}))
+    except Exception as e:
+        logger.error(f"Error reading policy gate status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/predictor-immune-bridge/status", methods=["GET"])
+def get_predictor_immune_bridge_status():
+    """Read-only Predictor Immune Bridge organ snapshot (Alt-10 wave)."""
+    try:
+        from src.predictor_immune_bridge_organ import build_predictor_immune_bridge_status
+
+        pipeline_trace = None
+        session_id = str(request.args.get("session_id") or "").strip()
+        if session_id:
+            session = conversation_memory.get_session(session_id)
+            if session:
+                pipeline_trace = _previous_governed_pipeline(session)
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "predictor_immune_bridge": build_predictor_immune_bridge_status(
+                        governed_pipeline=pipeline_trace
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading predictor immune bridge status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/reset", methods=["POST"])
 def reset_mission_board():
     """Reset Mission Board state with an optional backup and seeded current objectives."""

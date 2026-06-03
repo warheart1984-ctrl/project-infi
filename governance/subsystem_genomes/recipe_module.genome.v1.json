@@ -37,13 +37,19 @@
       {
         "lane_id": "operator",
         "weight": 1.0,
-        "capabilities": ["approve_policy_changes", "promote_policies_to_production"]
+        "capabilities": [
+          "approve_policy_changes",
+          "promote_policies_to_production"
+        ]
       }
     ],
     "contextual_gates": [
       {
         "gate_id": "recipe_mission_flow",
-        "activate_on": ["operator_runtime", "recipe"],
+        "activate_on": [
+          "operator_runtime",
+          "recipe"
+        ],
         "make_target": "recipe-module-gate"
       }
     ]

@@ -56,7 +56,9 @@
     "children": [
       "cisiv_operator_lineage_console",
       "governed_direct_pipeline",
-      "operator_cognition_coherence_fabric"
+      "memory_path_governance_organ",
+      "operator_cognition_coherence_fabric",
+      "verification_gate_organ"
     ]
   },
   "activation": {

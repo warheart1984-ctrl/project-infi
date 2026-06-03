@@ -39,6 +39,15 @@ GENE_GATES: dict[str, str] = {
     "phase_gate_organ": "phase-gate-organ-gate",
     "realtime_event_cause_predictor_organ": "realtime-predictor-organ-gate",
     "invariant_engine_organ": "invariant-engine-organ-gate",
+    "verification_gate_organ": "verification-gate-organ-gate",
+    "memory_path_governance_organ": "memory-path-governance-organ-gate",
+    "knowledge_authority_organ": "knowledge-authority-organ-gate",
+    "scorpion_bridge_organ": "scorpion-bridge-organ-gate",
+    "mechanic_handoff_organ": "mechanic-handoff-organ-gate",
+    "forensic_triangulation_organ": "forensic-triangulation-organ-gate",
+    "immune_observe_organ": "immune-observe-organ-gate",
+    "policy_gate_organ": "policy-gate-organ-gate",
+    "predictor_immune_bridge_organ": "predictor-immune-bridge-organ-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -70,6 +79,31 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     ],
     "invariant-engine-organ-gate": [
         ".github/scripts/check-invariant-engine-organ-governance.py"
+    ],
+    "verification-gate-organ-gate": [
+        ".github/scripts/check-verification-gate-organ-governance.py"
+    ],
+    "memory-path-governance-organ-gate": [
+        ".github/scripts/check-memory-path-governance-organ-governance.py"
+    ],
+    "knowledge-authority-organ-gate": [
+        ".github/scripts/check-knowledge-authority-organ-governance.py"
+    ],
+    "scorpion-bridge-organ-gate": [
+        ".github/scripts/check-scorpion-bridge-organ-governance.py"
+    ],
+    "mechanic-handoff-organ-gate": [
+        ".github/scripts/check-mechanic-handoff-organ-governance.py"
+    ],
+    "forensic-triangulation-organ-gate": [
+        ".github/scripts/check-forensic-triangulation-organ-governance.py"
+    ],
+    "immune-observe-organ-gate": [
+        ".github/scripts/check-immune-observe-organ-governance.py"
+    ],
+    "policy-gate-organ-gate": [".github/scripts/check-policy-gate-organ-governance.py"],
+    "predictor-immune-bridge-organ-gate": [
+        ".github/scripts/check-predictor-immune-bridge-organ-governance.py"
     ],
 }
 

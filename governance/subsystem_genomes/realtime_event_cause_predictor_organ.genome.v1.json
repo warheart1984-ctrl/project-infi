@@ -56,7 +56,9 @@
       "governed_direct_pipeline"
     ],
     "children": [
-      "invariant_engine_organ"
+      "immune_observe_organ",
+      "invariant_engine_organ",
+      "predictor_immune_bridge_organ"
     ]
   },
   "activation": {

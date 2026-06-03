@@ -283,6 +283,21 @@ includes `infrastructure_substrate_aligned`.
 | Batch | `alt9-2-summon-wave-2026-06` |
 | Proof | `docs/proof/nova/IMMUNE_SUBSTRATE_V1_PROOF.md` |
 
+## Alt-10.1 Memory, Forensics & Immune Coherence Join
+
+Snapshot v1.5 adds `memory_governance_posture[]`, `forensics_posture[]`, and
+`immune_observe_posture[]`. Tier 5 health includes `memory_paths_aligned`,
+`forensics_handoff_aligned`, and `immune_observe_aligned`.
+
+| Gate | `make alt10-1-gate` |
+| Batch | `alt10-1-summon-wave-2026-06` |
+
+## Alt-10.2 Immune Observe & Memory Path Closure
+
+| Gate | `make alt10-2-gate` |
+| Batch | `alt10-2-summon-wave-2026-06` |
+| Proof | `docs/proof/nova/IMMUNE_OBSERVE_V1_PROOF.md`, `docs/proof/platform/MEMORY_PATH_GOVERNANCE_V1_PROOF.md` |
+
 ## Related
 
 - [AAIS_SSP_PROTOCOL.md](./AAIS_SSP_PROTOCOL.md)

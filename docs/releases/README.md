@@ -10,8 +10,9 @@ Project Infinity ships **two independent release tracks**. Do not conflate them.
 |---|---|
 | Version | `pyproject.toml` (`aais` package) |
 | History | [CHANGELOG.md](../../CHANGELOG.md) |
-| Tag format | `v1.5.0` (latest — Alt-9), `v1.4.0`, `v1.3.3`, `v1.3.2`, `v1.3.1`, `v1.3.0`, `v1.2.0`, `v1.1.0`, `v0.2.0`, or `aais-v0.2.0` |
+| Tag format | `v1.6.0` (latest — Alt-10), `v1.5.0`, `v1.4.0`, `v1.3.3`, `v1.3.2`, `v1.3.1`, `v1.3.0`, `v1.2.0`, `v1.1.0`, `v0.2.0`, or `aais-v0.2.0` |
 | GitHub Release | Manual or release-drafter; body = CHANGELOG section for that version |
+| v1.6.0 notes | [v1.6.0-alt10-memory-forensics-immune.md](./v1.6.0-alt10-memory-forensics-immune.md) |
 | v1.5.0 notes | [v1.5.0-alt9-infrastructure-fabric.md](./v1.5.0-alt9-infrastructure-fabric.md) |
 | v1.4.0 notes | [v1.4.0-alt8-cognitive-continuity.md](./v1.4.0-alt8-cognitive-continuity.md) |
 | v1.3.3 notes | [v1.3.3-alt7-2-enforcement-closure.md](./v1.3.3-alt7-2-enforcement-closure.md) |
