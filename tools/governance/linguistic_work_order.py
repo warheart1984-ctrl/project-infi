@@ -12,6 +12,9 @@ _ROOT = Path(__file__).resolve().parents[2]
 if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
+from src.governance_organs.linguistic_governance_queue_engine import (  # noqa: E402
+    load_governance_queue,
+)
 from src.governance_organs.linguistic_governance_work_order_engine import (  # noqa: E402
     load_all_work_orders,
     set_work_order_status,
@@ -27,7 +30,21 @@ def main() -> int:
     parser.add_argument("--gene", type=str, default="")
     parser.add_argument("--status", type=str, default="")
     parser.add_argument("--notes", type=str, default="")
+    parser.add_argument("--ack-top", type=int, default=0, metavar="N")
     args = parser.parse_args()
+
+    if args.ack_top > 0:
+        sync_work_orders_from_queue(_ROOT)
+        queue = load_governance_queue(_ROOT)
+        genes = [
+            item["gene"]
+            for item in (queue.get("items") or [])[: args.ack_top]
+            if item.get("gene")
+        ]
+        for gene in genes:
+            set_work_order_status(gene, "acknowledged", root=_ROOT)
+        print(f"acknowledged {len(genes)} work order(s)")
+        return 0
 
     if args.sync_from_queue:
         paths = sync_work_orders_from_queue(_ROOT)

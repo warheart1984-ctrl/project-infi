@@ -1,0 +1,79 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "linguistic_governed_lifecycle_fabric_organ",
+    "version": "0.1.0-concept",
+    "stage": "governed",
+    "display_name": "Linguistic Governed Lifecycle Fabric Subsystem"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md",
+      "docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md",
+      "docs/runtime/AAIS_RUNTIME_GUIDE.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    ],
+    "invariants": [
+      "Read-only v1 \u2014 subsystem does not mutate upstream authority",
+      "module_id frozen to AAIS-LGLF-01"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/linguistic_governed_lifecycle_fabric_organ.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/linguistic_governed_lifecycle_fabric_organ.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/linguistic-governed-lifecycle-fabric/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make linguistic-governed-lifecycle-fabric-organ-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/platform/LINGUISTIC_GOVERNED_LIFECYCLE_FABRIC_ORGAN_GOVERNED_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/platform/LINGUISTIC_GOVERNED_LIFECYCLE_FABRIC_ORGAN_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "linguistic_governance_attestation_organ",
+      "meta_linguistic_registry_organ",
+      "linguistic_closed_loop_fabric_organ"
+    ],
+    "children": []
+  },
+  "activation": {
+    "order": 9,
+    "batch_id": "alt25-summon-wave-2026-06",
+    "notes": "Release 25 wave 9"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/LINGUISTIC_GOVERNED_LIFECYCLE_FABRIC_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/LINGUISTIC_GOVERNED_LIFECYCLE_FABRIC_ORGAN_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/platform/LINGUISTIC_GOVERNED_LIFECYCLE_FABRIC_ORGAN.md"
+  }
+}

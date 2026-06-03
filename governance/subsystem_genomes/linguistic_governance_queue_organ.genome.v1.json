@@ -56,7 +56,8 @@
       "linguistic_forecast_calibration_organ"
     ],
     "children": [
-      "linguistic_full_governance_cycle_organ"
+      "linguistic_full_governance_cycle_organ",
+      "linguistic_governance_work_order_organ"
     ]
   },
   "activation": {

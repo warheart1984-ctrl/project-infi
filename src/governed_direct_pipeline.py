@@ -1035,6 +1035,7 @@ def build_governed_turn_pipeline(
 
     from src.operator_cognition_coherence_fabric import (
         build_coherence_fabric_status,
+        evaluate_attestation_coherence,
         evaluate_pipeline_coherence,
     )
 
@@ -1056,6 +1057,13 @@ def build_governed_turn_pipeline(
             "response": "BLOCK",
             "reason": coherence_eval.reason or "coherence fabric blocked",
         }
+    else:
+        attestation_eval = evaluate_attestation_coherence()
+        if not attestation_eval.allowed:
+            coherence_protocol = {
+                "response": "BLOCK",
+                "reason": attestation_eval.reason or "linguistic attestation blocked",
+            }
 
     active_contract = str(contract or (turn_contract or {}).get("contract_label") or "direct_answer").strip()
     surface_node = _surface_node(surface_identity or (god_brain or {}).get("surface_identity"), normalized_mode)

@@ -5,5 +5,10 @@
   "max_queue_age_days": 7,
   "max_full_cycle_age_days": 7,
   "max_attestation_age_days": 7,
-  "max_pending_work_order_days": 14
+  "max_pending_work_order_days": 14,
+  "retain_attestation_history": 12,
+  "enforce_min_closed_loop_score": 60,
+  "enforce_block_on_stale_attestation": true,
+  "enforce_block_on_unaligned_attested_loop": true,
+  "enforce_block_on_pending_work_orders": false
 }

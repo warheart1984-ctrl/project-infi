@@ -39,7 +39,7 @@
     ]
   },
   "schema": {
-    "ref": "schemas/operator_cognition_coherence_fabric.v1.19.json",
+    "ref": "schemas/operator_cognition_coherence_fabric.v1.20.json",
     "frozen": true
   },
   "runtime": {

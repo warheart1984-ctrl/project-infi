@@ -12,6 +12,7 @@ if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
 from src.governance_organs.linguistic_governance_attestation_engine import (  # noqa: E402
+    attestation_diff,
     format_attestation_markdown,
     write_attestation,
 )
@@ -21,7 +22,14 @@ from tools.linguistic_genome_lib import load_json  # noqa: E402
 def main() -> int:
     parser = argparse.ArgumentParser(description="Linguistic governance attestation")
     parser.add_argument("--markdown", action="store_true", help="Print operator summary")
+    parser.add_argument("--diff", action="store_true", help="Compare latest vs prior cycle")
     args = parser.parse_args()
+
+    if args.diff:
+        import json
+
+        print(json.dumps(attestation_diff(_ROOT), indent=2))
+        return 0
 
     path = write_attestation(_ROOT)
     print(f"wrote {path.relative_to(_ROOT)}")

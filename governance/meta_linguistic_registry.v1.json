@@ -7,7 +7,11 @@
     "naming-gate",
     "naming-genome-gate",
     "linguistic-mutation-gate",
-    "linguistic-drift-gate"
+    "linguistic-drift-gate",
+    "linguistic-calibration-gate",
+    "linguistic-attestation-gate",
+    "linguistic-work-order-gate",
+    "linguistic-full-cycle-gate"
   ],
   "cascade_policy_ref": "governance/linguistic_cascade_policy.v1.json",
   "remediation_dir": "governance/linguistic_remediations",

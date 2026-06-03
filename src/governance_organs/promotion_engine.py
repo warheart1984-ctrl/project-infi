@@ -165,6 +165,19 @@ GENE_GATES: dict[str, str] = {
     "linguistic_forecast_consumption_organ": "linguistic-forecast-consumption-organ-gate",
     "linguistic_cycle_optimization_organ": "linguistic-cycle-optimization-organ-gate",
     "linguistic_closed_loop_fabric_organ": "linguistic-closed-loop-fabric-organ-gate",
+    "linguistic_forecast_calibration_organ": "linguistic-forecast-calibration-organ-gate",
+    "linguistic_governance_queue_organ": "linguistic-governance-queue-organ-gate",
+    "linguistic_full_governance_cycle_organ": "linguistic-full-governance-cycle-organ-gate",
+    "linguistic_governance_attestation_organ": "linguistic-governance-attestation-organ-gate",
+    "linguistic_forecast_archive_organ": "linguistic-forecast-archive-organ-gate",
+    "linguistic_drift_report_organ": "linguistic-drift-report-organ-gate",
+    "linguistic_governance_work_order_organ": "linguistic-governance-work-order-organ-gate",
+    "linguistic_governance_cadence_organ": "linguistic-governance-cadence-organ-gate",
+    "linguistic_forecast_calibration_report_organ": "linguistic-forecast-calibration-report-organ-gate",
+    "linguistic_full_governance_cycle_history_organ": "linguistic-full-governance-cycle-history-organ-gate",
+    "meta_linguistic_registry_organ": "meta-linguistic-registry-organ-gate",
+    "linguistic_subsystem_promotion_organ": "linguistic-subsystem-promotion-organ-gate",
+    "linguistic_governed_lifecycle_fabric_organ": "linguistic-governed-lifecycle-fabric-organ-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -504,6 +517,45 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     ],
     "linguistic-closed-loop-fabric-organ-gate": [
         ".github/scripts/check-linguistic-closed-loop-fabric-organ-governance.py"
+    ],
+    "linguistic-forecast-calibration-organ-gate": [
+        ".github/scripts/check-linguistic-forecast-calibration-organ-governance.py"
+    ],
+    "linguistic-governance-queue-organ-gate": [
+        ".github/scripts/check-linguistic-governance-queue-organ-governance.py"
+    ],
+    "linguistic-full-governance-cycle-organ-gate": [
+        ".github/scripts/check-linguistic-full-governance-cycle-organ-governance.py"
+    ],
+    "linguistic-governance-attestation-organ-gate": [
+        ".github/scripts/check-linguistic-governance-attestation-organ-governance.py"
+    ],
+    "linguistic-forecast-archive-organ-gate": [
+        ".github/scripts/check-linguistic-forecast-archive-organ-governance.py"
+    ],
+    "linguistic-drift-report-organ-gate": [
+        ".github/scripts/check-linguistic-drift-report-organ-governance.py"
+    ],
+    "linguistic-governance-work-order-organ-gate": [
+        ".github/scripts/check-linguistic-governance-work-order-organ-governance.py"
+    ],
+    "linguistic-governance-cadence-organ-gate": [
+        ".github/scripts/check-linguistic-governance-cadence-organ-governance.py"
+    ],
+    "linguistic-forecast-calibration-report-organ-gate": [
+        ".github/scripts/check-linguistic-forecast-calibration-report-organ-governance.py"
+    ],
+    "linguistic-full-governance-cycle-history-organ-gate": [
+        ".github/scripts/check-linguistic-full-governance-cycle-history-organ-governance.py"
+    ],
+    "meta-linguistic-registry-organ-gate": [
+        ".github/scripts/check-meta-linguistic-registry-organ-governance.py"
+    ],
+    "linguistic-subsystem-promotion-organ-gate": [
+        ".github/scripts/check-linguistic-subsystem-promotion-organ-governance.py"
+    ],
+    "linguistic-governed-lifecycle-fabric-organ-gate": [
+        ".github/scripts/check-linguistic-governed-lifecycle-fabric-organ-governance.py"
     ],
 }
 

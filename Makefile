@@ -261,6 +261,9 @@ linguistic-governance-attestation:
 linguistic-attestation-gate:
 	python3 tools/governance/check_linguistic_attestation_gate.py
 
+linguistic-full-cycle-gate:
+	python3 tools/governance/check_linguistic_full_cycle_gate.py
+
 safety-envelope-gate:
 	python3 .github/scripts/check-safety-envelope-governance.py
 
@@ -982,6 +985,45 @@ alt24-2-gate: alt24-1-gate alt24-closure-gate
 
 alt24-governed-gate:
 	python3 tools/governance/check_alt24_governed_eligibility.py
+
+linguistic-forecast-archive-organ-gate:
+	python3 .github/scripts/check-linguistic-forecast-archive-organ-governance.py
+
+linguistic-drift-report-organ-gate:
+	python3 .github/scripts/check-linguistic-drift-report-organ-governance.py
+
+linguistic-governance-work-order-organ-gate:
+	python3 .github/scripts/check-linguistic-governance-work-order-organ-governance.py
+
+linguistic-governance-cadence-organ-gate:
+	python3 .github/scripts/check-linguistic-governance-cadence-organ-governance.py
+
+linguistic-forecast-calibration-report-organ-gate:
+	python3 .github/scripts/check-linguistic-forecast-calibration-report-organ-governance.py
+
+linguistic-full-governance-cycle-history-organ-gate:
+	python3 .github/scripts/check-linguistic-full-governance-cycle-history-organ-governance.py
+
+meta-linguistic-registry-organ-gate:
+	python3 .github/scripts/check-meta-linguistic-registry-organ-governance.py
+
+linguistic-subsystem-promotion-organ-gate:
+	python3 .github/scripts/check-linguistic-subsystem-promotion-organ-governance.py
+
+linguistic-governed-lifecycle-fabric-organ-gate:
+	python3 .github/scripts/check-linguistic-governed-lifecycle-fabric-organ-governance.py
+
+alt25-gate: linguistic-forecast-archive-organ-gate linguistic-drift-report-organ-gate linguistic-governance-work-order-organ-gate linguistic-governance-cadence-organ-gate linguistic-forecast-calibration-report-organ-gate linguistic-full-governance-cycle-history-organ-gate meta-linguistic-registry-organ-gate linguistic-subsystem-promotion-organ-gate linguistic-governed-lifecycle-fabric-organ-gate genome-gate
+
+alt25-1-gate: alt25-gate alt24-2-gate
+
+alt25-closure-gate:
+	python3 tools/governance/check_alt25_closure.py
+
+alt25-2-gate: alt25-1-gate alt25-closure-gate
+
+alt25-governed-gate:
+	python3 tools/governance/check_alt25_governed_eligibility.py
 
 alt23-1-gate: alt23-gate alt22-1-gate
 

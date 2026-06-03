@@ -57,6 +57,8 @@
       "meta_linguistic_governance_organ"
     ],
     "children": [
+      "linguistic_forecast_archive_organ",
+      "linguistic_forecast_calibration_report_organ",
       "linguistic_full_governance_cycle_organ",
       "linguistic_governance_queue_organ"
     ]

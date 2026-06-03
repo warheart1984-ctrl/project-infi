@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.19"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.20"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -121,8 +121,73 @@ def coherence_protocol_from_pipeline(
     return {"response": response, "reason": reason}
 
 
+def evaluate_attestation_coherence(root: Path | None = None) -> CoherenceExecuteResult:
+    """Wave 16 — enforce-mode attestation/cadence checks for cognitive turns."""
+    root = _root(root)
+    reg_path = root / "governance/meta_linguistic_registry.v1.json"
+    policy_mode = "observe"
+    if reg_path.is_file():
+        from tools.linguistic_genome_lib import load_json
+
+        policy_mode = load_json(reg_path).get("policy_mode", "observe")
+    if policy_mode != "enforce":
+        return CoherenceExecuteResult(allowed=True)
+
+    from src.governance_organs.linguistic_governance_attestation_engine import (
+        attestation_stale,
+        load_attestation,
+        load_cadence_policy,
+    )
+    from src.governance_organs.linguistic_governance_work_order_engine import (
+        pending_urgent_stale,
+    )
+
+    cadence = load_cadence_policy(root)
+    att = load_attestation(root)
+    min_score = int(cadence.get("enforce_min_closed_loop_score", 60))
+
+    if cadence.get("enforce_block_on_stale_attestation", True) and attestation_stale(root):
+        return CoherenceExecuteResult(
+            allowed=False,
+            reason="linguistic attestation stale or missing",
+        )
+    if att:
+        score = int(att.get("closed_loop_score", 0))
+        if score < min_score:
+            return CoherenceExecuteResult(
+                allowed=False,
+                reason=f"closed_loop_score {score} below minimum {min_score}",
+            )
+    elif cadence.get("enforce_block_on_stale_attestation", True):
+        return CoherenceExecuteResult(
+            allowed=False,
+            reason="linguistic attestation missing",
+        )
+
+    if cadence.get("enforce_block_on_unaligned_attested_loop", True):
+        fabric = build_coherence_fabric_status(root=root)
+        if not fabric.get("linguistic_attested_closed_loop_aligned"):
+            return CoherenceExecuteResult(
+                allowed=False,
+                reason="linguistic attested closed-loop not aligned",
+            )
+
+    if cadence.get("enforce_block_on_pending_work_orders", False):
+        max_days = int(cadence.get("max_pending_work_order_days", 14))
+        stale = pending_urgent_stale(root, top_n=5, max_pending_days=max_days)
+        if stale:
+            return CoherenceExecuteResult(
+                allowed=False,
+                reason=f"{len(stale)} urgent work order(s) pending beyond SLA",
+            )
+
+    return CoherenceExecuteResult(allowed=True)
+
+
 def assert_coherence_allows_turn(
     pipeline: dict[str, Any] | None,
+    *,
+    root: Path | None = None,
 ) -> CoherenceExecuteResult:
     """Return whether a cognitive turn may proceed given pipeline coherence_protocol."""
     if not coherence_hard_block_enabled():
@@ -133,6 +198,9 @@ def assert_coherence_allows_turn(
             allowed=False,
             reason=protocol["reason"] or "coherence fabric blocked",
         )
+    attestation = evaluate_attestation_coherence(root)
+    if not attestation.allowed:
+        return attestation
     return CoherenceExecuteResult(allowed=True)
 
 
@@ -1863,6 +1931,76 @@ def _build_linguistic_attestation_layer() -> list[dict[str, Any]]:
     ]
 
 
+def _build_linguistic_operator_execution_layer() -> list[dict[str, Any]]:
+    from src.linguistic_forecast_archive_organ import (
+        build_linguistic_forecast_archive_status,
+    )
+    from src.linguistic_governance_cadence_organ import (
+        build_linguistic_governance_cadence_status,
+    )
+    from src.linguistic_governance_work_order_organ import (
+        build_linguistic_governance_work_order_status,
+    )
+
+    return [
+        _organ_posture_item(
+            "linguistic_forecast_archive_organ",
+            build_linguistic_forecast_archive_status(),
+        ),
+        _organ_posture_item(
+            "linguistic_governance_work_order_organ",
+            build_linguistic_governance_work_order_status(),
+        ),
+        _organ_posture_item(
+            "linguistic_governance_cadence_organ",
+            build_linguistic_governance_cadence_status(),
+        ),
+    ]
+
+
+def _build_linguistic_lifecycle_artifact_layer() -> list[dict[str, Any]]:
+    from src.linguistic_drift_report_organ import build_linguistic_drift_report_status
+    from src.linguistic_forecast_calibration_report_organ import (
+        build_linguistic_forecast_calibration_report_status,
+    )
+    from src.linguistic_full_governance_cycle_history_organ import (
+        build_linguistic_full_governance_cycle_history_status,
+    )
+    from src.meta_linguistic_registry_organ import build_meta_linguistic_registry_status
+
+    return [
+        _organ_posture_item(
+            "linguistic_drift_report_organ",
+            build_linguistic_drift_report_status(),
+        ),
+        _organ_posture_item(
+            "linguistic_forecast_calibration_report_organ",
+            build_linguistic_forecast_calibration_report_status(),
+        ),
+        _organ_posture_item(
+            "linguistic_full_governance_cycle_history_organ",
+            build_linguistic_full_governance_cycle_history_status(),
+        ),
+        _organ_posture_item(
+            "meta_linguistic_registry_organ",
+            build_meta_linguistic_registry_status(),
+        ),
+    ]
+
+
+def _build_linguistic_promotion_layer() -> list[dict[str, Any]]:
+    from src.linguistic_subsystem_promotion_organ import (
+        build_linguistic_subsystem_promotion_status,
+    )
+
+    return [
+        _organ_posture_item(
+            "linguistic_subsystem_promotion_organ",
+            build_linguistic_subsystem_promotion_status(),
+        ),
+    ]
+
+
 def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
@@ -1978,6 +2116,9 @@ def build_coherence_fabric_status(
     linguistic_calibration_layer = _build_linguistic_calibration_layer()
     linguistic_governance_queue_layer = _build_linguistic_governance_queue_layer()
     linguistic_attestation_layer = _build_linguistic_attestation_layer()
+    linguistic_operator_execution_layer = _build_linguistic_operator_execution_layer()
+    linguistic_lifecycle_artifact_layer = _build_linguistic_lifecycle_artifact_layer()
+    linguistic_promotion_layer = _build_linguistic_promotion_layer()
 
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
@@ -2178,6 +2319,29 @@ def build_coherence_fabric_status(
             and _layer_aligned(linguistic_calibration_layer, minimum=3)
             and _layer_aligned(linguistic_governance_queue_layer, minimum=3)
             and _layer_aligned(linguistic_attestation_layer, minimum=3)
+        ),
+        "linguistic_operator_execution_layer": linguistic_operator_execution_layer,
+        "linguistic_operator_execution_aligned": _layer_aligned(
+            linguistic_operator_execution_layer, minimum=3
+        ),
+        "linguistic_lifecycle_artifact_layer": linguistic_lifecycle_artifact_layer,
+        "linguistic_lifecycle_artifact_aligned": _layer_aligned(
+            linguistic_lifecycle_artifact_layer, minimum=4
+        ),
+        "linguistic_promotion_layer": linguistic_promotion_layer,
+        "linguistic_promotion_aligned": _layer_aligned(
+            linguistic_promotion_layer, minimum=1
+        ),
+        "linguistic_governed_lifecycle_aligned": (
+            _layer_aligned(linguistic_forecast_layer, minimum=3)
+            and _layer_aligned(linguistic_predictive_cycle_layer, minimum=3)
+            and _layer_aligned(linguistic_governance_cycle_layer, minimum=3)
+            and _layer_aligned(linguistic_calibration_layer, minimum=3)
+            and _layer_aligned(linguistic_governance_queue_layer, minimum=3)
+            and _layer_aligned(linguistic_attestation_layer, minimum=3)
+            and _layer_aligned(linguistic_operator_execution_layer, minimum=3)
+            and _layer_aligned(linguistic_lifecycle_artifact_layer, minimum=4)
+            and _layer_aligned(linguistic_promotion_layer, minimum=1)
         ),
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,

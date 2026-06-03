@@ -11,6 +11,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from src.governance_organs.linguistic_governance_engine import (  # noqa: E402
+    DEFAULT_GATES,
     GATE_COMMANDS,
     LinguisticGovernanceEngine,
 )
@@ -30,6 +31,12 @@ def test_gate_commands_cover_registry_gates():
     reg = engine.load_registry()
     for gate in reg.get("gates") or []:
         assert gate in GATE_COMMANDS
+
+
+def test_default_gates_include_wave16():
+    assert "linguistic-attestation-gate" in DEFAULT_GATES
+    assert "linguistic-work-order-gate" in DEFAULT_GATES
+    assert "linguistic-full-cycle-gate" in DEFAULT_GATES
 
 
 def test_check_cascade_policy_returns_tuple():

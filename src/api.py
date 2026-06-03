@@ -13783,6 +13783,191 @@ def get_linguistic_governance_attestation_organ_status():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/linguistic-forecast-archive/status", methods=["GET"])
+def get_linguistic_forecast_archive_organ_status():
+    try:
+        from src.linguistic_forecast_archive_organ import (
+            build_linguistic_forecast_archive_status,
+        )
+
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "linguistic_forecast_archive": (
+                        build_linguistic_forecast_archive_status()
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading linguistic_forecast_archive_organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/linguistic-drift-report/status", methods=["GET"])
+def get_linguistic_drift_report_organ_status():
+    try:
+        from src.linguistic_drift_report_organ import build_linguistic_drift_report_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"linguistic_drift_report": build_linguistic_drift_report_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading linguistic_drift_report_organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/linguistic-governance-work-order/status", methods=["GET"])
+def get_linguistic_governance_work_order_organ_status():
+    try:
+        from src.linguistic_governance_work_order_organ import (
+            build_linguistic_governance_work_order_status,
+        )
+
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "linguistic_governance_work_order": (
+                        build_linguistic_governance_work_order_status()
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(
+            f"Error reading linguistic_governance_work_order_organ status: {e}"
+        )
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/linguistic-governance-cadence/status", methods=["GET"])
+def get_linguistic_governance_cadence_organ_status():
+    try:
+        from src.linguistic_governance_cadence_organ import (
+            build_linguistic_governance_cadence_status,
+        )
+
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "linguistic_governance_cadence": (
+                        build_linguistic_governance_cadence_status()
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading linguistic_governance_cadence_organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/linguistic-forecast-calibration-report/status", methods=["GET"])
+def get_linguistic_forecast_calibration_report_organ_status():
+    try:
+        from src.linguistic_forecast_calibration_report_organ import (
+            build_linguistic_forecast_calibration_report_status,
+        )
+
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "linguistic_forecast_calibration_report": (
+                        build_linguistic_forecast_calibration_report_status()
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(
+            f"Error reading linguistic_forecast_calibration_report_organ status: {e}"
+        )
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/linguistic-full-governance-cycle-history/status", methods=["GET"])
+def get_linguistic_full_governance_cycle_history_organ_status():
+    try:
+        from src.linguistic_full_governance_cycle_history_organ import (
+            build_linguistic_full_governance_cycle_history_status,
+        )
+
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "linguistic_full_governance_cycle_history": (
+                        build_linguistic_full_governance_cycle_history_status()
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(
+            f"Error reading linguistic_full_governance_cycle_history_organ status: {e}"
+        )
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/meta-linguistic-registry/status", methods=["GET"])
+def get_meta_linguistic_registry_organ_status():
+    try:
+        from src.meta_linguistic_registry_organ import build_meta_linguistic_registry_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"meta_linguistic_registry": build_meta_linguistic_registry_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading meta_linguistic_registry_organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/linguistic-subsystem-promotion/status", methods=["GET"])
+def get_linguistic_subsystem_promotion_organ_status():
+    try:
+        from src.linguistic_subsystem_promotion_organ import (
+            build_linguistic_subsystem_promotion_status,
+        )
+
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "linguistic_subsystem_promotion": (
+                        build_linguistic_subsystem_promotion_status()
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading linguistic_subsystem_promotion_organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/linguistic-governed-lifecycle-fabric/status", methods=["GET"])
+def get_linguistic_governed_lifecycle_fabric_organ_status():
+    try:
+        from src.linguistic_governed_lifecycle_fabric_organ import (
+            build_linguistic_governed_lifecycle_fabric_status,
+        )
+
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "linguistic_governed_lifecycle_fabric": (
+                        build_linguistic_governed_lifecycle_fabric_status()
+                    )
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(
+            f"Error reading linguistic_governed_lifecycle_fabric_organ status: {e}"
+        )
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/reset", methods=["POST"])
 def reset_mission_board():
     """Reset Mission Board state with an optional backup and seeded current objectives."""

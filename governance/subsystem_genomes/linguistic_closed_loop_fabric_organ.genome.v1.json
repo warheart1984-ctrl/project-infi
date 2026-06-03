@@ -58,7 +58,8 @@
       "operator_cognition_coherence_fabric"
     ],
     "children": [
-      "linguistic_governance_attestation_organ"
+      "linguistic_governance_attestation_organ",
+      "linguistic_governed_lifecycle_fabric_organ"
     ]
   },
   "activation": {

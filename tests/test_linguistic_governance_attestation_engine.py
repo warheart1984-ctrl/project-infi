@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -12,6 +13,7 @@ if str(ROOT) not in sys.path:
 
 from src.governance_organs.linguistic_governance_attestation_engine import (  # noqa: E402
     build_attestation,
+    list_attestation_cycles,
     write_attestation,
 )
 
@@ -47,3 +49,28 @@ def test_write_attestation(tmp_path: Path):
     assert path.is_file()
     att = build_attestation(tmp_path)
     assert att["generated_at"]
+    cycles = list_attestation_cycles(tmp_path)
+    assert len(cycles) >= 1
+
+
+def test_attestation_history_prune(tmp_path: Path):
+    import shutil
+
+    dst = tmp_path / "governance"
+    dst.mkdir(parents=True, exist_ok=True)
+    for name in (
+        "linguistic_governance_cadence_policy.v1.json",
+        "meta_linguistic_registry.v1.json",
+    ):
+        src = ROOT / "governance" / name
+        if src.is_file():
+            shutil.copy(src, dst / name)
+    src_policy = dst / "linguistic_governance_cadence_policy.v1.json"
+    if src_policy.is_file():
+        data = json.loads(src_policy.read_text(encoding="utf-8"))
+        data["retain_attestation_history"] = 2
+        src_policy.write_text(json.dumps(data), encoding="utf-8")
+    for _ in range(4):
+        write_attestation(tmp_path)
+    cycles = list_attestation_cycles(tmp_path)
+    assert len(cycles) <= 2

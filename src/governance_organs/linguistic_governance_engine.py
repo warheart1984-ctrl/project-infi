@@ -34,6 +34,17 @@ class MetaLinguisticGateReport:
     errors: list[str] = field(default_factory=list)
 
 
+DEFAULT_GATES: list[str] = [
+    "naming-gate",
+    "naming-genome-gate",
+    "linguistic-mutation-gate",
+    "linguistic-drift-gate",
+    "linguistic-calibration-gate",
+    "linguistic-attestation-gate",
+    "linguistic-work-order-gate",
+    "linguistic-full-cycle-gate",
+]
+
 GATE_COMMANDS: dict[str, list[str]] = {
     "naming-gate": ["tools/naming_protocol_lint.py"],
     "naming-genome-gate": [
@@ -46,6 +57,18 @@ GATE_COMMANDS: dict[str, list[str]] = {
         "--json",
         "-o",
         "governance/linguistic_drift_report.v1.json",
+    ],
+    "linguistic-calibration-gate": [
+        "tools/governance/check_linguistic_calibration_gate.py",
+    ],
+    "linguistic-attestation-gate": [
+        "tools/governance/check_linguistic_attestation_gate.py",
+    ],
+    "linguistic-work-order-gate": [
+        "tools/governance/check_linguistic_work_order_gate.py",
+    ],
+    "linguistic-full-cycle-gate": [
+        "tools/governance/check_linguistic_full_cycle_gate.py",
     ],
 }
 
@@ -61,7 +84,7 @@ class LinguisticGovernanceEngine:
         return {
             "meta_linguistic_registry_version": "meta_linguistic_registry.v1",
             "policy_mode": "observe",
-            "gates": list(GATE_COMMANDS.keys()),
+            "gates": list(DEFAULT_GATES),
             "cascade_policy_ref": "governance/linguistic_cascade_policy.v1.json",
             "remediation_dir": "governance/linguistic_remediations",
         }
@@ -95,7 +118,7 @@ class LinguisticGovernanceEngine:
         mode = reg.get("policy_mode", "observe")
         report = MetaLinguisticGateReport(passed=True, policy_mode=mode)
 
-        for gate_name in reg.get("gates") or list(GATE_COMMANDS.keys()):
+        for gate_name in reg.get("gates") or list(DEFAULT_GATES):
             result = self._run_gate(gate_name)
             report.results.append(result)
             if not result.passed:
@@ -121,6 +144,27 @@ class LinguisticGovernanceEngine:
                                 f"high drift gene {gene!r} missing remediation playbook"
                             )
                             report.passed = False
+
+            from src.governance_organs.linguistic_governance_attestation_engine import (
+                load_attestation,
+                load_cadence_policy,
+            )
+
+            cadence = load_cadence_policy(self.root)
+            min_score = int(cadence.get("enforce_min_closed_loop_score", 60))
+            att = load_attestation(self.root)
+            if not att:
+                report.errors.append(
+                    "enforce: linguistic attestation missing (run: make linguistic-governance-attestation)"
+                )
+                report.passed = False
+            else:
+                score = int(att.get("closed_loop_score", 0))
+                if score < min_score:
+                    report.errors.append(
+                        f"enforce: closed_loop_score {score} below minimum {min_score}"
+                    )
+                    report.passed = False
         elif not strict:
             pass
 

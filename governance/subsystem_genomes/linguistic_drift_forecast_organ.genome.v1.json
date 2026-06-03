@@ -57,6 +57,7 @@
       "linguistic_drift_predictor_organ"
     ],
     "children": [
+      "linguistic_forecast_archive_organ",
       "linguistic_forecast_calibration_organ",
       "linguistic_forecast_consumption_organ",
       "linguistic_predictive_governance_organ",

@@ -353,6 +353,43 @@ make alt24-governed-gate
 
 ---
 
+## 22. Operational enforcement (Wave 16)
+
+| Wave | Tool | Purpose |
+|------|------|---------|
+| **16** | Expanded `meta-linguistic-gate` | Runs calibration, attestation, work-order, full-cycle gates |
+| **16** | `evaluate_attestation_coherence` | Enforce-mode turn block on attestation SLAs |
+| **16** | Attestation cycles | History under `governance/linguistic_attestation_cycles/` |
+
+```bash
+make meta-linguistic-gate
+make linguistic-full-cycle-gate
+python tools/governance/run_linguistic_attestation.py --diff
+python tools/governance/linguistic_work_order.py --ack-top 5
+```
+
+---
+
+## 23. Governed lifecycle fabric (Release 25)
+
+| Release | Tool | Purpose |
+|---------|------|---------|
+| **25** | `_alt25_ssp_bootstrap.py` | Nine Wave 16 lifecycle subsystem concept bundles |
+| **25.1** | `_alt25_coherence_v120.py` | Coherence snapshot `v1.20` + execution/artifact/promotion layers |
+| **25.2** | `check_alt25_closure.py` | Governed linguistic lifecycle closure proof |
+| **25 governed** | `alt25_promote_governed.py` | Promote nine Release 25 organs to `governed` |
+
+```bash
+python tools/governance/_alt25_ssp_bootstrap.py
+make alt25-gate
+python tools/governance/_alt25_coherence_v120.py
+make alt25-1-gate
+make alt25-2-gate
+make alt25-governed-gate
+```
+
+---
+
 ## 14. Verification
 
 ```bash

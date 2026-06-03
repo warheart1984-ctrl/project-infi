@@ -814,6 +814,42 @@ Depends on: Release 23 closed-loop fabric; Wave 14 attestation and work-order en
 | MVP surfaces | `tools/governance/alt24_promote_mvp.py` |
 | Governed promotion | `tools/governance/alt24_promote_governed.py` + `make alt24-governed-gate` |
 
+## Release 25 — Governed Linguistic Lifecycle Fabric
+
+Batch-admit nine read-only **subsystems** for Wave 16 operator execution and lifecycle artifacts.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt25-summon-wave-2026-06` in LOGBOOK |
+| Activation order | forecast archive → drift report → work order → cadence → calibration report → full-cycle history → registry → promotion → governed lifecycle fabric |
+| Bootstrap | `tools/governance/_alt25_ssp_bootstrap.py` |
+| Gates | `make alt25-gate` |
+
+Depends on: Release 24 attested closed-loop; Wave 14 archive/work-order engines.
+
+## Release 25.1 — Coherence Layer Governed Lifecycle Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt25-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.20` + execution/artifact/promotion layers |
+| Schema tool | `tools/governance/_alt25_coherence_v120.py` |
+| Gate | `make alt25-1-gate` |
+
+## Release 25.2 — Governed Linguistic Lifecycle Closure
+
+| Convention | Value |
+|------------|-------|
+| Proof | `docs/proof/platform/GOVERNED_LINGUISTIC_LIFECYCLE_V1_PROOF.md` |
+| Gate | `make alt25-2-gate` |
+
+## Release 25 Governed Promotion
+
+| Convention | Value |
+|------------|-------|
+| MVP surfaces | `tools/governance/alt25_promote_mvp.py` |
+| Governed promotion | `tools/governance/alt25_promote_governed.py` + `make alt25-governed-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per

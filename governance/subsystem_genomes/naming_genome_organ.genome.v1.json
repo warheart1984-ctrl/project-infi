@@ -60,6 +60,7 @@
       "linguistic_drift_predictor_organ",
       "linguistic_lineage_viz_organ",
       "linguistic_mutation_organ",
+      "linguistic_subsystem_promotion_organ",
       "meta_linguistic_governance_organ"
     ]
   },

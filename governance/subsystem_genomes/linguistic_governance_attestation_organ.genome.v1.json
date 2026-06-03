@@ -56,7 +56,10 @@
       "linguistic_full_governance_cycle_organ",
       "linguistic_closed_loop_fabric_organ"
     ],
-    "children": []
+    "children": [
+      "linguistic_governance_cadence_organ",
+      "linguistic_governed_lifecycle_fabric_organ"
+    ]
   },
   "activation": {
     "order": 4,

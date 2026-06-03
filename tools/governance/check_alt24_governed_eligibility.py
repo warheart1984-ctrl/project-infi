@@ -70,10 +70,12 @@ def check_eligibility(root: Path | None = None) -> list[str]:
             errors.append(f"missing governed proof: {proof_path.relative_to(root)}")
 
     fabric = build_coherence_fabric_status(root=root)
-    if fabric.get("operator_cognition_coherence_fabric_version") != (
-        "operator_cognition_coherence_fabric.v1.19"
+    fabric_ver = fabric.get("operator_cognition_coherence_fabric_version")
+    if fabric_ver not in (
+        "operator_cognition_coherence_fabric.v1.19",
+        "operator_cognition_coherence_fabric.v1.20",
     ):
-        errors.append("coherence layer must be v1.19")
+        errors.append("coherence layer must be v1.19 or v1.20")
     expected_lens = {
         "linguistic_calibration_layer": 3,
         "linguistic_governance_queue_layer": 3,

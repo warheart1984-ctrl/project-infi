@@ -58,6 +58,7 @@
     ],
     "children": [
       "linguistic_drift_forecast_organ",
+      "linguistic_drift_report_organ",
       "linguistic_remediation_organ"
     ]
   },

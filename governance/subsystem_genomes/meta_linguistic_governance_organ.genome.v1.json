@@ -62,8 +62,11 @@
     ],
     "children": [
       "linguistic_drift_forecast_organ",
+      "linguistic_drift_report_organ",
       "linguistic_forecast_calibration_organ",
-      "linguistic_governance_cycle_organ"
+      "linguistic_governance_cycle_organ",
+      "linguistic_subsystem_promotion_organ",
+      "meta_linguistic_registry_organ"
     ]
   },
   "activation": {

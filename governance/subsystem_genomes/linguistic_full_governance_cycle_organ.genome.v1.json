@@ -59,7 +59,9 @@
       "linguistic_governance_cycle_organ"
     ],
     "children": [
-      "linguistic_governance_attestation_organ"
+      "linguistic_full_governance_cycle_history_organ",
+      "linguistic_governance_attestation_organ",
+      "linguistic_governance_cadence_organ"
     ]
   },
   "activation": {

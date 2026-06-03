@@ -166,6 +166,48 @@ make alt24-governed-gate
 
 Closure proof: [docs/proof/platform/ATTESTED_LINGUISTIC_CLOSED_LOOP_V1_PROOF.md](../proof/platform/ATTESTED_LINGUISTIC_CLOSED_LOOP_V1_PROOF.md)
 
+## Wave 16 — Operational enforcement + meta-gate unification
+
+Attestation history: `governance/linguistic_attestation_cycles/` (retain per cadence policy).
+
+Enforcement (when `policy_mode` is `enforce`):
+
+- `evaluate_attestation_coherence()` blocks cognitive turns on stale attestation, low `closed_loop_score`, or misaligned attested closed-loop
+- Governed direct pipeline chains attestation check after fabric coherence check
+
+Meta-gate runs Wave 14–15 sub-gates: calibration, attestation, work-order, full-cycle.
+
+Tier5 health (`runtime_governance/tier5_health.json`) includes `linguistic_closed_loop_score`, `linguistic_work_orders_pending`, `linguistic_attestation_stale`.
+
+```bash
+make meta-linguistic-gate
+make linguistic-full-cycle-gate
+python tools/governance/run_linguistic_attestation.py --diff
+python tools/governance/linguistic_work_order.py --ack-top 5
+```
+
+Release 25 read-only organs (governed): forecast archive, drift report, work order, cadence, calibration report, full-cycle history, meta registry, subsystem promotion, governed lifecycle fabric (`make alt25-governed-gate`).
+
+## Wave 16.1 — Coherence governed lifecycle join + Release 25 closure
+
+Coherence snapshot: `operator_cognition_coherence_fabric.v1.20` with:
+
+- `linguistic_operator_execution_layer[]` — forecast archive, work order, cadence
+- `linguistic_lifecycle_artifact_layer[]` — drift report, calibration report, full-cycle history, registry
+- `linguistic_promotion_layer[]` — subsystem promotion
+- `linguistic_governed_lifecycle_aligned` — Waves 9–16 lifecycle layers jointly aligned
+
+```bash
+python tools/governance/_alt25_coherence_v120.py
+make alt25-1-gate
+make alt25-2-gate
+python tools/governance/alt25_promote_mvp.py
+python tools/governance/alt25_promote_governed.py
+make alt25-governed-gate
+```
+
+Closure proof: [docs/proof/platform/GOVERNED_LINGUISTIC_LIFECYCLE_V1_PROOF.md](../proof/platform/GOVERNED_LINGUISTIC_LIFECYCLE_V1_PROOF.md)
+
 ## Verification
 
 ```bash

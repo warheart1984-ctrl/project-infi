@@ -38,8 +38,70 @@ def load_cadence_policy(root: Path | None = None) -> dict[str, Any]:
             "max_full_cycle_age_days": 7,
             "max_attestation_age_days": 7,
             "max_pending_work_order_days": 14,
+            "retain_attestation_history": 12,
+            "enforce_min_closed_loop_score": 60,
+            "enforce_block_on_stale_attestation": True,
+            "enforce_block_on_unaligned_attested_loop": True,
+            "enforce_block_on_pending_work_orders": False,
         }
     return load_json(path)
+
+
+def _prune_attestation_history(root: Path, policy: dict[str, Any]) -> None:
+    retain = int(policy.get("retain_attestation_history", 12))
+    cycle_dir = root / "governance/linguistic_attestation_cycles"
+    if not cycle_dir.is_dir():
+        return
+    files = sorted(cycle_dir.glob("*.v1.json"), key=lambda p: p.name, reverse=True)
+    for old in files[retain:]:
+        old.unlink(missing_ok=True)
+
+
+def list_attestation_cycles(root: Path | None = None) -> list[Path]:
+    root = root or repo_root()
+    cycle_dir = root / "governance/linguistic_attestation_cycles"
+    if not cycle_dir.is_dir():
+        return []
+    return sorted(cycle_dir.glob("*.v1.json"), key=lambda p: p.name, reverse=True)
+
+
+def load_latest_attestation_cycle(root: Path | None = None) -> dict[str, Any] | None:
+    files = list_attestation_cycles(root)
+    if not files:
+        return None
+    return load_json(files[0])
+
+
+def load_prior_attestation_cycle(root: Path | None = None) -> dict[str, Any] | None:
+    files = list_attestation_cycles(root)
+    if len(files) < 2:
+        return None
+    return load_json(files[1])
+
+
+def attestation_diff(root: Path | None = None) -> dict[str, Any]:
+    """Compare latest attestation cycle to prior."""
+    root = root or repo_root()
+    latest = load_attestation(root) or load_latest_attestation_cycle(root)
+    prior = load_prior_attestation_cycle(root)
+    if not latest:
+        return {"present": False}
+    out: dict[str, Any] = {
+        "present": True,
+        "latest_generated_at": latest.get("generated_at"),
+        "latest_score": int(latest.get("closed_loop_score", 0)),
+        "prior_score": None,
+        "score_delta": None,
+        "recommendation_changes": [],
+    }
+    if prior:
+        out["prior_generated_at"] = prior.get("generated_at")
+        out["prior_score"] = int(prior.get("closed_loop_score", 0))
+        out["score_delta"] = out["latest_score"] - out["prior_score"]
+        latest_actions = {r.get("action") for r in (latest.get("recommendations") or [])}
+        prior_actions = {r.get("action") for r in (prior.get("recommendations") or [])}
+        out["recommendation_changes"] = sorted(latest_actions ^ prior_actions)
+    return out
 
 
 def _parse_ts(value: str) -> datetime | None:
@@ -247,6 +309,14 @@ def write_attestation(
         out = root / out
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
+    policy = load_cadence_policy(root)
+    cycle_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    cycle_dir = root / "governance/linguistic_attestation_cycles"
+    cycle_dir.mkdir(parents=True, exist_ok=True)
+    cycle_path = cycle_dir / f"{cycle_id}.v1.json"
+    cycle_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    _prune_attestation_history(root, policy)
 
     reg_path = root / "governance/meta_linguistic_registry.v1.json"
     if reg_path.is_file():

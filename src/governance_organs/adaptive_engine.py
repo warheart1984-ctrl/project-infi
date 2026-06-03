@@ -105,6 +105,30 @@ class AdaptiveEngine:
                     fabric.get("forensics_handoff_aligned")
                 )
                 report["immune_observe_aligned"] = bool(fabric.get("immune_observe_aligned"))
+                report["linguistic_attested_closed_loop_aligned"] = bool(
+                    fabric.get("linguistic_attested_closed_loop_aligned")
+                )
+                try:
+                    from src.governance_organs.linguistic_governance_attestation_engine import (
+                        attestation_stale,
+                        load_attestation,
+                    )
+                    from src.governance_organs.linguistic_governance_work_order_engine import (
+                        work_order_summary,
+                    )
+
+                    att = load_attestation(self.root)
+                    report["linguistic_closed_loop_score"] = int(
+                        (att or {}).get("closed_loop_score", 0)
+                    )
+                    report["linguistic_attestation_stale"] = attestation_stale(self.root)
+                    wo = work_order_summary(self.root)
+                    report["linguistic_work_orders_pending"] = int(wo.get("pending", 0))
+                except Exception:
+                    report["linguistic_closed_loop_score"] = 0
+                    report["linguistic_attestation_stale"] = True
+                    report["linguistic_work_orders_pending"] = 0
+                    report["linguistic_attested_closed_loop_aligned"] = False
             except Exception:
                 report["coherence_fabric_aligned"] = False
                 report["coherence_pipeline_allowed"] = False
@@ -114,6 +138,10 @@ class AdaptiveEngine:
                 report["memory_paths_aligned"] = False
                 report["forensics_handoff_aligned"] = False
                 report["immune_observe_aligned"] = False
+                report["linguistic_attested_closed_loop_aligned"] = False
+                report["linguistic_closed_loop_score"] = 0
+                report["linguistic_attestation_stale"] = True
+                report["linguistic_work_orders_pending"] = 0
             out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         except Exception:
             report["adaptive_lanes_awakened"] = False
