@@ -300,9 +300,8 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
-| Latest tag | [`v1.3.3`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.3) — **Alt-7.2** — chat hard-block, snapshot v1.2, MP-OPO-001 |
-| Prior tag | [`v1.3.2`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.2) — Alt-7.1 — coherence MP-OCCF-001, governance projection, pipeline guard |
-| Earlier | [`v1.3.1`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.1) — Close Loops — MP-ALO-001 + MP-NTP-001 live |
+| Latest tag | [`v1.3.3`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.3) — **Alt-7.2 + Alt-7.1** — enforcement closure, MP-OPO-001; coherence MP-OCCF-001, snapshot v1.2, pipeline guard (see [CHANGELOG](CHANGELOG.md) §1.3.2–1.3.3) |
+| Prior tag | [`v1.3.1`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.1) — Close Loops — MP-ALO-001 + MP-NTP-001 live |
 | Earlier | [`v1.3.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.0) — Infinity 1 · Alt-7 — 15 governed genomes, coherence fabric, bridge enforcement |
 | Earlier | [`v1.2.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.2.0) — Infinity 1 · Alt-6 — 14 governed genomes, adaptive lanes fabric, Tier 5 wake |
 | Earlier | [`v1.1.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.1.0) — Infinity 1 (complete) — 13 governed genomes, Alt-5 waves 1–2, barebones wave |
