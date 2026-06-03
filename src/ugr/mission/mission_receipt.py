@@ -372,6 +372,7 @@ def build_federation_receipt_fields(
         home_rows=home_rows,
         peer_rows=peer_rows,
         grant_id=grant_id,
+        federation_forge=federation_context,
     )
     peer_rows_fed = [
         r

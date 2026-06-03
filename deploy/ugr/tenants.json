@@ -1,5 +1,5 @@
 {
-  "config_version": "1.0",
+  "config_version": "1.1",
   "tenants": {
     "global": {
       "label": "Global shared knowledge",
@@ -25,7 +25,15 @@
       "cost_ceiling": { "hard_ceil": 100 },
       "invariant_profile": "default",
       "receipt_key_id": "tenant-acme",
-      "federation_grants": []
+      "federation_grants": [],
+      "cloud_forge": {
+        "latency_bias": 0.55,
+        "throughput_bias": 0.3,
+        "intelligence_bias": 0.15,
+        "wL_express_threshold": 95,
+        "wL_express_floor": 45,
+        "actor": { "wL": 130, "wT": 90, "wI": 120, "tier": "A" }
+      }
     },
     "tenant:contoso": {
       "label": "Contoso overlay",
@@ -38,7 +46,15 @@
       "cost_ceiling": { "hard_ceil": 80 },
       "invariant_profile": "default",
       "receipt_key_id": "tenant-contoso",
-      "federation_grants": []
+      "federation_grants": [],
+      "cloud_forge": {
+        "latency_bias": 0.25,
+        "throughput_bias": 0.25,
+        "intelligence_bias": 0.5,
+        "wL_express_threshold": 140,
+        "wL_express_floor": 75,
+        "actor": { "wL": 85, "wT": 70, "wI": 180, "tier": "B" }
+      }
     }
   }
 }

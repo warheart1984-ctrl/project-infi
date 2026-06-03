@@ -254,15 +254,33 @@ class UGRMissionRuntime:
         constraints = dict(payload.get("constraints") or {})
         if str(constraints.get("risk_ceiling") or "").lower() in {"low", "medium"}:
             context.setdefault("forbid_express", True)
+        from src.ugr.cloud_forge_bridge import (
+            build_forge_actor_from_tenant,
+            build_forge_profile_from_tenant,
+            compute_cloud_forge_tenant_digest,
+        )
+
+        forge_profile = build_forge_profile_from_tenant(tenant_manifold.tenant_id)
+        forge_actor = build_forge_actor_from_tenant(
+            tenant_manifold.tenant_id,
+            operator_id=str(payload.get("operator_id") or ""),
+        )
+        ingress["cloud_forge_tenant_digest"] = compute_cloud_forge_tenant_digest(
+            forge_profile, forge_actor
+        )
+        ingress["cloud_forge_binding_version"] = "2.0"
         cloud_forge = schedule_rail_for_ugr(
             {
                 "question": str(payload.get("objective") or "")[:500],
                 "intent": intent,
                 "tenant_id": payload.get("tenant_id"),
                 "context": context,
+                "constraints": constraints,
+                "operator_id": payload.get("operator_id"),
             },
             trace_id=mission_id,
             bridge_result={"decision": "ALLOW", "execution_allowed": True},
+            tenant_manifold=tenant_manifold,
         )
         rail_decision = dict((cloud_forge or {}).get("rail_decision") or {})
         rail = str(rail_decision.get("rail") or "NORMAL")
@@ -422,6 +440,41 @@ class UGRMissionRuntime:
                     )
                 continue
 
+            step_rail = rail
+            step_cloud_forge: dict[str, Any] | None = None
+            if federation_peer_tenant:
+                from src.ugr.platform.tenant_registry import TenantRegistry
+
+                peer_spec = TenantRegistry().get(federation_peer_tenant)
+                step_cloud_forge = schedule_rail_for_ugr(
+                    {
+                        "question": str(step.get("objective") or payload.get("objective") or "")[
+                            :500
+                        ],
+                        "intent": str(step.get("intent") or intent),
+                        "tenant_id": federation_peer_tenant,
+                        "context": context,
+                        "constraints": constraints,
+                        "operator_id": payload.get("operator_id"),
+                    },
+                    trace_id=f"{mission_id}:{step_id}:forge",
+                    bridge_result={"decision": "ALLOW", "execution_allowed": True},
+                    tenant_manifold=peer_spec,
+                )
+                peer_decision = dict((step_cloud_forge or {}).get("rail_decision") or {})
+                step_rail = str(peer_decision.get("rail") or rail).upper()
+                if step_rail == "EXPRESS" and context.get("forbid_express"):
+                    step_rail = "NORMAL"
+                self._federation_context.append(
+                    {
+                        "grant_id": federation_grant_id,
+                        "peer_tenant": federation_peer_tenant,
+                        "step_id": step_id,
+                        "mission_rail": rail,
+                        "peer_rail": step_rail,
+                    }
+                )
+
             region_id = str(payload.get("region_id") or "")
             est_step_cost = estimate_step_cost(organ, region_id=region_id)
             if budget_ledger.would_exceed_hard(est_step_cost):
@@ -463,7 +516,7 @@ class UGRMissionRuntime:
                 action_id=action_id,
                 prior_action_id=prior_action_id,
                 cost_spent=cost_spent,
-                rail=rail,
+                rail=step_rail,
                 manifold=manifold,
             )
             if self.invariants.has_hard_fail(step_invariants):
@@ -568,7 +621,7 @@ class UGRMissionRuntime:
                         invariants=self.invariants,
                         ledger=self.ledger,
                         prior_action_id=prior_action_id,
-                        rail=rail,
+                        rail=step_rail,
                         run_bridge_fn=_run_bridge,
                         step_invariants=step_invariants,
                     )
@@ -628,7 +681,7 @@ class UGRMissionRuntime:
                 "aais_instance_id": step_aais_id,
                 "region_id": payload.get("region_id"),
                 "cost_units": cost_units,
-                "rail": rail,
+                "rail": step_rail,
                 "status": step_status,
                 "proposal_status": (proposal or {}).get("status"),
                 "aais_step_bridge": use_aais_bridge,
@@ -703,13 +756,6 @@ class UGRMissionRuntime:
                             provider=organ.provider,
                             peer_tenant_id=federation_peer_tenant,
                         )
-                        self._federation_context.append(
-                            {
-                                "grant_id": federation_grant_id,
-                                "peer_tenant": federation_peer_tenant,
-                                "step_id": step_id,
-                            }
-                        )
                 except CloudCausalityFault as exc:
                     return self._blocked(
                         mission_id,
@@ -751,6 +797,9 @@ class UGRMissionRuntime:
             if federation_peer_tenant:
                 step_outcome["federation_peer_tenant"] = federation_peer_tenant
                 step_outcome["federation_grant_id"] = federation_grant_id
+            if step_cloud_forge:
+                step_outcome["cloud_forge"] = step_cloud_forge
+                step_outcome["rail"] = step_rail
             step_outcomes.append(step_outcome)
 
             if step_status == "blocked" and halt_on_failure:

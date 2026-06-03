@@ -335,10 +335,22 @@ def compute_federation_digest(
     home_rows: list[dict[str, Any]],
     peer_rows: list[dict[str, Any]],
     grant_id: str,
+    federation_forge: list[dict[str, Any]] | None = None,
 ) -> str:
-    """Stable digest over cross-linked federation ledger rows (v1.8)."""
+    """Stable digest over cross-linked federation ledger rows (v1.8+)."""
+    forge_entries = []
+    for entry in list(federation_forge or []):
+        forge_entries.append(
+            {
+                "grant_id": entry.get("grant_id"),
+                "step_id": entry.get("step_id"),
+                "mission_rail": entry.get("mission_rail"),
+                "peer_rail": entry.get("peer_rail"),
+            }
+        )
     payload = {
         "grant_id": str(grant_id or ""),
+        "forge": forge_entries,
         "home": [
             {
                 "phase": r.get("phase"),

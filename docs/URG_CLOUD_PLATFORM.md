@@ -67,6 +67,25 @@ py -3.12 tools/proof/run_ugr_mission_demo.py
 | `UGR_LLM_EXECUTE=1` | Legacy → `LIVE_EXECUTION` |
 | `URG_GOVERNANCE_APPLY=1` | Write tenant organ overlay on governance ops |
 | `URG_RECEIPT_ADMIN=1` | Cross-tenant receipt reads (ops only) |
+| `UGR_CLOUD_FORGE_ENABLED` | `1` (default) — schedule Cloud Forge rail on deliberate/mission paths |
+| `UGR_CLOUD_FORGE_OBSERVED` | `1` — observed scheduler + `rail-decisions.jsonl` ledger (tenant_id + trace_id) |
+
+---
+
+## Cloud Forge binding (v2.0–v2.1)
+
+All URG → Cloud Forge traffic goes through `src/ugr/cloud_forge_bridge.py` (no separate Forge federation API).
+
+| Phase | Behavior |
+|-------|----------|
+| **v2.0 tenant binding** | Optional `cloud_forge` block in `deploy/ugr/tenants.json`; `build_forge_profile_from_tenant()` maps `cost_ceiling` + biases to `PerformanceProfile`. Mission open and `POST /api/ugr/deliberate` pass `tenant_manifold` into `schedule_rail_for_ugr()`. Ingress carries `cloud_forge_tenant_digest` + `cloud_forge_binding_version: "2.0"`. |
+| **v2.1 federated step** | Steps with `federation_peer_tenant` re-schedule on **peer** tenant profile; `step_outcomes[].cloud_forge` + `federation_digest` includes `mission_rail` / `peer_rail`. Mission-level `cloud_forge` remains **home** tenant. |
+
+Contract cross-link: [cloud-forge-rail-contract.md](contracts/cloud-forge-rail-contract.md)
+
+Gate: `make ugr-mission-gate` includes `test_ugr_cloud_forge_tenant_binding.py` and `test_ugr_federation_forge_peer_rail.py`.
+
+Release tags: **`urg-cloud-forge-v2.0`** (tenant binding) · **`urg-cloud-forge-v2.1`** (federated peer rail).
 
 ---
 

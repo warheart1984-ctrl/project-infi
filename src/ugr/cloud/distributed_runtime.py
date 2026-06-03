@@ -15,6 +15,7 @@ from src.ugr.cloud.mesh_config import load_mesh_config
 from src.ugr.cloud_forge_bridge import (
     attach_cloud_forge_metadata,
     rail_trace_summary,
+    resolve_tenant_manifold_for_forge,
     schedule_rail_for_ugr,
 )
 from src.ugr.embryo.model_pool import attach_model_pool_to_response
@@ -80,6 +81,7 @@ class DistributedUnifiedGovernedRuntime:
             payload,
             trace_id=trace_id,
             bridge_result=bridge_result,
+            tenant_manifold=resolve_tenant_manifold_for_forge(payload),
         )
         finalized = attach_cloud_forge_metadata(response, cloud_forge_bundle)
         finalized = attach_model_pool_to_response(finalized, payload)

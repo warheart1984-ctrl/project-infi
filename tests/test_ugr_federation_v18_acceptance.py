@@ -74,10 +74,12 @@ class TestFederationV18Acceptance(unittest.TestCase):
 
         home_ledger = MissionLedger(runtime_dir=self.temp_root, tenant_id="tenant:acme")
         peer_ledger = MissionLedger(runtime_dir=self.temp_root, tenant_id="tenant:contoso")
+        fed_ctx = list((result.get("urg_ingress") or {}).get("federation_context") or [])
         expected_digest = compute_federation_digest(
             home_rows=home_ledger.list_for_mission(mission_id),
             peer_rows=peer_ledger.list_for_mission(mission_id),
             grant_id=grant_id,
+            federation_forge=fed_ctx,
         )
         self.assertEqual(schema["federation_digest"], expected_digest)
 

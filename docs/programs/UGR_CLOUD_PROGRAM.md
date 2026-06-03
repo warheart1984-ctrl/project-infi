@@ -346,6 +346,25 @@ Tag: **`urg-cloud-platform-v1.9`**
 
 **Deferred post-v1.9:** Nova/Forge federated operator UI (display-only receipts); Platform Membrane IMXP HTTP (v45–46).
 
+### Mission cloud-forge-v2 — Tenant binding + federated peer rail
+
+**Goal:** Align URG `TenantSpec` with Cloud Forge `PerformanceProfile` / actor weights; federated steps schedule on peer tenant only.
+
+Deliverables:
+
+- [x] `TenantSpec.cloud_forge` + optional block in `deploy/ugr/tenants.json`
+- [x] `build_forge_profile_from_tenant`, `resolve_tenant_manifold_for_forge`, `tenant_manifold` on `schedule_rail_for_ugr` (mission, deliberate, distributed)
+- [x] Federated step peer rail + `steps[].cloud_forge`; `federation_digest` forge entries
+- [x] `tests/test_ugr_cloud_forge_tenant_binding.py`, `tests/test_ugr_federation_forge_peer_rail.py`
+- [x] `make ugr-mission-gate` includes forge binding tests
+
+Acceptance:
+
+- Acme vs contoso profiles differ (`wL_express_threshold` / biases)
+- Bilateral federated mission: peer step carries `cloud_forge`; ingress `federation_context` has `mission_rail` / `peer_rail`
+
+Tags: **`urg-cloud-forge-v2.0`** (tenant binding) · **`urg-cloud-forge-v2.1`** (federated peer rail)
+
 ## v1 Invariants (non-negotiable)
 
 1. Single path of authority — all UGR traffic through Cognitive Bridge

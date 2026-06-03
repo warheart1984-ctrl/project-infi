@@ -8,6 +8,8 @@ Blueprint: `document/blueprints/PROJECT_BLUEPRINTS_MASTER.md` §1.6 Cloud Forge.
 
 Failsafe: `docs/failsafe/cloud-forge-rail-failsafe.md`.
 
+URG integration (tenant binding + federated peer rails): `src/ugr/cloud_forge_bridge.py`, [URG_MISSION_CONTRACT.md](URG_MISSION_CONTRACT.md) § Cloud Forge binding, [URG_CLOUD_PLATFORM.md](../URG_CLOUD_PLATFORM.md).
+
 ## Purpose
 
 This contract admits the **Cloud Forge rail scheduler** into AAIS as a governed

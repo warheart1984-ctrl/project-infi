@@ -161,6 +161,19 @@ Ledger phases: home `federation_step`; peer `federation_inbound` (includes `home
 
 **Governance:** `mutation_op` = `federation_organ_admit` | `federation_organ_suspend` requires grant capability `governance_cosign` and dual ledger rows when `URG_GOVERNANCE_APPLY=1`.
 
+## Cloud Forge binding (v2.0–v2.1)
+
+Bridge: `src/ugr/cloud_forge_bridge.py` only — see [cloud-forge-rail-contract.md](cloud-forge-rail-contract.md).
+
+| Surface | Field |
+|---------|--------|
+| Mission open (home tenant) | Response `cloud_forge` — one `schedule_rail_for_ugr()` at ingress; `urg_ingress.cloud_forge_tenant_digest`, `cloud_forge_binding_version: "2.0"` |
+| Federated step | `steps[].cloud_forge` + `steps[].rail` from **peer** tenant profile; mission-level `cloud_forge` stays home |
+| Receipt | `federation_digest` includes optional `forge[]` entries (`mission_rail`, `peer_rail` per federated step) |
+| Tenant config | Optional `cloud_forge` in `deploy/ugr/tenants.json` (biases, express thresholds, actor weights) |
+
+Env: `UGR_CLOUD_FORGE_ENABLED`, `UGR_CLOUD_FORGE_OBSERVED` (ledger uses `tenant_id` + mission `trace_id`).
+
 ## Cost routing (v1.6)
 
 - `constraints.mission_budget`: `{soft_ceil, hard_ceil, per_step_max}`

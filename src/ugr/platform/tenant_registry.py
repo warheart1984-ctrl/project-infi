@@ -39,6 +39,7 @@ class TenantSpec:
     invariant_profile: str = "default"
     receipt_key_id: str = ""
     federation_grants: tuple[dict[str, Any], ...] = ()
+    cloud_forge: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -54,6 +55,7 @@ class TenantSpec:
             "invariant_profile": self.invariant_profile,
             "receipt_key_id": self.receipt_key_id,
             "federation_grants": list(self.federation_grants),
+            "cloud_forge": dict(self.cloud_forge or {}),
         }
 
 
@@ -87,6 +89,7 @@ class TenantRegistry:
             invariant_profile=str(spec.get("invariant_profile") or "default"),
             receipt_key_id=str(spec.get("receipt_key_id") or normalized.replace(":", "-")),
             federation_grants=tuple(dict(g) for g in (spec.get("federation_grants") or [])),
+            cloud_forge=dict(spec.get("cloud_forge") or {}) or None,
         )
 
     def list_tenants(self) -> list[TenantSpec]:
