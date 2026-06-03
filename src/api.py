@@ -4476,6 +4476,60 @@ def _previous_governed_pipeline(session):
     return None
 
 
+def _apply_coherence_guard_to_response_trace(response_trace: dict) -> dict:
+    """Attach coherence_protocol and block metadata when hard-block is active."""
+    from src.operator_cognition_coherence_fabric import (
+        assert_coherence_allows_turn,
+        coherence_protocol_from_pipeline,
+    )
+
+    if not isinstance(response_trace, dict):
+        return response_trace
+    pipeline = response_trace.get("governed_pipeline")
+    if isinstance(pipeline, dict):
+        response_trace["coherence_protocol"] = coherence_protocol_from_pipeline(pipeline)
+    result = assert_coherence_allows_turn(pipeline if isinstance(pipeline, dict) else None)
+    if not result.allowed:
+        response_trace["blocked_by"] = "coherence_fabric"
+        response_trace["error"] = result.reason or "coherence fabric blocked"
+        response_trace["contract"] = "coherence_blocked"
+        response_trace["contract_label"] = "coherence blocked"
+        response_trace["summary"] = result.reason or "Turn blocked by coherence fabric."
+    return response_trace
+
+
+def _build_chat_coherence_block_payload(session, session_id, response_trace: dict):
+    """Governed chat block when coherence fabric hard-block applies."""
+    return {
+        "blocked_by": "coherence_fabric",
+        "error": response_trace.get("error"),
+        "coherence_protocol": response_trace.get("coherence_protocol"),
+        "governed_pipeline": response_trace.get("governed_pipeline"),
+        "response_trace": response_trace,
+        **_build_chat_runtime_payload(session, session_id),
+    }
+
+
+def _coherence_block_http_response(session, session_id, response_trace: dict):
+    """Record blocked turn state and return Flask response tuple."""
+    _transition_session_state(
+        session,
+        "degraded",
+        summary="Jarvis blocked the turn because coherence fabric is not aligned.",
+        reason="coherence_fabric_blocked",
+        event_type="turn_blocked",
+        payload={
+            "error": response_trace.get("error"),
+            "coherence_protocol": response_trace.get("coherence_protocol"),
+        },
+    )
+    session.metadata["response_trace"] = response_trace
+    return (
+        jsonify(_build_chat_coherence_block_payload(session, session_id, response_trace)),
+        403,
+    )
+
+
 def _current_cognitive_bridge(session) -> dict | None:
     """Return the most recent routed bridge packet for this session, when present."""
     metadata = getattr(session, "metadata", None)
@@ -5319,7 +5373,7 @@ def _build_tool_response_trace(
         operator_text=operator_text,
     )
 
-    return {
+    trace = {
         "mode": normalized_mode,
         "contract": "direct_tool",
         "contract_label": "direct tool",
@@ -5351,6 +5405,7 @@ def _build_tool_response_trace(
         "turn_contract": turn_contract,
         "reasoning_objective": reasoning_objective,
     }
+    return _apply_coherence_guard_to_response_trace(trace)
 
 
 def _build_mode_plan(session, response_mode: str, model=None, max_length=None):
@@ -11577,11 +11632,18 @@ def get_coherence_fabric_status():
         from src.operator_cognition_coherence_fabric import build_coherence_fabric_status
 
         bridge_snapshot = jarvis_operator.capability_bridge_snapshot()
+        pipeline_trace = None
+        session_id = str(request.args.get("session_id") or "").strip()
+        if session_id:
+            session = conversation_memory.get_session(session_id)
+            if session:
+                pipeline_trace = _previous_governed_pipeline(session)
         return jsonify(
             attach_ul_substrate(
                 {
                     "coherence_fabric": build_coherence_fabric_status(
-                        bridge_snapshot=bridge_snapshot
+                        bridge_snapshot=bridge_snapshot,
+                        pipeline_trace=pipeline_trace,
                     )
                 }
             )
@@ -13327,6 +13389,9 @@ def chat_message(session_id):
                 requested_specialists=requested_specialists,
                 requested_specialist_preset=requested_specialist_preset,
             )
+            response_trace = _apply_coherence_guard_to_response_trace(response_trace)
+            if response_trace.get("blocked_by") == "coherence_fabric":
+                return _coherence_block_http_response(session, session_id, response_trace)
             _record_external_suggestion_admission_trace(
                 response_trace,
                 session.metadata.get("external_suggestion_admission"),
@@ -14050,6 +14115,31 @@ def chat_message_stream(session_id):
                     requested_specialists=requested_specialists,
                     requested_specialist_preset=requested_specialist_preset,
                 )
+                response_trace = _apply_coherence_guard_to_response_trace(response_trace)
+                if response_trace.get("blocked_by") == "coherence_fabric":
+                    block_payload = _build_chat_coherence_block_payload(
+                        session,
+                        session_id,
+                        response_trace,
+                    )
+                    _transition_session_state(
+                        session,
+                        "degraded",
+                        summary="Jarvis blocked the streamed turn because coherence fabric is not aligned.",
+                        reason="coherence_fabric_blocked",
+                        event_type="turn_blocked",
+                        payload={
+                            "error": response_trace.get("error"),
+                            "coherence_protocol": response_trace.get("coherence_protocol"),
+                        },
+                    )
+                    session.metadata["response_trace"] = response_trace
+                    live_payload = emit_live_event(_latest_session_event(session))
+                    if live_payload:
+                        yield live_payload
+                    yield _format_sse_payload({"event": "blocked", **block_payload})
+                    yield _format_sse_payload({"event": "done"})
+                    return
                 _record_external_suggestion_admission_trace(
                     response_trace,
                     session.metadata.get("external_suggestion_admission"),

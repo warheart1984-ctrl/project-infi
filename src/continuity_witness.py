@@ -124,6 +124,8 @@ def build_continuity_witness_input(governed_pipeline: dict[str, Any] | None) -> 
     tool_type = _normalize_slug(governed_pipeline.get("tool_type"))
     immune_protocol = _normalize_mapping(governed_pipeline.get("immune_protocol"))
     immune_response = _normalize_slug(immune_protocol.get("response") or "allow")
+    coherence_protocol = _normalize_mapping(governed_pipeline.get("coherence_protocol"))
+    coherence_response = _normalize_slug(coherence_protocol.get("response") or "allow")
     provider_hint = (
         _normalize_slug(model_route.get("id"))
         or _normalize_slug(capability.get("provider"))
@@ -137,6 +139,7 @@ def build_continuity_witness_input(governed_pipeline: dict[str, Any] | None) -> 
             "service_lane" if active_lane == "service_tools" else "direct_lane",
             "nova_surface" if surface_node == "nov" else None,
             "immune_boundary" if immune_response != "allow" else None,
+            "coherence_boundary" if coherence_response != "allow" else None,
             "tool_traffic" if tool_type else None,
             "capability_bridge" if capability.get("module") else None,
             "operator_runtime" if runtime_context == "operator_runtime" else None,
@@ -149,6 +152,7 @@ def build_continuity_witness_input(governed_pipeline: dict[str, Any] | None) -> 
             "realtime_signal_feed",
             "realtime_event_cause_predictor",
             "immune_protocol",
+            "coherence_protocol",
             "service_lane_governance" if active_lane == "service_tools" else "direct_lane_governance",
             "capability_service_bridge" if capability.get("module") else None,
             "otem_lane" if tool_type == "otem" else None,

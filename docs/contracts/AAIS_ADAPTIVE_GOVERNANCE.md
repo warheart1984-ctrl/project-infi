@@ -188,6 +188,63 @@ python tools/governance/alt7_promote_governed.py
 
 Tier 5 health includes `coherence_fabric_aligned` from the snapshot builder.
 
+## Alt-7.1 Coherence Fabric Mutation (MP-X)
+
+Coherence fabric genome evolution and fabric-affecting lane DNA require MP-X with
+post-apply `alt7-governed-gate` re-validation per
+[AAIS_SUBSYSTEM_MUTATION_PATH.md](./AAIS_SUBSYSTEM_MUTATION_PATH.md).
+
+| Change type | Path |
+|-------------|------|
+| **Coherence invariant** | MP-X on `operator_cognition_coherence_fabric` (`mutation_kind: coherence_invariant`) |
+| **Lane DNA on fabric minimum** | Existing `lane_dna` MP-X + `alt6-governed-gate` **and** `alt7-governed-gate` |
+| **Runtime snapshot edit** | **Forbidden** — `build_coherence_fabric_status()` remains derived read-only |
+| **Promotion** | Promotion Engine stage bump — not coherence DNA |
+
+### Golden path
+
+| Artifact | Location |
+|----------|----------|
+| Proposal | `docs/_future/mutations/MP-OCCF-001.md` |
+| Reference delta | `schemas/deltas/operator_cognition_coherence_fabric_MP-OCCF-001.json` |
+| Gate | `make coherence-fabric-mutation-gate` |
+
+```bash
+make coherence-fabric-mutation-gate
+python -m src.governance_organs.mutation_engine --gene operator_cognition_coherence_fabric --mp-id MP-OCCF-001 --verify
+python -m src.governance_organs.mutation_engine --gene operator_cognition_coherence_fabric --mp-id MP-OCCF-001 --apply --invariant "Coherence fabric genome mutations require MP-X and post-apply alt7-governed-gate"
+```
+
+**Alt-7.1 batch:** `alt7-1-summon-wave-2026-06` — snapshot v1.1 runtime posture, governance
+projection module, pipeline coherence guard.
+
+## Alt-7.2 Coherence Enforcement Closure
+
+Hard-block cognitive turns when `coherence_protocol.response` is `BLOCK`; join live
+pipeline traces into coherence snapshot v1.2; extend Tier 5 and continuity witness.
+
+| Surface | Path |
+|---------|------|
+| Turn guard | `assert_coherence_allows_turn()` in `operator_cognition_coherence_fabric.py` |
+| Chat block | `_apply_coherence_guard_to_response_trace()` in `api.py` |
+| Env | `AAIS_COHERENCE_HARD_BLOCK=1` (default on) |
+| Status API | `GET /api/jarvis/coherence-fabric/status?session_id=` |
+| Gate | `make alt7-2-gate` |
+
+### Profile mutation (MP-OPO-001)
+
+| Artifact | Location |
+|----------|----------|
+| Proposal | `docs/_future/mutations/MP-OPO-001.md` |
+| Gate | `make operator-profile-mutation-gate` |
+
+```bash
+make operator-profile-mutation-gate
+python -m src.governance_organs.mutation_engine --gene operator_profile_organ --mp-id MP-OPO-001 --apply --invariant "Profile authority changes require MP-X and post-apply alt7-governed-gate"
+```
+
+**Alt-7.2 batch:** `alt7-2-summon-wave-2026-06`
+
 ## Related
 
 - [AAIS_SSP_PROTOCOL.md](./AAIS_SSP_PROTOCOL.md)

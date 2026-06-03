@@ -2,7 +2,7 @@
   "subsystem_genome_version": "subsystem_genome.v1",
   "identity": {
     "gene": "operator_cognition_coherence_fabric",
-    "version": "1.0.0-governed",
+    "version": "1.0.1",
     "stage": "governed",
     "display_name": "Operator Cognition Coherence Fabric"
   },
@@ -31,11 +31,15 @@
       {
         "text": "Coherence projection remains read-only and does not route or authorize",
         "maturity": "stable"
+      },
+      {
+        "text": "Coherence fabric genome mutations require MP-X and post-apply alt7-governed-gate",
+        "maturity": "stable"
       }
     ]
   },
   "schema": {
-    "ref": "schemas/operator_cognition_coherence_fabric.v1.json",
+    "ref": "schemas/operator_cognition_coherence_fabric.v1.2.json",
     "frozen": true
   },
   "runtime": {
@@ -77,14 +81,21 @@
   "activation": {
     "order": 1,
     "batch_id": "alt7-summon-wave-2026-06",
-    "notes": "Alt-7 \u2014 operator profile, lanes, and envelopes co-stabilize behavior"
+    "notes": "Alt-7 governed; Alt-7.1 alt7-1-summon-wave-2026-06; Alt-7.2 alt7-2-summon-wave-2026-06 enforcement closure"
   },
   "retirement": {
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md",
     "migration_proof": "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
   },
   "mutation": {
-    "history": []
+    "history": [
+      {
+        "proposal_id": "MP-OCCF-001",
+        "status": "promoted",
+        "schema_delta_ref": "schemas/deltas/operator_cognition_coherence_fabric_MP-OCCF-001.json",
+        "notes": "backup: .runtime\\governance\\mutation_backups\\operator_cognition_coherence_fabric_20260602T235447Z.genome.v1.json"
+      }
+    ]
   },
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/OPERATOR_COGNITION_COHERENCE_FABRIC.md",

@@ -23,6 +23,8 @@ preserving identity gene name and backward compatibility.
 | New cross-subsystem links | Genome `lineage.parents` / `children` update |
 | New governance rules | Additional `governance.contracts[]` entry |
 | **Lane DNA change** | MP-X with `mutation_kind: lane_dna` + `operator_lanes` delta (Alt-6.1) |
+| **Coherence invariant** | MP-X with `mutation_kind: coherence_invariant` on coherence fabric (Alt-7.1) |
+| **Profile invariant** | MP-X with `mutation_kind: profile_invariant` on `operator_profile_organ` (Alt-7.2) |
 
 ## Mutation Steps
 
@@ -60,6 +62,28 @@ Lane mutations (Alt-6.1) add optional fields:
 - post_apply_wake: true
 - post_apply_gate: alt6-governed-gate
 ```
+
+Coherence mutations (Alt-7.1) add optional fields:
+
+```markdown
+- mutation_kind: coherence_invariant
+- post_apply_gate: alt7-governed-gate
+- fabric_genes: [operator_cognition_coherence_fabric, ...]
+- post_apply_snapshot_check: true
+```
+
+Fabric lane DNA mutations SHOULD set `post_apply_gate: alt7-governed-gate` in addition to
+`alt6-governed-gate` when `fabric_genes` intersect the fabric minimum set.
+
+Profile mutations (Alt-7.2) add optional fields:
+
+```markdown
+- mutation_kind: profile_invariant
+- post_apply_gate: operator-profile-gate
+- post_apply_snapshot_check: true
+```
+
+`profile_invariant` apply also runs `alt7-governed-gate`.
 
 Record in LOGBOOK when promoted.
 

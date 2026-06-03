@@ -67,6 +67,18 @@ def check_eligibility(root: Path | None = None) -> list[str]:
     envelope_modes = status.get("envelope_governance_modes") or []
     if len(envelope_modes) != 4:
         errors.append(f"expected 4 envelope governance modes (got {len(envelope_modes)})")
+    schema_version = str(status.get("operator_cognition_coherence_fabric_version") or "")
+    if schema_version.endswith(".v1.1") or schema_version.endswith(".v1.2"):
+        runtime_posture = status.get("runtime_posture") or []
+        if len(runtime_posture) != 2:
+            errors.append(
+                f"expected 2 runtime_posture entries for {schema_version} (got {len(runtime_posture)})"
+            )
+    if schema_version.endswith(".v1.2"):
+        if "coherence_pipeline_allowed" not in status:
+            errors.append("coherence_pipeline_allowed missing from v1.2 snapshot")
+        if "safety_envelope_halt" not in status:
+            errors.append("safety_envelope_halt missing from v1.2 snapshot")
 
     if BRIDGE_TESTS.is_file():
         proc = subprocess.run(

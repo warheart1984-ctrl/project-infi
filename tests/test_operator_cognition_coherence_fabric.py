@@ -10,7 +10,7 @@ from src.operator_cognition_coherence_fabric import build_coherence_fabric_statu
 def test_build_coherence_fabric_status_schema_fields():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status["operator_cognition_coherence_fabric_version"] == (
-        "operator_cognition_coherence_fabric.v1"
+        "operator_cognition_coherence_fabric.v1.2"
     )
     assert status["read_only"] is True
     assert status["authority_lane"] == "operator"
@@ -40,6 +40,52 @@ def test_lane_coherence_with_profile_authority():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status["authority_lane"] == "operator"
     assert status["resolved_lane"] == "operator"
+
+
+def test_v12_health_fields_present():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    assert "coherence_pipeline_allowed" in status
+    assert "safety_envelope_halt" in status
+
+
+def test_runtime_posture_includes_alt5_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("runtime_posture") or []}
+    assert organs == {"reflection_runtime_organ", "memory_runtime_organ"}
+
+
+def test_evaluate_pipeline_coherence_blocks_misaligned():
+    from src.operator_cognition_coherence_fabric import evaluate_pipeline_coherence
+
+    result = evaluate_pipeline_coherence(fabric_genes_aligned=False, safety_halt=False)
+    assert not result.allowed
+    assert result.reason == "coherence fabric misaligned"
+
+
+def test_live_pipeline_trace_in_snapshot():
+    trace = {
+        "pipeline_id": "gdp_live",
+        "version": "1",
+        "active_lane": "direct_cognitive",
+        "coherence_protocol": {"response": "ALLOW"},
+        "realtime_signal_feed": {"risk_level": "low"},
+        "immune_protocol": {"response": "ALLOW"},
+        "forward_packets": [],
+        "service_packets": [],
+        "return_packets": [],
+    }
+    status = build_coherence_fabric_status(
+        root=Path(__file__).resolve().parents[1],
+        pipeline_trace=trace,
+    )
+    assert status.get("last_coherence_response") == "ALLOW"
+
+
+def test_evaluate_pipeline_coherence_allows_aligned():
+    from src.operator_cognition_coherence_fabric import evaluate_pipeline_coherence
+
+    result = evaluate_pipeline_coherence(fabric_genes_aligned=True, safety_halt=False)
+    assert result.allowed
 
 
 def test_evaluate_bridge_coherence_blocks_misaligned_fabric():

@@ -647,6 +647,48 @@ Every major entry should name its CISIV stage explicitly.
 - outcome: `mutation.history[]` status `promoted`; genome version `1.0.1`; schema delta reference-only under frozen schema
 - verification note: `make narrative-trust-pack-mutation-gate`; `make narrative-gate`
 
+### Alt-7.1 Coherence Fabric Evolution — Contract + MP-OCCF-001
+
+- CISIV stage: `structure`
+- scope: Alt-7.1 MP-X contract; MP-OCCF-001 golden path; MutationEngine alt7-governed-gate + dual alt6/alt7 on fabric lane_dna; `make coherence-fabric-mutation-gate`
+- outcome: coherence fabric genome may evolve invariants via MP-X with post-apply alt7-governed-gate
+- verification note: `make coherence-fabric-mutation-gate`; `make alt7-governed-gate`
+
+### Alt-7.1 — Snapshot v1.1 + Runtime Posture
+
+- CISIV stage: `implementation`
+- scope: `operator_cognition_coherence_fabric.v1.1` schema; `runtime_posture[]` from reflection/memory runtime organs; genome schema ref v1.1
+- outcome: coherence snapshot joins Alt-5 wave-2 runtime posture planes
+- verification note: `make alt7-governed-gate`; `python -m pytest tests/test_operator_cognition_coherence_fabric.py -q`
+
+### Alt-7.1 — Governance Projection + Pipeline Guard
+
+- CISIV stage: `implementation`
+- scope: `OperatorGovernanceCoherenceModule`; `evaluate_pipeline_coherence()`; `coherence_protocol` on governed direct pipeline; `make alt7-1-gate`
+- outcome: read-only governance coherence in chat turns; pipeline blocks when fabric misaligned
+- verification note: `make alt7-1-gate`
+
+### MP-OCCF-001 Live Promotion — Coherence Fabric Invariant
+
+- CISIV stage: `verification`
+- scope: Apply MP-OCCF-001 to live `operator_cognition_coherence_fabric` genome; invariant-only MP-X with post-apply alt7-governed-gate
+- outcome: `mutation.history[]` status `promoted`; genome version bump; schema ref v1.1
+- verification note: `make coherence-fabric-mutation-gate`; `make alt7-governed-gate`
+
+### Alt-7.2 — Coherence Enforcement Closure
+
+- CISIV stage: `implementation`
+- scope: `assert_coherence_allows_turn()`; chat/stream hard-block; snapshot v1.2 live pipeline; witness + Tier 5; `make alt7-2-gate`
+- outcome: cognitive path respects `coherence_protocol`; pipeline envelope exposes coherence fields
+- verification note: `make alt7-2-gate`
+
+### Alt-7.2 — MP-OPO-001 Profile Plane MP-X
+
+- CISIV stage: `structure`
+- scope: MP-OPO-001 golden path for `operator_profile_organ`; `make operator-profile-mutation-gate`
+- outcome: profile authority mutations documented under Alt-7.2 contract
+- verification note: `make operator-profile-mutation-gate`
+
 ### Adaptive Lane Organ — Prototype Promotion (Alt-4 Runtime)
 
 - CISIV stage: `verification`

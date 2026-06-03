@@ -21,6 +21,11 @@ from src.cog_runtime.coherence_projection import (
     build_coherence_projection,
     format_coherence_projection_block,
 )
+from src.operator_cognition_coherence_fabric import (
+    build_governance_coherence_projection,
+    format_governance_coherence_block,
+    governance_coherence_projection_enabled,
+)
 from src.cog_runtime import cognitive_runtime_family_spec, nova_cortex_spec
 from src.speaking_runtime import speaking_runtime_spec
 from src.jarvis_protocol import JarvisMessage, build_provider_payload, normalize_messages
@@ -40,6 +45,7 @@ from src.writers_3_rules import (
 CHANNEL_LABELS = {
     "instruction": "System instruction",
     "runtime": "Runtime context",
+    "governance": "Governance coherence",
     "cognitive": "Nova cognitive state",
     "memory": "Memory context",
     "workspace": "Workspace context",
@@ -54,16 +60,17 @@ CHANNEL_LABELS = {
 CHANNEL_ORDER = {
     "instruction": 0,
     "runtime": 1,
-    "cognitive": 2,
-    "memory": 3,
-    "workspace": 4,
-    "research": 5,
-    "browser": 6,
-    "specialist": 7,
-    "orchestration": 8,
-    "corrigibility": 9,
-    "tool": 10,
-    "dialogue": 11,
+    "governance": 2,
+    "cognitive": 3,
+    "memory": 4,
+    "workspace": 5,
+    "research": 6,
+    "browser": 7,
+    "specialist": 8,
+    "orchestration": 9,
+    "corrigibility": 10,
+    "tool": 11,
+    "dialogue": 12,
 }
 
 
@@ -320,6 +327,35 @@ class ProviderPayloadModule(BaseContextModule):
         return payload
 
 
+class OperatorGovernanceCoherenceModule(BaseContextModule):
+    """Project read-only operator governance coherence into provider messages."""
+
+    name = "OperatorGovernanceCoherenceModule"
+    order = 14
+
+    def collect(self, context: ModularContext) -> list[ContextModule]:
+        if not governance_coherence_projection_enabled():
+            return []
+        projection = build_governance_coherence_projection()
+        content = format_governance_coherence_block(projection)
+        if not content.strip():
+            return []
+        return [
+            ContextModule(
+                channel="governance",
+                label="Governance coherence",
+                content=content,
+                metadata={
+                    "projection_version": projection.get("projection_version"),
+                    "read_only": True,
+                    "source": "operator_cognition_coherence_fabric",
+                    "fabric_genes_aligned": projection.get("fabric_genes_aligned"),
+                },
+                source_module=self.name,
+            )
+        ]
+
+
 class NovaCoherenceProjectionModule(BaseContextModule):
     """Project read-only Nova Cortex state into provider messages before generation."""
 
@@ -350,6 +386,7 @@ class NovaCoherenceProjectionModule(BaseContextModule):
 
 context_modules = [
     ProtocolContextModule(),
+    OperatorGovernanceCoherenceModule(),
     NovaCoherenceProjectionModule(),
     KnowledgeModule(),
     ToolResultsModule(),

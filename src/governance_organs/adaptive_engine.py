@@ -92,8 +92,14 @@ class AdaptiveEngine:
 
                 fabric = build_coherence_fabric_status(root=self.root)
                 report["coherence_fabric_aligned"] = bool(fabric.get("fabric_genes_aligned"))
+                report["coherence_pipeline_allowed"] = bool(
+                    fabric.get("coherence_pipeline_allowed")
+                )
+                report["safety_envelope_halt"] = bool(fabric.get("safety_envelope_halt"))
             except Exception:
                 report["coherence_fabric_aligned"] = False
+                report["coherence_pipeline_allowed"] = False
+                report["safety_envelope_halt"] = False
             out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         except Exception:
             report["adaptive_lanes_awakened"] = False

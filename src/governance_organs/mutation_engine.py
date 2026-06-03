@@ -254,14 +254,34 @@ class MutationEngine:
             report = wake_adaptive_lanes(self.root)
             if not report.get("awakened"):
                 failures.append("post-apply wake did not awaken adaptive lanes")
-        if proposal.post_apply_gate == "alt6-governed-gate":
-            fabric_overlap = FABRIC_MINIMUM_GENES.intersection(proposal.fabric_genes)
-            if fabric_overlap:
-                script = self.root / "tools/governance/check_alt6_governed_eligibility.py"
-                failures.extend(self._run_subprocess(script, label="alt6-governed-gate"))
-        elif proposal.post_apply_gate == "narrative-gate":
+        fabric_overlap = FABRIC_MINIMUM_GENES.intersection(proposal.fabric_genes)
+        run_alt6 = proposal.post_apply_gate == "alt6-governed-gate" or (
+            proposal.mutation_kind == "lane_dna" and bool(fabric_overlap)
+        )
+        run_alt7 = proposal.post_apply_gate == "alt7-governed-gate" or (
+            proposal.mutation_kind == "lane_dna" and bool(fabric_overlap)
+        )
+        if run_alt6 and fabric_overlap:
+            script = self.root / "tools/governance/check_alt6_governed_eligibility.py"
+            failures.extend(self._run_subprocess(script, label="alt6-governed-gate"))
+        if run_alt7:
+            script = self.root / "tools/governance/check_alt7_governed_eligibility.py"
+            failures.extend(self._run_subprocess(script, label="alt7-governed-gate"))
+        if proposal.post_apply_gate == "narrative-gate":
             script = self.root / ".github/scripts/check-narrative-governance.py"
             failures.extend(self._run_subprocess(script, label="narrative-gate"))
+        elif proposal.post_apply_gate == "operator-profile-gate":
+            script = self.root / ".github/scripts/check-operator-profile-governance.py"
+            failures.extend(self._run_subprocess(script, label="operator-profile-gate"))
+        if proposal.mutation_kind == "profile_invariant":
+            script = self.root / "tools/governance/check_alt7_governed_eligibility.py"
+            failures.extend(self._run_subprocess(script, label="alt7-governed-gate"))
+        if proposal.raw.get("post_apply_snapshot_check", "").lower() in {"true", "yes", "1"}:
+            from src.operator_cognition_coherence_fabric import build_coherence_fabric_status
+
+            status = build_coherence_fabric_status(root=self.root)
+            if not status.get("fabric_genes_aligned"):
+                failures.append("post-apply coherence snapshot not aligned")
         return failures
 
     def verify(self, gene: str, mp_id: str) -> MutationResult:

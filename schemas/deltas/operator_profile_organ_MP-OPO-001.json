@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "operator_profile_organ MP-OPO-001 additive delta",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "alt7_2_profile_mutation_path": {
+      "type": "boolean",
+      "description": "Reference marker for Alt-7.2 profile MP-X path"
+    }
+  }
+}

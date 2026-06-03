@@ -2,7 +2,7 @@
 
 CISIV stage: **implementation**
 
-Status: **governed** (Alt-7 summon wave `alt7-summon-wave-2026-06`; promoted via `alt7_promote_governed.py`)
+Status: **governed** (Alt-7 / Alt-7.1 / Alt-7.2 batches through `alt7-2-summon-wave-2026-06`)
 
 ## Purpose
 
@@ -12,7 +12,7 @@ wake without adding execution authority.
 
 ## Contract
 
-Schema: [schemas/operator_cognition_coherence_fabric.v1.json](../../../schemas/operator_cognition_coherence_fabric.v1.json)
+Schema: [schemas/operator_cognition_coherence_fabric.v1.2.json](../../../schemas/operator_cognition_coherence_fabric.v1.2.json)
 
 Parent law: [AAIS_ADAPTIVE_GOVERNANCE.md](../../contracts/AAIS_ADAPTIVE_GOVERNANCE.md)
 
@@ -23,6 +23,7 @@ Parent law: [AAIS_ADAPTIVE_GOVERNANCE.md](../../contracts/AAIS_ADAPTIVE_GOVERNAN
 | Profile | `operator_profile_organ` | `authority_lane`, `profile_posture` |
 | Lanes | `adaptive_lane_organ` | `resolved_lane`, `lane_awakened` |
 | Envelopes | bridge / pipeline / memory / safety | `envelope_governance_modes[]` |
+| Runtime posture | reflection + memory runtime organs | `runtime_posture[]` |
 
 ## Runtime Surface
 
@@ -30,7 +31,12 @@ Parent law: [AAIS_ADAPTIVE_GOVERNANCE.md](../../contracts/AAIS_ADAPTIVE_GOVERNAN
 |------|------|
 | module | `src/operator_cognition_coherence_fabric.py` |
 | API | `GET /api/jarvis/coherence-fabric/status` |
-| gate | `make coherence-fabric-gate`, `make alt7-gate`, `make alt7-governed-gate` |
+| gate | `make coherence-fabric-gate`, `make alt7-gate`, `make alt7-governed-gate`, `make alt7-1-gate`, `make alt7-2-gate` |
+| mutation | `make coherence-fabric-mutation-gate` (MP-OCCF-001) |
+| projection | `OperatorGovernanceCoherenceModule` in `jarvis_modular.py` |
+| pipeline guard | `evaluate_pipeline_coherence()` + `coherence_protocol` on trace |
+| hard block | `assert_coherence_allows_turn()` — `AAIS_COHERENCE_HARD_BLOCK=1` (default) |
+| status query | `GET /api/jarvis/coherence-fabric/status?session_id=` for live pipeline join |
 
 ## Integration
 

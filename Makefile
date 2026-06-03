@@ -267,12 +267,24 @@ adaptive-lane-mutation-gate:
 coherence-fabric-gate:
 	python3 .github/scripts/check-coherence-fabric-governance.py
 
+coherence-fabric-mutation-gate:
+	python3 tools/governance/check_coherence_fabric_mutation.py
+
 alt7-gate: coherence-fabric-gate alt6-governed-gate genome-gate
 
 alt7-governed-gate:
 	python3 tools/governance/check_alt7_governed_eligibility.py
 	python3 .github/scripts/check-coherence-fabric-governance.py
 	python3 -m pytest tests/test_coherence_fabric_bridge.py tests/test_alt7_governed_eligibility.py -q
+
+alt7-1-gate: coherence-fabric-mutation-gate alt7-governed-gate genome-gate
+	python3 -m pytest tests/test_coherence_fabric_pipeline.py tests/test_governance_coherence_projection.py -q
+
+operator-profile-mutation-gate:
+	python3 tools/governance/check_operator_profile_mutation.py
+
+alt7-2-gate: alt7-1-gate operator-profile-mutation-gate
+	python3 -m pytest tests/test_coherence_fabric_chat_block.py tests/test_coherence_fabric_pipeline.py tests/test_operator_cognition_coherence_fabric.py tests/test_operator_profile_organ_mutation_MP_OPO_001.py -q
 
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py

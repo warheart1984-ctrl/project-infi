@@ -28,7 +28,7 @@ Authoritative references:
 
 This repository is also **Project Infi** — constitutional engineering where claims require proof, not intent.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.3.1 — Close Loops](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.1) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.3.3 — Alt-7.2 Enforcement Closure](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.3) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -123,7 +123,7 @@ Promotion scripts: `tools/governance/alt5_promote_wave2_mvp.py`, `alt5_promote_g
 **Verification:**
 
 ```bash
-make genome-gate alt4-gate alt5-gate barebones-gate tier5-gate alt6-governed-gate alt7-governed-gate
+make genome-gate alt4-gate alt5-gate barebones-gate tier5-gate alt6-governed-gate alt7-governed-gate alt7-1-gate alt7-2-gate
 python -m pytest tests/test_governance_organs_alt4.py tests/test_adaptive_governance.py \
   tests/test_adaptive_lane_organ.py tests/test_alt6_governed_eligibility.py \
   tests/test_adaptive_lane_bridge.py tests/test_coherence_fabric_bridge.py \
@@ -300,8 +300,10 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
-| Latest tag | [`v1.3.1`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.1) — **Close Loops** — MP-ALO-001 + MP-NTP-001 live, Triangulation/NTP Jarvis routes |
-| Prior tag | [`v1.3.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.0) — Infinity 1 · Alt-7 — 15 governed genomes, coherence fabric, bridge enforcement |
+| Latest tag | [`v1.3.3`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.3) — **Alt-7.2** — chat hard-block, snapshot v1.2, MP-OPO-001 |
+| Prior tag | [`v1.3.2`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.2) — Alt-7.1 — coherence MP-OCCF-001, governance projection, pipeline guard |
+| Earlier | [`v1.3.1`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.1) — Close Loops — MP-ALO-001 + MP-NTP-001 live |
+| Earlier | [`v1.3.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.0) — Infinity 1 · Alt-7 — 15 governed genomes, coherence fabric, bridge enforcement |
 | Earlier | [`v1.2.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.2.0) — Infinity 1 · Alt-6 — 14 governed genomes, adaptive lanes fabric, Tier 5 wake |
 | Earlier | [`v1.1.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.1.0) — Infinity 1 (complete) — 13 governed genomes, Alt-5 waves 1–2, barebones wave |
 | Earlier | [`v1.0.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.0.0) — Infinity 1 initial (Alt-4, Tier 5, Alt-5 wave 1 MVP) |

@@ -18,3 +18,5 @@ schemas/deltas/<gene>_MP-<ID>.json   # optional schema delta
 |----|------|--------|
 | MP-ALO-001 | adaptive_lane_organ | promoted |
 | MP-NTP-001 | narrative_trust_pack | promoted |
+| MP-OCCF-001 | operator_cognition_coherence_fabric | promoted |
+| MP-OPO-001 | operator_profile_organ | promoted |

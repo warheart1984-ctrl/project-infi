@@ -148,10 +148,14 @@ MP-X proposal → verify (genome-gate + delta + tests) → apply → optional ro
 | Tests | `tests/test_<gene>_mutation_<MP_ID>.py` |
 | Golden example | `MP-NTP-001` for `narrative_trust_pack` |
 | Lane mutation golden path | `MP-ALO-001` for `adaptive_lane_organ` |
+| Coherence fabric golden path | `MP-OCCF-001` for `operator_cognition_coherence_fabric` |
+| Profile organ golden path | `MP-OPO-001` for `operator_profile_organ` |
 
 ### Commands
 
 ```bash
+make coherence-fabric-mutation-gate
+make operator-profile-mutation-gate
 make narrative-trust-pack-mutation-gate
 make adaptive-lane-mutation-gate
 python3 -m src.governance_organs.mutation_engine --gene narrative_trust_pack --mp-id MP-NTP-001 --verify
@@ -160,6 +164,12 @@ python3 -m src.governance_organs.mutation_engine --gene narrative_trust_pack --m
 python3 -m src.governance_organs.mutation_engine --gene adaptive_lane_organ --mp-id MP-ALO-001 --verify
 python3 -m src.governance_organs.mutation_engine --gene adaptive_lane_organ --mp-id MP-ALO-001 --apply --invariant "Lane DNA mutations require MP-X, fabric re-validation, and post-apply wake"
 python3 -m src.governance_organs.mutation_engine --gene adaptive_lane_organ --mp-id MP-ALO-001 --rollback
+python3 -m src.governance_organs.mutation_engine --gene operator_cognition_coherence_fabric --mp-id MP-OCCF-001 --verify
+python3 -m src.governance_organs.mutation_engine --gene operator_cognition_coherence_fabric --mp-id MP-OCCF-001 --apply --invariant "Coherence fabric genome mutations require MP-X and post-apply alt7-governed-gate"
+python3 -m src.governance_organs.mutation_engine --gene operator_cognition_coherence_fabric --mp-id MP-OCCF-001 --rollback
+python3 -m src.governance_organs.mutation_engine --gene operator_profile_organ --mp-id MP-OPO-001 --verify
+python3 -m src.governance_organs.mutation_engine --gene operator_profile_organ --mp-id MP-OPO-001 --apply --invariant "Profile authority changes require MP-X and post-apply alt7-governed-gate"
+python3 -m src.governance_organs.mutation_engine --gene operator_profile_organ --mp-id MP-OPO-001 --rollback
 ```
 
 History entries use `proposal_id` (MP-X id) and `status` per genome meta-schema.

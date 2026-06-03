@@ -3,9 +3,15 @@
 from __future__ import annotations
 
 import importlib.util
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.2"
+GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
+MAX_ENVELOPE_MODES = 6
+MAX_FIELD_LEN = 120
 
 from src.adaptive_lane_organ import LaneResolution, load_awakened_lanes, resolve_lane_for_gene
 from src.capability_service_bridge import to_bridge_envelope
@@ -78,6 +84,58 @@ def evaluate_bridge_coherence(
     return CoherenceExecuteResult(allowed=True)
 
 
+def evaluate_pipeline_coherence(
+    *,
+    fabric_genes_aligned: bool,
+    safety_halt: bool,
+) -> CoherenceExecuteResult:
+    """Pipeline-path coherence checks (no policy-cap / strict-mode branch)."""
+    if not fabric_genes_aligned:
+        return CoherenceExecuteResult(
+            allowed=False,
+            reason="coherence fabric misaligned",
+        )
+    if safety_halt:
+        return CoherenceExecuteResult(
+            allowed=False,
+            reason="safety envelope halt",
+        )
+    return CoherenceExecuteResult(allowed=True)
+
+
+def coherence_hard_block_enabled() -> bool:
+    """Env gate for cognitive-path hard block (default on)."""
+    raw = os.environ.get("AAIS_COHERENCE_HARD_BLOCK", "1").strip().lower()
+    return raw not in {"0", "false", "no", "off"}
+
+
+def coherence_protocol_from_pipeline(
+    pipeline: dict[str, Any] | None,
+) -> dict[str, str]:
+    """Normalize coherence_protocol from a governed pipeline trace."""
+    protocol = dict((pipeline or {}).get("coherence_protocol") or {})
+    response = str(protocol.get("response") or "ALLOW").strip().upper()
+    if response not in {"ALLOW", "BLOCK"}:
+        response = "ALLOW"
+    reason = _clip(protocol.get("reason"), 160) if response == "BLOCK" else ""
+    return {"response": response, "reason": reason}
+
+
+def assert_coherence_allows_turn(
+    pipeline: dict[str, Any] | None,
+) -> CoherenceExecuteResult:
+    """Return whether a cognitive turn may proceed given pipeline coherence_protocol."""
+    if not coherence_hard_block_enabled():
+        return CoherenceExecuteResult(allowed=True)
+    protocol = coherence_protocol_from_pipeline(pipeline)
+    if protocol["response"] == "BLOCK":
+        return CoherenceExecuteResult(
+            allowed=False,
+            reason=protocol["reason"] or "coherence fabric blocked",
+        )
+    return CoherenceExecuteResult(allowed=True)
+
+
 def coherence_inputs_for_bridge(
     bridge_snapshot: dict[str, Any],
     *,
@@ -140,10 +198,35 @@ def _fabric_genes_aligned(root: Path) -> bool:
     return not module.check_eligibility(root)
 
 
+def _build_runtime_posture() -> list[dict[str, str]]:
+    from src.memory_runtime_organ import build_memory_runtime_status
+    from src.reflection_runtime_organ import build_reflection_runtime_status
+
+    posture: list[dict[str, str]] = []
+    for organ_id, builder in (
+        ("reflection_runtime_organ", build_reflection_runtime_status),
+        ("memory_runtime_organ", build_memory_runtime_status),
+    ):
+        status = builder()
+        posture.append(
+            {
+                "organ_id": organ_id,
+                "stage": str(status.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+                "claim_label": str(status.get("claim_label") or "asserted")[:32],
+            }
+        )
+    return posture
+
+
+def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
+    return bool((safety_status.get("thresholds") or {}).get("halt_required"))
+
+
 def build_coherence_fabric_status(
     *,
     root: Path | None = None,
     bridge_snapshot: dict[str, Any] | None = None,
+    pipeline_trace: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Join profile, lane, and envelope posture into one inspectable snapshot."""
     root = _root(root)
@@ -157,7 +240,14 @@ def build_coherence_fabric_status(
     )
 
     bridge_env = to_bridge_envelope(bridge_snapshot or _idle_bridge_snapshot())
-    pipeline_env = to_pipeline_envelope(_idle_pipeline_baseline())
+    pipeline_source = pipeline_trace if isinstance(pipeline_trace, dict) and pipeline_trace else None
+    pipeline_env = to_pipeline_envelope(
+        pipeline_source or _idle_pipeline_baseline()
+    )
+    protocol = coherence_protocol_from_pipeline(pipeline_source)
+    pipeline_governance_mode = "strict"
+    if protocol["response"] == "BLOCK":
+        pipeline_governance_mode = "halt"
     memory_env = to_memory_board_envelope(
         build_memory_board_snapshot(build_default_memory_controller())
     )
@@ -175,7 +265,7 @@ def build_coherence_fabric_status(
         },
         {
             "envelope_id": "governed_direct_pipeline",
-            "governance_mode": "strict",
+            "governance_mode": pipeline_governance_mode,
         },
         {
             "envelope_id": "jarvis_memory_board",
@@ -187,15 +277,93 @@ def build_coherence_fabric_status(
         },
     ]
 
-    return {
-        "operator_cognition_coherence_fabric_version": "operator_cognition_coherence_fabric.v1",
+    fabric_aligned = _fabric_genes_aligned(root)
+    safety_halt = safety_mode == "halt"
+    pipeline_allowed = evaluate_pipeline_coherence(
+        fabric_genes_aligned=fabric_aligned,
+        safety_halt=safety_halt,
+    ).allowed
+    if pipeline_source and protocol["response"] == "BLOCK":
+        pipeline_allowed = False
+
+    payload: dict[str, Any] = {
+        "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
         "authority_lane": authority_lane,
         "resolved_lane": str(resolution.lane_id or authority_lane),
         "envelope_governance_modes": envelope_governance_modes,
-        "fabric_genes_aligned": _fabric_genes_aligned(root),
+        "runtime_posture": _build_runtime_posture(),
+        "fabric_genes_aligned": fabric_aligned,
+        "coherence_pipeline_allowed": pipeline_allowed,
+        "safety_envelope_halt": safety_halt,
         "profile_posture": str(profile.get("claim_label") or "asserted"),
         "lane_awakened": bool(lane_report.get("awakened")),
         "cisiv_stage": "implementation",
         "claim_label": "asserted",
         "read_only": True,
     }
+    if pipeline_source:
+        payload["last_coherence_response"] = protocol["response"]
+        if protocol["reason"]:
+            payload["last_coherence_reason"] = protocol["reason"]
+    return payload
+
+
+def _clip(value: Any, limit: int = MAX_FIELD_LEN) -> str:
+    return str(value or "").strip()[:limit]
+
+
+def build_governance_coherence_projection(
+    status: dict[str, Any] | None = None,
+    *,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    """Bounded read-only governance posture for provider context (not Nova cortex)."""
+    snapshot = status or build_coherence_fabric_status(root=root)
+    modes = list(snapshot.get("envelope_governance_modes") or [])[:MAX_ENVELOPE_MODES]
+    clipped_modes = [
+        {
+            "envelope_id": _clip(item.get("envelope_id"), 48),
+            "governance_mode": _clip(item.get("governance_mode"), 24),
+        }
+        for item in modes
+        if isinstance(item, dict)
+    ]
+    return {
+        "projection_version": "1.0",
+        "read_only": True,
+        "source": "operator_cognition_coherence_fabric",
+        "authority_lane": _clip(snapshot.get("authority_lane")),
+        "resolved_lane": _clip(snapshot.get("resolved_lane")),
+        "fabric_genes_aligned": bool(snapshot.get("fabric_genes_aligned")),
+        "envelope_governance_modes": clipped_modes,
+        "runtime_posture": list(snapshot.get("runtime_posture") or [])[:4],
+    }
+
+
+def format_governance_coherence_block(projection: dict[str, Any] | None) -> str:
+    """Format governance coherence for a system context module."""
+    if not projection:
+        return ""
+    if not projection.get("fabric_genes_aligned"):
+        return (
+            "Governance coherence (read-only): fabric genes misaligned — "
+            "bridge and pipeline policy paths may block until alignment is restored."
+        )
+    lines = [
+        "Governance coherence (read-only; does not route or authorize):",
+        f"- authority_lane: {projection.get('authority_lane')}",
+        f"- resolved_lane: {projection.get('resolved_lane')}",
+        f"- fabric_genes_aligned: {projection.get('fabric_genes_aligned')}",
+    ]
+    for item in projection.get("envelope_governance_modes") or []:
+        if isinstance(item, dict):
+            lines.append(
+                f"- envelope {item.get('envelope_id')}: {item.get('governance_mode')}"
+            )
+    return "\n".join(lines)
+
+
+def governance_coherence_projection_enabled() -> bool:
+    """Env gate for OperatorGovernanceCoherenceModule (default on)."""
+    raw = os.environ.get("AAIS_GOVERNANCE_COHERENCE_PROJECTION", "1").strip().lower()
+    return raw not in {"0", "false", "no", "off"}

@@ -1032,6 +1032,31 @@ def build_governed_turn_pipeline(
     """Build the governed direct pipeline trace for one turn."""
     normalized_mode = str(response_mode or "fast").strip().lower() or "fast"
     normalized_runtime_context = _normalize_runtime_context(runtime_context)
+
+    from src.operator_cognition_coherence_fabric import (
+        build_coherence_fabric_status,
+        evaluate_pipeline_coherence,
+    )
+
+    coherence_status = build_coherence_fabric_status()
+    safety_modes = coherence_status.get("envelope_governance_modes") or []
+    safety_halt = any(
+        isinstance(item, dict)
+        and item.get("envelope_id") == "safety_envelope"
+        and str(item.get("governance_mode") or "").lower() == "halt"
+        for item in safety_modes
+    )
+    coherence_eval = evaluate_pipeline_coherence(
+        fabric_genes_aligned=bool(coherence_status.get("fabric_genes_aligned")),
+        safety_halt=safety_halt,
+    )
+    coherence_protocol = {"response": "ALLOW"}
+    if not coherence_eval.allowed:
+        coherence_protocol = {
+            "response": "BLOCK",
+            "reason": coherence_eval.reason or "coherence fabric blocked",
+        }
+
     active_contract = str(contract or (turn_contract or {}).get("contract_label") or "direct_answer").strip()
     surface_node = _surface_node(surface_identity or (god_brain or {}).get("surface_identity"), normalized_mode)
     if tool_result:
@@ -1087,6 +1112,8 @@ def build_governed_turn_pipeline(
     service_packets = immune_evaluation["service_packets"]
     return_packets = immune_evaluation["return_packets"]
     immune_protocol = immune_evaluation["immune_protocol"]
+    if coherence_protocol["response"] != "ALLOW":
+        summary = f"{summary} Coherence response: {coherence_protocol['response']}."
     if immune_protocol["response"] != "ALLOW":
         summary = f"{summary} Immune response: {immune_protocol['response']}."
     pipeline_id = f"gdp_{uuid4().hex}"
@@ -1255,6 +1282,7 @@ def build_governed_turn_pipeline(
         "service_packets": service_packets,
         "return_packets": return_packets,
         "immune_protocol": immune_protocol,
+        "coherence_protocol": coherence_protocol,
         "bridge_hops": bridge_hops,
         "realtime_signal_feed": realtime_signal_feed,
         "realtime_event_cause_predictor": realtime_event_cause_predictor,
@@ -1377,6 +1405,11 @@ def to_pipeline_envelope(
         )
     feed = dict(pipeline.get("realtime_signal_feed") or {})
     immune = dict(pipeline.get("immune_protocol") or {})
+    coherence = dict(pipeline.get("coherence_protocol") or {})
+    coherence_response = str(coherence.get("response") or "ALLOW").strip().upper()
+    if coherence_response not in {"ALLOW", "BLOCK"}:
+        coherence_response = "ALLOW"
+    coherence_reason = str(coherence.get("reason") or "").strip()[:160]
     risk = str(feed.get("risk_level") or "low").strip().lower()
     if risk not in {"low", "medium", "high", "critical"}:
         risk = "medium"
@@ -1385,6 +1418,8 @@ def to_pipeline_envelope(
         "risk_level": risk,
         "system_state": str(feed.get("system_state") or pipeline.get("traffic_class") or ""),
         "immune_response": str(immune.get("response") or "ALLOW"),
+        "coherence_response": coherence_response,
+        "coherence_reason": coherence_reason,
         "claim_label": claim_label,
     }
     return {

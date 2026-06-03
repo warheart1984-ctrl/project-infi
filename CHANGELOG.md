@@ -13,6 +13,64 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.3.3] - 2026-06-02 — Alt-7.2 Enforcement Closure
+
+**Alt-7.2** — hard-block Jarvis chat when `coherence_protocol` is BLOCK; coherence snapshot v1.2 with live pipeline join; witness/Tier 5 observability; MP-OPO-001 profile MP-X path.
+
+### Added
+
+- **Cognitive hard block** — `assert_coherence_allows_turn()` + 403 chat/stream responses (`AAIS_COHERENCE_HARD_BLOCK`, default on)
+- **Snapshot v1.2** — `coherence_pipeline_allowed`, `safety_envelope_halt`, optional `last_coherence_*` from live pipeline
+- **Status API** — `GET /api/jarvis/coherence-fabric/status?session_id=` joins last governed pipeline
+- **Pipeline envelope** — `coherence_response` / `coherence_reason` in `signal_feed`
+- **MP-OPO-001** — `operator_profile_organ` profile invariant MP-X; `make operator-profile-mutation-gate`
+- **Umbrella gate** — `make alt7-2-gate`
+
+### Changed
+
+- Continuity witness records `coherence_boundary` and `coherence_protocol` surface
+- Tier 5 health includes `coherence_pipeline_allowed` and `safety_envelope_halt`
+- Genome coherence fabric schema ref → v1.2
+
+### Verification (v1.3.3)
+
+```bash
+make alt7-2-gate
+python -m pytest tests/test_coherence_fabric_chat_block.py \
+  tests/test_coherence_fabric_pipeline.py tests/test_operator_profile_organ_mutation_MP_OPO_001.py -q
+```
+
+[1.3.3]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.3
+
+## [1.3.2] - 2026-06-02 — Alt-7.1 Coherence Evolution
+
+**Alt-7.1** — coherence fabric MP-X path (MP-OCCF-001), snapshot v1.1 with runtime posture planes, governance projection in Jarvis modular chat, and pipeline `coherence_protocol` guard.
+
+### Added
+
+- **Alt-7.1 MP-X** — `MP-OCCF-001` for `operator_cognition_coherence_fabric`; `make coherence-fabric-mutation-gate`; post-apply `alt7-governed-gate`
+- **Snapshot v1.1** — `runtime_posture[]` joins `reflection_runtime_organ` and `memory_runtime_organ`
+- **Governance projection** — `OperatorGovernanceCoherenceModule` (`AAIS_GOVERNANCE_COHERENCE_PROJECTION`, default on)
+- **Pipeline guard** — `evaluate_pipeline_coherence()` + `coherence_protocol` on governed direct pipeline trace
+- **Umbrella gate** — `make alt7-1-gate`
+
+### Changed
+
+- `MutationEngine` runs `alt7-governed-gate` on coherence MP-X; fabric `lane_dna` mutations also re-validate alt7
+- Genome `operator_cognition_coherence_fabric` schema ref → v1.1
+
+### Verification (v1.3.2)
+
+```bash
+make alt7-1-gate
+python -m pytest tests/test_operator_cognition_coherence_fabric.py \
+  tests/test_operator_cognition_coherence_fabric_mutation_MP_OCCF_001.py \
+  tests/test_coherence_fabric_bridge.py tests/test_coherence_fabric_pipeline.py \
+  tests/test_governance_coherence_projection.py -q
+```
+
+[1.3.2]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.3.2
+
 ## [1.3.1] - 2026-06-02 — Close Loops
 
 **Close Loops** — live MP-ALO-001 lane DNA + MP-NTP-001 invariant mutations; Triangulation and Narrative Trust Pack Jarvis bridge/API routes; retirement lineage `migration_proof` on Alt-5/6/7 dependents.

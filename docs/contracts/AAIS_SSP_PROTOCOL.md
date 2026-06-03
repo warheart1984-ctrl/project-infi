@@ -250,6 +250,31 @@ make alt4-gate
 make tier5-gate
 ```
 
+## Alt-7.1 Coherence Fabric Evolution
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt7-1-summon-wave-2026-06` in LOGBOOK |
+| Contract | [AAIS_ADAPTIVE_GOVERNANCE.md](./AAIS_ADAPTIVE_GOVERNANCE.md) § Alt-7.1 |
+| Golden proposal | `MP-OCCF-001` for `operator_cognition_coherence_fabric` |
+| Gate | `make coherence-fabric-mutation-gate`, `make alt7-1-gate` |
+| Post-apply | `alt7-governed-gate` + `build_coherence_fabric_status()` aligned |
+| Snapshot v1.1 | `schemas/operator_cognition_coherence_fabric.v1.1.json` + `runtime_posture[]` |
+| Cognition bridge | `OperatorGovernanceCoherenceModule` in `jarvis_modular.py` |
+| Pipeline guard | `evaluate_pipeline_coherence()` in `build_governed_turn_pipeline` |
+
+Depends on: Alt-7 governed fabric; Alt-6.1 lane MP-X path.
+
+## Alt-7.2 Coherence Enforcement Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt7-2-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.2` + live `pipeline_trace` |
+| Hard block | `assert_coherence_allows_turn()` on Jarvis chat paths |
+| Profile MP-X | `MP-OPO-001` + `make operator-profile-mutation-gate` |
+| Gate | `make alt7-2-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per

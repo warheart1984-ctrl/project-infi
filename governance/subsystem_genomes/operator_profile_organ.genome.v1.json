@@ -2,7 +2,7 @@
   "subsystem_genome_version": "subsystem_genome.v1",
   "identity": {
     "gene": "operator_profile_organ",
-    "version": "1.0.0-governed",
+    "version": "1.0.1",
     "stage": "governed",
     "display_name": "Operator Profile Organ"
   },
@@ -18,13 +18,17 @@
     "invariants": [
       "profile_id never empty on live path",
       "authority_lane defaults to operator",
-      "No elevation without explicit operator action"
+      "No elevation without explicit operator action",
+      "Profile authority changes require MP-X and post-apply alt7-governed-gate"
     ],
     "operator_lanes": [
       {
         "lane_id": "operator",
         "weight": 1.0,
-        "capabilities": ["inspect_operator_profile", "resolve_authority_lane"]
+        "capabilities": [
+          "inspect_operator_profile",
+          "resolve_authority_lane"
+        ]
       }
     ]
   },
@@ -77,7 +81,14 @@
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
   },
   "mutation": {
-    "history": []
+    "history": [
+      {
+        "proposal_id": "MP-OPO-001",
+        "status": "promoted",
+        "schema_delta_ref": "schemas/deltas/operator_profile_organ_MP-OPO-001.json",
+        "notes": "backup: .runtime\\governance\\mutation_backups\\operator_profile_organ_20260603T000012Z.genome.v1.json"
+      }
+    ]
   },
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/OPERATOR_PROFILE_ORGAN.md",

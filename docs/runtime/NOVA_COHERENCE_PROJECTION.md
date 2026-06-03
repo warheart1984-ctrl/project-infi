@@ -79,10 +79,22 @@ Injected as modular context channel `cognitive` via `NovaCoherenceProjectionModu
 2. `build_chat_turn_modular_preview()` copies `nova_intent`, `nova_narrative`, `cortex_arc`, artifacts into turn metadata
 3. `NovaCoherenceProjectionModule.collect()` adds one system module before `generate_chat`
 
+## Governance vs cortex projection
+
+| Layer | Module | Source | Channel |
+|-------|--------|--------|---------|
+| **Governance** | `OperatorGovernanceCoherenceModule` | `build_governance_coherence_projection()` | `governance` |
+| **Cortex** | `NovaCoherenceProjectionModule` | `build_coherence_projection()` | `cognitive` |
+
+Governance projection (Alt-7.1) joins operator profile, lanes, and envelope posture. Nova
+projection exports bounded cortex artifacts. Neither routes or authorizes execution.
+
+Env: `AAIS_GOVERNANCE_COHERENCE_PROJECTION=1` (default on).
+
 ## Verification
 
 ```bash
-pytest tests/test_coherence_projection.py -q
+pytest tests/test_coherence_projection.py tests/test_governance_coherence_projection.py -q
 ```
 
 **Claim status:** modular injection + projection schema = **asserted** (single-machine pytest).
