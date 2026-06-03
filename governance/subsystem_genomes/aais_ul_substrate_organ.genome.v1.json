@@ -55,7 +55,9 @@
       "chat_turn_governance_organ",
       "cisiv_operator_lineage_console"
     ],
-    "children": []
+    "children": [
+      "blueprint_posture_organ"
+    ]
   },
   "activation": {
     "order": 5,

@@ -4,6 +4,29 @@ Status: **active contract**
 
 CISIV stage: **structure**
 
+## Project Infinity terminology
+
+Architecture is unchanged; documentation uses standard engineering language. Legacy repo identifiers (`*_organ`, `*.genome.v1.json`, `altN-summon-wave`) remain for compatibility.
+
+| Legacy (code/paths) | Standard language |
+|---------------------|-------------------|
+| Organ | **Subsystem** |
+| Genome | **Schema** (`governance/subsystem_genomes/`) |
+| Surface | **Interface** (UI/API binding subsystem) |
+| Plane / `*_posture[]` | **Layer** |
+| Fabric | **Coherence Layer** (`operator_cognition_coherence_fabric`) |
+| Summon wave | **Release** (batch admission, e.g. Release 20 = `alt20-summon-wave-2026-06`) |
+
+## Codex / Cursor naming (new admissions)
+
+All SSP admissions from Wave 1 onward follow [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](./AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md):
+
+- Mythic names in comments and concept specs only
+- Engineering identifiers: `<Domain><Function><Role>` (PascalCase class, snake_case module)
+- No new `*_organ.py` or `*_fabric.py` file stems (legacy paths grandfathered)
+- Dual-layer comments, explicit invariants and boundaries
+- Cursor rules: `.cursor/rules/jon-*.mdc`; gate: `make naming-gate`
+
 ## Purpose
 
 SSP is a deterministic pattern that takes raw idea seeds and transforms them into
@@ -634,6 +657,36 @@ Depends on: Alt-18 governed law/admission posture; launcher maintain-only per sp
 | Batch id | `alt19-2-summon-wave-2026-06` in LOGBOOK |
 | Proof | `docs/proof/platform/OPERATOR_PRODUCT_SHELL_V1_PROOF.md`, `docs/proof/platform/LAUNCHER_ORGAN_V1_PROOF.md`, `docs/proof/platform/API_GATEWAY_ORGAN_V1_PROOF.md` |
 | Gate | `make alt19-2-gate` |
+
+## Release 20 — Operator Workspace & Extended Interfaces Coherence Layer
+
+Batch-admit nine read-only **subsystems** across workspace/memory, hygiene/blueprint posture, and extended operator **interfaces**.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt20-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `memory_smith_organ` → `operator_workspace_organ` → `jarvis_runs_organ` → `state_hygiene_organ` → `blueprint_posture_organ` → `workflow_interfaces_organ` → `platform_console_interfaces_organ` → `operator_console_interface_organ` → `nova_workspace_interface_organ` |
+| MVP promotion | `tools/governance/alt20_promote_mvp.py` |
+| Gates | `make alt20-gate` |
+| Governed promotion | `tools/governance/alt20_promote_governed.py` + `make alt20-governed-gate` |
+
+Depends on: Release 19 governed product interfaces; read-only posture; no new execute authority.
+
+## Release 20.1 Coherence Layer Workspace/Interface Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt20-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.15` + `workspace_memory_layer[]`, `hygiene_blueprint_layer[]`, `extended_operator_interface_layer[]` |
+| Gate | `make alt20-1-gate` |
+
+## Release 20.2 Operator Workspace & Extended Interfaces Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt20-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/platform/OPERATOR_WORKSPACE_INTERFACES_V1_PROOF.md`, `docs/proof/platform/MEMORY_SMITH_ORGAN_V1_PROOF.md`, `docs/proof/platform/WORKFLOW_INTERFACES_ORGAN_V1_PROOF.md` |
+| Gate | `make alt20-2-gate` |
 
 ## Activation Rule
 

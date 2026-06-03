@@ -58,7 +58,8 @@
     "children": [
       "dashboard_surface_organ",
       "memory_bank_surface_organ",
-      "nova_landing_surface_organ"
+      "nova_landing_surface_organ",
+      "operator_console_interface_organ"
     ]
   },
   "activation": {

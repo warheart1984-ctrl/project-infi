@@ -57,6 +57,7 @@
     ],
     "children": [
       "aris_integration_organ",
+      "blueprint_posture_organ",
       "chat_turn_governance_organ",
       "governance_layer_organ",
       "run_ledger_binding_organ"

@@ -10,7 +10,7 @@ from src.operator_cognition_coherence_fabric import build_coherence_fabric_statu
 def test_build_coherence_fabric_status_schema_fields():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status["operator_cognition_coherence_fabric_version"] == (
-        "operator_cognition_coherence_fabric.v1.14"
+        "operator_cognition_coherence_fabric.v1.15"
     )
     assert status["read_only"] is True
     assert status["authority_lane"] == "operator"
@@ -328,6 +328,9 @@ def test_alt16_factory_kinetic_planes_at_v111():
 
 def test_alt19_operator_product_shell_planes_at_v114():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    assert status["operator_cognition_coherence_fabric_version"] == (
+        "operator_cognition_coherence_fabric.v1.15"
+    )
     assert len(status.get("product_shell_posture") or []) == 3
     assert len(status.get("operator_surface_posture") or []) == 4
     assert len(status.get("composed_runtime_posture") or []) == 2
@@ -335,6 +338,17 @@ def test_alt19_operator_product_shell_planes_at_v114():
     assert status.get("operator_surface_aligned") is True
     assert status.get("composed_runtime_aligned") is True
     assert status.get("operator_product_shell_aligned") is True
+
+
+def test_alt20_operator_workspace_interfaces_layers_at_v115():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    assert len(status.get("workspace_memory_layer") or []) == 3
+    assert len(status.get("hygiene_blueprint_layer") or []) == 3
+    assert len(status.get("extended_operator_interface_layer") or []) == 3
+    assert status.get("workspace_memory_aligned") is True
+    assert status.get("hygiene_blueprint_aligned") is True
+    assert status.get("extended_operator_interface_aligned") is True
+    assert status.get("operator_workspace_interfaces_aligned") is True
 
 
 def test_alt18_project_infi_law_planes_at_v113():
@@ -370,7 +384,7 @@ def test_alt15_lobe_voice_planes_at_v111():
 def test_alt12_planes_aligned_at_v112_alongside_alt13_and_alt14():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status.get("operator_cognition_coherence_fabric_version") == (
-        "operator_cognition_coherence_fabric.v1.14"
+        "operator_cognition_coherence_fabric.v1.15"
     )
     assert len(status.get("otem_lane_posture") or []) == 3
     assert len(status.get("predictive_lane_posture") or []) == 3

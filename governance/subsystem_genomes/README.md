@@ -6,6 +6,8 @@ Meta-schema: [schemas/subsystem_genome.v1.json](../../schemas/subsystem_genome.v
 
 Contract: [docs/contracts/AAIS_SUBSYSTEM_GENOME.md](../../docs/contracts/AAIS_SUBSYSTEM_GENOME.md)
 
+Legacy engineering aliases (Wave 3): [../legacy_engineering_aliases.v1.json](../legacy_engineering_aliases.v1.json) — maps grandfathered `*_organ` / `*_fabric` genes to PascalCase comment names per [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](../../docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md).
+
 ## Gate
 
 ```bash

@@ -1,0 +1,76 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "platform_console_interfaces_organ",
+    "version": "0.1.0-concept",
+    "stage": "governed",
+    "display_name": "Platform Console Interfaces Subsystem"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/runtime/AAIS_RUNTIME_GUIDE.md",
+      "docs/contracts/JARVIS_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    ],
+    "invariants": [
+      "Read-only v1 \u2014 subsystem does not mutate upstream authority",
+      "module_id frozen to AAIS-PCI-01"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/platform_console_interfaces_organ.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/platform_console_interfaces_organ.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/platform-console-interfaces/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make platform-console-interfaces-organ-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "E:\\project-infi\\docs\\proof\\platform\\PLATFORM_CONSOLE_INTERFACES_ORGAN_GOVERNED_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/platform/PLATFORM_CONSOLE_INTERFACES_ORGAN_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "api_gateway_organ"
+    ],
+    "children": []
+  },
+  "activation": {
+    "order": 7,
+    "batch_id": "alt20-summon-wave-2026-06",
+    "notes": "Release 20 wave 7"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/PLATFORM_CONSOLE_INTERFACES_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/PLATFORM_CONSOLE_INTERFACES_ORGAN_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/platform/PLATFORM_CONSOLE_INTERFACES_ORGAN.md"
+  }
+}

@@ -9,3 +9,16 @@ These three subsystems completed the full SSP pipeline and graduated to partial 
 | Narrative Trust Pack | [NARRATIVE_TRUST_PACK.md](../../../docs/_future/ideas_pending/NARRATIVE_TRUST_PACK.md) | [NARRATIVE_TRUST_PACK_MVP_PLAN.md](../../../docs/_future/ideas_pending/NARRATIVE_TRUST_PACK_MVP_PLAN.md) | [narrative_trust_pack.v1.json](../../../schemas/narrative_trust_pack.v1.json) | [NARRATIVE_TRUST_PACK.md](../../../docs/subsystems/storyforge/NARRATIVE_TRUST_PACK.md) | [NARRATIVE_TRUST_PACK_V1_PROOF.md](../../../docs/proof/storyforge/NARRATIVE_TRUST_PACK_V1_PROOF.md) |
 
 Use these as reference when summoning new subsystem families.
+
+## Engineering scaffold example (new admissions)
+
+For a seed "Runtime plane steward", SSP Step 6 would scaffold:
+
+| Field | Value |
+|-------|-------|
+| Mythic | Runtime plane steward |
+| Engineering class | `RuntimePlaneManager` |
+| Module | `src/runtime_plane_manager.py` |
+| Function | `synchronize_runtime_planes()` |
+
+Template: [../templates/python_subsystem_header.py](../templates/python_subsystem_header.py). Do not use `runtime_plane_organ.py`.

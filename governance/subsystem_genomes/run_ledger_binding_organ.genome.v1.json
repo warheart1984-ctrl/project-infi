@@ -55,7 +55,9 @@
       "project_infi_law_organ",
       "run_ledger_organ"
     ],
-    "children": []
+    "children": [
+      "jarvis_runs_organ"
+    ]
   },
   "activation": {
     "order": 3,

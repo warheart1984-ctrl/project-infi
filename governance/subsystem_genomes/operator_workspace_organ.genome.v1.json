@@ -1,0 +1,77 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "operator_workspace_organ",
+    "version": "0.1.0-concept",
+    "stage": "governed",
+    "display_name": "Operator Workspace Subsystem"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/runtime/AAIS_RUNTIME_GUIDE.md",
+      "docs/contracts/JARVIS_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    ],
+    "invariants": [
+      "Read-only v1 \u2014 subsystem does not mutate upstream authority",
+      "module_id frozen to AAIS-OWS-01"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/operator_workspace_organ.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/operator_workspace_organ.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/operator-workspace/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make operator-workspace-organ-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "E:\\project-infi\\docs\\proof\\platform\\OPERATOR_WORKSPACE_ORGAN_GOVERNED_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/platform/OPERATOR_WORKSPACE_ORGAN_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "capability_service_bridge",
+      "jarvis_operator_organ"
+    ],
+    "children": []
+  },
+  "activation": {
+    "order": 2,
+    "batch_id": "alt20-summon-wave-2026-06",
+    "notes": "Release 20 wave 2"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/OPERATOR_WORKSPACE_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/OPERATOR_WORKSPACE_ORGAN_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/platform/OPERATOR_WORKSPACE_ORGAN.md"
+  }
+}

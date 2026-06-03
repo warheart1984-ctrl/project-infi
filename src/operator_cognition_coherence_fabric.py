@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.14"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.15"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -1530,6 +1530,69 @@ def _composed_runtime_aligned(posture: list[dict[str, Any]]) -> bool:
     return True
 
 
+def _layer_aligned(posture: list[dict[str, Any]], *, minimum: int) -> bool:
+    if len(posture) < minimum:
+        return False
+    return all(str(item.get("claim_label") or "") != "rejected" for item in posture)
+
+
+def _build_workspace_memory_layer() -> list[dict[str, Any]]:
+    from src.jarvis_runs_organ import build_jarvis_runs_status
+    from src.memory_smith_organ import build_memory_smith_status
+    from src.operator_workspace_organ import build_operator_workspace_status
+
+    return [
+        _organ_posture_item("memory_smith_organ", build_memory_smith_status()),
+        _organ_posture_item(
+            "operator_workspace_organ", build_operator_workspace_status()
+        ),
+        _organ_posture_item("jarvis_runs_organ", build_jarvis_runs_status()),
+    ]
+
+
+def _build_hygiene_blueprint_layer() -> list[dict[str, Any]]:
+    from src.blueprint_posture_organ import build_blueprint_posture_status
+    from src.state_hygiene_organ import build_state_hygiene_status
+    from src.workflow_interfaces_organ import build_workflow_interfaces_status
+
+    return [
+        _organ_posture_item("state_hygiene_organ", build_state_hygiene_status()),
+        _organ_posture_item(
+            "blueprint_posture_organ", build_blueprint_posture_status()
+        ),
+        _organ_posture_item(
+            "workflow_interfaces_organ", build_workflow_interfaces_status()
+        ),
+    ]
+
+
+def _build_extended_operator_interface_layer() -> list[dict[str, Any]]:
+    from src.nova_workspace_interface_organ import (
+        build_nova_workspace_interface_status,
+    )
+    from src.operator_console_interface_organ import (
+        build_operator_console_interface_status,
+    )
+    from src.platform_console_interfaces_organ import (
+        build_platform_console_interfaces_status,
+    )
+
+    return [
+        _organ_posture_item(
+            "platform_console_interfaces_organ",
+            build_platform_console_interfaces_status(),
+        ),
+        _organ_posture_item(
+            "operator_console_interface_organ",
+            build_operator_console_interface_status(),
+        ),
+        _organ_posture_item(
+            "nova_workspace_interface_organ",
+            build_nova_workspace_interface_status(),
+        ),
+    ]
+
+
 def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
@@ -1630,6 +1693,9 @@ def build_coherence_fabric_status(
     product_shell_posture = _build_product_shell_posture()
     operator_surface_posture = _build_operator_surface_posture()
     composed_runtime_posture = _build_composed_runtime_posture()
+    workspace_memory_layer = _build_workspace_memory_layer()
+    hygiene_blueprint_layer = _build_hygiene_blueprint_layer()
+    extended_operator_interface_layer = _build_extended_operator_interface_layer()
 
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
@@ -1750,6 +1816,23 @@ def build_coherence_fabric_status(
             _product_shell_aligned(product_shell_posture)
             and _operator_surface_aligned(operator_surface_posture)
             and _composed_runtime_aligned(composed_runtime_posture)
+        ),
+        "workspace_memory_layer": workspace_memory_layer,
+        "workspace_memory_aligned": _layer_aligned(
+            workspace_memory_layer, minimum=3
+        ),
+        "hygiene_blueprint_layer": hygiene_blueprint_layer,
+        "hygiene_blueprint_aligned": _layer_aligned(
+            hygiene_blueprint_layer, minimum=3
+        ),
+        "extended_operator_interface_layer": extended_operator_interface_layer,
+        "extended_operator_interface_aligned": _layer_aligned(
+            extended_operator_interface_layer, minimum=3
+        ),
+        "operator_workspace_interfaces_aligned": (
+            _layer_aligned(workspace_memory_layer, minimum=3)
+            and _layer_aligned(hygiene_blueprint_layer, minimum=3)
+            and _layer_aligned(extended_operator_interface_layer, minimum=3)
         ),
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,

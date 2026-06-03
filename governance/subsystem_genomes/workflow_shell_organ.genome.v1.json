@@ -57,6 +57,7 @@
     "children": [
       "jarvis_operator_organ",
       "launcher_organ",
+      "workflow_interfaces_organ",
       "workflow_runtime_organ"
     ]
   },

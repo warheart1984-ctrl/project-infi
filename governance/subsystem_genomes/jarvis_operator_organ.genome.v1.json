@@ -61,7 +61,9 @@
       "anti_drift_organ",
       "api_gateway_organ",
       "chat_turn_governance_organ",
-      "jarvis_console_surface_organ"
+      "jarvis_console_surface_organ",
+      "operator_workspace_organ",
+      "state_hygiene_organ"
     ]
   },
   "activation": {

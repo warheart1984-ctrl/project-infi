@@ -13,6 +13,32 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.16.0] - 2026-06-03 — Release 20 Operator Workspace & Extended Interfaces
+
+**Release 20** — nine read-only subsystems at governed; Coherence Layer v1.15 with workspace/memory, hygiene/blueprint, and extended operator interface layers.
+
+### Added
+
+- **Release 20.0** — `memory_smith_organ`, `operator_workspace_organ`, `jarvis_runs_organ`, `state_hygiene_organ`, `blueprint_posture_organ`, `workflow_interfaces_organ`, `platform_console_interfaces_organ`, `operator_console_interface_organ`, `nova_workspace_interface_organ`; status APIs; `make alt20-gate`; `tools/governance/alt20_promote_mvp.py`
+- **Release 20.1** — Coherence Layer v1.15 + `workspace_memory_layer`, `hygiene_blueprint_layer`, `extended_operator_interface_layer`, `operator_workspace_interfaces_aligned`; `make alt20-1-gate`
+- **Release 20.2** — `OPERATOR_WORKSPACE_INTERFACES_V1_PROOF`; `make alt20-2-gate`
+- **Governed promotion** — `tools/governance/alt20_promote_governed.py`; `make alt20-governed-gate`
+- **Terminology** — Project Infinity glossary in README and [AAIS_SSP_PROTOCOL.md](docs/contracts/AAIS_SSP_PROTOCOL.md) (Subsystem, Schema, Interface, Layer, Coherence Layer, Release)
+
+### Changed
+
+- Schema registry: **120 governed** subsystem schemas (111 prior + 9 Release 20)
+- `operator_cognition_coherence_fabric` schema ref → v1.15
+
+### Verification (v1.16.0)
+
+```bash
+make alt20-gate alt20-1-gate alt20-2-gate alt20-governed-gate
+python -m pytest tests/test_memory_smith_organ.py tests/test_operator_workspace_organ.py tests/test_jarvis_runs_organ.py tests/test_state_hygiene_organ.py tests/test_blueprint_posture_organ.py tests/test_workflow_interfaces_organ.py tests/test_platform_console_interfaces_organ.py tests/test_operator_console_interface_organ.py tests/test_nova_workspace_interface_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.16.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.16.0
+
 ## [1.15.0] - 2026-06-02 — Alt-19 Operator Product Shell Fabric
 
 **Alt-19** — nine read-only organs at governed; coherence fabric v1.14 with product shell, operator surface, and composed runtime posture planes.

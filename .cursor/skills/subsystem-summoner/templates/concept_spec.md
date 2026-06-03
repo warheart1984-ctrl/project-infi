@@ -6,6 +6,12 @@ Status: pending — not yet integrated into active AAIS doc tree or backed by ru
 
 ## 1. Purpose
 
+**Mythic:** {{MYTHIC_NAME}} — {{MYTHIC_PURPOSE}}
+
+**Engineering:** `{{ENGINEERING_CLASS}}` (`<Domain><Function><Role>`) — {{ENGINEERING_PURPOSE}}
+
+Naming protocol: [docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](../../../docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md)
+
 {{PURPOSE}}
 
 ## 2. Authority And Precedence

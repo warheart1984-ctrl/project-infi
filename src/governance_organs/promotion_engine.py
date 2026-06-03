@@ -129,6 +129,15 @@ GENE_GATES: dict[str, str] = {
     "nova_landing_surface_organ": "nova-landing-surface-organ-gate",
     "aais_composed_runtime_organ": "aais-composed-runtime-organ-gate",
     "api_gateway_organ": "api-gateway-organ-gate",
+    "memory_smith_organ": "memory-smith-organ-gate",
+    "operator_workspace_organ": "operator-workspace-organ-gate",
+    "jarvis_runs_organ": "jarvis-runs-organ-gate",
+    "state_hygiene_organ": "state-hygiene-organ-gate",
+    "blueprint_posture_organ": "blueprint-posture-organ-gate",
+    "workflow_interfaces_organ": "workflow-interfaces-organ-gate",
+    "platform_console_interfaces_organ": "platform-console-interfaces-organ-gate",
+    "operator_console_interface_organ": "operator-console-interface-organ-gate",
+    "nova_workspace_interface_organ": "nova-workspace-interface-organ-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -369,6 +378,31 @@ GATE_SCRIPTS: dict[str, list[str]] = {
         ".github/scripts/check-aais-composed-runtime-organ-governance.py"
     ],
     "api-gateway-organ-gate": [".github/scripts/check-api-gateway-organ-governance.py"],
+    "memory-smith-organ-gate": [
+        ".github/scripts/check-memory-smith-organ-governance.py"
+    ],
+    "operator-workspace-organ-gate": [
+        ".github/scripts/check-operator-workspace-organ-governance.py"
+    ],
+    "jarvis-runs-organ-gate": [".github/scripts/check-jarvis-runs-organ-governance.py"],
+    "state-hygiene-organ-gate": [
+        ".github/scripts/check-state-hygiene-organ-governance.py"
+    ],
+    "blueprint-posture-organ-gate": [
+        ".github/scripts/check-blueprint-posture-organ-governance.py"
+    ],
+    "workflow-interfaces-organ-gate": [
+        ".github/scripts/check-workflow-interfaces-organ-governance.py"
+    ],
+    "platform-console-interfaces-organ-gate": [
+        ".github/scripts/check-platform-console-interfaces-organ-governance.py"
+    ],
+    "operator-console-interface-organ-gate": [
+        ".github/scripts/check-operator-console-interface-organ-governance.py"
+    ],
+    "nova-workspace-interface-organ-gate": [
+        ".github/scripts/check-nova-workspace-interface-organ-governance.py"
+    ],
 }
 
 PROTOTYPE_GATE_STUB_GENES = frozenset(GENE_GATES.keys()) | frozenset(

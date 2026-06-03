@@ -1,0 +1,777 @@
+{
+  "version": "legacy_engineering_aliases.v1",
+  "contract": "docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md",
+  "note": "Comment-only engineering names until Wave 4 MP-X rename.",
+  "aliases": [
+    {
+      "gene": "aais_composed_runtime_organ",
+      "legacy_path": "src/aais_composed_runtime_organ.py",
+      "engineering_class": "AaisComposedRuntimeEngine",
+      "mythic_label": "Aais Composed Runtime Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "aais_doctor_organ",
+      "legacy_path": "src/aais_doctor_organ.py",
+      "engineering_class": "AaisDoctorEngine",
+      "mythic_label": "Aais Doctor Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "aais_ul_substrate_organ",
+      "legacy_path": "src/aais_ul_substrate_organ.py",
+      "engineering_class": "AaisUlSubstrateEngine",
+      "mythic_label": "Aais Ul Substrate Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "adaptive_lane_organ",
+      "legacy_path": "src/adaptive_lane_organ.py",
+      "engineering_class": "AdaptiveLaneInterface",
+      "mythic_label": "Adaptive Lane Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "ai_factory_organ",
+      "legacy_path": "src/ai_factory_organ.py",
+      "engineering_class": "AiFactoryEngine",
+      "mythic_label": "Ai Factory Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "anti_drift_organ",
+      "legacy_path": "src/anti_drift_organ.py",
+      "engineering_class": "AntiDriftEngine",
+      "mythic_label": "Anti Drift Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "api_gateway_organ",
+      "legacy_path": "src/api_gateway_organ.py",
+      "engineering_class": "ApiGatewayGate",
+      "mythic_label": "Api Gateway Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "aris_boundary_organ",
+      "legacy_path": "src/aris_boundary_organ.py",
+      "engineering_class": "ArisBoundaryEngine",
+      "mythic_label": "Aris Boundary Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "aris_integration_organ",
+      "legacy_path": "src/aris_integration_organ.py",
+      "engineering_class": "ArisIntegrationEngine",
+      "mythic_label": "Aris Integration Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "attention_organ",
+      "legacy_path": "src/attention_organ.py",
+      "engineering_class": "AttentionEngine",
+      "mythic_label": "Attention Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "beatbox_lane_organ",
+      "legacy_path": "src/beatbox_lane_organ.py",
+      "engineering_class": "BeatboxLaneInterface",
+      "mythic_label": "Beatbox Lane Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "blueprint_posture_organ",
+      "legacy_path": "src/blueprint_posture_organ.py",
+      "engineering_class": "BlueprintPostureEngine",
+      "mythic_label": "Blueprint Posture Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "capability_module_organ",
+      "legacy_path": "src/capability_module_organ.py",
+      "engineering_class": "CapabilityModuleEngine",
+      "mythic_label": "Capability Module Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "change_scope_organ",
+      "legacy_path": "src/change_scope_organ.py",
+      "engineering_class": "ChangeScopeEngine",
+      "mythic_label": "Change Scope Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "chat_turn_governance_organ",
+      "legacy_path": "src/chat_turn_governance_organ.py",
+      "engineering_class": "ChatTurnGovernanceEngine",
+      "mythic_label": "Chat Turn Governance Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "cognitive_bridge_organ",
+      "legacy_path": "src/cognitive_bridge_organ.py",
+      "engineering_class": "CognitiveBridgeBridge",
+      "mythic_label": "Cognitive Bridge Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "cognitive_execution_organ",
+      "legacy_path": "src/cognitive_execution_organ.py",
+      "engineering_class": "CognitiveExecutionEngine",
+      "mythic_label": "Cognitive Execution Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "cogos_runtime_bridge_organ",
+      "legacy_path": "src/cogos_runtime_bridge_organ.py",
+      "engineering_class": "CogosRuntimeBridgeBridge",
+      "mythic_label": "Cogos Runtime Bridge Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "coherence_projection_organ",
+      "legacy_path": "src/coherence_projection_organ.py",
+      "engineering_class": "CoherenceProjectionLayer",
+      "mythic_label": "Coherence Projection Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "continuity_substrate_organ",
+      "legacy_path": "src/continuity_substrate_organ.py",
+      "engineering_class": "ContinuitySubstrateEngine",
+      "mythic_label": "Continuity Substrate Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "continuity_witness_organ",
+      "legacy_path": "src/continuity_witness_organ.py",
+      "engineering_class": "ContinuityWitnessEngine",
+      "mythic_label": "Continuity Witness Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "conversation_memory_organ",
+      "legacy_path": "src/conversation_memory_organ.py",
+      "engineering_class": "ConversationMemoryEngine",
+      "mythic_label": "Conversation Memory Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "cortex_arcs_organ",
+      "legacy_path": "src/cortex_arcs_organ.py",
+      "engineering_class": "CortexArcsEngine",
+      "mythic_label": "Cortex Arcs Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "dashboard_surface_organ",
+      "legacy_path": "src/dashboard_surface_organ.py",
+      "engineering_class": "DashboardSurfaceInterface",
+      "mythic_label": "Dashboard Surface Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "deliberation_organ",
+      "legacy_path": "src/deliberation_organ.py",
+      "engineering_class": "DeliberationEngine",
+      "mythic_label": "Deliberation Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "direct_challenge_organ",
+      "legacy_path": "src/direct_challenge_organ.py",
+      "engineering_class": "DirectChallengeEngine",
+      "mythic_label": "Direct Challenge Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "document_vision_organ",
+      "legacy_path": "src/document_vision_organ.py",
+      "engineering_class": "DocumentVisionEngine",
+      "mythic_label": "Document Vision Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "evolve_engine_organ",
+      "legacy_path": "src/evolve_engine_organ.py",
+      "engineering_class": "EvolveEngineEngine",
+      "mythic_label": "Evolve Engine Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "forensic_triangulation_organ",
+      "legacy_path": "src/forensic_triangulation_organ.py",
+      "engineering_class": "ForensicTriangulationEngine",
+      "mythic_label": "Forensic Triangulation Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "forge_contractor_organ",
+      "legacy_path": "src/forge_contractor_organ.py",
+      "engineering_class": "ForgeContractorEngine",
+      "mythic_label": "Forge Contractor Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "forge_eval_organ",
+      "legacy_path": "src/forge_eval_organ.py",
+      "engineering_class": "ForgeEvalEngine",
+      "mythic_label": "Forge Eval Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "governance_layer_organ",
+      "legacy_path": "src/governance_layer_organ.py",
+      "engineering_class": "GovernanceLayerEngine",
+      "mythic_label": "Governance Layer Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "governed_event_chain_organ",
+      "legacy_path": "src/governed_event_chain_organ.py",
+      "engineering_class": "GovernedEventChainEngine",
+      "mythic_label": "Governed Event Chain Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "governed_realtime_lane_organ",
+      "legacy_path": "src/governed_realtime_lane_organ.py",
+      "engineering_class": "GovernedRealtimeLaneInterface",
+      "mythic_label": "Governed Realtime Lane Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "human_voice_extraction_organ",
+      "legacy_path": "src/human_voice_extraction_organ.py",
+      "engineering_class": "HumanVoiceExtractionEngine",
+      "mythic_label": "Human Voice Extraction Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "imagine_generator_organ",
+      "legacy_path": "src/imagine_generator_organ.py",
+      "engineering_class": "ImagineGeneratorEngine",
+      "mythic_label": "Imagine Generator Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "immune_observe_organ",
+      "legacy_path": "src/immune_observe_organ.py",
+      "engineering_class": "ImmuneObserveEngine",
+      "mythic_label": "Immune Observe Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "intent_agency_organ",
+      "legacy_path": "src/intent_agency_organ.py",
+      "engineering_class": "IntentAgencyEngine",
+      "mythic_label": "Intent Agency Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "invariant_engine_organ",
+      "legacy_path": "src/invariant_engine_organ.py",
+      "engineering_class": "InvariantEngineEngine",
+      "mythic_label": "Invariant Engine Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "jarvis_console_surface_organ",
+      "legacy_path": "src/jarvis_console_surface_organ.py",
+      "engineering_class": "JarvisConsoleSurfaceInterface",
+      "mythic_label": "Jarvis Console Surface Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "jarvis_operator_organ",
+      "legacy_path": "src/jarvis_operator_organ.py",
+      "engineering_class": "JarvisOperatorEngine",
+      "mythic_label": "Jarvis Operator Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "jarvis_protocol_organ",
+      "legacy_path": "src/jarvis_protocol_organ.py",
+      "engineering_class": "JarvisProtocolEngine",
+      "mythic_label": "Jarvis Protocol Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "jarvis_reasoning_lane_organ",
+      "legacy_path": "src/jarvis_reasoning_lane_organ.py",
+      "engineering_class": "JarvisReasoningLaneInterface",
+      "mythic_label": "Jarvis Reasoning Lane Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "jarvis_runs_organ",
+      "legacy_path": "src/jarvis_runs_organ.py",
+      "engineering_class": "JarvisRunsEngine",
+      "mythic_label": "Jarvis Runs Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "knowledge_authority_organ",
+      "legacy_path": "src/knowledge_authority_organ.py",
+      "engineering_class": "KnowledgeAuthorityEngine",
+      "mythic_label": "Knowledge Authority Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "launcher_organ",
+      "legacy_path": "src/launcher_organ.py",
+      "engineering_class": "LauncherEngine",
+      "mythic_label": "Launcher Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "mechanic_handoff_organ",
+      "legacy_path": "src/mechanic_handoff_organ.py",
+      "engineering_class": "MechanicHandoffBridge",
+      "mythic_label": "Mechanic Handoff Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "memory_bank_surface_organ",
+      "legacy_path": "src/memory_bank_surface_organ.py",
+      "engineering_class": "MemoryBankSurfaceInterface",
+      "mythic_label": "Memory Bank Surface Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "memory_path_governance_organ",
+      "legacy_path": "src/memory_path_governance_organ.py",
+      "engineering_class": "MemoryPathGovernanceEngine",
+      "mythic_label": "Memory Path Governance Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "memory_runtime_organ",
+      "legacy_path": "src/memory_runtime_organ.py",
+      "engineering_class": "MemoryRuntimeEngine",
+      "mythic_label": "Memory Runtime Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "memory_smith_organ",
+      "legacy_path": "src/memory_smith_organ.py",
+      "engineering_class": "MemorySmithEngine",
+      "mythic_label": "Memory Smith Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "mission_board_organ",
+      "legacy_path": "src/mission_board_organ.py",
+      "engineering_class": "MissionBoardEngine",
+      "mythic_label": "Mission Board Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "module_governance_organ",
+      "legacy_path": "src/module_governance_organ.py",
+      "engineering_class": "ModuleGovernanceEngine",
+      "mythic_label": "Module Governance Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "mystic_engine_organ",
+      "legacy_path": "src/mystic_engine_organ.py",
+      "engineering_class": "MysticEngineBridge",
+      "mythic_label": "Mystic engine",
+      "grandfathered": true
+    },
+    {
+      "gene": "narrative_continuity_organ",
+      "legacy_path": "src/narrative_continuity_organ.py",
+      "engineering_class": "NarrativeContinuityEngine",
+      "mythic_label": "Narrative Continuity Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "narrative_trust_pack_organ",
+      "legacy_path": "src/narrative_trust_pack_organ.py",
+      "engineering_class": "NarrativeTrustPackEngine",
+      "mythic_label": "Narrative Trust Pack Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "nova_face_organ",
+      "legacy_path": "src/nova_face_organ.py",
+      "engineering_class": "NovaFaceEngine",
+      "mythic_label": "Nova Face Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "nova_landing_surface_organ",
+      "legacy_path": "src/nova_landing_surface_organ.py",
+      "engineering_class": "NovaLandingSurfaceInterface",
+      "mythic_label": "Nova Landing Surface Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "nova_workspace_interface_organ",
+      "legacy_path": "src/nova_workspace_interface_organ.py",
+      "engineering_class": "NovaWorkspaceInterfaceInterface",
+      "mythic_label": "Nova Workspace Interface Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "operator_cognition_coherence_fabric",
+      "legacy_path": "src/operator_cognition_coherence_fabric.py",
+      "engineering_class": "OperatorCognitionCoherenceLayer",
+      "mythic_label": "Coherence Fabric",
+      "grandfathered": true
+    },
+    {
+      "gene": "operator_console_interface_organ",
+      "legacy_path": "src/operator_console_interface_organ.py",
+      "engineering_class": "OperatorConsoleInterfaceInterface",
+      "mythic_label": "Operator Console Interface Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "operator_health_sentinel_organ",
+      "legacy_path": "src/operator_health_sentinel_organ.py",
+      "engineering_class": "OperatorHealthSentinelGate",
+      "mythic_label": "Operator Health Sentinel Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "operator_profile_organ",
+      "legacy_path": "src/operator_profile_organ.py",
+      "engineering_class": "OperatorProfileEngine",
+      "mythic_label": "Operator Profile Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "operator_workbench_organ",
+      "legacy_path": "src/operator_workbench_organ.py",
+      "engineering_class": "OperatorWorkbenchEngine",
+      "mythic_label": "Operator Workbench Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "operator_workspace_organ",
+      "legacy_path": "src/operator_workspace_organ.py",
+      "engineering_class": "OperatorWorkspaceEngine",
+      "mythic_label": "Operator Workspace Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "orchestration_spine_organ",
+      "legacy_path": "src/orchestration_spine_organ.py",
+      "engineering_class": "OrchestrationSpineEngine",
+      "mythic_label": "Orchestration Spine Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "otem_bounded_organ",
+      "legacy_path": "src/otem_bounded_organ.py",
+      "engineering_class": "OtemBoundedEngine",
+      "mythic_label": "Otem Bounded Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "output_integrity_organ",
+      "legacy_path": "src/output_integrity_organ.py",
+      "engineering_class": "OutputIntegrityEngine",
+      "mythic_label": "Output Integrity Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "patch_apply_organ",
+      "legacy_path": "src/patch_apply_organ.py",
+      "engineering_class": "PatchApplyEngine",
+      "mythic_label": "Patch Apply Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "patch_execution_preview_organ",
+      "legacy_path": "src/patch_execution_preview_organ.py",
+      "engineering_class": "PatchExecutionPreviewEngine",
+      "mythic_label": "Patch Execution Preview Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "patch_verification_organ",
+      "legacy_path": "src/patch_verification_organ.py",
+      "engineering_class": "PatchVerificationEngine",
+      "mythic_label": "Patch Verification Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "patchforge_organ",
+      "legacy_path": "src/patchforge_organ.py",
+      "engineering_class": "PatchforgeEngine",
+      "mythic_label": "Patchforge Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "perception_gateway_organ",
+      "legacy_path": "src/perception_gateway_organ.py",
+      "engineering_class": "PerceptionGatewayGate",
+      "mythic_label": "Perception Gateway Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "perception_lane_organ",
+      "legacy_path": "src/perception_lane_organ.py",
+      "engineering_class": "PerceptionLaneInterface",
+      "mythic_label": "Perception Lane Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "phase_gate_organ",
+      "legacy_path": "src/phase_gate_organ.py",
+      "engineering_class": "PhaseGateGate",
+      "mythic_label": "Phase Gate Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "planning_organ",
+      "legacy_path": "src/planning_organ.py",
+      "engineering_class": "PlanningEngine",
+      "mythic_label": "Planning Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "platform_console_interfaces_organ",
+      "legacy_path": "src/platform_console_interfaces_organ.py",
+      "engineering_class": "PlatformConsoleInterfacesInterface",
+      "mythic_label": "Platform Console Interfaces Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "policy_gate_organ",
+      "legacy_path": "src/policy_gate_organ.py",
+      "engineering_class": "PolicyGateGate",
+      "mythic_label": "Policy Gate Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "predictor_immune_bridge_organ",
+      "legacy_path": "src/predictor_immune_bridge_organ.py",
+      "engineering_class": "PredictorImmuneBridgeBridge",
+      "mythic_label": "Predictor Immune Bridge Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "project_infi_law_organ",
+      "legacy_path": "src/project_infi_law_organ.py",
+      "engineering_class": "ProjectInfiLawEngine",
+      "mythic_label": "Project Infi Law Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "project_infi_state_machine_organ",
+      "legacy_path": "src/project_infi_state_machine_organ.py",
+      "engineering_class": "ProjectInfiStateMachineEngine",
+      "mythic_label": "Project Infi State Machine Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "prompt_assembly_organ",
+      "legacy_path": "src/prompt_assembly_organ.py",
+      "engineering_class": "PromptAssemblyEngine",
+      "mythic_label": "Prompt Assembly Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "provider_route_organ",
+      "legacy_path": "src/provider_route_organ.py",
+      "engineering_class": "ProviderRouteInterface",
+      "mythic_label": "Provider Route Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "realtime_event_cause_predictor_organ",
+      "legacy_path": "src/realtime_event_cause_predictor_organ.py",
+      "engineering_class": "RealtimeEventCausePredictorEngine",
+      "mythic_label": "Realtime Event Cause Predictor Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "reasoning_contract_organ",
+      "legacy_path": "src/reasoning_contract_organ.py",
+      "engineering_class": "ReasoningContractEngine",
+      "mythic_label": "Reasoning Contract Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "reasoning_executive_organ",
+      "legacy_path": "src/reasoning_executive_organ.py",
+      "engineering_class": "ReasoningExecutiveEngine",
+      "mythic_label": "Reasoning Executive Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "recipe_module_organ",
+      "legacy_path": "src/recipe_module_organ.py",
+      "engineering_class": "RecipeModuleEngine",
+      "mythic_label": "Recipe Module Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "reflection_runtime_organ",
+      "legacy_path": "src/reflection_runtime_organ.py",
+      "engineering_class": "ReflectionRuntimeEngine",
+      "mythic_label": "Reflection Runtime Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "route_choice_organ",
+      "legacy_path": "src/route_choice_organ.py",
+      "engineering_class": "RouteChoiceInterface",
+      "mythic_label": "Route Choice Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "run_ledger_binding_organ",
+      "legacy_path": "src/run_ledger_binding_organ.py",
+      "engineering_class": "RunLedgerBindingEngine",
+      "mythic_label": "Run Ledger Binding Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "run_ledger_organ",
+      "legacy_path": "src/run_ledger_organ.py",
+      "engineering_class": "RunLedgerEngine",
+      "mythic_label": "Run Ledger Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "scorpion_bridge_organ",
+      "legacy_path": "src/scorpion_bridge_organ.py",
+      "engineering_class": "ScorpionBridgeBridge",
+      "mythic_label": "Scorpion Bridge Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "security_protocol_organ",
+      "legacy_path": "src/security_protocol_organ.py",
+      "engineering_class": "SecurityProtocolEngine",
+      "mythic_label": "Security Protocol Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "slingshot_organ",
+      "legacy_path": "src/slingshot_organ.py",
+      "engineering_class": "SlingshotEngine",
+      "mythic_label": "Slingshot Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "spatial_reasoning_organ",
+      "legacy_path": "src/spatial_reasoning_organ.py",
+      "engineering_class": "SpatialReasoningEngine",
+      "mythic_label": "Spatial Reasoning Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "speakers_lane_organ",
+      "legacy_path": "src/speakers_lane_organ.py",
+      "engineering_class": "SpeakersLaneInterface",
+      "mythic_label": "Speakers Lane Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "speaking_runtime_organ",
+      "legacy_path": "src/speaking_runtime_organ.py",
+      "engineering_class": "SpeakingRuntimeEngine",
+      "mythic_label": "Speaking Runtime Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "specialist_route_organ",
+      "legacy_path": "src/specialist_route_organ.py",
+      "engineering_class": "SpecialistRouteInterface",
+      "mythic_label": "Specialist Route Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "state_hygiene_organ",
+      "legacy_path": "src/state_hygiene_organ.py",
+      "engineering_class": "StateHygieneEngine",
+      "mythic_label": "State Hygiene Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "story_forge_lane_organ",
+      "legacy_path": "src/story_forge_lane_organ.py",
+      "engineering_class": "StoryForgeLaneInterface",
+      "mythic_label": "Story Forge Lane Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "system_guard_organ",
+      "legacy_path": "src/system_guard_organ.py",
+      "engineering_class": "SystemGuardEngine",
+      "mythic_label": "System Guard Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "tracing_spine_organ",
+      "legacy_path": "src/tracing_spine_organ.py",
+      "engineering_class": "TracingSpineEngine",
+      "mythic_label": "Tracing Spine Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "ui_vision_organ",
+      "legacy_path": "src/ui_vision_organ.py",
+      "engineering_class": "UiVisionEngine",
+      "mythic_label": "Ui Vision Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "ul_lineage_console_organ",
+      "legacy_path": "src/ul_lineage_console_organ.py",
+      "engineering_class": "UlLineageConsoleInterface",
+      "mythic_label": "Ul Lineage Console Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "v8_runtime_organ",
+      "legacy_path": "src/v8_runtime_organ.py",
+      "engineering_class": "V8RuntimeEngine",
+      "mythic_label": "V8 Runtime Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "verification_gate_organ",
+      "legacy_path": "src/verification_gate_organ.py",
+      "engineering_class": "VerificationGateGate",
+      "mythic_label": "Verification Gate Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "wolf_rehydration_organ",
+      "legacy_path": "src/wolf_rehydration_organ.py",
+      "engineering_class": "WolfRehydrationEngine",
+      "mythic_label": "Wolf Rehydration Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "workflow_interfaces_organ",
+      "legacy_path": "src/workflow_interfaces_organ.py",
+      "engineering_class": "WorkflowInterfacesInterface",
+      "mythic_label": "Workflow Interfaces Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "workflow_runtime_organ",
+      "legacy_path": "src/workflow_runtime_organ.py",
+      "engineering_class": "WorkflowRuntimeEngine",
+      "mythic_label": "Workflow Runtime Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "workflow_shell_organ",
+      "legacy_path": "src/workflow_shell_organ.py",
+      "engineering_class": "WorkflowShellEngine",
+      "mythic_label": "Workflow Shell Organ",
+      "grandfathered": true
+    }
+  ]
+}

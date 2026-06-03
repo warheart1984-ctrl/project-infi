@@ -177,6 +177,9 @@ ssp-gate:
 genome-gate:
 	python3 tools/governance/check_subsystem_genome.py
 
+naming-gate:
+	python3 tools/naming_protocol_lint.py
+
 safety-envelope-gate:
 	python3 .github/scripts/check-safety-envelope-governance.py
 
@@ -728,6 +731,45 @@ alt19-2-gate: alt19-1-gate alt19-closure-gate
 
 alt19-governed-gate:
 	python3 tools/governance/check_alt19_governed_eligibility.py
+
+memory-smith-organ-gate:
+	python3 .github/scripts/check-memory-smith-organ-governance.py
+
+operator-workspace-organ-gate:
+	python3 .github/scripts/check-operator-workspace-organ-governance.py
+
+jarvis-runs-organ-gate:
+	python3 .github/scripts/check-jarvis-runs-organ-governance.py
+
+state-hygiene-organ-gate:
+	python3 .github/scripts/check-state-hygiene-organ-governance.py
+
+blueprint-posture-organ-gate:
+	python3 .github/scripts/check-blueprint-posture-organ-governance.py
+
+workflow-interfaces-organ-gate:
+	python3 .github/scripts/check-workflow-interfaces-organ-governance.py
+
+platform-console-interfaces-organ-gate:
+	python3 .github/scripts/check-platform-console-interfaces-organ-governance.py
+
+operator-console-interface-organ-gate:
+	python3 .github/scripts/check-operator-console-interface-organ-governance.py
+
+nova-workspace-interface-organ-gate:
+	python3 .github/scripts/check-nova-workspace-interface-organ-governance.py
+
+alt20-gate: memory-smith-organ-gate operator-workspace-organ-gate jarvis-runs-organ-gate state-hygiene-organ-gate blueprint-posture-organ-gate workflow-interfaces-organ-gate platform-console-interfaces-organ-gate operator-console-interface-organ-gate nova-workspace-interface-organ-gate genome-gate
+
+alt20-1-gate: alt20-gate alt19-1-gate
+
+alt20-closure-gate:
+	python3 tools/governance/check_alt20_closure.py
+
+alt20-2-gate: alt20-1-gate alt20-closure-gate
+
+alt20-governed-gate:
+	python3 tools/governance/check_alt20_governed_eligibility.py
 
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py

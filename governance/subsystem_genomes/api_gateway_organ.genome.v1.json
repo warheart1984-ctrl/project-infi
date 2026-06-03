@@ -56,7 +56,8 @@
       "capability_service_bridge"
     ],
     "children": [
-      "jarvis_console_surface_organ"
+      "jarvis_console_surface_organ",
+      "platform_console_interfaces_organ"
     ]
   },
   "activation": {

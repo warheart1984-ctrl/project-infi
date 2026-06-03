@@ -54,6 +54,7 @@
       "patchforge_organ"
     ],
     "children": [
+      "jarvis_runs_organ",
       "project_infi_law_organ",
       "run_ledger_binding_organ"
     ]

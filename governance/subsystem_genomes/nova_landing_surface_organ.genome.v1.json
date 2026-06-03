@@ -55,7 +55,9 @@
       "nova_face_organ",
       "jarvis_console_surface_organ"
     ],
-    "children": []
+    "children": [
+      "nova_workspace_interface_organ"
+    ]
   },
   "activation": {
     "order": 7,

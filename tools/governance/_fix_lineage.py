@@ -11,7 +11,9 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--wave", choices=["alt17", "alt18", "alt19"], required=True)
+    parser.add_argument(
+        "--wave", choices=["alt17", "alt18", "alt19", "alt20"], required=True
+    )
     args = parser.parse_args()
     if args.wave == "alt17":
         genes = {
@@ -36,6 +38,36 @@ def main() -> None:
             "governance_layer_organ": ["project_infi_law_organ", "immune_observe_organ"],
             "security_protocol_organ": ["governance_layer_organ", "policy_gate_organ"],
             "system_guard_organ": ["governance_layer_organ", "security_protocol_organ"],
+        }
+    elif args.wave == "alt20":
+        genes = {
+            "memory_smith_organ": [
+                "jarvis_memory_board",
+                "memory_path_governance_organ",
+            ],
+            "operator_workspace_organ": [
+                "capability_service_bridge",
+                "jarvis_operator_organ",
+            ],
+            "jarvis_runs_organ": ["run_ledger_organ", "run_ledger_binding_organ"],
+            "state_hygiene_organ": [
+                "governance_layer_organ",
+                "jarvis_operator_organ",
+            ],
+            "blueprint_posture_organ": [
+                "project_infi_law_organ",
+                "aais_ul_substrate_organ",
+            ],
+            "workflow_interfaces_organ": [
+                "workflow_shell_organ",
+                "workflow_runtime_organ",
+            ],
+            "platform_console_interfaces_organ": ["api_gateway_organ"],
+            "operator_console_interface_organ": ["jarvis_console_surface_organ"],
+            "nova_workspace_interface_organ": [
+                "nova_landing_surface_organ",
+                "nova_face_organ",
+            ],
         }
     else:
         genes = {

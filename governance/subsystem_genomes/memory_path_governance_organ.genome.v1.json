@@ -54,7 +54,8 @@
       "verification_gate_organ"
     ],
     "children": [
-      "knowledge_authority_organ"
+      "knowledge_authority_organ",
+      "memory_smith_organ"
     ]
   },
   "activation": {

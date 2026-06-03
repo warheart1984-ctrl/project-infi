@@ -12,6 +12,8 @@ It is meant to answer:
 
 If this file conflicts with runtime code, runtime code still wins.
 
+**New admissions:** follow [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](../contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md) (engineering `<Domain><Function><Role>`; mythic comments only; no new `*_organ` / `*_fabric` stems).
+
 ## 1. Status Legend
 
 - `live`
@@ -1283,8 +1285,17 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | Nova Landing Surface Organ | governed | [../subsystems/platform/NOVA_LANDING_SURFACE_ORGAN.md](../subsystems/platform/NOVA_LANDING_SURFACE_ORGAN.md) | [../proof/platform/NOVA_LANDING_SURFACE_ORGAN_V1_PROOF.md](../proof/platform/NOVA_LANDING_SURFACE_ORGAN_V1_PROOF.md) |
 | AAIS Composed Runtime Organ | governed | [../subsystems/platform/AAIS_COMPOSED_RUNTIME_ORGAN.md](../subsystems/platform/AAIS_COMPOSED_RUNTIME_ORGAN.md) | [../proof/platform/AAIS_COMPOSED_RUNTIME_ORGAN_V1_PROOF.md](../proof/platform/AAIS_COMPOSED_RUNTIME_ORGAN_V1_PROOF.md) |
 | API Gateway Organ | governed | [../subsystems/platform/API_GATEWAY_ORGAN.md](../subsystems/platform/API_GATEWAY_ORGAN.md) | [../proof/platform/API_GATEWAY_ORGAN_V1_PROOF.md](../proof/platform/API_GATEWAY_ORGAN_V1_PROOF.md) |
+| Memory Smith Subsystem | governed | [../subsystems/platform/MEMORY_SMITH_ORGAN.md](../subsystems/platform/MEMORY_SMITH_ORGAN.md) | [../proof/platform/MEMORY_SMITH_ORGAN_V1_PROOF.md](../proof/platform/MEMORY_SMITH_ORGAN_V1_PROOF.md) |
+| Operator Workspace Subsystem | governed | [../subsystems/platform/OPERATOR_WORKSPACE_ORGAN.md](../subsystems/platform/OPERATOR_WORKSPACE_ORGAN.md) | [../proof/platform/OPERATOR_WORKSPACE_ORGAN_V1_PROOF.md](../proof/platform/OPERATOR_WORKSPACE_ORGAN_V1_PROOF.md) |
+| Jarvis Runs Subsystem | governed | [../subsystems/platform/JARVIS_RUNS_ORGAN.md](../subsystems/platform/JARVIS_RUNS_ORGAN.md) | [../proof/platform/JARVIS_RUNS_ORGAN_V1_PROOF.md](../proof/platform/JARVIS_RUNS_ORGAN_V1_PROOF.md) |
+| State Hygiene Subsystem | governed | [../subsystems/platform/STATE_HYGIENE_ORGAN.md](../subsystems/platform/STATE_HYGIENE_ORGAN.md) | [../proof/platform/STATE_HYGIENE_ORGAN_V1_PROOF.md](../proof/platform/STATE_HYGIENE_ORGAN_V1_PROOF.md) |
+| Blueprint Posture Subsystem | governed | [../subsystems/platform/BLUEPRINT_POSTURE_ORGAN.md](../subsystems/platform/BLUEPRINT_POSTURE_ORGAN.md) | [../proof/platform/BLUEPRINT_POSTURE_ORGAN_V1_PROOF.md](../proof/platform/BLUEPRINT_POSTURE_ORGAN_V1_PROOF.md) |
+| Workflow Interfaces Subsystem | governed | [../subsystems/platform/WORKFLOW_INTERFACES_ORGAN.md](../subsystems/platform/WORKFLOW_INTERFACES_ORGAN.md) | [../proof/platform/WORKFLOW_INTERFACES_ORGAN_V1_PROOF.md](../proof/platform/WORKFLOW_INTERFACES_ORGAN_V1_PROOF.md) |
+| Platform Console Interfaces Subsystem | governed | [../subsystems/platform/PLATFORM_CONSOLE_INTERFACES_ORGAN.md](../subsystems/platform/PLATFORM_CONSOLE_INTERFACES_ORGAN.md) | [../proof/platform/PLATFORM_CONSOLE_INTERFACES_ORGAN_V1_PROOF.md](../proof/platform/PLATFORM_CONSOLE_INTERFACES_ORGAN_V1_PROOF.md) |
+| Operator Console Interface Subsystem | governed | [../subsystems/platform/OPERATOR_CONSOLE_INTERFACE_ORGAN.md](../subsystems/platform/OPERATOR_CONSOLE_INTERFACE_ORGAN.md) | [../proof/platform/OPERATOR_CONSOLE_INTERFACE_ORGAN_V1_PROOF.md](../proof/platform/OPERATOR_CONSOLE_INTERFACE_ORGAN_V1_PROOF.md) |
+| Nova Workspace Interface Subsystem | governed | [../subsystems/platform/NOVA_WORKSPACE_INTERFACE_ORGAN.md](../subsystems/platform/NOVA_WORKSPACE_INTERFACE_ORGAN.md) | [../proof/platform/NOVA_WORKSPACE_INTERFACE_ORGAN_V1_PROOF.md](../proof/platform/NOVA_WORKSPACE_INTERFACE_ORGAN_V1_PROOF.md) |
 
-Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate alt13-governed-gate alt14-governed-gate alt15-governed-gate alt16-governed-gate alt17-governed-gate alt18-governed-gate alt19-governed-gate`
+Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate alt13-governed-gate alt14-governed-gate alt15-governed-gate alt16-governed-gate alt17-governed-gate alt18-governed-gate alt19-governed-gate alt20-governed-gate`
 
 ## 9. Concept Pending (SSP)
 
@@ -1293,6 +1304,6 @@ Nothing here is live until promoted per [ideas_pending/README.md](../_future/ide
 
 | Idea | Status | Concept spec | MVP plan | Genome |
 |------|--------|--------------|----------|--------|
-| *(none — Alt-19 graduated to §8)* | — | — | — | — |
+| *(none — Release 20 graduated to §8)* | — | — | — | — |
 
 New admissions via SSP (Step 7) update this table. Graduated ideas move to §8. Genome contract: [AAIS_SUBSYSTEM_GENOME.md](../contracts/AAIS_SUBSYSTEM_GENOME.md).

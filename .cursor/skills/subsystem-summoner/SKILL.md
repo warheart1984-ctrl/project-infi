@@ -13,6 +13,8 @@ Deterministic pipeline: raw idea seed → governed subsystem family with concept
 
 Canonical protocol: [docs/contracts/AAIS_SSP_PROTOCOL.md](../../docs/contracts/AAIS_SSP_PROTOCOL.md)
 
+**Naming (required):** [docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](../../docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md) — read before Step 1. Mythic in comments; engineering in code; no new `*_organ` / `*_fabric` file stems.
+
 Alt-4 lifecycle: [AAIS_SSP_PROMOTION_PROTOCOL.md](../../docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md), [AAIS_SUBSYSTEM_GENOME.md](../../docs/contracts/AAIS_SUBSYSTEM_GENOME.md), [AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md](../../docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md), [AAIS_SUBSYSTEM_MUTATION_PATH.md](../../docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md)
 
 Golden examples: [examples/README.md](./examples/README.md)
@@ -68,7 +70,7 @@ Use template: [templates/concept_spec.md](./templates/concept_spec.md)
 
 | § | Title |
 |---|-------|
-| 1 | Purpose |
+| 1 | Purpose (Mythic + Engineering names) |
 | 2 | Authority And Precedence |
 | 3 | Non-Goals |
 | 4 | Core contract (schema link + tables) |
@@ -169,10 +171,19 @@ At concept admission, status is: `planned (not yet implemented)`.
 
 Only when asked. Create empty or stub files:
 
+- `src/<engineering_snake_case>.py` — **not** `*_organ.py` or `*_fabric.py`
+- Header template: [templates/python_subsystem_header.py](./templates/python_subsystem_header.py)
 - `tools/<name>/`
 - `.github/scripts/check-<name>-governance.py` (stub)
 - `tests/test_<name>.py` (stub)
 - `fixtures/` as needed
+
+Scaffold rules:
+
+- Primary class: `<Domain><Function><Role>` (PascalCase)
+- Dual-layer `# Mythic:` / `# Engineering:` on class and public functions
+- File header: Responsibilities, Non-responsibilities, Invariants
+- Functions: verb names only
 
 Do **not** implement business logic unless explicitly requested.
 
@@ -189,6 +200,8 @@ Use template: [templates/genome.v1.json](./templates/genome.v1.json)
 - `runtime.surface`: `[]` (no runtime code)
 - `proof.bundles`: `[]`; use `target_bundles` for planned proof paths
 - `ssp.summon_eligible`: `true` until promoted or retired
+- `ssp.engineering_class`: PascalCase `<Domain><Function><Role>` (documentation field)
+- `ssp.mythic_label`: short mythic name for operator docs (documentation field)
 
 Register in [governance/subsystem_genomes/README.md](../../governance/subsystem_genomes/README.md).
 
@@ -236,9 +249,13 @@ Confirm:
 
 ## Naming Conventions
 
+Engineering protocol: [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](../../docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md). Legacy `*_organ` paths are grandfathered only.
+
 | Artifact | Convention | Example |
 |----------|------------|---------|
 | Concept spec file | `UPPER_SNAKE.md` | `FORENSIC_TRIANGULATION.md` |
+| Runtime module (new) | `snake_case.py` (no organ/fabric suffix) | `runtime_plane_manager.py` |
+| Primary class (new) | `<Domain><Function><Role>` | `RuntimePlaneManager` |
 | MVP plan file | `<CONCEPT_SPEC>_MVP_PLAN.md` | `FORENSIC_TRIANGULATION_MVP_PLAN.md` |
 | Schema file | `snake_case.v1.json` | `triangulation.v1.json` |
 | Schema `$id` | `snake_case.v1` | `triangulation.v1` |
@@ -257,4 +274,5 @@ Confirm:
 - [AAIS_SUBSYSTEM_MUTATION_PATH.md](../../docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md)
 - [AAIS_MODULE_GOVERNANCE_PROTOCOL.md](../../docs/contracts/AAIS_MODULE_GOVERNANCE_PROTOCOL.md)
 - [AAIS_SUBSYSTEM_SPEC.md](../../docs/runtime/AAIS_SUBSYSTEM_SPEC.md)
+- [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](../../docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md)
 - [src/cisiv.py](../../src/cisiv.py)

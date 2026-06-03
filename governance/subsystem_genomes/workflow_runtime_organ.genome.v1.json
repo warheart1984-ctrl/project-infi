@@ -55,7 +55,9 @@
       "workflow_shell_organ",
       "launcher_organ"
     ],
-    "children": []
+    "children": [
+      "workflow_interfaces_organ"
+    ]
   },
   "activation": {
     "order": 3,

@@ -56,7 +56,8 @@
     ],
     "children": [
       "ai_factory_organ",
-      "nova_landing_surface_organ"
+      "nova_landing_surface_organ",
+      "nova_workspace_interface_organ"
     ]
   },
   "activation": {

@@ -14,6 +14,15 @@ Concept origin: [./{{CONCEPT_SPEC_FILE}}](./{{CONCEPT_SPEC_FILE}})
 
 ## 2. Code Artifacts
 
+**Naming protocol checklist**
+
+- [ ] Mythic + Engineering names recorded in concept spec §1
+- [ ] Module stem is snake_case engineering name (not `*_organ.py` / `*_fabric.py`)
+- [ ] Primary class is `<Domain><Function><Role>` PascalCase
+- [ ] File header + dual-layer comments per [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](../../../docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md)
+- [ ] Public functions are verb-led; no mythic identifiers in symbols
+- [ ] Genome `ssp.engineering_class` set (documentation field until schema gene ships)
+
 {{CODE_ARTIFACTS}}
 
 ## 3. Tests
