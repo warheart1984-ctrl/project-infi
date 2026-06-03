@@ -1,5 +1,7 @@
 """Dormant Super Nova scaffold with observation-only drift checks."""
 
+# Mythic: Super Nova Runtime
+# Engineering: SuperNovaRuntimeEngine
 from __future__ import annotations
 
 from dataclasses import dataclass, field

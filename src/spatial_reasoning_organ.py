@@ -1,5 +1,7 @@
 """Spatial Reasoning Organ — read-only spatial plug posture."""
 
+# Mythic: Spatial Reasoning Organ
+# Engineering: SpatialReasoningEngine
 from __future__ import annotations
 
 from typing import Any

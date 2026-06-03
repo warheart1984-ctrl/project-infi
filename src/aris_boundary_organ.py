@@ -1,5 +1,7 @@
 """ARIS Boundary Organ — read-only embedded ARIS non-copy enforcement posture."""
 
+# Mythic: Aris Boundary Organ
+# Engineering: ArisBoundaryEngine
 from __future__ import annotations
 
 from typing import Any

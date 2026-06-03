@@ -1,5 +1,7 @@
 """Story Forge Lane Organ — read-only story_forge_audio capability lane posture."""
 
+# Mythic: Story Forge Lane Organ
+# Engineering: StoryForgeLaneInterface
 from __future__ import annotations
 
 from pathlib import Path

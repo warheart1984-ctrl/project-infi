@@ -1,5 +1,7 @@
 """Nova Coherence Projection — read-only cortex state for provider generation."""
 
+# Mythic: Coherence Projection Organ
+# Engineering: CoherenceProjectionLayer
 from __future__ import annotations
 
 import json

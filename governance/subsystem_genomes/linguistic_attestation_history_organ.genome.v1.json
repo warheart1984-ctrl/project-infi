@@ -3,7 +3,7 @@
   "identity": {
     "gene": "linguistic_attestation_history_organ",
     "version": "0.1.0-concept",
-    "stage": "concept",
+    "stage": "governed",
     "display_name": "Linguistic Attestation History Subsystem"
   },
   "governance": {
@@ -13,7 +13,9 @@
       "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
       "docs/contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md",
       "docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md",
-      "docs/runtime/AAIS_RUNTIME_GUIDE.md"
+      "docs/runtime/AAIS_RUNTIME_GUIDE.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
     ],
     "invariants": [
       "Read-only v1 \u2014 subsystem does not mutate upstream authority",
@@ -22,21 +24,37 @@
   },
   "schema": {
     "ref": "schemas/linguistic_attestation_history_organ.v1.json",
-    "frozen": false
+    "frozen": true
   },
   "runtime": {
-    "surface": []
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/linguistic_attestation_history_organ.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/linguistic-attestation-history/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make linguistic-attestation-history-organ-gate"
+      }
+    ]
   },
   "proof": {
-    "bundles": [],
-    "posture": "asserted",
+    "bundles": [
+      "docs/proof/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN_V1_PROOF.md"
+    ],
+    "posture": "governed",
     "target_bundles": [
       "docs/proof/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN_V1_PROOF.md"
     ]
   },
   "lineage": {
     "parents": [
-      "linguistic_governance_attestation_organ"
+      "linguistic_governance_attestation_organ",
+      "linguistic_governed_lifecycle_fabric_organ"
     ],
     "children": []
   },
@@ -54,6 +72,7 @@
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/LINGUISTIC_ATTESTATION_HISTORY_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/LINGUISTIC_ATTESTATION_HISTORY_ORGAN_MVP_PLAN.md",
-    "summon_eligible": true
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN.md"
   }
 }

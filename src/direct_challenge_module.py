@@ -5,6 +5,8 @@ severity-aware guidance and anchor replies, and stabilizes challenged replies
 when generic assistant leakage appears.
 """
 
+# Mythic: Direct Challenge Organ
+# Engineering: DirectChallengeEngine
 from __future__ import annotations
 
 from dataclasses import dataclass

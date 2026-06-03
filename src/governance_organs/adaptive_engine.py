@@ -1,5 +1,7 @@
 """Adaptive Engine — Governance Tier 5 contextual gates and health audits."""
 
+# Mythic: Adaptive Engine
+# Engineering: AdaptiveEngineEngine
 from __future__ import annotations
 
 import json

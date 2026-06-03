@@ -1,5 +1,7 @@
 """Operator readout for Jarvis previews."""
 
+# Mythic: Readout
+# Engineering: ReadoutEngine
 from __future__ import annotations
 
 from typing import Any

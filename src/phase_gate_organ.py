@@ -1,5 +1,7 @@
 """Phase Gate Organ — read-only AAIS-PG-01 admission snapshot."""
 
+# Mythic: Phase Gate Organ
+# Engineering: PhaseGateGate
 from __future__ import annotations
 
 from typing import Any

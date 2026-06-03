@@ -1,5 +1,7 @@
 """Creative Console Interface Subsystem — v9/v10 UI binding posture."""
 
+# Mythic: Creative Console Interface Organ
+# Engineering: CreativeConsoleInterfaceInterface
 from __future__ import annotations
 
 from pathlib import Path

@@ -2,7 +2,7 @@
   "meta_linguistic_registry_version": "meta_linguistic_registry.v1",
   "policy_mode": "observe",
   "last_drift_report": "governance/linguistic_drift_report.v1.json",
-  "last_gate_run_at": "2026-06-03T10:54:42Z",
+  "last_gate_run_at": "2026-06-03T12:02:57Z",
   "gates": [
     "naming-gate",
     "naming-genome-gate",

@@ -1,5 +1,7 @@
 """ForgeEval Organ — read-only evaluator lane posture."""
 
+# Mythic: Forge Eval Organ
+# Engineering: ForgeEvalEngine
 from __future__ import annotations
 
 from typing import Any

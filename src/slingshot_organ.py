@@ -1,5 +1,7 @@
 """Slingshot Organ — read-only kinetic accelerator posture."""
 
+# Mythic: Slingshot Organ
+# Engineering: SlingshotEngine
 from __future__ import annotations
 
 import os

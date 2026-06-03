@@ -1,5 +1,7 @@
 """Governed service-lane bridge for AAIS capability modules."""
 
+# Mythic: Capability service bridge
+# Engineering: CapabilityServiceBridge
 from __future__ import annotations
 
 from datetime import datetime

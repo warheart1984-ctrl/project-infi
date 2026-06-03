@@ -1,5 +1,7 @@
 """V10 Core Subsystem — V10 core lane posture."""
 
+# Mythic: V10 Core Organ
+# Engineering: V10CoreEngine
 from __future__ import annotations
 
 from pathlib import Path

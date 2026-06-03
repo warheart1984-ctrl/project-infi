@@ -1321,6 +1321,9 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | Linguistic Forecast Consumption Subsystem | governed | [../subsystems/platform/LINGUISTIC_FORECAST_CONSUMPTION_ORGAN.md](../subsystems/platform/LINGUISTIC_FORECAST_CONSUMPTION_ORGAN.md) | [../proof/platform/LINGUISTIC_FORECAST_CONSUMPTION_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_FORECAST_CONSUMPTION_ORGAN_V1_PROOF.md) |
 | Linguistic Cycle Optimization Subsystem | governed | [../subsystems/platform/LINGUISTIC_CYCLE_OPTIMIZATION_ORGAN.md](../subsystems/platform/LINGUISTIC_CYCLE_OPTIMIZATION_ORGAN.md) | [../proof/platform/LINGUISTIC_CYCLE_OPTIMIZATION_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_CYCLE_OPTIMIZATION_ORGAN_V1_PROOF.md) |
 | Linguistic Closed Loop Fabric Subsystem | governed | [../subsystems/platform/LINGUISTIC_CLOSED_LOOP_FABRIC_ORGAN.md](../subsystems/platform/LINGUISTIC_CLOSED_LOOP_FABRIC_ORGAN.md) | [../proof/platform/LINGUISTIC_CLOSED_LOOP_FABRIC_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_CLOSED_LOOP_FABRIC_ORGAN_V1_PROOF.md) |
+| Linguistic Governance Day Subsystem | governed | [../subsystems/platform/LINGUISTIC_GOVERNANCE_DAY_ORGAN.md](../subsystems/platform/LINGUISTIC_GOVERNANCE_DAY_ORGAN.md) | [../proof/platform/LINGUISTIC_GOVERNANCE_DAY_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_GOVERNANCE_DAY_ORGAN_V1_PROOF.md) |
+| Linguistic Work Order History Subsystem | governed | [../subsystems/platform/LINGUISTIC_WORK_ORDER_HISTORY_ORGAN.md](../subsystems/platform/LINGUISTIC_WORK_ORDER_HISTORY_ORGAN.md) | [../proof/platform/LINGUISTIC_WORK_ORDER_HISTORY_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_WORK_ORDER_HISTORY_ORGAN_V1_PROOF.md) |
+| Linguistic Attestation History Subsystem | governed | [../subsystems/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN.md](../subsystems/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN.md) | [../proof/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN_V1_PROOF.md) |
 
 Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate alt13-governed-gate alt14-governed-gate alt15-governed-gate alt16-governed-gate alt17-governed-gate alt18-governed-gate alt19-governed-gate alt20-governed-gate alt21-governed-gate alt22-governed-gate alt23-governed-gate`
 
@@ -1331,6 +1334,6 @@ Nothing here is live until promoted per [ideas_pending/README.md](../_future/ide
 
 | Idea | Status | Concept spec | MVP plan | Genome |
 |------|--------|--------------|----------|--------|
-| *(none — Release 23 graduated to §8)* | — | — | — | — |
+| *(none — Release 26 graduated to §8)* | — | — | — | — |
 
 New admissions via SSP (Step 7) update this table. Graduated ideas move to §8. Genome contract: [AAIS_SUBSYSTEM_GENOME.md](../contracts/AAIS_SUBSYSTEM_GENOME.md).

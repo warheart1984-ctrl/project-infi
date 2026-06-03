@@ -1,5 +1,7 @@
 """OTEM Bounded Organ — read-only OTEM v5_frozen ceiling posture."""
 
+# Mythic: Otem Bounded Organ
+# Engineering: OtemBoundedEngine
 from __future__ import annotations
 
 from typing import Any

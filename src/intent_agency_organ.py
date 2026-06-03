@@ -1,5 +1,7 @@
 """Intent Agency Organ — read-only Nova intent/agency posture snapshot."""
 
+# Mythic: Intent Agency Organ
+# Engineering: IntentAgencyEngine
 from __future__ import annotations
 
 from typing import Any

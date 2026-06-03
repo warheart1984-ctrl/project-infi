@@ -1,5 +1,7 @@
 """API Gateway Organ — bounded api.py ingress posture."""
 
+# Mythic: Api Gateway Organ
+# Engineering: ApiGatewayGate
 from __future__ import annotations
 
 from pathlib import Path

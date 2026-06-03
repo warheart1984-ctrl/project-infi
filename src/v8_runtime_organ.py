@@ -1,5 +1,7 @@
 """V8 Runtime Organ — read-only V8 session spine visibility."""
 
+# Mythic: V8 Runtime Organ
+# Engineering: V8RuntimeEngine
 from __future__ import annotations
 
 from typing import Any

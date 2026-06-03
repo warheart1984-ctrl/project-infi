@@ -1,5 +1,7 @@
 """Linguistic Governance Attestation Subsystem — Wave 14 attested closed-loop."""
 
+# Mythic: Linguistic Governance Attestation Organ
+# Engineering: LinguisticGovernanceAttestationEngine
 from __future__ import annotations
 
 from pathlib import Path

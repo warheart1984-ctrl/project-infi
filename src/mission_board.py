@@ -5,6 +5,8 @@ single turn. Missions can be focused, blocked, queued, or completed and can be
 linked back to an active chat session.
 """
 
+# Mythic: Mission Board Organ
+# Engineering: MissionBoardEngine
 from __future__ import annotations
 
 from datetime import datetime

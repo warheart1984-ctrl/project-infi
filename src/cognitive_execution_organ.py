@@ -1,5 +1,7 @@
 """Cognitive Execution Organ — read-only cognitive.execution lobe posture."""
 
+# Mythic: Cognitive Execution Organ
+# Engineering: CognitiveExecutionEngine
 from __future__ import annotations
 
 from typing import Any

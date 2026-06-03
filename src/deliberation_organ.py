@@ -1,5 +1,7 @@
 """Deliberation Organ — read-only cognitive.deliberation lobe posture."""
 
+# Mythic: Deliberation Organ
+# Engineering: DeliberationEngine
 from __future__ import annotations
 
 from typing import Any

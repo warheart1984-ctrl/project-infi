@@ -1,5 +1,7 @@
 """Creative Capability Bridge Subsystem — v9/v10 bridge provider posture."""
 
+# Mythic: Creative Capability Bridge Organ
+# Engineering: CreativeCapabilityBridgeBridge
 from __future__ import annotations
 
 from pathlib import Path

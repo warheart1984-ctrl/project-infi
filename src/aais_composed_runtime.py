@@ -1,5 +1,7 @@
 """AAIS Composed Turn Runtime — Spine doctrine, ARIS admission, Nova Cortex."""
 
+# Mythic: Aais Composed Runtime Organ
+# Engineering: AaisComposedRuntimeEngine
 from __future__ import annotations
 
 import argparse

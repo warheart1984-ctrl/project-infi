@@ -1,5 +1,7 @@
 """Linguistic Governance Work Order Subsystem — Wave 14 operator execution posture."""
 
+# Mythic: Linguistic Governance Work Order Organ
+# Engineering: LinguisticGovernanceWorkOrderEngine
 from __future__ import annotations
 
 from pathlib import Path

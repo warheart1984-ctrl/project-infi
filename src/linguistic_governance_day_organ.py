@@ -1,5 +1,7 @@
 """Linguistic Governance Day Subsystem — Wave 17 operator day orchestrator."""
 
+# Mythic: Linguistic Governance Day Organ
+# Engineering: LinguisticGovernanceDayEngine
 from __future__ import annotations
 
 from pathlib import Path

@@ -1,5 +1,7 @@
 """UGR embryo v0 gateway — single ingress for deliberation, ingestion, and graph."""
 
+# Mythic: Gateway
+# Engineering: GatewayEngine
 from __future__ import annotations
 
 from typing import Any

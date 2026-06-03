@@ -1,5 +1,7 @@
 """Perception Gateway Organ — read-only bridge perception catalog posture."""
 
+# Mythic: Perception Gateway Organ
+# Engineering: PerceptionGatewayGate
 from __future__ import annotations
 
 from typing import Any

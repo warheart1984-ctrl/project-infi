@@ -13,6 +13,61 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.22.0] - 2026-06-03 — Release 26 Operational Closure
+
+**Release 26** — three read-only subsystems at governed; Coherence Layer v1.21 with operator day and retention history layers; Wave 17 operational closure; naming-gate clean (0 warnings).
+
+### Added
+
+- **Release 26.0** — `linguistic_governance_day_organ`, `linguistic_work_order_history_organ`, `linguistic_attestation_history_organ`; status APIs; `make alt26-gate`; `tools/governance/alt26_promote_mvp.py`
+- **Release 26.1** — Coherence Layer v1.21 + `linguistic_operator_day_layer`, `linguistic_retention_history_layer`, `linguistic_operational_closure_aligned`; `make alt26-1-gate`
+- **Release 26.2** — `LINGUISTIC_OPERATIONAL_CLOSURE_V1_PROOF`; `make alt26-2-gate`
+- **Governed promotion** — `tools/governance/alt26_promote_governed.py`; `make alt26-governed-gate`
+- **Codex headers** — `tools/governance/apply_engineering_file_headers.py`; `# Engineering:` / `# Mythic:` on subsystem shells
+- **Grandfather registry** — 34 linguistic `*_organ.py` paths in `legacy_engineering_aliases.v1.json`
+
+### Changed
+
+- Schema registry: **163 governed** subsystem schemas (160 prior + 3 Release 26)
+- `operator_cognition_coherence_fabric` runtime schema → v1.21
+- `check_alt24_closure` / `check_alt25_governed_eligibility` accept coherence v1.19–v1.21 for cumulative stack gates
+
+### Verification (v1.22.0)
+
+```bash
+python tools/naming_protocol_lint.py
+python -m src.governance_organs.linguistic_governance_engine --gate
+python tools/governance/check_linguistic_governance_stack_gate.py
+python tools/governance/check_alt25_governed_eligibility.py
+python tools/governance/check_alt26_governed_eligibility.py
+```
+
+[1.22.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.22.0
+
+## [1.21.0] - 2026-06-03 — Release 25 Governed Linguistic Lifecycle Fabric
+
+**Release 25** — nine read-only subsystems at governed; Coherence Layer v1.20 with execution, artifact, and promotion layers; Wave 16 lifecycle fabric.
+
+### Added
+
+- **Release 25.0** — nine Release 25 organs (forecast archive through governed lifecycle fabric); `make alt25-gate`; `tools/governance/alt25_promote_mvp.py`
+- **Release 25.1** — Coherence Layer v1.20 + governed lifecycle layers; `make alt25-1-gate`
+- **Release 25.2** — `GOVERNED_LINGUISTIC_LIFECYCLE_V1_PROOF`; `make alt25-2-gate`
+- **Governed promotion** — `tools/governance/alt25_promote_governed.py`; `make alt25-governed-gate`
+
+### Changed
+
+- Schema registry: **160 governed** subsystem schemas (151 prior + 9 Release 25)
+- `operator_cognition_coherence_fabric` schema ref → v1.20
+
+### Verification (v1.21.0)
+
+```bash
+make alt25-gate alt25-1-gate alt25-2-gate alt25-governed-gate
+```
+
+[1.21.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.21.0
+
 ## [1.20.0] - 2026-06-03 — Release 24 Attested Linguistic Closed-Loop
 
 **Release 24** — four read-only subsystems at governed; Coherence Layer v1.19 with calibration, queue, and attestation layers; Wave 14 attestation and work-order engines.

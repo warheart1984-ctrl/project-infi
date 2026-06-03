@@ -1,5 +1,7 @@
 """Linguistic Governance Cadence Subsystem — SLA cadence policy posture."""
 
+# Mythic: Linguistic Governance Cadence Organ
+# Engineering: LinguisticGovernanceCadenceEngine
 from __future__ import annotations
 
 from pathlib import Path

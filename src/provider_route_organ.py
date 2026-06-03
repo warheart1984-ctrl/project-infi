@@ -1,5 +1,7 @@
 """Provider Route Organ — read-only provider mind routing posture."""
 
+# Mythic: Provider Route Organ
+# Engineering: ProviderRouteInterface
 from __future__ import annotations
 
 from typing import Any

@@ -1,5 +1,7 @@
 """Jarvis modular memory-board law and controller primitives."""
 
+# Mythic: Jarvis memory board
+# Engineering: JarvisMemoryBoard
 from __future__ import annotations
 
 from dataclasses import dataclass, field, replace

@@ -1,5 +1,7 @@
 """Dashboard Surface Organ — UI binding posture."""
 
+# Mythic: Dashboard Surface Organ
+# Engineering: DashboardSurfaceInterface
 from __future__ import annotations
 
 from pathlib import Path

@@ -1,5 +1,7 @@
 """Invariant Engine Organ — read-only Nova runtime consumer attestation."""
 
+# Mythic: Invariant Engine Organ
+# Engineering: InvariantEngineEngine
 from __future__ import annotations
 
 from typing import Any

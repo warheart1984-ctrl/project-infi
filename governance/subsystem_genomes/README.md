@@ -81,6 +81,9 @@ make alt7-governed-gate
 | `speakers_lane_organ` | governed | [speakers_lane_organ.genome.v1.json](./speakers_lane_organ.genome.v1.json) |
 | `human_voice_extraction_organ` | governed | [human_voice_extraction_organ.genome.v1.json](./human_voice_extraction_organ.genome.v1.json) |
 | `narrative_trust_pack_organ` | governed | [narrative_trust_pack_organ.genome.v1.json](./narrative_trust_pack_organ.genome.v1.json) |
+| `linguistic_governance_day_organ` | governed | [linguistic_governance_day_organ.genome.v1.json](./linguistic_governance_day_organ.genome.v1.json) |
+| `linguistic_work_order_history_organ` | governed | [linguistic_work_order_history_organ.genome.v1.json](./linguistic_work_order_history_organ.genome.v1.json) |
+| `linguistic_attestation_history_organ` | governed | [linguistic_attestation_history_organ.genome.v1.json](./linguistic_attestation_history_organ.genome.v1.json) |
 
 ## Adding a Genome
 

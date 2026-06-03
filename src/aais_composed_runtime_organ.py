@@ -1,5 +1,7 @@
 """AAIS Composed Runtime Organ — composed runtime posture."""
 
+# Mythic: Aais Composed Runtime Organ
+# Engineering: AaisComposedRuntimeEngine
 from __future__ import annotations
 
 from pathlib import Path

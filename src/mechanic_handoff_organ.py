@@ -1,5 +1,7 @@
 """Mechanic Handoff Organ — read-only Mechanic chat enforcement posture."""
 
+# Mythic: Mechanic Handoff Organ
+# Engineering: MechanicHandoffBridge
 from __future__ import annotations
 
 import os

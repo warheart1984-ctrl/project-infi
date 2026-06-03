@@ -1,5 +1,7 @@
 """Canonical knowledge authority snapshot for AAIS."""
 
+# Mythic: Knowledge Authority Organ
+# Engineering: KnowledgeAuthorityEngine
 from __future__ import annotations
 
 def _wrap_ul_payload(payload: dict) -> dict:

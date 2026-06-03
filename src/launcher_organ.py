@@ -1,5 +1,7 @@
 """Launcher Organ — AAIS launcher package posture."""
 
+# Mythic: Launcher Organ
+# Engineering: LauncherEngine
 from __future__ import annotations
 
 from pathlib import Path

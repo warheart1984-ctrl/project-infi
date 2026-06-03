@@ -1,5 +1,7 @@
 """Linguistic Full Governance Cycle Subsystem — Wave 13–14 orchestration posture."""
 
+# Mythic: Linguistic Full Governance Cycle Organ
+# Engineering: LinguisticFullGovernanceCycleEngine
 from __future__ import annotations
 
 import json

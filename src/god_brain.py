@@ -5,6 +5,8 @@ that decides how Jarvis should use its current mode, specialist council,
 evidence, and policy posture before the final model answer is generated.
 """
 
+# Mythic: God Brain
+# Engineering: GodBrainEngine
 from __future__ import annotations
 
 from src.specialist_registry import SPECIALIST_DEFINITIONS, normalize_requested_specialists

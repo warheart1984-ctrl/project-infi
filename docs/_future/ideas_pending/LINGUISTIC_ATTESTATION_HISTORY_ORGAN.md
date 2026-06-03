@@ -65,4 +65,4 @@ Target proof packet: `docs/proof/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN_V
 
 **Release:** `alt26-summon-wave-2026-06` — order **3**
 
-**Depends on:** `linguistic_governance_attestation_organ`, `linguistic_governed_lifecycle_fabric_organ`
+**Depends on:** `linguistic_governance_attestation_organ`

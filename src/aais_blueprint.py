@@ -5,6 +5,8 @@ runtime into one explicit, UI-friendly system map. It explains what AAIS is,
 what is live right now, and which earlier files became today's runtime pieces.
 """
 
+# Mythic: Aais Blueprint
+# Engineering: AaisBlueprintEngine
 from __future__ import annotations
 
 from typing import Any

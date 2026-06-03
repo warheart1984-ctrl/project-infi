@@ -1,3 +1,5 @@
+# Mythic: Project Infi Law Organ
+# Engineering: ProjectInfiLawEngine
 from __future__ import annotations
 
 from copy import deepcopy

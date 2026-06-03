@@ -1,5 +1,7 @@
 """Patch Apply Organ — read-only apply gate posture."""
 
+# Mythic: Patch Apply Organ
+# Engineering: PatchApplyEngine
 from __future__ import annotations
 
 from typing import Any

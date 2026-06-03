@@ -1,5 +1,7 @@
 """AI Factory Organ — read-only governed mind fabrication posture."""
 
+# Mythic: Ai Factory Organ
+# Engineering: AiFactoryEngine
 from __future__ import annotations
 
 from pathlib import Path

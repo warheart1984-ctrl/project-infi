@@ -1,5 +1,7 @@
 """Conversation memory and Spiral-inspired session state for multi-turn chats."""
 
+# Mythic: Conversation Memory Organ
+# Engineering: ConversationMemoryEngine
 from collections import OrderedDict
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta

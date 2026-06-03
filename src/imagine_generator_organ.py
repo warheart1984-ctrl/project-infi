@@ -1,5 +1,7 @@
 """Imagine Generator Organ — read-only creative pattern emission posture."""
 
+# Mythic: Imagine Generator Organ
+# Engineering: ImagineGeneratorEngine
 from __future__ import annotations
 
 from pathlib import Path

@@ -165,6 +165,34 @@
       "grandfathered": true
     },
     {
+      "gene": "creative_capability_bridge_organ",
+      "legacy_path": "src/creative_capability_bridge_organ.py",
+      "engineering_class": "CreativeCapabilityBridgeBridge",
+      "mythic_label": "Creative Capability Bridge Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "creative_console_interface_organ",
+      "legacy_path": "src/creative_console_interface_organ.py",
+      "engineering_class": "CreativeConsoleInterfaceInterface",
+      "mythic_label": "Creative Console Interface Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "creative_core_runtime_organ",
+      "legacy_path": "src/creative_core_runtime_organ.py",
+      "engineering_class": "CreativeCoreRuntimeEngine",
+      "mythic_label": "Creative Core Runtime Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "creative_operator_handoff_organ",
+      "legacy_path": "src/creative_operator_handoff_organ.py",
+      "engineering_class": "CreativeOperatorHandoffBridge",
+      "mythic_label": "Creative Operator Handoff Organ",
+      "grandfathered": true
+    },
+    {
       "gene": "dashboard_surface_organ",
       "legacy_path": "src/dashboard_surface_organ.py",
       "engineering_class": "DashboardSurfaceInterface",
@@ -326,6 +354,209 @@
       "grandfathered": true
     },
     {
+      "gene": "linguistic_attestation_history_organ",
+      "legacy_path": "src/linguistic_attestation_history_organ.py",
+      "engineering_class": "LinguisticAttestationHistoryEngine",
+      "mythic_label": "Linguistic Attestation History Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_cascade_organ",
+      "legacy_path": "src/linguistic_cascade_organ.py",
+      "engineering_class": "LinguisticCascadeEngine",
+      "mythic_label": "Linguistic Cascade Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_closed_loop_fabric_organ",
+      "legacy_path": "src/linguistic_closed_loop_fabric_organ.py",
+      "engineering_class": "LinguisticClosedLoopFabricEngine",
+      "mythic_label": "Linguistic Closed Loop Fabric Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_cycle_optimization_organ",
+      "legacy_path": "src/linguistic_cycle_optimization_organ.py",
+      "engineering_class": "LinguisticCycleOptimizationEngine",
+      "mythic_label": "Linguistic Cycle Optimization Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_drift_forecast_organ",
+      "legacy_path": "src/linguistic_drift_forecast_organ.py",
+      "engineering_class": "LinguisticDriftForecastEngine",
+      "mythic_label": "Linguistic Drift Forecast Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_drift_predictor_organ",
+      "legacy_path": "src/linguistic_drift_predictor_organ.py",
+      "engineering_class": "LinguisticDriftPredictorEngine",
+      "mythic_label": "Linguistic Drift Predictor Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_drift_report_organ",
+      "legacy_path": "src/linguistic_drift_report_organ.py",
+      "engineering_class": "LinguisticDriftReportEngine",
+      "mythic_label": "Linguistic Drift Report Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_forecast_archive_organ",
+      "legacy_path": "src/linguistic_forecast_archive_organ.py",
+      "engineering_class": "LinguisticForecastArchiveEngine",
+      "mythic_label": "Linguistic Forecast Archive Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_forecast_calibration_organ",
+      "legacy_path": "src/linguistic_forecast_calibration_organ.py",
+      "engineering_class": "LinguisticForecastCalibrationEngine",
+      "mythic_label": "Linguistic Forecast Calibration Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_forecast_calibration_report_organ",
+      "legacy_path": "src/linguistic_forecast_calibration_report_organ.py",
+      "engineering_class": "LinguisticForecastCalibrationReportEngine",
+      "mythic_label": "Linguistic Forecast Calibration Report Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_forecast_consumption_organ",
+      "legacy_path": "src/linguistic_forecast_consumption_organ.py",
+      "engineering_class": "LinguisticForecastConsumptionEngine",
+      "mythic_label": "Linguistic Forecast Consumption Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_full_governance_cycle_history_organ",
+      "legacy_path": "src/linguistic_full_governance_cycle_history_organ.py",
+      "engineering_class": "LinguisticFullGovernanceCycleHistoryEngine",
+      "mythic_label": "Linguistic Full Governance Cycle History Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_full_governance_cycle_organ",
+      "legacy_path": "src/linguistic_full_governance_cycle_organ.py",
+      "engineering_class": "LinguisticFullGovernanceCycleEngine",
+      "mythic_label": "Linguistic Full Governance Cycle Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_governance_attestation_organ",
+      "legacy_path": "src/linguistic_governance_attestation_organ.py",
+      "engineering_class": "LinguisticGovernanceAttestationEngine",
+      "mythic_label": "Linguistic Governance Attestation Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_governance_cadence_organ",
+      "legacy_path": "src/linguistic_governance_cadence_organ.py",
+      "engineering_class": "LinguisticGovernanceCadenceEngine",
+      "mythic_label": "Linguistic Governance Cadence Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_governance_cycle_history_organ",
+      "legacy_path": "src/linguistic_governance_cycle_history_organ.py",
+      "engineering_class": "LinguisticGovernanceCycleHistoryEngine",
+      "mythic_label": "Linguistic Governance Cycle History Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_governance_cycle_organ",
+      "legacy_path": "src/linguistic_governance_cycle_organ.py",
+      "engineering_class": "LinguisticGovernanceCycleEngine",
+      "mythic_label": "Linguistic Governance Cycle Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_governance_day_organ",
+      "legacy_path": "src/linguistic_governance_day_organ.py",
+      "engineering_class": "LinguisticGovernanceDayEngine",
+      "mythic_label": "Linguistic Governance Day Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_governance_queue_organ",
+      "legacy_path": "src/linguistic_governance_queue_organ.py",
+      "engineering_class": "LinguisticGovernanceQueueEngine",
+      "mythic_label": "Linguistic Governance Queue Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_governance_work_order_organ",
+      "legacy_path": "src/linguistic_governance_work_order_organ.py",
+      "engineering_class": "LinguisticGovernanceWorkOrderEngine",
+      "mythic_label": "Linguistic Governance Work Order Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_governed_lifecycle_fabric_organ",
+      "legacy_path": "src/linguistic_governed_lifecycle_fabric_organ.py",
+      "engineering_class": "LinguisticGovernedLifecycleFabricEngine",
+      "mythic_label": "Linguistic Governed Lifecycle Fabric Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_lineage_viz_organ",
+      "legacy_path": "src/linguistic_lineage_viz_organ.py",
+      "engineering_class": "LinguisticLineageVizEngine",
+      "mythic_label": "Linguistic Lineage Viz Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_mutation_organ",
+      "legacy_path": "src/linguistic_mutation_organ.py",
+      "engineering_class": "LinguisticMutationEngine",
+      "mythic_label": "Linguistic Mutation Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_predictive_cycle_history_organ",
+      "legacy_path": "src/linguistic_predictive_cycle_history_organ.py",
+      "engineering_class": "LinguisticPredictiveCycleHistoryEngine",
+      "mythic_label": "Linguistic Predictive Cycle History Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_predictive_governance_organ",
+      "legacy_path": "src/linguistic_predictive_governance_organ.py",
+      "engineering_class": "LinguisticPredictiveGovernanceEngine",
+      "mythic_label": "Linguistic Predictive Governance Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_preemptive_remediation_organ",
+      "legacy_path": "src/linguistic_preemptive_remediation_organ.py",
+      "engineering_class": "LinguisticPreemptiveRemediationEngine",
+      "mythic_label": "Linguistic Preemptive Remediation Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_remediation_organ",
+      "legacy_path": "src/linguistic_remediation_organ.py",
+      "engineering_class": "LinguisticRemediationEngine",
+      "mythic_label": "Linguistic Remediation Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_subsystem_promotion_organ",
+      "legacy_path": "src/linguistic_subsystem_promotion_organ.py",
+      "engineering_class": "LinguisticSubsystemPromotionEngine",
+      "mythic_label": "Linguistic Subsystem Promotion Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "linguistic_work_order_history_organ",
+      "legacy_path": "src/linguistic_work_order_history_organ.py",
+      "engineering_class": "LinguisticWorkOrderHistoryEngine",
+      "mythic_label": "Linguistic Work Order History Organ",
+      "grandfathered": true
+    },
+    {
       "gene": "mechanic_handoff_organ",
       "legacy_path": "src/mechanic_handoff_organ.py",
       "engineering_class": "MechanicHandoffBridge",
@@ -361,6 +592,20 @@
       "grandfathered": true
     },
     {
+      "gene": "meta_linguistic_governance_organ",
+      "legacy_path": "src/meta_linguistic_governance_organ.py",
+      "engineering_class": "MetaLinguisticGovernanceEngine",
+      "mythic_label": "Meta Linguistic Governance Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "meta_linguistic_registry_organ",
+      "legacy_path": "src/meta_linguistic_registry_organ.py",
+      "engineering_class": "MetaLinguisticRegistryEngine",
+      "mythic_label": "Meta Linguistic Registry Organ",
+      "grandfathered": true
+    },
+    {
       "gene": "mission_board_organ",
       "legacy_path": "src/mission_board_organ.py",
       "engineering_class": "MissionBoardEngine",
@@ -379,6 +624,27 @@
       "legacy_path": "src/mystic_engine_organ.py",
       "engineering_class": "MysticEngineBridge",
       "mythic_label": "Mystic engine",
+      "grandfathered": true
+    },
+    {
+      "gene": "mythic_engineering_translator_organ",
+      "legacy_path": "src/mythic_engineering_translator_organ.py",
+      "engineering_class": "MythicEngineeringTranslatorEngine",
+      "mythic_label": "Mythic Engineering Translator Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "naming_genome_organ",
+      "legacy_path": "src/naming_genome_organ.py",
+      "engineering_class": "NamingGenomeEngine",
+      "mythic_label": "Naming Genome Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "naming_protocol_organ",
+      "legacy_path": "src/naming_protocol_organ.py",
+      "engineering_class": "NamingProtocolEngine",
+      "mythic_label": "Naming Protocol Organ",
       "grandfathered": true
     },
     {
@@ -732,10 +998,45 @@
       "grandfathered": true
     },
     {
+      "gene": "v10_action_engine_organ",
+      "legacy_path": "src/v10_action_engine_organ.py",
+      "engineering_class": "V10ActionEngineEngine",
+      "mythic_label": "V10 Action Engine Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "v10_core_organ",
+      "legacy_path": "src/v10_core_organ.py",
+      "engineering_class": "V10CoreEngine",
+      "mythic_label": "V10 Core Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "v10_runtime_organ",
+      "legacy_path": "src/v10_runtime_organ.py",
+      "engineering_class": "V10RuntimeEngine",
+      "mythic_label": "V10 Runtime Organ",
+      "grandfathered": true
+    },
+    {
       "gene": "v8_runtime_organ",
       "legacy_path": "src/v8_runtime_organ.py",
       "engineering_class": "V8RuntimeEngine",
       "mythic_label": "V8 Runtime Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "v9_core_organ",
+      "legacy_path": "src/v9_core_organ.py",
+      "engineering_class": "V9CoreEngine",
+      "mythic_label": "V9 Core Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "v9_runtime_organ",
+      "legacy_path": "src/v9_runtime_organ.py",
+      "engineering_class": "V9RuntimeEngine",
+      "mythic_label": "V9 Runtime Organ",
       "grandfathered": true
     },
     {
@@ -771,69 +1072,6 @@
       "legacy_path": "src/workflow_shell_organ.py",
       "engineering_class": "WorkflowShellEngine",
       "mythic_label": "Workflow Shell Organ",
-      "grandfathered": true
-    },
-    {
-      "gene": "creative_capability_bridge_organ",
-      "legacy_path": "src/creative_capability_bridge_organ.py",
-      "engineering_class": "CreativeCapabilityBridgeBridge",
-      "mythic_label": "Creative Capability Bridge Organ",
-      "grandfathered": true
-    },
-    {
-      "gene": "creative_console_interface_organ",
-      "legacy_path": "src/creative_console_interface_organ.py",
-      "engineering_class": "CreativeConsoleInterfaceInterface",
-      "mythic_label": "Creative Console Interface Organ",
-      "grandfathered": true
-    },
-    {
-      "gene": "creative_core_runtime_organ",
-      "legacy_path": "src/creative_core_runtime_organ.py",
-      "engineering_class": "CreativeCoreRuntimeEngine",
-      "mythic_label": "Creative Core Runtime Organ",
-      "grandfathered": true
-    },
-    {
-      "gene": "creative_operator_handoff_organ",
-      "legacy_path": "src/creative_operator_handoff_organ.py",
-      "engineering_class": "CreativeOperatorHandoffBridge",
-      "mythic_label": "Creative Operator Handoff Organ",
-      "grandfathered": true
-    },
-    {
-      "gene": "v10_action_engine_organ",
-      "legacy_path": "src/v10_action_engine_organ.py",
-      "engineering_class": "V10ActionEngineEngine",
-      "mythic_label": "V10 Action Engine Organ",
-      "grandfathered": true
-    },
-    {
-      "gene": "v10_core_organ",
-      "legacy_path": "src/v10_core_organ.py",
-      "engineering_class": "V10CoreEngine",
-      "mythic_label": "V10 Core Organ",
-      "grandfathered": true
-    },
-    {
-      "gene": "v10_runtime_organ",
-      "legacy_path": "src/v10_runtime_organ.py",
-      "engineering_class": "V10RuntimeEngine",
-      "mythic_label": "V10 Runtime Organ",
-      "grandfathered": true
-    },
-    {
-      "gene": "v9_core_organ",
-      "legacy_path": "src/v9_core_organ.py",
-      "engineering_class": "V9CoreEngine",
-      "mythic_label": "V9 Core Organ",
-      "grandfathered": true
-    },
-    {
-      "gene": "v9_runtime_organ",
-      "legacy_path": "src/v9_runtime_organ.py",
-      "engineering_class": "V9RuntimeEngine",
-      "mythic_label": "V9 Runtime Organ",
       "grandfathered": true
     }
   ]

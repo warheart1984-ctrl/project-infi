@@ -1,5 +1,7 @@
 """Meta-Linguistic Governance Subsystem — orchestration and registry posture."""
 
+# Mythic: Meta Linguistic Governance Organ
+# Engineering: MetaLinguisticGovernanceEngine
 from __future__ import annotations
 
 from pathlib import Path

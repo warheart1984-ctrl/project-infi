@@ -1,5 +1,7 @@
 """Reflection Runtime Organ — read-only Nova reflection lobe snapshot."""
 
+# Mythic: Reflection Runtime Organ
+# Engineering: ReflectionRuntimeEngine
 from __future__ import annotations
 
 from typing import Any

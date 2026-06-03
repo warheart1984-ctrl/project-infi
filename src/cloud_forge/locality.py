@@ -1,5 +1,7 @@
 """Cloud locality: domain slices, queue priority, session prewarm (Phase 4)."""
 
+# Mythic: Locality
+# Engineering: LocalityEngine
 from __future__ import annotations
 
 def _wrap_ul_payload(payload: dict) -> dict:

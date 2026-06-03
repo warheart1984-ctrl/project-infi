@@ -1,5 +1,7 @@
 """Predictor Immune Bridge Organ — Alt-9 producer to immune observe attestation."""
 
+# Mythic: Predictor Immune Bridge Organ
+# Engineering: PredictorImmuneBridgeBridge
 from __future__ import annotations
 
 from typing import Any

@@ -1,5 +1,7 @@
 """Speakers Lane Organ — read-only Speakers mix lane posture."""
 
+# Mythic: Speakers Lane Organ
+# Engineering: SpeakersLaneInterface
 from __future__ import annotations
 
 from pathlib import Path

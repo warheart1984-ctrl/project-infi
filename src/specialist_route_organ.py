@@ -1,5 +1,7 @@
 """Specialist Route Organ — read-only specialist selection posture."""
 
+# Mythic: Specialist Route Organ
+# Engineering: SpecialistRouteInterface
 from __future__ import annotations
 
 from typing import Any

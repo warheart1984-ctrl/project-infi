@@ -1,5 +1,7 @@
 """Change Scope Organ — read-only workspace impact posture."""
 
+# Mythic: Change Scope Organ
+# Engineering: ChangeScopeEngine
 from __future__ import annotations
 
 from pathlib import Path

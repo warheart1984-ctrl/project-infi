@@ -1,5 +1,7 @@
 """Human Voice Extraction — governed voice profiles from human notes."""
 
+# Mythic: Human Voice Extraction Organ
+# Engineering: HumanVoiceExtractionEngine
 from __future__ import annotations
 
 import hashlib

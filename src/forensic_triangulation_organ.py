@@ -1,5 +1,7 @@
 """Forensic Triangulation Organ — read-only shell over triangulation correlator."""
 
+# Mythic: Forensic Triangulation Organ
+# Engineering: ForensicTriangulationEngine
 from __future__ import annotations
 
 import json

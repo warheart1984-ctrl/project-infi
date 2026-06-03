@@ -1,5 +1,7 @@
 """Nova Landing Surface Organ — UI binding posture."""
 
+# Mythic: Nova Landing Surface Organ
+# Engineering: NovaLandingSurfaceInterface
 from __future__ import annotations
 
 from pathlib import Path

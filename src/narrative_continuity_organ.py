@@ -1,5 +1,7 @@
 """Narrative Continuity Organ — read-only Nova continuity metrics snapshot."""
 
+# Mythic: Narrative Continuity Organ
+# Engineering: NarrativeContinuityEngine
 from __future__ import annotations
 
 from typing import Any

@@ -1,5 +1,7 @@
 """Reasoning Contract Organ — read-only reasoning_types posture."""
 
+# Mythic: Reasoning Contract Organ
+# Engineering: ReasoningContractEngine
 from __future__ import annotations
 
 from typing import Any

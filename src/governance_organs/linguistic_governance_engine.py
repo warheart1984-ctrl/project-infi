@@ -1,5 +1,7 @@
 """Meta-linguistic governance engine — orchestrates Waves 0–10 linguistic gates."""
 
+# Mythic: Linguistic Governance Engine
+# Engineering: LinguisticGovernanceEngineEngine
 from __future__ import annotations
 
 import json

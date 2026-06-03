@@ -1,5 +1,7 @@
 """Nova Workspace Interface Subsystem — Nova/Jarvis page posture."""
 
+# Mythic: Nova Workspace Interface Organ
+# Engineering: NovaWorkspaceInterfaceInterface
 from __future__ import annotations
 
 from pathlib import Path

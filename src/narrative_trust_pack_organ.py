@@ -1,5 +1,7 @@
 """Narrative Trust Pack Organ — read-only NTP pack/verify/signoff posture."""
 
+# Mythic: Narrative Trust Pack Organ
+# Engineering: NarrativeTrustPackEngine
 from __future__ import annotations
 
 from pathlib import Path

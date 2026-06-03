@@ -1,5 +1,7 @@
 """Platform Console Interfaces Subsystem — platform UI posture."""
 
+# Mythic: Platform Console Interfaces Organ
+# Engineering: PlatformConsoleInterfacesInterface
 from __future__ import annotations
 
 from pathlib import Path

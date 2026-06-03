@@ -1,5 +1,7 @@
 """Linguistic Forecast Archive Subsystem — Wave 14 archive retention posture."""
 
+# Mythic: Linguistic Forecast Archive Organ
+# Engineering: LinguisticForecastArchiveEngine
 from __future__ import annotations
 
 from pathlib import Path

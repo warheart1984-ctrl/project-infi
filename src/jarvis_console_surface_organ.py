@@ -1,5 +1,7 @@
 """Jarvis Console Surface Organ — UI binding posture."""
 
+# Mythic: Jarvis Console Surface Organ
+# Engineering: JarvisConsoleSurfaceInterface
 from __future__ import annotations
 
 from pathlib import Path

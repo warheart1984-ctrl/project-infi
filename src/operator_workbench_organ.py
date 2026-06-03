@@ -1,5 +1,7 @@
 """Operator Workbench Organ — read-only evolving workbench posture."""
 
+# Mythic: Operator Workbench Organ
+# Engineering: OperatorWorkbenchEngine
 from __future__ import annotations
 
 import os

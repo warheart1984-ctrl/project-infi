@@ -1,5 +1,7 @@
 """UL Lineage Console Organ — read-only CISIV operator lineage posture."""
 
+# Mythic: Ul Lineage Console Organ
+# Engineering: UlLineageConsoleInterface
 from __future__ import annotations
 
 from pathlib import Path

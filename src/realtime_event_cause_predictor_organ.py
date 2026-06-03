@@ -1,5 +1,7 @@
 """Realtime Event Cause Predictor Organ — read-only live producer attestation."""
 
+# Mythic: Realtime Event Cause Predictor Organ
+# Engineering: RealtimeEventCausePredictorEngine
 from __future__ import annotations
 
 from typing import Any

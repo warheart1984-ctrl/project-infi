@@ -1,5 +1,7 @@
 """Output Integrity Organ — output completion and corrigibility posture."""
 
+# Mythic: Output Integrity Organ
+# Engineering: OutputIntegrityEngine
 from __future__ import annotations
 
 from typing import Any

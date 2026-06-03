@@ -1,5 +1,7 @@
 """Recipe Module Organ — read-only recipe workflow template posture."""
 
+# Mythic: Recipe Module Organ
+# Engineering: RecipeModuleEngine
 from __future__ import annotations
 
 from pathlib import Path

@@ -1,5 +1,7 @@
 """Bounded governed event chain for realtime predictor -> invariants -> immune."""
 
+# Mythic: Governed Event Chain Organ
+# Engineering: GovernedEventChainEngine
 from __future__ import annotations
 
 def _wrap_ul_payload(payload: dict) -> dict:

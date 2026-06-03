@@ -1,5 +1,7 @@
 """Linguistic Full Governance Cycle History Subsystem — cycle artifact retention."""
 
+# Mythic: Linguistic Full Governance Cycle History Organ
+# Engineering: LinguisticFullGovernanceCycleHistoryEngine
 from __future__ import annotations
 
 from pathlib import Path

@@ -1,5 +1,7 @@
 """Document Vision Organ — read-only OCR/document vision posture."""
 
+# Mythic: Document Vision Organ
+# Engineering: DocumentVisionEngine
 from __future__ import annotations
 
 import importlib.util

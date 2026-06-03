@@ -1,5 +1,7 @@
 """Tracing Spine Organ — read-only governed trace stage visibility."""
 
+# Mythic: Tracing Spine Organ
+# Engineering: TracingSpineEngine
 from __future__ import annotations
 
 from pathlib import Path

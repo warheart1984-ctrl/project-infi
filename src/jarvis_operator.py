@@ -1,5 +1,7 @@
 """Persistent Jarvis memory and safe local workspace tools."""
 
+# Mythic: Jarvis Operator Organ
+# Engineering: JarvisOperatorEngine
 from __future__ import annotations
 
 from dataclasses import dataclass

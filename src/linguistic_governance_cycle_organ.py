@@ -1,5 +1,7 @@
 """Linguistic Governance Cycle Subsystem — Wave 11 self-optimizing cycle posture."""
 
+# Mythic: Linguistic Governance Cycle Organ
+# Engineering: LinguisticGovernanceCycleEngine
 from __future__ import annotations
 
 from pathlib import Path

@@ -1,5 +1,7 @@
 """UGR governed LLM lane v1 — proposal-only, temperature 0, invariant gated."""
 
+# Mythic: Llm Lane
+# Engineering: LlmLane
 from __future__ import annotations
 
 def _wrap_ul_payload(payload: dict) -> dict:

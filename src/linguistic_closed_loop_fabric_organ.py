@@ -1,5 +1,7 @@
 """Linguistic Closed Loop Fabric Subsystem — Wave 14 attested anticipate→react loop."""
 
+# Mythic: Linguistic Closed Loop Fabric Organ
+# Engineering: LinguisticClosedLoopFabricEngine
 from __future__ import annotations
 
 import json

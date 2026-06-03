@@ -48,6 +48,14 @@ Concept-origin specs (historical):
 | Memory Runtime Organ | [MEMORY_RUNTIME_ORGAN.md](./MEMORY_RUNTIME_ORGAN.md) | [MEMORY_RUNTIME_ORGAN_MVP_PLAN.md](./MEMORY_RUNTIME_ORGAN_MVP_PLAN.md) | [schemas/memory_runtime_organ.v1.json](./schemas/memory_runtime_organ.v1.json) |
 | Adaptive Lane Organ | [ADAPTIVE_LANE_ORGAN.md](./ADAPTIVE_LANE_ORGAN.md) | [ADAPTIVE_LANE_ORGAN_MVP_PLAN.md](./ADAPTIVE_LANE_ORGAN_MVP_PLAN.md) | [schemas/adaptive_lane_organ.v1.json](./schemas/adaptive_lane_organ.v1.json) |
 
+## Promoted to Governed (Release 26)
+
+| Idea | Active doc | Concept spec | Proof |
+|------|------------|--------------|-------|
+| Linguistic Governance Day Subsystem | [../../subsystems/platform/LINGUISTIC_GOVERNANCE_DAY_ORGAN.md](../../subsystems/platform/LINGUISTIC_GOVERNANCE_DAY_ORGAN.md) | [LINGUISTIC_GOVERNANCE_DAY_ORGAN.md](./LINGUISTIC_GOVERNANCE_DAY_ORGAN.md) | [../../proof/platform/LINGUISTIC_GOVERNANCE_DAY_ORGAN_GOVERNED_PROOF.md](../../proof/platform/LINGUISTIC_GOVERNANCE_DAY_ORGAN_GOVERNED_PROOF.md) |
+| Linguistic Work Order History Subsystem | [../../subsystems/platform/LINGUISTIC_WORK_ORDER_HISTORY_ORGAN.md](../../subsystems/platform/LINGUISTIC_WORK_ORDER_HISTORY_ORGAN.md) | [LINGUISTIC_WORK_ORDER_HISTORY_ORGAN.md](./LINGUISTIC_WORK_ORDER_HISTORY_ORGAN.md) | [../../proof/platform/LINGUISTIC_WORK_ORDER_HISTORY_ORGAN_GOVERNED_PROOF.md](../../proof/platform/LINGUISTIC_WORK_ORDER_HISTORY_ORGAN_GOVERNED_PROOF.md) |
+| Linguistic Attestation History Subsystem | [../../subsystems/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN.md](../../subsystems/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN.md) | [LINGUISTIC_ATTESTATION_HISTORY_ORGAN.md](./LINGUISTIC_ATTESTATION_HISTORY_ORGAN.md) | [../../proof/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN_GOVERNED_PROOF.md](../../proof/platform/LINGUISTIC_ATTESTATION_HISTORY_ORGAN_GOVERNED_PROOF.md) |
+
 ## Promotion Rule
 
 An idea graduates from pending when:
@@ -73,6 +81,9 @@ Full SSP bundle required at concept admission: concept spec + schema + MVP plan 
 - [schemas/memory_runtime_organ.v1.json](./schemas/memory_runtime_organ.v1.json)
 - [schemas/adaptive_lane_organ.v1.json](./schemas/adaptive_lane_organ.v1.json)
 - [schemas/operator_cognition_coherence_fabric.v1.json](./schemas/operator_cognition_coherence_fabric.v1.json)
+- [schemas/linguistic_governance_day_organ.v1.json](./schemas/linguistic_governance_day_organ.v1.json)
+- [schemas/linguistic_work_order_history_organ.v1.json](./schemas/linguistic_work_order_history_organ.v1.json)
+- [schemas/linguistic_attestation_history_organ.v1.json](./schemas/linguistic_attestation_history_organ.v1.json)
 
 Runtime copies also live under `schemas/`, `triangulation/schemas/`.
 

@@ -1,5 +1,7 @@
 """Linguistic Predictive Governance Subsystem — Wave 12 predictive cycle posture."""
 
+# Mythic: Linguistic Predictive Governance Organ
+# Engineering: LinguisticPredictiveGovernanceEngine
 from __future__ import annotations
 
 from pathlib import Path

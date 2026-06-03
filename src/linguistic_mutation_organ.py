@@ -1,5 +1,7 @@
 """Linguistic Mutation Subsystem — MP-X linguistic_layer mutation posture."""
 
+# Mythic: Linguistic Mutation Organ
+# Engineering: LinguisticMutationEngine
 from __future__ import annotations
 
 from pathlib import Path

@@ -5,6 +5,8 @@ computes compact event and cause forecasts, and emits `rt` channel packets that
 still route through God Brain and Jarvis before reaching Nova.
 """
 
+# Mythic: Realtime Event Cause Predictor Organ
+# Engineering: RealtimeEventCausePredictorEngine
 from __future__ import annotations
 
 def _wrap_ul_payload(payload: dict) -> dict:

@@ -1,5 +1,7 @@
 """Safety Envelope Organ — read-only threshold snapshot from SWARM_LAW doctrine."""
 
+# Mythic: Safety Envelope
+# Engineering: SafetyEnvelopeEngine
 from __future__ import annotations
 
 from pathlib import Path

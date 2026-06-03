@@ -1,5 +1,7 @@
 """Blueprint Posture Subsystem — blueprint snapshot posture."""
 
+# Mythic: Blueprint Posture Organ
+# Engineering: BlueprintPostureEngine
 from __future__ import annotations
 
 from pathlib import Path

@@ -1,5 +1,7 @@
 """Recipe Module — governed workflow recipe packs for Mission Board admission."""
 
+# Mythic: Recipe Module Organ
+# Engineering: RecipeModuleEngine
 from __future__ import annotations
 
 import hashlib

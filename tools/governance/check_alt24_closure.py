@@ -36,10 +36,15 @@ def main() -> int:
     from src.operator_cognition_coherence_fabric import build_coherence_fabric_status
 
     fabric = build_coherence_fabric_status(root=_ROOT)
-    if fabric.get("operator_cognition_coherence_fabric_version") != (
-        "operator_cognition_coherence_fabric.v1.19"
-    ):
-        print("[alt24-closure-gate] FAIL: coherence fabric must be v1.19")
+    version = fabric.get("operator_cognition_coherence_fabric_version")
+    if version not in {
+        "operator_cognition_coherence_fabric.v1.19",
+        "operator_cognition_coherence_fabric.v1.20",
+        "operator_cognition_coherence_fabric.v1.21",
+    }:
+        print(
+            f"[alt24-closure-gate] FAIL: coherence fabric must be v1.19–v1.21 (got {version})"
+        )
         return 1
     for key in (
         "linguistic_calibration_layer",

@@ -1,5 +1,7 @@
 """Narrative Trust Pack — governed export for Story Forge → Beatbox → Speakers."""
 
+# Mythic: Narrative Trust Pack Organ
+# Engineering: NarrativeTrustPackEngine
 from __future__ import annotations
 
 import json

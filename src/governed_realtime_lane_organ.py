@@ -1,5 +1,7 @@
 """Governed Realtime Lane Organ — read-only pipeline realtime producer posture."""
 
+# Mythic: Governed Realtime Lane Organ
+# Engineering: GovernedRealtimeLaneInterface
 from __future__ import annotations
 
 from typing import Any

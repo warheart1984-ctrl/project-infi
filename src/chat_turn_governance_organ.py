@@ -1,5 +1,7 @@
 """Chat Turn Governance Organ — UL substrate and admission posture."""
 
+# Mythic: Chat Turn Governance Organ
+# Engineering: ChatTurnGovernanceEngine
 from __future__ import annotations
 
 from typing import Any

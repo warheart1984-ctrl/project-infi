@@ -1,5 +1,7 @@
 """ARIS Integration Organ — embedded repo-intelligence boundary posture."""
 
+# Mythic: Aris Integration Organ
+# Engineering: ArisIntegrationEngine
 from __future__ import annotations
 
 from typing import Any

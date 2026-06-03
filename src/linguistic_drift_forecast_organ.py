@@ -1,5 +1,7 @@
 """Linguistic Drift Forecast Subsystem — forward drift forecast posture."""
 
+# Mythic: Linguistic Drift Forecast Organ
+# Engineering: LinguisticDriftForecastEngine
 from __future__ import annotations
 
 from pathlib import Path

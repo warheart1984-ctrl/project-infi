@@ -1,5 +1,7 @@
 """Project Infi Law Organ — read-only law substrate posture."""
 
+# Mythic: Project Infi Law Organ
+# Engineering: ProjectInfiLawEngine
 from __future__ import annotations
 
 from typing import Any

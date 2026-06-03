@@ -5,6 +5,8 @@ runtime operations route through the governed memory board, respect phase and
 module admission checks, and emit bounded audit metadata.
 """
 
+# Mythic: Memory Board Enforcer
+# Engineering: MemoryBoardEnforcerEngine
 from __future__ import annotations
 
 def _wrap_ul_payload(payload: dict) -> dict:

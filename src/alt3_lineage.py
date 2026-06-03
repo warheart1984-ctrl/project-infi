@@ -1,5 +1,7 @@
 """UL lineage helpers for Alt-3 subsystem families."""
 
+# Mythic: Alt3 Lineage
+# Engineering: Alt3LineageEngine
 from __future__ import annotations
 
 from typing import Any

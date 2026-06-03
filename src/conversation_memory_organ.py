@@ -1,5 +1,7 @@
 """Conversation Memory Organ — read-only session memory posture."""
 
+# Mythic: Conversation Memory Organ
+# Engineering: ConversationMemoryEngine
 from __future__ import annotations
 
 from typing import Any

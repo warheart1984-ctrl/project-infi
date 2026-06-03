@@ -1,5 +1,7 @@
 """Nova Face Organ — read-only Nova companion surface binding posture."""
 
+# Mythic: Nova Face Organ
+# Engineering: NovaFaceEngine
 from __future__ import annotations
 
 from typing import Any

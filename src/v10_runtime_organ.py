@@ -1,5 +1,7 @@
 """V10 Runtime Subsystem — V10 runtime snapshot posture."""
 
+# Mythic: V10 Runtime Organ
+# Engineering: V10RuntimeEngine
 from __future__ import annotations
 
 from pathlib import Path

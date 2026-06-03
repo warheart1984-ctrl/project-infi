@@ -1,5 +1,7 @@
 """Security Protocol Organ — security protocol core posture."""
 
+# Mythic: Security Protocol Organ
+# Engineering: SecurityProtocolEngine
 from __future__ import annotations
 
 from typing import Any

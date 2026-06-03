@@ -1,5 +1,7 @@
 """Route Choice Organ — read-only model route posture (advisory only)."""
 
+# Mythic: Route Choice Organ
+# Engineering: RouteChoiceInterface
 from __future__ import annotations
 
 from typing import Any

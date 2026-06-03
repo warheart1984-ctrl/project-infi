@@ -1,5 +1,7 @@
 """Governed LLM execution commit layer — honors PROPOSED envelopes after bridge clearance."""
 
+# Mythic: Governed Llm Executor
+# Engineering: GovernedLlmExecutorEngine
 from __future__ import annotations
 
 def _wrap_ul_payload(payload: dict) -> dict:

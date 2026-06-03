@@ -6,6 +6,8 @@ which local "brain profile" should drive the answer, then exposes a compact
 trace the UI can show.
 """
 
+# Mythic: Model Routing
+# Engineering: ModelRoutingEngine
 from __future__ import annotations
 
 import os

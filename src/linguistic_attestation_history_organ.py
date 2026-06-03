@@ -1,5 +1,7 @@
 """Linguistic Attestation History Subsystem — attestation cycle retention."""
 
+# Mythic: Linguistic Attestation History Organ
+# Engineering: LinguisticAttestationHistoryEngine
 from __future__ import annotations
 
 from pathlib import Path

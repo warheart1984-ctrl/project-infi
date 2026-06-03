@@ -1,5 +1,7 @@
 """Nova Narrative — continuity of self across turns (not memory, planning, or arcs)."""
 
+# Mythic: Narrative
+# Engineering: NarrativeEngine
 from __future__ import annotations
 
 import re

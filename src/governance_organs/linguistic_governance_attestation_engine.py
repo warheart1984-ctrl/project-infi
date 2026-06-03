@@ -1,5 +1,7 @@
 """Linguistic governance attestation digest — Wave 14 closed-loop health."""
 
+# Mythic: Linguistic Governance Attestation Organ
+# Engineering: LinguisticGovernanceAttestationEngine
 from __future__ import annotations
 
 import json

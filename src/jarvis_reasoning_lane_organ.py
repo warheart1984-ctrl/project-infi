@@ -1,5 +1,7 @@
 """Jarvis Reasoning Lane Organ — read-only lane catalog (non-executive)."""
 
+# Mythic: Jarvis Reasoning Lane Organ
+# Engineering: JarvisReasoningLaneInterface
 from __future__ import annotations
 
 from typing import Any

@@ -1,5 +1,7 @@
 """Cortex cognitive arcs — multi-turn continuity across Nova lobes."""
 
+# Mythic: Arcs
+# Engineering: ArcsEngine
 from __future__ import annotations
 
 import uuid

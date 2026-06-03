@@ -1,5 +1,7 @@
 """Linguistic Drift Report Subsystem — drift report artifact posture."""
 
+# Mythic: Linguistic Drift Report Organ
+# Engineering: LinguisticDriftReportEngine
 from __future__ import annotations
 
 from pathlib import Path

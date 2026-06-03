@@ -1,5 +1,7 @@
 """Linguistic Subsystem Promotion Subsystem — SSP promotion engine posture."""
 
+# Mythic: Linguistic Subsystem Promotion Organ
+# Engineering: LinguisticSubsystemPromotionEngine
 from __future__ import annotations
 
 from pathlib import Path

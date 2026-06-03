@@ -1,5 +1,7 @@
 """Governed Event Chain Organ — read-only predictor→invariant→immune chain posture."""
 
+# Mythic: Governed Event Chain Organ
+# Engineering: GovernedEventChainEngine
 from __future__ import annotations
 
 from typing import Any

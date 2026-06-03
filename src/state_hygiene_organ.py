@@ -1,5 +1,7 @@
 """State Hygiene Subsystem — hygiene snapshot posture."""
 
+# Mythic: State Hygiene Organ
+# Engineering: StateHygieneEngine
 from __future__ import annotations
 
 from pathlib import Path

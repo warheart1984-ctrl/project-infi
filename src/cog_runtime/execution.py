@@ -1,5 +1,7 @@
 """Execution Runtime — Bind → Execute → Verify → Recover → Rollback → Report."""
 
+# Mythic: Execution
+# Engineering: ExecutionEngine
 from __future__ import annotations
 
 import re

@@ -1,5 +1,7 @@
 """Cortex Arcs Organ — read-only cortex.arcs module posture."""
 
+# Mythic: Cortex Arcs Organ
+# Engineering: CortexArcsEngine
 from __future__ import annotations
 
 from typing import Any

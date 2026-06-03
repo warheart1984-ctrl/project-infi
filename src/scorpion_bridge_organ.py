@@ -1,5 +1,7 @@
 """Scorpion Bridge Organ — read-only Scorpion status; Jarvis bridge gap documented."""
 
+# Mythic: Scorpion Bridge Organ
+# Engineering: ScorpionBridgeBridge
 from __future__ import annotations
 
 from pathlib import Path

@@ -1,5 +1,7 @@
 """Nova Face — companion surface bridge to Nova Cortex and Jarvis Core."""
 
+# Mythic: Nova Face Organ
+# Engineering: NovaFaceEngine
 from __future__ import annotations
 
 from dataclasses import dataclass, field

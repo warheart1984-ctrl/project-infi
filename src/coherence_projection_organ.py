@@ -1,5 +1,7 @@
 """Coherence Projection Organ — read-only mind-to-voice projection posture."""
 
+# Mythic: Coherence Projection Organ
+# Engineering: CoherenceProjectionLayer
 from __future__ import annotations
 
 from typing import Any

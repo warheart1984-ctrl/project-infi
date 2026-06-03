@@ -6,6 +6,8 @@ to make core cognitive traffic explicit and keep slower service/tool work off
 the fast lane.
 """
 
+# Mythic: Governed Direct Pipeline
+# Engineering: GovernedDirectPipelineEngine
 from __future__ import annotations
 
 from datetime import datetime

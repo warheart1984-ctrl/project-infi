@@ -1,5 +1,7 @@
 """UI Vision Organ — read-only screenshot/UI vision posture."""
 
+# Mythic: Ui Vision Organ
+# Engineering: UiVisionEngine
 from __future__ import annotations
 
 from typing import Any

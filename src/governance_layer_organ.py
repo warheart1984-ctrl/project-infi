@@ -1,5 +1,7 @@
 """Governance Layer Organ — policy and break-glass posture."""
 
+# Mythic: Governance Layer Organ
+# Engineering: GovernanceLayerEngine
 from __future__ import annotations
 
 from typing import Any

@@ -1,5 +1,7 @@
 """Linguistic Work Order History Subsystem — Wave 17 snapshot retention."""
 
+# Mythic: Linguistic Work Order History Organ
+# Engineering: LinguisticWorkOrderHistoryEngine
 from __future__ import annotations
 
 from pathlib import Path

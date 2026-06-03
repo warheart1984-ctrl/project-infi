@@ -1,5 +1,7 @@
 """System Guard Organ — system guard control posture."""
 
+# Mythic: System Guard Organ
+# Engineering: SystemGuardEngine
 from __future__ import annotations
 
 from typing import Any

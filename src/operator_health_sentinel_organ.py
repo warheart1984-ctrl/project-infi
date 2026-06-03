@@ -1,5 +1,7 @@
 """Operator Health Sentinel Organ — advisory-only burden snapshot."""
 
+# Mythic: Operator Health Sentinel Organ
+# Engineering: OperatorHealthSentinelGate
 from __future__ import annotations
 
 from typing import Any

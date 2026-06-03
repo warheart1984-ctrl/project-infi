@@ -1,5 +1,7 @@
 """Patch Execution Preview Organ — read-only preview posture."""
 
+# Mythic: Patch Execution Preview Organ
+# Engineering: PatchExecutionPreviewEngine
 from __future__ import annotations
 
 from typing import Any

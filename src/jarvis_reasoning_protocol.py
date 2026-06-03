@@ -9,6 +9,8 @@ must answer as Jarvis first, without generic assistant disclaimers or
 identity collapse.
 """
 
+# Mythic: Jarvis Reasoning Protocol
+# Engineering: JarvisReasoningProtocolEngine
 from __future__ import annotations
 
 def _wrap_ul_payload(payload: dict) -> dict:

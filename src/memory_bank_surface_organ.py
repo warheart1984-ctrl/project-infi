@@ -1,5 +1,7 @@
 """Memory Bank Surface Organ — UI binding posture."""
 
+# Mythic: Memory Bank Surface Organ
+# Engineering: MemoryBankSurfaceInterface
 from __future__ import annotations
 
 from pathlib import Path

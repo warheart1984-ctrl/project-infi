@@ -4,6 +4,8 @@ This module observes structured runtime traces over time and emits bounded,
 deterministic drift signals. It never mutates routing, output, or execution.
 """
 
+# Mythic: Continuity Witness Organ
+# Engineering: ContinuityWitnessEngine
 from __future__ import annotations
 
 from collections import Counter

@@ -1,5 +1,7 @@
 """Deliberation Runtime — Options → Tradeoffs → Commit → Revisit."""
 
+# Mythic: Deliberation Organ
+# Engineering: DeliberationEngine
 from __future__ import annotations
 
 import re

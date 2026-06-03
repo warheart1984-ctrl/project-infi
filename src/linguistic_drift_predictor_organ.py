@@ -1,5 +1,7 @@
 """Linguistic Drift Predictor Subsystem — hybrid drift scoring posture."""
 
+# Mythic: Linguistic Drift Predictor Organ
+# Engineering: LinguisticDriftPredictorEngine
 from __future__ import annotations
 
 from pathlib import Path

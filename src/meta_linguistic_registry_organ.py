@@ -1,5 +1,7 @@
 """Meta-Linguistic Registry Subsystem — registry artifact hub posture."""
 
+# Mythic: Meta Linguistic Registry Organ
+# Engineering: MetaLinguisticRegistryEngine
 from __future__ import annotations
 
 import json

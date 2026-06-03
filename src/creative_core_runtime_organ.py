@@ -1,5 +1,7 @@
 """Creative Core Runtime Subsystem — bounded creative wrapper posture."""
 
+# Mythic: Creative Core Runtime Organ
+# Engineering: CreativeCoreRuntimeEngine
 from __future__ import annotations
 
 from pathlib import Path

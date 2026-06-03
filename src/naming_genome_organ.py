@@ -1,5 +1,7 @@
 """Naming Genome Subsystem — genome/alias linguistic cross-check posture."""
 
+# Mythic: Naming Genome Organ
+# Engineering: NamingGenomeEngine
 from __future__ import annotations
 
 from pathlib import Path

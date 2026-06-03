@@ -1,5 +1,7 @@
 """Linguistic Forecast Calibration Report Subsystem — calibration report snapshot."""
 
+# Mythic: Linguistic Forecast Calibration Report Organ
+# Engineering: LinguisticForecastCalibrationReportEngine
 from __future__ import annotations
 
 from pathlib import Path

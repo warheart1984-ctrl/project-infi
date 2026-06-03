@@ -1,5 +1,7 @@
 """Linguistic Forecast Calibration Subsystem — Wave 13 calibration posture."""
 
+# Mythic: Linguistic Forecast Calibration Organ
+# Engineering: LinguisticForecastCalibrationEngine
 from __future__ import annotations
 
 from pathlib import Path

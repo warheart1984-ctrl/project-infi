@@ -1,5 +1,7 @@
 """Aggregate UGR + Cloud Forge operator console snapshot."""
 
+# Mythic: Snapshot
+# Engineering: SnapshotEngine
 from __future__ import annotations
 
 import json

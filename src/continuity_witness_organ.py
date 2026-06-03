@@ -1,5 +1,7 @@
 """Continuity Witness Organ — read-only AAIS-CW-01 snapshot."""
 
+# Mythic: Continuity Witness Organ
+# Engineering: ContinuityWitnessEngine
 from __future__ import annotations
 
 from typing import Any

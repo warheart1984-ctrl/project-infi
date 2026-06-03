@@ -1,5 +1,7 @@
 """Linguistic Forecast Consumption Subsystem — forecast-in-cycle bridge posture."""
 
+# Mythic: Linguistic Forecast Consumption Organ
+# Engineering: LinguisticForecastConsumptionEngine
 from __future__ import annotations
 
 import json

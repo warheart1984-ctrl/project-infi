@@ -1,5 +1,7 @@
 """Nova cognitive router, session, and speaking adapter."""
 
+# Mythic: Nova
+# Engineering: NovaEngine
 from __future__ import annotations
 
 from dataclasses import dataclass, field

@@ -1,5 +1,7 @@
 """Knowledge Authority Organ — read-only authority source posture."""
 
+# Mythic: Knowledge Authority Organ
+# Engineering: KnowledgeAuthorityEngine
 from __future__ import annotations
 
 from typing import Any

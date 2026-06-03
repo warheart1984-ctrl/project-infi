@@ -1,5 +1,7 @@
 """Workflow Shell Organ — read-only FastAPI workflow shell posture."""
 
+# Mythic: Workflow Shell Organ
+# Engineering: WorkflowShellEngine
 from __future__ import annotations
 
 from pathlib import Path

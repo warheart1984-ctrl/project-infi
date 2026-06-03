@@ -1,5 +1,7 @@
 """Patch Verification Organ — read-only verify/preview/apply gate posture."""
 
+# Mythic: Patch Verification Organ
+# Engineering: PatchVerificationEngine
 from __future__ import annotations
 
 from pathlib import Path

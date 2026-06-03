@@ -1,5 +1,7 @@
 """Human Voice Extraction Organ — read-only HVE retention and signoff posture."""
 
+# Mythic: Human Voice Extraction Organ
+# Engineering: HumanVoiceExtractionEngine
 from __future__ import annotations
 
 from pathlib import Path

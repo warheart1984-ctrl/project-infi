@@ -5,6 +5,8 @@ browser verification, or safe local action actually advanced the active mission
 and returns a compact judgment that the Mission Board can store and surface.
 """
 
+# Mythic: Critic
+# Engineering: CriticEngine
 from __future__ import annotations
 
 from datetime import datetime

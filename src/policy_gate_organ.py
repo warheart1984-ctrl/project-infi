@@ -1,5 +1,7 @@
 """Policy Gate Organ — documents blocked immune escalation; MP-X stub only."""
 
+# Mythic: Policy Gate Organ
+# Engineering: PolicyGateGate
 from __future__ import annotations
 
 from typing import Any

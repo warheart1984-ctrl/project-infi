@@ -1,5 +1,7 @@
 """Linguistic governance queue engine — Wave 13 prescriptive operator backlog."""
 
+# Mythic: Linguistic Governance Queue Organ
+# Engineering: LinguisticGovernanceQueueEngine
 from __future__ import annotations
 
 import json

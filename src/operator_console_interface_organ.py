@@ -1,5 +1,7 @@
 """Operator Console Interface Subsystem — operator console UI posture."""
 
+# Mythic: Operator Console Interface Organ
+# Engineering: OperatorConsoleInterfaceInterface
 from __future__ import annotations
 
 from pathlib import Path

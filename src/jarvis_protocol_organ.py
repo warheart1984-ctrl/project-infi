@@ -1,5 +1,7 @@
 """Jarvis Protocol Organ — read-only message/tool protocol posture."""
 
+# Mythic: Jarvis Protocol Organ
+# Engineering: JarvisProtocolEngine
 from __future__ import annotations
 
 from typing import Any

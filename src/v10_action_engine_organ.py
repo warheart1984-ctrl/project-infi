@@ -1,5 +1,7 @@
 """V10 Action Engine Subsystem — mission step engine posture."""
 
+# Mythic: V10 Action Engine Organ
+# Engineering: V10ActionEngineEngine
 from __future__ import annotations
 
 from pathlib import Path

@@ -1,5 +1,7 @@
 """AAIS module governance protocol and immune enforcement."""
 
+# Mythic: Module Governance Organ
+# Engineering: ModuleGovernanceEngine
 from __future__ import annotations
 
 from datetime import datetime

@@ -1,5 +1,7 @@
 """Naming Protocol Subsystem — Wave 0 naming lint posture."""
 
+# Mythic: Naming Protocol Organ
+# Engineering: NamingProtocolEngine
 from __future__ import annotations
 
 from pathlib import Path

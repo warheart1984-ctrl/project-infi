@@ -1,5 +1,7 @@
 """AAIS Doctor Organ — doctor readiness posture."""
 
+# Mythic: Aais Doctor Organ
+# Engineering: AaisDoctorEngine
 from __future__ import annotations
 
 from pathlib import Path

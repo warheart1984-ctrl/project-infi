@@ -1,5 +1,7 @@
 """Imagine Generator — governed imagination patterns for Story Forge handoff."""
 
+# Mythic: Imagine Generator Organ
+# Engineering: ImagineGeneratorEngine
 from __future__ import annotations
 
 import hashlib

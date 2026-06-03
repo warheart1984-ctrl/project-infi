@@ -1,5 +1,7 @@
 """UL Lineage Graph — append-only governance visibility for mission lifecycles."""
 
+# Mythic: Ul Lineage
+# Engineering: UlLineageEngine
 from __future__ import annotations
 
 import hashlib

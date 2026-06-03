@@ -1,5 +1,7 @@
 """Immune Observe Organ — read-only observe_protocol_signal posture."""
 
+# Mythic: Immune Observe Organ
+# Engineering: ImmuneObserveEngine
 from __future__ import annotations
 
 from typing import Any

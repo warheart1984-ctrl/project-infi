@@ -3,6 +3,8 @@
 Optimized with embedding caching and batch encoding.
 """
 
+# Mythic: Document Rag
+# Engineering: DocumentRagEngine
 from __future__ import annotations
 
 import os

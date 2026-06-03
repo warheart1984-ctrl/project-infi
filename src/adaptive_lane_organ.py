@@ -1,5 +1,7 @@
 """Adaptive Lane Organ — wake Tier 5 operator-weighted lanes into live runtime."""
 
+# Mythic: Adaptive Lane Organ
+# Engineering: AdaptiveLaneInterface
 from __future__ import annotations
 
 import json

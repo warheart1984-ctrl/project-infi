@@ -1,5 +1,7 @@
 """Continuity Substrate Organ — continuity and preference profile posture."""
 
+# Mythic: Continuity Substrate Organ
+# Engineering: ContinuitySubstrateEngine
 from __future__ import annotations
 
 from pathlib import Path

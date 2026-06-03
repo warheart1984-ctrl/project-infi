@@ -1,5 +1,7 @@
 """Nova Intent Core — commitments, tensions, agency, closure (consult only)."""
 
+# Mythic: Intent Core
+# Engineering: IntentCoreEngine
 from __future__ import annotations
 
 from typing import Any

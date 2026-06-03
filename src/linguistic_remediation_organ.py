@@ -1,5 +1,7 @@
 """Linguistic Remediation Subsystem — drift remediation playbook posture."""
 
+# Mythic: Linguistic Remediation Organ
+# Engineering: LinguisticRemediationEngine
 from __future__ import annotations
 
 from pathlib import Path

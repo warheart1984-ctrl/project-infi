@@ -1,5 +1,7 @@
 """Operator readout builder — advisory-only UGR / Cloud Forge surface."""
 
+# Mythic: Readout
+# Engineering: ReadoutEngine
 from __future__ import annotations
 
 from typing import Any

@@ -1,5 +1,7 @@
 """Operator Profile Organ — normalized operator identity and authority lane."""
 
+# Mythic: Operator Profile Organ
+# Engineering: OperatorProfileEngine
 from __future__ import annotations
 
 from typing import Any

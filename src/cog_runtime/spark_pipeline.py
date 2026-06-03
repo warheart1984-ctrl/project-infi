@@ -1,5 +1,7 @@
 """Spark v1 ignition sequence — constitutional turn composition."""
 
+# Mythic: Spark Pipeline
+# Engineering: SparkPipelineEngine
 from __future__ import annotations
 
 from typing import Any

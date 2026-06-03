@@ -1,5 +1,7 @@
 """Reasoning Executive Organ — read-only jarvis.reasoning OODA posture."""
 
+# Mythic: Reasoning Executive Organ
+# Engineering: ReasoningExecutiveEngine
 from __future__ import annotations
 
 from typing import Any

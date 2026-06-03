@@ -1,5 +1,7 @@
 """Operator Cognition Coherence Fabric — read-only cross-plane snapshot."""
 
+# Mythic: Coherence Fabric
+# Engineering: OperatorCognitionCoherenceLayer
 from __future__ import annotations
 
 import importlib.util

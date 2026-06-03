@@ -5,6 +5,8 @@ pluggable. Each module contributes a slice of provider-facing context without
 forcing Jarvis to become a second app shell.
 """
 
+# Mythic: Jarvis Modular
+# Engineering: JarvisModularEngine
 from __future__ import annotations
 
 from dataclasses import dataclass, field

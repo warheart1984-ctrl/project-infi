@@ -1,5 +1,7 @@
 """Direct Challenge Organ — read-only relational lane posture."""
 
+# Mythic: Direct Challenge Organ
+# Engineering: DirectChallengeEngine
 from __future__ import annotations
 
 from typing import Any

@@ -65,4 +65,4 @@ Target proof packet: `docs/proof/platform/LINGUISTIC_WORK_ORDER_HISTORY_ORGAN_V1
 
 **Release:** `alt26-summon-wave-2026-06` — order **2**
 
-**Depends on:** `linguistic_governance_work_order_organ`, `linguistic_governed_lifecycle_fabric_organ`
+**Depends on:** `linguistic_governance_work_order_organ`

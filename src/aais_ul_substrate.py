@@ -5,6 +5,8 @@ Combines AAIS-UL payload adaptation with the ARIS governed command substrate
 result passes through one inspectable envelope before Jarvis delivery.
 """
 
+# Mythic: Aais Ul Substrate Organ
+# Engineering: AaisUlSubstrateEngine
 from __future__ import annotations
 
 import sys

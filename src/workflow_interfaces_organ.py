@@ -1,5 +1,7 @@
 """Workflow Interfaces Subsystem — workflow UI posture."""
 
+# Mythic: Workflow Interfaces Organ
+# Engineering: WorkflowInterfacesInterface
 from __future__ import annotations
 
 from pathlib import Path

@@ -1,5 +1,7 @@
 """Linguistic Lineage Viz Subsystem — lineage Mermaid export posture."""
 
+# Mythic: Linguistic Lineage Viz Organ
+# Engineering: LinguisticLineageVizEngine
 from __future__ import annotations
 
 from pathlib import Path

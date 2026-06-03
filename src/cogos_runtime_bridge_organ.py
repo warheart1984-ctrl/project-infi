@@ -1,5 +1,7 @@
 """CoGOS Runtime Bridge Organ — read-only family bridge posture."""
 
+# Mythic: Cogos Runtime Bridge Organ
+# Engineering: CogosRuntimeBridgeBridge
 from __future__ import annotations
 
 from pathlib import Path

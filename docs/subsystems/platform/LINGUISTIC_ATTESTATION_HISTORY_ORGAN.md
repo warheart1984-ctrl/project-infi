@@ -1,6 +1,6 @@
 # Linguistic Attestation History Organ
 
-Status: **implementation** (Release 26 `alt26-summon-wave-2026-06`)
+Status: **governed** (Release 26 `alt26-summon-wave-2026-06`)
 
 ## Runtime
 

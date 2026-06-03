@@ -1,5 +1,7 @@
 """Prompt Assembly Organ — read-only scaffold suppression posture."""
 
+# Mythic: Prompt Assembly Organ
+# Engineering: PromptAssemblyEngine
 from __future__ import annotations
 
 from typing import Any

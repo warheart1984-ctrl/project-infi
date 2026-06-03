@@ -1,5 +1,7 @@
 """AAIS UL Substrate Organ — envelope attachment posture."""
 
+# Mythic: Aais Ul Substrate Organ
+# Engineering: AaisUlSubstrateEngine
 from __future__ import annotations
 
 from typing import Any

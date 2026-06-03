@@ -1,5 +1,7 @@
 """Perception Lane Organ — read-only spatial/mystic lane chain posture."""
 
+# Mythic: Perception Lane Organ
+# Engineering: PerceptionLaneInterface
 from __future__ import annotations
 
 from typing import Any

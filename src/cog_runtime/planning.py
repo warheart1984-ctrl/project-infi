@@ -1,5 +1,7 @@
 """Planning Runtime — Orient → Sequence → Checkpoint → Handoff."""
 
+# Mythic: Planning Organ
+# Engineering: PlanningEngine
 from __future__ import annotations
 
 from typing import Any

@@ -5,6 +5,8 @@ generation and deliberation packets into one bounded provider proposal envelope
 that downstream runtime layers may inspect, trace, and choose to honor.
 """
 
+# Mythic: Aais Governed Llm Module
+# Engineering: AaisGovernedLlmModuleEngine
 from __future__ import annotations
 
 from hashlib import sha256

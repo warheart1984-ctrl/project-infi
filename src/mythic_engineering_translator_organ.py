@@ -1,5 +1,7 @@
 """Mythic Engineering Translator Subsystem — mythic→engineering translator posture."""
 
+# Mythic: Mythic Engineering Translator Organ
+# Engineering: MythicEngineeringTranslatorEngine
 from __future__ import annotations
 
 from pathlib import Path

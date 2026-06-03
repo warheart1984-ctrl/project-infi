@@ -1,5 +1,7 @@
 """Forge Contractor Organ — read-only isolated Forge contractor lane posture."""
 
+# Mythic: Forge Contractor Organ
+# Engineering: ForgeContractorEngine
 from __future__ import annotations
 
 from typing import Any

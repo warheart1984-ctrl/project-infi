@@ -1,5 +1,7 @@
 """Linguistic Cascade Subsystem — lineage cascade policy posture."""
 
+# Mythic: Linguistic Cascade Organ
+# Engineering: LinguisticCascadeEngine
 from __future__ import annotations
 
 from pathlib import Path

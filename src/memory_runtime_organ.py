@@ -1,5 +1,7 @@
 """Memory Runtime Organ — read-only Nova memory lobe snapshot."""
 
+# Mythic: Memory Runtime Organ
+# Engineering: MemoryRuntimeEngine
 from __future__ import annotations
 
 from typing import Any

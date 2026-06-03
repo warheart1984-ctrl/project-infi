@@ -75,10 +75,12 @@ def check_eligibility(root: Path | None = None) -> list[str]:
             errors.append(f"missing governed proof: {proof_path.relative_to(root)}")
 
     fabric = build_coherence_fabric_status(root=root)
-    if fabric.get("operator_cognition_coherence_fabric_version") != (
-        "operator_cognition_coherence_fabric.v1.20"
-    ):
-        errors.append("coherence layer must be v1.20")
+    version = fabric.get("operator_cognition_coherence_fabric_version")
+    if version not in {
+        "operator_cognition_coherence_fabric.v1.20",
+        "operator_cognition_coherence_fabric.v1.21",
+    }:
+        errors.append(f"coherence layer must be v1.20 or v1.21 (got {version})")
     expected_lens = {
         "linguistic_operator_execution_layer": 3,
         "linguistic_lifecycle_artifact_layer": 4,
@@ -89,6 +91,11 @@ def check_eligibility(root: Path | None = None) -> list[str]:
             errors.append(f"expected {need} {key} entries")
     if not fabric.get("linguistic_governed_lifecycle_aligned"):
         errors.append("linguistic_governed_lifecycle_aligned is false")
+    if version == "operator_cognition_coherence_fabric.v1.21":
+        if len(fabric.get("linguistic_operator_day_layer") or []) < 2:
+            errors.append("expected 2 linguistic_operator_day_layer entries")
+        if len(fabric.get("linguistic_retention_history_layer") or []) < 3:
+            errors.append("expected 3 linguistic_retention_history_layer entries")
 
     closure = root / "docs/proof/platform/GOVERNED_LINGUISTIC_LIFECYCLE_V1_PROOF.md"
     if not closure.is_file():

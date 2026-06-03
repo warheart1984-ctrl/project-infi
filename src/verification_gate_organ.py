@@ -1,5 +1,7 @@
 """Verification Gate Organ — read-only mission verification gate snapshot."""
 
+# Mythic: Verification Gate Organ
+# Engineering: VerificationGateGate
 from __future__ import annotations
 
 from typing import Any

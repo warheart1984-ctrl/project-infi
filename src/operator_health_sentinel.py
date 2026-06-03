@@ -6,6 +6,8 @@ bounded form, and emits advisory-only recommendations through governed trace
 surfaces.
 """
 
+# Mythic: Operator Health Sentinel Organ
+# Engineering: OperatorHealthSentinelGate
 from __future__ import annotations
 
 from typing import Any

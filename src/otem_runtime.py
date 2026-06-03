@@ -10,6 +10,8 @@ Everything here is proposal-only. No execution, workflow creation, approval
 mutation, run creation, or durable memory writes are allowed.
 """
 
+# Mythic: Otem Runtime
+# Engineering: OtemRuntimeEngine
 from __future__ import annotations
 
 def _wrap_ul_payload(payload: dict) -> dict:

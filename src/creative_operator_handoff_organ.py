@@ -1,5 +1,7 @@
 """Creative Operator Handoff Subsystem — operator creative lane posture."""
 
+# Mythic: Creative Operator Handoff Organ
+# Engineering: CreativeOperatorHandoffBridge
 from __future__ import annotations
 
 from pathlib import Path

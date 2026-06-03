@@ -1,5 +1,7 @@
 """Chat-turn UL substrate and Project Infi admission with CISIV staging."""
 
+# Mythic: Chat Turn Governance Organ
+# Engineering: ChatTurnGovernanceEngine
 from __future__ import annotations
 
 from typing import Any

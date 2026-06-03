@@ -1,5 +1,7 @@
 """Wolf Rehydration Organ — read-only metal reboot continuity harness posture."""
 
+# Mythic: Wolf Rehydration Organ
+# Engineering: WolfRehydrationEngine
 from __future__ import annotations
 
 from pathlib import Path

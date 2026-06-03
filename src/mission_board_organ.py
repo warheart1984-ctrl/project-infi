@@ -1,5 +1,7 @@
 """Mission Board Organ — read-only mission and verification gate posture."""
 
+# Mythic: Mission Board Organ
+# Engineering: MissionBoardEngine
 from __future__ import annotations
 
 from typing import Any

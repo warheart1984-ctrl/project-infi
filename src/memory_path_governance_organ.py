@@ -1,5 +1,7 @@
 """Memory Path Governance Organ — board vs legacy memory path coverage."""
 
+# Mythic: Memory Path Governance Organ
+# Engineering: MemoryPathGovernanceEngine
 from __future__ import annotations
 
 from typing import Any

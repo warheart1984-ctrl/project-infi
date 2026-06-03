@@ -1,5 +1,7 @@
 """Patchforge Organ — read-only PatchForge proposal/preview posture."""
 
+# Mythic: Patchforge Organ
+# Engineering: PatchforgeEngine
 from __future__ import annotations
 
 from typing import Any

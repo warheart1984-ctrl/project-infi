@@ -1,5 +1,7 @@
 """Linguistic Cycle Optimization Subsystem — cycle optimization recommendations posture."""
 
+# Mythic: Linguistic Cycle Optimization Organ
+# Engineering: LinguisticCycleOptimizationEngine
 from __future__ import annotations
 
 import json

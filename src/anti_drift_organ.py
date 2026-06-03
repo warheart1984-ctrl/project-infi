@@ -1,5 +1,7 @@
 """Anti-Drift Organ — read-only thread contract and drift control posture."""
 
+# Mythic: Anti Drift Organ
+# Engineering: AntiDriftEngine
 from __future__ import annotations
 
 from typing import Any

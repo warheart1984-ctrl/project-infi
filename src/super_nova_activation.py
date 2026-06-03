@@ -1,5 +1,7 @@
 """Fail-closed dormant activation gate for Super Nova."""
 
+# Mythic: Super Nova Activation
+# Engineering: SuperNovaActivationEngine
 from __future__ import annotations
 
 from dataclasses import dataclass

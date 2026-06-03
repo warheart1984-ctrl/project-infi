@@ -1,5 +1,7 @@
 """Planning Organ — read-only cognitive.planning lobe posture."""
 
+# Mythic: Planning Organ
+# Engineering: PlanningEngine
 from __future__ import annotations
 
 from typing import Any

@@ -1,5 +1,7 @@
 """Linguistic Preemptive Remediation Subsystem — preemptive playbook posture."""
 
+# Mythic: Linguistic Preemptive Remediation Organ
+# Engineering: LinguisticPreemptiveRemediationEngine
 from __future__ import annotations
 
 from pathlib import Path

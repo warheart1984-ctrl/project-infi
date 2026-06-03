@@ -1,5 +1,7 @@
 """Cognitive Bridge Organ — read-only ingress bridge posture."""
 
+# Mythic: Cognitive Bridge Organ
+# Engineering: CognitiveBridgeBridge
 from __future__ import annotations
 
 from typing import Any

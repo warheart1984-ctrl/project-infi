@@ -1,5 +1,7 @@
 """Project Infi State Machine Organ — read-only governed cycle posture."""
 
+# Mythic: Project Infi State Machine Organ
+# Engineering: ProjectInfiStateMachineEngine
 from __future__ import annotations
 
 from typing import Any

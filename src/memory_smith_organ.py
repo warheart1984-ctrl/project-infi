@@ -1,5 +1,7 @@
 """Memory Smith Subsystem — memory curation posture."""
 
+# Mythic: Memory Smith Organ
+# Engineering: MemorySmithEngine
 from __future__ import annotations
 
 from pathlib import Path

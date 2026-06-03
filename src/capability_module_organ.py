@@ -1,5 +1,7 @@
 """Capability Module Organ — read-only capability module layer over service bridge."""
 
+# Mythic: Capability Module Organ
+# Engineering: CapabilityModuleEngine
 from __future__ import annotations
 
 from pathlib import Path

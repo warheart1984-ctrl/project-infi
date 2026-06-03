@@ -1,5 +1,7 @@
 """Attention Organ — read-only cognitive.attention lobe posture."""
 
+# Mythic: Attention Organ
+# Engineering: AttentionEngine
 from __future__ import annotations
 
 from typing import Any

@@ -1,5 +1,7 @@
 """Jarvis Operator Organ — read-only authority shell posture."""
 
+# Mythic: Jarvis Operator Organ
+# Engineering: JarvisOperatorEngine
 from __future__ import annotations
 
 from typing import Any

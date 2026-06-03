@@ -1,5 +1,7 @@
 """Beatbox Lane Organ — read-only Beatbox score lane posture."""
 
+# Mythic: Beatbox Lane Organ
+# Engineering: BeatboxLaneInterface
 from __future__ import annotations
 
 from pathlib import Path

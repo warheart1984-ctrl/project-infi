@@ -1,5 +1,7 @@
 """Mystic Engine Organ — read-only deterministic mystic posture."""
 
+# Mythic: Mystic engine
+# Engineering: MysticEngineBridge
 from __future__ import annotations
 
 from typing import Any

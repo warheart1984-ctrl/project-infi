@@ -1,5 +1,7 @@
 """Linguistic Predictive Cycle History Subsystem — predictive cycle artifact retention."""
 
+# Mythic: Linguistic Predictive Cycle History Organ
+# Engineering: LinguisticPredictiveCycleHistoryEngine
 from __future__ import annotations
 
 from pathlib import Path

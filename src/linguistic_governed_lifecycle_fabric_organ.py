@@ -1,5 +1,7 @@
 """Linguistic Governed Lifecycle Fabric Subsystem — Waves 9–16 lifecycle alignment."""
 
+# Mythic: Linguistic Governed Lifecycle Fabric Organ
+# Engineering: LinguisticGovernedLifecycleFabricEngine
 from __future__ import annotations
 
 from pathlib import Path

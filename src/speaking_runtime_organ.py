@@ -1,5 +1,7 @@
 """Speaking Runtime Organ — read-only speaking.runtime posture."""
 
+# Mythic: Speaking Runtime Organ
+# Engineering: SpeakingRuntimeEngine
 from __future__ import annotations
 
 from typing import Any

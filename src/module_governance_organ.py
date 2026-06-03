@@ -1,5 +1,7 @@
 """Module Governance Organ — read-only module governance controller posture."""
 
+# Mythic: Module Governance Organ
+# Engineering: ModuleGovernanceEngine
 from __future__ import annotations
 
 from typing import Any

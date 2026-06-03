@@ -1,5 +1,7 @@
 """Linguistic Governance Queue Subsystem — Wave 13 queue + Wave 14 work orders."""
 
+# Mythic: Linguistic Governance Queue Organ
+# Engineering: LinguisticGovernanceQueueEngine
 from __future__ import annotations
 
 from pathlib import Path

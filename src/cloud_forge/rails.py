@@ -1,5 +1,7 @@
 """Rail selection and cognition plan construction."""
 
+# Mythic: Rails
+# Engineering: RailsEngine
 from __future__ import annotations
 
 from typing import Any
