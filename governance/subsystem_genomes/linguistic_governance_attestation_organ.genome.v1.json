@@ -1,0 +1,30 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "linguistic_governance_attestation_organ",
+    "version": "0.1.0-mvp",
+    "stage": "mvp",
+    "display_name": "Linguistic Governance Attestation Subsystem"
+  },
+  "governance": {
+    "contracts": [],
+    "invariants": [
+      "Read-only v1"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/linguistic_governance_attestation_organ.v1.json",
+    "frozen": false
+  },
+  "lineage": {
+    "parents": [
+      "linguistic_full_governance_cycle_organ",
+      "linguistic_closed_loop_fabric_organ"
+    ],
+    "children": []
+  },
+  "activation": {
+    "order": 4,
+    "batch_id": "alt24-summon-wave-2026-06"
+  }
+}

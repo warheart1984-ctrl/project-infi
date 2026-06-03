@@ -1,0 +1,30 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "linguistic_forecast_calibration_organ",
+    "version": "0.1.0-mvp",
+    "stage": "mvp",
+    "display_name": "Linguistic Forecast Calibration Subsystem"
+  },
+  "governance": {
+    "contracts": [],
+    "invariants": [
+      "Read-only v1"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/linguistic_forecast_calibration_organ.v1.json",
+    "frozen": false
+  },
+  "lineage": {
+    "parents": [
+      "linguistic_drift_forecast_organ",
+      "meta_linguistic_governance_organ"
+    ],
+    "children": []
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "alt24-summon-wave-2026-06"
+  }
+}

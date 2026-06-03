@@ -146,6 +146,46 @@ class LinguisticGovernanceEngine:
 
         return LinguisticPredictiveGovernanceEngine(self.root).run_cycle(**kwargs)
 
+    def run_calibration_cycle(self, **kwargs: Any) -> Any:
+        """Wave 13a — calibrate prior forecast vs current drift."""
+        from src.governance_organs.linguistic_forecast_calibration_engine import (
+            LinguisticForecastCalibrationEngine,
+        )
+
+        return LinguisticForecastCalibrationEngine(self.root).run_cycle(**kwargs)
+
+    def build_governance_queue(self, **kwargs: Any) -> Any:
+        """Wave 13b — prescriptive operator queue."""
+        from src.governance_organs.linguistic_governance_queue_engine import (
+            write_governance_queue,
+        )
+
+        return write_governance_queue(self.root, **kwargs)
+
+    def run_full_cycle(self, **kwargs: Any) -> Any:
+        """Full cycle — calibrate → predict → react → queue → gates."""
+        from src.governance_organs.linguistic_full_governance_cycle_engine import (
+            LinguisticFullGovernanceCycleEngine,
+        )
+
+        return LinguisticFullGovernanceCycleEngine(self.root).run_cycle(**kwargs)
+
+    def sync_work_orders(self) -> Any:
+        """Wave 14 — sync work orders from governance queue."""
+        from src.governance_organs.linguistic_governance_work_order_engine import (
+            sync_work_orders_from_queue,
+        )
+
+        return sync_work_orders_from_queue(self.root)
+
+    def run_attestation(self, **kwargs: Any) -> Any:
+        """Wave 14 — unified closed-loop attestation digest."""
+        from src.governance_organs.linguistic_governance_attestation_engine import (
+            write_attestation,
+        )
+
+        return write_attestation(self.root, **kwargs)
+
     def check_cascade_policy(
         self, gene: str, delta: dict[str, Any]
     ) -> tuple[list[str], list[str]]:

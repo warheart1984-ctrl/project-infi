@@ -737,7 +737,7 @@ Depends on: Release 21 governed creative runtime; [AAIS_META_LINGUISTIC_GOVERNAN
 | Convention | Value |
 |------------|-------|
 | Batch id | `alt22-1-summon-wave-2026-06` in LOGBOOK |
-| Snapshot | `operator_cognition_coherence_fabric.v1.17` + `naming_protocol_layer[]`, `linguistic_mutation_layer[]`, `meta_linguistic_orchestration_layer[]` |
+| Snapshot | `operator_cognition_coherence_fabric.v1.17` (superseded by v1.18) + `naming_protocol_layer[]`, `linguistic_mutation_layer[]`, `meta_linguistic_orchestration_layer[]` |
 | Gate | `make alt22-1-gate` |
 
 ## Release 22.2 Meta-Linguistic Governance Closure
@@ -747,6 +747,49 @@ Depends on: Release 21 governed creative runtime; [AAIS_META_LINGUISTIC_GOVERNAN
 | Batch id | `alt22-2-summon-wave-2026-06` in LOGBOOK |
 | Proof | `docs/proof/platform/META_LINGUISTIC_GOVERNANCE_V1_PROOF.md`, `docs/proof/platform/NAMING_GENOME_ORGAN_V1_PROOF.md`, `docs/proof/platform/LINGUISTIC_CASCADE_ORGAN_V1_PROOF.md` |
 | Gate | `make alt22-2-gate` |
+
+## Release 23 — Predictive Linguistic Cycle Fabric
+
+Batch-admit nine read-only **subsystems** across drift forecast, preemptive remediation, predictive governance, cycle history, governance cycle, forecast consumption, cycle optimization, and closed-loop fabric.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt23-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `linguistic_drift_forecast_organ` → `linguistic_preemptive_remediation_organ` → `linguistic_predictive_governance_organ` → `linguistic_predictive_cycle_history_organ` → `linguistic_governance_cycle_organ` → `linguistic_governance_cycle_history_organ` → `linguistic_forecast_consumption_organ` → `linguistic_cycle_optimization_organ` → `linguistic_closed_loop_fabric_organ` |
+| MVP promotion | `tools/governance/alt23_promote_mvp.py` |
+| Gates | `make alt23-gate` |
+| Governed promotion | `tools/governance/alt23_promote_governed.py` + `make alt23-governed-gate` |
+
+Depends on: Release 22 governed meta-linguistic fabric; live Wave 11–12 cycle engines; read-only posture; no autonomous MP-X apply via status APIs.
+
+## Release 23.1 Coherence Layer Predictive Cycle Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt23-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.18` + `linguistic_forecast_layer[]`, `linguistic_predictive_cycle_layer[]`, `linguistic_governance_cycle_layer[]` |
+| Gate | `make alt23-1-gate` |
+
+## Release 23.2 Predictive Linguistic Cycle Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt23-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/platform/PREDICTIVE_LINGUISTIC_CYCLE_V1_PROOF.md`, `docs/proof/platform/LINGUISTIC_DRIFT_FORECAST_ORGAN_V1_PROOF.md`, `docs/proof/platform/LINGUISTIC_CLOSED_LOOP_FABRIC_ORGAN_V1_PROOF.md` |
+| Gate | `make alt23-2-gate` |
+
+## Release 24 — Attested Linguistic Closed-Loop
+
+Batch-admit four read-only **subsystems** for Wave 13–14 engines: forecast calibration, governance queue (with work orders), full governance cycle, and governance attestation.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt24-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `linguistic_forecast_calibration_organ` → `linguistic_governance_queue_organ` → `linguistic_full_governance_cycle_organ` → `linguistic_governance_attestation_organ` |
+| Bootstrap | `tools/governance/_alt24_ssp_bootstrap.py` |
+| Gates | `make alt24-gate` |
+
+Depends on: Release 23 closed-loop fabric; Wave 14 attestation and work-order engines; read-only posture.
 
 ## Activation Rule
 

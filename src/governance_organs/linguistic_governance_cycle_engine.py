@@ -396,15 +396,25 @@ class LinguisticGovernanceCycleEngine:
             {"gene": s.gene, "drift_risk": s.drift_risk, "band": s.band}
             for s in sorted(scores, key=lambda x: (-x.drift_risk, x.gene))[:15]
         ]
+        queue_ref = None
+        merged_genes: list[str] = []
+        if self.policy.get("use_governance_queue_in_cycle", True):
+            from src.governance_organs.linguistic_governance_queue_engine import (
+                queue_priority_genes,
+            )
+
+            reg = self._gov().load_registry()
+            queue_ref = reg.get("last_governance_queue")
+            merged_genes.extend(queue_priority_genes(self.root, top=15))
+
         if forecast_report and self.policy.get("use_forecast_in_cycle", True):
             forecast_top = sorted(
                 forecast_report.get("forecasts") or [],
                 key=lambda x: -int(x.get("predicted_risk_30d", 0)),
             )[:10]
-            merged_genes: list[str] = []
             for entry in forecast_top:
                 g = entry.get("gene")
-                if g:
+                if g and g not in merged_genes:
                     merged_genes.append(g)
             for item in top_at_risk:
                 if item["gene"] not in merged_genes:
@@ -433,6 +443,20 @@ class LinguisticGovernanceCycleEngine:
                             "source": "reactive",
                         }
                     )
+        elif merged_genes:
+            score_map = {s.gene: s for s in scores}
+            top_at_risk = []
+            for g in merged_genes[:15]:
+                if g in score_map:
+                    s = score_map[g]
+                    top_at_risk.append(
+                        {
+                            "gene": g,
+                            "drift_risk": s.drift_risk,
+                            "band": s.band,
+                            "source": "queue",
+                        }
+                    )
         opt_recs = _optimization_recommendations(
             metrics,
             self.policy,
@@ -450,6 +474,9 @@ class LinguisticGovernanceCycleEngine:
                     self._gov().save_registry(reg)
                     policy_mode = "enforce"
                     break
+
+        if queue_ref:
+            phases["queue_ref"] = queue_ref
 
         report = LinguisticGovernanceCycleReport(
             cycle_id=cycle_id,

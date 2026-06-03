@@ -69,6 +69,17 @@ def test_optimization_recommendations_present():
     assert "remediation_min_band" in kinds
 
 
+def test_queue_priority_genes_helper():
+    from src.governance_organs.linguistic_governance_queue_engine import (
+        queue_priority_genes,
+        write_governance_queue,
+    )
+
+    write_governance_queue(ROOT, top=5)
+    genes = queue_priority_genes(ROOT, top=5)
+    assert isinstance(genes, list)
+
+
 def test_adaptive_band_escalates_with_forecast_metrics():
     from src.governance_organs.linguistic_governance_cycle_engine import CycleMetrics
 

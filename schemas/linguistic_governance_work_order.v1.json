@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "linguistic_governance_work_order.v1",
+  "title": "Linguistic Governance Work Order v1",
+  "type": "object",
+  "required": [
+    "linguistic_governance_work_order_version",
+    "gene",
+    "status",
+    "urgency_score",
+    "updated_at"
+  ],
+  "properties": {
+    "linguistic_governance_work_order_version": {
+      "const": "linguistic_governance_work_order.v1"
+    },
+    "gene": { "type": "string" },
+    "status": {
+      "enum": ["pending", "acknowledged", "completed", "deferred"]
+    },
+    "urgency_score": { "type": "number" },
+    "queue_generated_at": { "type": "string" },
+    "recommended_actions": { "type": "array" },
+    "operator_notes": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": true
+}

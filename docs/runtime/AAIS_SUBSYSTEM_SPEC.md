@@ -1312,8 +1312,17 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | Linguistic Remediation Subsystem | governed | [../subsystems/platform/LINGUISTIC_REMEDIATION_ORGAN.md](../subsystems/platform/LINGUISTIC_REMEDIATION_ORGAN.md) | [../proof/platform/LINGUISTIC_REMEDIATION_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_REMEDIATION_ORGAN_V1_PROOF.md) |
 | Linguistic Cascade Subsystem | governed | [../subsystems/platform/LINGUISTIC_CASCADE_ORGAN.md](../subsystems/platform/LINGUISTIC_CASCADE_ORGAN.md) | [../proof/platform/LINGUISTIC_CASCADE_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_CASCADE_ORGAN_V1_PROOF.md) |
 | Meta-Linguistic Governance Subsystem | governed | [../subsystems/platform/META_LINGUISTIC_GOVERNANCE_ORGAN.md](../subsystems/platform/META_LINGUISTIC_GOVERNANCE_ORGAN.md) | [../proof/platform/META_LINGUISTIC_GOVERNANCE_ORGAN_V1_PROOF.md](../proof/platform/META_LINGUISTIC_GOVERNANCE_ORGAN_V1_PROOF.md) |
+| Linguistic Drift Forecast Subsystem | governed | [../subsystems/platform/LINGUISTIC_DRIFT_FORECAST_ORGAN.md](../subsystems/platform/LINGUISTIC_DRIFT_FORECAST_ORGAN.md) | [../proof/platform/LINGUISTIC_DRIFT_FORECAST_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_DRIFT_FORECAST_ORGAN_V1_PROOF.md) |
+| Linguistic Preemptive Remediation Subsystem | governed | [../subsystems/platform/LINGUISTIC_PREEMPTIVE_REMEDIATION_ORGAN.md](../subsystems/platform/LINGUISTIC_PREEMPTIVE_REMEDIATION_ORGAN.md) | [../proof/platform/LINGUISTIC_PREEMPTIVE_REMEDIATION_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_PREEMPTIVE_REMEDIATION_ORGAN_V1_PROOF.md) |
+| Linguistic Predictive Governance Subsystem | governed | [../subsystems/platform/LINGUISTIC_PREDICTIVE_GOVERNANCE_ORGAN.md](../subsystems/platform/LINGUISTIC_PREDICTIVE_GOVERNANCE_ORGAN.md) | [../proof/platform/LINGUISTIC_PREDICTIVE_GOVERNANCE_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_PREDICTIVE_GOVERNANCE_ORGAN_V1_PROOF.md) |
+| Linguistic Predictive Cycle History Subsystem | governed | [../subsystems/platform/LINGUISTIC_PREDICTIVE_CYCLE_HISTORY_ORGAN.md](../subsystems/platform/LINGUISTIC_PREDICTIVE_CYCLE_HISTORY_ORGAN.md) | [../proof/platform/LINGUISTIC_PREDICTIVE_CYCLE_HISTORY_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_PREDICTIVE_CYCLE_HISTORY_ORGAN_V1_PROOF.md) |
+| Linguistic Governance Cycle Subsystem | governed | [../subsystems/platform/LINGUISTIC_GOVERNANCE_CYCLE_ORGAN.md](../subsystems/platform/LINGUISTIC_GOVERNANCE_CYCLE_ORGAN.md) | [../proof/platform/LINGUISTIC_GOVERNANCE_CYCLE_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_GOVERNANCE_CYCLE_ORGAN_V1_PROOF.md) |
+| Linguistic Governance Cycle History Subsystem | governed | [../subsystems/platform/LINGUISTIC_GOVERNANCE_CYCLE_HISTORY_ORGAN.md](../subsystems/platform/LINGUISTIC_GOVERNANCE_CYCLE_HISTORY_ORGAN.md) | [../proof/platform/LINGUISTIC_GOVERNANCE_CYCLE_HISTORY_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_GOVERNANCE_CYCLE_HISTORY_ORGAN_V1_PROOF.md) |
+| Linguistic Forecast Consumption Subsystem | governed | [../subsystems/platform/LINGUISTIC_FORECAST_CONSUMPTION_ORGAN.md](../subsystems/platform/LINGUISTIC_FORECAST_CONSUMPTION_ORGAN.md) | [../proof/platform/LINGUISTIC_FORECAST_CONSUMPTION_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_FORECAST_CONSUMPTION_ORGAN_V1_PROOF.md) |
+| Linguistic Cycle Optimization Subsystem | governed | [../subsystems/platform/LINGUISTIC_CYCLE_OPTIMIZATION_ORGAN.md](../subsystems/platform/LINGUISTIC_CYCLE_OPTIMIZATION_ORGAN.md) | [../proof/platform/LINGUISTIC_CYCLE_OPTIMIZATION_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_CYCLE_OPTIMIZATION_ORGAN_V1_PROOF.md) |
+| Linguistic Closed Loop Fabric Subsystem | governed | [../subsystems/platform/LINGUISTIC_CLOSED_LOOP_FABRIC_ORGAN.md](../subsystems/platform/LINGUISTIC_CLOSED_LOOP_FABRIC_ORGAN.md) | [../proof/platform/LINGUISTIC_CLOSED_LOOP_FABRIC_ORGAN_V1_PROOF.md](../proof/platform/LINGUISTIC_CLOSED_LOOP_FABRIC_ORGAN_V1_PROOF.md) |
 
-Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate alt13-governed-gate alt14-governed-gate alt15-governed-gate alt16-governed-gate alt17-governed-gate alt18-governed-gate alt19-governed-gate alt20-governed-gate alt21-governed-gate alt22-governed-gate`
+Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate alt13-governed-gate alt14-governed-gate alt15-governed-gate alt16-governed-gate alt17-governed-gate alt18-governed-gate alt19-governed-gate alt20-governed-gate alt21-governed-gate alt22-governed-gate alt23-governed-gate`
 
 ## 9. Concept Pending (SSP)
 
@@ -1322,6 +1331,6 @@ Nothing here is live until promoted per [ideas_pending/README.md](../_future/ide
 
 | Idea | Status | Concept spec | MVP plan | Genome |
 |------|--------|--------------|----------|--------|
-| *(none — Release 22 graduated to §8)* | — | — | — | — |
+| *(none — Release 23 graduated to §8)* | — | — | — | — |
 
 New admissions via SSP (Step 7) update this table. Graduated ideas move to §8. Genome contract: [AAIS_SUBSYSTEM_GENOME.md](../contracts/AAIS_SUBSYSTEM_GENOME.md).

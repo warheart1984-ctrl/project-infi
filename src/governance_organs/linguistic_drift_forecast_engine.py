@@ -59,7 +59,19 @@ def load_forecast_policy(root: Path | None = None) -> dict[str, Any]:
             "max_forecast_age_days": 7,
             "retain_predictive_cycle_history": 12,
         }
-    return load_json(path)
+    data = load_json(path)
+    if data.get("use_calibration_weights", True):
+        from src.governance_organs.linguistic_forecast_calibration_engine import (
+            load_calibration_report,
+        )
+
+        cal = load_calibration_report(root)
+        if cal and cal.get("recommended_weights"):
+            merged = dict(data.get("weights") or {})
+            for k, v in cal["recommended_weights"].items():
+                merged[k] = v
+            data = {**data, "weights": merged}
+    return data
 
 
 def _trajectory_delta(gene: str, root: Path, horizon_days: int = 30) -> float:
@@ -291,11 +303,47 @@ def forecast_all(root: Path | None = None) -> list[ForecastScore]:
     return results
 
 
+def archive_forecast_before_write(root: Path | None = None) -> Path | None:
+    """Copy current forecast to archive before overwrite (Wave 14)."""
+    root = root or repo_root()
+    live = root / "governance/linguistic_drift_forecast.v1.json"
+    if not live.is_file():
+        return None
+    cal_policy_path = root / "governance/linguistic_forecast_calibration_policy.v1.json"
+    retain = 5
+    if cal_policy_path.is_file():
+        retain = int(load_json(cal_policy_path).get("retain_forecast_archive", 5))
+    archive_dir = root / "governance/linguistic_forecast_archive"
+    archive_dir.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    dest = archive_dir / f"{stamp}.v1.json"
+    dest.write_text(live.read_text(encoding="utf-8"), encoding="utf-8")
+    files = sorted(archive_dir.glob("*.v1.json"), key=lambda p: p.name, reverse=True)
+    for old in files[retain:]:
+        old.unlink(missing_ok=True)
+    return dest
+
+
+def load_latest_forecast_archive(root: Path | None = None) -> dict[str, Any] | None:
+    root = root or repo_root()
+    archive_dir = root / "governance/linguistic_forecast_archive"
+    if not archive_dir.is_dir():
+        return None
+    files = sorted(archive_dir.glob("*.v1.json"), key=lambda p: p.name, reverse=True)
+    if not files:
+        return None
+    return load_json(files[0])
+
+
 def write_forecast_report(
     root: Path | None = None,
     output: str | Path | None = None,
+    *,
+    archive_prior: bool = True,
 ) -> Path:
     root = root or repo_root()
+    if archive_prior:
+        archive_forecast_before_write(root)
     policy = load_forecast_policy(root)
     forecasts = forecast_all(root)
     out = Path(output) if output else root / "governance/linguistic_drift_forecast.v1.json"

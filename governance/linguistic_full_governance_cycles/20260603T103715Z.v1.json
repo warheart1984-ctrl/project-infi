@@ -1,0 +1,30 @@
+{
+  "linguistic_full_governance_cycle_version": "linguistic_full_governance_cycle.v1",
+  "cycle_id": "20260603T103715Z",
+  "generated_at": "2026-06-03T10:37:15Z",
+  "phases": {
+    "calibration": {
+      "cycle_id": "20260603T103715Z",
+      "skipped": true,
+      "skip_reason": "forecast younger than min_forecast_age_hours",
+      "metrics": {}
+    },
+    "predictive": {
+      "cycle_id": "20260603T103715Z",
+      "passed": true,
+      "predicted_medium": 34
+    },
+    "reactive": {
+      "cycle_id": "20260603T103737Z",
+      "remediation_band": "medium",
+      "remediations_written": 20
+    },
+    "queue": "governance/linguistic_governance_queue.v1.json",
+    "meta_gates_passed": null
+  },
+  "passed": true,
+  "errors": [],
+  "warnings": [
+    "calibration skipped: forecast younger than min_forecast_age_hours"
+  ]
+}

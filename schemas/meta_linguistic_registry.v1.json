@@ -30,7 +30,16 @@
     "predictive_policy_ref": { "type": "string" },
     "last_forecast_report": { "type": "string" },
     "last_predictive_cycle_report": { "type": "string" },
-    "last_predictive_cycle_at": { "type": "string", "format": "date-time" }
+    "last_predictive_cycle_at": { "type": "string", "format": "date-time" },
+    "calibration_policy_ref": { "type": "string" },
+    "last_calibration_report": { "type": "string" },
+    "last_calibration_at": { "type": "string", "format": "date-time" },
+    "last_governance_queue": { "type": "string" },
+    "last_full_cycle_report": { "type": "string" },
+    "cadence_policy_ref": { "type": "string" },
+    "last_attestation_report": { "type": "string" },
+    "last_attestation_at": { "type": "string", "format": "date-time" },
+    "last_work_order_sync_at": { "type": "string", "format": "date-time" }
   },
   "additionalProperties": false
 }

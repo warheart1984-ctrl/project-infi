@@ -1,16 +1,16 @@
 {
   "linguistic_remediation_playbook_version": "linguistic_remediation_playbook.v1",
   "gene": "linguistic_drift_predictor_organ",
-  "drift_band": "low",
-  "drift_risk": 30,
+  "drift_band": "medium",
+  "drift_risk": 34,
   "signals": {
     "alignment_gap": 40.0,
     "snapshot_velocity": 0.0,
     "layer_skew": 80.0,
     "gene_mythic_tokens": 0.0,
-    "lineage_fanout": 0.0
+    "lineage_fanout": 30.0
   },
-  "generated_at": "2026-06-03T10:22:18Z",
+  "generated_at": "2026-06-03T10:54:22Z",
   "actions": [
     {
       "kind": "wave2_header",

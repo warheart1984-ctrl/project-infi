@@ -3,12 +3,12 @@
   "gene": "naming_genome_organ",
   "current_band": "medium",
   "predicted_band": "medium",
-  "predicted_risk_30d": 48,
+  "predicted_risk_30d": 47,
   "lead_time_days": 0,
   "drivers": [
     "parent gene in forecast or cycle at-risk set"
   ],
-  "generated_at": "2026-06-03T10:23:36Z",
+  "generated_at": "2026-06-03T10:54:14Z",
   "actions": [
     {
       "kind": "watch_cascade",

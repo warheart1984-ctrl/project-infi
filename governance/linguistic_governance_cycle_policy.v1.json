@@ -9,5 +9,6 @@
   "auto_tune_policy": false,
   "max_cycle_age_days": 7,
   "retain_cycle_history": 12,
-  "use_forecast_in_cycle": true
+  "use_forecast_in_cycle": true,
+  "use_governance_queue_in_cycle": true
 }

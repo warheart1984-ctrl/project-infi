@@ -1,0 +1,9 @@
+{
+  "version": "linguistic_governance_cadence_policy.v1",
+  "max_forecast_age_days": 7,
+  "max_calibration_age_days": 14,
+  "max_queue_age_days": 7,
+  "max_full_cycle_age_days": 7,
+  "max_attestation_age_days": 7,
+  "max_pending_work_order_days": 14
+}

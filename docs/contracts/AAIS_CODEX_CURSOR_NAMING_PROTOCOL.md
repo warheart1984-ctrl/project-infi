@@ -301,6 +301,41 @@ Run Wave 12 before Wave 11 for full anticipate → react loop. Forecast: [govern
 
 ---
 
+## 19. Calibrating + prescriptive cycle (Wave 13)
+
+| Wave | Tool | Purpose |
+|------|------|---------|
+| **13** | `run_linguistic_calibration_cycle.py` | Verify forecasts; tune weights (recommendations) |
+| **13** | `linguistic_governance_queue.py` | Unified operator backlog |
+| **13** | `run_linguistic_full_governance_cycle.py` | Full calibrate → predict → react → queue → gates |
+
+```bash
+make linguistic-full-governance-cycle
+make linguistic-calibration-cycle
+make linguistic-governance-queue
+```
+
+---
+
+## 20. Attested closed-loop + work orders (Wave 14)
+
+| Wave | Tool | Purpose |
+|------|------|---------|
+| **14** | Forecast archive | Same-session calibration via `governance/linguistic_forecast_archive/` |
+| **14** | `linguistic_work_order.py` | Operator work-order sync and status |
+| **14** | `run_linguistic_attestation.py` | Unified attestation digest + `closed_loop_score` |
+
+```bash
+make linguistic-work-order-sync
+make linguistic-governance-attestation
+make linguistic-attestation-gate
+make alt24-gate
+```
+
+Full cycle (Wave 14): archive → calibrate (archive-aware) → predict → react → queue → work orders → attestation → gates.
+
+---
+
 ## 14. Verification
 
 ```bash

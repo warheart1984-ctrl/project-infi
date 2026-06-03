@@ -11,5 +11,6 @@
     "ecosystem_trend": 0.10
   },
   "max_forecast_age_days": 7,
-  "retain_predictive_cycle_history": 12
+  "retain_predictive_cycle_history": 12,
+  "use_calibration_weights": true
 }

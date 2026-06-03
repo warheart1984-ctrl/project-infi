@@ -1,0 +1,10 @@
+{
+  "version": "linguistic_forecast_calibration_policy.v1",
+  "min_forecast_age_hours": 1,
+  "max_calibration_age_days": 14,
+  "auto_tune_weights": false,
+  "weight_adjust_step": 0.05,
+  "retain_calibration_history": 12,
+  "retain_forecast_archive": 5,
+  "allow_archive_for_same_session_calibration": true
+}

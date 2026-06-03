@@ -6,6 +6,41 @@ Every major entry should name its CISIV stage explicitly.
 
 ## 2026-06-03
 
+### Release 23 Governed Promotion — Predictive Linguistic Cycle Fabric
+
+- CISIV stage: `verification`
+- scope: nine Release 23 subsystems promoted to `governed`
+- outcome: one hundred forty-seven governed subsystem schemas; Release 23 complete at governed
+- verification note: `make alt23-governed-gate`; `python tools/governance/alt23_promote_governed.py`
+
+### Release 23.2 — Predictive Linguistic Cycle Closure
+
+- CISIV stage: `verification`
+- scope: `PREDICTIVE_LINGUISTIC_CYCLE_V1_PROOF` + drift forecast and closed-loop fabric organ proofs
+- outcome: Wave 11–12 cycle stack attested at subsystem layer
+- verification note: `make alt23-2-gate`
+
+### Release 23.1 — Coherence Layer Predictive Cycle Join
+
+- CISIV stage: `implementation`
+- scope: snapshot v1.18 `linguistic_forecast_layer[]`, `linguistic_predictive_cycle_layer[]`, `linguistic_governance_cycle_layer[]`
+- outcome: Coherence Layer joins Release 23 predictive/cycle subsystems
+- verification note: `make alt23-1-gate`
+
+### Release 23 — Subsystems (MVP)
+
+- CISIV stage: `implementation`
+- scope: subsystem wrappers, status APIs, gates, proof packets; `tools/governance/alt23_promote_mvp.py`
+- outcome: one hundred forty-seven registered schemas at mvp prior to governed wave (+9 Release 23)
+- verification note: `make alt23-gate`; `python tools/governance/alt23_promote_mvp.py`
+
+### Release 23 — Predictive Linguistic Cycle Fabric (Concept)
+
+- CISIV stage: `concept`
+- scope: SSP Steps 1–7 for nine Release 23 subsystems; batch `alt23-summon-wave-2026-06` orders 1→9
+- outcome: concept specs, schemas, MVP plans, genomes at `concept` for drift forecast, preemptive remediation, predictive governance, cycle history organs, governance cycle, forecast consumption, cycle optimization, closed-loop fabric
+- verification note: `make ssp-gate`; `make genome-gate`; `python tools/governance/_alt23_ssp_bootstrap.py`
+
 ### Release 22 Governed Promotion — Meta-Linguistic Governance Fabric
 
 - CISIV stage: `verification`
@@ -40,6 +75,27 @@ Every major entry should name its CISIV stage explicitly.
 - scope: SSP Steps 1–7 for nine Release 22 subsystems; batch `alt22-summon-wave-2026-06` orders 1→9
 - outcome: concept specs, schemas, MVP plans, genomes at `concept` for naming protocol, naming genome, linguistic mutation, mythic engineering translator, drift predictor, lineage viz, remediation, cascade, meta orchestration
 - verification note: `make ssp-gate`; `make genome-gate`; `python tools/governance/_alt22_ssp_bootstrap.py`
+
+### Release 24 — Attested Linguistic Closed-Loop (Wave 14 organs)
+
+- CISIV stage: `implementation`
+- scope: four read-only subsystems for calibration, queue/work orders, full cycle, attestation
+- outcome: `linguistic_forecast_calibration_organ`, `linguistic_governance_queue_organ`, `linguistic_full_governance_cycle_organ`, `linguistic_governance_attestation_organ`; `make alt24-gate`
+- verification note: `python tools/governance/_alt24_ssp_bootstrap.py`; `make alt24-gate`
+
+### Wave 14 — Attested Closed-Loop + Queue Work Orders
+
+- CISIV stage: `implementation`
+- scope: forecast archive, work-order engine, attestation digest, cadence gates, full-cycle expansion, closed-loop fabric v2
+- outcome: `archive_forecast_before_write`, `linguistic_governance_work_order_engine`, `linguistic_governance_attestation_engine`, registry cadence fields
+- verification note: `make linguistic-work-order-sync`; `make linguistic-governance-attestation`; `pytest tests/test_linguistic_forecast_archive.py tests/test_linguistic_governance_work_order_engine.py tests/test_linguistic_governance_attestation_engine.py -q`
+
+### Wave 13 — Calibrating + Prescriptive Linguistic Governance Cycle
+
+- CISIV stage: `implementation`
+- scope: forecast calibration vs current drift, prescriptive governance queue, full cycle orchestrator
+- outcome: `LinguisticForecastCalibrationEngine`, `linguistic_governance_queue_engine`, `LinguisticFullGovernanceCycleEngine`, Wave 11/12 hooks
+- verification note: `make linguistic-full-governance-cycle`; `pytest tests/test_linguistic_forecast_calibration_engine.py tests/test_linguistic_governance_queue_engine.py tests/test_linguistic_full_governance_cycle_engine.py -q`
 
 ### Wave 12 — Predictive Linguistic Governance Cycle
 
@@ -3494,5 +3550,167 @@ Every major entry should name its CISIV stage explicitly.
 
 - CISIV stage: `verification`
 - scope: Promotion Engine full-auto — `meta_linguistic_governance_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Drift Forecast Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_drift_forecast_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Drift Forecast Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_drift_forecast_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Drift Forecast Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_drift_forecast_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Preemptive Remediation Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_preemptive_remediation_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Preemptive Remediation Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_preemptive_remediation_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Predictive Governance Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_predictive_governance_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Predictive Governance Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_predictive_governance_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Predictive Cycle History Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_predictive_cycle_history_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Predictive Cycle History Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_predictive_cycle_history_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Governance Cycle Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_governance_cycle_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Governance Cycle Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_governance_cycle_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Governance Cycle History Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_governance_cycle_history_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Governance Cycle History Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_governance_cycle_history_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Forecast Consumption Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_forecast_consumption_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Forecast Consumption Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_forecast_consumption_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Cycle Optimization Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_cycle_optimization_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Cycle Optimization Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_cycle_optimization_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Closed Loop Fabric Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_closed_loop_fabric_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Closed Loop Fabric Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_closed_loop_fabric_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Preemptive Remediation Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_preemptive_remediation_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Predictive Governance Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_predictive_governance_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Predictive Cycle History Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_predictive_cycle_history_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Governance Cycle Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_governance_cycle_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Governance Cycle History Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_governance_cycle_history_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Forecast Consumption Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_forecast_consumption_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Cycle Optimization Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_cycle_optimization_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Closed Loop Fabric Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_closed_loop_fabric_organ` `governed` via Alt-4 runtime organ
 - outcome: genome `identity.stage` and `proof.posture` set to `governed`
 - verification note: `make genome-gate`; `make alt4-gate`

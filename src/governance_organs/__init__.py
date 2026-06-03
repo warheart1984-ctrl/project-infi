@@ -14,14 +14,34 @@ from src.governance_organs.linguistic_governance_cycle_engine import (
 from src.governance_organs.linguistic_predictive_governance_engine import (
     LinguisticPredictiveGovernanceEngine,
 )
+from src.governance_organs.linguistic_forecast_calibration_engine import (
+    LinguisticForecastCalibrationEngine,
+)
+from src.governance_organs.linguistic_governance_queue_engine import (
+    build_governance_queue,
+)
+from src.governance_organs.linguistic_full_governance_cycle_engine import (
+    LinguisticFullGovernanceCycleEngine,
+)
+from src.governance_organs.linguistic_governance_work_order_engine import (
+    sync_work_orders_from_queue,
+)
+from src.governance_organs.linguistic_governance_attestation_engine import (
+    write_attestation,
+)
 
 
 class LinguisticGovernanceRuntime:
-    """Facade for meta-linguistic gates, cycle, predictive cycle, drift/cascade."""
+    """Facade for meta-linguistic gates and Waves 11–14 cycles."""
 
     linguistic = LinguisticGovernanceEngine
     cycle = LinguisticGovernanceCycleEngine
     predictive = LinguisticPredictiveGovernanceEngine
+    calibration = LinguisticForecastCalibrationEngine
+    queue = build_governance_queue
+    full_cycle = LinguisticFullGovernanceCycleEngine
+    work_orders = sync_work_orders_from_queue
+    attestation = write_attestation
 
 
 class Alt4Runtime:
@@ -85,6 +105,8 @@ __all__ = [
     "LinguisticGovernanceEngine",
     "LinguisticGovernanceCycleEngine",
     "LinguisticPredictiveGovernanceEngine",
+    "LinguisticForecastCalibrationEngine",
+    "LinguisticFullGovernanceCycleEngine",
     "Alt4Runtime",
     "AdaptiveEngine",
     "Tier5Governance",

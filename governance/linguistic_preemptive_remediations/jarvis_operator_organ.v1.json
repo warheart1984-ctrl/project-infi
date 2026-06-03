@@ -3,13 +3,13 @@
   "gene": "jarvis_operator_organ",
   "current_band": "low",
   "predicted_band": "medium",
-  "predicted_risk_30d": 41,
+  "predicted_risk_30d": 42,
   "lead_time_days": 30,
   "drivers": [
     "latent alignment gap (header/doc vs genome ssp)",
     "parent gene in forecast or cycle at-risk set"
   ],
-  "generated_at": "2026-06-03T10:23:37Z",
+  "generated_at": "2026-06-03T10:40:12Z",
   "actions": [
     {
       "kind": "watch_wave2_header",

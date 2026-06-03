@@ -234,6 +234,33 @@ linguistic-drift-forecast:
 linguistic-predictive-gate:
 	python3 tools/governance/check_linguistic_predictive_gate.py
 
+linguistic-calibration-cycle:
+	python3 tools/governance/run_linguistic_calibration_cycle.py
+
+linguistic-calibration-gate:
+	python3 tools/governance/check_linguistic_calibration_gate.py
+
+linguistic-governance-queue:
+	python3 tools/linguistic_governance_queue.py -o governance/linguistic_governance_queue.v1.json
+
+linguistic-full-governance-cycle:
+	python3 tools/governance/run_linguistic_full_governance_cycle.py
+
+linguistic-full-governance-cycle-fast:
+	python3 tools/governance/run_linguistic_full_governance_cycle.py --skip-gates --skip-drift-refresh
+
+linguistic-work-order-sync:
+	python3 tools/governance/linguistic_work_order.py --sync-from-queue
+
+linguistic-work-order-gate:
+	python3 tools/governance/check_linguistic_work_order_gate.py
+
+linguistic-governance-attestation:
+	python3 tools/governance/run_linguistic_attestation.py
+
+linguistic-attestation-gate:
+	python3 tools/governance/check_linguistic_attestation_gate.py
+
 safety-envelope-gate:
 	python3 .github/scripts/check-safety-envelope-governance.py
 
@@ -902,6 +929,59 @@ alt22-2-gate: alt22-1-gate alt22-closure-gate
 
 alt22-governed-gate:
 	python3 tools/governance/check_alt22_governed_eligibility.py
+
+linguistic-drift-forecast-organ-gate:
+	python3 .github/scripts/check-linguistic-drift-forecast-organ-governance.py
+
+linguistic-preemptive-remediation-organ-gate:
+	python3 .github/scripts/check-linguistic-preemptive-remediation-organ-governance.py
+
+linguistic-predictive-governance-organ-gate:
+	python3 .github/scripts/check-linguistic-predictive-governance-organ-governance.py
+
+linguistic-predictive-cycle-history-organ-gate:
+	python3 .github/scripts/check-linguistic-predictive-cycle-history-organ-governance.py
+
+linguistic-governance-cycle-organ-gate:
+	python3 .github/scripts/check-linguistic-governance-cycle-organ-governance.py
+
+linguistic-governance-cycle-history-organ-gate:
+	python3 .github/scripts/check-linguistic-governance-cycle-history-organ-governance.py
+
+linguistic-forecast-consumption-organ-gate:
+	python3 .github/scripts/check-linguistic-forecast-consumption-organ-governance.py
+
+linguistic-cycle-optimization-organ-gate:
+	python3 .github/scripts/check-linguistic-cycle-optimization-organ-governance.py
+
+linguistic-closed-loop-fabric-organ-gate:
+	python3 .github/scripts/check-linguistic-closed-loop-fabric-organ-governance.py
+
+alt23-gate: linguistic-drift-forecast-organ-gate linguistic-preemptive-remediation-organ-gate linguistic-predictive-governance-organ-gate linguistic-predictive-cycle-history-organ-gate linguistic-governance-cycle-organ-gate linguistic-governance-cycle-history-organ-gate linguistic-forecast-consumption-organ-gate linguistic-cycle-optimization-organ-gate linguistic-closed-loop-fabric-organ-gate genome-gate
+
+linguistic-forecast-calibration-organ-gate:
+	python3 .github/scripts/check-linguistic-forecast-calibration-organ-governance.py
+
+linguistic-governance-queue-organ-gate:
+	python3 .github/scripts/check-linguistic-governance-queue-organ-governance.py
+
+linguistic-full-governance-cycle-organ-gate:
+	python3 .github/scripts/check-linguistic-full-governance-cycle-organ-governance.py
+
+linguistic-governance-attestation-organ-gate:
+	python3 .github/scripts/check-linguistic-governance-attestation-organ-governance.py
+
+alt24-gate: linguistic-forecast-calibration-organ-gate linguistic-governance-queue-organ-gate linguistic-full-governance-cycle-organ-gate linguistic-governance-attestation-organ-gate genome-gate
+
+alt23-1-gate: alt23-gate alt22-1-gate
+
+alt23-closure-gate:
+	python3 tools/governance/check_alt23_closure.py
+
+alt23-2-gate: alt23-1-gate alt23-closure-gate
+
+alt23-governed-gate:
+	python3 tools/governance/check_alt23_governed_eligibility.py
 
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py

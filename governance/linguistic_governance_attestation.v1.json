@@ -1,0 +1,70 @@
+{
+  "linguistic_governance_attestation_version": "linguistic_governance_attestation.v1",
+  "generated_at": "2026-06-03T10:54:41Z",
+  "closed_loop_score": 80,
+  "policy_mode": "observe",
+  "registry_summary": {
+    "policy_mode": "observe",
+    "last_gate_run_at": "2026-06-03T10:54:41Z",
+    "last_forecast_at": "2026-06-03T10:53:50Z",
+    "last_calibration_at": "2026-06-03T10:53:43Z",
+    "last_cycle_at": "2026-06-03T10:54:14Z",
+    "last_work_order_sync_at": "2026-06-03T10:54:41Z",
+    "last_attestation_at": null
+  },
+  "forecast_summary": {
+    "present": true,
+    "generated_at": "2026-06-03T10:54:02Z",
+    "predicted_medium_high": 33,
+    "stale": false
+  },
+  "calibration_summary": {
+    "present": true,
+    "generated_at": "2026-06-03T10:53:49Z",
+    "band_hit_rate": 0.816,
+    "false_alarm_rate": 0.184,
+    "miss_rate": 0.0,
+    "stale": false
+  },
+  "queue_summary": {
+    "present": true,
+    "generated_at": "2026-06-03T10:54:41Z",
+    "item_count": 30,
+    "top_genes": [
+      "operator_cognition_coherence_fabric",
+      "governed_direct_pipeline",
+      "capability_service_bridge",
+      "jarvis_memory_board",
+      "jarvis_operator_organ"
+    ]
+  },
+  "work_order_summary": {
+    "total": 30,
+    "pending": 30,
+    "acknowledged": 0,
+    "completed": 0,
+    "deferred": 0
+  },
+  "full_cycle_summary": {
+    "present": true,
+    "cycle_id": "20260603T103946Z",
+    "generated_at": "2026-06-03T10:39:46Z",
+    "passed": true,
+    "phase_keys": [
+      "calibration",
+      "meta_gates_passed",
+      "predictive",
+      "queue",
+      "reactive"
+    ]
+  },
+  "meta_gate_summary": {
+    "last_gate_run_at": "2026-06-03T10:54:41Z"
+  },
+  "recommendations": [
+    {
+      "action": "triage_work_orders",
+      "reason": "30 pending work order(s)"
+    }
+  ]
+}

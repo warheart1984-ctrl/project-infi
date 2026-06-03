@@ -156,6 +156,15 @@ GENE_GATES: dict[str, str] = {
     "linguistic_remediation_organ": "linguistic-remediation-organ-gate",
     "linguistic_cascade_organ": "linguistic-cascade-organ-gate",
     "meta_linguistic_governance_organ": "meta-linguistic-governance-organ-gate",
+    "linguistic_drift_forecast_organ": "linguistic-drift-forecast-organ-gate",
+    "linguistic_preemptive_remediation_organ": "linguistic-preemptive-remediation-organ-gate",
+    "linguistic_predictive_governance_organ": "linguistic-predictive-governance-organ-gate",
+    "linguistic_predictive_cycle_history_organ": "linguistic-predictive-cycle-history-organ-gate",
+    "linguistic_governance_cycle_organ": "linguistic-governance-cycle-organ-gate",
+    "linguistic_governance_cycle_history_organ": "linguistic-governance-cycle-history-organ-gate",
+    "linguistic_forecast_consumption_organ": "linguistic-forecast-consumption-organ-gate",
+    "linguistic_cycle_optimization_organ": "linguistic-cycle-optimization-organ-gate",
+    "linguistic_closed_loop_fabric_organ": "linguistic-closed-loop-fabric-organ-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -468,6 +477,33 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     ],
     "meta-linguistic-governance-organ-gate": [
         ".github/scripts/check-meta-linguistic-governance-organ-governance.py"
+    ],
+    "linguistic-drift-forecast-organ-gate": [
+        ".github/scripts/check-linguistic-drift-forecast-organ-governance.py"
+    ],
+    "linguistic-preemptive-remediation-organ-gate": [
+        ".github/scripts/check-linguistic-preemptive-remediation-organ-governance.py"
+    ],
+    "linguistic-predictive-governance-organ-gate": [
+        ".github/scripts/check-linguistic-predictive-governance-organ-governance.py"
+    ],
+    "linguistic-predictive-cycle-history-organ-gate": [
+        ".github/scripts/check-linguistic-predictive-cycle-history-organ-governance.py"
+    ],
+    "linguistic-governance-cycle-organ-gate": [
+        ".github/scripts/check-linguistic-governance-cycle-organ-governance.py"
+    ],
+    "linguistic-governance-cycle-history-organ-gate": [
+        ".github/scripts/check-linguistic-governance-cycle-history-organ-governance.py"
+    ],
+    "linguistic-forecast-consumption-organ-gate": [
+        ".github/scripts/check-linguistic-forecast-consumption-organ-governance.py"
+    ],
+    "linguistic-cycle-optimization-organ-gate": [
+        ".github/scripts/check-linguistic-cycle-optimization-organ-governance.py"
+    ],
+    "linguistic-closed-loop-fabric-organ-gate": [
+        ".github/scripts/check-linguistic-closed-loop-fabric-organ-governance.py"
     ],
 }
 

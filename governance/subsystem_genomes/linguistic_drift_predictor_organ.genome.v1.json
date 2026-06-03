@@ -57,6 +57,7 @@
       "linguistic_mutation_organ"
     ],
     "children": [
+      "linguistic_drift_forecast_organ",
       "linguistic_remediation_organ"
     ]
   },

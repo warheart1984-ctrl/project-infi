@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "linguistic_governance_queue.v1",
+  "title": "Linguistic Governance Queue v1",
+  "type": "object",
+  "required": [
+    "linguistic_governance_queue_version",
+    "generated_at",
+    "items"
+  ],
+  "properties": {
+    "linguistic_governance_queue_version": {
+      "const": "linguistic_governance_queue.v1"
+    },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["gene", "urgency_score", "sources"],
+        "properties": {
+          "gene": { "type": "string" },
+          "urgency_score": { "type": "number" },
+          "sources": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "current_band": { "enum": ["low", "medium", "high"] },
+          "predicted_band": { "enum": ["low", "medium", "high"] },
+          "current_risk": { "type": "integer" },
+          "predicted_risk_30d": { "type": "integer" },
+          "calibration_outcome": { "type": "string" },
+          "recommended_actions": {
+            "type": "array",
+            "items": { "type": "object" }
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

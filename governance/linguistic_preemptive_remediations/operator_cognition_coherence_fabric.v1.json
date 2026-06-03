@@ -3,14 +3,14 @@
   "gene": "operator_cognition_coherence_fabric",
   "current_band": "low",
   "predicted_band": "medium",
-  "predicted_risk_30d": 43,
+  "predicted_risk_30d": 48,
   "lead_time_days": 30,
   "drivers": [
     "latent alignment gap (header/doc vs genome ssp)",
     "pending or draft MP-LING linguistic mutation",
     "parent gene in forecast or cycle at-risk set"
   ],
-  "generated_at": "2026-06-03T10:23:36Z",
+  "generated_at": "2026-06-03T10:54:14Z",
   "actions": [
     {
       "kind": "watch_wave2_header",

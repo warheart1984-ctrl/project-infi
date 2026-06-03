@@ -60,7 +60,10 @@
       "linguistic_cascade_organ",
       "governance_layer_organ"
     ],
-    "children": []
+    "children": [
+      "linguistic_drift_forecast_organ",
+      "linguistic_governance_cycle_organ"
+    ]
   },
   "activation": {
     "order": 9,
