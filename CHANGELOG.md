@@ -13,6 +13,58 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.20.0] - 2026-06-03 — Release 24 Attested Linguistic Closed-Loop
+
+**Release 24** — four read-only subsystems at governed; Coherence Layer v1.19 with calibration, queue, and attestation layers; Wave 14 attestation and work-order engines.
+
+### Added
+
+- **Release 24.0** — `linguistic_forecast_calibration_organ`, `linguistic_governance_queue_organ`, `linguistic_full_governance_cycle_organ`, `linguistic_governance_attestation_organ`; status APIs; `make alt24-gate`; `tools/governance/alt24_promote_mvp.py`
+- **Release 24.1** — Coherence Layer v1.19 + `linguistic_calibration_layer`, `linguistic_governance_queue_layer`, `linguistic_attestation_layer`, `linguistic_attested_closed_loop_aligned`; `make alt24-1-gate`
+- **Release 24.2** — `ATTESTED_LINGUISTIC_CLOSED_LOOP_V1_PROOF`; `make alt24-2-gate`
+- **Governed promotion** — `tools/governance/alt24_promote_governed.py`; `make alt24-governed-gate`
+- **Wave 14 engines** — forecast archive, work-order sync, unified attestation digest, cadence gates
+
+### Changed
+
+- Schema registry: **151 governed** subsystem schemas (147 prior + 4 Release 24)
+- `operator_cognition_coherence_fabric` schema ref → v1.19
+
+### Verification (v1.20.0)
+
+```bash
+make alt24-gate alt24-1-gate alt24-2-gate alt24-governed-gate
+make linguistic-governance-attestation
+python -m pytest tests/test_linguistic_forecast_calibration_organ.py tests/test_linguistic_governance_queue_organ.py tests/test_linguistic_full_governance_cycle_organ.py tests/test_linguistic_governance_attestation_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.20.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.20.0
+
+## [1.19.0] - 2026-06-03 — Release 23 Predictive Linguistic Cycle Fabric
+
+**Release 23** — nine read-only subsystems at governed; Coherence Layer v1.18 with forecast, predictive cycle, and governance cycle layers; Wave 11–12 predictive stack.
+
+### Added
+
+- **Release 23.0** — `linguistic_drift_forecast_organ`, `linguistic_preemptive_remediation_organ`, `linguistic_predictive_governance_organ`, `linguistic_predictive_cycle_history_organ`, `linguistic_governance_cycle_organ`, `linguistic_governance_cycle_history_organ`, `linguistic_forecast_consumption_organ`, `linguistic_cycle_optimization_organ`, `linguistic_closed_loop_fabric_organ`; status APIs; `make alt23-gate`
+- **Release 23.1** — Coherence Layer v1.18 + predictive/cycle layers; `make alt23-1-gate`
+- **Release 23.2** — `PREDICTIVE_LINGUISTIC_CYCLE_V1_PROOF`; `make alt23-2-gate`
+- **Governed promotion** — `tools/governance/alt23_promote_governed.py`; `make alt23-governed-gate`
+
+### Changed
+
+- Schema registry: **147 governed** subsystem schemas (138 prior + 9 Release 23)
+- `operator_cognition_coherence_fabric` schema ref → v1.18
+
+### Verification (v1.19.0)
+
+```bash
+make alt23-gate alt23-1-gate alt23-2-gate alt23-governed-gate
+make linguistic-predictive-cycle
+```
+
+[1.19.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.19.0
+
 ## [1.18.0] - 2026-06-03 — Release 22 Meta-Linguistic Governance Fabric
 
 **Release 22** — nine read-only subsystems at governed; Coherence Layer v1.17 with naming protocol, linguistic mutation, and meta orchestration layers; meta-linguistic governance engine (Waves 0–10).

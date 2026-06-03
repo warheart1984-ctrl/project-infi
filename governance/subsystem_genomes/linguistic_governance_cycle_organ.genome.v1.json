@@ -60,6 +60,7 @@
       "linguistic_closed_loop_fabric_organ",
       "linguistic_cycle_optimization_organ",
       "linguistic_forecast_consumption_organ",
+      "linguistic_full_governance_cycle_organ",
       "linguistic_governance_cycle_history_organ"
     ]
   },

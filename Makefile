@@ -973,6 +973,16 @@ linguistic-governance-attestation-organ-gate:
 
 alt24-gate: linguistic-forecast-calibration-organ-gate linguistic-governance-queue-organ-gate linguistic-full-governance-cycle-organ-gate linguistic-governance-attestation-organ-gate genome-gate
 
+alt24-1-gate: alt24-gate alt23-1-gate
+
+alt24-closure-gate:
+	python3 tools/governance/check_alt24_closure.py
+
+alt24-2-gate: alt24-1-gate alt24-closure-gate
+
+alt24-governed-gate:
+	python3 tools/governance/check_alt24_governed_eligibility.py
+
 alt23-1-gate: alt23-gate alt22-1-gate
 
 alt23-closure-gate:

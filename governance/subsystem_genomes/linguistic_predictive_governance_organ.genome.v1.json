@@ -58,6 +58,7 @@
     ],
     "children": [
       "linguistic_closed_loop_fabric_organ",
+      "linguistic_full_governance_cycle_organ",
       "linguistic_governance_cycle_organ",
       "linguistic_predictive_cycle_history_organ"
     ]

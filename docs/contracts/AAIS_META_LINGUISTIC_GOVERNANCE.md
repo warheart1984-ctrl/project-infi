@@ -144,7 +144,27 @@ make linguistic-attestation-gate
 make linguistic-work-order-gate
 ```
 
-Release 24 read-only organs: forecast calibration, governance queue, full governance cycle, governance attestation (`make alt24-gate`).
+Release 24 read-only organs (governed): forecast calibration, governance queue, full governance cycle, governance attestation (`make alt24-governed-gate`).
+
+## Wave 15 — Coherence attestation join + Release 24 closure
+
+Coherence snapshot: `operator_cognition_coherence_fabric.v1.19` with:
+
+- `linguistic_calibration_layer[]` — forecast calibration, drift forecast, forecast consumption
+- `linguistic_governance_queue_layer[]` — governance queue, full cycle, governance cycle
+- `linguistic_attestation_layer[]` — attestation, closed-loop fabric, cycle optimization
+- `linguistic_attested_closed_loop_aligned` — Wave 11–14 layers jointly aligned
+
+```bash
+python tools/governance/_alt24_coherence_v119.py
+make alt24-1-gate
+make alt24-2-gate
+python tools/governance/alt24_promote_mvp.py
+python tools/governance/alt24_promote_governed.py
+make alt24-governed-gate
+```
+
+Closure proof: [docs/proof/platform/ATTESTED_LINGUISTIC_CLOSED_LOOP_V1_PROOF.md](../proof/platform/ATTESTED_LINGUISTIC_CLOSED_LOOP_V1_PROOF.md)
 
 ## Verification
 

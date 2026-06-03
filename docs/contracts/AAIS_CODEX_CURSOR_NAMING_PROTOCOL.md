@@ -336,6 +336,23 @@ Full cycle (Wave 14): archive → calibrate (archive-aware) → predict → reac
 
 ---
 
+## 21. Coherence attestation join (Wave 15)
+
+| Release | Tool | Purpose |
+|---------|------|---------|
+| **24.1** | `_alt24_coherence_v119.py` | Coherence snapshot `v1.19` + calibration/queue/attestation layers |
+| **24.2** | `check_alt24_closure.py` | Attested closed-loop closure proof |
+| **24 governed** | `alt24_promote_governed.py` | Promote four Release 24 organs to `governed` |
+
+```bash
+python tools/governance/_alt24_coherence_v119.py
+make alt24-1-gate
+make alt24-2-gate
+make alt24-governed-gate
+```
+
+---
+
 ## 14. Verification
 
 ```bash

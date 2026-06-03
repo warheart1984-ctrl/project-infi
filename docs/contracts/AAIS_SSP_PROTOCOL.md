@@ -791,6 +791,29 @@ Batch-admit four read-only **subsystems** for Wave 13–14 engines: forecast cal
 
 Depends on: Release 23 closed-loop fabric; Wave 14 attestation and work-order engines; read-only posture.
 
+## Release 24.1 — Coherence Layer Attestation Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt24-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.19` + `linguistic_calibration_layer[]`, `linguistic_governance_queue_layer[]`, `linguistic_attestation_layer[]` |
+| Schema tool | `tools/governance/_alt24_coherence_v119.py` |
+| Gate | `make alt24-1-gate` |
+
+## Release 24.2 — Attested Linguistic Closed-Loop Closure
+
+| Convention | Value |
+|------------|-------|
+| Proof | `docs/proof/platform/ATTESTED_LINGUISTIC_CLOSED_LOOP_V1_PROOF.md` |
+| Gate | `make alt24-2-gate` |
+
+## Release 24 Governed Promotion
+
+| Convention | Value |
+|------------|-------|
+| MVP surfaces | `tools/governance/alt24_promote_mvp.py` |
+| Governed promotion | `tools/governance/alt24_promote_governed.py` + `make alt24-governed-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per

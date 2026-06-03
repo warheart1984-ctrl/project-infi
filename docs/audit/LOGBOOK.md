@@ -76,6 +76,34 @@ Every major entry should name its CISIV stage explicitly.
 - outcome: concept specs, schemas, MVP plans, genomes at `concept` for naming protocol, naming genome, linguistic mutation, mythic engineering translator, drift predictor, lineage viz, remediation, cascade, meta orchestration
 - verification note: `make ssp-gate`; `make genome-gate`; `python tools/governance/_alt22_ssp_bootstrap.py`
 
+### Release 24 Governed Promotion — Attested Linguistic Closed-Loop
+
+- CISIV stage: `verification`
+- scope: four Release 24 subsystems promoted to `governed`
+- outcome: Release 24 organs at governed with runtime surfaces and GOVERNED proofs
+- verification note: `make alt24-governed-gate`; `python tools/governance/alt24_promote_governed.py`
+
+### Release 24.2 — Attested Linguistic Closed-Loop Closure
+
+- CISIV stage: `verification`
+- scope: `ATTESTED_LINGUISTIC_CLOSED_LOOP_V1_PROOF` + Wave 14 engine verification
+- outcome: attestation artifact + coherence v1.19 attested in closure gate
+- verification note: `make alt24-2-gate`
+
+### Release 24.1 — Coherence Layer Attestation Join (Wave 15)
+
+- CISIV stage: `implementation`
+- scope: snapshot v1.19 `linguistic_calibration_layer[]`, `linguistic_governance_queue_layer[]`, `linguistic_attestation_layer[]`
+- outcome: Coherence Layer joins Release 24 calibration/queue/attestation subsystems
+- verification note: `python tools/governance/_alt24_coherence_v119.py`; `make alt24-1-gate`
+
+### Wave 15 — Coherence Attestation Join + Release 24 Closure
+
+- CISIV stage: `implementation`
+- scope: coherence v1.19, alt24-1/2 gates, MVP runtime bootstrap, governed promotion
+- outcome: `linguistic_attested_closed_loop_aligned`; `alt24_promote_mvp`, `alt24_promote_governed`
+- verification note: `make alt24-2-gate`; `make alt24-governed-gate`
+
 ### Release 24 — Attested Linguistic Closed-Loop (Wave 14 organs)
 
 - CISIV stage: `implementation`
@@ -3712,5 +3740,29 @@ Every major entry should name its CISIV stage explicitly.
 
 - CISIV stage: `verification`
 - scope: Promotion Engine full-auto — `linguistic_closed_loop_fabric_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Forecast Calibration Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_forecast_calibration_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Governance Queue Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_governance_queue_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Full Governance Cycle Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_full_governance_cycle_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Governance Attestation Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_governance_attestation_organ` `governed` via Alt-4 runtime organ
 - outcome: genome `identity.stage` and `proof.posture` set to `governed`
 - verification note: `make genome-gate`; `make alt4-gate`

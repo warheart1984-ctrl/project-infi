@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.18"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.19"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -1784,6 +1784,85 @@ def _build_linguistic_governance_cycle_layer() -> list[dict[str, Any]]:
     ]
 
 
+def _build_linguistic_calibration_layer() -> list[dict[str, Any]]:
+    from src.linguistic_drift_forecast_organ import build_linguistic_drift_forecast_status
+    from src.linguistic_forecast_calibration_organ import (
+        build_linguistic_forecast_calibration_status,
+    )
+    from src.linguistic_forecast_consumption_organ import (
+        build_linguistic_forecast_consumption_status,
+    )
+
+    return [
+        _organ_posture_item(
+            "linguistic_forecast_calibration_organ",
+            build_linguistic_forecast_calibration_status(),
+        ),
+        _organ_posture_item(
+            "linguistic_drift_forecast_organ",
+            build_linguistic_drift_forecast_status(),
+        ),
+        _organ_posture_item(
+            "linguistic_forecast_consumption_organ",
+            build_linguistic_forecast_consumption_status(),
+        ),
+    ]
+
+
+def _build_linguistic_governance_queue_layer() -> list[dict[str, Any]]:
+    from src.linguistic_full_governance_cycle_organ import (
+        build_linguistic_full_governance_cycle_status,
+    )
+    from src.linguistic_governance_cycle_organ import (
+        build_linguistic_governance_cycle_status,
+    )
+    from src.linguistic_governance_queue_organ import (
+        build_linguistic_governance_queue_status,
+    )
+
+    return [
+        _organ_posture_item(
+            "linguistic_governance_queue_organ",
+            build_linguistic_governance_queue_status(),
+        ),
+        _organ_posture_item(
+            "linguistic_full_governance_cycle_organ",
+            build_linguistic_full_governance_cycle_status(),
+        ),
+        _organ_posture_item(
+            "linguistic_governance_cycle_organ",
+            build_linguistic_governance_cycle_status(),
+        ),
+    ]
+
+
+def _build_linguistic_attestation_layer() -> list[dict[str, Any]]:
+    from src.linguistic_closed_loop_fabric_organ import (
+        build_linguistic_closed_loop_fabric_status,
+    )
+    from src.linguistic_cycle_optimization_organ import (
+        build_linguistic_cycle_optimization_status,
+    )
+    from src.linguistic_governance_attestation_organ import (
+        build_linguistic_governance_attestation_status,
+    )
+
+    return [
+        _organ_posture_item(
+            "linguistic_governance_attestation_organ",
+            build_linguistic_governance_attestation_status(),
+        ),
+        _organ_posture_item(
+            "linguistic_closed_loop_fabric_organ",
+            build_linguistic_closed_loop_fabric_status(),
+        ),
+        _organ_posture_item(
+            "linguistic_cycle_optimization_organ",
+            build_linguistic_cycle_optimization_status(),
+        ),
+    ]
+
+
 def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
@@ -1896,6 +1975,9 @@ def build_coherence_fabric_status(
     linguistic_forecast_layer = _build_linguistic_forecast_layer()
     linguistic_predictive_cycle_layer = _build_linguistic_predictive_cycle_layer()
     linguistic_governance_cycle_layer = _build_linguistic_governance_cycle_layer()
+    linguistic_calibration_layer = _build_linguistic_calibration_layer()
+    linguistic_governance_queue_layer = _build_linguistic_governance_queue_layer()
+    linguistic_attestation_layer = _build_linguistic_attestation_layer()
 
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
@@ -2076,6 +2158,26 @@ def build_coherence_fabric_status(
             _layer_aligned(linguistic_forecast_layer, minimum=3)
             and _layer_aligned(linguistic_predictive_cycle_layer, minimum=3)
             and _layer_aligned(linguistic_governance_cycle_layer, minimum=3)
+        ),
+        "linguistic_calibration_layer": linguistic_calibration_layer,
+        "linguistic_calibration_aligned": _layer_aligned(
+            linguistic_calibration_layer, minimum=3
+        ),
+        "linguistic_governance_queue_layer": linguistic_governance_queue_layer,
+        "linguistic_governance_queue_aligned": _layer_aligned(
+            linguistic_governance_queue_layer, minimum=3
+        ),
+        "linguistic_attestation_layer": linguistic_attestation_layer,
+        "linguistic_attestation_aligned": _layer_aligned(
+            linguistic_attestation_layer, minimum=3
+        ),
+        "linguistic_attested_closed_loop_aligned": (
+            _layer_aligned(linguistic_forecast_layer, minimum=3)
+            and _layer_aligned(linguistic_predictive_cycle_layer, minimum=3)
+            and _layer_aligned(linguistic_governance_cycle_layer, minimum=3)
+            and _layer_aligned(linguistic_calibration_layer, minimum=3)
+            and _layer_aligned(linguistic_governance_queue_layer, minimum=3)
+            and _layer_aligned(linguistic_attestation_layer, minimum=3)
         ),
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,

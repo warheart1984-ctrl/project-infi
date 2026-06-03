@@ -41,13 +41,13 @@ Architecture is unchanged; documentation and gates use standard engineering lang
 | Fabric | **Coherence Layer** |
 | Summon wave | **Release** |
 
-**Linguistic naming schema** — each governed subsystem schema carries mythic and engineering names on its SSP block (138 schemas at **v1.18.0**):
+**Linguistic naming schema** — each governed subsystem schema carries mythic and engineering names on its SSP block (151 schemas at **v1.20.0**):
 
 | SSP field | Example (Release 22) | Role |
 |-----------|----------------------|------|
-| `gene` | `meta_linguistic_governance_organ` | Stable registry id (legacy path stem) |
-| `engineering_class` | `MetaLinguisticGovernanceEngine` | PascalCase `<Domain><Function><Role>` in code |
-| `mythic_label` | Meta-Linguistic Governance Organ | Operator-facing mythic name in docs/comments |
+| `gene` | `linguistic_governance_attestation_organ` | Stable registry id (legacy path stem) |
+| `engineering_class` | `LinguisticGovernanceAttestationEngine` | PascalCase `<Domain><Function><Role>` in code |
+| `mythic_label` | Linguistic Governance Attestation Organ | Operator-facing mythic name in docs/comments |
 | `linguistic_version` | `1.0.0` | Bump when MP-X changes mythic/engineering text |
 
 Snapshots: [governance/linguistic_snapshots/](governance/linguistic_snapshots/) · schema [linguistic_snapshot.v1.json](schemas/linguistic_snapshot.v1.json) · grandfathered aliases: [legacy_engineering_aliases.v1.json](governance/legacy_engineering_aliases.v1.json).
@@ -59,7 +59,7 @@ make translate-mythic MYTHIC='V9 runtime steward'   # mythic → engineering_cla
 
 **Codex / Cursor naming (new code):** [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md) · **Meta-linguistic governance:** [AAIS_META_LINGUISTIC_GOVERNANCE.md](docs/contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md) — mythic in comments, engineering in identifiers; legacy `*_organ` / `*_fabric` paths grandfathered until Wave 4 MP-X rename.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.18.0 — Release 22 Meta-Linguistic Governance Fabric](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.18.0) (tag on GitHub) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.20.0 — Release 24 Attested Linguistic Closed-Loop](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.20.0) (tag on GitHub) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -181,7 +181,7 @@ python -m pytest tests/test_governance_organs_alt4.py tests/test_adaptive_govern
 
 Operator guide: [AAIS_ALT4_RUNTIME_OPERATOR_GUIDE](docs/contracts/AAIS_ALT4_RUNTIME_OPERATOR_GUIDE.md) · Adaptive law: [AAIS_ADAPTIVE_GOVERNANCE](docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md) · Adaptive lanes: [ADAPTIVE_LANE_ORGAN](docs/subsystems/platform/ADAPTIVE_LANE_ORGAN.md) · Coherence Layer: [OPERATOR_COGNITION_COHERENCE_FABRIC](docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md) · Schema registry: [governance/subsystem_genomes/README.md](governance/subsystem_genomes/README.md) · Naming contract: [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md)
 
-> **v1.0.0** shipped the initial Infinity 1 slice (Alt-4, Tier 5, Alt-5 wave 1 at MVP). **v1.1.0** completes the constitutional layer (barebones wave + Alt-5 wave 2). **v1.2.0** adds Alt-6 adaptive lanes at `governed`. **v1.3.0** adds Alt-7 coherence fabric with cross-plane bridge enforcement. **v1.4.0** adds Alt-8 mind-plane organs and coherence fabric v1.3. **v1.5.0** adds Alt-9 infrastructure organs and coherence fabric v1.4. **v1.6.0** adds Alt-10 memory/forensics/immune observe organs and coherence fabric v1.5. **v1.7.0** adds Alt-11 authority trace/boundary/coding organs and coherence fabric v1.6. **v1.8.0** adds Alt-12 OTEM/predictive/execution-depth organs and coherence fabric v1.7. **v1.9.0** adds Alt-13 creative chain/constitutional closure organs and coherence fabric v1.8. **v1.10.0** adds Alt-14 route choice/perception organs and coherence fabric v1.9. **v1.11.0** adds Alt-15 Nova cortex lobe and voice organs and coherence fabric v1.10. **v1.12.0** adds Alt-16 factory and kinetic organs and coherence fabric v1.11. **v1.13.0** adds Alt-17 authority shell and protocol organs and coherence fabric v1.12. **v1.14.0** adds Alt-18 Project Infi law organs and coherence fabric v1.13. **v1.15.0** adds Alt-19 operator product shell organs and coherence fabric v1.14. **v1.16.0** adds Release 20 operator workspace and extended interface subsystems and Coherence Layer v1.15. **v1.17.0** adds Release 21 creative runtime V9/V10 subsystems and Coherence Layer v1.16. **v1.18.0** adds Release 22 meta-linguistic governance subsystems, meta-linguistic gates (Waves 0–10), and Coherence Layer v1.17.
+> **v1.0.0** shipped the initial Infinity 1 slice (Alt-4, Tier 5, Alt-5 wave 1 at MVP). **v1.1.0** completes the constitutional layer (barebones wave + Alt-5 wave 2). **v1.2.0** adds Alt-6 adaptive lanes at `governed`. **v1.3.0** adds Alt-7 coherence fabric with cross-plane bridge enforcement. **v1.4.0** adds Alt-8 mind-plane organs and coherence fabric v1.3. **v1.5.0** adds Alt-9 infrastructure organs and coherence fabric v1.4. **v1.6.0** adds Alt-10 memory/forensics/immune observe organs and coherence fabric v1.5. **v1.7.0** adds Alt-11 authority trace/boundary/coding organs and coherence fabric v1.6. **v1.8.0** adds Alt-12 OTEM/predictive/execution-depth organs and coherence fabric v1.7. **v1.9.0** adds Alt-13 creative chain/constitutional closure organs and coherence fabric v1.8. **v1.10.0** adds Alt-14 route choice/perception organs and coherence fabric v1.9. **v1.11.0** adds Alt-15 Nova cortex lobe and voice organs and coherence fabric v1.10. **v1.12.0** adds Alt-16 factory and kinetic organs and coherence fabric v1.11. **v1.13.0** adds Alt-17 authority shell and protocol organs and coherence fabric v1.12. **v1.14.0** adds Alt-18 Project Infi law organs and coherence fabric v1.13. **v1.15.0** adds Alt-19 operator product shell organs and coherence fabric v1.14. **v1.16.0** adds Release 20 operator workspace and extended interface subsystems and Coherence Layer v1.15. **v1.17.0** adds Release 21 creative runtime V9/V10 subsystems and Coherence Layer v1.16. **v1.18.0** adds Release 22 meta-linguistic governance subsystems, meta-linguistic gates (Waves 0–10), and Coherence Layer v1.17. **v1.19.0** adds Release 23 predictive linguistic cycle subsystems and Coherence Layer v1.18. **v1.20.0** adds Release 24 attested linguistic closed-loop subsystems, Wave 14 attestation engines, and Coherence Layer v1.19.
 
 ### Three Ideas MVP partial-live subsystems (v0.4.0)
 
@@ -347,7 +347,9 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
-| Latest tag | [`v1.18.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.18.0) — **Release 22** (shipped) — 138 governed schemas, meta-linguistic governance fabric, Coherence Layer v1.17 ([release notes](docs/releases/v1.18.0-release22-meta-linguistic-governance.md), [CHANGELOG](CHANGELOG.md) §1.18.0) |
+| Latest tag | [`v1.20.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.20.0) — **Release 24** (shipped) — 151 governed schemas, attested linguistic closed-loop, Coherence Layer v1.19 ([release notes](docs/releases/v1.20.0-release24-attested-linguistic-closed-loop.md), [CHANGELOG](CHANGELOG.md) §1.20.0) |
+| Prior tag | [`v1.19.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.19.0) — **Release 23** — 147 governed schemas, predictive linguistic cycle fabric, Coherence Layer v1.18 ([release notes](docs/releases/v1.19.0-release23-predictive-linguistic-cycle.md), [CHANGELOG](CHANGELOG.md) §1.19.0) |
+| Prior tag | [`v1.18.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.18.0) — **Release 22** — 138 governed schemas, meta-linguistic governance fabric, Coherence Layer v1.17 ([release notes](docs/releases/v1.18.0-release22-meta-linguistic-governance.md), [CHANGELOG](CHANGELOG.md) §1.18.0) |
 | Prior tag | [`v1.17.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.17.0) — **Release 21** — 129 governed schemas, creative runtime V9/V10, Coherence Layer v1.16 (see [CHANGELOG](CHANGELOG.md) §1.17.0) |
 | Prior tag | [`v1.16.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.16.0) — **Release 20** — 120 governed schemas (see [CHANGELOG](CHANGELOG.md) §1.16.0) |
 | Prior tag | [`v1.15.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.15.0) — **Alt-19** — 111 governed schemas, operator product interfaces, coherence v1.14 (see [CHANGELOG](CHANGELOG.md) §1.15.0) |
