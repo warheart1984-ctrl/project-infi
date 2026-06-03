@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ugr_operator_reward_receipt.v1",
+  "title": "UGR OperatorRewardReceipt v1.0",
+  "type": "object",
+  "required": [
+    "receipt_schema_version",
+    "receipt_id",
+    "event_id",
+    "event_type",
+    "operator_id",
+    "tenant_id",
+    "subsystem_id",
+    "discovery_receipt_id",
+    "deltas",
+    "profile_snapshot",
+    "issued_at",
+    "receipt_sig"
+  ],
+  "properties": {
+    "receipt_schema_version": { "const": "1.0" },
+    "receipt_id": { "type": "string", "format": "uuid" },
+    "event_id": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "event_type": {
+      "enum": ["subsystem_discovered", "subsystem_promoted", "subsystem_adopted"]
+    },
+    "operator_id": { "type": "string" },
+    "tenant_id": { "type": "string" },
+    "subsystem_id": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "discovery_receipt_id": { "type": "string" },
+    "governance_mission_id": { "type": ["string", "null"] },
+    "promotion_organ_id": { "type": ["string", "null"] },
+    "deltas": {
+      "type": "object",
+      "properties": {
+        "reputation": { "type": "number" },
+        "rail_credits": { "type": "number" },
+        "adoption_multiplier": { "type": "number" }
+      }
+    },
+    "attribution": {
+      "type": "object",
+      "properties": {
+        "lifecycle_chain": { "type": "array", "items": { "type": "string" } },
+        "lifecycle_stage": { "type": "string" },
+        "contributor_attribution": { "type": "object" }
+      }
+    },
+    "profile_snapshot": { "type": "object" },
+    "issued_at": { "type": "number" },
+    "receipt_sig": { "type": "string" },
+    "receipt_algorithm": { "type": "string" },
+    "urg_key_id": { "type": "string" }
+  }
+}

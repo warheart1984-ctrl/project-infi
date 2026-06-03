@@ -10,7 +10,7 @@ from typing import Any
 from src.ugr.platform.tenant_registry import normalize_tenant_id
 
 
-CLOUD_INVARIANT_SET_VERSION = "1.5"
+CLOUD_INVARIANT_SET_VERSION = "3.0"
 
 
 def _stable_json(value: Any) -> str:
@@ -198,6 +198,62 @@ def build_cloud_manifold(
         region_id=region_id,
         rail=str(rail or "NORMAL").upper(),
         organ_ids=admitted,
+    )
+
+
+def extend_boundary_for_federation_step(
+    manifold: CloudManifoldState,
+    *,
+    organ_id: str,
+    provider: str,
+    region_id: str,
+    peer_rail: str,
+) -> tuple[CloudManifoldState, bool]:
+    """
+    Widen runtime B_cloud for one federated step (ingress boundary_digest unchanged).
+
+    Returns (manifold_copy, extended).
+    """
+    rail_upper = str(peer_rail or "NORMAL").upper()
+    region = str(region_id or manifold.region_id or "").strip()
+    provider_name = str(provider or "local").strip()
+    key = (region, provider_name, rail_upper)
+    if key in manifold.boundary_tuples():
+        return manifold, False
+
+    extended_set = list(manifold.boundary_set)
+    extended_set.append(
+        {
+            "region": region,
+            "provider": provider_name,
+            "rail": rail_upper,
+            "organ_id": str(organ_id or "").strip(),
+            "federation_extend": "true",
+        }
+    )
+    extended_set.sort(
+        key=lambda item: (
+            item.get("region", ""),
+            item.get("provider", ""),
+            item.get("rail", ""),
+            item.get("organ_id", ""),
+        )
+    )
+    return (
+        CloudManifoldState(
+            cloud_identity_hash=manifold.cloud_identity_hash,
+            boundary_digest=manifold.boundary_digest,
+            invariant_version=manifold.invariant_version,
+            boundary_set=extended_set,
+            tenant_id=manifold.tenant_id,
+            operator_id=manifold.operator_id,
+            mission_id=manifold.mission_id,
+            aais_instance_id=manifold.aais_instance_id,
+            region_id=manifold.region_id,
+            rail=manifold.rail,
+            organ_ids=list(manifold.organ_ids),
+        ),
+        True,
     )
 
 

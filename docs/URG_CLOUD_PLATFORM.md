@@ -69,6 +69,10 @@ py -3.12 tools/proof/run_ugr_mission_demo.py
 | `URG_RECEIPT_ADMIN=1` | Cross-tenant receipt reads (ops only) |
 | `UGR_CLOUD_FORGE_ENABLED` | `1` (default) — schedule Cloud Forge rail on deliberate/mission paths |
 | `UGR_CLOUD_FORGE_OBSERVED` | `1` — observed scheduler + `rail-decisions.jsonl` ledger (tenant_id + trace_id) |
+| `UGR_SUBSYSTEM_DISCOVERY_ENABLED` | `1` (default) — Proof-of-Subsystem discovery API |
+| `UGR_DISCOVERY_SHADOW_ONLY` | `1` (default) — discovery receipts + catalog only; block `promote` writes |
+| `UGR_OPERATOR_REWARDS_ENABLED` | `1` (default) — Proof-of-Subsystem operator incentives |
+| `UGR_RAIL_CREDIT_SPEND_ENABLED` | `1` (default) — rail credit spend + Cloud Forge boost hook |
 
 ---
 
@@ -85,7 +89,10 @@ Contract cross-link: [cloud-forge-rail-contract.md](contracts/cloud-forge-rail-c
 
 Gate: `make ugr-mission-gate` includes `test_ugr_cloud_forge_tenant_binding.py` and `test_ugr_federation_forge_peer_rail.py`.
 
-Release tags: **`urg-cloud-forge-v2.0`** (tenant binding) · **`urg-cloud-forge-v2.1`** (federated peer rail).
+Release tags: **`urg-cloud-forge-v2.0`** (tenant binding) · **`urg-cloud-forge-v2.1`** (federated peer rail) · **`urg-cloud-forge-v2.2`** (boundary + observed) · **`urg-cloud-platform-v3.0`** / **`urg-cloud-forge-v3.0`** (invariants 9–11, receipt 1.4, profile governance).
+
+| v2.2 | Federated `B_cloud` extend, observed ledger tests, operator snapshot binding |
+| v3.0 | Invariant families 9–11, `cloud_forge_profile_update`, receipt schema **1.4**, trust `forge_federation_boundary` |
 
 ---
 
@@ -114,6 +121,12 @@ Receipt fetch: `GET /api/ugr/mission/receipt/<mission_id>?tenant_id=tenant:acme`
 | `POST /api/ugr/federation/issue` | Issue pending bilateral grant |
 | `POST /api/ugr/federation/accept` | Grantee accepts grant |
 | `GET /api/ugr/federation/grants?tenant_id=` | List grants for tenant |
+| `POST /api/ugr/discover/subsystem` | Proof-of-Subsystem discovery (validate or bounded search) |
+| `GET /api/ugr/discover/subsystem/<subsystem_id>?tenant_id=` | Subsystem discovery receipt by hash |
+| `GET /api/ugr/discover/subsystems?tenant_id=` | Shadow catalog of discovered specs |
+| `GET /api/ugr/rewards/operator/<id>?tenant_id=` | Operator reputation, rail credits, adoption multipliers |
+| `GET /api/ugr/rewards/ledger?tenant_id=` | Reward event ledger |
+| `POST /api/ugr/rewards/spend` | Spend rail credits for EXPRESS forge boost |
 
 ---
 

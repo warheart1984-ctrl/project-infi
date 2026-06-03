@@ -1,0 +1,37 @@
+{
+  "version": "1.1",
+  "economy": {
+    "reputation_primary": true,
+    "reputation_to_credit_ratio_min": 2.0,
+    "credit_earn_cap_fraction_of_reputation": 0.35,
+    "min_reputation_to_spend_credits": 10,
+    "max_spend_per_reputation_point": 0.15
+  },
+  "discovery": {
+    "reputation": 15,
+    "rail_credits": 3,
+    "search_efficiency_bonus": {
+      "max_attempts": 8,
+      "reputation": 3,
+      "rail_credits": 0
+    }
+  },
+  "promotion": {
+    "reputation": 40,
+    "rail_credits": 8
+  },
+  "adoption": {
+    "reputation": 10,
+    "rail_credits": 0,
+    "multiplier_increment": 0.1,
+    "multiplier_cap": 3.0,
+    "reputation_scales_with_multiplier": true
+  },
+  "spend": {
+    "express_boost": {
+      "credits_per_point": 1,
+      "max_threshold_reduction": 30,
+      "ttl_seconds": 300
+    }
+  }
+}

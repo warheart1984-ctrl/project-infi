@@ -17,9 +17,17 @@ from src.ugr.platform.tenant_registry import TenantRegistry, normalize_tenant_id
 CAP_ROUTE_STEP = "route_step"
 CAP_READ_MARKETPLACE = "read_marketplace"
 CAP_GOVERNANCE_COSIGN = "governance_cosign"
+CAP_FORGE_PEER_RAIL = "forge_peer_rail"
+CAP_FORGE_PROFILE_READ = "forge_profile_read"
 
 VALID_CAPABILITIES = frozenset(
-    {CAP_ROUTE_STEP, CAP_READ_MARKETPLACE, CAP_GOVERNANCE_COSIGN}
+    {
+        CAP_ROUTE_STEP,
+        CAP_READ_MARKETPLACE,
+        CAP_GOVERNANCE_COSIGN,
+        CAP_FORGE_PEER_RAIL,
+        CAP_FORGE_PROFILE_READ,
+    }
 )
 
 GRANT_STATUS_PENDING = "pending"
@@ -375,3 +383,18 @@ def compute_federation_digest(
         ],
     }
     return sha256(_stable_json(payload).encode("utf-8")).hexdigest()
+
+
+def compute_federation_forge_digest(federation_forge: list[dict[str, Any]] | None) -> str:
+    """SHA256 over forge rail entries only (receipt v1.4)."""
+    forge_entries = []
+    for entry in list(federation_forge or []):
+        forge_entries.append(
+            {
+                "grant_id": entry.get("grant_id"),
+                "step_id": entry.get("step_id"),
+                "mission_rail": entry.get("mission_rail"),
+                "peer_rail": entry.get("peer_rail"),
+            }
+        )
+    return sha256(_stable_json({"forge": forge_entries}).encode("utf-8")).hexdigest()

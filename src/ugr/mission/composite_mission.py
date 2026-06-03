@@ -317,7 +317,7 @@ def issue_mission_receipt(
 
         from src.ugr.mission.mission_receipt import build_federation_receipt_fields
 
-        digest, cref = build_federation_receipt_fields(
+        digest, cref, forge_digest = build_federation_receipt_fields(
             runtime_dir=Path(store_root),
             home_tenant_id=tenant_norm,
             mission_id=str(gcm.get("mission_id") or ""),
@@ -327,6 +327,8 @@ def issue_mission_receipt(
             fed_ingress["federation_digest"] = digest
         if cref:
             fed_ingress["counterparty_receipt_ref"] = cref
+        if forge_digest:
+            fed_ingress["federation_forge_digest"] = forge_digest
     schema_body = build_mission_receipt_v2(
         gcm=gcm,
         ingress=fed_ingress,

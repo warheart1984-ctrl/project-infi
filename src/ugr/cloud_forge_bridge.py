@@ -11,7 +11,7 @@ from src.cloud_forge.rails import schedule_request
 from src.cloud_forge.types import CONTRACT_VERSION, PerformanceProfile
 from src.ugr.platform.tenant_registry import TenantRegistry, TenantSpec, normalize_tenant_id
 
-CLOUD_FORGE_BINDING_VERSION = "2.0"
+CLOUD_FORGE_BINDING_VERSION = "3.0"
 
 
 UGR_CLOUD_FORGE_ENABLED_ENV = "UGR_CLOUD_FORGE_ENABLED"
@@ -264,6 +264,44 @@ def build_ugr_actor(
     return {"wL": 100.0, "wT": None, "wI": None, "tier": "ugr"}
 
 
+def apply_rail_credit_boost_to_forge(
+    request: dict[str, Any],
+    tenant_profile: dict[str, Any],
+    actor: dict[str, Any],
+    *,
+    runtime_dir: str | None = None,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Apply bounded EXPRESS boost from a validated spend token in request context."""
+    meta: dict[str, Any] = {}
+    context = dict(request.get("context") or {})
+    boost = dict(context.get("rail_credit_boost") or {})
+    if not boost:
+        return tenant_profile, actor, meta
+
+    from src.ugr.rewards.rail_credit_spend import consume_forge_boost, validate_forge_boost
+
+    ok, reason, token = validate_forge_boost(boost, runtime_dir=runtime_dir)
+    if not ok:
+        meta["rail_credit_boost"] = {"applied": False, "reason": reason}
+        return tenant_profile, actor, meta
+
+    profile = dict(tenant_profile)
+    actor_out = dict(actor)
+    reduction = float(token.get("threshold_reduction") or 0)
+    floor = float(profile.get("wL_express_floor") or 50)
+    threshold = float(profile.get("wL_express_threshold") or 100)
+    profile["wL_express_threshold"] = max(floor, threshold - reduction)
+    wL = float(actor_out.get("wL") or 100)
+    actor_out["wL"] = min(200.0, wL + reduction * 0.5)
+    consume_forge_boost(boost, runtime_dir=runtime_dir)
+    meta["rail_credit_boost"] = {
+        "applied": True,
+        "spend_id": token.get("spend_id"),
+        "threshold_reduction": reduction,
+    }
+    return profile, actor_out, meta
+
+
 def build_ugr_tenant_profile(
     request: dict[str, Any],
     *,
@@ -324,14 +362,25 @@ def schedule_rail_for_ugr(
         tenant_manifold=tenant_manifold,
         operator_id=str(request.get("operator_id") or ""),
     )
+    runtime_dir = os.getenv("AAIS_RUNTIME_DIR") or None
+    tenant_profile, actor, boost_meta = apply_rail_credit_boost_to_forge(
+        request,
+        tenant_profile,
+        actor,
+        runtime_dir=runtime_dir,
+    )
 
     if cloud_forge_observed():
         from src.cloud_forge.integration import schedule_request_observed
 
-        tenant_id = normalize_tenant_id(
-            getattr(tenant_manifold, "tenant_id", None) or request.get("tenant_id")
+        from src.ugr.mission.tenant_manifold import tenant_path_slug
+
+        tenant_id = tenant_path_slug(
+            normalize_tenant_id(
+                getattr(tenant_manifold, "tenant_id", None) or request.get("tenant_id")
+            )
         )
-        return schedule_request_observed(
+        observed_bundle = schedule_request_observed(
             task=task,
             actor=actor,
             tenant=tenant_profile,
@@ -344,8 +393,14 @@ def schedule_rail_for_ugr(
             tenant_id=tenant_id,
             apply_domain_template=bool(request.get("cloud_forge_apply_template", False)),
         )
+        if observed_bundle is not None and boost_meta:
+            observed_bundle = dict(observed_bundle)
+            observed_bundle["rail_credit_boost"] = dict(
+                boost_meta.get("rail_credit_boost") or boost_meta
+            )
+        return observed_bundle
 
-    return schedule_request(
+    bundle = schedule_request(
         task=task,
         actor=actor,
         tenant=tenant_profile,
@@ -355,6 +410,10 @@ def schedule_rail_for_ugr(
         force_safe=request.get("cloud_forge_force_safe"),
         pattern_records=pattern_records,
     )
+    if bundle is not None and boost_meta:
+        bundle = dict(bundle)
+        bundle["rail_credit_boost"] = dict(boost_meta.get("rail_credit_boost") or boost_meta)
+    return bundle
 
 
 def attach_cloud_forge_metadata(response: dict[str, Any], bundle: dict[str, Any] | None) -> dict[str, Any]:

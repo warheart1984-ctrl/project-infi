@@ -20,8 +20,16 @@ from src.ugr.platform.tenant_registry import normalize_tenant_id
 RISK_ORDER = {"low": 0, "medium": 1, "high": 2}
 
 GOVERNANCE_MUTATION_TARGETS = frozenset(
-    {"provider_organs", "regions", "aais_instances", "invariant_definitions"}
+    {
+        "provider_organs",
+        "regions",
+        "aais_instances",
+        "invariant_definitions",
+        "tenant_config",
+    }
 )
+
+FORGE_PEER_RAIL_CAPABILITIES = frozenset({"route_step", "forge_peer_rail"})
 
 
 class CloudCausalityFault(RuntimeError):
@@ -87,6 +95,128 @@ def check_cloud_identity(
     else:
         results.append(_invariant("cloud_identity", "pass", f"hash={current[:16]}"))
     return results
+
+
+def check_cloud_forge_rail(
+    mission_state: dict[str, Any],
+    step_assignment: dict[str, Any],
+    *,
+    manifold: CloudManifoldState | None = None,
+    home_rail: str | None = None,
+    federation_peer_tenant: str | None = None,
+    federation_grant_id: str | None = None,
+    grant_capabilities: tuple[str, ...] | None = None,
+) -> list[dict[str, Any]]:
+    """Cloud Forge rail family (#9): scheduled rail lawful vs B_cloud and grant."""
+    results: list[dict[str, Any]] = []
+    frozen = manifold or CloudManifoldState.from_dict(mission_state.get("cloud_manifold") or {})
+    rail = str(step_assignment.get("rail") or frozen.rail or "NORMAL").upper()
+    organ_id = str(step_assignment.get("organ_id") or "").strip()
+    home = str(home_rail or frozen.rail or "NORMAL").upper()
+
+    if federation_peer_tenant:
+        caps = {str(c).strip().lower() for c in (grant_capabilities or ())}
+        if not caps.intersection(FORGE_PEER_RAIL_CAPABILITIES):
+            results.append(
+                _invariant(
+                    "cloud_forge_rail",
+                    "hard_fail",
+                    "grant lacks forge_peer_rail or route_step capability",
+                )
+            )
+            return results
+        if not federation_grant_id:
+            results.append(
+                _invariant("cloud_forge_rail", "hard_fail", "federated step missing grant_id")
+            )
+            return results
+
+    key = (
+        str(mission_state.get("region_id") or frozen.region_id or "").strip(),
+        str(step_assignment.get("provider") or "").strip(),
+        rail,
+    )
+    allowed = frozen.boundary_tuples()
+    if allowed and key not in allowed:
+        results.append(
+            _invariant(
+                "cloud_forge_rail",
+                "hard_fail",
+                f"scheduled rail {rail} not in runtime B_cloud",
+            )
+        )
+        return results
+
+    detail = f"rail={rail} organ={organ_id}"
+    if federation_peer_tenant and rail != home:
+        detail = f"peer_rail={rail} home_rail={home} grant={federation_grant_id}"
+    results.append(_invariant("cloud_forge_rail", "pass", detail))
+    return results
+
+
+def check_cloud_federation_policy(
+    *,
+    home_tenant_id: str,
+    peer_tenant_id: str,
+    federation_grant_id: str,
+    grant_status: str | None = None,
+    grant_capabilities: tuple[str, ...] | None = None,
+) -> list[dict[str, Any]]:
+    """Federation policy family (#10): grant accepted and route capability present."""
+    results: list[dict[str, Any]] = []
+    if not peer_tenant_id:
+        results.append(_invariant("cloud_federation_policy", "pass", "not_federated"))
+        return results
+    if not federation_grant_id:
+        results.append(_invariant("cloud_federation_policy", "hard_fail", "missing grant_id"))
+        return results
+    if str(grant_status or "") != "accepted":
+        results.append(
+            _invariant(
+                "cloud_federation_policy",
+                "hard_fail",
+                f"grant status {grant_status!r} not accepted",
+            )
+        )
+        return results
+    caps = {str(c).strip().lower() for c in (grant_capabilities or ())}
+    if not caps.intersection(FORGE_PEER_RAIL_CAPABILITIES):
+        results.append(
+            _invariant("cloud_federation_policy", "hard_fail", "grant missing route capability")
+        )
+        return results
+    results.append(
+        _invariant(
+            "cloud_federation_policy",
+            "pass",
+            f"home={home_tenant_id} peer={peer_tenant_id}",
+        )
+    )
+    return results
+
+
+def check_cloud_observed_promotion(*, submit_promotion: bool = False) -> list[dict[str, Any]]:
+    """Observed promotion family (#11): no silent tenants.json writes from observed path."""
+    if submit_promotion and not os.getenv("URG_GOVERNANCE_APPLY", "").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }:
+        return [
+            _invariant(
+                "cloud_observed_promotion",
+                "hard_fail",
+                "cloud_forge_submit_promotion requires governance apply path",
+            )
+        ]
+    return [
+        _invariant(
+            "cloud_observed_promotion",
+            "pass",
+            "observed ledger does not mutate tenant config directly",
+        )
+    ]
 
 
 def check_cloud_boundary(
@@ -306,6 +436,11 @@ class CloudInvariantEvaluator:
         cost_spent: float,
         rail: str = "NORMAL",
         manifold: CloudManifoldState | None = None,
+        federation_peer_tenant: str | None = None,
+        federation_grant_id: str | None = None,
+        grant_capabilities: tuple[str, ...] | None = None,
+        grant_status: str | None = None,
+        home_rail: str | None = None,
     ) -> list[dict[str, Any]]:
         results: list[dict[str, Any]] = []
         region_id = str(request.get("region_id") or "").strip()
@@ -334,12 +469,43 @@ class CloudInvariantEvaluator:
         else:
             results.append(_invariant("cloud_identity", "pass", organ.organ_id))
 
+        step_assignment = {
+            "organ_id": organ.organ_id,
+            "provider": organ.provider,
+            "rail": rail,
+        }
         boundary_results = check_cloud_boundary(
             mission_state,
-            {"organ_id": organ.organ_id, "provider": organ.provider, "rail": rail},
+            step_assignment,
             manifold=manifold,
         )
         results.extend(boundary_results)
+
+        results.extend(
+            check_cloud_forge_rail(
+                mission_state,
+                step_assignment,
+                manifold=manifold,
+                home_rail=home_rail or str(ingress.get("rail") or ""),
+                federation_peer_tenant=federation_peer_tenant,
+                federation_grant_id=federation_grant_id,
+                grant_capabilities=grant_capabilities,
+            )
+        )
+        results.extend(
+            check_cloud_federation_policy(
+                home_tenant_id=str(ingress.get("tenant_id") or request.get("tenant_id") or ""),
+                peer_tenant_id=str(federation_peer_tenant or ""),
+                federation_grant_id=str(federation_grant_id or ""),
+                grant_status=grant_status,
+                grant_capabilities=grant_capabilities,
+            )
+        )
+        results.extend(
+            check_cloud_observed_promotion(
+                submit_promotion=bool(ingress.get("cloud_forge_submit_promotion")),
+            )
+        )
 
         allowed_regions = list(organ.contract.get("allowed_regions") or [])
         if region_id not in allowed_regions:

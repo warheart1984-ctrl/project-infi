@@ -85,7 +85,7 @@ class TestMissionCloudForgeTenantDigest(unittest.TestCase):
         self.assertEqual(result["status"], "ok")
         ingress = result.get("urg_ingress") or {}
         self.assertTrue(ingress.get("cloud_forge_tenant_digest"))
-        self.assertEqual(ingress.get("cloud_forge_binding_version"), "2.0")
+        self.assertEqual(ingress.get("cloud_forge_binding_version"), "3.0")
 
 
 if __name__ == "__main__":

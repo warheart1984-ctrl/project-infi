@@ -398,10 +398,90 @@ def scenario_federation_dual_ledger(
             os.environ["AAIS_RUNTIME_DIR"] = original_runtime
 
 
+def scenario_forge_federation_boundary(
+    *,
+    machine_id: str,
+    runtime_root: Path | None = None,
+) -> ScenarioEvidence:
+    """v3.0 — federated peer rail with boundary extend and forge digest witness."""
+    root = Path(runtime_root or Path(tempfile.mkdtemp(prefix="ugr-forge-fed-scenario-")))
+    root.mkdir(parents=True, exist_ok=True)
+    original_runtime = os.environ.get("AAIS_RUNTIME_DIR")
+    os.environ["AAIS_RUNTIME_DIR"] = str(root)
+    os.environ.setdefault("URG_OPERATOR_RECEIPT_KEY", "trust-bundle-forge-op")
+    os.environ.setdefault("URG_RECEIPT_SIGNING_KEY", "trust-bundle-forge-urg")
+    try:
+        from src.ugr.mission.federation_grants import (
+            CAP_FORGE_PEER_RAIL,
+            CAP_ROUTE_STEP,
+            FederationGrantStore,
+            compute_federation_forge_digest,
+        )
+        from src.ugr.mission.mission_ledger import MissionLedger
+        from src.ugr.mission.mission_runtime import UGRMissionRuntime
+
+        demo_path = REPO_ROOT / "deploy" / "ugr" / "mission-demo-federation-v17.json"
+        mission = json.loads(demo_path.read_text(encoding="utf-8"))["mission"]
+        mission["context"] = {"forbid_express": False}
+        store = FederationGrantStore(root)
+        grant = store.issue(
+            issuer_tenant="tenant:acme",
+            grantee_tenant="tenant:contoso",
+            capabilities=[CAP_ROUTE_STEP, CAP_FORGE_PEER_RAIL],
+            operator_id="trust-bundle",
+        )
+        store.accept(
+            grant.grant_id,
+            accepting_tenant="tenant:contoso",
+            operator_id="trust-bundle",
+        )
+        for step in mission["steps"]:
+            if step.get("federation_grant_id") == "__GRANT_ID__":
+                step["federation_grant_id"] = grant.grant_id
+        result = UGRMissionRuntime(runtime_dir=root).run_mission(mission)
+        mission_id = str(result.get("mission_id") or "")
+        fed_ctx = list((result.get("urg_ingress") or {}).get("federation_context") or [])
+        forge_digest = compute_federation_forge_digest(fed_ctx)
+        home_ledger = MissionLedger(runtime_dir=root, tenant_id="tenant:acme")
+        boundary_rows = [
+            r
+            for r in home_ledger.list_for_mission(mission_id)
+            if r.get("phase") == "federation_boundary_extend"
+        ]
+        ok = (
+            result.get("status") == "ok"
+            and bool(forge_digest)
+            and (bool(boundary_rows) or fed_ctx[0].get("mission_rail") == fed_ctx[0].get("peer_rail"))
+        )
+        payload = {
+            "grant_id": grant.grant_id,
+            "mission_id": mission_id,
+            "federation_forge_digest": forge_digest,
+            "boundary_extend_rows": len(boundary_rows),
+            "status": result.get("status"),
+        }
+        return ScenarioEvidence(
+            scenario_id="forge_federation_boundary",
+            machine_id=machine_id,
+            status="pass" if ok else "fail",
+            summary="federated forge boundary extend witness",
+            command="forge_federation_boundary",
+            exit_code=0 if ok else 1,
+            payload_sha256=sha256_text(stable_json(payload)),
+            details=payload,
+        )
+    finally:
+        if original_runtime is None:
+            os.environ.pop("AAIS_RUNTIME_DIR", None)
+        else:
+            os.environ["AAIS_RUNTIME_DIR"] = original_runtime
+
+
 SCENARIO_RUNNERS = {
     "mesh_parity": scenario_mesh_parity,
     "causal_rebuild": scenario_causal_rebuild,
     "llm_execution_smoke": scenario_llm_execution_smoke,
     "gate_manifest": scenario_gate_manifest,
     "federation_dual_ledger": scenario_federation_dual_ledger,
+    "forge_federation_boundary": scenario_forge_federation_boundary,
 }

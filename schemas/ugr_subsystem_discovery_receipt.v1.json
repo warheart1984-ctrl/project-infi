@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ugr_subsystem_discovery_receipt.v1",
+  "title": "UGR SubsystemDiscoveryReceipt v1.0",
+  "type": "object",
+  "required": [
+    "receipt_schema_version",
+    "receipt_id",
+    "subsystem_id",
+    "spec",
+    "invariants_passed",
+    "organs_matched",
+    "rail_proof",
+    "law_version",
+    "tenant_id",
+    "operator_id",
+    "aais_instance_id",
+    "discovered_at",
+    "discovery_mode",
+    "receipt_sig"
+  ],
+  "properties": {
+    "receipt_schema_version": {
+      "const": "1.0"
+    },
+    "receipt_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "subsystem_id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "spec": {
+      "type": "object",
+      "required": ["role", "io_shape", "rail_class", "risk_ceiling", "tenant_class"],
+      "properties": {
+        "role": { "type": "string" },
+        "io_shape": {
+          "type": "object",
+          "properties": {
+            "inputs": { "type": "array", "items": { "type": "string" } },
+            "outputs": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "rail_class": { "enum": ["SAFE", "NORMAL", "EXPRESS"] },
+        "risk_ceiling": { "enum": ["low", "medium", "high"] },
+        "tenant_class": { "enum": ["global", "standard", "restricted"] }
+      }
+    },
+    "invariants_passed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["family", "status"],
+        "properties": {
+          "family": { "type": "string" },
+          "status": { "type": "string" },
+          "details": { "type": "string" }
+        }
+      }
+    },
+    "organs_matched": {
+      "type": "array"
+    },
+    "rail_proof": {
+      "type": "object",
+      "properties": {
+        "requested": { "type": "string" },
+        "scheduled": { "type": "string" },
+        "codes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "law_version": {
+      "type": "object",
+      "properties": {
+        "law_id": { "type": "string" },
+        "law_version": { "type": "string" }
+      }
+    },
+    "tenant_id": { "type": "string" },
+    "operator_id": { "type": "string" },
+    "aais_instance_id": { "type": "string" },
+    "discovered_at": { "type": "number" },
+    "discovery_mode": { "enum": ["validate", "search"] },
+    "search_attempts": { "type": "integer" },
+    "search_trail": { "type": "array" },
+    "catalog_status": { "type": "string" },
+    "receipt_sig": { "type": "string" },
+    "receipt_algorithm": { "type": "string" },
+    "urg_key_id": { "type": "string" },
+    "genome_metadata": { "type": "object" }
+  }
+}

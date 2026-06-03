@@ -365,6 +365,35 @@ Acceptance:
 
 Tags: **`urg-cloud-forge-v2.0`** (tenant binding) · **`urg-cloud-forge-v2.1`** (federated peer rail)
 
+### Mission cloud-forge-v2.2 — Forge–invariant closure
+
+**Goal:** Federated peer rails lawful inside `B_cloud`; observed ledger + operator readout.
+
+Deliverables:
+
+- [x] `extend_boundary_for_federation_step` + `federation_boundary_extend` ledger phase
+- [x] Invariant family **cloud_forge_rail** (wired in `evaluate_step`)
+- [x] `tests/test_ugr_cloud_forge_observed.py`, operator snapshot `binding_version`
+- [x] `CLOUD_FORGE_BINDING_VERSION` **3.0**
+
+Tag: **`urg-cloud-forge-v2.2`**
+
+### Mission cloud-platform-v3.0 — Invariants + governance + receipt 1.4
+
+**Goal:** Platform contract generation without per-step Forge everywhere or Forge federation API.
+
+Deliverables:
+
+- [x] Invariant families **9–11** (`cloud_forge_rail`, `cloud_federation_policy`, `cloud_observed_promotion`)
+- [x] `invariant_version` **3.0** on manifold ingress
+- [x] Governance `mutation_op` **`cloud_forge_profile_update`** on `tenant_config`
+- [x] Grant capabilities `forge_peer_rail`, `forge_profile_read`
+- [x] Receipt schema **1.4**: `federation_forge_digest`, `observed_rail_ledger_ref`, `cloud_forge_binding_version`
+- [x] Trust scenario **`forge_federation_boundary`** (`URG_TRUST_BUNDLE_FORGE=1`)
+- [x] `tests/test_ugr_cloud_invariants_v2.py`, `tests/test_ugr_cloud_forge_governance.py`
+
+Tags: **`urg-cloud-platform-v3.0`** · **`urg-cloud-forge-v3.0`**
+
 ## v1 Invariants (non-negotiable)
 
 1. Single path of authority — all UGR traffic through Cognitive Bridge

@@ -26,6 +26,8 @@ def default_scenarios() -> tuple[str, ...]:
     scenarios = list(DEFAULT_SCENARIOS)
     if os.getenv("URG_TRUST_BUNDLE_FEDERATION", "").strip().lower() in {"1", "true", "yes", "on"}:
         scenarios.append("federation_dual_ledger")
+        if os.getenv("URG_TRUST_BUNDLE_FORGE", "").strip().lower() in {"1", "true", "yes", "on"}:
+            scenarios.append("forge_federation_boundary")
     return tuple(scenarios)
 CROSS_PROFILE_IDS = ("machine-a", "machine-b")
 

@@ -77,6 +77,45 @@ class TestFederationForgePeerRail(unittest.TestCase):
         self.assertEqual(fed_ctx[0].get("mission_rail"), home_rail)
         self.assertEqual(fed_ctx[0].get("peer_rail"), peer_rail)
 
+    def test_federated_mission_ok_with_divergent_rails_when_boundary_extended(self):
+        store = FederationGrantStore(self.temp_root)
+        grant = store.issue(
+            issuer_tenant="tenant:acme",
+            grantee_tenant="tenant:contoso",
+            capabilities=[CAP_ROUTE_STEP, "forge_peer_rail"],
+            operator_id="operator-acme",
+        )
+        store.accept(
+            grant.grant_id,
+            accepting_tenant="tenant:contoso",
+            operator_id="operator-contoso",
+        )
+        mission = json.loads(json.dumps(self.demo_template))
+        mission["context"] = {"forbid_express": False}
+        for step in mission["steps"]:
+            if step.get("federation_grant_id") == "__GRANT_ID__":
+                step["federation_grant_id"] = grant.grant_id
+
+        result = UGRMissionRuntime(runtime_dir=self.temp_root).run_mission(mission)
+        self.assertEqual(result["status"], "ok", result.get("summary"))
+        schema = dict(result.get("mission_receipt_schema") or {})
+        self.assertEqual(schema.get("schema_version"), "1.4")
+        if schema.get("federation_forge_digest"):
+            self.assertTrue(len(schema["federation_forge_digest"]) == 64)
+
+        from src.ugr.mission.mission_ledger import MissionLedger
+
+        mission_id = result["mission_id"]
+        rows = MissionLedger(
+            runtime_dir=self.temp_root, tenant_id="tenant:acme"
+        ).list_for_mission(mission_id)
+        fed_ctx = list((result.get("urg_ingress") or {}).get("federation_context") or [])
+        home_rail = fed_ctx[0].get("mission_rail") if fed_ctx else ""
+        peer_rail = fed_ctx[0].get("peer_rail") if fed_ctx else ""
+        if home_rail != peer_rail:
+            extend_rows = [r for r in rows if r.get("phase") == "federation_boundary_extend"]
+            self.assertGreaterEqual(len(extend_rows), 1)
+
 
 if __name__ == "__main__":
     unittest.main()

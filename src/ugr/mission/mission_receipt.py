@@ -12,7 +12,7 @@ from src.ugr.invariants.cloud_manifold import CLOUD_INVARIANT_SET_VERSION
 from src.ugr.mission.ledger_merkle import compute_ledger_merkle_root
 
 
-MISSION_RECEIPT_SCHEMA_VERSION = "1.3"
+MISSION_RECEIPT_SCHEMA_VERSION = "1.4"
 OUTCOME_COMPLETED = "completed"
 OUTCOME_FAILED = "failed"
 OUTCOME_VETOED = "vetoed"
@@ -342,6 +342,15 @@ def build_mission_receipt_v2(
     counterparty_ref = ingress.get("counterparty_receipt_ref")
     if counterparty_ref:
         receipt["counterparty_receipt_ref"] = dict(counterparty_ref)
+    binding_version = str(ingress.get("cloud_forge_binding_version") or "")
+    if binding_version:
+        receipt["cloud_forge_binding_version"] = binding_version
+    forge_digest = str(ingress.get("federation_forge_digest") or "")
+    if forge_digest:
+        receipt["federation_forge_digest"] = forge_digest
+    observed_ref = str(ingress.get("observed_rail_ledger_ref") or "")
+    if observed_ref:
+        receipt["observed_rail_ledger_ref"] = observed_ref
     return receipt
 
 
@@ -351,14 +360,14 @@ def build_federation_receipt_fields(
     home_tenant_id: str,
     mission_id: str,
     federation_context: list[dict[str, Any]],
-) -> tuple[str | None, dict[str, Any] | None]:
-    """Compute federation_digest and counterparty_receipt_ref for v1.8 receipts."""
+) -> tuple[str | None, dict[str, Any] | None, str | None]:
+    """Compute federation_digest, counterparty ref, and federation_forge_digest (v1.4)."""
     from src.ugr.mission.federation_grants import compute_federation_digest
     from src.ugr.mission.mission_ledger import MissionLedger
     from src.ugr.platform.tenant_registry import normalize_tenant_id
 
     if not federation_context:
-        return None, None
+        return None, None, None
     grant_id = str(federation_context[0].get("grant_id") or "")
     peer_tenant = normalize_tenant_id(
         str(federation_context[0].get("peer_tenant") or "")
@@ -368,12 +377,15 @@ def build_federation_receipt_fields(
     peer_ledger = MissionLedger(runtime_dir=root, tenant_id=peer_tenant)
     home_rows = home_ledger.list_for_mission(mission_id)
     peer_rows = peer_ledger.list_for_mission(mission_id)
+    from src.ugr.mission.federation_grants import compute_federation_forge_digest
+
     digest = compute_federation_digest(
         home_rows=home_rows,
         peer_rows=peer_rows,
         grant_id=grant_id,
         federation_forge=federation_context,
     )
+    forge_digest = compute_federation_forge_digest(federation_context)
     peer_rows_fed = [
         r
         for r in peer_rows
@@ -390,4 +402,4 @@ def build_federation_receipt_fields(
         "receipt_row_hash": receipt_row_hash,
         "grant_id": grant_id,
     }
-    return digest, counterparty_ref
+    return digest, counterparty_ref, forge_digest

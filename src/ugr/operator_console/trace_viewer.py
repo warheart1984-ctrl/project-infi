@@ -18,6 +18,7 @@ def _runtime_traces_path(runtime: Any | None = None) -> Path:
 
 def _summarize_trace(row: dict[str, Any]) -> dict[str, Any]:
     rail = dict(row.get("rail_decision") or {})
+    cloud_forge = dict(row.get("cloud_forge") or {})
     return {
         "trace_id": row.get("trace_id"),
         "status": row.get("status"),
@@ -28,6 +29,8 @@ def _summarize_trace(row: dict[str, Any]) -> dict[str, Any]:
         "rail": rail.get("rail"),
         "risk": rail.get("risk"),
         "rail_rationale": rail.get("rationale"),
+        "cloud_forge_tenant_digest": row.get("cloud_forge_tenant_digest")
+        or cloud_forge.get("tenant_digest"),
     }
 
 

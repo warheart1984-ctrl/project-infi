@@ -154,14 +154,14 @@ class TestCloudInvariantGolden(unittest.TestCase):
         rows = self._ledger().list_for_mission(result["mission_id"])
         self.assertTrue(any(r.get("type") == "governance_mutation" for r in rows))
         schema = result["mission_receipt_schema"]
-        self.assertEqual(schema["schema_version"], "1.3")
+        self.assertEqual(schema["schema_version"], "1.4")
         self.assertTrue(schema.get("cloud_identity_hash"))
 
     def test_completed_receipt_has_cloud_proof_fields(self):
         result = self._runtime().run_mission(self.demo)
         schema = result["mission_receipt_schema"]
-        self.assertEqual(schema["schema_version"], "1.3")
-        self.assertEqual(schema["invariant_version"], "1.5")
+        self.assertEqual(schema["schema_version"], "1.4")
+        self.assertEqual(schema["invariant_version"], "3.0")
         self.assertTrue(schema.get("cloud_identity_hash"))
         self.assertTrue(schema.get("boundary_digest"))
         for organ in schema["organs"]:

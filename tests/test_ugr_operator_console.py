@@ -53,6 +53,12 @@ class TestOperatorConsoleSnapshot(unittest.TestCase):
                 os.environ["AAIS_RUNTIME_DIR"] = original
             shutil.rmtree(temp_root, ignore_errors=True)
 
+    def test_cloud_forge_snapshot_has_binding_version(self):
+        snapshot = build_operator_console_snapshot(runtime=None)
+        forge = snapshot.get("cloud_forge") or {}
+        self.assertEqual(forge.get("binding_version"), "3.0")
+        self.assertIn("traces_path", forge)
+
     def test_debt_register_lists_open_items(self):
         snapshot = build_operator_console_snapshot(runtime=None)
         debt = snapshot.get("debt_register") or {}

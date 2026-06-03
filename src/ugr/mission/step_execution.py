@@ -325,6 +325,37 @@ def try_commit_execution(
     return True, EXECUTION_STATE_COMMITTED, safety
 
 
+def append_federation_boundary_extend_ledger(
+    ledger: MissionLedger,
+    *,
+    mission_id: str,
+    step_id: str,
+    peer_rail: str,
+    home_rail: str,
+    federation_grant_id: str,
+    federation_peer_tenant: str,
+    organ_id: str,
+    provider: str,
+) -> str:
+    """Record runtime B_cloud widen for federated peer rail (v2.2)."""
+    action_id = f"{mission_id}:{step_id}:federation_boundary_extend"
+    record = build_ledger_phase_record(
+        phase="federation_boundary_extend",
+        mission_id=mission_id,
+        action_id=action_id,
+        step_id=step_id,
+        organ_id=organ_id,
+        provider=provider,
+        extra={
+            "peer_rail": peer_rail,
+            "home_rail": home_rail,
+            "federation_grant_id": federation_grant_id,
+            "federation_peer_tenant": federation_peer_tenant,
+        },
+    )
+    return ledger.append_action(record)
+
+
 def append_federation_step_ledger(
     ledger: MissionLedger,
     *,

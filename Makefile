@@ -90,9 +90,15 @@ ugr-graph-index-gate:
 	python3 wolf-cog-os/scripts/validate-ugr-graph-index-manifest.py --mode fail
 	pytest tests/test_ugr_graph_index.py -q
 
+ugr-discovery-gate:
+	pytest tests/test_ugr_subsystem_discovery.py -q
+
+ugr-rewards-gate:
+	pytest tests/test_ugr_operator_rewards.py tests/test_ugr_subsystem_discovery.py -q
+
 ugr-mission-gate:
 	python3 wolf-cog-os/scripts/validate-ugr-mission-manifest.py --mode fail
-	pytest tests/test_ugr_mission_demo.py tests/test_ugr_tenant_isolation.py tests/test_ugr_cost_routing.py tests/test_ugr_marketplace.py tests/test_ugr_cloud_invariants.py tests/test_ugr_execution_policy.py tests/test_ugr_cloud_forge_tenant_binding.py tests/test_ugr_federation_v17_acceptance.py tests/test_ugr_federation_v18_acceptance.py tests/test_ugr_federation_v19_acceptance.py tests/test_ugr_federation_forge_peer_rail.py -q
+	pytest tests/test_ugr_mission_demo.py tests/test_ugr_tenant_isolation.py tests/test_ugr_cost_routing.py tests/test_ugr_marketplace.py tests/test_ugr_cloud_invariants.py tests/test_ugr_cloud_invariants_v2.py tests/test_ugr_execution_policy.py tests/test_ugr_cloud_forge_tenant_binding.py tests/test_ugr_cloud_forge_observed.py tests/test_ugr_cloud_forge_governance.py tests/test_ugr_federation_v17_acceptance.py tests/test_ugr_federation_v18_acceptance.py tests/test_ugr_federation_v19_acceptance.py tests/test_ugr_federation_forge_peer_rail.py tests/test_ugr_subsystem_discovery.py -q
 
 ugr-embryo-gate:
 	python3 wolf-cog-os/scripts/validate-ugr-embryo-manifest.py --mode fail

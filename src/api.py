@@ -11252,6 +11252,146 @@ def ugr_mission_receipt_get(mission_id: str):
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/ugr/discover/subsystem", methods=["POST"])
+def ugr_discover_subsystem():
+    """Proof-of-Subsystem discovery — validate or search spec space, emit hash-anchored receipt."""
+    try:
+        from src.ugr.discovery.subsystem_discovery import build_subsystem_discovery_service
+
+        data = request.get_json(silent=True) or {}
+        if not str(data.get("operator_id") or "").strip():
+            return jsonify({"error": "operator_id is required"}), 400
+        if not str(data.get("aais_instance_id") or "").strip():
+            return jsonify({"error": "aais_instance_id is required"}), 400
+        result = build_subsystem_discovery_service().discover(data)
+        status = str(result.get("status") or "")
+        if status == "discovered":
+            code = 200
+        elif status in {"invalid", "not_found", "rejected"}:
+            code = 200
+        else:
+            code = 500
+        return jsonify(result), code
+    except Exception as e:
+        logger.error(f"Error in URG subsystem discovery: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/discover/subsystem/<subsystem_id>", methods=["GET"])
+def ugr_discover_subsystem_get(subsystem_id: str):
+    """Fetch subsystem discovery receipt by canonical subsystem_id hash."""
+    try:
+        from src.ugr.discovery.subsystem_discovery import build_subsystem_discovery_service
+        from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+        tenant_raw = request.args.get("tenant_id") or request.headers.get("X-URG-Tenant-Id")
+        if not tenant_raw:
+            return jsonify({"error": "tenant_id query parameter required"}), 400
+        tenant_norm = normalize_tenant_id(tenant_raw)
+        receipt = build_subsystem_discovery_service().get_receipt(subsystem_id, tenant_id=tenant_norm)
+        if not receipt:
+            return jsonify({"error": "discovery_not_found", "subsystem_id": subsystem_id}), 404
+        if normalize_tenant_id(receipt.get("tenant_id")) != tenant_norm:
+            return jsonify({"error": "tenant_mismatch", "subsystem_id": subsystem_id}), 403
+        return jsonify({"subsystem_id": subsystem_id, "subsystem_discovery_receipt": receipt}), 200
+    except Exception as e:
+        logger.error(f"Error fetching URG subsystem discovery receipt: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/rewards/operator/<operator_id>", methods=["GET"])
+def ugr_rewards_operator_profile(operator_id: str):
+    """Operator reward profile: reputation, rail credits, adoption multipliers."""
+    try:
+        from src.ugr.rewards.operator_reward_engine import build_operator_reward_engine
+        from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+        tenant_id = normalize_tenant_id(request.args.get("tenant_id") or "global")
+        profile = build_operator_reward_engine().get_profile(operator_id, tenant_id=tenant_id)
+        return jsonify({"tenant_id": tenant_id, "operator_id": operator_id, "profile": profile}), 200
+    except Exception as e:
+        logger.error(f"Error fetching URG operator rewards profile: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/rewards/ledger", methods=["GET"])
+def ugr_rewards_ledger():
+    """Paginated operator reward event ledger."""
+    try:
+        from src.ugr.rewards.operator_reward_engine import build_operator_reward_engine
+        from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+        tenant_id = normalize_tenant_id(request.args.get("tenant_id") or "global")
+        operator_id = request.args.get("operator_id") or None
+        subsystem_id = request.args.get("subsystem_id") or None
+        limit = min(int(request.args.get("limit") or 50), 200)
+        events = build_operator_reward_engine().list_ledger(
+            tenant_id=tenant_id,
+            operator_id=operator_id,
+            subsystem_id=subsystem_id,
+            limit=limit,
+        )
+        return jsonify(
+            {
+                "tenant_id": tenant_id,
+                "events": events,
+                "count": len(events),
+            }
+        ), 200
+    except Exception as e:
+        logger.error(f"Error listing URG rewards ledger: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/rewards/spend", methods=["POST"])
+def ugr_rewards_spend():
+    """Spend rail credits for a bounded Cloud Forge EXPRESS boost token."""
+    try:
+        from src.ugr.rewards.rail_credit_spend import spend_rail_credits
+
+        data = request.get_json(silent=True) or {}
+        if not str(data.get("operator_id") or "").strip():
+            return jsonify({"error": "operator_id is required"}), 400
+        amount = float(data.get("amount") or 0)
+        if amount <= 0:
+            return jsonify({"error": "amount must be positive"}), 400
+        result = spend_rail_credits(
+            tenant_id=str(data.get("tenant_id") or "global"),
+            operator_id=str(data.get("operator_id") or ""),
+            amount=amount,
+            trace_id=str(data.get("trace_id") or ""),
+            purpose=str(data.get("purpose") or "express_boost"),
+        )
+        status = str(result.get("status") or "")
+        code = 200 if status in {"ok", "rejected"} else 500
+        return jsonify(result), code
+    except Exception as e:
+        logger.error(f"Error spending URG rail credits: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/discover/subsystems", methods=["GET"])
+def ugr_discover_subsystems_list():
+    """Enumerate shadow-catalog discoveries for a tenant."""
+    try:
+        from src.ugr.discovery.subsystem_discovery import build_subsystem_discovery_service
+        from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+        tenant_id = normalize_tenant_id(request.args.get("tenant_id") or "global")
+        since_raw = request.args.get("since")
+        since = float(since_raw) if since_raw else None
+        limit = min(int(request.args.get("limit") or 50), 200)
+        entries = build_subsystem_discovery_service().list_discoveries(
+            tenant_id=tenant_id,
+            since=since,
+            limit=limit,
+        )
+        return jsonify({"tenant_id": tenant_id, "discoveries": entries, "count": len(entries)}), 200
+    except Exception as e:
+        logger.error(f"Error listing URG subsystem discoveries: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/ugr/marketplace/organs", methods=["GET"])
 def ugr_marketplace_organs_query():
     """Public organ catalog for a tenant (no auth)."""

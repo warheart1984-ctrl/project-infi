@@ -1,6 +1,6 @@
 # URG Cloud Invariants
 
-Status: **v1.5** — super-cloud manifold enforcement
+Status: **v3.0** — super-cloud manifold + Cloud Forge rail families
 
 Authority: `docs/contracts/URG_STACK_DOCTRINE.md`, `docs/contracts/URG_MISSION_CONTRACT.md`.
 
@@ -50,6 +50,18 @@ Merged mission outcome respects URG law.
 ### 8. Cloud Execution Safety (live)
 
 No `execution_committed` step may violate \(B_{cloud}(M)\), bypass ledger write, or emit without a valid MissionReceipt path. Enforced at the execution organ boundary in `src/ugr/invariants/execution_safety.py` via `try_commit_execution`.
+
+### 9. Cloud Forge Rail (v3.0)
+
+Scheduled rail must lie in runtime `B_cloud` (including federated `federation_boundary_extend` tuples). Federated steps require grant `forge_peer_rail` or `route_step`. Home vs peer rails recorded on `federation_context`.
+
+### 10. Cloud Federation Policy (v3.0)
+
+Peer steps require accepted bilateral grant with route capability; grant must not be revoked mid-mission.
+
+### 11. Cloud Observed Promotion (v3.0)
+
+`UGR_CLOUD_FORGE_OBSERVED` ledger rows do not mutate `tenants.json`. `cloud_forge_submit_promotion` on mission ingress requires `URG_GOVERNANCE_APPLY=1` and governance `cloud_forge_profile_update`.
 
 ## Implementation
 

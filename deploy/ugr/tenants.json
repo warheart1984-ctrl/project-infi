@@ -2,59 +2,90 @@
   "config_version": "1.1",
   "tenants": {
     "global": {
-      "label": "Global shared knowledge",
+      "allowed_providers": [
+        "local",
+        "openrouter",
+        "openai"
+      ],
+      "allowed_regions": [
+        "local-primary",
+        "tenant-us",
+        "tenant-eu"
+      ],
+      "cost_ceiling": {
+        "hard_ceil": 500
+      },
       "enabled": true,
-      "shard_id": "shard-global",
-      "overlay_global": false,
-      "max_claims_per_query": 100,
-      "allowed_regions": ["local-primary", "tenant-us", "tenant-eu"],
-      "allowed_providers": ["local", "openrouter", "openai"],
-      "cost_ceiling": { "hard_ceil": 500 },
+      "federation_grants": [],
       "invariant_profile": "default",
+      "label": "Global shared knowledge",
+      "max_claims_per_query": 100,
+      "overlay_global": false,
       "receipt_key_id": "global",
-      "federation_grants": []
+      "shard_id": "shard-global"
     },
     "tenant:acme": {
-      "label": "Acme Corp overlay",
-      "enabled": true,
-      "shard_id": "shard-tenant-acme",
-      "overlay_global": true,
-      "max_claims_per_query": 50,
-      "allowed_regions": ["tenant-us", "local-primary"],
-      "allowed_providers": ["local", "openrouter", "openai"],
-      "cost_ceiling": { "hard_ceil": 100 },
-      "invariant_profile": "default",
-      "receipt_key_id": "tenant-acme",
-      "federation_grants": [],
+      "allowed_providers": [
+        "local",
+        "openrouter",
+        "openai"
+      ],
+      "allowed_regions": [
+        "tenant-us",
+        "local-primary"
+      ],
       "cloud_forge": {
+        "intelligence_bias": 0.15,
         "latency_bias": 0.55,
         "throughput_bias": 0.3,
-        "intelligence_bias": 0.15,
-        "wL_express_threshold": 95,
         "wL_express_floor": 45,
-        "actor": { "wL": 130, "wT": 90, "wI": 120, "tier": "A" }
-      }
+        "wL_express_threshold": 95
+      },
+      "cost_ceiling": {
+        "hard_ceil": 100
+      },
+      "enabled": true,
+      "federation_grants": [],
+      "invariant_profile": "default",
+      "label": "Acme Corp overlay",
+      "max_claims_per_query": 50,
+      "overlay_global": true,
+      "receipt_key_id": "tenant-acme",
+      "shard_id": "shard-tenant-acme"
     },
     "tenant:contoso": {
-      "label": "Contoso overlay",
-      "enabled": true,
-      "shard_id": "shard-tenant-contoso",
-      "overlay_global": true,
-      "max_claims_per_query": 50,
-      "allowed_regions": ["tenant-eu", "local-primary"],
-      "allowed_providers": ["local", "openrouter"],
-      "cost_ceiling": { "hard_ceil": 80 },
-      "invariant_profile": "default",
-      "receipt_key_id": "tenant-contoso",
-      "federation_grants": [],
+      "allowed_providers": [
+        "local",
+        "openrouter"
+      ],
+      "allowed_regions": [
+        "tenant-eu",
+        "local-primary"
+      ],
       "cloud_forge": {
+        "actor": {
+          "tier": "B",
+          "wI": 180,
+          "wL": 85,
+          "wT": 70
+        },
+        "intelligence_bias": 0.5,
         "latency_bias": 0.25,
         "throughput_bias": 0.25,
-        "intelligence_bias": 0.5,
-        "wL_express_threshold": 140,
         "wL_express_floor": 75,
-        "actor": { "wL": 85, "wT": 70, "wI": 180, "tier": "B" }
-      }
+        "wL_express_threshold": 140
+      },
+      "cost_ceiling": {
+        "hard_ceil": 80
+      },
+      "enabled": true,
+      "federation_grants": [],
+      "invariant_profile": "default",
+      "label": "Contoso overlay",
+      "max_claims_per_query": 50,
+      "overlay_global": true,
+      "receipt_key_id": "tenant-contoso",
+      "shard_id": "shard-tenant-contoso"
     }
   }
 }

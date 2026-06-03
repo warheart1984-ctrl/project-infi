@@ -161,7 +161,7 @@ Ledger phases: home `federation_step`; peer `federation_inbound` (includes `home
 
 **Governance:** `mutation_op` = `federation_organ_admit` | `federation_organ_suspend` requires grant capability `governance_cosign` and dual ledger rows when `URG_GOVERNANCE_APPLY=1`.
 
-## Cloud Forge binding (v2.0–v2.1)
+## Cloud Forge binding (v2.0–v3.0)
 
 Bridge: `src/ugr/cloud_forge_bridge.py` only — see [cloud-forge-rail-contract.md](cloud-forge-rail-contract.md).
 
@@ -172,7 +172,13 @@ Bridge: `src/ugr/cloud_forge_bridge.py` only — see [cloud-forge-rail-contract.
 | Receipt | `federation_digest` includes optional `forge[]` entries (`mission_rail`, `peer_rail` per federated step) |
 | Tenant config | Optional `cloud_forge` in `deploy/ugr/tenants.json` (biases, express thresholds, actor weights) |
 
-Env: `UGR_CLOUD_FORGE_ENABLED`, `UGR_CLOUD_FORGE_OBSERVED` (ledger uses `tenant_id` + mission `trace_id`).
+Env: `UGR_CLOUD_FORGE_ENABLED`, `UGR_CLOUD_FORGE_OBSERVED` (ledger uses tenant slug + mission `trace_id`).
+
+**Receipt schema 1.4:** `cloud_forge_binding_version`, `federation_forge_digest`, `observed_rail_ledger_ref`.
+
+**Governance:** `mutation_target: tenant_config`, `mutation_op: cloud_forge_profile_update` (requires `URG_GOVERNANCE_APPLY=1`).
+
+**Invariant version 3.0:** families 9–11 in `URG_CLOUD_INVARIANTS.md`; federated steps may append `federation_boundary_extend` ledger rows.
 
 ## Cost routing (v1.6)
 

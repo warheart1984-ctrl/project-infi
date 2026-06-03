@@ -108,16 +108,39 @@ def _build_ugr_snapshot(*, runtime: Any | None = None) -> dict[str, Any]:
     }
 
 
-def _build_cloud_forge_snapshot() -> dict[str, Any]:
+def _latest_trace_forge_fields(runtime: Any | None = None) -> dict[str, Any]:
+    traces = load_deliberation_traces(runtime=runtime, limit=1)
+    summaries = list(traces.get("summaries") or [])
+    if not summaries:
+        return {}
+    latest = summaries[-1]
+    return {
+        "rail": latest.get("rail"),
+        "trace_id": latest.get("trace_id"),
+        "tenant_id": latest.get("tenant_id"),
+        "risk": latest.get("risk"),
+    }
+
+
+def _build_cloud_forge_snapshot(*, runtime: Any | None = None) -> dict[str, Any]:
     rail = os.getenv("CLOUD_FORGE_DEFAULT_RAIL", "NORMAL").strip().upper() or "NORMAL"
+    trace_fields = _latest_trace_forge_fields(runtime=runtime)
+    if trace_fields.get("rail"):
+        rail = str(trace_fields["rail"]).upper()
+    observed = os.getenv("UGR_CLOUD_FORGE_OBSERVED", "").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }
     bundle = {
-        "contract_version": "1.0",
+        "contract_version": "3.0",
         "rail_decision": {
             "rail": rail,
-            "risk": os.getenv("CLOUD_FORGE_DEFAULT_RISK", "LOW"),
-            "rationale": "operator_console_default",
+            "risk": trace_fields.get("risk") or os.getenv("CLOUD_FORGE_DEFAULT_RISK", "LOW"),
+            "rationale": "operator_console_trace" if trace_fields else "operator_console_default",
         },
-        "observed": os.getenv("UGR_CLOUD_FORGE_OBSERVED", "").strip().lower() in {"1", "true", "yes", "on"},
+        "observed": observed,
     }
     try:
         from src.cloud_forge.readout import build_cloud_forge_readout
@@ -129,8 +152,20 @@ def _build_cloud_forge_snapshot() -> dict[str, Any]:
             "claim_status": "asserted",
             "runtime_effect": "readout_only",
         }
+    federation_forge: list[dict[str, Any]] = []
+    root = _runtime_root()
+    traces_path = root / "ugr" / "traces.jsonl"
+    if runtime is not None and hasattr(runtime, "traces_path"):
+        traces_path = Path(runtime.traces_path)
     return {
         "rail": rail,
+        "binding_version": "3.0",
+        "cloud_forge_tenant_digest": trace_fields.get("cloud_forge_tenant_digest"),
+        "last_trace_id": trace_fields.get("trace_id"),
+        "last_tenant_id": trace_fields.get("tenant_id"),
+        "federation_forge": federation_forge,
+        "observed": observed,
+        "traces_path": str(traces_path),
         "readout": readout,
         "routes": {
             "forge_platform_gate": "make forge-platform-gate",
@@ -154,7 +189,7 @@ def build_operator_console_snapshot(*, runtime: Any | None = None) -> dict[str, 
     trust = _load_trust_bundle_status(runtime_root)
     debt = debt_summary()
     ugr = _build_ugr_snapshot(runtime=runtime)
-    forge = _build_cloud_forge_snapshot()
+    forge = _build_cloud_forge_snapshot(runtime=runtime)
     mesh_health = poll_mesh_health()
     traces = load_deliberation_traces(runtime=runtime, limit=10)
     forge_platform = load_forge_platform_dashboard(live_checks=False)

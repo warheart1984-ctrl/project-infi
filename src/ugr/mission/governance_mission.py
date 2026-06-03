@@ -17,7 +17,7 @@ from src.ugr.mission.marketplace import apply_provider_organ_mutation
 from src.ugr.mission.mission_ledger import MissionLedger
 from src.ugr.mission.provider_organ import ProviderOrganRegistry
 from src.ugr.mission.tenant_manifold import tenant_path_slug, validate_tenant_for_mission
-from src.ugr.platform.tenant_registry import normalize_tenant_id
+from src.ugr.platform.tenant_registry import TenantRegistry, normalize_tenant_id
 
 
 GOVERNANCE_DEPLOY_ROOT = Path(__file__).resolve().parents[3] / "deploy" / "ugr"
@@ -27,6 +27,7 @@ MUTATION_PATHS = {
     "regions": GOVERNANCE_DEPLOY_ROOT / "regions.json",
     "aais_instances": GOVERNANCE_DEPLOY_ROOT / "aais-instances.json",
     "invariant_definitions": Path(__file__).resolve().parents[2] / "invariants" / "cloud_invariants.py",
+    "tenant_config": GOVERNANCE_DEPLOY_ROOT / "tenants.json",
 }
 
 MARKETPLACE_OPS = frozenset({
@@ -38,6 +39,7 @@ MARKETPLACE_OPS = frozenset({
     "federation_organ_suspend",
 })
 FEDERATION_GOVERNANCE_OPS = frozenset({"federation_organ_admit", "federation_organ_suspend"})
+CLOUD_FORGE_PROFILE_OPS = frozenset({"cloud_forge_profile_update"})
 
 
 def _stable_json(value: Any) -> str:
@@ -142,7 +144,27 @@ def run_governance_mission(
             "mission_id": mission_id,
         }
 
-    if target == "provider_organs" and mutation_op in MARKETPLACE_OPS:
+    if target == "tenant_config" and mutation_op in CLOUD_FORGE_PROFILE_OPS:
+        from src.ugr.platform.tenant_config import apply_cloud_forge_profile_update
+
+        tenants_path = TenantRegistry().path
+        before_digest = _file_digest(tenants_path)
+        after_digest = before_digest
+        apply_note = "audit_only"
+        profile = dict(payload.get("cloud_forge") or {})
+        if os.getenv("URG_GOVERNANCE_APPLY", "").strip().lower() in {"1", "true", "yes", "on"}:
+            ok_apply, msg, after_digest = apply_cloud_forge_profile_update(
+                tenant_manifold.tenant_id,
+                profile,
+            )
+            apply_note = msg if ok_apply else f"apply_failed: {msg}"
+            if not ok_apply:
+                return {
+                    "status": "blocked",
+                    "summary": msg,
+                    "mission_id": mission_id,
+                }
+    elif target == "provider_organs" and mutation_op in MARKETPLACE_OPS:
         overlay_path = _tenant_overlay_path(tenant_manifold.tenant_id)
         before_digest = _file_digest(overlay_path) or _file_digest(GOVERNANCE_DEPLOY_ROOT / "provider-organs.json")
         apply_note = "audit_only"

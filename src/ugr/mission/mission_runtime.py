@@ -268,20 +268,28 @@ class UGRMissionRuntime:
         ingress["cloud_forge_tenant_digest"] = compute_cloud_forge_tenant_digest(
             forge_profile, forge_actor
         )
-        ingress["cloud_forge_binding_version"] = "2.0"
+        ingress["cloud_forge_binding_version"] = "3.0"
+        if payload.get("cloud_forge_submit_promotion"):
+            ingress["cloud_forge_submit_promotion"] = True
+        forge_request = {
+            "question": str(payload.get("objective") or "")[:500],
+            "intent": intent,
+            "tenant_id": payload.get("tenant_id"),
+            "context": context,
+            "constraints": constraints,
+            "operator_id": payload.get("operator_id"),
+            "cloud_forge_submit_promotion": bool(
+                payload.get("cloud_forge_submit_promotion")
+            ),
+        }
         cloud_forge = schedule_rail_for_ugr(
-            {
-                "question": str(payload.get("objective") or "")[:500],
-                "intent": intent,
-                "tenant_id": payload.get("tenant_id"),
-                "context": context,
-                "constraints": constraints,
-                "operator_id": payload.get("operator_id"),
-            },
+            forge_request,
             trace_id=mission_id,
             bridge_result={"decision": "ALLOW", "execution_allowed": True},
             tenant_manifold=tenant_manifold,
         )
+        if cloud_forge and cloud_forge.get("ledger_record_id"):
+            ingress["observed_rail_ledger_ref"] = str(cloud_forge.get("ledger_record_id"))
         rail_decision = dict((cloud_forge or {}).get("rail_decision") or {})
         rail = str(rail_decision.get("rail") or "NORMAL")
         if rail == "EXPRESS" and context.get("forbid_express"):
@@ -361,8 +369,10 @@ class UGRMissionRuntime:
             federation_grant_id = str(step.get("federation_grant_id") or "").strip()
             step_organ_registry = self.organs
             federation_peer_tenant: str | None = None
+            federation_grant: Any | None = None
             if peer_tenant_raw:
                 from src.ugr.mission.federation_grants import (
+                    CAP_FORGE_PEER_RAIL,
                     CAP_ROUTE_STEP,
                     FederationGrantStore,
                 )
@@ -373,8 +383,15 @@ class UGRMissionRuntime:
                     home_tenant=tenant_manifold.tenant_id,
                     peer_tenant=peer_tenant_raw,
                     grant_id=federation_grant_id,
-                    capability=CAP_ROUTE_STEP,
+                    capability=CAP_FORGE_PEER_RAIL,
                 )
+                if grant_err:
+                    grant, grant_err = store.verify_step_capability(
+                        home_tenant=tenant_manifold.tenant_id,
+                        peer_tenant=peer_tenant_raw,
+                        grant_id=federation_grant_id,
+                        capability=CAP_ROUTE_STEP,
+                    )
                 if grant_err:
                     outcome = self._step_blocked(
                         mission_id,
@@ -405,6 +422,7 @@ class UGRMissionRuntime:
                         )
                     continue
                 federation_peer_tenant = normalize_tenant_id(peer_tenant_raw)
+                federation_grant = grant
                 step_organ_registry = ProviderOrganRegistry(tenant_id=federation_peer_tenant)
 
             organ = step_organ_registry.get(organ_id)
@@ -475,7 +493,31 @@ class UGRMissionRuntime:
                     }
                 )
 
-            region_id = str(payload.get("region_id") or "")
+            region_id = str(payload.get("region_id") or manifold.region_id or "")
+            step_manifold = manifold
+            if federation_peer_tenant:
+                from src.ugr.invariants.cloud_manifold import extend_boundary_for_federation_step
+                from src.ugr.mission.step_execution import append_federation_boundary_extend_ledger
+
+                step_manifold, boundary_extended = extend_boundary_for_federation_step(
+                    manifold,
+                    organ_id=organ.organ_id,
+                    provider=organ.provider,
+                    region_id=region_id,
+                    peer_rail=step_rail,
+                )
+                if boundary_extended:
+                    append_federation_boundary_extend_ledger(
+                        self.ledger,
+                        mission_id=mission_id,
+                        step_id=step_id,
+                        peer_rail=step_rail,
+                        home_rail=rail,
+                        federation_grant_id=federation_grant_id,
+                        federation_peer_tenant=federation_peer_tenant,
+                        organ_id=organ.organ_id,
+                        provider=organ.provider,
+                    )
             est_step_cost = estimate_step_cost(organ, region_id=region_id)
             if budget_ledger.would_exceed_hard(est_step_cost):
                 if halt_on_failure:
@@ -508,6 +550,8 @@ class UGRMissionRuntime:
                 provider=organ.provider,
                 ordinal=ordinal,
             )
+            grant_caps = tuple(federation_grant.capabilities) if federation_grant else ()
+            grant_status = str(federation_grant.status) if federation_grant else None
             step_invariants = self.invariants.evaluate_step(
                 request=payload,
                 ingress=ingress,
@@ -517,7 +561,12 @@ class UGRMissionRuntime:
                 prior_action_id=prior_action_id,
                 cost_spent=cost_spent,
                 rail=step_rail,
-                manifold=manifold,
+                manifold=step_manifold,
+                federation_peer_tenant=federation_peer_tenant,
+                federation_grant_id=federation_grant_id or None,
+                grant_capabilities=grant_caps,
+                grant_status=grant_status,
+                home_rail=rail,
             )
             if self.invariants.has_hard_fail(step_invariants):
                 outcome = {
@@ -928,6 +977,23 @@ class UGRMissionRuntime:
         response["cloud_rail"] = rail
         if self._federation_context:
             ingress["federation_context"] = list(self._federation_context)
+        if status == "ok":
+            try:
+                from src.ugr.rewards.operator_reward_engine import try_emit_adoption_from_mission
+
+                tenant_id = str((payload or {}).get("tenant_id") or ingress.get("tenant_id") or "global")
+                adoption_rewards = try_emit_adoption_from_mission(
+                    tenant_id=tenant_id,
+                    mission_id=mission_id,
+                    steps=steps,
+                    status=status,
+                    runtime_dir=str(self.runtime_dir),
+                    organ_registry=self.organs,
+                )
+                if adoption_rewards:
+                    response["operator_rewards_adoption"] = adoption_rewards
+            except Exception:
+                pass
         return attach_gcm_to_response(
             response,
             request=payload,
