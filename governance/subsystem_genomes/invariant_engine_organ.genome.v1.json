@@ -71,6 +71,9 @@
     "concept_spec": "docs/_future/ideas_pending/INVARIANT_ENGINE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/INVARIANT_ENGINE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/INVARIANT_ENGINE_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/INVARIANT_ENGINE_ORGAN.md",
+    "engineering_class": "InvariantEngineEngine",
+    "mythic_label": "Invariant Engine Organ",
+    "linguistic_version": "1.0.0"
   }
 }

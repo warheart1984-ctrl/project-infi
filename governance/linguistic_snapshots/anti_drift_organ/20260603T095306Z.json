@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "anti_drift_organ",
+  "captured_at": "2026-06-03T09:53:06Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "anti_drift_organ",
+      "engineering_class": "AntiDriftEngine",
+      "mythic_label": "Anti Drift Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Anti-Drift Organ",
+      "module_path": "src/anti_drift_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/anti_drift_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Anti-Drift Organ"
+      },
+      "active_doc": {
+        "title": "Anti Drift Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "1ef010fe852ac5c98cb2cf17d3600618a90059ddc44cf92e29a9e9fef5389d6c",
+    "engineering": "a5ed9d2913f6217dae5604f6536ad8fbe14e07ccb6ebb9ab4638729152980c16",
+    "combined": "99cb1f0ff9ceb70624bf29dd60f23cfa84ab8c0f11cc175215a8430c49d9629b"
+  }
+}

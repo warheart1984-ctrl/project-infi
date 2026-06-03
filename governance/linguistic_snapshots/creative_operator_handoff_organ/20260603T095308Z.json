@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "creative_operator_handoff_organ",
+  "captured_at": "2026-06-03T09:53:08Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "mvp",
+  "layers": {
+    "genome": {
+      "gene": "creative_operator_handoff_organ",
+      "engineering_class": "CreativeOperatorHandoffBridge",
+      "mythic_label": "Creative Operator Handoff Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Creative Operator Handoff Subsystem",
+      "module_path": "src/creative_operator_handoff_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/creative_operator_handoff_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Creative Operator Handoff Subsystem"
+      },
+      "active_doc": {
+        "title": "Creative Operator Handoff Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "d0b7bd3ffa23cbfc160a2f5d62f1ca72e43b18b80f480ceadfe76f76d62cd273",
+    "engineering": "0d18868cced8e285af6577377ff3853f67d0196fb887893876b718bb8753df79",
+    "combined": "da9511c865981dc838d662424e6522631cf26082d711cf2fcaef6c15f64df329"
+  }
+}

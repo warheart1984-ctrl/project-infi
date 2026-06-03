@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "workflow_runtime_organ",
+  "captured_at": "2026-06-03T09:53:13Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "workflow_runtime_organ",
+      "engineering_class": "WorkflowRuntimeEngine",
+      "mythic_label": "Workflow Runtime Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Workflow Runtime Organ",
+      "module_path": "src/workflow_runtime_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/workflow_runtime_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Workflow Runtime Organ"
+      },
+      "active_doc": {
+        "title": "Workflow Runtime Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "55da55085ba0fe6b2b4e4fea59f716f2fb842d4dd9ef4c1c54572e6eb3d767df",
+    "engineering": "36cd7de756fea125457f7f8984ab96231931cb6d8febd4b82542971f3607de84",
+    "combined": "b2725f3bf8876ea8fdfc8de780d36e55a0e21b3bc15e8f220fea91e5462a4e32"
+  }
+}

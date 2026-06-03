@@ -71,6 +71,9 @@
     "concept_spec": "docs/_future/ideas_pending/SPEAKERS_LANE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/SPEAKERS_LANE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/speakers/SPEAKERS_LANE_ORGAN.md"
+    "active_doc": "docs/subsystems/speakers/SPEAKERS_LANE_ORGAN.md",
+    "engineering_class": "SpeakersLaneInterface",
+    "mythic_label": "Speakers Lane Organ",
+    "linguistic_version": "1.0.0"
   }
 }

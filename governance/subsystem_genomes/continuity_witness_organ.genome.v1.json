@@ -77,6 +77,9 @@
     "concept_spec": "docs/_future/ideas_pending/CONTINUITY_WITNESS_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/CONTINUITY_WITNESS_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/nova/CONTINUITY_WITNESS_ORGAN.md"
+    "active_doc": "docs/subsystems/nova/CONTINUITY_WITNESS_ORGAN.md",
+    "engineering_class": "ContinuityWitnessEngine",
+    "mythic_label": "Continuity Witness Organ",
+    "linguistic_version": "1.0.0"
   }
 }

@@ -93,6 +93,9 @@
     "concept_spec": "docs/_future/ideas_pending/IMAGINE_GENERATOR.md",
     "mvp_plan": "docs/_future/ideas_pending/IMAGINE_GENERATOR_MVP_PLAN.md",
     "active_doc": "docs/subsystems/storyforge/IMAGINE_GENERATOR.md",
-    "summon_eligible": false
+    "summon_eligible": false,
+    "engineering_class": "ImagineGeneratorEngine",
+    "mythic_label": "Imagine generator",
+    "linguistic_version": "1.0.0"
   }
 }

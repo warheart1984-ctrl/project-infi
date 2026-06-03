@@ -73,6 +73,9 @@
     "concept_spec": "docs/_future/ideas_pending/SPEAKING_RUNTIME_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/SPEAKING_RUNTIME_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/nova/SPEAKING_RUNTIME_ORGAN.md"
+    "active_doc": "docs/subsystems/nova/SPEAKING_RUNTIME_ORGAN.md",
+    "engineering_class": "SpeakingRuntimeEngine",
+    "mythic_label": "Speaking Runtime Organ",
+    "linguistic_version": "1.0.0"
   }
 }

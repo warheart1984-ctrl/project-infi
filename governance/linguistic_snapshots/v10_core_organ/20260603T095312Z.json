@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "v10_core_organ",
+  "captured_at": "2026-06-03T09:53:12Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "mvp",
+  "layers": {
+    "genome": {
+      "gene": "v10_core_organ",
+      "engineering_class": "V10CoreEngine",
+      "mythic_label": "V10 Core Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "V10 Core Subsystem",
+      "module_path": "src/v10_core_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/v10_core_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "V10 Core Subsystem"
+      },
+      "active_doc": {
+        "title": "V10 Core Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "3c90da1e91c9cda00af332b796ff0f2df9ca4c45749c174b77b4e3e2af722694",
+    "engineering": "943c14195f5971cc8e3f6dbe9791586b98f73b32c0d303160e4d83a667b735c1",
+    "combined": "01bd895f0c398ca7a4f4cecaa996b2cbb68aa8bc8760fb299d4f6b701821d6a3"
+  }
+}

@@ -138,6 +138,24 @@ GENE_GATES: dict[str, str] = {
     "platform_console_interfaces_organ": "platform-console-interfaces-organ-gate",
     "operator_console_interface_organ": "operator-console-interface-organ-gate",
     "nova_workspace_interface_organ": "nova-workspace-interface-organ-gate",
+    "creative_core_runtime_organ": "creative-core-runtime-organ-gate",
+    "v9_core_organ": "v9-core-organ-gate",
+    "v9_runtime_organ": "v9-runtime-organ-gate",
+    "v10_core_organ": "v10-core-organ-gate",
+    "v10_runtime_organ": "v10-runtime-organ-gate",
+    "v10_action_engine_organ": "v10-action-engine-organ-gate",
+    "creative_capability_bridge_organ": "creative-capability-bridge-organ-gate",
+    "creative_operator_handoff_organ": "creative-operator-handoff-organ-gate",
+    "creative_console_interface_organ": "creative-console-interface-organ-gate",
+    "naming_protocol_organ": "naming-protocol-organ-gate",
+    "naming_genome_organ": "naming-genome-organ-gate",
+    "linguistic_mutation_organ": "linguistic-mutation-organ-gate",
+    "mythic_engineering_translator_organ": "mythic-engineering-translator-organ-gate",
+    "linguistic_drift_predictor_organ": "linguistic-drift-predictor-organ-gate",
+    "linguistic_lineage_viz_organ": "linguistic-lineage-viz-organ-gate",
+    "linguistic_remediation_organ": "linguistic-remediation-organ-gate",
+    "linguistic_cascade_organ": "linguistic-cascade-organ-gate",
+    "meta_linguistic_governance_organ": "meta-linguistic-governance-organ-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -402,6 +420,54 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     ],
     "nova-workspace-interface-organ-gate": [
         ".github/scripts/check-nova-workspace-interface-organ-governance.py"
+    ],
+    "creative-core-runtime-organ-gate": [
+        ".github/scripts/check-creative-core-runtime-organ-governance.py"
+    ],
+    "v9-core-organ-gate": [".github/scripts/check-v9-core-organ-governance.py"],
+    "v9-runtime-organ-gate": [".github/scripts/check-v9-runtime-organ-governance.py"],
+    "v10-core-organ-gate": [".github/scripts/check-v10-core-organ-governance.py"],
+    "v10-runtime-organ-gate": [
+        ".github/scripts/check-v10-runtime-organ-governance.py"
+    ],
+    "v10-action-engine-organ-gate": [
+        ".github/scripts/check-v10-action-engine-organ-governance.py"
+    ],
+    "creative-capability-bridge-organ-gate": [
+        ".github/scripts/check-creative-capability-bridge-organ-governance.py"
+    ],
+    "creative-operator-handoff-organ-gate": [
+        ".github/scripts/check-creative-operator-handoff-organ-governance.py"
+    ],
+    "creative-console-interface-organ-gate": [
+        ".github/scripts/check-creative-console-interface-organ-governance.py"
+    ],
+    "naming-protocol-organ-gate": [
+        ".github/scripts/check-naming-protocol-organ-governance.py"
+    ],
+    "naming-genome-organ-gate": [
+        ".github/scripts/check-naming-genome-organ-governance.py"
+    ],
+    "linguistic-mutation-organ-gate": [
+        ".github/scripts/check-linguistic-mutation-organ-governance.py"
+    ],
+    "mythic-engineering-translator-organ-gate": [
+        ".github/scripts/check-mythic-engineering-translator-organ-governance.py"
+    ],
+    "linguistic-drift-predictor-organ-gate": [
+        ".github/scripts/check-linguistic-drift-predictor-organ-governance.py"
+    ],
+    "linguistic-lineage-viz-organ-gate": [
+        ".github/scripts/check-linguistic-lineage-viz-organ-governance.py"
+    ],
+    "linguistic-remediation-organ-gate": [
+        ".github/scripts/check-linguistic-remediation-organ-governance.py"
+    ],
+    "linguistic-cascade-organ-gate": [
+        ".github/scripts/check-linguistic-cascade-organ-governance.py"
+    ],
+    "meta-linguistic-governance-organ-gate": [
+        ".github/scripts/check-meta-linguistic-governance-organ-governance.py"
     ],
 }
 

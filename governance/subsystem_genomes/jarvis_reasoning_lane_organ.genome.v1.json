@@ -55,7 +55,9 @@
       "jarvis_protocol_organ",
       "reasoning_contract_organ"
     ],
-    "children": []
+    "children": [
+      "creative_operator_handoff_organ"
+    ]
   },
   "activation": {
     "order": 3,
@@ -72,6 +74,9 @@
     "concept_spec": "docs/_future/ideas_pending/JARVIS_REASONING_LANE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/JARVIS_REASONING_LANE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/JARVIS_REASONING_LANE_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/JARVIS_REASONING_LANE_ORGAN.md",
+    "engineering_class": "JarvisReasoningLaneInterface",
+    "mythic_label": "Jarvis Reasoning Lane Organ",
+    "linguistic_version": "1.0.0"
   }
 }

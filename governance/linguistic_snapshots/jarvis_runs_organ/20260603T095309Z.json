@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "jarvis_runs_organ",
+  "captured_at": "2026-06-03T09:53:09Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "jarvis_runs_organ",
+      "engineering_class": "JarvisRunsEngine",
+      "mythic_label": "Jarvis Runs Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Jarvis Runs Subsystem",
+      "module_path": "src/jarvis_runs_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/jarvis_runs_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Jarvis Runs Subsystem"
+      },
+      "active_doc": {
+        "title": "Jarvis Runs Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "fca163f5084773f9c624e93c2d6137b5c67aa733af9d41f04213a3fd2c7b3cdc",
+    "engineering": "fb3e345b03d67a699cc3bb69c83dc8b0b709bb0efccf7f963ec0079059f4a8ca",
+    "combined": "677c1afbeb4ce1843c1fb2ecac8d8979fa58c9a9bb2d3dcba5cd0887d05c9a8d"
+  }
+}

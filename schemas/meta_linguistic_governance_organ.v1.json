@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "meta_linguistic_governance_organ.v1",
+  "title": "meta_linguistic_governance_organ v1",
+  "type": "object",
+  "required": [
+    "meta_linguistic_governance_organ_version",
+    "module_id",
+    "cisiv_stage",
+    "claim_label"
+  ],
+  "properties": {
+    "meta_linguistic_governance_organ_version": {
+      "const": "meta_linguistic_governance_organ.v1"
+    },
+    "module_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status_summary": {
+      "type": "string"
+    },
+    "cisiv_stage": {
+      "enum": [
+        "concept",
+        "identity",
+        "structure",
+        "implementation",
+        "verification"
+      ]
+    },
+    "claim_label": {
+      "enum": [
+        "asserted",
+        "proven",
+        "rejected"
+      ]
+    },
+    "read_only": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": true
+}

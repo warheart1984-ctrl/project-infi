@@ -60,7 +60,8 @@
       "governed_event_chain_organ",
       "policy_gate_organ",
       "realtime_event_cause_predictor_organ",
-      "v8_runtime_organ"
+      "v8_runtime_organ",
+      "creative_core_runtime_organ"
     ]
   },
   "activation": {
@@ -78,6 +79,9 @@
     "concept_spec": "docs/_future/ideas_pending/PHASE_GATE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/PHASE_GATE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/PHASE_GATE_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/PHASE_GATE_ORGAN.md",
+    "engineering_class": "PhaseGateGate",
+    "mythic_label": "Phase Gate Organ",
+    "linguistic_version": "1.0.0"
   }
 }

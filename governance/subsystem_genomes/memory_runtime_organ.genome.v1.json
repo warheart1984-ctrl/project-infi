@@ -74,6 +74,9 @@
     "concept_spec": "docs/_future/ideas_pending/MEMORY_RUNTIME_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/MEMORY_RUNTIME_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/nova/MEMORY_RUNTIME_ORGAN.md"
+    "active_doc": "docs/subsystems/nova/MEMORY_RUNTIME_ORGAN.md",
+    "engineering_class": "MemoryRuntimeEngine",
+    "mythic_label": "Memory Runtime Organ",
+    "linguistic_version": "1.0.0"
   }
 }

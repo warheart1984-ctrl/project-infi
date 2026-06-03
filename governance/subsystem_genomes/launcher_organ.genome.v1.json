@@ -75,6 +75,9 @@
     "concept_spec": "docs/_future/ideas_pending/LAUNCHER_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/LAUNCHER_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/LAUNCHER_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/LAUNCHER_ORGAN.md",
+    "engineering_class": "LauncherEngine",
+    "mythic_label": "Launcher Organ",
+    "linguistic_version": "1.0.0"
   }
 }

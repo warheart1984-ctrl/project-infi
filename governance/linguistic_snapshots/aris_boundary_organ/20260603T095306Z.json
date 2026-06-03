@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "aris_boundary_organ",
+  "captured_at": "2026-06-03T09:53:06Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "aris_boundary_organ",
+      "engineering_class": "ArisBoundaryEngine",
+      "mythic_label": "Aris Boundary Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "ARIS Boundary Organ",
+      "module_path": "src/aris_boundary_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/aris_boundary_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "ARIS Boundary Organ"
+      },
+      "active_doc": {
+        "title": "Aris Boundary Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "8fea6c0cfc39d8fa30fcb6780383614c355e1b63c430c6f317954c6e10fbed6c",
+    "engineering": "554bf025b9709891a69bbace13e33f479cd3c7deb30386917cc3476b247a549e",
+    "combined": "dafeaa079f5d04737286817fa051d1bd96e13b119a8b7e02150552cb3d96de28"
+  }
+}

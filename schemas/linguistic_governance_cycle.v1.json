@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "linguistic_governance_cycle.v1",
+  "title": "Linguistic Governance Cycle Report v1",
+  "type": "object",
+  "required": [
+    "linguistic_governance_cycle_version",
+    "cycle_id",
+    "generated_at",
+    "metrics",
+    "phases"
+  ],
+  "properties": {
+    "linguistic_governance_cycle_version": {
+      "const": "linguistic_governance_cycle.v1"
+    },
+    "cycle_id": { "type": "string", "minLength": 1 },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "policy_mode": { "enum": ["observe", "enforce"] },
+    "remediation_min_band": { "enum": ["low", "medium", "high"] },
+    "metrics": {
+      "type": "object",
+      "required": [
+        "gene_count",
+        "high_count",
+        "medium_count",
+        "low_count",
+        "mean_drift_risk",
+        "playbook_count",
+        "playbook_coverage_pct"
+      ],
+      "properties": {
+        "gene_count": { "type": "integer", "minimum": 0 },
+        "high_count": { "type": "integer", "minimum": 0 },
+        "medium_count": { "type": "integer", "minimum": 0 },
+        "low_count": { "type": "integer", "minimum": 0 },
+        "mean_drift_risk": { "type": "number", "minimum": 0 },
+        "playbook_count": { "type": "integer", "minimum": 0 },
+        "playbook_coverage_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+      },
+      "additionalProperties": false
+    },
+    "deltas_from_previous": {
+      "type": "object",
+      "properties": {
+        "high_count_delta": { "type": "integer" },
+        "medium_count_delta": { "type": "integer" },
+        "mean_drift_risk_delta": { "type": "number" },
+        "playbook_coverage_pct_delta": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+    "phases": {
+      "type": "object",
+      "properties": {
+        "gates_passed": { "type": "boolean" },
+        "drift_refreshed": { "type": "boolean" },
+        "remediations_written": { "type": "integer", "minimum": 0 },
+        "cascade_parents_scanned": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": true
+    },
+    "optimization_recommendations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind"],
+        "properties": {
+          "kind": { "type": "string" },
+          "suggested": {},
+          "reason": { "type": "string" },
+          "genes": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "command": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "top_at_risk": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["gene", "drift_risk", "band"],
+        "properties": {
+          "gene": { "type": "string" },
+          "drift_risk": { "type": "integer" },
+          "band": { "enum": ["low", "medium", "high"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "cascade_summaries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "parent_gene": { "type": "string" },
+          "child_count": { "type": "integer" },
+          "high_drift_children": { "type": "integer" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

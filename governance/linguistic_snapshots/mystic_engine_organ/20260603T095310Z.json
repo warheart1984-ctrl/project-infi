@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "mystic_engine_organ",
+  "captured_at": "2026-06-03T09:53:10Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "mystic_engine_organ",
+      "engineering_class": "MysticEngineBridge",
+      "mythic_label": "Mystic engine",
+      "linguistic_version": "1.0.0",
+      "display_name": "Mystic Engine Organ",
+      "module_path": "src/mystic_engine_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/mystic_engine_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Mystic Engine Organ"
+      },
+      "active_doc": {
+        "title": "Mystic Engine Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "8592dd7692c654ba95a96143c7ddc9bc35514f67ad0d8cf7fcdccec0644476b9",
+    "engineering": "6348c17b0e17385dd4732d00b0437a9efc31c0871a37054ab0360bd970f7eae5",
+    "combined": "22d5bae78de2fde7a84f35e195c2d874fa28c99d3c048911e33e7c62e215d2b3"
+  }
+}

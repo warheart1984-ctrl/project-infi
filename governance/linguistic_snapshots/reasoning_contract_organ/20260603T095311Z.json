@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "reasoning_contract_organ",
+  "captured_at": "2026-06-03T09:53:11Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "reasoning_contract_organ",
+      "engineering_class": "ReasoningContractEngine",
+      "mythic_label": "Reasoning Contract Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Reasoning Contract Organ",
+      "module_path": "src/reasoning_contract_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/reasoning_contract_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Reasoning Contract Organ"
+      },
+      "active_doc": {
+        "title": "Reasoning Contract Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "59aed9f6939d82bd18e026493ca426b5007af9fa434f1e2fd152f06cd989f7b8",
+    "engineering": "f53cdba59daa8c9e2b2936f7b4ff9232ad2f1cde14f6281c4e24a53484e0fb22",
+    "combined": "3e63cea9e836c1dc782c2dfa1097dfcd3554dfbb6bdd6a7b60f9f68834fece8f"
+  }
+}

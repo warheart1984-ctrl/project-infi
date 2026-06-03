@@ -1,0 +1,82 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "linguistic_mutation_organ",
+    "version": "0.1.0-concept",
+    "stage": "governed",
+    "display_name": "Linguistic Mutation Subsystem"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md",
+      "docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md",
+      "docs/runtime/AAIS_RUNTIME_GUIDE.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    ],
+    "invariants": [
+      "Read-only v1 \u2014 subsystem does not mutate upstream authority",
+      "module_id frozen to AAIS-LMU-01"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/linguistic_mutation_organ.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/linguistic_mutation_organ.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/linguistic-mutation/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make linguistic-mutation-organ-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "E:\\project-infi\\docs\\proof\\platform\\LINGUISTIC_MUTATION_ORGAN_GOVERNED_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/platform/LINGUISTIC_MUTATION_ORGAN_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "naming_genome_organ",
+      "module_governance_organ"
+    ],
+    "children": [
+      "linguistic_cascade_organ",
+      "linguistic_drift_predictor_organ",
+      "meta_linguistic_governance_organ"
+    ]
+  },
+  "activation": {
+    "order": 3,
+    "batch_id": "alt22-summon-wave-2026-06",
+    "notes": "Release 22 wave 3"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/LINGUISTIC_MUTATION_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/LINGUISTIC_MUTATION_ORGAN_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/platform/LINGUISTIC_MUTATION_ORGAN.md"
+  }
+}

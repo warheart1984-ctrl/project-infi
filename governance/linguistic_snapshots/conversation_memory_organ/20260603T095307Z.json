@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "conversation_memory_organ",
+  "captured_at": "2026-06-03T09:53:07Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "conversation_memory_organ",
+      "engineering_class": "ConversationMemoryEngine",
+      "mythic_label": "Conversation Memory Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Conversation Memory Organ",
+      "module_path": "src/conversation_memory_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/conversation_memory_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Conversation Memory Organ"
+      },
+      "active_doc": {
+        "title": "Conversation Memory Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "dd522a7dfd1338f3c96e3d9958cc76d2c55ec783979419d6712007d5abe88d86",
+    "engineering": "60dc8da555d25d58083a1ec022e3adb2b0700ac7e5edc614a8f1cd90ca42d17d",
+    "combined": "c12f587b703d63f2cc396a75a75f4da94ad6a166551cc45a2db8f1b9827d8842"
+  }
+}

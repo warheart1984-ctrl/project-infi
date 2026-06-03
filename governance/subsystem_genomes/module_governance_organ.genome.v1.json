@@ -54,6 +54,8 @@
       "safety_envelope_organ"
     ],
     "children": [
+      "linguistic_mutation_organ",
+      "naming_protocol_organ",
       "recipe_module_organ"
     ]
   },
@@ -72,6 +74,9 @@
     "concept_spec": "docs/_future/ideas_pending/MODULE_GOVERNANCE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/MODULE_GOVERNANCE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/MODULE_GOVERNANCE_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/MODULE_GOVERNANCE_ORGAN.md",
+    "engineering_class": "ModuleGovernanceEngine",
+    "mythic_label": "Module Governance Organ",
+    "linguistic_version": "1.0.0"
   }
 }

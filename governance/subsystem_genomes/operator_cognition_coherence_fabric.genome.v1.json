@@ -39,7 +39,7 @@
     ]
   },
   "schema": {
-    "ref": "schemas/operator_cognition_coherence_fabric.v1.15.json",
+    "ref": "schemas/operator_cognition_coherence_fabric.v1.17.json",
     "frozen": true
   },
   "runtime": {
@@ -81,6 +81,7 @@
       "continuity_witness_organ",
       "forge_contractor_organ",
       "jarvis_protocol_organ",
+      "naming_genome_organ",
       "project_infi_state_machine_organ",
       "reasoning_executive_organ"
     ]
@@ -108,6 +109,9 @@
     "concept_spec": "docs/_future/ideas_pending/OPERATOR_COGNITION_COHERENCE_FABRIC.md",
     "mvp_plan": "docs/_future/ideas_pending/OPERATOR_COGNITION_COHERENCE_FABRIC_MVP_PLAN.md",
     "active_doc": "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md",
-    "summon_eligible": false
+    "summon_eligible": false,
+    "engineering_class": "OperatorCognitionCoherenceLayer",
+    "mythic_label": "Coherence Fabric",
+    "linguistic_version": "1.0.0"
   }
 }

@@ -180,6 +180,60 @@ genome-gate:
 naming-gate:
 	python3 tools/naming_protocol_lint.py
 
+naming-genome-gate:
+	python3 tools/governance/check_naming_genome.py --snapshot
+
+naming-genome-gate-strict:
+	python3 tools/governance/check_naming_genome.py --snapshot --strict
+
+linguistic-diff:
+	python3 tools/linguistic_diff.py --gene $(GENE)
+
+translate-mythic:
+	python3 tools/mythic_engineering_translator.py --mythic "$(MYTHIC)"
+
+linguistic-mutation-gate:
+	python3 tools/governance/check_linguistic_mutation_gate.py
+
+linguistic-drift-gate:
+	python3 tools/linguistic_drift_predictor.py --json -o governance/linguistic_drift_report.v1.json
+
+linguistic-lineage-viz:
+	python3 tools/linguistic_lineage_viz.py $(if $(GENE),--gene $(GENE),) $(if $(OUTPUT),-o $(OUTPUT),) $(if $(CASCADE_FROM),--cascade-from $(CASCADE_FROM),)
+
+meta-linguistic-gate:
+	python3 -m src.governance_organs.linguistic_governance_engine --gate
+
+linguistic-remediation-gate:
+	python3 tools/governance/check_linguistic_remediation_gate.py
+
+linguistic-cascade-report:
+	python3 tools/linguistic_cascade_report.py --gene $(GENE)
+
+generate-linguistic-remediations:
+	python3 tools/governance/generate_linguistic_remediations.py --min-band medium
+
+linguistic-governance-cycle:
+	python3 tools/governance/run_linguistic_governance_cycle.py
+
+linguistic-governance-cycle-gate:
+	python3 tools/governance/check_linguistic_governance_cycle_gate.py
+
+linguistic-governance-cycle-fast:
+	python3 tools/governance/run_linguistic_governance_cycle.py --skip-gates
+
+linguistic-predictive-cycle:
+	python3 tools/governance/run_linguistic_predictive_cycle.py
+
+linguistic-predictive-cycle-fast:
+	python3 tools/governance/run_linguistic_predictive_cycle.py --skip-drift-refresh
+
+linguistic-drift-forecast:
+	python3 tools/linguistic_drift_forecast.py -o governance/linguistic_drift_forecast.v1.json
+
+linguistic-predictive-gate:
+	python3 tools/governance/check_linguistic_predictive_gate.py
+
 safety-envelope-gate:
 	python3 .github/scripts/check-safety-envelope-governance.py
 
@@ -770,6 +824,84 @@ alt20-2-gate: alt20-1-gate alt20-closure-gate
 
 alt20-governed-gate:
 	python3 tools/governance/check_alt20_governed_eligibility.py
+
+creative-core-runtime-organ-gate:
+	python3 .github/scripts/check-creative-core-runtime-organ-governance.py
+
+v9-core-organ-gate:
+	python3 .github/scripts/check-v9-core-organ-governance.py
+
+v9-runtime-organ-gate:
+	python3 .github/scripts/check-v9-runtime-organ-governance.py
+
+v10-core-organ-gate:
+	python3 .github/scripts/check-v10-core-organ-governance.py
+
+v10-runtime-organ-gate:
+	python3 .github/scripts/check-v10-runtime-organ-governance.py
+
+v10-action-engine-organ-gate:
+	python3 .github/scripts/check-v10-action-engine-organ-governance.py
+
+creative-capability-bridge-organ-gate:
+	python3 .github/scripts/check-creative-capability-bridge-organ-governance.py
+
+creative-operator-handoff-organ-gate:
+	python3 .github/scripts/check-creative-operator-handoff-organ-governance.py
+
+creative-console-interface-organ-gate:
+	python3 .github/scripts/check-creative-console-interface-organ-governance.py
+
+alt21-gate: creative-core-runtime-organ-gate v9-core-organ-gate v9-runtime-organ-gate v10-core-organ-gate v10-runtime-organ-gate v10-action-engine-organ-gate creative-capability-bridge-organ-gate creative-operator-handoff-organ-gate creative-console-interface-organ-gate genome-gate
+
+alt21-1-gate: alt21-gate alt20-1-gate
+
+alt21-closure-gate:
+	python3 tools/governance/check_alt21_closure.py
+
+alt21-2-gate: alt21-1-gate alt21-closure-gate
+
+alt21-governed-gate:
+	python3 tools/governance/check_alt21_governed_eligibility.py
+
+naming-protocol-organ-gate:
+	python3 .github/scripts/check-naming-protocol-organ-governance.py
+
+naming-genome-organ-gate:
+	python3 .github/scripts/check-naming-genome-organ-governance.py
+
+linguistic-mutation-organ-gate:
+	python3 .github/scripts/check-linguistic-mutation-organ-governance.py
+
+mythic-engineering-translator-organ-gate:
+	python3 .github/scripts/check-mythic-engineering-translator-organ-governance.py
+
+linguistic-drift-predictor-organ-gate:
+	python3 .github/scripts/check-linguistic-drift-predictor-organ-governance.py
+
+linguistic-lineage-viz-organ-gate:
+	python3 .github/scripts/check-linguistic-lineage-viz-organ-governance.py
+
+linguistic-remediation-organ-gate:
+	python3 .github/scripts/check-linguistic-remediation-organ-governance.py
+
+linguistic-cascade-organ-gate:
+	python3 .github/scripts/check-linguistic-cascade-organ-governance.py
+
+meta-linguistic-governance-organ-gate:
+	python3 .github/scripts/check-meta-linguistic-governance-organ-governance.py
+
+alt22-gate: naming-protocol-organ-gate naming-genome-organ-gate linguistic-mutation-organ-gate mythic-engineering-translator-organ-gate linguistic-drift-predictor-organ-gate linguistic-lineage-viz-organ-gate linguistic-remediation-organ-gate linguistic-cascade-organ-gate meta-linguistic-governance-organ-gate genome-gate
+
+alt22-1-gate: alt22-gate alt21-1-gate
+
+alt22-closure-gate:
+	python3 tools/governance/check_alt22_closure.py
+
+alt22-2-gate: alt22-1-gate alt22-closure-gate
+
+alt22-governed-gate:
+	python3 tools/governance/check_alt22_governed_eligibility.py
 
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py

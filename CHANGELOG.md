@@ -13,6 +13,58 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.18.0] - 2026-06-03 — Release 22 Meta-Linguistic Governance Fabric
+
+**Release 22** — nine read-only subsystems at governed; Coherence Layer v1.17 with naming protocol, linguistic mutation, and meta orchestration layers; meta-linguistic governance engine (Waves 0–10).
+
+### Added
+
+- **Release 22.0** — `naming_protocol_organ`, `naming_genome_organ`, `linguistic_mutation_organ`, `mythic_engineering_translator_organ`, `linguistic_drift_predictor_organ`, `linguistic_lineage_viz_organ`, `linguistic_remediation_organ`, `linguistic_cascade_organ`, `meta_linguistic_governance_organ`; status APIs; `make alt22-gate`; `tools/governance/alt22_promote_mvp.py`
+- **Release 22.1** — Coherence Layer v1.17 + `naming_protocol_layer`, `linguistic_mutation_layer`, `meta_linguistic_orchestration_layer`, `meta_linguistic_governance_aligned`; `make alt22-1-gate`
+- **Release 22.2** — `META_LINGUISTIC_GOVERNANCE_V1_PROOF`; `make alt22-2-gate`
+- **Governed promotion** — `tools/governance/alt22_promote_governed.py`; `make alt22-governed-gate`
+- **Meta-linguistic stack** — naming protocol lint, genome validator, mutation/remediation/cascade engines, drift predictor, lineage viz, `make meta-linguistic-gate`
+
+### Changed
+
+- Schema registry: **138 governed** subsystem schemas (129 prior + 9 Release 22)
+- `operator_cognition_coherence_fabric` schema ref → v1.17
+
+### Verification (v1.18.0)
+
+```bash
+make alt22-gate alt22-1-gate alt22-2-gate alt22-governed-gate
+make meta-linguistic-gate
+python -m pytest tests/test_naming_protocol_organ.py tests/test_naming_genome_organ.py tests/test_linguistic_mutation_organ.py tests/test_mythic_engineering_translator_organ.py tests/test_linguistic_drift_predictor_organ.py tests/test_linguistic_lineage_viz_organ.py tests/test_linguistic_remediation_organ.py tests/test_linguistic_cascade_organ.py tests/test_meta_linguistic_governance_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.18.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.18.0
+
+## [1.17.0] - 2026-06-03 — Release 21 Creative Runtime V9/V10 Fabric
+
+**Release 21** — nine read-only subsystems at governed; Coherence Layer v1.16 with creative core, V9 creative, and V10 creative runtime layers.
+
+### Added
+
+- **Release 21.0** — `creative_core_runtime_organ`, `v9_core_organ`, `v9_runtime_organ`, `v10_core_organ`, `v10_runtime_organ`, `v10_action_engine_organ`, `creative_capability_bridge_organ`, `creative_operator_handoff_organ`, `creative_console_interface_organ`; status APIs; `make alt21-gate`; `tools/governance/alt21_promote_mvp.py`
+- **Release 21.1** — Coherence Layer v1.16 + `creative_core_layer`, `v9_creative_layer`, `v10_creative_layer`, `creative_runtime_v9_v10_aligned`; `make alt21-1-gate`
+- **Release 21.2** — `CREATIVE_RUNTIME_V9_V10_V1_PROOF`; `make alt21-2-gate`
+- **Governed promotion** — `tools/governance/alt21_promote_governed.py`; `make alt21-governed-gate`
+
+### Changed
+
+- Schema registry: **129 governed** subsystem schemas (120 prior + 9 Release 21)
+- `operator_cognition_coherence_fabric` schema ref → v1.16
+
+### Verification (v1.17.0)
+
+```bash
+make alt21-gate alt21-1-gate alt21-2-gate alt21-governed-gate
+python -m pytest tests/test_creative_core_runtime_organ.py tests/test_v9_core_organ.py tests/test_v9_runtime_organ.py tests/test_v10_core_organ.py tests/test_v10_runtime_organ.py tests/test_v10_action_engine_organ.py tests/test_creative_capability_bridge_organ.py tests/test_creative_operator_handoff_organ.py tests/test_creative_console_interface_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.17.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.17.0
+
 ## [1.16.0] - 2026-06-03 — Release 20 Operator Workspace & Extended Interfaces
 
 **Release 20** — nine read-only subsystems at governed; Coherence Layer v1.15 with workspace/memory, hygiene/blueprint, and extended operator interface layers.

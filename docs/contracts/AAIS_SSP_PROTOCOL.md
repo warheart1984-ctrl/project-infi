@@ -688,6 +688,66 @@ Depends on: Release 19 governed product interfaces; read-only posture; no new ex
 | Proof | `docs/proof/platform/OPERATOR_WORKSPACE_INTERFACES_V1_PROOF.md`, `docs/proof/platform/MEMORY_SMITH_ORGAN_V1_PROOF.md`, `docs/proof/platform/WORKFLOW_INTERFACES_ORGAN_V1_PROOF.md` |
 | Gate | `make alt20-2-gate` |
 
+## Release 21 — Creative Runtime V9/V10 Fabric
+
+Batch-admit nine read-only **subsystems** across bounded creative core, V9/V10 runtime lanes, capability bridge, operator handoff, and console interfaces.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt21-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `creative_core_runtime_organ` → `v9_core_organ` → `v9_runtime_organ` → `v10_core_organ` → `v10_runtime_organ` → `v10_action_engine_organ` → `creative_capability_bridge_organ` → `creative_operator_handoff_organ` → `creative_console_interface_organ` |
+| MVP promotion | `tools/governance/alt21_promote_mvp.py` |
+| Gates | `make alt21-gate` |
+| Governed promotion | `tools/governance/alt21_promote_governed.py` + `make alt21-governed-gate` |
+
+Depends on: Release 20 governed workspace/interfaces; live `creative_core_runtime`, `v9_runtime`, `v10_runtime`; read-only posture; no new execute authority beyond existing v9/v10 POST routes.
+
+## Release 21.1 Coherence Layer Creative Runtime Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt21-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.16` + `creative_core_layer[]`, `v9_creative_layer[]`, `v10_creative_layer[]` |
+| Gate | `make alt21-1-gate` |
+
+## Release 21.2 Creative Runtime V9/V10 Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt21-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/platform/CREATIVE_RUNTIME_V9_V10_V1_PROOF.md`, `docs/proof/platform/CREATIVE_CORE_RUNTIME_ORGAN_V1_PROOF.md`, `docs/proof/platform/V9_RUNTIME_ORGAN_V1_PROOF.md` |
+| Gate | `make alt21-2-gate` |
+
+## Release 22 — Meta-Linguistic Governance Fabric
+
+Batch-admit nine read-only **subsystems** across naming protocol, genome validation, linguistic mutation, translation, drift, lineage viz, remediation, cascade, and meta orchestration.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt22-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `naming_protocol_organ` → `naming_genome_organ` → `linguistic_mutation_organ` → `mythic_engineering_translator_organ` → `linguistic_drift_predictor_organ` → `linguistic_lineage_viz_organ` → `linguistic_remediation_organ` → `linguistic_cascade_organ` → `meta_linguistic_governance_organ` |
+| MVP promotion | `tools/governance/alt22_promote_mvp.py` |
+| Gates | `make alt22-gate` |
+| Governed promotion | `tools/governance/alt22_promote_governed.py` + `make alt22-governed-gate` |
+
+Depends on: Release 21 governed creative runtime; [AAIS_META_LINGUISTIC_GOVERNANCE.md](./AAIS_META_LINGUISTIC_GOVERNANCE.md); live `make meta-linguistic-gate`; read-only posture; no autonomous MP-X apply via status APIs.
+
+## Release 22.1 Coherence Layer Meta-Linguistic Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt22-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.17` + `naming_protocol_layer[]`, `linguistic_mutation_layer[]`, `meta_linguistic_orchestration_layer[]` |
+| Gate | `make alt22-1-gate` |
+
+## Release 22.2 Meta-Linguistic Governance Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt22-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/platform/META_LINGUISTIC_GOVERNANCE_V1_PROOF.md`, `docs/proof/platform/NAMING_GENOME_ORGAN_V1_PROOF.md`, `docs/proof/platform/LINGUISTIC_CASCADE_ORGAN_V1_PROOF.md` |
+| Gate | `make alt22-2-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per

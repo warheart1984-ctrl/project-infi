@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "perception_lane_organ",
+  "captured_at": "2026-06-03T09:53:11Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "perception_lane_organ",
+      "engineering_class": "PerceptionLaneInterface",
+      "mythic_label": "Perception Lane Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Perception Lane Organ",
+      "module_path": "src/perception_lane_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/perception_lane_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Perception Lane Organ"
+      },
+      "active_doc": {
+        "title": "Perception Lane Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "d77f5aafbf451097bfceff805d9e85aa75fad93814dc9a0ec7d8d0babc04dc04",
+    "engineering": "713a3f1a6d820b2777e1aedcb8d861d6a5311313673fc8c49a49adfbf2b2e7e9",
+    "combined": "cb007177087d04c34f128eabed7523012db30b1a8dbe0ea0b001c00e32093e4d"
+  }
+}

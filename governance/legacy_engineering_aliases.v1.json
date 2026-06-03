@@ -772,6 +772,69 @@
       "engineering_class": "WorkflowShellEngine",
       "mythic_label": "Workflow Shell Organ",
       "grandfathered": true
+    },
+    {
+      "gene": "creative_capability_bridge_organ",
+      "legacy_path": "src/creative_capability_bridge_organ.py",
+      "engineering_class": "CreativeCapabilityBridgeBridge",
+      "mythic_label": "Creative Capability Bridge Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "creative_console_interface_organ",
+      "legacy_path": "src/creative_console_interface_organ.py",
+      "engineering_class": "CreativeConsoleInterfaceInterface",
+      "mythic_label": "Creative Console Interface Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "creative_core_runtime_organ",
+      "legacy_path": "src/creative_core_runtime_organ.py",
+      "engineering_class": "CreativeCoreRuntimeEngine",
+      "mythic_label": "Creative Core Runtime Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "creative_operator_handoff_organ",
+      "legacy_path": "src/creative_operator_handoff_organ.py",
+      "engineering_class": "CreativeOperatorHandoffBridge",
+      "mythic_label": "Creative Operator Handoff Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "v10_action_engine_organ",
+      "legacy_path": "src/v10_action_engine_organ.py",
+      "engineering_class": "V10ActionEngineEngine",
+      "mythic_label": "V10 Action Engine Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "v10_core_organ",
+      "legacy_path": "src/v10_core_organ.py",
+      "engineering_class": "V10CoreEngine",
+      "mythic_label": "V10 Core Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "v10_runtime_organ",
+      "legacy_path": "src/v10_runtime_organ.py",
+      "engineering_class": "V10RuntimeEngine",
+      "mythic_label": "V10 Runtime Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "v9_core_organ",
+      "legacy_path": "src/v9_core_organ.py",
+      "engineering_class": "V9CoreEngine",
+      "mythic_label": "V9 Core Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "v9_runtime_organ",
+      "legacy_path": "src/v9_runtime_organ.py",
+      "engineering_class": "V9RuntimeEngine",
+      "mythic_label": "V9 Runtime Organ",
+      "grandfathered": true
     }
   ]
 }

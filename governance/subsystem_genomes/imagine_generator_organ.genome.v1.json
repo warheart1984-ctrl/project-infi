@@ -72,6 +72,9 @@
     "concept_spec": "docs/_future/ideas_pending/IMAGINE_GENERATOR_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/IMAGINE_GENERATOR_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/storyforge/IMAGINE_GENERATOR_ORGAN.md"
+    "active_doc": "docs/subsystems/storyforge/IMAGINE_GENERATOR_ORGAN.md",
+    "engineering_class": "ImagineGeneratorEngine",
+    "mythic_label": "Imagine Generator Organ",
+    "linguistic_version": "1.0.0"
   }
 }

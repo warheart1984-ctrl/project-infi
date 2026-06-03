@@ -72,6 +72,9 @@
     "concept_spec": "docs/_future/ideas_pending/PERCEPTION_GATEWAY_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/PERCEPTION_GATEWAY_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/PERCEPTION_GATEWAY_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/PERCEPTION_GATEWAY_ORGAN.md",
+    "engineering_class": "PerceptionGatewayGate",
+    "mythic_label": "Perception Gateway Organ",
+    "linguistic_version": "1.0.0"
   }
 }

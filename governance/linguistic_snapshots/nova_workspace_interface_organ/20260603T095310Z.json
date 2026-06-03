@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "nova_workspace_interface_organ",
+  "captured_at": "2026-06-03T09:53:10Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "nova_workspace_interface_organ",
+      "engineering_class": "NovaWorkspaceInterfaceInterface",
+      "mythic_label": "Nova Workspace Interface Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Nova Workspace Interface Subsystem",
+      "module_path": "src/nova_workspace_interface_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/nova_workspace_interface_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Nova Workspace Interface Subsystem"
+      },
+      "active_doc": {
+        "title": "Nova Workspace Interface Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "897956da8529c852b07b6371059d7dea4aa710f39cd17fa53586c914a0c859e2",
+    "engineering": "90c2be1e92fb57faa2daf1ea0a4e3d34b327ad1cf938384034982d1510d766c6",
+    "combined": "b9f93d7a15b1c06cab7fe1fdade2e55105889c0bfa05b6927b1d2e16593d3a5d"
+  }
+}

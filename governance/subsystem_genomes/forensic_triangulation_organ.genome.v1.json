@@ -72,6 +72,9 @@
     "concept_spec": "docs/_future/ideas_pending/FORENSIC_TRIANGULATION_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/FORENSIC_TRIANGULATION_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/forensics/FORENSIC_TRIANGULATION_ORGAN.md"
+    "active_doc": "docs/subsystems/forensics/FORENSIC_TRIANGULATION_ORGAN.md",
+    "engineering_class": "ForensicTriangulationEngine",
+    "mythic_label": "Forensic Triangulation Organ",
+    "linguistic_version": "1.0.0"
   }
 }

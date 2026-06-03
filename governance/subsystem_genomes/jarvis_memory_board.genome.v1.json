@@ -79,6 +79,9 @@
     "concept_spec": "docs/_future/ideas_pending/JARVIS_MEMORY_BOARD.md",
     "mvp_plan": "docs/_future/ideas_pending/JARVIS_MEMORY_BOARD_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/JARVIS_MEMORY_BOARD.md"
+    "active_doc": "docs/subsystems/platform/JARVIS_MEMORY_BOARD.md",
+    "engineering_class": "JarvisMemoryBoard",
+    "mythic_label": "Jarvis memory board",
+    "linguistic_version": "1.0.0"
   }
 }

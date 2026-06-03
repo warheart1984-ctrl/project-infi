@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "jarvis_protocol_organ",
+  "captured_at": "2026-06-03T09:53:09Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "jarvis_protocol_organ",
+      "engineering_class": "JarvisProtocolEngine",
+      "mythic_label": "Jarvis Protocol Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Jarvis Protocol Organ",
+      "module_path": "src/jarvis_protocol_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/jarvis_protocol_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Jarvis Protocol Organ"
+      },
+      "active_doc": {
+        "title": "Jarvis Protocol Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "c89541d23ab11842f3526e2a9692802120af191e0dac43691f497a52fb716d28",
+    "engineering": "8485a1f50a09fe32fef0b5a4e720f4f7722e4499c43000455a7ef43d757a7061",
+    "combined": "a2b159aa4121803b20170ec131be6d4af72da9ff468bde9b7503729f42db0214"
+  }
+}

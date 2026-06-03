@@ -85,7 +85,10 @@
       "phase_gate_organ",
       "story_forge_lane_organ",
       "verification_gate_organ",
-      "workflow_shell_organ"
+      "workflow_shell_organ",
+      "v9_core_organ",
+      "v10_core_organ",
+      "creative_capability_bridge_organ"
     ]
   },
   "activation": {
@@ -103,6 +106,9 @@
     "concept_spec": "docs/_future/ideas_pending/CAPABILITY_SERVICE_BRIDGE.md",
     "mvp_plan": "docs/_future/ideas_pending/CAPABILITY_SERVICE_BRIDGE_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/CAPABILITY_SERVICE_BRIDGE.md"
+    "active_doc": "docs/subsystems/platform/CAPABILITY_SERVICE_BRIDGE.md",
+    "engineering_class": "CapabilityServiceBridge",
+    "mythic_label": "Capability service bridge",
+    "linguistic_version": "1.0.0"
   }
 }

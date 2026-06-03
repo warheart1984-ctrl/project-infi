@@ -73,6 +73,9 @@
     "concept_spec": "docs/_future/ideas_pending/NARRATIVE_TRUST_PACK_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/NARRATIVE_TRUST_PACK_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/storyforge/NARRATIVE_TRUST_PACK_ORGAN.md"
+    "active_doc": "docs/subsystems/storyforge/NARRATIVE_TRUST_PACK_ORGAN.md",
+    "engineering_class": "NarrativeTrustPackEngine",
+    "mythic_label": "Narrative Trust Pack Organ",
+    "linguistic_version": "1.0.0"
   }
 }

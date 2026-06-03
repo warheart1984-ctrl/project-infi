@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "module_governance_organ",
+  "captured_at": "2026-06-03T09:53:10Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "module_governance_organ",
+      "engineering_class": "ModuleGovernanceEngine",
+      "mythic_label": "Module Governance Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Module Governance Organ",
+      "module_path": "src/module_governance_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/module_governance_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Module Governance Organ"
+      },
+      "active_doc": {
+        "title": "Module Governance Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "e2bc3bd2af6843721f37620bfec74c6b67b18e8a07e825a44aef017e75acbd64",
+    "engineering": "bc6304a973ccb19c760839e746f8eb1a16f5a05f977c149803ba3ecb3ad21154",
+    "combined": "328985bf099ef46e2fdcd57b9f69bab121f1251c9c2d10b4c4608bd4c17f181b"
+  }
+}

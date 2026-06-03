@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "aais_composed_runtime_organ",
+  "captured_at": "2026-06-03T09:53:06Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "aais_composed_runtime_organ",
+      "engineering_class": "AaisComposedRuntimeEngine",
+      "mythic_label": "Aais Composed Runtime Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "AAIS Composed Runtime Organ",
+      "module_path": "src/aais_composed_runtime_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/aais_composed_runtime_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "AAIS Composed Runtime Organ"
+      },
+      "active_doc": {
+        "title": "Aais Composed Runtime Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "84dddbd9b1681573cbc93c0401e868b2cb8f52e59d9b9f9c176605a0b5721111",
+    "engineering": "efdf2a21a05aba4d65e2b922569c00a340f5570617948088bcb77b125e580838",
+    "combined": "997f1342b01cd4ec15fb96a755cb0cdd89a67e61566e84232c852fe65631c0f2"
+  }
+}

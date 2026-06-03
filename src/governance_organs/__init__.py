@@ -7,6 +7,21 @@ from src.governance_organs.mutation_engine import MutationEngine
 from src.governance_organs.promotion_engine import PromotionEngine
 from src.governance_organs.retirement_engine import RetirementEngine
 from src.governance_organs.adaptive_engine import AdaptiveEngine, Tier5Governance
+from src.governance_organs.linguistic_governance_engine import LinguisticGovernanceEngine
+from src.governance_organs.linguistic_governance_cycle_engine import (
+    LinguisticGovernanceCycleEngine,
+)
+from src.governance_organs.linguistic_predictive_governance_engine import (
+    LinguisticPredictiveGovernanceEngine,
+)
+
+
+class LinguisticGovernanceRuntime:
+    """Facade for meta-linguistic gates, cycle, predictive cycle, drift/cascade."""
+
+    linguistic = LinguisticGovernanceEngine
+    cycle = LinguisticGovernanceCycleEngine
+    predictive = LinguisticPredictiveGovernanceEngine
 
 
 class Alt4Runtime:
@@ -50,10 +65,26 @@ class Alt4Runtime:
         if strict and pending:
             print("[alt4-gate] FAIL: strict mode — pending promotions block gate")
             return 1
+        import os
+
+        if os.getenv("AAIS_META_LINGUISTIC_GATE", "").strip().lower() in {
+            "1",
+            "true",
+            "yes",
+        }:
+            ling = LinguisticGovernanceEngine()
+            ling_report = ling.run_all_gates(strict=strict)
+            if not ling_report.passed:
+                print("[alt4-gate] FAIL: meta-linguistic-gate failed")
+                return 1
         return 0
 
 
 __all__ = [
+    "LinguisticGovernanceRuntime",
+    "LinguisticGovernanceEngine",
+    "LinguisticGovernanceCycleEngine",
+    "LinguisticPredictiveGovernanceEngine",
     "Alt4Runtime",
     "AdaptiveEngine",
     "Tier5Governance",

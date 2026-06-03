@@ -70,6 +70,9 @@
     "concept_spec": "docs/_future/ideas_pending/KNOWLEDGE_AUTHORITY_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/KNOWLEDGE_AUTHORITY_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/KNOWLEDGE_AUTHORITY_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/KNOWLEDGE_AUTHORITY_ORGAN.md",
+    "engineering_class": "KnowledgeAuthorityEngine",
+    "mythic_label": "Knowledge Authority Organ",
+    "linguistic_version": "1.0.0"
   }
 }

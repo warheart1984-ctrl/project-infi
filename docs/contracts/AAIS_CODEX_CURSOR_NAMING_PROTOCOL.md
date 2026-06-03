@@ -184,10 +184,129 @@ Full registry: [governance/legacy_engineering_aliases.v1.json](../../governance/
 
 ---
 
-## 12. Verification
+## 12. Linguistic genome (naming-genome-gate)
+
+Cross-layer validation of mythic and engineering text across genomes, alias registry, source headers, and concept specs.
+
+```bash
+make naming-genome-gate          # warn mode; writes snapshots on fingerprint change
+make naming-genome-gate-strict   # errors on missing SSP linguistic fields
+python tools/governance/backfill_naming_genome.py --write  # one-time SSP backfill
+```
+
+Required SSP fields (after backfill):
+
+| Field | Purpose |
+|-------|---------|
+| `ssp.engineering_class` | PascalCase `<Domain><Function><Role>` |
+| `ssp.mythic_label` | Short mythic name for operator docs |
+| `ssp.linguistic_version` | Bump on MP-X mythic/engineering changes (e.g. `1.0.0`) |
+
+Snapshots: [governance/linguistic_snapshots/](../../governance/linguistic_snapshots/) — schema [linguistic_snapshot.v1.json](../../schemas/linguistic_snapshot.v1.json).
+
+Library: [tools/linguistic_genome_lib.py](../../tools/linguistic_genome_lib.py).
+
+---
+
+## 13. Linguistic diff (hybrid history)
+
+Shows how mythic and engineering layers evolve for one gene.
+
+```bash
+# Snapshot timeline (latest checkpoints)
+python tools/linguistic_diff.py --gene operator_cognition_coherence_fabric
+
+# Git-backed older transitions
+python tools/linguistic_diff.py --gene operator_cognition_coherence_fabric --git --since 2026-05-01
+
+# Makefile convenience
+make linguistic-diff GENE=operator_cognition_coherence_fabric
+```
+
+**Hybrid policy:** snapshot checkpoints from naming-genome-gate first; git log on genome-linked paths fills older gaps.
+
+---
+
+## 15. Waves 5–8 (linguistic stack extensions)
+
+| Wave | Tool | Purpose |
+|------|------|---------|
+| **5** | `linguistic_mutation_engine` + `apply_linguistic_mutation.py` | MP-X `linguistic_layer` — governed mythic/engineering changes |
+| **6** | `mythic_engineering_translator.py` | Deterministic mythic → `<Domain><Function><Role>` for SSP |
+| **7** | `linguistic_lineage_viz.py` | Mermaid graph of genome lineage + linguistic labels |
+| **8** | `linguistic_drift_predictor.py` | Drift risk score (`low` / `medium` / `high`) from alignment + snapshots |
+
+```bash
+make translate-mythic MYTHIC='Runtime plane steward'
+make linguistic-mutation-gate
+python tools/governance/apply_linguistic_mutation.py --dry-run MP-LING-001 --gene operator_cognition_coherence_fabric
+make linguistic-drift-gate
+make linguistic-lineage-viz GENE=operator_cognition_coherence_fabric OUTPUT=docs/audit/LINGUISTIC_LINEAGE_GRAPH.md
+```
+
+**Drift remediation:** Wave 2 source headers, MP-LING mutation, or re-run translator.
+
+---
+
+## 16. Meta-linguistic governance (Waves 9–10)
+
+Orchestrator: [AAIS_META_LINGUISTIC_GOVERNANCE.md](./AAIS_META_LINGUISTIC_GOVERNANCE.md)
+
+| Wave | Tool | Purpose |
+|------|------|---------|
+| **9** | `generate_linguistic_remediations.py` | Drift-driven remediation playbooks (no auto-apply) |
+| **10** | `linguistic_cascade_report.py` | Lineage cascade impact when parent linguistic layer changes |
+| **Meta** | `make meta-linguistic-gate` | Runs naming + naming-genome + linguistic-mutation + linguistic-drift gates |
+
+```bash
+make meta-linguistic-gate
+python tools/governance/generate_linguistic_remediations.py --min-band medium
+make linguistic-remediation-gate
+python tools/linguistic_cascade_report.py --gene operator_cognition_coherence_fabric
+make linguistic-lineage-viz CASCADE_FROM=operator_cognition_coherence_fabric GENE=operator_cognition_coherence_fabric
+```
+
+Registry: [governance/meta_linguistic_registry.v1.json](../../governance/meta_linguistic_registry.v1.json) (`observe` | `enforce`).
+
+---
+
+## 17. Self-optimizing governance cycle (Wave 11)
+
+| Wave | Tool | Purpose |
+|------|------|---------|
+| **11** | `run_linguistic_governance_cycle.py` | Closed loop: gates → drift → remediations → cascade scan → optimize |
+
+```bash
+make linguistic-governance-cycle
+make linguistic-governance-cycle-gate
+```
+
+Cycle reports: [governance/linguistic_governance_cycles/](../../governance/linguistic_governance_cycles/). Recommendations only — no auto MP-LING apply.
+
+---
+
+## 18. Predictive governance cycle (Wave 12)
+
+| Wave | Tool | Purpose |
+|------|------|---------|
+| **12** | `run_linguistic_predictive_cycle.py` | Forecast drift before bands escalate; preemptive watch playbooks |
+
+```bash
+make linguistic-predictive-cycle
+make linguistic-drift-forecast
+make linguistic-predictive-gate
+```
+
+Run Wave 12 before Wave 11 for full anticipate → react loop. Forecast: [governance/linguistic_drift_forecast.v1.json](../../governance/linguistic_drift_forecast.v1.json).
+
+---
+
+## 14. Verification
 
 ```bash
 make naming-gate
+make naming-genome-gate
+make meta-linguistic-gate
 make ssp-gate
 make genome-gate
 ```

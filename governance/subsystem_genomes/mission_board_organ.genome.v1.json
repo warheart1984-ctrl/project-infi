@@ -72,6 +72,9 @@
     "concept_spec": "docs/_future/ideas_pending/MISSION_BOARD_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/MISSION_BOARD_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/MISSION_BOARD_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/MISSION_BOARD_ORGAN.md",
+    "engineering_class": "MissionBoardEngine",
+    "mythic_label": "Mission Board Organ",
+    "linguistic_version": "1.0.0"
   }
 }

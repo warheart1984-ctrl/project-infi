@@ -38,8 +38,9 @@ registered families.
 | `mutation` | `history[]` | yes | List of MP-X mutation proposals |
 | `ssp` | `concept_spec`, `mvp_plan`, `active_doc` | no | SSP artifact cross-links |
 | `ssp` | `summon_eligible` | no | `false` when retired from summon table |
-| `ssp` | `engineering_class` | no | PascalCase `<Domain><Function><Role>` — documentation until schema gene ships ([AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](./AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md)) |
+| `ssp` | `engineering_class` | no | PascalCase `<Domain><Function><Role>` — validated by `make naming-genome-gate` |
 | `ssp` | `mythic_label` | no | Short mythic label for operator docs (comments only in code) |
+| `ssp` | `linguistic_version` | no | Semver; bump when mythic/engineering text changes via MP-X |
 
 ## Registry Location
 

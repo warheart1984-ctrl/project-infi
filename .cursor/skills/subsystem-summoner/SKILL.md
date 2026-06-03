@@ -62,6 +62,14 @@ Execute steps 1–5 and 7 for **each** idea seed. Step 6 is optional. For batche
 
 ### Step 1 — Generate Concept Spec
 
+When the idea seed is **mythic-only**, run the translator first:
+
+```bash
+python tools/mythic_engineering_translator.py --mythic "<seed text>" --format markdown
+```
+
+Or `make translate-mythic MYTHIC='<seed text>'`. Copy **Mythic** and **Engineering** lines into concept spec §1.
+
 **Output:** `docs/_future/ideas_pending/<UPPER_SNAKE>.md`
 
 Use template: [templates/concept_spec.md](./templates/concept_spec.md)
@@ -200,8 +208,19 @@ Use template: [templates/genome.v1.json](./templates/genome.v1.json)
 - `runtime.surface`: `[]` (no runtime code)
 - `proof.bundles`: `[]`; use `target_bundles` for planned proof paths
 - `ssp.summon_eligible`: `true` until promoted or retired
-- `ssp.engineering_class`: PascalCase `<Domain><Function><Role>` (documentation field)
-- `ssp.mythic_label`: short mythic name for operator docs (documentation field)
+- `ssp.engineering_class`: PascalCase `<Domain><Function><Role>` (required after concept admission)
+- `ssp.mythic_label`: short mythic name for operator docs (required)
+- `ssp.linguistic_version`: `1.0.0` at concept; bump on MP-X linguistic changes
+
+After Step 7: run `make naming-genome-gate` to capture linguistic snapshot.
+
+**Before MP-LING apply** (when genome has `lineage.children`): run cascade impact report:
+
+```bash
+python tools/linguistic_cascade_report.py --gene <gene>
+```
+
+If [linguistic_cascade_policy.v1.json](../../governance/linguistic_cascade_policy.v1.json) sets `block_apply_without_cascade_ack: true`, include acknowledged child genes in the linguistic delta `cascade_ack` array.
 
 Register in [governance/subsystem_genomes/README.md](../../governance/subsystem_genomes/README.md).
 

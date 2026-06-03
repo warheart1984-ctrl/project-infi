@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "cognitive_bridge_organ",
+  "captured_at": "2026-06-03T09:53:07Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "cognitive_bridge_organ",
+      "engineering_class": "CognitiveBridgeBridge",
+      "mythic_label": "Cognitive Bridge Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Cognitive Bridge Organ",
+      "module_path": "src/cognitive_bridge_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/cognitive_bridge_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Cognitive Bridge Organ"
+      },
+      "active_doc": {
+        "title": "Cognitive Bridge Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "1bdaa3b22270dfbf013e0005fd72fa50e9ccf27467b4b284d19e28e28026385c",
+    "engineering": "926e22c3e1ab4f8908e56a95f170b9f8cd1bb7d870a342f92312bc489fd89c80",
+    "combined": "568c4509b52a58ebe825c33589a5b4f9b15cae96a01f64085699440bbf7cf7ed"
+  }
+}

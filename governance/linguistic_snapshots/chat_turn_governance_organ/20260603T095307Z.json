@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "chat_turn_governance_organ",
+  "captured_at": "2026-06-03T09:53:07Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "chat_turn_governance_organ",
+      "engineering_class": "ChatTurnGovernanceEngine",
+      "mythic_label": "Chat Turn Governance Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Chat Turn Governance Organ",
+      "module_path": "src/chat_turn_governance_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/chat_turn_governance_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Chat Turn Governance Organ"
+      },
+      "active_doc": {
+        "title": "Chat Turn Governance Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "6a4e3db4c9252f512363f79ba04f00fb8819f8ac9b462386a5109860361645a5",
+    "engineering": "bec3acc5c058d70196b43131071e0da2dcba8194c1c8744754e3d9e29d43c708",
+    "combined": "7ee480cb4048730023ba578446fefbe409e41ffe3bcf3c83e6c35df842e3fc91"
+  }
+}

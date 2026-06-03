@@ -71,6 +71,9 @@
     "concept_spec": "docs/_future/ideas_pending/MYSTIC_ENGINE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/MYSTIC_ENGINE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/MYSTIC_ENGINE_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/MYSTIC_ENGINE_ORGAN.md",
+    "engineering_class": "MysticEngineBridge",
+    "mythic_label": "Mystic engine",
+    "linguistic_version": "1.0.0"
   }
 }

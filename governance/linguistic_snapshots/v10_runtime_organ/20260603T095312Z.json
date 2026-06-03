@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "v10_runtime_organ",
+  "captured_at": "2026-06-03T09:53:12Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "mvp",
+  "layers": {
+    "genome": {
+      "gene": "v10_runtime_organ",
+      "engineering_class": "V10RuntimeEngine",
+      "mythic_label": "V10 Runtime Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "V10 Runtime Subsystem",
+      "module_path": "src/v10_runtime_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/v10_runtime_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "V10 Runtime Subsystem"
+      },
+      "active_doc": {
+        "title": "V10 Runtime Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "51f894da769b543b9ad93fa8ad31ba42ceaf28312639e9f49a56817771eeaedc",
+    "engineering": "62be513c7f03b6dc41a9e9109283a0b7f791d1dde5617784e74d70706e7e9a67",
+    "combined": "275ba0a55823cd00bb5e7412a8ea67aa5a1c1ce6c361ee402c1ca8a8bf4a9902"
+  }
+}

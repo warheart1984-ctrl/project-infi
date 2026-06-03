@@ -72,6 +72,9 @@
     "concept_spec": "docs/_future/ideas_pending/OUTPUT_INTEGRITY_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/OUTPUT_INTEGRITY_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/OUTPUT_INTEGRITY_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/OUTPUT_INTEGRITY_ORGAN.md",
+    "engineering_class": "OutputIntegrityEngine",
+    "mythic_label": "Output Integrity Organ",
+    "linguistic_version": "1.0.0"
   }
 }

@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "aais_ul_substrate_organ",
+  "captured_at": "2026-06-03T09:53:06Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "aais_ul_substrate_organ",
+      "engineering_class": "AaisUlSubstrateEngine",
+      "mythic_label": "Aais Ul Substrate Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "AAIS UL Substrate Organ",
+      "module_path": "src/aais_ul_substrate_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/aais_ul_substrate_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "AAIS UL Substrate Organ"
+      },
+      "active_doc": {
+        "title": "Aais Ul Substrate Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "8c6c4dc6944dbf5296b05fedc57fae15f6209bbef1d7f729cfa2488ecacf4ce7",
+    "engineering": "4dc8f493095a3e38bc03b36dbaa0cc6537d8977efb33a548ba61915190b3015c",
+    "combined": "08db1394af71462b4759ef5cb4e07453b6db36cd64c7a1dfd0ddb454e52b16d8"
+  }
+}

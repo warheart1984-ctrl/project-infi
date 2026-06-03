@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "cortex_arcs_organ",
+  "captured_at": "2026-06-03T09:53:07Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "cortex_arcs_organ",
+      "engineering_class": "CortexArcsEngine",
+      "mythic_label": "Cortex Arcs Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Cortex Arcs Organ",
+      "module_path": "src/cortex_arcs_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/cortex_arcs_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Cortex Arcs Organ"
+      },
+      "active_doc": {
+        "title": "Cortex Arcs Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "5d583c71262b17404586519e82121c3473555e0d36dd0586058191042ae57a7a",
+    "engineering": "41951cf5885ae9be0de3ca1e61a11520ac41ccce8e2099ef81797acaa862d9d0",
+    "combined": "d4943e62b4f76d1ae2d895820d234ae0e839558acaa20807deef8e0ffeb6894c"
+  }
+}

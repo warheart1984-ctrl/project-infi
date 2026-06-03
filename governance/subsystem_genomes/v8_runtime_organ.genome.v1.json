@@ -53,7 +53,9 @@
       "governed_realtime_lane_organ",
       "phase_gate_organ"
     ],
-    "children": []
+    "children": [
+      "creative_core_runtime_organ"
+    ]
   },
   "activation": {
     "order": 6,
@@ -70,6 +72,9 @@
     "concept_spec": "docs/_future/ideas_pending/V8_RUNTIME_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/V8_RUNTIME_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/V8_RUNTIME_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/V8_RUNTIME_ORGAN.md",
+    "engineering_class": "V8RuntimeEngine",
+    "mythic_label": "V8 Runtime Organ",
+    "linguistic_version": "1.0.0"
   }
 }

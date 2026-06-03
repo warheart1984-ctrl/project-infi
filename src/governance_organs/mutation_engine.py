@@ -229,11 +229,17 @@ class MutationEngine:
             invariants.append(invariant)
         gov["invariants"] = invariants
 
-    def _run_subprocess(self, script: Path, *, label: str) -> list[str]:
-        if not script.is_file():
-            return [f"{label} script missing: {script.relative_to(self.root)}"]
+    def _run_subprocess(self, script: Path | list[str], *, label: str) -> list[str]:
+        if isinstance(script, list):
+            cmd = script
+            if not cmd:
+                return [f"{label} command missing"]
+        else:
+            if not script.is_file():
+                return [f"{label} script missing: {script.relative_to(self.root)}"]
+            cmd = [sys.executable, str(script)]
         proc = subprocess.run(
-            [sys.executable, str(script)],
+            cmd,
             cwd=self.root,
             capture_output=True,
             text=True,
@@ -285,6 +291,14 @@ class MutationEngine:
             status = build_coherence_fabric_status(root=self.root)
             if not status.get("fabric_genes_aligned"):
                 failures.append("post-apply coherence snapshot not aligned")
+        if proposal.mutation_kind == "linguistic_layer" or proposal.post_apply_gate == "naming-genome-gate":
+            script = self.root / "tools/governance/check_naming_genome.py"
+            failures.extend(
+                self._run_subprocess(
+                    [sys.executable, str(script), "--gene", proposal.gene, "--snapshot"],
+                    label="naming-genome-gate",
+                )
+            )
         return failures
 
     def verify(self, gene: str, mp_id: str) -> MutationResult:
@@ -305,6 +319,22 @@ class MutationEngine:
                 )
             else:
                 failures.extend(self._validate_lane_delta(load_json(delta_path)))
+        elif proposal.mutation_kind == "linguistic_layer":
+            from src.governance_organs.linguistic_mutation_engine import (
+                validate_linguistic_delta,
+            )
+            from tools.linguistic_genome_lib import load_aliases
+
+            delta_path = self.root / f"schemas/deltas/{gene}_{mp_id}_linguistic.json"
+            if not delta_path.is_file():
+                failures.append(f"linguistic delta missing: {delta_path.relative_to(self.root)}")
+            else:
+                genome = load_json(self._genome_path(gene))
+                failures.extend(
+                    validate_linguistic_delta(
+                        load_json(delta_path), genome, load_aliases(self.root)
+                    )
+                )
         elif proposal.schema_delta_ref:
             delta_path = self.root / proposal.schema_delta_ref
             if not delta_path.is_file():
@@ -325,6 +355,39 @@ class MutationEngine:
         if not result.passed:
             return result
         proposal = next(p for p in self.list_proposals(gene) if p.mp_id == mp_id)
+
+        if proposal.mutation_kind == "linguistic_layer":
+            from src.governance_organs.linguistic_mutation_engine import (
+                apply_linguistic_mutation,
+            )
+
+            ok, ling_failures = apply_linguistic_mutation(mp_id, gene, self.root)
+            if not ok:
+                return MutationResult(
+                    mp_id=mp_id,
+                    gene=gene,
+                    passed=False,
+                    failures=ling_failures,
+                )
+            hook_failures = self._post_apply_hooks(proposal)
+            if hook_failures:
+                from src.governance_organs.linguistic_mutation_engine import (
+                    rollback_linguistic_mutation,
+                )
+
+                rollback_linguistic_mutation(mp_id, gene, self.root)
+                return MutationResult(
+                    mp_id=mp_id,
+                    gene=gene,
+                    passed=False,
+                    failures=hook_failures,
+                )
+            append_audit(
+                "mutation_audit.jsonl",
+                {"action": "mutation_apply", "gene": gene, "mp_id": mp_id, "kind": "linguistic_layer"},
+            )
+            return result
+
         backup = self._backup_genome(gene)
         path = self._genome_path(gene)
         data = load_json(path)
@@ -378,6 +441,13 @@ class MutationEngine:
         return result
 
     def rollback(self, gene: str, mp_id: str) -> bool:
+        proposal = next((p for p in self.list_proposals(gene) if p.mp_id == mp_id), None)
+        if proposal and proposal.mutation_kind == "linguistic_layer":
+            from src.governance_organs.linguistic_mutation_engine import (
+                rollback_linguistic_mutation,
+            )
+
+            return rollback_linguistic_mutation(mp_id, gene, self.root)
         backup_dir = runtime_governance_dir() / "mutation_backups"
         backups = sorted(backup_dir.glob(f"{gene}_*.genome.v1.json"))
         if not backups:

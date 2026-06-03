@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "change_scope_organ",
+  "captured_at": "2026-06-03T09:53:07Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "change_scope_organ",
+      "engineering_class": "ChangeScopeEngine",
+      "mythic_label": "Change Scope Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Change Scope Organ",
+      "module_path": "src/change_scope_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/change_scope_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Change Scope Organ"
+      },
+      "active_doc": {
+        "title": "Change Scope Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "81b004b4a33014a579646b6166c2ca0da5a2eb7e9d035d7d4b6f3a3d471fd9c1",
+    "engineering": "0f85ddab739bd4ec8516766d3b281598b5778fe7b075efe4729e0441cf5c8ee9",
+    "combined": "51b45d9247f97e7482123382029bbc767262156366b2fbe8623ee425e18da9bd"
+  }
+}

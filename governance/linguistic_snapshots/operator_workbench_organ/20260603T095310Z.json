@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "operator_workbench_organ",
+  "captured_at": "2026-06-03T09:53:10Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "operator_workbench_organ",
+      "engineering_class": "OperatorWorkbenchEngine",
+      "mythic_label": "Operator Workbench Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Operator Workbench Organ",
+      "module_path": "src/operator_workbench_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/operator_workbench_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Operator Workbench Organ"
+      },
+      "active_doc": {
+        "title": "Operator Workbench Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "2141991ac6e99f9bbd0b8201cb23e1491bdc58a2f825deba840a60ad2978d435",
+    "engineering": "429fa19ff21c94855cac8f1631bc3003ff2904b1c1905bf1d9fdeb37ffce913a",
+    "combined": "3ad3b7365f28d26d932acb315cac81b445618e38e308dae7b3d356282247fba2"
+  }
+}

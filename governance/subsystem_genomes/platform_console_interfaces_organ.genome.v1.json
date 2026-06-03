@@ -71,6 +71,9 @@
     "concept_spec": "docs/_future/ideas_pending/PLATFORM_CONSOLE_INTERFACES_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/PLATFORM_CONSOLE_INTERFACES_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/PLATFORM_CONSOLE_INTERFACES_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/PLATFORM_CONSOLE_INTERFACES_ORGAN.md",
+    "engineering_class": "PlatformConsoleInterfacesInterface",
+    "mythic_label": "Platform Console Interfaces Organ",
+    "linguistic_version": "1.0.0"
   }
 }

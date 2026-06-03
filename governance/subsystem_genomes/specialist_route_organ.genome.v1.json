@@ -71,6 +71,9 @@
     "concept_spec": "docs/_future/ideas_pending/SPECIALIST_ROUTE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/SPECIALIST_ROUTE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/SPECIALIST_ROUTE_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/SPECIALIST_ROUTE_ORGAN.md",
+    "engineering_class": "SpecialistRouteInterface",
+    "mythic_label": "Specialist Route Organ",
+    "linguistic_version": "1.0.0"
   }
 }

@@ -1,0 +1,30 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "forensic_triangulation",
+  "captured_at": "2026-06-03T09:53:08Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "forensic_triangulation",
+      "engineering_class": "ForensicTriangulationEngine",
+      "mythic_label": "Forensic triangulation ledger",
+      "linguistic_version": "1.0.0",
+      "display_name": "Forensic Triangulation Ledger",
+      "module_path": ""
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Forensic Triangulation Ledger"
+      },
+      "active_doc": {
+        "title": "Forensic Triangulation"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "a44f6db977f901ea15949e606857b02be9588c6c71bedc471147d836ed9169fa",
+    "engineering": "5ad8b228ad6e64e7304d2244a38d5e822b97403fed880c3210c45658b7777c20",
+    "combined": "939d10b0adeebe5fb0b879c17aeb04dc958b6048384587e6cbf0654eb22ee95a"
+  }
+}

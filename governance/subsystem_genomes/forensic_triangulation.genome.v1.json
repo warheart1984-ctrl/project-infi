@@ -82,6 +82,9 @@
     "concept_spec": "docs/_future/ideas_pending/FORENSIC_TRIANGULATION.md",
     "mvp_plan": "docs/_future/ideas_pending/FORENSIC_TRIANGULATION_MVP_PLAN.md",
     "active_doc": "docs/subsystems/forensics/TRIANGULATION.md",
-    "summon_eligible": false
+    "summon_eligible": false,
+    "engineering_class": "ForensicTriangulationEngine",
+    "mythic_label": "Forensic triangulation ledger",
+    "linguistic_version": "1.0.0"
   }
 }

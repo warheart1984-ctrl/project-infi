@@ -90,6 +90,9 @@
     "concept_spec": "docs/_future/ideas_pending/SAFETY_ENVELOPE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/SAFETY_ENVELOPE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/SAFETY_ENVELOPE_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/SAFETY_ENVELOPE_ORGAN.md",
+    "engineering_class": "SafetyEnvelopeEngine",
+    "mythic_label": "Safety Envelope Organ",
+    "linguistic_version": "1.0.0"
   }
 }

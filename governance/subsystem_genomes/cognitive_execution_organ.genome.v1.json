@@ -73,6 +73,9 @@
     "concept_spec": "docs/_future/ideas_pending/COGNITIVE_EXECUTION_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/COGNITIVE_EXECUTION_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/nova/COGNITIVE_EXECUTION_ORGAN.md"
+    "active_doc": "docs/subsystems/nova/COGNITIVE_EXECUTION_ORGAN.md",
+    "engineering_class": "CognitiveExecutionEngine",
+    "mythic_label": "Cognitive Execution Organ",
+    "linguistic_version": "1.0.0"
   }
 }

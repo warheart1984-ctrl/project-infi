@@ -59,7 +59,8 @@
       "dashboard_surface_organ",
       "memory_bank_surface_organ",
       "nova_landing_surface_organ",
-      "operator_console_interface_organ"
+      "operator_console_interface_organ",
+      "creative_console_interface_organ"
     ]
   },
   "activation": {
@@ -77,6 +78,9 @@
     "concept_spec": "docs/_future/ideas_pending/JARVIS_CONSOLE_SURFACE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/JARVIS_CONSOLE_SURFACE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/JARVIS_CONSOLE_SURFACE_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/JARVIS_CONSOLE_SURFACE_ORGAN.md",
+    "engineering_class": "JarvisConsoleSurfaceInterface",
+    "mythic_label": "Jarvis Console Surface Organ",
+    "linguistic_version": "1.0.0"
   }
 }

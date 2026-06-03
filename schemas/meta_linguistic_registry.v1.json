@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "meta_linguistic_registry.v1",
+  "title": "Meta Linguistic Registry v1",
+  "type": "object",
+  "required": [
+    "meta_linguistic_registry_version",
+    "policy_mode",
+    "gates",
+    "cascade_policy_ref"
+  ],
+  "properties": {
+    "meta_linguistic_registry_version": { "const": "meta_linguistic_registry.v1" },
+    "policy_mode": {
+      "enum": ["observe", "enforce"]
+    },
+    "last_drift_report": { "type": "string" },
+    "last_gate_run_at": { "type": "string", "format": "date-time" },
+    "gates": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "cascade_policy_ref": { "type": "string" },
+    "remediation_dir": { "type": "string" },
+    "cycle_policy_ref": { "type": "string" },
+    "last_cycle_report": { "type": "string" },
+    "last_cycle_id": { "type": "string" },
+    "last_cycle_at": { "type": "string", "format": "date-time" },
+    "predictive_policy_ref": { "type": "string" },
+    "last_forecast_report": { "type": "string" },
+    "last_predictive_cycle_report": { "type": "string" },
+    "last_predictive_cycle_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

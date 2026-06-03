@@ -58,6 +58,8 @@
     "children": [
       "aais_composed_runtime_organ",
       "dashboard_surface_organ",
+      "meta_linguistic_governance_organ",
+      "naming_protocol_organ",
       "security_protocol_organ",
       "state_hygiene_organ",
       "system_guard_organ"
@@ -78,6 +80,9 @@
     "concept_spec": "docs/_future/ideas_pending/GOVERNANCE_LAYER_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/GOVERNANCE_LAYER_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/GOVERNANCE_LAYER_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/GOVERNANCE_LAYER_ORGAN.md",
+    "engineering_class": "GovernanceLayerEngine",
+    "mythic_label": "Governance Layer Organ",
+    "linguistic_version": "1.0.0"
   }
 }

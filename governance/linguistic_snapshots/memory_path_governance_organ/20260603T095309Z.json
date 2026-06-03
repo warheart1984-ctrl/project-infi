@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "memory_path_governance_organ",
+  "captured_at": "2026-06-03T09:53:09Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "memory_path_governance_organ",
+      "engineering_class": "MemoryPathGovernanceEngine",
+      "mythic_label": "Memory Path Governance Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Memory Path Governance Organ",
+      "module_path": "src/memory_path_governance_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/memory_path_governance_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Memory Path Governance Organ"
+      },
+      "active_doc": {
+        "title": "Memory Path Governance Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "cae52bc3fad3c6227f4a7a397156eaa5adab2c64bdd3ef0854d99437665dfa48",
+    "engineering": "5019f35e00bf98f00fc2009877d783886f88314b2f0e7aa32dddeed5676f8696",
+    "combined": "b967c44f0705ff73beb6469573fbea7f69c72be714c622f5cde8e14da382b7b9"
+  }
+}

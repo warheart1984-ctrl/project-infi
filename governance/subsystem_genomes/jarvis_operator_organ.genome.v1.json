@@ -63,7 +63,9 @@
       "chat_turn_governance_organ",
       "jarvis_console_surface_organ",
       "operator_workspace_organ",
-      "state_hygiene_organ"
+      "state_hygiene_organ",
+      "v10_action_engine_organ",
+      "creative_operator_handoff_organ"
     ]
   },
   "activation": {
@@ -81,6 +83,9 @@
     "concept_spec": "docs/_future/ideas_pending/JARVIS_OPERATOR_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/JARVIS_OPERATOR_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/JARVIS_OPERATOR_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/JARVIS_OPERATOR_ORGAN.md",
+    "engineering_class": "JarvisOperatorEngine",
+    "mythic_label": "Jarvis Operator Organ",
+    "linguistic_version": "1.0.0"
   }
 }

@@ -78,6 +78,9 @@
     "concept_spec": "docs/_future/ideas_pending/PROJECT_INFI_LAW_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/PROJECT_INFI_LAW_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/PROJECT_INFI_LAW_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/PROJECT_INFI_LAW_ORGAN.md",
+    "engineering_class": "ProjectInfiLawEngine",
+    "mythic_label": "Project Infi Law Organ",
+    "linguistic_version": "1.0.0"
   }
 }

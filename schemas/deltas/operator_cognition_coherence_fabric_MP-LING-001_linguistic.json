@@ -1,0 +1,15 @@
+{
+  "mutation_kind": "linguistic_layer",
+  "gene": "operator_cognition_coherence_fabric",
+  "backward_compatible": true,
+  "before": {
+    "mythic_label": "Coherence Fabric",
+    "engineering_class": "OperatorCognitionCoherenceLayer"
+  },
+  "after": {
+    "mythic_label": "Coherence Fabric (cross-plane)",
+    "engineering_class": "OperatorCognitionCoherenceLayer"
+  },
+  "bump_linguistic_version": "1.0.1",
+  "touch_source_header": false
+}

@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "patch_apply_organ",
+  "captured_at": "2026-06-03T09:53:10Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "patch_apply_organ",
+      "engineering_class": "PatchApplyEngine",
+      "mythic_label": "Patch Apply Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Patch Apply Organ",
+      "module_path": "src/patch_apply_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/patch_apply_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Patch Apply Organ"
+      },
+      "active_doc": {
+        "title": "Patch Apply Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "ddace0dc7f5938a9245bc63438d37a458ba0d2de7d6b3925cf8bef5a8438236d",
+    "engineering": "e631ecfc17b83c6b1f3eb66519384bbf2fac45d802241a71eb8d3777c7bcfbd0",
+    "combined": "35ffece7b1b77846d07569bc97543fae355ea7c91e9b140f4fa79f26a2c85c5a"
+  }
+}

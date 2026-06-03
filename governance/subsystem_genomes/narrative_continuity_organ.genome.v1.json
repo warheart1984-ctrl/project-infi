@@ -75,6 +75,9 @@
     "concept_spec": "docs/_future/ideas_pending/NARRATIVE_CONTINUITY_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/NARRATIVE_CONTINUITY_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/nova/NARRATIVE_CONTINUITY_ORGAN.md"
+    "active_doc": "docs/subsystems/nova/NARRATIVE_CONTINUITY_ORGAN.md",
+    "engineering_class": "NarrativeContinuityEngine",
+    "mythic_label": "Narrative Continuity Organ",
+    "linguistic_version": "1.0.0"
   }
 }

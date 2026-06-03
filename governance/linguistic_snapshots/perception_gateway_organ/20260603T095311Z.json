@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "perception_gateway_organ",
+  "captured_at": "2026-06-03T09:53:11Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "perception_gateway_organ",
+      "engineering_class": "PerceptionGatewayGate",
+      "mythic_label": "Perception Gateway Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Perception Gateway Organ",
+      "module_path": "src/perception_gateway_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/perception_gateway_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Perception Gateway Organ"
+      },
+      "active_doc": {
+        "title": "Perception Gateway Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "69a28b100a24b68072cc2e32be0074a3d6e2446d9fe51b61b6d2b7e2f9bad53f",
+    "engineering": "9fd3af2694d20cd14955e5f9ea406f2327226645ec7d0a1410fb4a300355822a",
+    "combined": "6a0a0c6210b8b184186bcb6ed03f6118df5e44eb5fbdc209e0e3be51db101770"
+  }
+}

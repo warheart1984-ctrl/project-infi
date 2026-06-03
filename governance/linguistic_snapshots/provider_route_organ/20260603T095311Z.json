@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "provider_route_organ",
+  "captured_at": "2026-06-03T09:53:11Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "provider_route_organ",
+      "engineering_class": "ProviderRouteInterface",
+      "mythic_label": "Provider Route Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Provider Route Organ",
+      "module_path": "src/provider_route_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/provider_route_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Provider Route Organ"
+      },
+      "active_doc": {
+        "title": "Provider Route Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "d25a8002eeed58bb44d320abb131be43ce31d19335aa27645b370086d36b6653",
+    "engineering": "7e6d9edcb47f8369b2d34e3946e25e85b84606e9b02bc28e575838a447e6da14",
+    "combined": "ef608d0c8f40052fca10ca184b9628789d7857cd40120953bd3d9bf8cefd284d"
+  }
+}

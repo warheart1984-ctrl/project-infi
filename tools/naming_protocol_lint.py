@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Lint AAIS Codex/Cursor naming protocol for src/**/*.py."""
+"""Lint AAIS Codex/Cursor naming protocol for src/**/*.py.
+
+Cross-layer genome/alias/doc checks: make naming-genome-gate (tools/governance/check_naming_genome.py).
+"""
 
 from __future__ import annotations
 

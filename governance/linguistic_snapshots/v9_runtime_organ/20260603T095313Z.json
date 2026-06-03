@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "v9_runtime_organ",
+  "captured_at": "2026-06-03T09:53:13Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "mvp",
+  "layers": {
+    "genome": {
+      "gene": "v9_runtime_organ",
+      "engineering_class": "V9RuntimeEngine",
+      "mythic_label": "V9 Runtime Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "V9 Runtime Subsystem",
+      "module_path": "src/v9_runtime_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/v9_runtime_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "V9 Runtime Subsystem"
+      },
+      "active_doc": {
+        "title": "V9 Runtime Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "195b17c8b51666be25165f2b7b376f483da0a2a6aed2fbf2ed28b6246b5dbaa9",
+    "engineering": "2b02820be8799901a9abf52f5338ec9f798445ab6b0b84f5fd0cb093b0542128",
+    "combined": "1bbd11bc1d5e0aabfdb6de22ab3f30c662dd0655639c8f6886b30f253deb3f12"
+  }
+}

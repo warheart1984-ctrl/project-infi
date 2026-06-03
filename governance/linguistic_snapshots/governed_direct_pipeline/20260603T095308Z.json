@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "governed_direct_pipeline",
+  "captured_at": "2026-06-03T09:53:08Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "governed_direct_pipeline",
+      "engineering_class": "GovernedDirectPipelineEngine",
+      "mythic_label": "Governed Direct Pipeline",
+      "linguistic_version": "1.0.0",
+      "display_name": "Governed Direct Pipeline",
+      "module_path": "src/governed_direct_pipeline.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/governed_direct_pipeline.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Governed Direct Pipeline"
+      },
+      "active_doc": {
+        "title": "Governed Direct Pipeline"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "3603f21a0db5083f9c5ab3533218daef306bff5b664965e6f625b15b9a37c60b",
+    "engineering": "93f2dac2f26e63218db893055840b997a67e47c7bc897d27c435d0b5b33f500e",
+    "combined": "34844403970eb29713a8265c9f5ab674ced4cad1261c0482599e4047bedbc805"
+  }
+}

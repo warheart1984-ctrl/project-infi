@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "narrative_trust_pack_organ",
+  "captured_at": "2026-06-03T09:53:10Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "narrative_trust_pack_organ",
+      "engineering_class": "NarrativeTrustPackEngine",
+      "mythic_label": "Narrative Trust Pack Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Narrative Trust Pack Organ",
+      "module_path": "src/narrative_trust_pack_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/narrative_trust_pack_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Narrative Trust Pack Organ"
+      },
+      "active_doc": {
+        "title": "Narrative Trust Pack Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "b5b07feea1cae4c4d7c028cc6cd20dabf5335aad314bf280f3d6c4228d8246fe",
+    "engineering": "e6437c8e1e19317221b63b1ca25c2da3ae143bf92060062b0dc8e4f2ae8ad058",
+    "combined": "7518dedaa19017dc272a7430b88014efeae9ed35872e57bd10d5fa9d6096d1f7"
+  }
+}

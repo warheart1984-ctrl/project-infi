@@ -1,0 +1,113 @@
+{
+  "linguistic_governance_cycle_version": "linguistic_governance_cycle.v1",
+  "cycle_id": "20260603T101421Z",
+  "generated_at": "2026-06-03T10:14:21Z",
+  "policy_mode": "observe",
+  "remediation_min_band": "low",
+  "metrics": {
+    "gene_count": 138,
+    "high_count": 0,
+    "medium_count": 0,
+    "low_count": 138,
+    "mean_drift_risk": 16.62,
+    "playbook_count": 0,
+    "playbook_coverage_pct": 100.0
+  },
+  "deltas_from_previous": {
+    "high_count_delta": 0,
+    "medium_count_delta": 0,
+    "mean_drift_risk_delta": 0.0,
+    "playbook_coverage_pct_delta": 0.0
+  },
+  "phases": {
+    "gates_passed": null,
+    "drift_refreshed": false,
+    "remediations_written": 20,
+    "cascade_parents_scanned": 0
+  },
+  "optimization_recommendations": [
+    {
+      "kind": "remediation_min_band",
+      "suggested": "low",
+      "reason": "adaptive band from current drift distribution"
+    }
+  ],
+  "top_at_risk": [
+    {
+      "gene": "capability_service_bridge",
+      "drift_risk": 29,
+      "band": "low"
+    },
+    {
+      "gene": "governed_direct_pipeline",
+      "drift_risk": 29,
+      "band": "low"
+    },
+    {
+      "gene": "jarvis_memory_board",
+      "drift_risk": 29,
+      "band": "low"
+    },
+    {
+      "gene": "jarvis_operator_organ",
+      "drift_risk": 29,
+      "band": "low"
+    },
+    {
+      "gene": "operator_profile_organ",
+      "drift_risk": 29,
+      "band": "low"
+    },
+    {
+      "gene": "safety_envelope_organ",
+      "drift_risk": 29,
+      "band": "low"
+    },
+    {
+      "gene": "naming_genome_organ",
+      "drift_risk": 25,
+      "band": "low"
+    },
+    {
+      "gene": "cisiv_operator_lineage_console",
+      "drift_risk": 23,
+      "band": "low"
+    },
+    {
+      "gene": "cognitive_bridge_organ",
+      "drift_risk": 23,
+      "band": "low"
+    },
+    {
+      "gene": "continuity_witness_organ",
+      "drift_risk": 23,
+      "band": "low"
+    },
+    {
+      "gene": "creative_core_runtime_organ",
+      "drift_risk": 23,
+      "band": "low"
+    },
+    {
+      "gene": "governance_layer_organ",
+      "drift_risk": 23,
+      "band": "low"
+    },
+    {
+      "gene": "jarvis_console_surface_organ",
+      "drift_risk": 23,
+      "band": "low"
+    },
+    {
+      "gene": "jarvis_protocol_organ",
+      "drift_risk": 23,
+      "band": "low"
+    },
+    {
+      "gene": "operator_cognition_coherence_fabric",
+      "drift_risk": 23,
+      "band": "low"
+    }
+  ],
+  "cascade_summaries": []
+}

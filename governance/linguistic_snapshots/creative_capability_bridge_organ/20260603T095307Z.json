@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "creative_capability_bridge_organ",
+  "captured_at": "2026-06-03T09:53:07Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "mvp",
+  "layers": {
+    "genome": {
+      "gene": "creative_capability_bridge_organ",
+      "engineering_class": "CreativeCapabilityBridgeBridge",
+      "mythic_label": "Creative Capability Bridge Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Creative Capability Bridge Subsystem",
+      "module_path": "src/creative_capability_bridge_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/creative_capability_bridge_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Creative Capability Bridge Subsystem"
+      },
+      "active_doc": {
+        "title": "Creative Capability Bridge Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "b267aea2ceca71785ebf6f7117ee7a521b49b705d04e73912e6efbe2065287ff",
+    "engineering": "c6cabcf357aa8cc23c8a89943f31f524b889f2b420049d43e5dbca0e071e9b97",
+    "combined": "485e8e4220270403f5f1b8fc4c5243d7ea547229c1b7094ed6bafb61b2b86b79"
+  }
+}

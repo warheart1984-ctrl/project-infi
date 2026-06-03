@@ -72,6 +72,9 @@
     "concept_spec": "docs/_future/ideas_pending/NOVA_WORKSPACE_INTERFACE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/NOVA_WORKSPACE_INTERFACE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/NOVA_WORKSPACE_INTERFACE_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/NOVA_WORKSPACE_INTERFACE_ORGAN.md",
+    "engineering_class": "NovaWorkspaceInterfaceInterface",
+    "mythic_label": "Nova Workspace Interface Organ",
+    "linguistic_version": "1.0.0"
   }
 }

@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "workflow_shell_organ",
+  "captured_at": "2026-06-03T09:53:13Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "workflow_shell_organ",
+      "engineering_class": "WorkflowShellEngine",
+      "mythic_label": "Workflow Shell Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Workflow Shell Organ",
+      "module_path": "src/workflow_shell_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/workflow_shell_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Workflow Shell Organ"
+      },
+      "active_doc": {
+        "title": "Workflow Shell Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "16eb831cfa50104258d9502b1db060cdea681333f2d3afc849cd919a6509edca",
+    "engineering": "3d5fd93e6165decf91a23c9e643e7635c0b2bcc1771397d255bba1a74fcb9e85",
+    "combined": "3b0f554334797ada2d9e6dd75e4b62dfb92d1b550e3859a87f22b0e788c94501"
+  }
+}

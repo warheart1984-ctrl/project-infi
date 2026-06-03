@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "operator_health_sentinel_organ",
+  "captured_at": "2026-06-03T09:53:10Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "operator_health_sentinel_organ",
+      "engineering_class": "OperatorHealthSentinelGate",
+      "mythic_label": "Operator Health Sentinel Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Operator Health Sentinel Organ",
+      "module_path": "src/operator_health_sentinel_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/operator_health_sentinel_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Operator Health Sentinel Organ"
+      },
+      "active_doc": {
+        "title": "Operator Health Sentinel Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "06ca59a01cd067c5a3886384dddc80b33155a3b27bace8229efdae9786ada0a5",
+    "engineering": "2bf2ff3d80b3691aebd86fa67ea9c92e4e10faad1b18a86e9a9ad6f715fbe372",
+    "combined": "0e0994da425c5814c6ea0013c67db4270c7dbb8eb7495b954336d2c49c400dd8"
+  }
+}

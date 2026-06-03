@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "mission_board_organ",
+  "captured_at": "2026-06-03T09:53:10Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "mission_board_organ",
+      "engineering_class": "MissionBoardEngine",
+      "mythic_label": "Mission Board Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Mission Board Organ",
+      "module_path": "src/mission_board_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/mission_board_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Mission Board Organ"
+      },
+      "active_doc": {
+        "title": "Mission Board Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "286a50143da49e7365bc7d508cdd4132c6386c66d0bbf8ac7a8a25745cd07b85",
+    "engineering": "12ee48ae03b3bfbdfdc058d5dcc43a6630b91e7dd58a66c1a951eda31c35b3c1",
+    "combined": "94d19881be56cad2d0c2349286d5d8373e6c52b50878a478a8b2fd5fc5243328"
+  }
+}

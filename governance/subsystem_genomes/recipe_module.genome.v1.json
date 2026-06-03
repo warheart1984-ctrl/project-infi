@@ -113,6 +113,9 @@
     "concept_spec": "docs/_future/ideas_pending/RECIPE_MODULE.md",
     "mvp_plan": "docs/_future/ideas_pending/RECIPE_MODULE_MVP_PLAN.md",
     "active_doc": "docs/subsystems/platform/RECIPE_MODULE.md",
-    "summon_eligible": false
+    "summon_eligible": false,
+    "engineering_class": "RecipeModuleEngine",
+    "mythic_label": "Recipe module",
+    "linguistic_version": "1.0.0"
   }
 }

@@ -75,6 +75,9 @@
     "concept_spec": "docs/_future/ideas_pending/CONVERSATION_MEMORY_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/CONVERSATION_MEMORY_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/CONVERSATION_MEMORY_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/CONVERSATION_MEMORY_ORGAN.md",
+    "engineering_class": "ConversationMemoryEngine",
+    "mythic_label": "Conversation Memory Organ",
+    "linguistic_version": "1.0.0"
   }
 }

@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "project_infi_state_machine_organ",
+  "captured_at": "2026-06-03T09:53:11Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "project_infi_state_machine_organ",
+      "engineering_class": "ProjectInfiStateMachineEngine",
+      "mythic_label": "Project Infi State Machine Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Project Infi State Machine Organ",
+      "module_path": "src/project_infi_state_machine_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/project_infi_state_machine_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Project Infi State Machine Organ"
+      },
+      "active_doc": {
+        "title": "Project Infi State Machine Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "c8aa658bb22504e17dd2a4e04722a1eded1ab88926ed995c3fab036d867beda3",
+    "engineering": "263b5434655ac9d6eb677f7ba83a0ad7691baac6ef46af1706002096c494c5af",
+    "combined": "1b960881fcb2dac986c0934e6273eb050710dd90c01aa1d4d82a900a4b32ba48"
+  }
+}

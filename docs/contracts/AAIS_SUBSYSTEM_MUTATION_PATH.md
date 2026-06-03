@@ -25,6 +25,7 @@ preserving identity gene name and backward compatibility.
 | **Lane DNA change** | MP-X with `mutation_kind: lane_dna` + `operator_lanes` delta (Alt-6.1) |
 | **Coherence invariant** | MP-X with `mutation_kind: coherence_invariant` on coherence fabric (Alt-7.1) |
 | **Profile invariant** | MP-X with `mutation_kind: profile_invariant` on `operator_profile_organ` (Alt-7.2) |
+| **Linguistic layer** | MP-X with `mutation_kind: linguistic_layer` + `schemas/deltas/<gene>_MP-<ID>_linguistic.json` (Wave 5) |
 
 ## Mutation Steps
 
@@ -84,6 +85,19 @@ Profile mutations (Alt-7.2) add optional fields:
 ```
 
 `profile_invariant` apply also runs `alt7-governed-gate`.
+
+Linguistic mutations (Wave 5) add optional fields:
+
+```markdown
+- mutation_kind: linguistic_layer
+- schema_delta_ref: schemas/deltas/<gene>_MP-<ID>_linguistic.json
+- post_apply_gate: naming-genome-gate
+- post_apply_linguistic_snapshot: true
+```
+
+Delta schema: [linguistic_mutation_delta.v1.json](../../schemas/linguistic_mutation_delta.v1.json). Optional `cascade_ack: [child_genes]` when [linguistic_cascade_policy.v1.json](../../governance/linguistic_cascade_policy.v1.json) sets `block_apply_without_cascade_ack: true`.
+
+Apply via `python tools/governance/apply_linguistic_mutation.py --apply MP-LING-001 --gene <gene>`. Run `python tools/linguistic_cascade_report.py --gene <gene>` before apply when parent has children.
 
 Record in LOGBOOK when promoted.
 

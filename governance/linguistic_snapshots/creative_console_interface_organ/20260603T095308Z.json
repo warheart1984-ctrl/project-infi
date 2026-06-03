@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "creative_console_interface_organ",
+  "captured_at": "2026-06-03T09:53:08Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "mvp",
+  "layers": {
+    "genome": {
+      "gene": "creative_console_interface_organ",
+      "engineering_class": "CreativeConsoleInterfaceInterface",
+      "mythic_label": "Creative Console Interface Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Creative Console Interface Subsystem",
+      "module_path": "src/creative_console_interface_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/creative_console_interface_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Creative Console Interface Subsystem"
+      },
+      "active_doc": {
+        "title": "Creative Console Interface Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "d41acb3ac1c0e3aeb9b8c25e62447811b4406d66e3f4c3b5a546c8dfabc076a0",
+    "engineering": "91b2d221917df93a64dc5c0d665a203afc065acde7a7573f1dfd1ede19a2a756",
+    "combined": "7c8ef003bde882d059dc2fbb349c0085dd565005ffdef23f5f52e2cd14e97e38"
+  }
+}

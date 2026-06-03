@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "evolve_engine_organ",
+  "captured_at": "2026-06-03T09:53:08Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "evolve_engine_organ",
+      "engineering_class": "EvolveEngineEngine",
+      "mythic_label": "Evolve Engine Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Evolve Engine Organ",
+      "module_path": "src/evolve_engine_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/evolve_engine_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Evolve Engine Organ"
+      },
+      "active_doc": {
+        "title": "Evolve Engine Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "8385a3c4c00c0c47f464a57022e9c123a9a4358827e6c006bc499279c20bb978",
+    "engineering": "325486a8cea3c1d37bf95c28dff96f27e8f44eeaa13e5abbf0b166eda464c026",
+    "combined": "08fe880e66614afe9a6d9ef6f3095f698fe124deea1d55cb09409df971b56bd7"
+  }
+}

@@ -240,7 +240,22 @@
         "concept_spec": { "type": "string" },
         "mvp_plan": { "type": "string" },
         "active_doc": { "type": "string" },
-        "summon_eligible": { "type": "boolean", "default": true }
+        "summon_eligible": { "type": "boolean", "default": true },
+        "engineering_class": {
+          "type": "string",
+          "pattern": "^[A-Z][a-zA-Z0-9]*([A-Z][a-zA-Z0-9]*)+$",
+          "description": "PascalCase DomainFunctionRole engineering identifier."
+        },
+        "mythic_label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Short mythic name for operator docs and comments."
+        },
+        "linguistic_version": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Semver for linguistic layer; bump on MP-X mythic/engineering changes."
+        }
       },
       "additionalProperties": false
     }

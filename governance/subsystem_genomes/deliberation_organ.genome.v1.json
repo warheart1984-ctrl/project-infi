@@ -73,6 +73,9 @@
     "concept_spec": "docs/_future/ideas_pending/DELIBERATION_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/DELIBERATION_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/nova/DELIBERATION_ORGAN.md"
+    "active_doc": "docs/subsystems/nova/DELIBERATION_ORGAN.md",
+    "engineering_class": "DeliberationEngine",
+    "mythic_label": "Deliberation Organ",
+    "linguistic_version": "1.0.0"
   }
 }

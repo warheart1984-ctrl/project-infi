@@ -94,6 +94,9 @@
     "concept_spec": "docs/_future/ideas_pending/GOVERNED_DIRECT_PIPELINE.md",
     "mvp_plan": "docs/_future/ideas_pending/GOVERNED_DIRECT_PIPELINE_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/runtime/GOVERNED_DIRECT_PIPELINE.md"
+    "active_doc": "docs/runtime/GOVERNED_DIRECT_PIPELINE.md",
+    "engineering_class": "GovernedDirectPipelineEngine",
+    "mythic_label": "Governed Direct Pipeline",
+    "linguistic_version": "1.0.0"
   }
 }

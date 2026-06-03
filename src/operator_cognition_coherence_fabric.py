@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.15"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.17"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -1593,6 +1593,118 @@ def _build_extended_operator_interface_layer() -> list[dict[str, Any]]:
     ]
 
 
+def _build_creative_core_layer() -> list[dict[str, Any]]:
+    from src.creative_capability_bridge_organ import (
+        build_creative_capability_bridge_status,
+    )
+    from src.creative_core_runtime_organ import build_creative_core_runtime_status
+    from src.creative_operator_handoff_organ import (
+        build_creative_operator_handoff_status,
+    )
+
+    return [
+        _organ_posture_item(
+            "creative_core_runtime_organ", build_creative_core_runtime_status()
+        ),
+        _organ_posture_item(
+            "creative_capability_bridge_organ",
+            build_creative_capability_bridge_status(),
+        ),
+        _organ_posture_item(
+            "creative_operator_handoff_organ",
+            build_creative_operator_handoff_status(),
+        ),
+    ]
+
+
+def _build_v9_creative_layer() -> list[dict[str, Any]]:
+    from src.creative_console_interface_organ import (
+        build_creative_console_interface_status,
+    )
+    from src.v9_core_organ import build_v9_core_status
+    from src.v9_runtime_organ import build_v9_runtime_status
+
+    return [
+        _organ_posture_item("v9_core_organ", build_v9_core_status()),
+        _organ_posture_item("v9_runtime_organ", build_v9_runtime_status()),
+        _organ_posture_item(
+            "creative_console_interface_organ",
+            build_creative_console_interface_status(),
+        ),
+    ]
+
+
+def _build_v10_creative_layer() -> list[dict[str, Any]]:
+    from src.v10_action_engine_organ import build_v10_action_engine_status
+    from src.v10_core_organ import build_v10_core_status
+    from src.v10_runtime_organ import build_v10_runtime_status
+
+    return [
+        _organ_posture_item("v10_core_organ", build_v10_core_status()),
+        _organ_posture_item("v10_runtime_organ", build_v10_runtime_status()),
+        _organ_posture_item(
+            "v10_action_engine_organ", build_v10_action_engine_status()
+        ),
+    ]
+
+
+def _build_naming_protocol_layer() -> list[dict[str, Any]]:
+    from src.mythic_engineering_translator_organ import (
+        build_mythic_engineering_translator_status,
+    )
+    from src.naming_genome_organ import build_naming_genome_status
+    from src.naming_protocol_organ import build_naming_protocol_status
+
+    return [
+        _organ_posture_item("naming_protocol_organ", build_naming_protocol_status()),
+        _organ_posture_item("naming_genome_organ", build_naming_genome_status()),
+        _organ_posture_item(
+            "mythic_engineering_translator_organ",
+            build_mythic_engineering_translator_status(),
+        ),
+    ]
+
+
+def _build_linguistic_mutation_layer() -> list[dict[str, Any]]:
+    from src.linguistic_drift_predictor_organ import (
+        build_linguistic_drift_predictor_status,
+    )
+    from src.linguistic_lineage_viz_organ import build_linguistic_lineage_viz_status
+    from src.linguistic_mutation_organ import build_linguistic_mutation_status
+
+    return [
+        _organ_posture_item(
+            "linguistic_mutation_organ", build_linguistic_mutation_status()
+        ),
+        _organ_posture_item(
+            "linguistic_drift_predictor_organ",
+            build_linguistic_drift_predictor_status(),
+        ),
+        _organ_posture_item(
+            "linguistic_lineage_viz_organ", build_linguistic_lineage_viz_status()
+        ),
+    ]
+
+
+def _build_meta_linguistic_orchestration_layer() -> list[dict[str, Any]]:
+    from src.linguistic_cascade_organ import build_linguistic_cascade_status
+    from src.linguistic_remediation_organ import build_linguistic_remediation_status
+    from src.meta_linguistic_governance_organ import (
+        build_meta_linguistic_governance_status,
+    )
+
+    return [
+        _organ_posture_item(
+            "linguistic_remediation_organ", build_linguistic_remediation_status()
+        ),
+        _organ_posture_item("linguistic_cascade_organ", build_linguistic_cascade_status()),
+        _organ_posture_item(
+            "meta_linguistic_governance_organ",
+            build_meta_linguistic_governance_status(),
+        ),
+    ]
+
+
 def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
@@ -1696,6 +1808,12 @@ def build_coherence_fabric_status(
     workspace_memory_layer = _build_workspace_memory_layer()
     hygiene_blueprint_layer = _build_hygiene_blueprint_layer()
     extended_operator_interface_layer = _build_extended_operator_interface_layer()
+    creative_core_layer = _build_creative_core_layer()
+    v9_creative_layer = _build_v9_creative_layer()
+    v10_creative_layer = _build_v10_creative_layer()
+    naming_protocol_layer = _build_naming_protocol_layer()
+    linguistic_mutation_layer = _build_linguistic_mutation_layer()
+    meta_linguistic_orchestration_layer = _build_meta_linguistic_orchestration_layer()
 
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
@@ -1833,6 +1951,32 @@ def build_coherence_fabric_status(
             _layer_aligned(workspace_memory_layer, minimum=3)
             and _layer_aligned(hygiene_blueprint_layer, minimum=3)
             and _layer_aligned(extended_operator_interface_layer, minimum=3)
+        ),
+        "creative_core_layer": creative_core_layer,
+        "creative_core_aligned": _layer_aligned(creative_core_layer, minimum=3),
+        "v9_creative_layer": v9_creative_layer,
+        "v9_creative_aligned": _layer_aligned(v9_creative_layer, minimum=3),
+        "v10_creative_layer": v10_creative_layer,
+        "v10_creative_aligned": _layer_aligned(v10_creative_layer, minimum=3),
+        "creative_runtime_v9_v10_aligned": (
+            _layer_aligned(creative_core_layer, minimum=3)
+            and _layer_aligned(v9_creative_layer, minimum=3)
+            and _layer_aligned(v10_creative_layer, minimum=3)
+        ),
+        "naming_protocol_layer": naming_protocol_layer,
+        "naming_protocol_aligned": _layer_aligned(naming_protocol_layer, minimum=3),
+        "linguistic_mutation_layer": linguistic_mutation_layer,
+        "linguistic_mutation_aligned": _layer_aligned(
+            linguistic_mutation_layer, minimum=3
+        ),
+        "meta_linguistic_orchestration_layer": meta_linguistic_orchestration_layer,
+        "meta_linguistic_orchestration_aligned": _layer_aligned(
+            meta_linguistic_orchestration_layer, minimum=3
+        ),
+        "meta_linguistic_governance_aligned": (
+            _layer_aligned(naming_protocol_layer, minimum=3)
+            and _layer_aligned(linguistic_mutation_layer, minimum=3)
+            and _layer_aligned(meta_linguistic_orchestration_layer, minimum=3)
         ),
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,

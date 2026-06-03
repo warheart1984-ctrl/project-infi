@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "governance_layer_organ",
+  "captured_at": "2026-06-03T09:53:08Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "governance_layer_organ",
+      "engineering_class": "GovernanceLayerEngine",
+      "mythic_label": "Governance Layer Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Governance Layer Organ",
+      "module_path": "src/governance_layer_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/governance_layer_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Governance Layer Organ"
+      },
+      "active_doc": {
+        "title": "Governance Layer Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "602ff6ac9b7d6b9d3402a4fbf48deedd4abc894e283c95f073e58083d97ad53d",
+    "engineering": "60bea874bc5dd8b5d360f126de29a619e778ce3f77adcb8391cfe77c61960980",
+    "combined": "5e69078514750b3fdcd4b83e2053d81c2b55719e272cb55e7218d5d329438770"
+  }
+}

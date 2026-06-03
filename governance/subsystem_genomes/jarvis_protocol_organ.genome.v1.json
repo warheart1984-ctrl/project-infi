@@ -78,6 +78,9 @@
     "concept_spec": "docs/_future/ideas_pending/JARVIS_PROTOCOL_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/JARVIS_PROTOCOL_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/JARVIS_PROTOCOL_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/JARVIS_PROTOCOL_ORGAN.md",
+    "engineering_class": "JarvisProtocolEngine",
+    "mythic_label": "Jarvis Protocol Organ",
+    "linguistic_version": "1.0.0"
   }
 }

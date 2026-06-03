@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "wolf_rehydration_organ",
+  "captured_at": "2026-06-03T09:53:13Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "wolf_rehydration_organ",
+      "engineering_class": "WolfRehydrationEngine",
+      "mythic_label": "Wolf Rehydration Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Wolf Rehydration Organ",
+      "module_path": "src/wolf_rehydration_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/wolf_rehydration_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Wolf Rehydration Organ"
+      },
+      "active_doc": {
+        "title": "Wolf Rehydration Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "1d0ca05f52e14dea9db66bbd1b7bdc142fb370bba52d19ee404068e3ff93dea1",
+    "engineering": "493635572d7b14cc5feab96f5c30722c5ce7c4f1255478051e33bae104d9c036",
+    "combined": "3f8b338d3be3294ecb1f3ceaf882480c044b89dd19e6a33fcc1d130e94d6b76c"
+  }
+}

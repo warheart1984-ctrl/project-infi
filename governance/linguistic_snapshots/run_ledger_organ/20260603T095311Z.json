@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "run_ledger_organ",
+  "captured_at": "2026-06-03T09:53:11Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "run_ledger_organ",
+      "engineering_class": "RunLedgerEngine",
+      "mythic_label": "Run Ledger Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Run Ledger Organ",
+      "module_path": "src/run_ledger_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/run_ledger_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Run Ledger Organ"
+      },
+      "active_doc": {
+        "title": "Run Ledger Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "0e43b6f65b17697011bcb50440b21cad92c38e37f911e97d689ed0b33ad680ab",
+    "engineering": "fb6d175e8c8a1ac0e31ec0884c6590c00450ea3ea4bc39dcfa446293d5607ad4",
+    "combined": "5a5d6f56282a02855bac9e7d9c99e810ea214ba66b95c954f34ff393c871b3dc"
+  }
+}

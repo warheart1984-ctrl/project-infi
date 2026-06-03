@@ -6,6 +6,112 @@ Every major entry should name its CISIV stage explicitly.
 
 ## 2026-06-03
 
+### Release 22 Governed Promotion — Meta-Linguistic Governance Fabric
+
+- CISIV stage: `verification`
+- scope: nine Release 22 subsystems promoted to `governed`
+- outcome: one hundred thirty-eight governed subsystem schemas; Release 22 complete at governed
+- verification note: `make alt22-governed-gate`; `python tools/governance/alt22_promote_governed.py`
+
+### Release 22.2 — Meta-Linguistic Governance Closure
+
+- CISIV stage: `verification`
+- scope: `META_LINGUISTIC_GOVERNANCE_V1_PROOF` + naming genome and linguistic cascade organ proofs
+- outcome: naming protocol, linguistic mutation, and meta orchestration layers attested
+- verification note: `make alt22-2-gate`
+
+### Release 22.1 — Coherence Layer Meta-Linguistic Join
+
+- CISIV stage: `implementation`
+- scope: snapshot v1.17 `naming_protocol_layer[]`, `linguistic_mutation_layer[]`, `meta_linguistic_orchestration_layer[]`
+- outcome: Coherence Layer joins Release 22 meta-linguistic subsystems
+- verification note: `make alt22-1-gate`
+
+### Release 22 — Subsystems (MVP)
+
+- CISIV stage: `implementation`
+- scope: subsystem wrappers, status APIs, gates, proof packets; `tools/governance/alt22_promote_mvp.py`
+- outcome: one hundred thirty-eight registered schemas at mvp prior to governed wave (+9 Release 22)
+- verification note: `make alt22-gate`; `python tools/governance/alt22_promote_mvp.py`
+
+### Release 22 — Meta-Linguistic Governance Fabric (Concept)
+
+- CISIV stage: `concept`
+- scope: SSP Steps 1–7 for nine Release 22 subsystems; batch `alt22-summon-wave-2026-06` orders 1→9
+- outcome: concept specs, schemas, MVP plans, genomes at `concept` for naming protocol, naming genome, linguistic mutation, mythic engineering translator, drift predictor, lineage viz, remediation, cascade, meta orchestration
+- verification note: `make ssp-gate`; `make genome-gate`; `python tools/governance/_alt22_ssp_bootstrap.py`
+
+### Wave 12 — Predictive Linguistic Governance Cycle
+
+- CISIV stage: `implementation`
+- scope: forward-looking drift forecast, preemptive playbooks, Wave 11 forecast integration
+- outcome: `LinguisticPredictiveGovernanceEngine`, `linguistic_drift_forecast_engine`, `make linguistic-predictive-cycle`, `use_forecast_in_cycle` on Wave 11
+- verification note: `make linguistic-predictive-cycle`; `make linguistic-predictive-gate`; `pytest tests/test_linguistic_drift_forecast_engine.py tests/test_linguistic_predictive_governance_engine.py -q`
+
+### Wave 11 — Self-Optimizing Linguistic Governance Cycle
+
+- CISIV stage: `implementation`
+- scope: closed-loop cycle engine (measure → remediate → cascade-scan → optimize → record)
+- outcome: `LinguisticGovernanceCycleEngine`, `make linguistic-governance-cycle`, cycle artifacts under `governance/linguistic_governance_cycles/`
+- verification note: `make linguistic-governance-cycle`; `make linguistic-governance-cycle-gate`; `pytest tests/test_linguistic_governance_cycle_engine.py -q`
+
+### Meta-Linguistic Governance + Waves 9–10
+
+- CISIV stage: `implementation`
+- scope: meta orchestration layer, drift remediation playbooks (Wave 9), lineage cascade policy (Wave 10)
+- outcome: `LinguisticGovernanceEngine`, `meta-linguistic-gate`, `linguistic-remediation-gate`, `linguistic_cascade_engine`, `cascade_ack` on linguistic deltas, `--cascade-from` on lineage viz
+- verification note: `make meta-linguistic-gate`; `make linguistic-remediation-gate`; `python tools/linguistic_cascade_report.py --gene operator_cognition_coherence_fabric`; `pytest tests/test_linguistic_*_engine.py -q`
+- contracts: [AAIS_META_LINGUISTIC_GOVERNANCE.md](../contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md); naming protocol §16
+
+### Release 21 Governed Promotion — Creative Runtime V9/V10
+
+- CISIV stage: `verification`
+- scope: nine Release 21 subsystems promoted to `governed`
+- outcome: one hundred twenty-nine governed subsystem schemas; Release 21 complete at governed
+- verification note: `make alt21-governed-gate`; `python tools/governance/alt21_promote_governed.py`
+
+### Release 21.2 — Creative Runtime V9/V10 Closure
+
+- CISIV stage: `verification`
+- scope: `CREATIVE_RUNTIME_V9_V10_V1_PROOF` + creative core and V9 runtime subsystem proofs
+- outcome: creative core, V9, and V10 runtime layers attested
+- verification note: `make alt21-2-gate`
+
+### Release 21.1 — Coherence Layer Creative Runtime Join
+
+- CISIV stage: `implementation`
+- scope: snapshot v1.16 `creative_core_layer[]`, `v9_creative_layer[]`, `v10_creative_layer[]`
+- outcome: Coherence Layer joins Release 21 creative runtime subsystems
+- verification note: `make alt21-1-gate`
+
+### Release 21 — Subsystems (MVP)
+
+- CISIV stage: `implementation`
+- scope: subsystem wrappers, status APIs, gates, proof packets; `tools/governance/alt21_promote_mvp.py`
+- outcome: one hundred twenty registered schemas at mvp prior to governed wave (+9 Release 21)
+- verification note: `make alt21-gate`; `python tools/governance/alt21_promote_mvp.py`
+
+### Release 21 — Creative Runtime V9/V10 (Concept)
+
+- CISIV stage: `concept`
+- scope: SSP Steps 1–7 for nine Release 21 subsystems; batch `alt21-summon-wave-2026-06` orders 1→9
+- outcome: concept specs, schemas, MVP plans, genomes at `concept`
+- verification note: `make ssp-gate`; `make genome-gate`
+
+### Linguistic Waves 5–8 — Mutation, Translator, Lineage Viz, Drift Predictor
+
+- CISIV stage: `structure`
+- scope: Wave 5 `linguistic_mutation_engine` + MP-LING-001; Wave 6 `mythic_engineering_translator.py`; Wave 7 `linguistic_lineage_viz.py`; Wave 8 `linguistic_drift_predictor.py`; Makefile gates `linguistic-mutation-gate`, `linguistic-drift-gate`, `translate-mythic`, `linguistic-lineage-viz`
+- outcome: governed linguistic_layer MP-X path; deterministic mythic→engineering translation; hybrid drift scoring and lineage Mermaid export
+- verification note: `make linguistic-mutation-gate`; `pytest tests/test_mythic_engineering_translator.py tests/test_operator_cognition_coherence_fabric_mutation_MP_LING_001.py tests/test_linguistic_drift_predictor.py tests/test_linguistic_lineage_viz.py -q`
+
+### Linguistic Genome Validator + Linguistic Diff
+
+- CISIV stage: `structure`
+- scope: `tools/linguistic_genome_lib.py`, `check_naming_genome.py`, `backfill_naming_genome.py`, `linguistic_diff.py`, `schemas/linguistic_snapshot.v1.json`, SSP fields on 129 genomes, `governance/linguistic_snapshots/`
+- outcome: naming-genome-gate cross-checks genome/alias/source/docs layers; hybrid diff via snapshots + git; alias registry expanded to 119 entries
+- verification note: `make naming-genome-gate`; `make genome-gate`; `python tools/linguistic_diff.py --gene operator_cognition_coherence_fabric`
+
 ### Codex / Cursor Naming Protocol — Wave 0 Adoption
 
 - CISIV stage: `structure`
@@ -3064,5 +3170,329 @@ Every major entry should name its CISIV stage explicitly.
 
 - CISIV stage: `verification`
 - scope: Promotion Engine full-auto — `nova_workspace_interface_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Creative Core Runtime Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `creative_core_runtime_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Creative Core Runtime Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `creative_core_runtime_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Creative Core Runtime Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `creative_core_runtime_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V9 Core Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v9_core_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V9 Core Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v9_core_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V9 Runtime Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v9_runtime_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V9 Runtime Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v9_runtime_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V10 Core Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v10_core_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V10 Core Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v10_core_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V10 Runtime Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v10_runtime_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V10 Runtime Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v10_runtime_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V10 Action Engine Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v10_action_engine_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V10 Action Engine Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v10_action_engine_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Creative Capability Bridge Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `creative_capability_bridge_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Creative Capability Bridge Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `creative_capability_bridge_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Creative Operator Handoff Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `creative_operator_handoff_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Creative Operator Handoff Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `creative_operator_handoff_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Creative Console Interface Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `creative_console_interface_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Creative Console Interface Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `creative_console_interface_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V9 Core Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v9_core_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V9 Runtime Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v9_runtime_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V10 Core Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v10_core_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V10 Runtime Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v10_runtime_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### V10 Action Engine Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `v10_action_engine_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Creative Capability Bridge Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `creative_capability_bridge_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Creative Operator Handoff Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `creative_operator_handoff_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Creative Console Interface Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `creative_console_interface_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Naming Protocol Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `naming_protocol_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Naming Protocol Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `naming_protocol_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Naming Genome Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `naming_genome_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Naming Genome Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `naming_genome_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Mutation Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_mutation_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Mutation Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_mutation_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Mythic Engineering Translator Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `mythic_engineering_translator_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Mythic Engineering Translator Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `mythic_engineering_translator_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Drift Predictor Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_drift_predictor_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Drift Predictor Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_drift_predictor_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Lineage Viz Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_lineage_viz_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Lineage Viz Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_lineage_viz_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Remediation Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_remediation_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Remediation Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_remediation_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Cascade Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_cascade_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Cascade Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_cascade_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Meta-Linguistic Governance Subsystem — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `meta_linguistic_governance_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Meta-Linguistic Governance Subsystem — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `meta_linguistic_governance_organ` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Naming Protocol Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `naming_protocol_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Naming Genome Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `naming_genome_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Mutation Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_mutation_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Mythic Engineering Translator Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `mythic_engineering_translator_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Drift Predictor Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_drift_predictor_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Lineage Viz Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_lineage_viz_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Remediation Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_remediation_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Linguistic Cascade Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `linguistic_cascade_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Meta-Linguistic Governance Subsystem — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `meta_linguistic_governance_organ` `governed` via Alt-4 runtime organ
 - outcome: genome `identity.stage` and `proof.posture` set to `governed`
 - verification note: `make genome-gate`; `make alt4-gate`

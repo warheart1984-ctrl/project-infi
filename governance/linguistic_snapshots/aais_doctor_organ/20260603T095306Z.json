@@ -1,0 +1,35 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "aais_doctor_organ",
+  "captured_at": "2026-06-03T09:53:06Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "aais_doctor_organ",
+      "engineering_class": "AaisDoctorEngine",
+      "mythic_label": "Aais Doctor Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "AAIS Doctor Organ",
+      "module_path": "src/aais_doctor_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/aais_doctor_organ.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "AAIS Doctor Organ"
+      },
+      "active_doc": {
+        "title": "Aais Doctor Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "c8716e0a786ccccfe902b85ca3d634e32be2e5984787a40a583c2377190a497b",
+    "engineering": "3ab3efbc736128bfe63b57165346cf12ef876423859c5acff41421e13cbc5484",
+    "combined": "a816047d9bd4e33bce7405eb9f3fda5ea0274cec777a43c32a0389acf9438be2"
+  }
+}

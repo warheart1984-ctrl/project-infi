@@ -57,7 +57,8 @@
     ],
     "children": [
       "jarvis_console_surface_organ",
-      "platform_console_interfaces_organ"
+      "platform_console_interfaces_organ",
+      "creative_console_interface_organ"
     ]
   },
   "activation": {
@@ -75,6 +76,9 @@
     "concept_spec": "docs/_future/ideas_pending/API_GATEWAY_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/API_GATEWAY_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/API_GATEWAY_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/API_GATEWAY_ORGAN.md",
+    "engineering_class": "ApiGatewayGate",
+    "mythic_label": "Api Gateway Organ",
+    "linguistic_version": "1.0.0"
   }
 }
