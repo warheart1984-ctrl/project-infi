@@ -6819,6 +6819,9 @@ class TestChatApi(unittest.TestCase):
         payload = response.get_json()
         self.assertEqual(payload["otem"]["workflow_handoff"]["workflow_template_id"], "daily-ai-brief")
         self.assertTrue(payload["otem"]["workflow_handoff"]["proposal_only"])
+        queue_meta = payload["otem"].get("execution_approval_queue")
+        if queue_meta:
+            self.assertEqual(queue_meta.get("status"), "pending")
         self.assertEqual(
             len(api.jarvis_operator.memory_enforcer.list_memories(runtime_context="operator_runtime")),
             before_memory_count,

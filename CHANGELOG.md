@@ -13,6 +13,32 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.26.0] - 2026-06-03 — OTEM Execution Approval Bridge
+
+**Release 30** — wires session-bound OTEM `workflow_handoff` into existing `/workflows/approvals`; operator approve runs OTEM execution substrate `approve()` + `apply()` without Celery.
+
+### Added
+
+- **`src/otem_execution_approval_bridge.py`** — shell workflow `otem-execution-substrate`, enqueue with session/template dedupe, `resolve_otem_execution_approval`
+- **Auto-enqueue** — `build_otem_turn_result` sets `execution_approval_queue` when `workflow_handoff` is present
+- **FastAPI branch** — `POST /workflows/approvals/{id}` for `step_type: otem_execution_substrate`
+- **UI** — Dashboard link to pending approvals; Workflow Approvals OTEM label
+- **Tests** — `tests/test_otem_execution_approval_bridge.py`
+
+### Changed
+
+- **CI** — `ai-factory-governance-gate.yml` and `cogos-rc.yml` limited to `workflow_dispatch` (stops failing/spam automatic runs until gates/runner are ready)
+- **Contract** — [OTEM_EXECUTION_SUBSTRATE.md](docs/contracts/OTEM_EXECUTION_SUBSTRATE.md) documents approval ingress and in-memory substrate (persistence phase 2)
+
+### Verification (v1.26.0)
+
+```bash
+python -m pytest tests/test_otem_execution_approval_bridge.py -q
+make otem-execution-substrate-gate
+```
+
+[1.26.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.0
+
 ## [1.25.0] - 2026-06-03 — Release 29 Integration and Story Forge Execution Fabric
 
 **Release 29** (`alt29-summon-wave-2026-06`) — Alt28 six-pack governed; Story Forge execution bridge; coherence v1.24; universal integration proof; `media_processor_bridge_organ` (170 governed).

@@ -1101,6 +1101,11 @@ def workflow_approvals():
 
 @app.post("/workflows/approvals/{approval_id}", dependencies=[Depends(require_token)])
 def workflow_approval_action(approval_id: str, req: WorkflowApprovalActionRequest):
+    from src.otem_execution_approval_bridge import (
+        is_otem_execution_approval,
+        resolve_otem_execution_approval,
+    )
+
     approval = get_workflow_approval(approval_id)
     if not approval:
         raise HTTPException(status_code=404, detail="Approval not found")
@@ -1112,6 +1117,39 @@ def workflow_approval_action(approval_id: str, req: WorkflowApprovalActionReques
         raise HTTPException(status_code=404, detail="Workflow run not found for this approval")
     if run_record["status"] != "awaiting_approval":
         raise HTTPException(status_code=409, detail="Workflow run is not waiting for approval")
+
+    if is_otem_execution_approval(approval):
+        if req.action not in {"approve", "reject"}:
+            raise HTTPException(status_code=400, detail="Unsupported approval action")
+        try:
+            result = resolve_otem_execution_approval(approval, req.action)
+        except PermissionError as exc:
+            raise HTTPException(status_code=403, detail=str(exc)) from exc
+        except (ValueError, KeyError) as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        action_status = "approved" if result.get("status") == "approved" else "failed"
+        return _govern_project_wide_payload(
+            {"ok": True, "status": result.get("status")},
+            action_id="workflow_approval_action",
+            target=approval["workflow_id"],
+            cisiv_stage=run_record.get("cisiv_stage"),
+            summary=(
+                f"OTEM execution approved for {approval['step_label']}."
+                if result.get("status") == "approved"
+                else f"OTEM execution rejected for {approval['step_label']}."
+            ),
+            action_status=action_status,
+            run_id=approval["workflow_run_id"],
+            details={
+                "approval_id": approval_id,
+                "workflow_id": approval["workflow_id"],
+                "workflow_run_id": approval["workflow_run_id"],
+                "step_id": approval["step_id"],
+                "approval_action": req.action,
+                "step_type": approval["step_type"],
+                "substrate_stage": (result.get("substrate") or {}).get("stage"),
+            },
+        )
 
     run_output = run_record.get("output") or {}
     next_step_index = run_output.get("nextStepIndex")

@@ -3226,6 +3226,15 @@ class JarvisOperator:
             "Jarvis produced an OTEM v5 proposal-only plan with read-only workflow, run, approval, and tool awareness."
         )
         assert result.get("version") == OTEM_VERSION, f"Unexpected OTEM payload version: {result.get('version')!r}"
+        if session_id and result.get("workflow_handoff"):
+            try:
+                from src.otem_execution_approval_bridge import maybe_enqueue_otem_execution_approval
+
+                queue_meta = maybe_enqueue_otem_execution_approval(session_id, result)
+                if queue_meta:
+                    result["execution_approval_queue"] = queue_meta
+            except Exception:
+                logger.exception("OTEM execution approval enqueue failed for session %s", session_id)
         return result
 
     def _sync_evolving_workspace(self):

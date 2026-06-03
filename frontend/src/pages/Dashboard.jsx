@@ -478,6 +478,7 @@ function Dashboard() {
   const activeOtemRecommendations = activeOtemState?.execution_awareness?.recommendations || [];
   const activeOtemToolSuggestions = activeOtemState?.tool_awareness?.suggestions || [];
   const activeOtemWorkflowHandoff = activeOtemState?.workflow_handoff || null;
+  const activeOtemExecutionApprovalQueue = activeOtemState?.execution_approval_queue || null;
   const activeOtemRejected = String(activeOtemState?.status || '').toLowerCase() === 'rejected';
   const activeSessionModeGuidance = activeSession?.mode_guidance || {};
   const activeSessionTrace = activeSession?.response_trace || {};
@@ -1899,6 +1900,13 @@ function Dashboard() {
               <div className="workbench-notice warning" data-testid="otem-workflow-handoff">
                 <strong>{activeOtemWorkflowHandoff.template_name || activeOtemWorkflowHandoff.workflow_template_id}</strong>
                 <p>{activeOtemWorkflowHandoff.rationale}</p>
+                {activeOtemExecutionApprovalQueue?.status === 'pending' ? (
+                  <p className="workbench-muted" data-testid="otem-execution-approval-pending">
+                    Execution approval queued for this session.
+                    {' '}
+                    <Link to="/workflows/approvals">Review pending execution approval</Link>
+                  </p>
+                ) : null}
               </div>
             ) : (
               <p className="workbench-muted">No workflow handoff is active on the latest OTEM task.</p>

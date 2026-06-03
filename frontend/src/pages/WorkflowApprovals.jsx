@@ -87,8 +87,16 @@ function WorkflowApprovals() {
             <article key={approval.id} className="workflow-card page-panel workflow-approval-card">
               <div className="workflow-approval-header">
                 <div>
-                  <strong>{approval.workflow_run?.workflow?.name || 'Workflow'} → {approval.step_label}</strong>
-                  <div className="workflow-step-type">{approval.step_type}</div>
+                  <strong>
+                    {approval.step_type === 'otem_execution_substrate'
+                      ? 'OTEM execution'
+                      : (approval.workflow_run?.workflow?.name || 'Workflow')}
+                    {' '}
+                    → {approval.step_label}
+                  </strong>
+                  <div className="workflow-step-type">
+                    {approval.step_type === 'otem_execution_substrate' ? 'otem_execution_substrate' : approval.step_type}
+                  </div>
                 </div>
 
                 <div className="workflow-approval-actions">

@@ -1,10 +1,8 @@
 name: CoGOS Release Candidate
 
+# Paused: tag pushes fired RC builds without a self-hosted cogos-builder (no jobs ran).
+# Re-enable push.tags below when the builder runner is online.
 on:
-  push:
-    tags:
-      - "v*"
-      - "cogos-*"
   workflow_dispatch:
     inputs:
       cogos_tag:

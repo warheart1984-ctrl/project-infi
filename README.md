@@ -61,7 +61,7 @@ make translate-mythic MYTHIC='V9 runtime steward'   # mythic → engineering_cla
 
 **Codex / Cursor naming (new code):** [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md) · **Meta-linguistic governance:** [AAIS_META_LINGUISTIC_GOVERNANCE.md](docs/contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md) — mythic in comments, engineering in identifiers; legacy `*_organ` / `*_fabric` paths grandfathered until Wave 4 MP-X rename.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.25.0 — Release 29 Integration and Story Forge Execution Fabric](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.25.0) (tag on GitHub) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.26.0 — Release 30 OTEM Execution Approval Bridge](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.0) (tag on GitHub) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -101,7 +101,7 @@ flowchart LR
 | Plane | Owner | Role |
 |---|---|---|
 | **Cognition executive** | `src/api.py` | Jarvis sessions, chat turns, law admission, provider routing |
-| **Workflow shell** | `app/main.py` | Health, onboarding, static UI, Celery workflow — does not replace Jarvis |
+| **Workflow shell** | `app/main.py` | Health, onboarding, static UI, Celery workflow, **`/workflows/approvals`** (including OTEM execution substrate approvals since v1.26.0) — does not replace Jarvis |
 | **Ops membrane** | `platform/` | Multi-tenant jobs, ledger, artifacts — observe/actuate, not goal invention |
 | **Contractors** | `forge/`, `forge_eval/`, `evolve_engine/` | Isolated HTTP lanes for repo mutation and evaluation |
 
@@ -401,7 +401,8 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 | Item | Location |
 |---|---|
 | Repository | https://github.com/warheart1984-ctrl/Project-Infinity1 |
-| Latest tag | [`v1.25.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.25.0) — **Release 29** — Story Forge execution fabric, universal integration proof, media processor bridge, 170 governed genomes, Coherence v1.24 ([release notes](docs/releases/v1.25.0-release29-integration-storyforge-execution.md), [CHANGELOG](CHANGELOG.md) §1.25.0) |
+| Latest tag | [`v1.26.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.0) — **Release 30** — OTEM execution approval bridge (`/workflows/approvals`), auto-enqueue on session `workflow_handoff`, CI gate pause for AI Factory / CoGOS RC ([release notes](docs/releases/v1.26.0-release30-otem-execution-approval-bridge.md), [CHANGELOG](CHANGELOG.md) §1.26.0) |
+| Prior tag | [`v1.25.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.25.0) — **Release 29** — Story Forge execution fabric, universal integration proof, media processor bridge, 170 governed genomes, Coherence v1.24 ([release notes](docs/releases/v1.25.0-release29-integration-storyforge-execution.md), [CHANGELOG](CHANGELOG.md) §1.25.0) |
 | Summon wave | [`alt29-summon-wave-2026-06`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/alt29-summon-wave-2026-06) — Release 29 batch marker (same commit as `v1.25.0`) |
 | Prior tag | [`v1.23.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.23.0) — **Release 27** — 163 governed schemas, CISIV early ideas bundle, Coherence Layer v1.22 ([release notes](docs/releases/v1.23.0-release27-cisiv-early-ideas-fabric.md), [CHANGELOG](CHANGELOG.md) §1.23.0) |
 | Prior tag | [`v1.22.0`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.22.0) — **Release 26** — 163 governed schemas, operational closure, Coherence Layer v1.21 ([release notes](docs/releases/v1.22.0-release26-operational-closure.md), [CHANGELOG](CHANGELOG.md) §1.22.0) |
