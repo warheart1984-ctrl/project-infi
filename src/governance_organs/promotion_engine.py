@@ -102,6 +102,33 @@ GENE_GATES: dict[str, str] = {
     "slingshot_organ": "slingshot-organ-gate",
     "operator_workbench_organ": "operator-workbench-organ-gate",
     "workflow_shell_organ": "workflow-shell-organ-gate",
+    "jarvis_protocol_organ": "jarvis-protocol-organ-gate",
+    "reasoning_contract_organ": "reasoning-contract-organ-gate",
+    "jarvis_reasoning_lane_organ": "jarvis-reasoning-lane-organ-gate",
+    "conversation_memory_organ": "conversation-memory-organ-gate",
+    "continuity_substrate_organ": "continuity-substrate-organ-gate",
+    "jarvis_operator_organ": "jarvis-operator-organ-gate",
+    "anti_drift_organ": "anti-drift-organ-gate",
+    "prompt_assembly_organ": "prompt-assembly-organ-gate",
+    "output_integrity_organ": "output-integrity-organ-gate",
+    "project_infi_state_machine_organ": "project-infi-state-machine-organ-gate",
+    "project_infi_law_organ": "project-infi-law-organ-gate",
+    "run_ledger_binding_organ": "run-ledger-binding-organ-gate",
+    "chat_turn_governance_organ": "chat-turn-governance-organ-gate",
+    "aais_ul_substrate_organ": "aais-ul-substrate-organ-gate",
+    "aris_integration_organ": "aris-integration-organ-gate",
+    "governance_layer_organ": "governance-layer-organ-gate",
+    "security_protocol_organ": "security-protocol-organ-gate",
+    "system_guard_organ": "system-guard-organ-gate",
+    "launcher_organ": "launcher-organ-gate",
+    "aais_doctor_organ": "aais-doctor-organ-gate",
+    "workflow_runtime_organ": "workflow-runtime-organ-gate",
+    "jarvis_console_surface_organ": "jarvis-console-surface-organ-gate",
+    "memory_bank_surface_organ": "memory-bank-surface-organ-gate",
+    "dashboard_surface_organ": "dashboard-surface-organ-gate",
+    "nova_landing_surface_organ": "nova-landing-surface-organ-gate",
+    "aais_composed_runtime_organ": "aais-composed-runtime-organ-gate",
+    "api_gateway_organ": "api-gateway-organ-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -269,6 +296,79 @@ GATE_SCRIPTS: dict[str, list[str]] = {
         ".github/scripts/check-operator-workbench-organ-governance.py"
     ],
     "workflow-shell-organ-gate": [".github/scripts/check-workflow-shell-organ-governance.py"],
+    "jarvis-protocol-organ-gate": [
+        ".github/scripts/check-jarvis-protocol-organ-governance.py"
+    ],
+    "reasoning-contract-organ-gate": [
+        ".github/scripts/check-reasoning-contract-organ-governance.py"
+    ],
+    "jarvis-reasoning-lane-organ-gate": [
+        ".github/scripts/check-jarvis-reasoning-lane-organ-governance.py"
+    ],
+    "conversation-memory-organ-gate": [
+        ".github/scripts/check-conversation-memory-organ-governance.py"
+    ],
+    "continuity-substrate-organ-gate": [
+        ".github/scripts/check-continuity-substrate-organ-governance.py"
+    ],
+    "jarvis-operator-organ-gate": [
+        ".github/scripts/check-jarvis-operator-organ-governance.py"
+    ],
+    "anti-drift-organ-gate": [".github/scripts/check-anti-drift-organ-governance.py"],
+    "prompt-assembly-organ-gate": [
+        ".github/scripts/check-prompt-assembly-organ-governance.py"
+    ],
+    "output-integrity-organ-gate": [
+        ".github/scripts/check-output-integrity-organ-governance.py"
+    ],
+    "project-infi-state-machine-organ-gate": [
+        ".github/scripts/check-project-infi-state-machine-organ-governance.py"
+    ],
+    "project-infi-law-organ-gate": [
+        ".github/scripts/check-project-infi-law-organ-governance.py"
+    ],
+    "run-ledger-binding-organ-gate": [
+        ".github/scripts/check-run-ledger-binding-organ-governance.py"
+    ],
+    "chat-turn-governance-organ-gate": [
+        ".github/scripts/check-chat-turn-governance-organ-governance.py"
+    ],
+    "aais-ul-substrate-organ-gate": [
+        ".github/scripts/check-aais-ul-substrate-organ-governance.py"
+    ],
+    "aris-integration-organ-gate": [
+        ".github/scripts/check-aris-integration-organ-governance.py"
+    ],
+    "governance-layer-organ-gate": [
+        ".github/scripts/check-governance-layer-organ-governance.py"
+    ],
+    "security-protocol-organ-gate": [
+        ".github/scripts/check-security-protocol-organ-governance.py"
+    ],
+    "system-guard-organ-gate": [
+        ".github/scripts/check-system-guard-organ-governance.py"
+    ],
+    "launcher-organ-gate": [".github/scripts/check-launcher-organ-governance.py"],
+    "aais-doctor-organ-gate": [".github/scripts/check-aais-doctor-organ-governance.py"],
+    "workflow-runtime-organ-gate": [
+        ".github/scripts/check-workflow-runtime-organ-governance.py"
+    ],
+    "jarvis-console-surface-organ-gate": [
+        ".github/scripts/check-jarvis-console-surface-organ-governance.py"
+    ],
+    "memory-bank-surface-organ-gate": [
+        ".github/scripts/check-memory-bank-surface-organ-governance.py"
+    ],
+    "dashboard-surface-organ-gate": [
+        ".github/scripts/check-dashboard-surface-organ-governance.py"
+    ],
+    "nova-landing-surface-organ-gate": [
+        ".github/scripts/check-nova-landing-surface-organ-governance.py"
+    ],
+    "aais-composed-runtime-organ-gate": [
+        ".github/scripts/check-aais-composed-runtime-organ-governance.py"
+    ],
+    "api-gateway-organ-gate": [".github/scripts/check-api-gateway-organ-governance.py"],
 }
 
 PROTOTYPE_GATE_STUB_GENES = frozenset(GENE_GATES.keys()) | frozenset(

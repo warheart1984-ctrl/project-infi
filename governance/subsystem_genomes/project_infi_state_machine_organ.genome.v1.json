@@ -1,0 +1,79 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "project_infi_state_machine_organ",
+    "version": "0.1.0-concept",
+    "stage": "governed",
+    "display_name": "Project Infi State Machine Organ"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/runtime/AAIS_RUNTIME_GUIDE.md",
+      "docs/contracts/JARVIS_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    ],
+    "invariants": [
+      "Read-only v1 \u2014 organ does not mutate upstream authority",
+      "module_id frozen to AAIS-PIS-01"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/project_infi_state_machine_organ.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/project_infi_state_machine_organ.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/project-infi-state-machine/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make project-infi-state-machine-organ-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "E:\\project-infi\\docs\\proof\\platform\\PROJECT_INFI_STATE_MACHINE_ORGAN_GOVERNED_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/platform/PROJECT_INFI_STATE_MACHINE_ORGAN_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "operator_cognition_coherence_fabric",
+      "ul_lineage_console_organ"
+    ],
+    "children": [
+      "project_infi_law_organ"
+    ]
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "alt18-summon-wave-2026-06",
+    "notes": "Alt-18 wave 1"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/PROJECT_INFI_STATE_MACHINE_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/PROJECT_INFI_STATE_MACHINE_ORGAN_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/platform/PROJECT_INFI_STATE_MACHINE_ORGAN.md"
+  }
+}

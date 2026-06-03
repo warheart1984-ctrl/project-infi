@@ -56,6 +56,7 @@
     ],
     "children": [
       "aris_boundary_organ",
+      "aris_integration_organ",
       "governed_event_chain_organ",
       "mission_board_organ",
       "otem_bounded_organ",

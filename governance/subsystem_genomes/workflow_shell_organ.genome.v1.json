@@ -54,7 +54,11 @@
       "operator_workbench_organ",
       "capability_service_bridge"
     ],
-    "children": []
+    "children": [
+      "jarvis_operator_organ",
+      "launcher_organ",
+      "workflow_runtime_organ"
+    ]
   },
   "activation": {
     "order": 9,

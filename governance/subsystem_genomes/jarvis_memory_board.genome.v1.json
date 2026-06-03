@@ -55,7 +55,9 @@
     "parents": [],
     "children": [
       "cisiv_operator_lineage_console",
+      "conversation_memory_organ",
       "governed_direct_pipeline",
+      "memory_bank_surface_organ",
       "memory_path_governance_organ",
       "operator_cognition_coherence_fabric",
       "verification_gate_organ"

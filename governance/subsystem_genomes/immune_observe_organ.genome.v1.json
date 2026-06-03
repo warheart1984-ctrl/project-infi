@@ -54,6 +54,7 @@
       "safety_envelope_organ"
     ],
     "children": [
+      "governance_layer_organ",
       "policy_gate_organ"
     ]
   },

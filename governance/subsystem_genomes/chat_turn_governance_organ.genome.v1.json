@@ -1,0 +1,79 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "chat_turn_governance_organ",
+    "version": "0.1.0-concept",
+    "stage": "governed",
+    "display_name": "Chat Turn Governance Organ"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/runtime/AAIS_RUNTIME_GUIDE.md",
+      "docs/contracts/JARVIS_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    ],
+    "invariants": [
+      "Read-only v1 \u2014 organ does not mutate upstream authority",
+      "module_id frozen to AAIS-CTG-01"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/chat_turn_governance_organ.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/chat_turn_governance_organ.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/chat-turn-governance/status"
+      },
+      {
+        "kind": "gate",
+        "path": "make chat-turn-governance-organ-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "E:\\project-infi\\docs\\proof\\platform\\CHAT_TURN_GOVERNANCE_ORGAN_GOVERNED_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/platform/CHAT_TURN_GOVERNANCE_ORGAN_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [
+      "project_infi_law_organ",
+      "jarvis_operator_organ"
+    ],
+    "children": [
+      "aais_ul_substrate_organ"
+    ]
+  },
+  "activation": {
+    "order": 4,
+    "batch_id": "alt18-summon-wave-2026-06",
+    "notes": "Alt-18 wave 4"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/CHAT_TURN_GOVERNANCE_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/CHAT_TURN_GOVERNANCE_ORGAN_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/platform/CHAT_TURN_GOVERNANCE_ORGAN.md"
+  }
+}

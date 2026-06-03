@@ -57,8 +57,10 @@
       "immune_system"
     ],
     "children": [
+      "anti_drift_organ",
       "cognitive_bridge_organ",
       "immune_observe_organ",
+      "jarvis_operator_organ",
       "module_governance_organ",
       "operator_cognition_coherence_fabric",
       "otem_bounded_organ",

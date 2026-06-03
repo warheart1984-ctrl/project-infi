@@ -10,7 +10,7 @@ from src.operator_cognition_coherence_fabric import build_coherence_fabric_statu
 def test_build_coherence_fabric_status_schema_fields():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status["operator_cognition_coherence_fabric_version"] == (
-        "operator_cognition_coherence_fabric.v1.11"
+        "operator_cognition_coherence_fabric.v1.14"
     )
     assert status["read_only"] is True
     assert status["authority_lane"] == "operator"
@@ -326,6 +326,36 @@ def test_alt16_factory_kinetic_planes_at_v111():
     assert status.get("factory_kinetic_aligned") is True
 
 
+def test_alt19_operator_product_shell_planes_at_v114():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    assert len(status.get("product_shell_posture") or []) == 3
+    assert len(status.get("operator_surface_posture") or []) == 4
+    assert len(status.get("composed_runtime_posture") or []) == 2
+    assert status.get("product_shell_aligned") is True
+    assert status.get("operator_surface_aligned") is True
+    assert status.get("composed_runtime_aligned") is True
+    assert status.get("operator_product_shell_aligned") is True
+
+
+def test_alt18_project_infi_law_planes_at_v113():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    assert len(status.get("law_cycle_posture") or []) == 3
+    assert len(status.get("turn_admission_posture") or []) == 3
+    assert len(status.get("governance_control_posture") or []) == 3
+    assert status.get("project_infi_law_aligned") is True
+
+
+def test_alt17_authority_protocol_integrity_planes_at_v112():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    assert len(status.get("protocol_posture") or []) == 3
+    assert len(status.get("authority_shell_posture") or []) == 3
+    assert len(status.get("response_integrity_posture") or []) == 3
+    assert status.get("protocol_aligned") is True
+    assert status.get("authority_shell_aligned") is True
+    assert status.get("response_integrity_aligned") is True
+    assert status.get("authority_protocol_integrity_aligned") is True
+
+
 def test_alt15_lobe_voice_planes_at_v111():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert len(status.get("executive_attention_posture") or []) == 3
@@ -337,10 +367,10 @@ def test_alt15_lobe_voice_planes_at_v111():
     assert status.get("nova_lobe_voice_aligned") is True
 
 
-def test_alt12_planes_aligned_at_v111_alongside_alt13_and_alt14():
+def test_alt12_planes_aligned_at_v112_alongside_alt13_and_alt14():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status.get("operator_cognition_coherence_fabric_version") == (
-        "operator_cognition_coherence_fabric.v1.11"
+        "operator_cognition_coherence_fabric.v1.14"
     )
     assert len(status.get("otem_lane_posture") or []) == 3
     assert len(status.get("predictive_lane_posture") or []) == 3

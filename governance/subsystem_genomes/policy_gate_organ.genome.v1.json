@@ -54,7 +54,8 @@
       "phase_gate_organ"
     ],
     "children": [
-      "predictor_immune_bridge_organ"
+      "predictor_immune_bridge_organ",
+      "security_protocol_organ"
     ]
   },
   "activation": {

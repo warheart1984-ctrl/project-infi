@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.11"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.14"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -1235,6 +1235,301 @@ def _kinetic_shell_aligned(posture: list[dict[str, Any]]) -> bool:
     return True
 
 
+def _build_protocol_posture() -> list[dict[str, Any]]:
+    from src.jarvis_protocol_organ import build_jarvis_protocol_status
+    from src.jarvis_reasoning_lane_organ import build_jarvis_reasoning_lane_status
+    from src.reasoning_contract_organ import build_reasoning_contract_status
+
+    protocol = build_jarvis_protocol_status()
+    contract = build_reasoning_contract_status()
+    lane = build_jarvis_reasoning_lane_status()
+    return [
+        _organ_posture_item(
+            "jarvis_protocol_organ",
+            protocol,
+            read_only=bool(protocol.get("read_only")),
+        ),
+        _organ_posture_item(
+            "reasoning_contract_organ",
+            contract,
+            executive_usurpation=bool(contract.get("executive_usurpation")),
+        ),
+        _organ_posture_item(
+            "jarvis_reasoning_lane_organ",
+            lane,
+            routing_usurpation=bool(lane.get("routing_usurpation")),
+            lane_catalog_only=bool(lane.get("lane_catalog_only")),
+        ),
+    ]
+
+
+def _protocol_aligned(posture: list[dict[str, Any]]) -> bool:
+    if len(posture) < 3:
+        return False
+    for item in posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if item.get("organ_id") == "reasoning_contract_organ" and item.get(
+            "executive_usurpation"
+        ):
+            return False
+        if item.get("organ_id") == "jarvis_reasoning_lane_organ" and item.get(
+            "routing_usurpation"
+        ):
+            return False
+    return True
+
+
+def _build_authority_shell_posture() -> list[dict[str, Any]]:
+    from src.continuity_substrate_organ import build_continuity_substrate_status
+    from src.conversation_memory_organ import build_conversation_memory_status
+    from src.jarvis_operator_organ import build_jarvis_operator_status
+
+    memory = build_conversation_memory_status()
+    continuity = build_continuity_substrate_status()
+    operator = build_jarvis_operator_status()
+    return [
+        _organ_posture_item(
+            "conversation_memory_organ",
+            memory,
+            read_only=bool(memory.get("read_only")),
+        ),
+        _organ_posture_item(
+            "continuity_substrate_organ",
+            continuity,
+            substrate_aligned=bool(continuity.get("substrate_aligned")),
+        ),
+        _organ_posture_item(
+            "jarvis_operator_organ",
+            operator,
+            new_execute_authority_via_organ=bool(
+                operator.get("new_execute_authority_via_organ")
+            ),
+        ),
+    ]
+
+
+def _authority_shell_aligned(posture: list[dict[str, Any]]) -> bool:
+    if len(posture) < 3:
+        return False
+    for item in posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if item.get("organ_id") == "jarvis_operator_organ" and item.get(
+            "new_execute_authority_via_organ"
+        ):
+            return False
+        if item.get("organ_id") == "continuity_substrate_organ" and not item.get(
+            "substrate_aligned"
+        ):
+            return False
+    return True
+
+
+def _build_response_integrity_posture() -> list[dict[str, Any]]:
+    from src.anti_drift_organ import build_anti_drift_status
+    from src.output_integrity_organ import build_output_integrity_status
+    from src.prompt_assembly_organ import build_prompt_assembly_status
+
+    anti = build_anti_drift_status()
+    prompt = build_prompt_assembly_status()
+    output = build_output_integrity_status()
+    return [
+        _organ_posture_item(
+            "anti_drift_organ",
+            anti,
+            read_only=bool(anti.get("read_only")),
+            thread_contract_active=bool(anti.get("thread_contract_active")),
+        ),
+        _organ_posture_item(
+            "prompt_assembly_organ",
+            prompt,
+            scaffold_suppression=bool(prompt.get("scaffold_suppression")),
+        ),
+        _organ_posture_item(
+            "output_integrity_organ",
+            output,
+            finalization_read_only=bool(output.get("finalization_read_only")),
+        ),
+    ]
+
+
+def _response_integrity_aligned(posture: list[dict[str, Any]]) -> bool:
+    if len(posture) < 3:
+        return False
+    for item in posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if item.get("organ_id") == "output_integrity_organ" and not item.get(
+            "finalization_read_only"
+        ):
+            return False
+    return True
+
+
+def _build_law_cycle_posture() -> list[dict[str, Any]]:
+    from src.project_infi_law_organ import build_project_infi_law_status
+    from src.project_infi_state_machine_organ import build_project_infi_state_machine_status
+    from src.run_ledger_binding_organ import build_run_ledger_binding_status
+
+    sm = build_project_infi_state_machine_status()
+    law = build_project_infi_law_status()
+    bind = build_run_ledger_binding_status()
+    return [
+        _organ_posture_item(
+            "project_infi_state_machine_organ",
+            sm,
+            special_review_only=bool(sm.get("special_review_only")),
+        ),
+        _organ_posture_item(
+            "project_infi_law_organ",
+            law,
+            autonomous_law_mutation=bool(law.get("autonomous_law_mutation")),
+        ),
+        _organ_posture_item("run_ledger_binding_organ", bind),
+    ]
+
+
+def _law_cycle_aligned(posture: list[dict[str, Any]]) -> bool:
+    if len(posture) < 3:
+        return False
+    for item in posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if item.get("organ_id") == "project_infi_law_organ" and item.get(
+            "autonomous_law_mutation"
+        ):
+            return False
+    return True
+
+
+def _build_turn_admission_posture() -> list[dict[str, Any]]:
+    from src.aais_ul_substrate_organ import build_aais_ul_substrate_status
+    from src.aris_integration_organ import build_aris_integration_status
+    from src.chat_turn_governance_organ import build_chat_turn_governance_status
+
+    chat = build_chat_turn_governance_status()
+    ul = build_aais_ul_substrate_status()
+    aris = build_aris_integration_status()
+    return [
+        _organ_posture_item("chat_turn_governance_organ", chat),
+        _organ_posture_item("aais_ul_substrate_organ", ul),
+        _organ_posture_item("aris_integration_organ", aris),
+    ]
+
+
+def _turn_admission_aligned(posture: list[dict[str, Any]]) -> bool:
+    return len(posture) >= 3 and all(
+        str(item.get("claim_label") or "") != "rejected" for item in posture
+    )
+
+
+def _build_governance_control_posture() -> list[dict[str, Any]]:
+    from src.governance_layer_organ import build_governance_layer_status
+    from src.security_protocol_organ import build_security_protocol_status
+    from src.system_guard_organ import build_system_guard_status
+
+    gov = build_governance_layer_status()
+    sec = build_security_protocol_status()
+    guard = build_system_guard_status()
+    return [
+        _organ_posture_item("governance_layer_organ", gov),
+        _organ_posture_item(
+            "security_protocol_organ",
+            sec,
+            security_protocol_core_present=bool(sec.get("security_protocol_core_present")),
+        ),
+        _organ_posture_item("system_guard_organ", guard),
+    ]
+
+
+def _governance_control_aligned(posture: list[dict[str, Any]]) -> bool:
+    if len(posture) < 3:
+        return False
+    for item in posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if item.get("organ_id") == "security_protocol_organ" and not item.get(
+            "security_protocol_core_present"
+        ):
+            return False
+    return True
+
+
+def _build_product_shell_posture() -> list[dict[str, Any]]:
+    from src.aais_doctor_organ import build_aais_doctor_status
+    from src.launcher_organ import build_launcher_status
+    from src.workflow_runtime_organ import build_workflow_runtime_status
+
+    return [
+        _organ_posture_item("launcher_organ", build_launcher_status()),
+        _organ_posture_item("aais_doctor_organ", build_aais_doctor_status()),
+        _organ_posture_item("workflow_runtime_organ", build_workflow_runtime_status()),
+    ]
+
+
+def _product_shell_aligned(posture: list[dict[str, Any]]) -> bool:
+    return len(posture) >= 3 and all(
+        str(item.get("claim_label") or "") != "rejected" for item in posture
+    )
+
+
+def _build_operator_surface_posture() -> list[dict[str, Any]]:
+    from src.dashboard_surface_organ import build_dashboard_surface_status
+    from src.jarvis_console_surface_organ import build_jarvis_console_surface_status
+    from src.memory_bank_surface_organ import build_memory_bank_surface_status
+    from src.nova_landing_surface_organ import build_nova_landing_surface_status
+
+    return [
+        _organ_posture_item(
+            "jarvis_console_surface_organ", build_jarvis_console_surface_status()
+        ),
+        _organ_posture_item(
+            "memory_bank_surface_organ", build_memory_bank_surface_status()
+        ),
+        _organ_posture_item("dashboard_surface_organ", build_dashboard_surface_status()),
+        _organ_posture_item(
+            "nova_landing_surface_organ", build_nova_landing_surface_status()
+        ),
+    ]
+
+
+def _operator_surface_aligned(posture: list[dict[str, Any]]) -> bool:
+    if len(posture) < 4:
+        return False
+    return all(str(item.get("claim_label") or "") != "rejected" for item in posture)
+
+
+def _build_composed_runtime_posture() -> list[dict[str, Any]]:
+    from src.aais_composed_runtime_organ import build_aais_composed_runtime_status
+    from src.api_gateway_organ import build_api_gateway_status
+
+    gateway = build_api_gateway_status()
+    return [
+        _organ_posture_item(
+            "aais_composed_runtime_organ", build_aais_composed_runtime_status()
+        ),
+        _organ_posture_item(
+            "api_gateway_organ",
+            gateway,
+            ingress_read_only=bool(gateway.get("ingress_read_only")),
+        ),
+    ]
+
+
+def _composed_runtime_aligned(posture: list[dict[str, Any]]) -> bool:
+    if len(posture) < 2:
+        return False
+    for item in posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if item.get("organ_id") == "api_gateway_organ" and not item.get(
+            "ingress_read_only"
+        ):
+            return False
+    return True
+
+
 def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
@@ -1326,6 +1621,15 @@ def build_coherence_fabric_status(
     factory_fabrication_posture = _build_factory_fabrication_posture()
     contractor_lane_posture = _build_contractor_lane_posture()
     kinetic_shell_posture = _build_kinetic_shell_posture()
+    protocol_posture = _build_protocol_posture()
+    authority_shell_posture = _build_authority_shell_posture()
+    response_integrity_posture = _build_response_integrity_posture()
+    law_cycle_posture = _build_law_cycle_posture()
+    turn_admission_posture = _build_turn_admission_posture()
+    governance_control_posture = _build_governance_control_posture()
+    product_shell_posture = _build_product_shell_posture()
+    operator_surface_posture = _build_operator_surface_posture()
+    composed_runtime_posture = _build_composed_runtime_posture()
 
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
@@ -1405,6 +1709,47 @@ def build_coherence_fabric_status(
             _factory_fabrication_aligned(factory_fabrication_posture)
             and _contractor_lanes_aligned(contractor_lane_posture)
             and _kinetic_shell_aligned(kinetic_shell_posture)
+        ),
+        "protocol_posture": protocol_posture,
+        "protocol_aligned": _protocol_aligned(protocol_posture),
+        "authority_shell_posture": authority_shell_posture,
+        "authority_shell_aligned": _authority_shell_aligned(authority_shell_posture),
+        "response_integrity_posture": response_integrity_posture,
+        "response_integrity_aligned": _response_integrity_aligned(
+            response_integrity_posture
+        ),
+        "authority_protocol_integrity_aligned": (
+            _protocol_aligned(protocol_posture)
+            and _authority_shell_aligned(authority_shell_posture)
+            and _response_integrity_aligned(response_integrity_posture)
+        ),
+        "law_cycle_posture": law_cycle_posture,
+        "law_cycle_aligned": _law_cycle_aligned(law_cycle_posture),
+        "turn_admission_posture": turn_admission_posture,
+        "turn_admission_aligned": _turn_admission_aligned(turn_admission_posture),
+        "governance_control_posture": governance_control_posture,
+        "governance_control_aligned": _governance_control_aligned(
+            governance_control_posture
+        ),
+        "project_infi_law_aligned": (
+            _law_cycle_aligned(law_cycle_posture)
+            and _turn_admission_aligned(turn_admission_posture)
+            and _governance_control_aligned(governance_control_posture)
+        ),
+        "product_shell_posture": product_shell_posture,
+        "product_shell_aligned": _product_shell_aligned(product_shell_posture),
+        "operator_surface_posture": operator_surface_posture,
+        "operator_surface_aligned": _operator_surface_aligned(
+            operator_surface_posture
+        ),
+        "composed_runtime_posture": composed_runtime_posture,
+        "composed_runtime_aligned": _composed_runtime_aligned(
+            composed_runtime_posture
+        ),
+        "operator_product_shell_aligned": (
+            _product_shell_aligned(product_shell_posture)
+            and _operator_surface_aligned(operator_surface_posture)
+            and _composed_runtime_aligned(composed_runtime_posture)
         ),
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,

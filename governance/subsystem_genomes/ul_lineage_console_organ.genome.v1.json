@@ -54,7 +54,8 @@
       "operator_profile_organ"
     ],
     "children": [
-      "module_governance_organ"
+      "module_governance_organ",
+      "project_infi_state_machine_organ"
     ]
   },
   "activation": {

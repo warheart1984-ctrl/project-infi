@@ -1256,8 +1256,35 @@ The following ideas graduated from [../_future/ideas_pending/](../_future/ideas_
 | Slingshot Organ | governed | [../subsystems/platform/SLINGSHOT_ORGAN.md](../subsystems/platform/SLINGSHOT_ORGAN.md) | [../proof/platform/SLINGSHOT_ORGAN_V1_PROOF.md](../proof/platform/SLINGSHOT_ORGAN_V1_PROOF.md) |
 | Operator Workbench Organ | governed | [../subsystems/platform/OPERATOR_WORKBENCH_ORGAN.md](../subsystems/platform/OPERATOR_WORKBENCH_ORGAN.md) | [../proof/platform/OPERATOR_WORKBENCH_ORGAN_V1_PROOF.md](../proof/platform/OPERATOR_WORKBENCH_ORGAN_V1_PROOF.md) |
 | Workflow Shell Organ | governed | [../subsystems/platform/WORKFLOW_SHELL_ORGAN.md](../subsystems/platform/WORKFLOW_SHELL_ORGAN.md) | [../proof/platform/WORKFLOW_SHELL_ORGAN_V1_PROOF.md](../proof/platform/WORKFLOW_SHELL_ORGAN_V1_PROOF.md) |
+| Jarvis Protocol Organ | governed | [../subsystems/platform/JARVIS_PROTOCOL_ORGAN.md](../subsystems/platform/JARVIS_PROTOCOL_ORGAN.md) | [../proof/platform/JARVIS_PROTOCOL_ORGAN_V1_PROOF.md](../proof/platform/JARVIS_PROTOCOL_ORGAN_V1_PROOF.md) |
+| Reasoning Contract Organ | governed | [../subsystems/platform/REASONING_CONTRACT_ORGAN.md](../subsystems/platform/REASONING_CONTRACT_ORGAN.md) | [../proof/platform/REASONING_CONTRACT_ORGAN_V1_PROOF.md](../proof/platform/REASONING_CONTRACT_ORGAN_V1_PROOF.md) |
+| Jarvis Reasoning Lane Organ | governed | [../subsystems/platform/JARVIS_REASONING_LANE_ORGAN.md](../subsystems/platform/JARVIS_REASONING_LANE_ORGAN.md) | [../proof/platform/JARVIS_REASONING_LANE_ORGAN_V1_PROOF.md](../proof/platform/JARVIS_REASONING_LANE_ORGAN_V1_PROOF.md) |
+| Conversation Memory Organ | governed | [../subsystems/platform/CONVERSATION_MEMORY_ORGAN.md](../subsystems/platform/CONVERSATION_MEMORY_ORGAN.md) | [../proof/platform/CONVERSATION_MEMORY_ORGAN_V1_PROOF.md](../proof/platform/CONVERSATION_MEMORY_ORGAN_V1_PROOF.md) |
+| Continuity Substrate Organ | governed | [../subsystems/platform/CONTINUITY_SUBSTRATE_ORGAN.md](../subsystems/platform/CONTINUITY_SUBSTRATE_ORGAN.md) | [../proof/platform/CONTINUITY_SUBSTRATE_ORGAN_V1_PROOF.md](../proof/platform/CONTINUITY_SUBSTRATE_ORGAN_V1_PROOF.md) |
+| Jarvis Operator Organ | governed | [../subsystems/platform/JARVIS_OPERATOR_ORGAN.md](../subsystems/platform/JARVIS_OPERATOR_ORGAN.md) | [../proof/platform/JARVIS_OPERATOR_ORGAN_V1_PROOF.md](../proof/platform/JARVIS_OPERATOR_ORGAN_V1_PROOF.md) |
+| Anti-Drift Organ | governed | [../subsystems/platform/ANTI_DRIFT_ORGAN.md](../subsystems/platform/ANTI_DRIFT_ORGAN.md) | [../proof/platform/ANTI_DRIFT_ORGAN_V1_PROOF.md](../proof/platform/ANTI_DRIFT_ORGAN_V1_PROOF.md) |
+| Prompt Assembly Organ | governed | [../subsystems/platform/PROMPT_ASSEMBLY_ORGAN.md](../subsystems/platform/PROMPT_ASSEMBLY_ORGAN.md) | [../proof/platform/PROMPT_ASSEMBLY_ORGAN_V1_PROOF.md](../proof/platform/PROMPT_ASSEMBLY_ORGAN_V1_PROOF.md) |
+| Output Integrity Organ | governed | [../subsystems/platform/OUTPUT_INTEGRITY_ORGAN.md](../subsystems/platform/OUTPUT_INTEGRITY_ORGAN.md) | [../proof/platform/OUTPUT_INTEGRITY_ORGAN_V1_PROOF.md](../proof/platform/OUTPUT_INTEGRITY_ORGAN_V1_PROOF.md) |
+| Project Infi State Machine Organ | governed | [../subsystems/platform/PROJECT_INFI_STATE_MACHINE_ORGAN.md](../subsystems/platform/PROJECT_INFI_STATE_MACHINE_ORGAN.md) | [../proof/platform/PROJECT_INFI_STATE_MACHINE_ORGAN_V1_PROOF.md](../proof/platform/PROJECT_INFI_STATE_MACHINE_ORGAN_V1_PROOF.md) |
+| Project Infi Law Organ | governed | [../subsystems/platform/PROJECT_INFI_LAW_ORGAN.md](../subsystems/platform/PROJECT_INFI_LAW_ORGAN.md) | [../proof/platform/PROJECT_INFI_LAW_ORGAN_V1_PROOF.md](../proof/platform/PROJECT_INFI_LAW_ORGAN_V1_PROOF.md) |
+| Run Ledger Binding Organ | governed | [../subsystems/platform/RUN_LEDGER_BINDING_ORGAN.md](../subsystems/platform/RUN_LEDGER_BINDING_ORGAN.md) | [../proof/platform/RUN_LEDGER_BINDING_ORGAN_V1_PROOF.md](../proof/platform/RUN_LEDGER_BINDING_ORGAN_V1_PROOF.md) |
+| Chat Turn Governance Organ | governed | [../subsystems/platform/CHAT_TURN_GOVERNANCE_ORGAN.md](../subsystems/platform/CHAT_TURN_GOVERNANCE_ORGAN.md) | [../proof/platform/CHAT_TURN_GOVERNANCE_ORGAN_V1_PROOF.md](../proof/platform/CHAT_TURN_GOVERNANCE_ORGAN_V1_PROOF.md) |
+| AAIS UL Substrate Organ | governed | [../subsystems/platform/AAIS_UL_SUBSTRATE_ORGAN.md](../subsystems/platform/AAIS_UL_SUBSTRATE_ORGAN.md) | [../proof/platform/AAIS_UL_SUBSTRATE_ORGAN_V1_PROOF.md](../proof/platform/AAIS_UL_SUBSTRATE_ORGAN_V1_PROOF.md) |
+| ARIS Integration Organ | governed | [../subsystems/platform/ARIS_INTEGRATION_ORGAN.md](../subsystems/platform/ARIS_INTEGRATION_ORGAN.md) | [../proof/platform/ARIS_INTEGRATION_ORGAN_V1_PROOF.md](../proof/platform/ARIS_INTEGRATION_ORGAN_V1_PROOF.md) |
+| Governance Layer Organ | governed | [../subsystems/platform/GOVERNANCE_LAYER_ORGAN.md](../subsystems/platform/GOVERNANCE_LAYER_ORGAN.md) | [../proof/platform/GOVERNANCE_LAYER_ORGAN_V1_PROOF.md](../proof/platform/GOVERNANCE_LAYER_ORGAN_V1_PROOF.md) |
+| Security Protocol Organ | governed | [../subsystems/platform/SECURITY_PROTOCOL_ORGAN.md](../subsystems/platform/SECURITY_PROTOCOL_ORGAN.md) | [../proof/platform/SECURITY_PROTOCOL_ORGAN_V1_PROOF.md](../proof/platform/SECURITY_PROTOCOL_ORGAN_V1_PROOF.md) |
+| System Guard Organ | governed | [../subsystems/platform/SYSTEM_GUARD_ORGAN.md](../subsystems/platform/SYSTEM_GUARD_ORGAN.md) | [../proof/platform/SYSTEM_GUARD_ORGAN_V1_PROOF.md](../proof/platform/SYSTEM_GUARD_ORGAN_V1_PROOF.md) |
+| Launcher Organ | governed | [../subsystems/platform/LAUNCHER_ORGAN.md](../subsystems/platform/LAUNCHER_ORGAN.md) | [../proof/platform/LAUNCHER_ORGAN_V1_PROOF.md](../proof/platform/LAUNCHER_ORGAN_V1_PROOF.md) |
+| AAIS Doctor Organ | governed | [../subsystems/platform/AAIS_DOCTOR_ORGAN.md](../subsystems/platform/AAIS_DOCTOR_ORGAN.md) | [../proof/platform/AAIS_DOCTOR_ORGAN_V1_PROOF.md](../proof/platform/AAIS_DOCTOR_ORGAN_V1_PROOF.md) |
+| Workflow Runtime Organ | governed | [../subsystems/platform/WORKFLOW_RUNTIME_ORGAN.md](../subsystems/platform/WORKFLOW_RUNTIME_ORGAN.md) | [../proof/platform/WORKFLOW_RUNTIME_ORGAN_V1_PROOF.md](../proof/platform/WORKFLOW_RUNTIME_ORGAN_V1_PROOF.md) |
+| Jarvis Console Surface Organ | governed | [../subsystems/platform/JARVIS_CONSOLE_SURFACE_ORGAN.md](../subsystems/platform/JARVIS_CONSOLE_SURFACE_ORGAN.md) | [../proof/platform/JARVIS_CONSOLE_SURFACE_ORGAN_V1_PROOF.md](../proof/platform/JARVIS_CONSOLE_SURFACE_ORGAN_V1_PROOF.md) |
+| Memory Bank Surface Organ | governed | [../subsystems/platform/MEMORY_BANK_SURFACE_ORGAN.md](../subsystems/platform/MEMORY_BANK_SURFACE_ORGAN.md) | [../proof/platform/MEMORY_BANK_SURFACE_ORGAN_V1_PROOF.md](../proof/platform/MEMORY_BANK_SURFACE_ORGAN_V1_PROOF.md) |
+| Dashboard Surface Organ | governed | [../subsystems/platform/DASHBOARD_SURFACE_ORGAN.md](../subsystems/platform/DASHBOARD_SURFACE_ORGAN.md) | [../proof/platform/DASHBOARD_SURFACE_ORGAN_V1_PROOF.md](../proof/platform/DASHBOARD_SURFACE_ORGAN_V1_PROOF.md) |
+| Nova Landing Surface Organ | governed | [../subsystems/platform/NOVA_LANDING_SURFACE_ORGAN.md](../subsystems/platform/NOVA_LANDING_SURFACE_ORGAN.md) | [../proof/platform/NOVA_LANDING_SURFACE_ORGAN_V1_PROOF.md](../proof/platform/NOVA_LANDING_SURFACE_ORGAN_V1_PROOF.md) |
+| AAIS Composed Runtime Organ | governed | [../subsystems/platform/AAIS_COMPOSED_RUNTIME_ORGAN.md](../subsystems/platform/AAIS_COMPOSED_RUNTIME_ORGAN.md) | [../proof/platform/AAIS_COMPOSED_RUNTIME_ORGAN_V1_PROOF.md](../proof/platform/AAIS_COMPOSED_RUNTIME_ORGAN_V1_PROOF.md) |
+| API Gateway Organ | governed | [../subsystems/platform/API_GATEWAY_ORGAN.md](../subsystems/platform/API_GATEWAY_ORGAN.md) | [../proof/platform/API_GATEWAY_ORGAN_V1_PROOF.md](../proof/platform/API_GATEWAY_ORGAN_V1_PROOF.md) |
 
-Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate alt13-governed-gate alt14-governed-gate alt15-governed-gate alt16-governed-gate`
+Gates: `make lineage-gate triangulation-gate narrative-gate alt3-gate alt5-gate barebones-gate alt6-governed-gate alt7-governed-gate alt8-governed-gate alt9-governed-gate alt10-governed-gate alt11-governed-gate alt12-governed-gate alt13-governed-gate alt14-governed-gate alt15-governed-gate alt16-governed-gate alt17-governed-gate alt18-governed-gate alt19-governed-gate`
 
 ## 9. Concept Pending (SSP)
 
@@ -1266,6 +1293,6 @@ Nothing here is live until promoted per [ideas_pending/README.md](../_future/ide
 
 | Idea | Status | Concept spec | MVP plan | Genome |
 |------|--------|--------------|----------|--------|
-| *(none — Alt-16 graduated to §8)* | — | — | — | — |
+| *(none — Alt-19 graduated to §8)* | — | — | — | — |
 
 New admissions via SSP (Step 7) update this table. Graduated ideas move to §8. Genome contract: [AAIS_SUBSYSTEM_GENOME.md](../contracts/AAIS_SUBSYSTEM_GENOME.md).

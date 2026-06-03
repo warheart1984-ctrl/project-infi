@@ -55,7 +55,8 @@
       "operator_profile_organ"
     ],
     "children": [
-      "ai_factory_organ"
+      "ai_factory_organ",
+      "nova_landing_surface_organ"
     ]
   },
   "activation": {

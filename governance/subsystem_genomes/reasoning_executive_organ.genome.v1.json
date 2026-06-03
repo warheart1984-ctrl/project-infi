@@ -56,7 +56,8 @@
       "operator_cognition_coherence_fabric"
     ],
     "children": [
-      "attention_organ"
+      "attention_organ",
+      "reasoning_contract_organ"
     ]
   },
   "activation": {

@@ -13,6 +13,81 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.15.0] - 2026-06-02 — Alt-19 Operator Product Shell Fabric
+
+**Alt-19** — nine read-only organs at governed; coherence fabric v1.14 with product shell, operator surface, and composed runtime posture planes.
+
+### Added
+
+- **Alt-19.0** — `launcher_organ`, `aais_doctor_organ`, `workflow_runtime_organ`, `jarvis_console_surface_organ`, `memory_bank_surface_organ`, `dashboard_surface_organ`, `nova_landing_surface_organ`, `aais_composed_runtime_organ`, `api_gateway_organ`; status APIs; `make alt19-gate`; `tools/governance/alt19_promote_mvp.py`
+- **Alt-19.1** — coherence snapshot v1.14 + `product_shell_aligned`, `operator_surface_aligned`, `composed_runtime_aligned`, `operator_product_shell_aligned`; `make alt19-1-gate`
+- **Alt-19.2** — `OPERATOR_PRODUCT_SHELL_V1_PROOF`; `make alt19-2-gate`
+- **Governed promotion** — `tools/governance/alt19_promote_governed.py`; `make alt19-governed-gate`
+
+### Changed
+
+- Genome registry: **111 governed** subsystem genomes (102 prior + 9 Alt-19)
+- `operator_cognition_coherence_fabric` schema ref → v1.14
+
+### Verification (v1.15.0)
+
+```bash
+make alt19-gate alt19-1-gate alt19-2-gate alt19-governed-gate
+python -m pytest tests/test_launcher_organ.py tests/test_aais_doctor_organ.py tests/test_workflow_runtime_organ.py tests/test_jarvis_console_surface_organ.py tests/test_memory_bank_surface_organ.py tests/test_dashboard_surface_organ.py tests/test_nova_landing_surface_organ.py tests/test_aais_composed_runtime_organ.py tests/test_api_gateway_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.15.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.15.0
+
+## [1.14.0] - 2026-06-02 — Alt-18 Project Infi Law Fabric
+
+**Alt-18** — nine read-only organs at governed; coherence fabric v1.13 with law cycle, turn admission, and governance control posture planes.
+
+### Added
+
+- **Alt-18.0** — `project_infi_state_machine_organ`, `project_infi_law_organ`, `run_ledger_binding_organ`, `chat_turn_governance_organ`, `aais_ul_substrate_organ`, `aris_integration_organ`, `governance_layer_organ`, `security_protocol_organ`, `system_guard_organ`; status APIs; `make alt18-gate`; `tools/governance/alt18_promote_mvp.py`
+- **Alt-18.1** — coherence snapshot v1.13 + `law_cycle_aligned`, `turn_admission_aligned`, `governance_control_aligned`, `project_infi_law_aligned`; `make alt18-1-gate`
+- **Alt-18.2** — `PROJECT_INFI_LAW_V1_PROOF` + `CHAT_TURN_GOVERNANCE_ORGAN_V1_PROOF` + `GOVERNANCE_LAYER_ORGAN_V1_PROOF`; `make alt18-2-gate`
+- **Governed promotion** — `tools/governance/alt18_promote_governed.py`; `make alt18-governed-gate`
+
+### Changed
+
+- Genome registry: **102 governed** subsystem genomes (93 prior + 9 Alt-18)
+- `operator_cognition_coherence_fabric` schema ref → v1.13
+
+### Verification (v1.14.0)
+
+```bash
+make alt18-gate alt18-1-gate alt18-2-gate alt18-governed-gate
+python -m pytest tests/test_project_infi_state_machine_organ.py tests/test_project_infi_law_organ.py tests/test_run_ledger_binding_organ.py tests/test_chat_turn_governance_organ.py tests/test_aais_ul_substrate_organ.py tests/test_aris_integration_organ.py tests/test_governance_layer_organ.py tests/test_security_protocol_organ.py tests/test_system_guard_organ.py tests/test_operator_cognition_coherence_fabric.py tests/test_project_infi_law.py tests/test_chat_turn_governance.py -q
+```
+
+[1.14.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.14.0
+
+## [1.13.0] - 2026-06-02 — Alt-17 Authority Shell & Protocol Fabric
+
+**Alt-17** — nine read-only organs at governed; coherence fabric v1.12 with protocol, authority shell, and response integrity posture planes.
+
+### Added
+
+- **Alt-17.0** — `jarvis_protocol_organ`, `reasoning_contract_organ`, `jarvis_reasoning_lane_organ`, `conversation_memory_organ`, `continuity_substrate_organ`, `jarvis_operator_organ`, `anti_drift_organ`, `prompt_assembly_organ`, `output_integrity_organ`; status APIs; `make alt17-gate`; `tools/governance/alt17_promote_mvp.py`
+- **Alt-17.1** — coherence snapshot v1.12 + `protocol_aligned`, `authority_shell_aligned`, `response_integrity_aligned`, `authority_protocol_integrity_aligned`; `make alt17-1-gate`
+- **Alt-17.2** — `AUTHORITY_PROTOCOL_INTEGRITY_V1_PROOF` + `JARVIS_PROTOCOL_ORGAN_V1_PROOF` + `OUTPUT_INTEGRITY_ORGAN_V1_PROOF`; `make alt17-2-gate`
+- **Governed promotion** — `tools/governance/alt17_promote_governed.py`; `make alt17-governed-gate`
+
+### Changed
+
+- Genome registry: **93 governed** subsystem genomes (84 prior + 9 Alt-17)
+- `operator_cognition_coherence_fabric` schema ref → v1.12
+
+### Verification (v1.13.0)
+
+```bash
+make alt17-gate alt17-1-gate alt17-2-gate alt17-governed-gate
+python -m pytest tests/test_jarvis_protocol_organ.py tests/test_reasoning_contract_organ.py tests/test_jarvis_reasoning_lane_organ.py tests/test_conversation_memory_organ.py tests/test_continuity_substrate_organ.py tests/test_jarvis_operator_organ.py tests/test_anti_drift_organ.py tests/test_prompt_assembly_organ.py tests/test_output_integrity_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+```
+
+[1.13.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.13.0
+
 ## [1.12.0] - 2026-06-02 — Alt-16 Factory & Kinetic Fabric
 
 **Alt-16** — nine read-only organs at governed; coherence fabric v1.11 with factory fabrication, contractor lane, and kinetic shell posture planes.

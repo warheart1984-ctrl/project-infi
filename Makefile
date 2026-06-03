@@ -611,6 +611,124 @@ alt16-2-gate: alt16-1-gate alt16-closure-gate
 alt16-governed-gate:
 	python3 tools/governance/check_alt16_governed_eligibility.py
 
+jarvis-protocol-organ-gate:
+	python3 .github/scripts/check-jarvis-protocol-organ-governance.py
+
+reasoning-contract-organ-gate:
+	python3 .github/scripts/check-reasoning-contract-organ-governance.py
+
+jarvis-reasoning-lane-organ-gate:
+	python3 .github/scripts/check-jarvis-reasoning-lane-organ-governance.py
+
+conversation-memory-organ-gate:
+	python3 .github/scripts/check-conversation-memory-organ-governance.py
+
+continuity-substrate-organ-gate:
+	python3 .github/scripts/check-continuity-substrate-organ-governance.py
+
+jarvis-operator-organ-gate:
+	python3 .github/scripts/check-jarvis-operator-organ-governance.py
+
+anti-drift-organ-gate:
+	python3 .github/scripts/check-anti-drift-organ-governance.py
+
+prompt-assembly-organ-gate:
+	python3 .github/scripts/check-prompt-assembly-organ-governance.py
+
+output-integrity-organ-gate:
+	python3 .github/scripts/check-output-integrity-organ-governance.py
+
+alt17-gate: jarvis-protocol-organ-gate reasoning-contract-organ-gate jarvis-reasoning-lane-organ-gate conversation-memory-organ-gate continuity-substrate-organ-gate jarvis-operator-organ-gate anti-drift-organ-gate prompt-assembly-organ-gate output-integrity-organ-gate genome-gate
+
+alt17-1-gate: alt17-gate alt16-1-gate
+	python3 -m pytest tests/test_jarvis_protocol_organ.py tests/test_reasoning_contract_organ.py tests/test_jarvis_reasoning_lane_organ.py tests/test_conversation_memory_organ.py tests/test_continuity_substrate_organ.py tests/test_jarvis_operator_organ.py tests/test_anti_drift_organ.py tests/test_prompt_assembly_organ.py tests/test_output_integrity_organ.py tests/test_operator_cognition_coherence_fabric.py -q
+
+alt17-closure-gate:
+	python3 tools/governance/check_alt17_closure.py
+
+alt17-2-gate: alt17-1-gate alt17-closure-gate
+
+alt17-governed-gate:
+	python3 tools/governance/check_alt17_governed_eligibility.py
+
+project-infi-state-machine-organ-gate:
+	python3 .github/scripts/check-project-infi-state-machine-organ-governance.py
+
+project-infi-law-organ-gate:
+	python3 .github/scripts/check-project-infi-law-organ-governance.py
+
+run-ledger-binding-organ-gate:
+	python3 .github/scripts/check-run-ledger-binding-organ-governance.py
+
+chat-turn-governance-organ-gate:
+	python3 .github/scripts/check-chat-turn-governance-organ-governance.py
+
+aais-ul-substrate-organ-gate:
+	python3 .github/scripts/check-aais-ul-substrate-organ-governance.py
+
+aris-integration-organ-gate:
+	python3 .github/scripts/check-aris-integration-organ-governance.py
+
+governance-layer-organ-gate:
+	python3 .github/scripts/check-governance-layer-organ-governance.py
+
+security-protocol-organ-gate:
+	python3 .github/scripts/check-security-protocol-organ-governance.py
+
+system-guard-organ-gate:
+	python3 .github/scripts/check-system-guard-organ-governance.py
+
+alt18-gate: project-infi-state-machine-organ-gate project-infi-law-organ-gate run-ledger-binding-organ-gate chat-turn-governance-organ-gate aais-ul-substrate-organ-gate aris-integration-organ-gate governance-layer-organ-gate security-protocol-organ-gate system-guard-organ-gate genome-gate
+
+alt18-1-gate: alt18-gate alt17-1-gate
+
+alt18-closure-gate:
+	python3 tools/governance/check_alt18_closure.py
+
+alt18-2-gate: alt18-1-gate alt18-closure-gate
+
+alt18-governed-gate:
+	python3 tools/governance/check_alt18_governed_eligibility.py
+
+launcher-organ-gate:
+	python3 .github/scripts/check-launcher-organ-governance.py
+
+aais-doctor-organ-gate:
+	python3 .github/scripts/check-aais-doctor-organ-governance.py
+
+workflow-runtime-organ-gate:
+	python3 .github/scripts/check-workflow-runtime-organ-governance.py
+
+jarvis-console-surface-organ-gate:
+	python3 .github/scripts/check-jarvis-console-surface-organ-governance.py
+
+memory-bank-surface-organ-gate:
+	python3 .github/scripts/check-memory-bank-surface-organ-governance.py
+
+dashboard-surface-organ-gate:
+	python3 .github/scripts/check-dashboard-surface-organ-governance.py
+
+nova-landing-surface-organ-gate:
+	python3 .github/scripts/check-nova-landing-surface-organ-governance.py
+
+aais-composed-runtime-organ-gate:
+	python3 .github/scripts/check-aais-composed-runtime-organ-governance.py
+
+api-gateway-organ-gate:
+	python3 .github/scripts/check-api-gateway-organ-governance.py
+
+alt19-gate: launcher-organ-gate aais-doctor-organ-gate workflow-runtime-organ-gate jarvis-console-surface-organ-gate memory-bank-surface-organ-gate dashboard-surface-organ-gate nova-landing-surface-organ-gate aais-composed-runtime-organ-gate api-gateway-organ-gate genome-gate
+
+alt19-1-gate: alt19-gate alt18-1-gate
+
+alt19-closure-gate:
+	python3 tools/governance/check_alt19_closure.py
+
+alt19-2-gate: alt19-1-gate alt19-closure-gate
+
+alt19-governed-gate:
+	python3 tools/governance/check_alt19_governed_eligibility.py
+
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py
 

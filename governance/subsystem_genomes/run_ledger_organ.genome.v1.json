@@ -53,7 +53,10 @@
       "patch_execution_preview_organ",
       "patchforge_organ"
     ],
-    "children": []
+    "children": [
+      "project_infi_law_organ",
+      "run_ledger_binding_organ"
+    ]
   },
   "activation": {
     "order": 9,

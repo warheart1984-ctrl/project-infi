@@ -68,6 +68,7 @@
       "jarvis_memory_board"
     ],
     "children": [
+      "aais_ul_substrate_organ",
       "forensic_triangulation",
       "ul_lineage_console_organ"
     ]

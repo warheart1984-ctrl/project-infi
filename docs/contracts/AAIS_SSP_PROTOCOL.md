@@ -545,6 +545,96 @@ Depends on: Alt-15 governed Nova lobe/voice fabric; Alt-11 coding stack; Alt-10 
 | Proof | `docs/proof/platform/FACTORY_KINETIC_V1_PROOF.md`, `docs/proof/ai_factory/AI_FACTORY_ORGAN_V1_PROOF.md`, `docs/proof/platform/SLINGSHOT_ORGAN_V1_PROOF.md` |
 | Gate | `make alt16-2-gate` |
 
+## Alt-17 Summon Wave — Authority Shell & Protocol Fabric
+
+Batch-admit nine read-only organs across Jarvis protocol/contracts, authority shell substrate, and response integrity posture.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt17-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `jarvis_protocol_organ` → `reasoning_contract_organ` → `jarvis_reasoning_lane_organ` → `conversation_memory_organ` → `continuity_substrate_organ` → `jarvis_operator_organ` → `anti_drift_organ` → `prompt_assembly_organ` → `output_integrity_organ` |
+| MVP promotion | `tools/governance/alt17_promote_mvp.py` |
+| Gates | `make alt17-gate` |
+| Governed promotion | `tools/governance/alt17_promote_governed.py` + `make alt17-governed-gate` |
+
+Depends on: Alt-16 governed factory/kinetic fabric; Alt-15 reasoning executive (non-usurping); safety envelope and barebones bridge/pipeline.
+
+## Alt-17.1 Coherence Fabric Authority/Protocol Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt17-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.12` + `protocol_posture[]`, `authority_shell_posture[]`, `response_integrity_posture[]` |
+| Gate | `make alt17-1-gate` |
+
+## Alt-17.2 Authority & Protocol Integrity Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt17-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/platform/AUTHORITY_PROTOCOL_INTEGRITY_V1_PROOF.md`, `docs/proof/platform/JARVIS_PROTOCOL_ORGAN_V1_PROOF.md`, `docs/proof/platform/OUTPUT_INTEGRITY_ORGAN_V1_PROOF.md` |
+| Gate | `make alt17-2-gate` |
+
+## Alt-18 Summon Wave — Project Infi Law Fabric
+
+Batch-admit nine read-only organs across law cycle, turn admission, and governance control posture.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt18-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `project_infi_state_machine_organ` → `project_infi_law_organ` → `run_ledger_binding_organ` → `chat_turn_governance_organ` → `aais_ul_substrate_organ` → `aris_integration_organ` → `governance_layer_organ` → `security_protocol_organ` → `system_guard_organ` |
+| MVP promotion | `tools/governance/alt18_promote_mvp.py` |
+| Gates | `make alt18-gate` |
+| Governed promotion | `tools/governance/alt18_promote_governed.py` + `make alt18-governed-gate` |
+
+Depends on: Alt-17 governed authority/protocol fabric; existing `run_ledger_organ`; **special_review_only** posture on law surfaces (no autonomous law mutation).
+
+## Alt-18.1 Coherence Fabric Law Fabric Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt18-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.13` + `law_cycle_posture[]`, `turn_admission_posture[]`, `governance_control_posture[]` |
+| Gate | `make alt18-1-gate` |
+
+## Alt-18.2 Project Infi Law Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt18-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/platform/PROJECT_INFI_LAW_V1_PROOF.md`, `docs/proof/platform/CHAT_TURN_GOVERNANCE_ORGAN_V1_PROOF.md`, `docs/proof/platform/GOVERNANCE_LAYER_ORGAN_V1_PROOF.md` |
+| Gate | `make alt18-2-gate` |
+
+## Alt-19 Summon Wave — Operator Product Shell Fabric
+
+Batch-admit nine read-only organs across product shell, operator surfaces, and composed runtime posture.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt19-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `launcher_organ` → `aais_doctor_organ` → `workflow_runtime_organ` → `jarvis_console_surface_organ` → `memory_bank_surface_organ` → `dashboard_surface_organ` → `nova_landing_surface_organ` → `aais_composed_runtime_organ` → `api_gateway_organ` |
+| MVP promotion | `tools/governance/alt19_promote_mvp.py` |
+| Gates | `make alt19-gate` |
+| Governed promotion | `tools/governance/alt19_promote_governed.py` + `make alt19-governed-gate` |
+
+Depends on: Alt-18 governed law/admission posture; launcher maintain-only per spec §5 (read-only posture, not new product features).
+
+## Alt-19.1 Coherence Fabric Product Shell Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt19-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.14` + `product_shell_posture[]`, `operator_surface_posture[]`, `composed_runtime_posture[]` |
+| Gate | `make alt19-1-gate` |
+
+## Alt-19.2 Operator Product Shell Closure
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt19-2-summon-wave-2026-06` in LOGBOOK |
+| Proof | `docs/proof/platform/OPERATOR_PRODUCT_SHELL_V1_PROOF.md`, `docs/proof/platform/LAUNCHER_ORGAN_V1_PROOF.md`, `docs/proof/platform/API_GATEWAY_ORGAN_V1_PROOF.md` |
+| Gate | `make alt19-2-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per

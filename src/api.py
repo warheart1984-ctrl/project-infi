@@ -12711,6 +12711,394 @@ def get_workflow_shell_organ_status():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/jarvis-protocol/status", methods=["GET"])
+def get_jarvis_protocol_organ_status():
+    """Read-only Jarvis protocol organ snapshot (Alt-17 wave)."""
+    try:
+        from src.jarvis_protocol_organ import build_jarvis_protocol_status
+
+        return jsonify(
+            attach_ul_substrate({"jarvis_protocol": build_jarvis_protocol_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading jarvis protocol organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/reasoning-contract/status", methods=["GET"])
+def get_reasoning_contract_organ_status():
+    """Read-only reasoning contract organ snapshot (Alt-17 wave)."""
+    try:
+        from src.reasoning_contract_organ import build_reasoning_contract_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"reasoning_contract": build_reasoning_contract_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading reasoning contract organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/jarvis-reasoning-lane/status", methods=["GET"])
+def get_jarvis_reasoning_lane_organ_status():
+    """Read-only Jarvis reasoning lane organ snapshot (Alt-17 wave)."""
+    try:
+        from src.jarvis_reasoning_lane_organ import build_jarvis_reasoning_lane_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"jarvis_reasoning_lane": build_jarvis_reasoning_lane_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading jarvis reasoning lane organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/conversation-memory/status", methods=["GET"])
+def get_conversation_memory_organ_status():
+    """Read-only conversation memory organ snapshot (Alt-17 wave)."""
+    try:
+        from src.conversation_memory_organ import build_conversation_memory_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"conversation_memory": build_conversation_memory_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading conversation memory organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/continuity-substrate/status", methods=["GET"])
+def get_continuity_substrate_organ_status():
+    """Read-only continuity substrate organ snapshot (Alt-17 wave)."""
+    try:
+        from src.continuity_substrate_organ import build_continuity_substrate_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"continuity_substrate": build_continuity_substrate_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading continuity substrate organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/jarvis-operator/status", methods=["GET"])
+def get_jarvis_operator_organ_status():
+    """Read-only Jarvis operator organ snapshot (Alt-17 wave)."""
+    try:
+        from src.jarvis_operator_organ import build_jarvis_operator_status
+
+        return jsonify(
+            attach_ul_substrate({"jarvis_operator": build_jarvis_operator_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading jarvis operator organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/anti-drift/status", methods=["GET"])
+def get_anti_drift_organ_status():
+    """Read-only anti-drift organ snapshot (Alt-17 wave)."""
+    try:
+        from src.anti_drift_organ import build_anti_drift_status
+
+        return jsonify(attach_ul_substrate({"anti_drift": build_anti_drift_status()}))
+    except Exception as e:
+        logger.error(f"Error reading anti-drift organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/prompt-assembly/status", methods=["GET"])
+def get_prompt_assembly_organ_status():
+    """Read-only prompt assembly organ snapshot (Alt-17 wave)."""
+    try:
+        from src.prompt_assembly_organ import build_prompt_assembly_status
+
+        return jsonify(
+            attach_ul_substrate({"prompt_assembly": build_prompt_assembly_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading prompt assembly organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/output-integrity/status", methods=["GET"])
+def get_output_integrity_organ_status():
+    """Read-only output integrity organ snapshot (Alt-17 wave)."""
+    try:
+        from src.output_integrity_organ import build_output_integrity_status
+
+        return jsonify(
+            attach_ul_substrate({"output_integrity": build_output_integrity_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading output integrity organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/project-infi-state-machine/status", methods=["GET"])
+def get_project_infi_state_machine_organ_status():
+    try:
+        from src.project_infi_state_machine_organ import (
+            build_project_infi_state_machine_status,
+        )
+
+        return jsonify(
+            attach_ul_substrate(
+                {"project_infi_state_machine": build_project_infi_state_machine_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading project infi state machine organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/project-infi-law/status", methods=["GET"])
+def get_project_infi_law_organ_status():
+    try:
+        from src.project_infi_law_organ import build_project_infi_law_status
+
+        return jsonify(
+            attach_ul_substrate({"project_infi_law": build_project_infi_law_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading project infi law organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/run-ledger-binding/status", methods=["GET"])
+def get_run_ledger_binding_organ_status():
+    try:
+        from src.run_ledger_binding_organ import build_run_ledger_binding_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"run_ledger_binding": build_run_ledger_binding_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading run ledger binding organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/chat-turn-governance/status", methods=["GET"])
+def get_chat_turn_governance_organ_status():
+    try:
+        from src.chat_turn_governance_organ import build_chat_turn_governance_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"chat_turn_governance": build_chat_turn_governance_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading chat turn governance organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/aais-ul-substrate/status", methods=["GET"])
+def get_aais_ul_substrate_organ_status():
+    try:
+        from src.aais_ul_substrate_organ import build_aais_ul_substrate_status
+
+        return jsonify(
+            attach_ul_substrate({"aais_ul_substrate": build_aais_ul_substrate_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading aais ul substrate organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/aris-integration/status", methods=["GET"])
+def get_aris_integration_organ_status():
+    try:
+        from src.aris_integration_organ import build_aris_integration_status
+
+        return jsonify(
+            attach_ul_substrate({"aris_integration": build_aris_integration_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading aris integration organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/governance-layer/status", methods=["GET"])
+def get_governance_layer_organ_status():
+    try:
+        from src.governance_layer_organ import build_governance_layer_status
+
+        return jsonify(
+            attach_ul_substrate({"governance_layer": build_governance_layer_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading governance layer organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/security-protocol/status", methods=["GET"])
+def get_security_protocol_organ_status():
+    try:
+        from src.security_protocol_organ import build_security_protocol_status
+
+        return jsonify(
+            attach_ul_substrate({"security_protocol": build_security_protocol_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading security protocol organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/system-guard/status", methods=["GET"])
+def get_system_guard_organ_status():
+    try:
+        from src.system_guard_organ import build_system_guard_status
+
+        return jsonify(
+            attach_ul_substrate({"system_guard": build_system_guard_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading system guard organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/launcher/status", methods=["GET"])
+def get_launcher_organ_status():
+    try:
+        from src.launcher_organ import build_launcher_status
+
+        return jsonify(attach_ul_substrate({"launcher": build_launcher_status()}))
+    except Exception as e:
+        logger.error(f"Error reading launcher organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/aais-doctor/status", methods=["GET"])
+def get_aais_doctor_organ_status():
+    try:
+        from src.aais_doctor_organ import build_aais_doctor_status
+
+        return jsonify(
+            attach_ul_substrate({"aais_doctor": build_aais_doctor_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading aais doctor organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/workflow-runtime/status", methods=["GET"])
+def get_workflow_runtime_organ_status():
+    try:
+        from src.workflow_runtime_organ import build_workflow_runtime_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"workflow_runtime": build_workflow_runtime_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading workflow runtime organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/jarvis-console-surface/status", methods=["GET"])
+def get_jarvis_console_surface_organ_status():
+    try:
+        from src.jarvis_console_surface_organ import build_jarvis_console_surface_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "jarvis_console_surface": build_jarvis_console_surface_status()
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading jarvis console surface organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/memory-bank-surface/status", methods=["GET"])
+def get_memory_bank_surface_organ_status():
+    try:
+        from src.memory_bank_surface_organ import build_memory_bank_surface_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"memory_bank_surface": build_memory_bank_surface_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading memory bank surface organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/dashboard-surface/status", methods=["GET"])
+def get_dashboard_surface_organ_status():
+    try:
+        from src.dashboard_surface_organ import build_dashboard_surface_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"dashboard_surface": build_dashboard_surface_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading dashboard surface organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/nova-landing-surface/status", methods=["GET"])
+def get_nova_landing_surface_organ_status():
+    try:
+        from src.nova_landing_surface_organ import build_nova_landing_surface_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {"nova_landing_surface": build_nova_landing_surface_status()}
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading nova landing surface organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/aais-composed-runtime/status", methods=["GET"])
+def get_aais_composed_runtime_organ_status():
+    try:
+        from src.aais_composed_runtime_organ import build_aais_composed_runtime_status
+
+        return jsonify(
+            attach_ul_substrate(
+                {
+                    "aais_composed_runtime": build_aais_composed_runtime_status()
+                }
+            )
+        )
+    except Exception as e:
+        logger.error(f"Error reading aais composed runtime organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/api-gateway/status", methods=["GET"])
+def get_api_gateway_organ_status():
+    try:
+        from src.api_gateway_organ import build_api_gateway_status
+
+        return jsonify(
+            attach_ul_substrate({"api_gateway": build_api_gateway_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading api gateway organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/reset", methods=["POST"])
 def reset_mission_board():
     """Reset Mission Board state with an optional backup and seeded current objectives."""

@@ -39,7 +39,7 @@
     ]
   },
   "schema": {
-    "ref": "schemas/operator_cognition_coherence_fabric.v1.11.json",
+    "ref": "schemas/operator_cognition_coherence_fabric.v1.14.json",
     "frozen": true
   },
   "runtime": {
@@ -80,6 +80,8 @@
       "ai_factory_organ",
       "continuity_witness_organ",
       "forge_contractor_organ",
+      "jarvis_protocol_organ",
+      "project_infi_state_machine_organ",
       "reasoning_executive_organ"
     ]
   },
