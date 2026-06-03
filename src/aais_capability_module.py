@@ -1,10 +1,18 @@
 """Backward-compatible AAIS capability module contract.
 
-This shim preserves the older AAIS adapter API used by tests and legacy
-callers while the newer governed bridge continues to use ``src.capability_module``.
+Deprecated: prefer ``src.capability_module`` for new code. This shim preserves
+legacy callers while the governed bridge uses the canonical base.
 """
 
 from __future__ import annotations
+
+import warnings
+
+warnings.warn(
+    "src.aais_capability_module is deprecated; use src.capability_module",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 from datetime import datetime
 from src.datetime_compat import UTC

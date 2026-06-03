@@ -3123,6 +3123,16 @@ class JarvisOperator:
             v10_run=self.v10_runtime.run,
             render_v10=self._render_v10_core_response,
         )
+        from src.capability_bridge_universal import attach_universal_gap_adapters
+
+        attach_universal_gap_adapters(
+            self.capability_bridge,
+            memory_enforcer=self.memory_enforcer,
+            workspace_tools=self.workspace_tools,
+            profile_detector=self.detect_workspace_profile,
+            governance_layer=self.project_infi_law,
+            patchforge=self.patchforge if hasattr(self, "patchforge") else None,
+        )
 
     def list_actions(self):
         """Expose the safe action catalog to the API/UI."""

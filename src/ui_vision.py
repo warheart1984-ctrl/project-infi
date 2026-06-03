@@ -329,6 +329,14 @@ class UIVision:
             ),
         }
 
+    def analyze_ui(self, image, *, include_operator_assist: bool = False, top_matches=None, ocr_result=None):
+        """Gateway-compatible alias for UI screenshot analysis."""
+        result = self.analyze(image, top_matches=top_matches, ocr_result=ocr_result)
+        if include_operator_assist:
+            result = dict(result)
+            result["operator_assist"] = True
+        return result
+
     def describe_unavailable(self, requested=False, top_matches=None, message=None):
         """Return a consistent payload when UI understanding is off."""
         return {

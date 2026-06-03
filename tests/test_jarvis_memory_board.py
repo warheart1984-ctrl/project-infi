@@ -53,7 +53,7 @@ class TestJarvisMemoryBoard(unittest.TestCase):
         self.assertEqual(snapshot["installed_slots"], 6)
         self.assertEqual(snapshot["reserved_slots"], 4)
         self.assertEqual(snapshot["board"]["board_id"], "capability_adapter_board")
-        self.assertIn("aais_capability_module", snapshot["board"]["linked_subsystems"])
+        self.assertIn("capability_module", snapshot["board"]["linked_subsystems"])
 
         foundation = next(slot for slot in snapshot["slots"] if slot["slot_id"] == "slot_01")
         preference = next(slot for slot in snapshot["slots"] if slot["slot_id"] == "slot_06")
@@ -61,7 +61,7 @@ class TestJarvisMemoryBoard(unittest.TestCase):
 
         self.assertEqual(foundation["module"]["module_id"], "capability_foundation_v2")
         self.assertEqual(preference["module"]["module_id"], "capability_routing_preferences_v2")
-        self.assertEqual(foundation["module"]["linked_subsystem"], "aais_capability_module")
+        self.assertEqual(foundation["module"]["linked_subsystem"], "capability_module")
         self.assertTrue(reserved["reserved"])
         self.assertFalse(reserved["installed"])
 

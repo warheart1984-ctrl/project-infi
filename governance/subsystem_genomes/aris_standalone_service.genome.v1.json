@@ -1,0 +1,36 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "aris_standalone_service",
+    "version": "1.0.0",
+    "stage": "governed",
+    "display_name": "ARIS Standalone Service"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/ARIS_SERVICE_CONTRACT.md",
+      "docs/contracts/ARIS_RUNTIME_CONTRACT.md"
+    ],
+    "invariants": [
+      "embedded remains authority spine",
+      "standalone cannot self-apply"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/aris_boundary_organ.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {"kind": "module", "path": "aris_service/__init__.py"},
+      {"kind": "module", "path": "src/aris_service_client.py"},
+      {"kind": "gate", "path": "make aris-standalone-gate"}
+    ]
+  },
+  "proof": {
+    "posture": "governed"
+  },
+  "lineage": {
+    "parents": ["aris_boundary_organ", "aris_integration_organ"]
+  }
+}

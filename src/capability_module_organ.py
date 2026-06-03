@@ -26,9 +26,19 @@ def build_capability_module_status(*, root: Path | None = None) -> dict[str, Any
     bridge_py = (root / "src" / "capability_service_bridge.py").is_file()
     phase_gate_py = (root / "src" / "phase_gate.py").is_file()
     universal_bridge = False
+    gap_paths: list[str] = list(BRIDGE_GAP_PATHS)
+    try:
+        from src.jarvis_operator import jarvis_operator
+        from src.capability_bridge_universal import universal_bridge_enforced
+
+        universal_bridge = universal_bridge_enforced(jarvis_operator.capability_bridge)
+        if universal_bridge:
+            gap_paths = []
+    except Exception:
+        pass
     summary = (
         f"module={module_py};bridge={bridge_py};"
-        f"gaps={len(BRIDGE_GAP_PATHS)};universal={universal_bridge}"
+        f"gaps={len(gap_paths)};universal={universal_bridge}"
     )[:128]
     return {
         "capability_module_organ_version": ORGAN_VERSION,
@@ -38,7 +48,7 @@ def build_capability_module_status(*, root: Path | None = None) -> dict[str, Any
         "service_bridge_present": bridge_py,
         "phase_gate_present": phase_gate_py,
         "universal_bridge_enforced": universal_bridge,
-        "bridge_gap_paths": list(BRIDGE_GAP_PATHS),
+        "bridge_gap_paths": gap_paths,
         "cisiv_stage": "implementation",
         "claim_label": "asserted",
         "read_only": True,

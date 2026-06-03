@@ -12,7 +12,7 @@ from hashlib import sha256
 import json
 from typing import Any
 
-from src.aris_integration import build_aris_enforcement
+from src.aris_service_client import evaluate_aris_admission
 from src.governed_event_chain import governed_event
 from src.invariant_engine import InvariantEngine
 from src.immune_system import ImmuneSystemController, immune_system
@@ -631,7 +631,7 @@ class CognitiveBridgeService:
                     detachment,
                     bridge_invariant,
                 )
-        aris_enforcement = build_aris_enforcement(
+        aris_enforcement = evaluate_aris_admission(
             details=normalized["payload"],
             runtime_context=governance.runtime_context,
             effectful=governance.effectful,

@@ -1183,5 +1183,32 @@ class MissionBoardController:
             ],
         }
 
+    def attach_memory(
+        self,
+        *,
+        memory_enforcer,
+        text: str,
+        mission_id: str | None = None,
+        runtime_context: str = "operator_runtime",
+    ) -> dict[str, Any]:
+        """Attach governed memory to an active mission through the memory board enforcer."""
+        memory = memory_enforcer.add_memory(
+            text=text,
+            tags=["mission_board"],
+            source="mission_board",
+            category="mission",
+            runtime_context=runtime_context,
+        )
+        with self._lock:
+            if mission_id:
+                mission = self._missions.get(mission_id)
+                if mission is not None:
+                    links = list(mission.get("memory_links") or [])
+                    links.append(memory.get("id"))
+                    mission["memory_links"] = links[-12:]
+                    mission["updated_at"] = _utc_now_iso()
+                    self._persist_locked()
+        return {"memory": memory, "path": "mission_board.attach_memory"}
+
 
 mission_board = MissionBoardController()

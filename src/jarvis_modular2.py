@@ -1,18 +1,9 @@
 """
 src/jarvis_modular2.py
 
-Jarvis modular context pipeline.
-
-Status
-------
-This file is a legacy experimental copy kept for reference. The canonical
-runtime path is `src/jarvis_modular.py`.
-
-Purpose
--------
-This module builds provider-facing messages from explicit context modules instead
-of one flattened system blob. It also exposes a protocol/debug view so the final
-assembly is inspectable.
+RETIRED — legacy experimental copy. Use ``src/jarvis_modular.py`` instead.
+This module remains for reference only and must not be used as a runtime authority.
+"""
 
 Design goals
 ------------

@@ -257,6 +257,21 @@ def finalize_chat_turn_admission(
     tool_result: dict[str, Any] | None = None,
 ) -> tuple[str, dict[str, Any] | None]:
     """Pass one ordinary chat reply through Project Infi admission with CISIV verification."""
+    try:
+        from src.invariant_engine import validate_bridge_packet
+
+        bridge_packet = dict(session.metadata.get("cognitive_bridge") or {})
+        if bridge_packet:
+            validate_bridge_packet(
+                {
+                    "source": bridge_packet.get("source") or "jarvis_chat",
+                    "type": bridge_packet.get("packet_type") or "chat_finalize",
+                    "payload": bridge_packet,
+                    "runtime_context": "live_runtime",
+                }
+            )
+    except Exception:
+        pass
     project_infi_law = _chat_turn_law()
     bridge = dict(session.metadata.get("cognitive_bridge") or {})
     modular_preview = dict(session.metadata.get("modular_preview") or {})

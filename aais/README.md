@@ -52,8 +52,8 @@ Legacy note:
 
 ## Read Next
 
-1. [../README.md](../README.md)
-2. [../app/README.md](../app/README.md)
-3. [../src/README.md](../src/README.md)
-4. [../docs/contracts/EXTERNAL_SUGGESTION_ADMISSION_RULE.md](../docs/contracts/EXTERNAL_SUGGESTION_ADMISSION_RULE.md)
-5. [../docs/runtime/AAIS_SYSTEM_HANDBOOK.md](../docs/runtime/AAIS_SYSTEM_HANDBOOK.md)
+1. [../docs/operators/AAIS_OPERATOR_GUIDE.md](../docs/operators/AAIS_OPERATOR_GUIDE.md) — **operators: start here**
+2. [../README.md](../README.md)
+3. [../app/README.md](../app/README.md)
+4. [../src/README.md](../src/README.md)
+5. [../docs/contracts/EXTERNAL_SUGGESTION_ADMISSION_RULE.md](../docs/contracts/EXTERNAL_SUGGESTION_ADMISSION_RULE.md)

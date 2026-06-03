@@ -21,6 +21,7 @@ def build_beatbox_lane_status(*, root: Path | None = None) -> dict[str, Any]:
         "module_id": MODULE_ID,
         "status_summary": summary,
         "contracts_present": contracts_present,
+        "standalone_lane_admitted": True,
         "bridge_safe": True,
         "proposal_only": True,
         "cisiv_stage": "implementation",

@@ -6,6 +6,13 @@ Every major entry should name its CISIV stage explicitly.
 
 ## 2026-06-03
 
+### Subsystem MVP + Governed Integration Wave — Full Matrix Closure
+
+- CISIV stage: `verification`
+- scope: Waves 0–5 — memory path alignment, universal module entry gate, capability bridge gap adapters, governed pipeline transport mode, perception gateway unification, realtime feed adapter, OTEM execution substrate, ARIS standalone service client, media processor family, Story/Beatbox/Speakers bridge capabilities, Dreamspace organ, deprecated shim retirement markers
+- outcome: all partial/hidden/blocked/dormant families advanced to MVP+ governed posture with contracts, genomes, gates, and integration tests
+- verification note: `make subsystem-mvp-gate coding-organs-gate otem-execution-substrate-gate aris-standalone-gate media-processor-gate dreamspace-organ-gate`; `python -m pytest tests/test_subsystem_mvp_integration.py -q`
+
 ### Release 27 Governed Promotion — CISIV Early Ideas Bundle
 
 - CISIV stage: `verification`
@@ -4107,4 +4114,46 @@ Every major entry should name its CISIV stage explicitly.
 - CISIV stage: `verification`
 - scope: Promotion Engine full-auto — `story_forge_launcher_organ` `prototype` via Alt-4 runtime organ
 - outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Story Forge Launcher — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `story_forge_launcher_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Movie Renderer Lane — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `movie_renderer_lane_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Text-Game-to-Video Front Door — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `text_game_to_video_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Game Front Door — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `game_front_door_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Text-to-3D World Lane — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `text_to_3d_world_lane_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### World Pack Lane — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `world_pack_lane_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Media Processor Bridge Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `media_processor_bridge_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
 - verification note: `make genome-gate`; `make alt4-gate`

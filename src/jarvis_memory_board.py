@@ -284,7 +284,7 @@ def default_active_modules() -> list[MemoryModule]:
             migration_rules=(),
             display_name="Capability Foundation",
             summary="Holds the deterministic result law, error taxonomy, and adapter doctrine for governed capability execution.",
-            linked_subsystem="aais_capability_module",
+            linked_subsystem="capability_module",
             board_family="capability_adapter_board",
             enabled=True,
         ),
@@ -302,7 +302,7 @@ def default_active_modules() -> list[MemoryModule]:
             migration_rules=("to_archive_after_provider_rotation",),
             display_name="Adapter Registry",
             summary="Tracks which capability adapters are admitted, provider-isolated, and safe for live AAIS routing.",
-            linked_subsystem="aais_capability_module",
+            linked_subsystem="capability_module",
             board_family="capability_adapter_board",
             enabled=True,
         ),
@@ -356,7 +356,7 @@ def default_active_modules() -> list[MemoryModule]:
             migration_rules=("discard_if_unverified",),
             display_name="Semantic Guard",
             summary="Carries low-confidence provider signals until semantic validation proves they are safe to admit.",
-            linked_subsystem="aais_capability_module",
+            linked_subsystem="capability_module",
             board_family="capability_adapter_board",
             enabled=True,
         ),
@@ -392,7 +392,7 @@ def default_memory_board_profile() -> MemoryBoardProfile:
             "A capability-aware board that links Memory Bank to deterministic adapter law, "
             "semantic guards, audit archive, and operator routing defaults."
         ),
-        linked_subsystems=("memory_bank", "aais_capability_module"),
+        linked_subsystems=("memory_bank", "capability_module"),
         retired_board={
             "board_id": "legacy_memory_board_v1",
             "board_label": "Legacy Six-Card Memory Board",

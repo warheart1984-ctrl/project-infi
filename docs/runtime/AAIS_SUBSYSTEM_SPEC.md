@@ -293,7 +293,7 @@ AAIS subsystems currently cluster into these architectural layers:
 
 ### Dreamspace
 
-- status: `dormant`
+- status: `governed`
 - primary purpose: optional reflective background cognition
 - architectural layer: authority and cognition
 - dependencies:
@@ -310,8 +310,7 @@ AAIS subsystems currently cluster into these architectural layers:
 - invariants or doctrine surfaces:
   - `src/aais_blueprint.py`
 - current implementation gaps:
-  - optional and off by default
-  - not suitable to expand before memory and governance tighten further
+  - governed opt-in activation via `dreamspace_organ`; remains off by default
 - integration risk: `medium`
 - recommended priority: `P3 dormant`
 
@@ -380,7 +379,7 @@ AAIS subsystems currently cluster into these architectural layers:
 
 ### Realtime Event-Cause Predictor
 
-- status: `concept`
+- status: `partial`
 - primary purpose: compact fast-lane event and cause forecasting
 - architectural layer: authority and cognition
 - dependencies:
@@ -394,7 +393,7 @@ AAIS subsystems currently cluster into these architectural layers:
 - invariants or doctrine surfaces:
   - `docs/contracts/REALTIME_EVENT_CAUSE_PREDICTION_MODULE.md`
 - current implementation gaps:
-  - no live external sensor feed; governed pipeline path attests producer via Alt-9 organ
+  - external feed infrastructure installed via `realtime_feed_adapter`; hardware ingest remains optional
   - immune substrate installed (Alt-9.2); broader autonomous immune coupling still blocked
 - integration risk: `medium`
 - recommended priority: `P1 expand feed infrastructure`
@@ -1001,7 +1000,7 @@ AAIS subsystems currently cluster into these architectural layers:
 
 ### Legacy Experimental Modular Copy
 
-- status: `deprecated`
+- status: `retired`
 - primary purpose: legacy modular experiment rather than runtime authority
 - architectural layer: hidden or seeded subsystem primitive
 - dependencies:
@@ -1116,15 +1115,11 @@ AAIS subsystems currently cluster into these architectural layers:
 
 ### Hidden Or Seeded
 
-- realtime event-cause predictor
-- invariant engine
-- media and processor seeds
+- media and processor seeds (promoted to governed family)
 
 ### Deprecated Or Dormant
 
-- Dreamspace
-- legacy experimental modular copy
-- AAIS capability shim
+- AAIS capability shim (deprecated; canonical path is `capability_module`)
 
 ## 6. Recommended Next Activation
 

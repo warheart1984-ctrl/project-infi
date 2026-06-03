@@ -27,6 +27,15 @@ PIPELINE_VERSION = "0.1"
 DIRECT_COGNITIVE_LANE = "direct_cognitive"
 SERVICE_TOOL_LANE = "service_tools"
 
+
+def pipeline_as_transport_enabled() -> bool:
+    return os.getenv("AAIS_PIPELINE_AS_TRANSPORT", "").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+    }
+
 NODE_LABELS = {
     "llm": "LLM",
     "gb": "God Brain",
@@ -665,6 +674,24 @@ def _build_realtime_signal_feed(
                 },
             )
         )
+
+    try:
+        from src.realtime_feed_adapter import get_realtime_feed_adapter
+
+        for event in get_realtime_feed_adapter().collect(limit=4):
+            signals.append(
+                _signal(
+                    signal_type="external_feed",
+                    signal_class=str(event.get("event_type") or "feed")[:64],
+                    stable_key=f"external_feed:{event.get('source')}:{event.get('event_type')}",
+                    severity="low",
+                    status="observed",
+                    data_sufficiency="sufficient",
+                    attributes={"source": event.get("source"), "payload_keys": list((event.get("payload") or {}).keys())[:8]},
+                )
+            )
+    except Exception:
+        pass
 
     realtime_signal_feed = {
         "feed_id": f"rtf_{uuid4().hex}",
@@ -1308,6 +1335,7 @@ def build_governed_turn_pipeline(
     """Build the governed direct pipeline trace for one turn."""
     normalized_mode = str(response_mode or "fast").strip().lower() or "fast"
     normalized_runtime_context = _normalize_runtime_context(runtime_context)
+    transport_mode = pipeline_as_transport_enabled()
 
     from src.operator_cognition_coherence_fabric import (
         build_coherence_fabric_status,
@@ -1450,6 +1478,7 @@ def build_governed_turn_pipeline(
         "contract": active_contract,
         "response_mode": normalized_mode,
         "runtime_context": normalized_runtime_context,
+        "transport_substrate": transport_mode,
         "active_lane": active_lane,
         "traffic_class": traffic_class,
         "surface_node": surface_node,
