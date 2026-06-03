@@ -33,6 +33,9 @@ GENE_GATES: dict[str, str] = {
     "governed_direct_pipeline": "governed-pipeline-gate",
     "adaptive_lane_organ": "adaptive-lane-gate",
     "operator_cognition_coherence_fabric": "coherence-fabric-gate",
+    "continuity_witness_organ": "continuity-witness-gate",
+    "narrative_continuity_organ": "narrative-continuity-gate",
+    "intent_agency_organ": "intent-agency-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -55,6 +58,9 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     "capability-bridge-gate": [".github/scripts/check-capability-bridge-governance.py"],
     "memory-board-gate": [".github/scripts/check-memory-board-governance.py"],
     "governed-pipeline-gate": [".github/scripts/check-governed-pipeline-governance.py"],
+    "continuity-witness-gate": [".github/scripts/check-continuity-witness-governance.py"],
+    "narrative-continuity-gate": [".github/scripts/check-narrative-continuity-governance.py"],
+    "intent-agency-gate": [".github/scripts/check-intent-agency-governance.py"],
 }
 
 PROTOTYPE_GATE_STUB_GENES = frozenset(GENE_GATES.keys()) | frozenset(

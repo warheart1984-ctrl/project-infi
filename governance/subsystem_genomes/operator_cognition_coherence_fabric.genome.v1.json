@@ -39,7 +39,7 @@
     ]
   },
   "schema": {
-    "ref": "schemas/operator_cognition_coherence_fabric.v1.2.json",
+    "ref": "schemas/operator_cognition_coherence_fabric.v1.3.json",
     "frozen": true
   },
   "runtime": {
@@ -76,7 +76,9 @@
       "jarvis_memory_board",
       "governed_direct_pipeline"
     ],
-    "children": []
+    "children": [
+      "continuity_witness_organ"
+    ]
   },
   "activation": {
     "order": 1,

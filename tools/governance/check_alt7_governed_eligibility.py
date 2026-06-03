@@ -79,6 +79,14 @@ def check_eligibility(root: Path | None = None) -> list[str]:
             errors.append("coherence_pipeline_allowed missing from v1.2 snapshot")
         if "safety_envelope_halt" not in status:
             errors.append("safety_envelope_halt missing from v1.2 snapshot")
+    if schema_version.endswith(".v1.3"):
+        mind_posture = status.get("mind_posture") or []
+        if len(mind_posture) != 3:
+            errors.append(
+                f"expected 3 mind_posture entries for v1.3 (got {len(mind_posture)})"
+            )
+        if "mind_planes_aligned" not in status:
+            errors.append("mind_planes_aligned missing from v1.3 snapshot")
 
     if BRIDGE_TESTS.is_file():
         proc = subprocess.run(

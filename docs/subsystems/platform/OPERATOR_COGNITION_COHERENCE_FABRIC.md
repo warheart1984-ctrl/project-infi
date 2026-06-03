@@ -2,7 +2,7 @@
 
 CISIV stage: **implementation**
 
-Status: **governed** (Alt-7 / Alt-7.1 / Alt-7.2 batches through `alt7-2-summon-wave-2026-06`)
+Status: **governed** (Alt-7 / Alt-7.1 / Alt-7.2 / Alt-8.1 batches through `alt8-1-summon-wave-2026-06`)
 
 ## Purpose
 
@@ -12,7 +12,7 @@ wake without adding execution authority.
 
 ## Contract
 
-Schema: [schemas/operator_cognition_coherence_fabric.v1.2.json](../../../schemas/operator_cognition_coherence_fabric.v1.2.json)
+Schema: [schemas/operator_cognition_coherence_fabric.v1.3.json](../../../schemas/operator_cognition_coherence_fabric.v1.3.json)
 
 Parent law: [AAIS_ADAPTIVE_GOVERNANCE.md](../../contracts/AAIS_ADAPTIVE_GOVERNANCE.md)
 

@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.2"
+COHERENCE_FABRIC_SCHEMA_VERSION = "operator_cognition_coherence_fabric.v1.3"
 GOVERNANCE_PROJECTION_DOC = "docs/subsystems/platform/OPERATOR_COGNITION_COHERENCE_FABRIC.md"
 MAX_ENVELOPE_MODES = 6
 MAX_FIELD_LEN = 120
@@ -218,6 +218,56 @@ def _build_runtime_posture() -> list[dict[str, str]]:
     return posture
 
 
+def _build_mind_posture(
+    *,
+    pipeline_trace: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
+    from src.continuity_witness_organ import build_continuity_witness_status
+    from src.intent_agency_organ import build_intent_agency_status
+    from src.narrative_continuity_organ import build_narrative_continuity_status
+
+    posture: list[dict[str, Any]] = []
+    witness = build_continuity_witness_status(governed_pipeline=pipeline_trace)
+    posture.append(
+        {
+            "organ_id": "continuity_witness_organ",
+            "stage": str(witness.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(witness.get("claim_label") or "asserted")[:32],
+            "drift_band": str(witness.get("drift_band") or "idle")[:32],
+        }
+    )
+    narrative = build_narrative_continuity_status()
+    posture.append(
+        {
+            "organ_id": "narrative_continuity_organ",
+            "stage": str(narrative.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(narrative.get("claim_label") or "asserted")[:32],
+            "continuity_score": float(narrative.get("continuity_score") or 0.0),
+        }
+    )
+    intent = build_intent_agency_status()
+    posture.append(
+        {
+            "organ_id": "intent_agency_organ",
+            "stage": str(intent.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(intent.get("claim_label") or "asserted")[:32],
+            "agency_claim_posture": str(intent.get("agency_claim_posture") or "asserted")[:32],
+        }
+    )
+    return posture
+
+
+def _mind_planes_aligned(mind_posture: list[dict[str, Any]]) -> bool:
+    if len(mind_posture) < 3:
+        return False
+    for item in mind_posture:
+        if str(item.get("drift_band") or "") == "critical":
+            return False
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+    return True
+
+
 def _safety_halt_from_status(safety_status: dict[str, Any]) -> bool:
     return bool((safety_status.get("thresholds") or {}).get("halt_required"))
 
@@ -286,12 +336,16 @@ def build_coherence_fabric_status(
     if pipeline_source and protocol["response"] == "BLOCK":
         pipeline_allowed = False
 
+    mind_posture = _build_mind_posture(pipeline_trace=pipeline_source)
+
     payload: dict[str, Any] = {
         "operator_cognition_coherence_fabric_version": COHERENCE_FABRIC_SCHEMA_VERSION,
         "authority_lane": authority_lane,
         "resolved_lane": str(resolution.lane_id or authority_lane),
         "envelope_governance_modes": envelope_governance_modes,
         "runtime_posture": _build_runtime_posture(),
+        "mind_posture": mind_posture,
+        "mind_planes_aligned": _mind_planes_aligned(mind_posture),
         "fabric_genes_aligned": fabric_aligned,
         "coherence_pipeline_allowed": pipeline_allowed,
         "safety_envelope_halt": safety_halt,
@@ -337,6 +391,8 @@ def build_governance_coherence_projection(
         "fabric_genes_aligned": bool(snapshot.get("fabric_genes_aligned")),
         "envelope_governance_modes": clipped_modes,
         "runtime_posture": list(snapshot.get("runtime_posture") or [])[:4],
+        "mind_posture": list(snapshot.get("mind_posture") or [])[:4],
+        "mind_planes_aligned": bool(snapshot.get("mind_planes_aligned")),
     }
 
 

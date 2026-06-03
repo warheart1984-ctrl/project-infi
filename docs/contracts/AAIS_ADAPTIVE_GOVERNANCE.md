@@ -245,6 +245,29 @@ python -m src.governance_organs.mutation_engine --gene operator_profile_organ --
 
 **Alt-7.2 batch:** `alt7-2-summon-wave-2026-06`
 
+## Alt-8.1 Mind-Plane Coherence Join
+
+Snapshot v1.3 adds `mind_posture[]` for `continuity_witness_organ`,
+`narrative_continuity_organ`, and `intent_agency_organ`. Tier 5 health includes
+`mind_planes_aligned`.
+
+| Gate | `make alt8-1-gate` |
+| Batch | `alt8-1-summon-wave-2026-06` |
+
+## Alt-8.2 Safety Envelope Mutation (MP-SE-001)
+
+| Artifact | Location |
+|----------|----------|
+| Proposal | `docs/_future/mutations/MP-SE-001.md` |
+| Gate | `make safety-envelope-mutation-gate` |
+
+```bash
+make safety-envelope-mutation-gate
+python -m src.governance_organs.mutation_engine --gene safety_envelope_organ --mp-id MP-SE-001 --apply --invariant "Envelope threshold mutations require MP-X and post-apply alt7-governed-gate"
+```
+
+**Alt-8.2 batch:** `alt8-2-summon-wave-2026-06`
+
 ## Related
 
 - [AAIS_SSP_PROTOCOL.md](./AAIS_SSP_PROTOCOL.md)

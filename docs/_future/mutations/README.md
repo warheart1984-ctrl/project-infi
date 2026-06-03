@@ -20,3 +20,4 @@ schemas/deltas/<gene>_MP-<ID>.json   # optional schema delta
 | MP-NTP-001 | narrative_trust_pack | promoted |
 | MP-OCCF-001 | operator_cognition_coherence_fabric | promoted |
 | MP-OPO-001 | operator_profile_organ | promoted |
+| MP-SE-001 | safety_envelope_organ | promoted |

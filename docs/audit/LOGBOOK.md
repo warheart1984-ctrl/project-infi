@@ -675,6 +675,62 @@ Every major entry should name its CISIV stage explicitly.
 - outcome: `mutation.history[]` status `promoted`; genome version bump; schema ref v1.1
 - verification note: `make coherence-fabric-mutation-gate`; `make alt7-governed-gate`
 
+### Alt-8 Summon Wave — Continuity Witness Organ (Concept)
+
+- CISIV stage: `concept`
+- scope: SSP Steps 1–7 for `continuity_witness_organ`; batch `alt8-summon-wave-2026-06` order 1
+- outcome: concept spec, schema, MVP plan, genome at `concept`
+- verification note: `make ssp-gate`; `make genome-gate`
+
+### Alt-8 Summon Wave — Narrative Continuity Organ (Concept)
+
+- CISIV stage: `concept`
+- scope: SSP Steps 1–7 for `narrative_continuity_organ`; batch `alt8-summon-wave-2026-06` order 2
+- outcome: Nova continuity metrics organ admitted; depends on witness organ
+- verification note: `make ssp-gate`; `make genome-gate`
+
+### Alt-8 Summon Wave — Intent Agency Organ (Concept)
+
+- CISIV stage: `concept`
+- scope: SSP Steps 1–7 for `intent_agency_organ`; batch `alt8-summon-wave-2026-06` order 3
+- outcome: intent/agency posture organ admitted
+- verification note: `make ssp-gate`; `make genome-gate`
+
+### Alt-8 Summon Wave — Mind-Plane Organs (MVP)
+
+- CISIV stage: `implementation`
+- scope: `continuity_witness_organ`, `narrative_continuity_organ`, `intent_agency_organ` runtime + APIs + gates
+- outcome: eighteen registered genomes (fifteen prior + three Alt-8 mvp); status APIs live
+- verification note: `make alt8-gate`; `python tools/governance/alt8_promote_mvp.py`
+
+### Alt-8.1 — Coherence Fabric Mind-Plane Join
+
+- CISIV stage: `implementation`
+- scope: snapshot v1.3 `mind_posture[]`; Tier 5 `mind_planes_aligned`; governance projection extension
+- outcome: coherence fabric joins witness, narrative continuity, and intent agency planes
+- verification note: `make alt8-1-gate`
+
+### Alt-8.2 — MP-SE-001 Safety Envelope MP-X
+
+- CISIV stage: `structure`
+- scope: MP-SE-001 golden path; `make safety-envelope-mutation-gate`
+- outcome: envelope invariant MP-X contract documented under Alt-8.2 batch
+- verification note: `make alt8-2-gate`
+
+### MP-SE-001 Live Promotion — Safety Envelope Invariant
+
+- CISIV stage: `verification`
+- scope: Apply MP-SE-001 to live `safety_envelope_organ` genome; invariant append with post-apply alt7-governed-gate
+- outcome: `mutation.history[]` status `promoted`; envelope MP-X path live
+- verification note: `make safety-envelope-mutation-gate`; `make alt7-governed-gate`
+
+### Alt-8 Governed Promotion — Mind-Plane Organs
+
+- CISIV stage: `verification`
+- scope: `continuity_witness_organ`, `narrative_continuity_organ`, `intent_agency_organ` promoted to `governed`
+- outcome: eighteen governed subsystem genomes; Alt-8 wave complete at governed
+- verification note: `make alt8-governed-gate`; `python tools/governance/alt8_promote_governed.py`
+
 ### Alt-7.2 — Coherence Enforcement Closure
 
 - CISIV stage: `implementation`
@@ -717,5 +773,29 @@ Every major entry should name its CISIV stage explicitly.
 
 - CISIV stage: `verification`
 - scope: Promotion Engine full-auto — `operator_cognition_coherence_fabric` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Continuity Witness Organ — Prototype Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `continuity_witness_organ` `prototype` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `prototype`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Continuity Witness Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `continuity_witness_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Narrative Continuity Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `narrative_continuity_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Intent Agency Organ — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `intent_agency_organ` `governed` via Alt-4 runtime organ
 - outcome: genome `identity.stage` and `proof.posture` set to `governed`
 - verification note: `make genome-gate`; `make alt4-gate`

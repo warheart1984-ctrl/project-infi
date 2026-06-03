@@ -286,6 +286,29 @@ operator-profile-mutation-gate:
 alt7-2-gate: alt7-1-gate operator-profile-mutation-gate
 	python3 -m pytest tests/test_coherence_fabric_chat_block.py tests/test_coherence_fabric_pipeline.py tests/test_operator_cognition_coherence_fabric.py tests/test_operator_profile_organ_mutation_MP_OPO_001.py -q
 
+continuity-witness-gate:
+	python3 .github/scripts/check-continuity-witness-governance.py
+
+narrative-continuity-gate:
+	python3 .github/scripts/check-narrative-continuity-governance.py
+
+intent-agency-gate:
+	python3 .github/scripts/check-intent-agency-governance.py
+
+alt8-gate: continuity-witness-gate narrative-continuity-gate intent-agency-gate genome-gate
+
+alt8-1-gate: alt8-gate alt7-2-gate
+	python3 -m pytest tests/test_operator_cognition_coherence_fabric.py tests/test_narrative_continuity_organ.py tests/test_intent_agency_organ.py tests/test_continuity_witness_organ.py -q
+
+safety-envelope-mutation-gate:
+	python3 tools/governance/check_safety_envelope_mutation.py
+
+alt8-2-gate: alt8-1-gate safety-envelope-mutation-gate
+	python3 -m pytest tests/test_safety_envelope_organ_mutation_MP_SE_001.py -q
+
+alt8-governed-gate:
+	python3 tools/governance/check_alt8_governed_eligibility.py
+
 platform-gate:
 	python3 .github/scripts/check-platform-governance.py
 

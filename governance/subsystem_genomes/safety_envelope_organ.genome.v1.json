@@ -2,7 +2,7 @@
   "subsystem_genome_version": "subsystem_genome.v1",
   "identity": {
     "gene": "safety_envelope_organ",
-    "version": "0.1.0-concept",
+    "version": "0.1.1",
     "stage": "governed",
     "display_name": "Safety Envelope Organ"
   },
@@ -18,7 +18,8 @@
     "invariants": [
       "Read-only v1 \u2014 no write path from envelope organ",
       "halt_required blocks optimistic execution when wired to bridge",
-      "Thresholds align with SWARM_LAW no-improvisation doctrine"
+      "Thresholds align with SWARM_LAW no-improvisation doctrine",
+      "Envelope threshold mutations require MP-X and post-apply alt7-governed-gate"
     ]
   },
   "schema": {
@@ -69,7 +70,14 @@
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
   },
   "mutation": {
-    "history": []
+    "history": [
+      {
+        "proposal_id": "MP-SE-001",
+        "status": "promoted",
+        "schema_delta_ref": "schemas/deltas/safety_envelope_organ_MP-SE-001.json",
+        "notes": "backup: .runtime\\governance\\mutation_backups\\safety_envelope_organ_20260603T001120Z.genome.v1.json"
+      }
+    ]
   },
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/SAFETY_ENVELOPE_ORGAN.md",

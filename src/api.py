@@ -11679,6 +11679,46 @@ def get_memory_runtime_status():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/continuity-witness/status", methods=["GET"])
+def get_continuity_witness_status():
+    """Read-only Continuity Witness organ snapshot (Alt-8 wave)."""
+    try:
+        from src.continuity_witness_organ import build_continuity_witness_status
+
+        return jsonify(
+            attach_ul_substrate({"continuity_witness": build_continuity_witness_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading continuity witness status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/narrative-continuity/status", methods=["GET"])
+def get_narrative_continuity_status():
+    """Read-only Narrative Continuity organ snapshot (Alt-8 wave)."""
+    try:
+        from src.narrative_continuity_organ import build_narrative_continuity_status
+
+        return jsonify(
+            attach_ul_substrate({"narrative_continuity": build_narrative_continuity_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading narrative continuity status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/intent-agency/status", methods=["GET"])
+def get_intent_agency_status():
+    """Read-only Intent Agency organ snapshot (Alt-8 wave)."""
+    try:
+        from src.intent_agency_organ import build_intent_agency_status
+
+        return jsonify(attach_ul_substrate({"intent_agency": build_intent_agency_status()}))
+    except Exception as e:
+        logger.error(f"Error reading intent agency status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/missions/reset", methods=["POST"])
 def reset_mission_board():
     """Reset Mission Board state with an optional backup and seeded current objectives."""

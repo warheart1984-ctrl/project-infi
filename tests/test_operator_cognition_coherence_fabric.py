@@ -10,7 +10,7 @@ from src.operator_cognition_coherence_fabric import build_coherence_fabric_statu
 def test_build_coherence_fabric_status_schema_fields():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     assert status["operator_cognition_coherence_fabric_version"] == (
-        "operator_cognition_coherence_fabric.v1.2"
+        "operator_cognition_coherence_fabric.v1.3"
     )
     assert status["read_only"] is True
     assert status["authority_lane"] == "operator"
@@ -52,6 +52,17 @@ def test_runtime_posture_includes_alt5_organs():
     status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
     organs = {item["organ_id"] for item in status.get("runtime_posture") or []}
     assert organs == {"reflection_runtime_organ", "memory_runtime_organ"}
+
+
+def test_mind_posture_includes_alt8_organs():
+    status = build_coherence_fabric_status(root=Path(__file__).resolve().parents[1])
+    organs = {item["organ_id"] for item in status.get("mind_posture") or []}
+    assert organs == {
+        "continuity_witness_organ",
+        "narrative_continuity_organ",
+        "intent_agency_organ",
+    }
+    assert status.get("mind_planes_aligned") is True
 
 
 def test_evaluate_pipeline_coherence_blocks_misaligned():

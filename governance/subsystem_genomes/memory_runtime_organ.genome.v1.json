@@ -54,7 +54,9 @@
     "parents": [
       "reflection_runtime_organ"
     ],
-    "children": []
+    "children": [
+      "narrative_continuity_organ"
+    ]
   },
   "activation": {
     "order": 2,

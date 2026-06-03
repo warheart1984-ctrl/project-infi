@@ -56,7 +56,8 @@
       "operator_profile_organ"
     ],
     "children": [
-      "memory_runtime_organ"
+      "memory_runtime_organ",
+      "intent_agency_organ"
     ]
   },
   "activation": {

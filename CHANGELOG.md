@@ -13,6 +13,31 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.4.0] - 2026-06-02 — Alt-8 Cognitive Continuity & Witness
+
+**Alt-8** — three mind-plane organs at governed; coherence fabric v1.3 `mind_posture[]`; MP-SE-001 safety envelope MP-X path.
+
+### Added
+
+- **Alt-8.0** — `continuity_witness_organ`, `narrative_continuity_organ`, `intent_agency_organ`; status APIs; `make alt8-gate`; `tools/governance/alt8_promote_mvp.py`
+- **Alt-8.1** — coherence snapshot v1.3 + `mind_planes_aligned` in Tier 5; `make alt8-1-gate`
+- **Alt-8.2** — `MP-SE-001` + `make safety-envelope-mutation-gate`; `make alt8-2-gate`
+- **Governed promotion** — `tools/governance/alt8_promote_governed.py`; `make alt8-governed-gate`
+
+### Changed
+
+- Genome registry: **18 governed** subsystem genomes (15 prior + 3 Alt-8)
+- `operator_cognition_coherence_fabric` schema ref → v1.3
+
+### Verification (v1.4.0)
+
+```bash
+make alt8-gate alt8-1-gate alt8-2-gate alt8-governed-gate
+python -m pytest tests/test_continuity_witness_organ.py tests/test_narrative_continuity_organ.py tests/test_intent_agency_organ.py tests/test_operator_cognition_coherence_fabric.py tests/test_safety_envelope_organ_mutation_MP_SE_001.py -q
+```
+
+[1.4.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.4.0
+
 ## [1.3.3] - 2026-06-02 — Alt-7.2 Enforcement Closure
 
 **Alt-7.2** — hard-block Jarvis chat when `coherence_protocol` is BLOCK; coherence snapshot v1.2 with live pipeline join; witness/Tier 5 observability; MP-OPO-001 profile MP-X path.

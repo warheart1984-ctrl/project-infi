@@ -276,6 +276,9 @@ class MutationEngine:
         if proposal.mutation_kind == "profile_invariant":
             script = self.root / "tools/governance/check_alt7_governed_eligibility.py"
             failures.extend(self._run_subprocess(script, label="alt7-governed-gate"))
+        if proposal.mutation_kind == "envelope_invariant":
+            script = self.root / "tools/governance/check_alt7_governed_eligibility.py"
+            failures.extend(self._run_subprocess(script, label="alt7-governed-gate"))
         if proposal.raw.get("post_apply_snapshot_check", "").lower() in {"true", "yes", "1"}:
             from src.operator_cognition_coherence_fabric import build_coherence_fabric_status
 

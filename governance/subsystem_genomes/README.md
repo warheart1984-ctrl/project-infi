@@ -37,6 +37,9 @@ make alt7-governed-gate
 | `governed_direct_pipeline` | governed | [governed_direct_pipeline.genome.v1.json](./governed_direct_pipeline.genome.v1.json) |
 | `adaptive_lane_organ` | governed | [adaptive_lane_organ.genome.v1.json](./adaptive_lane_organ.genome.v1.json) |
 | `operator_cognition_coherence_fabric` | governed | [operator_cognition_coherence_fabric.genome.v1.json](./operator_cognition_coherence_fabric.genome.v1.json) |
+| `continuity_witness_organ` | governed | [continuity_witness_organ.genome.v1.json](./continuity_witness_organ.genome.v1.json) |
+| `narrative_continuity_organ` | governed | [narrative_continuity_organ.genome.v1.json](./narrative_continuity_organ.genome.v1.json) |
+| `intent_agency_organ` | governed | [intent_agency_organ.genome.v1.json](./intent_agency_organ.genome.v1.json) |
 
 ## Adding a Genome
 

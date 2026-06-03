@@ -275,6 +275,36 @@ Depends on: Alt-7 governed fabric; Alt-6.1 lane MP-X path.
 | Profile MP-X | `MP-OPO-001` + `make operator-profile-mutation-gate` |
 | Gate | `make alt7-2-gate` |
 
+## Alt-8 Summon Wave — Cognitive Continuity & Witness
+
+Batch-admit Nova mind-plane organs as read-only governance shells.
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt8-summon-wave-2026-06` in LOGBOOK |
+| Activation order | `continuity_witness_organ` → `narrative_continuity_organ` → `intent_agency_organ` |
+| MVP promotion | `tools/governance/alt8_promote_mvp.py` |
+| Gates | `make alt8-gate` |
+| Governed promotion | `tools/governance/alt8_promote_governed.py` + `make alt8-governed-gate` |
+
+Depends on: Alt-7.2 governed coherence fabric; Nova v3 narrative and intent proof bundles.
+
+## Alt-8.1 Coherence Fabric Mind-Plane Join
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt8-1-summon-wave-2026-06` in LOGBOOK |
+| Snapshot | `operator_cognition_coherence_fabric.v1.3` + `mind_posture[]` |
+| Gate | `make alt8-1-gate` |
+
+## Alt-8.2 Safety Envelope MP-X
+
+| Convention | Value |
+|------------|-------|
+| Batch id | `alt8-2-summon-wave-2026-06` in LOGBOOK |
+| Golden proposal | `MP-SE-001` for `safety_envelope_organ` |
+| Gate | `make alt8-2-gate` |
+
 ## Activation Rule
 
 Subsystems move through stages per
