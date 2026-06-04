@@ -1,23 +1,29 @@
-# Meta Architect Lawbook (local-only)
+# Local constitutional docs (not on GitHub)
 
-`META_ARCHITECT_LAWBOOK.md` at the repository root is **gitignored** and is not published to GitHub (Project-Infinity1, URG-Cloud-Platform, or other remotes).
+These files at the **project-infi repo root** are **gitignored** and are not published to GitHub (Project-Infinity1, URG-Cloud-Platform, or other remotes):
+
+| File | Role |
+|------|------|
+| `META_ARCHITECT_LAWBOOK.md` | Supreme governance authority |
+| `HUMAN_AI_CO_COLLABORATION_CHARTER.md` | Human–AI collaboration constitutional companion |
 
 ## After clone or pull
 
-Keep **one** copy at the **project-infi repo root** only:
+Keep **one copy of each** at the repo root only:
 
 ```
 META_ARCHITECT_LAWBOOK.md
+HUMAN_AI_CO_COLLABORATION_CHARTER.md
 ```
 
-Do not keep duplicates under `Project-Infinity1/` or other nested clones — remove those copies; the nested `Project-Infinity1/` tree is gitignored in the canonical workspace.
+Do not keep duplicates under `Project-Infinity1/` or other nested clones. The nested `Project-Infinity1/` tree is gitignored in the canonical workspace.
 
-If you previously had the file tracked in git, it remains on disk when removed from the index; new clones must add the lawbook locally (backup, prior checkout, or your governance source).
+If files were previously tracked in git, they may remain on disk after `git rm --cached`; new clones must add them locally (backup, prior checkout, or your governance source).
 
 ## CI
 
-The documentation baseline gate **skips** lawbook validation when the file is absent. Local developers and agents should still treat the lawbook as supreme authority when the file is present.
+The documentation baseline gate **skips** lawbook validation when `META_ARCHITECT_LAWBOOK.md` is absent. Trust-bundle validation still applies to tracked docs; the charter is local-only like the lawbook.
 
 ## References elsewhere
 
-Many docs link to `META_ARCHITECT_LAWBOOK.md` by path; those links resolve when your local file exists at the repo root.
+Many tracked docs link to these paths; links resolve when your local files exist at the repo root.
