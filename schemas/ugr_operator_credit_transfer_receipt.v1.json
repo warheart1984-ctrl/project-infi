@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ugr_operator_credit_transfer_receipt.v1",
+  "title": "UGR OperatorCreditTransferReceipt v1.0",
+  "type": "object",
+  "required": [
+    "receipt_schema_version",
+    "transfer_id",
+    "tenant_id",
+    "from_operator_id",
+    "to_operator_id",
+    "amount",
+    "fee",
+    "trace_id",
+    "issued_at",
+    "receipt_sig"
+  ],
+  "properties": {
+    "receipt_schema_version": { "const": "1.0" },
+    "transfer_id": { "type": "string" },
+    "tenant_id": { "type": "string" },
+    "from_operator_id": { "type": "string" },
+    "to_operator_id": { "type": "string" },
+    "amount": { "type": "number", "minimum": 0 },
+    "fee": { "type": "number", "minimum": 0 },
+    "trace_id": { "type": "string" },
+    "memo": { "type": ["string", "null"] },
+    "exchange_id": { "type": ["string", "null"] },
+    "issued_at": { "type": "number" },
+    "urg_key_id": { "type": "string" },
+    "receipt_sig": { "type": "string" },
+    "receipt_algorithm": { "type": "string" }
+  },
+  "additionalProperties": true
+}

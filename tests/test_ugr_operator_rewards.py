@@ -14,8 +14,11 @@ from src.ugr.discovery.subsystem_discovery_store import SubsystemDiscoveryStore
 from src.ugr.rewards.operator_reward_engine import OperatorRewardEngine, rewards_enabled
 from src.ugr.rewards.operator_reward_receipt import verify_operator_reward_receipt
 from src.ugr.rewards.operator_reward_spec import EVENT_SUBSYSTEM_DISCOVERED, EVENT_SUBSYSTEM_PROMOTED
+from src.ugr.rewards.operator_credit_transfer_receipt import verify_credit_transfer_receipt
 from src.ugr.rewards.rail_credit_spend import spend_rail_credits, validate_forge_boost
+from src.ugr.rewards.rail_credit_transfer import exchange_rail_credits, transfer_rail_credits
 from src.ugr.rewards.reward_issuer import issue_reward
+from src.ugr.rewards.reward_ledger import RewardLedger
 
 
 def _valid_spec() -> dict:
@@ -39,6 +42,7 @@ class TestOperatorRewards(unittest.TestCase):
         os.environ["UGR_SUBSYSTEM_DISCOVERY_ENABLED"] = "1"
         os.environ["UGR_REWARDS_SHADOW_ONLY"] = "0"
         os.environ["UGR_REWARDS_AUDIT_ONLY"] = "0"
+        os.environ["UGR_RAIL_CREDIT_TRANSFER_ENABLED"] = "1"
 
     def tearDown(self):
         for key in (
@@ -50,6 +54,7 @@ class TestOperatorRewards(unittest.TestCase):
             "UGR_SUBSYSTEM_DISCOVERY_ENABLED",
             "UGR_REWARDS_SHADOW_ONLY",
             "UGR_REWARDS_AUDIT_ONLY",
+            "UGR_RAIL_CREDIT_TRANSFER_ENABLED",
         ):
             os.environ.pop(key, None)
         shutil.rmtree(self.temp_root, ignore_errors=True)
@@ -313,6 +318,169 @@ class TestOperatorRewards(unittest.TestCase):
         capped = cap_rail_credit_earn(15, 100, profile_reputation=0)
         self.assertLessEqual(capped, 15 / 2)
         self.assertGreater(capped, 0)
+
+    def test_transfer_happy_path_with_fee(self):
+        self._discover()
+        engine = OperatorRewardEngine(runtime_dir=str(self.temp_root))
+        before_sender = engine.get_profile("op-rewards", tenant_id="tenant:acme")
+        before_recipient = engine.get_profile("op-peer", tenant_id="tenant:acme")
+        result = transfer_rail_credits(
+            tenant_id="tenant:acme",
+            from_operator_id="op-rewards",
+            to_operator_id="op-peer",
+            amount=1.0,
+            trace_id="xfer-1",
+            transfer_id="xfer-id-1",
+            runtime_dir=str(self.temp_root),
+        )
+        self.assertEqual(result.get("status"), "ok")
+        receipt = result.get("credit_transfer_receipt") or {}
+        ok, _ = verify_credit_transfer_receipt(receipt, runtime_dir=str(self.temp_root))
+        self.assertTrue(ok)
+        after_sender = engine.get_profile("op-rewards", tenant_id="tenant:acme")
+        after_recipient = engine.get_profile("op-peer", tenant_id="tenant:acme")
+        fee = float(receipt.get("fee") or 0)
+        self.assertAlmostEqual(
+            after_sender["rail_credits"],
+            before_sender["rail_credits"] - 1.0 - fee,
+        )
+        self.assertAlmostEqual(after_recipient["rail_credits"], before_recipient["rail_credits"] + 1.0)
+        ledger = RewardLedger(runtime_dir=str(self.temp_root), tenant_id="tenant:acme")
+        events = ledger.list_transfer_events(operator_id="op-rewards", limit=10)
+        self.assertGreaterEqual(len(events), 1)
+
+    def test_transfer_reject_self_and_low_reputation(self):
+        self._discover()
+        self.assertEqual(
+            transfer_rail_credits(
+                tenant_id="tenant:acme",
+                from_operator_id="op-rewards",
+                to_operator_id="op-rewards",
+                amount=1,
+                trace_id="xfer-self",
+                runtime_dir=str(self.temp_root),
+            ).get("reason"),
+            "self_transfer",
+        )
+        self.assertEqual(
+            transfer_rail_credits(
+                tenant_id="tenant:acme",
+                from_operator_id="op-new",
+                to_operator_id="op-rewards",
+                amount=1,
+                trace_id="xfer-low",
+                runtime_dir=str(self.temp_root),
+            ).get("reason"),
+            "reputation_too_low",
+        )
+
+    def test_transfer_idempotent_and_cooldown(self):
+        self._discover()
+        first = transfer_rail_credits(
+            tenant_id="tenant:acme",
+            from_operator_id="op-rewards",
+            to_operator_id="op-peer",
+            amount=0.5,
+            trace_id="xfer-cd-1",
+            transfer_id="xfer-cd-fixed",
+            runtime_dir=str(self.temp_root),
+        )
+        self.assertEqual(first.get("status"), "ok")
+        second = transfer_rail_credits(
+            tenant_id="tenant:acme",
+            from_operator_id="op-rewards",
+            to_operator_id="op-peer",
+            amount=0.5,
+            trace_id="xfer-cd-2",
+            transfer_id="xfer-cd-fixed",
+            runtime_dir=str(self.temp_root),
+        )
+        self.assertEqual(second.get("status"), "idempotent")
+        third = transfer_rail_credits(
+            tenant_id="tenant:acme",
+            from_operator_id="op-rewards",
+            to_operator_id="op-peer",
+            amount=0.5,
+            trace_id="xfer-cd-3",
+            transfer_id="xfer-cd-3",
+            runtime_dir=str(self.temp_root),
+        )
+        self.assertEqual(third.get("reason"), "cooldown_active")
+
+    def test_transfer_shadow_no_balance_change(self):
+        self._discover()
+        os.environ["UGR_REWARDS_SHADOW_ONLY"] = "1"
+        engine = OperatorRewardEngine(runtime_dir=str(self.temp_root))
+        before = engine.get_profile("op-rewards", tenant_id="tenant:acme")
+        result = transfer_rail_credits(
+            tenant_id="tenant:acme",
+            from_operator_id="op-rewards",
+            to_operator_id="op-peer",
+            amount=1,
+            trace_id="xfer-shadow",
+            runtime_dir=str(self.temp_root),
+        )
+        self.assertEqual(result.get("status"), "shadow")
+        after = engine.get_profile("op-rewards", tenant_id="tenant:acme")
+        self.assertEqual(after.get("rail_credits"), before.get("rail_credits"))
+
+    def test_exchange_atomic(self):
+        self._discover()
+        discovery2 = SubsystemDiscoveryService(runtime_dir=str(self.temp_root))
+        peer_spec = _valid_spec()
+        peer_spec["io_shape"] = {"inputs": ["text", "image"], "outputs": ["text"]}
+        discovery2.discover(
+            {
+                "tenant_id": "tenant:acme",
+                "operator_id": "op-peer",
+                "aais_instance_id": "aais-test-2",
+                "spec": peer_spec,
+            }
+        )
+        result = exchange_rail_credits(
+            tenant_id="tenant:acme",
+            operator_a="op-rewards",
+            operator_b="op-peer",
+            amount_a=0.5,
+            amount_b=0.25,
+            trace_id="exch-1",
+            runtime_dir=str(self.temp_root),
+        )
+        self.assertEqual(result.get("status"), "ok")
+        self.assertEqual(len(result.get("legs") or []), 2)
+
+    def test_transfer_api_smoke(self):
+        self._discover()
+        try:
+            import importlib
+
+            importlib.import_module("src.api")
+        except ModuleNotFoundError:
+            self.skipTest("src.api not present")
+        prior_boot = os.environ.get("AAIS_GENOME_BOOT")
+        os.environ["AAIS_GENOME_BOOT"] = "warn"
+        try:
+            from src.api import app
+        finally:
+            if prior_boot is None:
+                os.environ.pop("AAIS_GENOME_BOOT", None)
+            else:
+                os.environ["AAIS_GENOME_BOOT"] = prior_boot
+        client = app.test_client()
+        resp = client.post(
+            "/api/ugr/reward/transfer",
+            json={
+                "tenant_id": "tenant:acme",
+                "from_operator_id": "op-rewards",
+                "to_operator_id": "op-peer",
+                "amount": 0.5,
+                "trace_id": "api-xfer-1",
+                "transfer_id": "api-xfer-id-1",
+            },
+        )
+        self.assertEqual(resp.status_code, 200)
+        body = json.loads(resp.data)
+        self.assertIn(body.get("status"), {"ok", "idempotent", "rejected"})
 
     def test_reward_issue_api_smoke(self):
         first = self._discover()

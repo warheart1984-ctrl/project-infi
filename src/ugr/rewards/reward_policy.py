@@ -37,6 +37,15 @@ DEFAULT_POLICY: dict[str, Any] = {
             "ttl_seconds": 300,
         }
     },
+    "transfer": {
+        "min_reputation_to_send": 10,
+        "max_per_transfer": 25,
+        "max_outbound_per_day": 50,
+        "max_transfers_per_day": 20,
+        "transfer_fee_fraction": 0.02,
+        "min_amount": 0.01,
+        "cooldown_seconds": 30,
+    },
 }
 
 LIFECYCLE_CHAIN = (
@@ -80,7 +89,7 @@ def load_reward_policy(path: str | Path | None = None) -> dict[str, Any]:
         merged.update({k: v for k, v in payload.items() if k != "economy"})
         if isinstance(payload.get("economy"), dict):
             merged["economy"] = {**dict(DEFAULT_POLICY.get("economy") or {}), **payload["economy"]}
-        for key in ("discovery", "promotion", "adoption", "spend"):
+        for key in ("discovery", "promotion", "adoption", "spend", "transfer"):
             if key in payload and isinstance(payload[key], dict):
                 merged[key] = {**dict(DEFAULT_POLICY.get(key) or {}), **payload[key]}
     if path is None:
@@ -127,3 +136,44 @@ def max_spendable_credits(
 
 def min_reputation_to_spend(policy: dict[str, Any] | None = None) -> float:
     return float(economy_policy(policy).get("min_reputation_to_spend_credits") or 10)
+
+
+def transfer_policy(policy: dict[str, Any] | None = None) -> dict[str, Any]:
+    return dict((policy or load_reward_policy()).get("transfer") or DEFAULT_POLICY["transfer"])
+
+
+def min_reputation_to_send(policy: dict[str, Any] | None = None) -> float:
+    tp = transfer_policy(policy)
+    spend_min = min_reputation_to_spend(policy)
+    return max(float(tp.get("min_reputation_to_send") or spend_min), spend_min)
+
+
+def max_per_transfer(policy: dict[str, Any] | None = None) -> float:
+    return float(transfer_policy(policy).get("max_per_transfer") or 25)
+
+
+def max_outbound_per_day(policy: dict[str, Any] | None = None) -> float:
+    return float(transfer_policy(policy).get("max_outbound_per_day") or 50)
+
+
+def max_transfers_per_day(policy: dict[str, Any] | None = None) -> int:
+    return int(transfer_policy(policy).get("max_transfers_per_day") or 20)
+
+
+def transfer_fee_fraction(policy: dict[str, Any] | None = None) -> float:
+    return max(0.0, float(transfer_policy(policy).get("transfer_fee_fraction") or 0))
+
+
+def min_transfer_amount(policy: dict[str, Any] | None = None) -> float:
+    return float(transfer_policy(policy).get("min_amount") or 0.01)
+
+
+def transfer_cooldown_seconds(policy: dict[str, Any] | None = None) -> int:
+    return int(transfer_policy(policy).get("cooldown_seconds") or 30)
+
+
+def compute_transfer_fee(amount: float, *, policy: dict[str, Any] | None = None) -> float:
+    frac = transfer_fee_fraction(policy)
+    if frac <= 0:
+        return 0.0
+    return max(0.0, float(amount) * frac)

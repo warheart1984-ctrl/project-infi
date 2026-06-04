@@ -49,6 +49,19 @@ Discovery → Proof → Receipt → Governance → Promotion → Adoption → At
 
 Events are idempotent by `event_id = SHA256(canonical anchors)`. Each record includes an `attribution` block with `lifecycle_chain` and `contributor_attribution`.
 
+## Credit transfer (rail credits only)
+
+Operators in the **same tenant** may transfer rail credits P2P or via atomic two-way exchange. **Reputation and adoption multipliers are not transferable.**
+
+| Rule | Purpose |
+|------|---------|
+| `min_reputation_to_send` | Sender standing gate |
+| `max_per_transfer` / `max_outbound_per_day` | Anti-farming caps |
+| `transfer_fee_fraction` | Fee burn on send (discourages wash loops) |
+| `cooldown_seconds` | Throttle rapid cycles |
+
+Transfers move existing balance only (no minting). Signed `credit_transfer_receipt` + paired ledger events (`rail_credits_sent`, `rail_credits_received`).
+
 ## Fail-closed (discovery receipt gate)
 
 **No reward may be issued unless `subsystem_id` resolves to a valid discovery receipt.**
@@ -67,6 +80,10 @@ Failure returns `status: rejected` with `reason: discovery_receipt_unresolved`. 
 
 | Method | Path | Description |
 |--------|------|-------------|
+| POST | `/api/ugr/reward/transfer` | P2P rail credit transfer (`from_operator_id`, `to_operator_id`, `amount`, `trace_id`) |
+| POST | `/api/ugr/reward/exchange` | Atomic two-way exchange (`operator_a`, `operator_b`, `amount_a`, `amount_b`) |
+| GET | `/api/ugr/reward/transfers?tenant_id=&operator_id=` | Transfer ledger events |
+| POST | `/api/ugr/rewards/transfer` | Legacy alias |
 | POST | `/api/ugr/reward/issue` | Issue reward (gated); body: `tenant_id`, `operator_id`, `subsystem_id`, `event_type`, optional anchors |
 | GET | `/api/ugr/reward/operator/<operator_id>?tenant_id=` | Balances from `operator_balances.json` |
 | GET | `/api/ugr/reward/subsystem/<subsystem_id>?tenant_id=` | Tenant ledger rows + attributions for subsystem |
@@ -86,6 +103,7 @@ Failure returns `status: rejected` with `reason: discovery_receipt_unresolved`. 
 | `UGR_OPERATOR_REWARDS_ENABLED` | `1` | Kill switch |
 | `UGR_REWARDS_SHADOW_ONLY` | `1` | Validate + audit; no balance writes |
 | `UGR_REWARDS_AUDIT_ONLY` | `0` | Compute deltas + attribution preview; no ledger append |
+| `UGR_RAIL_CREDIT_TRANSFER_ENABLED` | `1` | Allow operator P2P credit transfer |
 | `UGR_RAIL_CREDIT_SPEND_ENABLED` | `1` | Allow spend + forge hook |
 | `UGR_REWARD_POLICY_PATH` | `deploy/ugr/reward-policy.json` | Policy file |
 
@@ -101,6 +119,8 @@ Failure returns `status: rejected` with `reason: discovery_receipt_unresolved`. 
 - `src/ugr/rewards/reward_calculator.py` — policy v1.1 deltas
 - `src/ugr/rewards/reward_ledger.py` — `rewards.jsonl` + `operator_balances.json`
 - `src/ugr/rewards/reward_issuer.py` — `issue_reward()` single entry
+- `src/ugr/rewards/rail_credit_transfer.py` — `transfer_rail_credits()` / `exchange_rail_credits()`
+- `src/ugr/rewards/operator_credit_transfer_receipt.py` — signed transfer receipts
 - `src/ugr/rewards/reward_governance.py` — `reward_policy_update` via governance missions
 - `src/ugr/rewards/operator_reward_engine.py` — thin wrapper for discovery hooks
 - Hooks: `subsystem_discovery.py`, `mission_runtime.py`, `cloud_forge_bridge.py`

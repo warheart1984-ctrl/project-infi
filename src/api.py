@@ -80,6 +80,7 @@ from src.ugr.operator_console.snapshot import build_operator_console_snapshot
 from src.ugr.operator_console.mesh_health import poll_mesh_health
 from src.ugr.operator_console.trace_viewer import load_deliberation_traces
 from src.ugr.operator_console.forge_platform import load_forge_platform_dashboard
+from src.temporal_replay.service import TemporalReplayService
 from src.jarvis_detachment_guard import build_bridge_attestation
 from src.critic import mission_critic
 from src.corrigibility import corrigibility_engine, default_corrigibility_state
@@ -11413,6 +11414,89 @@ def ugr_rewards_ledger():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/ugr/reward/transfer", methods=["POST"])
+def ugr_reward_transfer():
+    """Transfer rail credits between operators (same tenant, reputation-gated)."""
+    try:
+        from src.ugr.rewards.rail_credit_transfer import transfer_rail_credits
+        from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+        data = request.get_json(silent=True) or {}
+        from_op = str(data.get("from_operator_id") or "").strip()
+        to_op = str(data.get("to_operator_id") or "").strip()
+        if not from_op or not to_op:
+            return jsonify({"error": "from_operator_id and to_operator_id are required"}), 400
+        amount = float(data.get("amount") or 0)
+        result = transfer_rail_credits(
+            tenant_id=normalize_tenant_id(str(data.get("tenant_id") or "global")),
+            from_operator_id=from_op,
+            to_operator_id=to_op,
+            amount=amount,
+            trace_id=str(data.get("trace_id") or ""),
+            transfer_id=str(data.get("transfer_id") or "").strip() or None,
+            memo=str(data.get("memo") or "").strip() or None,
+        )
+        status = str(result.get("status") or "")
+        code = 200 if status in {"ok", "rejected", "shadow", "audit", "idempotent", "disabled"} else 500
+        return jsonify(result), code
+    except Exception as e:
+        logger.error(f"Error transferring URG rail credits: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/reward/exchange", methods=["POST"])
+def ugr_reward_exchange():
+    """Atomic two-way rail credit exchange between two operators."""
+    try:
+        from src.ugr.rewards.rail_credit_transfer import exchange_rail_credits
+        from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+        data = request.get_json(silent=True) or {}
+        op_a = str(data.get("operator_a") or "").strip()
+        op_b = str(data.get("operator_b") or "").strip()
+        if not op_a or not op_b:
+            return jsonify({"error": "operator_a and operator_b are required"}), 400
+        result = exchange_rail_credits(
+            tenant_id=normalize_tenant_id(str(data.get("tenant_id") or "global")),
+            operator_a=op_a,
+            operator_b=op_b,
+            amount_a=float(data.get("amount_a") or 0),
+            amount_b=float(data.get("amount_b") or 0),
+            trace_id=str(data.get("trace_id") or ""),
+            exchange_id=str(data.get("exchange_id") or "").strip() or None,
+        )
+        status = str(result.get("status") or "")
+        code = 200 if status in {"ok", "rejected", "shadow", "audit", "disabled"} else 500
+        return jsonify(result), code
+    except Exception as e:
+        logger.error(f"Error exchanging URG rail credits: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/reward/transfers", methods=["GET"])
+def ugr_reward_transfers_list():
+    """List transfer ledger events for an operator."""
+    try:
+        from src.ugr.rewards.reward_ledger import RewardLedger
+        from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+        tenant_id = normalize_tenant_id(request.args.get("tenant_id") or "global")
+        operator_id = request.args.get("operator_id") or None
+        limit = min(int(request.args.get("limit") or 50), 200)
+        ledger = RewardLedger(tenant_id=tenant_id)
+        events = ledger.list_transfer_events(operator_id=operator_id, limit=limit)
+        return jsonify({"tenant_id": tenant_id, "events": events, "count": len(events)}), 200
+    except Exception as e:
+        logger.error(f"Error listing URG reward transfers: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/rewards/transfer", methods=["POST"])
+def ugr_rewards_transfer():
+    """Legacy alias for POST /api/ugr/reward/transfer."""
+    return ugr_reward_transfer()
+
+
 @app.route("/api/ugr/rewards/spend", methods=["POST"])
 def ugr_rewards_spend():
     """Spend rail credits for a bounded Cloud Forge EXPRESS boost token."""
@@ -11918,6 +12002,156 @@ def get_operator_console_forge_platform():
         return jsonify(load_forge_platform_dashboard(live_checks=live)), 200
     except Exception as e:
         logger.error(f"Error loading forge platform dashboard: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+_temporal_replay_service = TemporalReplayService()
+
+
+@app.route("/api/operator/replay/<subject_type>/<subject_id>/timeline", methods=["GET"])
+def get_temporal_replay_timeline(subject_type, subject_id):
+    """Normalized temporal replay timeline (read-only)."""
+    try:
+        tenant_id = str(request.args.get("tenant_id") or "").strip() or None
+        rebuild = str(request.args.get("rebuild") or "").strip().lower() in {"1", "true", "yes", "on"}
+        return jsonify(
+            _temporal_replay_service.timeline(
+                subject_type,
+                subject_id,
+                tenant_id=tenant_id,
+                rebuild=rebuild,
+            )
+        ), 200
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    except Exception as e:
+        logger.error(f"Error building temporal replay timeline: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/operator/replay/<subject_type>/<subject_id>/state", methods=["GET"])
+def get_temporal_replay_state(subject_type, subject_id):
+    """Replay state and law pin at timestamp T."""
+    try:
+        at = str(request.args.get("at") or "").strip() or None
+        tenant_id = str(request.args.get("tenant_id") or "").strip() or None
+        return jsonify(
+            _temporal_replay_service.state_at(
+                subject_type,
+                subject_id,
+                at=at,
+                tenant_id=tenant_id,
+            )
+        ), 200
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    except Exception as e:
+        logger.error(f"Error building temporal replay state: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/operator/replay/<subject_type>/<subject_id>/verify", methods=["POST"])
+def post_temporal_replay_verify(subject_type, subject_id):
+    """Merkle + receipt verification for replay subject."""
+    try:
+        data = request.get_json(silent=True) or {}
+        at = str(data.get("at") or request.args.get("at") or "").strip() or None
+        tenant_id = str(data.get("tenant_id") or request.args.get("tenant_id") or "").strip() or None
+        return jsonify(
+            _temporal_replay_service.verify(
+                subject_type,
+                subject_id,
+                at=at,
+                tenant_id=tenant_id,
+            )
+        ), 200
+    except Exception as e:
+        logger.error(f"Error verifying temporal replay: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/operator/replay/<subject_type>/<subject_id>/forward", methods=["POST"])
+def post_temporal_replay_forward(subject_type, subject_id):
+    """Forward replay from fork_at under historical law (dry-run default)."""
+    try:
+        data = request.get_json(silent=True) or {}
+        fork_at = str(data.get("fork_at") or "").strip()
+        if not fork_at:
+            return jsonify({"error": "fork_at required"}), 400
+        mode = str(data.get("mode") or "dry_run").strip().lower()
+        steps = int(data.get("steps") or 1)
+        target = str(data.get("target") or "cloud_invariants").strip()
+        tenant_id = str(data.get("tenant_id") or "").strip() or None
+        return jsonify(
+            _temporal_replay_service.forward(
+                subject_type,
+                subject_id,
+                fork_at=fork_at,
+                mode=mode,
+                steps=steps,
+                target=target,
+                tenant_id=tenant_id,
+            )
+        ), 200
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    except Exception as e:
+        logger.error(f"Error running temporal replay forward: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/operator/replay/compare", methods=["POST"])
+def post_temporal_replay_compare():
+    """Compare two replay subjects."""
+    try:
+        data = request.get_json(silent=True) or {}
+        return jsonify(_temporal_replay_service.compare(data)), 200
+    except Exception as e:
+        logger.error(f"Error comparing temporal replay runs: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/operator/replay/<subject_type>/<subject_id>/diff", methods=["GET"])
+def get_temporal_replay_diff(subject_type, subject_id):
+    """Reasoning delta: recorded tail vs dry-run forward replay at fork_at."""
+    try:
+        fork_at = str(request.args.get("fork_at") or "").strip()
+        if not fork_at:
+            return jsonify({"error": "fork_at query parameter required"}), 400
+        target = str(request.args.get("target") or "cloud_invariants").strip()
+        tenant_id = str(request.args.get("tenant_id") or "").strip() or None
+        return jsonify(
+            _temporal_replay_service.diff(
+                subject_type,
+                subject_id,
+                fork_at=fork_at,
+                target=target,
+                tenant_id=tenant_id,
+            )
+        ), 200
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    except Exception as e:
+        logger.error(f"Error building temporal replay diff: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/operator/replay/<subject_type>/<subject_id>/bundle", methods=["GET"])
+def get_temporal_replay_bundle(subject_type, subject_id):
+    """Export temporal replay verification bundle."""
+    try:
+        fork_at = str(request.args.get("fork_at") or "").strip() or None
+        tenant_id = str(request.args.get("tenant_id") or "").strip() or None
+        return jsonify(
+            _temporal_replay_service.bundle(
+                subject_type,
+                subject_id,
+                fork_at=fork_at,
+                tenant_id=tenant_id,
+            )
+        ), 200
+    except Exception as e:
+        logger.error(f"Error building temporal replay bundle: {e}")
         return jsonify({"error": str(e)}), 500
 
 

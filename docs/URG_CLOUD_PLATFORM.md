@@ -74,6 +74,7 @@ py -3.12 tools/proof/run_ugr_mission_demo.py
 | `UGR_OPERATOR_REWARDS_ENABLED` | `1` (default) — Proof-of-Subsystem operator incentives |
 | `UGR_REWARDS_SHADOW_ONLY` | `1` (default) — validate rewards; no balance writes unless `URG_GOVERNANCE_APPLY=1` path clears shadow |
 | `UGR_REWARDS_AUDIT_ONLY` | `0` (default) — compute reward preview without ledger append |
+| `UGR_RAIL_CREDIT_TRANSFER_ENABLED` | `1` (default) — P2P rail credit transfer between operators (same tenant) |
 | `UGR_RAIL_CREDIT_SPEND_ENABLED` | `1` (default) — rail credit spend + Cloud Forge boost hook |
 
 ---
@@ -126,7 +127,11 @@ Receipt fetch: `GET /api/ugr/mission/receipt/<mission_id>?tenant_id=tenant:acme`
 | `POST /api/ugr/discover/subsystem` | Proof-of-Subsystem discovery (validate or bounded search) |
 | `GET /api/ugr/discover/subsystem/<subsystem_id>?tenant_id=` | Subsystem discovery receipt by hash |
 | `GET /api/ugr/discover/subsystems?tenant_id=` | Shadow catalog of discovered specs |
-| `GET /api/ugr/rewards/operator/<id>?tenant_id=` | Operator reputation, rail credits, adoption multipliers |
+| `POST /api/ugr/reward/transfer` | P2P rail credit transfer (same tenant, anti-gaming caps) |
+| `POST /api/ugr/reward/exchange` | Atomic two-way credit exchange |
+| `GET /api/ugr/reward/transfers?tenant_id=&operator_id=` | Transfer ledger events |
+| `GET /api/ugr/reward/operator/<id>?tenant_id=` | Operator balances |
+| `GET /api/ugr/rewards/operator/<id>?tenant_id=` | Legacy alias |
 | `GET /api/ugr/rewards/ledger?tenant_id=` | Reward event ledger |
 | `POST /api/ugr/rewards/spend` | Spend rail credits for EXPRESS forge boost |
 

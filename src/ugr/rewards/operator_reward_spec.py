@@ -9,12 +9,23 @@ from typing import Any
 EVENT_SUBSYSTEM_DISCOVERED = "subsystem_discovered"
 EVENT_SUBSYSTEM_PROMOTED = "subsystem_promoted"
 EVENT_SUBSYSTEM_ADOPTED = "subsystem_adopted"
+EVENT_RAIL_CREDITS_SENT = "rail_credits_sent"
+EVENT_RAIL_CREDITS_RECEIVED = "rail_credits_received"
 
 REWARD_EVENT_TYPES = frozenset(
     {
         EVENT_SUBSYSTEM_DISCOVERED,
         EVENT_SUBSYSTEM_PROMOTED,
         EVENT_SUBSYSTEM_ADOPTED,
+        EVENT_RAIL_CREDITS_SENT,
+        EVENT_RAIL_CREDITS_RECEIVED,
+    }
+)
+
+TRANSFER_EVENT_TYPES = frozenset(
+    {
+        EVENT_RAIL_CREDITS_SENT,
+        EVENT_RAIL_CREDITS_RECEIVED,
     }
 )
 

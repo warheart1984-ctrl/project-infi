@@ -33,5 +33,14 @@
       "max_threshold_reduction": 30,
       "ttl_seconds": 300
     }
+  },
+  "transfer": {
+    "min_reputation_to_send": 10,
+    "max_per_transfer": 25,
+    "max_outbound_per_day": 50,
+    "max_transfers_per_day": 20,
+    "transfer_fee_fraction": 0.02,
+    "min_amount": 0.01,
+    "cooldown_seconds": 30
   }
 }

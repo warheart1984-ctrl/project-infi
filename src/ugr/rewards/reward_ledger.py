@@ -11,6 +11,7 @@ from typing import Any
 from src.ugr.mission.tenant_manifold import tenant_path_slug
 from src.ugr.platform.tenant_registry import normalize_tenant_id
 from src.ugr.rewards.operator_profile import OperatorProfile
+from src.ugr.rewards.operator_reward_spec import EVENT_RAIL_CREDITS_SENT, TRANSFER_EVENT_TYPES
 
 
 def _default_runtime_dir() -> Path:
@@ -70,19 +71,35 @@ class RewardLedger:
         path = self.balances_path(profile.operator_id)
         path.write_text(json.dumps(profile.to_dict(), indent=2, sort_keys=True), encoding="utf-8")
 
-    def has_event(self, event_id: str) -> bool:
-        eid = str(event_id or "").strip()
-        if not eid or not self.tenant_rewards_path.exists():
-            return False
+    def _iter_rewards_rows(self) -> list[dict[str, Any]]:
+        if not self.tenant_rewards_path.exists():
+            return []
+        rows: list[dict[str, Any]] = []
         for line in self.tenant_rewards_path.read_text(encoding="utf-8").splitlines():
             line = line.strip()
             if not line:
                 continue
             try:
-                row = json.loads(line)
+                rows.append(json.loads(line))
             except json.JSONDecodeError:
                 continue
+        return rows
+
+    def has_event(self, event_id: str) -> bool:
+        eid = str(event_id or "").strip()
+        if not eid:
+            return False
+        for row in self._iter_rewards_rows():
             if str(row.get("event_id") or "") == eid:
+                return True
+        return False
+
+    def has_transfer(self, transfer_id: str) -> bool:
+        tid = str(transfer_id or "").strip()
+        if not tid:
+            return False
+        for row in self._iter_rewards_rows():
+            if str(row.get("transfer_id") or "") == tid:
                 return True
         return False
 
@@ -99,27 +116,88 @@ class RewardLedger:
         *,
         operator_id: str | None = None,
         subsystem_id: str | None = None,
+        event_types: frozenset[str] | set[str] | None = None,
         limit: int = 50,
     ) -> list[dict[str, Any]]:
-        if not self.tenant_rewards_path.exists():
-            return []
         rows: list[dict[str, Any]] = []
         sid = str(subsystem_id or "").strip()
         op = str(operator_id or "").strip()
-        for line in self.tenant_rewards_path.read_text(encoding="utf-8").splitlines():
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                row = json.loads(line)
-            except json.JSONDecodeError:
-                continue
+        allowed = frozenset(event_types) if event_types else None
+        for row in self._iter_rewards_rows():
             if op and str(row.get("operator_id") or "") != op:
                 continue
             if sid and str(row.get("subsystem_id") or "") != sid:
                 continue
+            if allowed and str(row.get("event_type") or "") not in allowed:
+                continue
             rows.append(row)
         return rows[-limit:]
+
+    def list_transfer_events(
+        self,
+        *,
+        operator_id: str | None = None,
+        limit: int = 50,
+    ) -> list[dict[str, Any]]:
+        return self.list_events(
+            operator_id=operator_id,
+            event_types=TRANSFER_EVENT_TYPES,
+            limit=limit,
+        )
+
+    def sum_outbound_transfers(
+        self,
+        operator_id: str,
+        *,
+        window_seconds: float = 86400,
+        now: float | None = None,
+    ) -> float:
+        """Sum rail_credits_sent amounts for operator in rolling window."""
+        op = str(operator_id or "").strip()
+        cutoff = (now if now is not None else time.time()) - window_seconds
+        total = 0.0
+        for row in self._iter_rewards_rows():
+            if str(row.get("operator_id") or "") != op:
+                continue
+            if str(row.get("event_type") or "") != EVENT_RAIL_CREDITS_SENT:
+                continue
+            issued = float(row.get("issued_at") or 0)
+            if issued < cutoff:
+                continue
+            total += float(row.get("amount") or 0)
+        return total
+
+    def count_outbound_transfers_today(
+        self,
+        operator_id: str,
+        *,
+        now: float | None = None,
+    ) -> int:
+        op = str(operator_id or "").strip()
+        ts = now if now is not None else time.time()
+        day_start = ts - (ts % 86400)
+        count = 0
+        for row in self._iter_rewards_rows():
+            if str(row.get("operator_id") or "") != op:
+                continue
+            if str(row.get("event_type") or "") != EVENT_RAIL_CREDITS_SENT:
+                continue
+            if float(row.get("issued_at") or 0) >= day_start:
+                count += 1
+        return count
+
+    def last_outbound_transfer_at(self, operator_id: str) -> float | None:
+        op = str(operator_id or "").strip()
+        last: float | None = None
+        for row in self._iter_rewards_rows():
+            if str(row.get("operator_id") or "") != op:
+                continue
+            if str(row.get("event_type") or "") != EVENT_RAIL_CREDITS_SENT:
+                continue
+            issued = float(row.get("issued_at") or 0)
+            if last is None or issued > last:
+                last = issued
+        return last
 
     def save_spend_token(self, spend_id: str, payload: dict[str, Any]) -> None:
         path = self.spend_dir / f"{spend_id}.json"
