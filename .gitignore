@@ -141,6 +141,9 @@ wget-log*
 ProjectInfinity_UL_Documentation.pdf
 project_blueprints_infinity.html
 
+# Meta Architect lawbook — local authority only (not published to GitHub)
+META_ARCHITECT_LAWBOOK.md
+
 # Cursor local session state (rules under .cursor/rules/ are tracked)
 .cursor/projects/
 .cursor/**/*.log

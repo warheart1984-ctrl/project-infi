@@ -269,8 +269,16 @@ def _validate_meta_lawbook(repo_root: Path) -> tuple[list[Finding], list[Finding
 
     lawbook_path = (repo_root / "META_ARCHITECT_LAWBOOK.md").resolve()
     if not lawbook_path.exists():
-        err = Finding(level="error", message=f"Meta Architect lawbook not found: {lawbook_path}")
-        return [err], [err]
+        findings.append(
+            Finding(
+                level="info",
+                message=(
+                    "Meta Architect lawbook not in workspace (gitignored local-only). "
+                    "Skip lawbook validation; keep META_ARCHITECT_LAWBOOK.md on your machine only."
+                ),
+            )
+        )
+        return findings, []
 
     content = lawbook_path.read_text(encoding="utf-8")
     if REQUIRED_PRECEDENCE_LINE not in content:

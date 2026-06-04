@@ -10,7 +10,6 @@ on:
       - ".github/scripts/validate-trust-bundle.py"
       - ".github/workflows/documentation-baseline-gate.yml"
       - "REPO_PROOF_LAW.md"
-      - "META_ARCHITECT_LAWBOOK.md"
       - "README.md"
   push:
     branches: [main]
@@ -22,7 +21,6 @@ on:
       - ".github/scripts/validate-trust-bundle.py"
       - ".github/workflows/documentation-baseline-gate.yml"
       - "REPO_PROOF_LAW.md"
-      - "META_ARCHITECT_LAWBOOK.md"
       - "README.md"
 
 permissions:
