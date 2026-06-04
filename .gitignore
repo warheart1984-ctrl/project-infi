@@ -145,6 +145,7 @@ project_blueprints_infinity.html
 # Constitutional docs — local authority only (not published to GitHub)
 META_ARCHITECT_LAWBOOK.md
 HUMAN_AI_CO_COLLABORATION_CHARTER.md
+REPO_PROOF_LAW.md
 
 # Cursor local session state (rules under .cursor/rules/ are tracked)
 .cursor/projects/

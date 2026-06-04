@@ -5,6 +5,7 @@ These files at the **project-infi repo root** are **gitignored** and are not pub
 | File | Role |
 |------|------|
 | `META_ARCHITECT_LAWBOOK.md` | Supreme governance authority |
+| `REPO_PROOF_LAW.md` | Proof-of-reality and baseline law (implements the lawbook) |
 | `HUMAN_AI_CO_COLLABORATION_CHARTER.md` | Human–AI collaboration constitutional companion |
 
 ## After clone or pull
@@ -13,6 +14,7 @@ Keep **one copy of each** at the repo root only:
 
 ```
 META_ARCHITECT_LAWBOOK.md
+REPO_PROOF_LAW.md
 HUMAN_AI_CO_COLLABORATION_CHARTER.md
 ```
 
@@ -22,7 +24,7 @@ If files were previously tracked in git, they may remain on disk after `git rm -
 
 ## CI
 
-The documentation baseline gate **skips** lawbook validation when `META_ARCHITECT_LAWBOOK.md` is absent. Trust-bundle validation still applies to tracked docs; the charter is local-only like the lawbook.
+The documentation baseline gate **skips** lawbook validation when `META_ARCHITECT_LAWBOOK.md` is absent. Checklist and README validation still run on tracked files. Trust-bundle protected-path rules in CI refer to these filenames when present locally.
 
 ## References elsewhere
 

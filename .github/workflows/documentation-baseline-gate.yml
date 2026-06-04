@@ -9,7 +9,6 @@ on:
       - ".github/scripts/validate-documentation-baseline.py"
       - ".github/scripts/validate-trust-bundle.py"
       - ".github/workflows/documentation-baseline-gate.yml"
-      - "REPO_PROOF_LAW.md"
       - "README.md"
   push:
     branches: [main]
@@ -20,7 +19,6 @@ on:
       - ".github/scripts/validate-documentation-baseline.py"
       - ".github/scripts/validate-trust-bundle.py"
       - ".github/workflows/documentation-baseline-gate.yml"
-      - "REPO_PROOF_LAW.md"
       - "README.md"
 
 permissions:
