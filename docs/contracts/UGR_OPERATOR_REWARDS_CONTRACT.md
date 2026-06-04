@@ -49,12 +49,29 @@ Discovery → Proof → Receipt → Governance → Promotion → Adoption → At
 
 Events are idempotent by `event_id = SHA256(canonical anchors)`. Each record includes an `attribution` block with `lifecycle_chain` and `contributor_attribution`.
 
+## Fail-closed (discovery receipt gate)
+
+**No reward may be issued unless `subsystem_id` resolves to a valid discovery receipt.**
+
+Before any balance or ledger write, `resolve_valid_discovery_receipt` MUST:
+
+1. Load the receipt from `SubsystemDiscoveryStore.get_by_subsystem_id`
+2. Pass `verify_subsystem_discovery_receipt` (HMAC)
+3. Match `receipt.subsystem_id` to the requested `subsystem_id`
+4. Match normalized `receipt.tenant_id` to the request tenant
+5. Match `discovery_receipt_id` when provided
+
+Failure returns `status: rejected` with `reason: discovery_receipt_unresolved`. All issuance flows go through `reward_issuer.issue_reward()` — there is no bypass.
+
 ## API
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/api/ugr/rewards/operator/<operator_id>?tenant_id=` | Profile snapshot |
-| GET | `/api/ugr/rewards/ledger?tenant_id=&operator_id=&subsystem_id=&limit=` | Reward events |
+| POST | `/api/ugr/reward/issue` | Issue reward (gated); body: `tenant_id`, `operator_id`, `subsystem_id`, `event_type`, optional anchors |
+| GET | `/api/ugr/reward/operator/<operator_id>?tenant_id=` | Balances from `operator_balances.json` |
+| GET | `/api/ugr/reward/subsystem/<subsystem_id>?tenant_id=` | Tenant ledger rows + attributions for subsystem |
+| GET | `/api/ugr/rewards/operator/<operator_id>?tenant_id=` | Legacy alias |
+| GET | `/api/ugr/rewards/ledger?tenant_id=&operator_id=&subsystem_id=&limit=` | Legacy alias |
 | POST | `/api/ugr/rewards/spend` | Debit credits (reputation-gated); return `forge_boost` |
 | POST | `/api/ugr/discover/subsystem` | Includes `operator_rewards` on discovery / promotion |
 
@@ -67,6 +84,8 @@ Events are idempotent by `event_id = SHA256(canonical anchors)`. Each record inc
 | Variable | Default | Purpose |
 |----------|---------|---------|
 | `UGR_OPERATOR_REWARDS_ENABLED` | `1` | Kill switch |
+| `UGR_REWARDS_SHADOW_ONLY` | `1` | Validate + audit; no balance writes |
+| `UGR_REWARDS_AUDIT_ONLY` | `0` | Compute deltas + attribution preview; no ledger append |
 | `UGR_RAIL_CREDIT_SPEND_ENABLED` | `1` | Allow spend + forge hook |
 | `UGR_REWARD_POLICY_PATH` | `deploy/ugr/reward-policy.json` | Policy file |
 
@@ -77,5 +96,11 @@ Events are idempotent by `event_id = SHA256(canonical anchors)`. Each record inc
 
 ## Implementation
 
-- `src/ugr/rewards/`
+- `src/ugr/rewards/operator_reward_spec.py` — event types and anchor requirements
+- `src/ugr/rewards/reward_attribution.py` — attribution chain + `resolve_valid_discovery_receipt`
+- `src/ugr/rewards/reward_calculator.py` — policy v1.1 deltas
+- `src/ugr/rewards/reward_ledger.py` — `rewards.jsonl` + `operator_balances.json`
+- `src/ugr/rewards/reward_issuer.py` — `issue_reward()` single entry
+- `src/ugr/rewards/reward_governance.py` — `reward_policy_update` via governance missions
+- `src/ugr/rewards/operator_reward_engine.py` — thin wrapper for discovery hooks
 - Hooks: `subsystem_discovery.py`, `mission_runtime.py`, `cloud_forge_bridge.py`

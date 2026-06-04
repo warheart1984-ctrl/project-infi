@@ -276,10 +276,23 @@ class SubsystemDiscoveryService:
         operator_id: str,
         aais_instance_id: str,
     ) -> dict[str, Any]:
+        from src.ugr.rewards.reward_issuer import rewards_shadow_only
+
         if shadow_only_default() and not governance_apply_enabled():
             return {
                 "status": "blocked",
-                "summary": "promotion requires URG_GOVERNANCE_APPLY=1 and UGR_DISCOVERY_SHADOW_ONLY=0",
+                "summary": (
+                    "promotion requires URG_GOVERNANCE_APPLY=1, UGR_DISCOVERY_SHADOW_ONLY=0, "
+                    "and UGR_REWARDS_SHADOW_ONLY=0 for balance writes"
+                ),
+            }
+        if rewards_shadow_only() and not governance_apply_enabled():
+            return {
+                "status": "blocked",
+                "summary": (
+                    "promotion requires URG_GOVERNANCE_APPLY=1 and UGR_REWARDS_SHADOW_ONLY=0 "
+                    "for governed reward issuance"
+                ),
             }
         if not governance_apply_enabled():
             return {

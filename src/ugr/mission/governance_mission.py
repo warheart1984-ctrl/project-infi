@@ -28,6 +28,7 @@ MUTATION_PATHS = {
     "aais_instances": GOVERNANCE_DEPLOY_ROOT / "aais-instances.json",
     "invariant_definitions": Path(__file__).resolve().parents[2] / "invariants" / "cloud_invariants.py",
     "tenant_config": GOVERNANCE_DEPLOY_ROOT / "tenants.json",
+    "reward_policy": GOVERNANCE_DEPLOY_ROOT / "reward-policy.json",
 }
 
 MARKETPLACE_OPS = frozenset({
@@ -255,6 +256,27 @@ def run_governance_mission(
                     "summary": msg,
                     "mission_id": mission_id,
                 }
+    elif target == "reward_policy" and mutation_op == "reward_policy_update":
+        from src.ugr.rewards.reward_governance import apply_reward_policy_update
+
+        policy_path = MUTATION_PATHS["reward_policy"]
+        before_digest = _file_digest(policy_path)
+        after_digest = before_digest
+        apply_note = "audit_only"
+        patch = dict(payload.get("policy_patch") or payload.get("reward_policy") or {})
+        apply_result = apply_reward_policy_update(
+            patch,
+            tenant_id=tenant_manifold.tenant_id,
+        )
+        apply_note = str(apply_result.get("summary") or apply_note)
+        after_digest = _file_digest(policy_path)
+        if apply_result.get("status") == "blocked":
+            return {
+                "status": "blocked",
+                "summary": apply_note,
+                "mission_id": mission_id,
+                "urg_ingress": ingress,
+            }
     else:
         path = path or MUTATION_PATHS["provider_organs"]
         before_digest = _file_digest(path)

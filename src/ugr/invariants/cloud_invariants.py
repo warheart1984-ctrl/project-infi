@@ -26,6 +26,7 @@ GOVERNANCE_MUTATION_TARGETS = frozenset(
         "aais_instances",
         "invariant_definitions",
         "tenant_config",
+        "reward_policy",
     }
 )
 

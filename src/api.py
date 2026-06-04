@@ -11299,9 +11299,47 @@ def ugr_discover_subsystem_get(subsystem_id: str):
         return jsonify({"error": str(e)}), 500
 
 
-@app.route("/api/ugr/rewards/operator/<operator_id>", methods=["GET"])
-def ugr_rewards_operator_profile(operator_id: str):
-    """Operator reward profile: reputation, rail credits, adoption multipliers."""
+@app.route("/api/ugr/reward/issue", methods=["POST"])
+def ugr_reward_issue():
+    """Issue operator reward — requires valid discovery receipt for subsystem_id."""
+    try:
+        from src.ugr.rewards.operator_reward_engine import build_operator_reward_engine
+        from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+        data = request.get_json(silent=True) or {}
+        tenant_id = normalize_tenant_id(str(data.get("tenant_id") or "global"))
+        operator_id = str(data.get("operator_id") or "").strip()
+        subsystem_id = str(data.get("subsystem_id") or "").strip()
+        event_type = str(data.get("event_type") or "").strip()
+        if not operator_id:
+            return jsonify({"error": "operator_id is required"}), 400
+        if not subsystem_id:
+            return jsonify({"error": "subsystem_id is required"}), 400
+        if not event_type:
+            return jsonify({"error": "event_type is required"}), 400
+        result = build_operator_reward_engine().issue(
+            tenant_id=tenant_id,
+            operator_id=operator_id,
+            subsystem_id=subsystem_id,
+            event_type=event_type,
+            discovery_receipt_id=str(data.get("discovery_receipt_id") or "").strip() or None,
+            governance_mission_id=str(data.get("governance_mission_id") or "").strip() or None,
+            promotion_organ_id=str(data.get("promotion_organ_id") or "").strip() or None,
+            governance_status=str(data.get("governance_status") or "").strip() or None,
+        )
+        status = str(result.get("status") or "")
+        code = 200 if status in {"issued", "idempotent", "skipped", "shadow", "audit", "disabled"} else 400
+        if status == "rejected":
+            code = 403 if result.get("reason") == "discovery_receipt_unresolved" else 400
+        return jsonify(result), code
+    except Exception as e:
+        logger.error(f"Error issuing URG reward: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/reward/operator/<operator_id>", methods=["GET"])
+def ugr_reward_operator_profile(operator_id: str):
+    """Operator balances: reputation, rail credits, adoption multipliers."""
     try:
         from src.ugr.rewards.operator_reward_engine import build_operator_reward_engine
         from src.ugr.platform.tenant_registry import normalize_tenant_id
@@ -11310,13 +11348,45 @@ def ugr_rewards_operator_profile(operator_id: str):
         profile = build_operator_reward_engine().get_profile(operator_id, tenant_id=tenant_id)
         return jsonify({"tenant_id": tenant_id, "operator_id": operator_id, "profile": profile}), 200
     except Exception as e:
-        logger.error(f"Error fetching URG operator rewards profile: {e}")
+        logger.error(f"Error fetching URG operator reward profile: {e}")
         return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/reward/subsystem/<subsystem_id>", methods=["GET"])
+def ugr_reward_subsystem_ledger(subsystem_id: str):
+    """Ledger rows and attribution for a subsystem."""
+    try:
+        from src.ugr.rewards.operator_reward_engine import build_operator_reward_engine
+        from src.ugr.platform.tenant_registry import normalize_tenant_id
+
+        tenant_id = normalize_tenant_id(request.args.get("tenant_id") or "global")
+        limit = min(int(request.args.get("limit") or 50), 200)
+        engine = build_operator_reward_engine()
+        events = engine.list_ledger(tenant_id=tenant_id, subsystem_id=subsystem_id, limit=limit)
+        attributions = [row.get("attribution") for row in events if row.get("attribution")]
+        return jsonify(
+            {
+                "tenant_id": tenant_id,
+                "subsystem_id": subsystem_id,
+                "events": events,
+                "attributions": attributions,
+                "count": len(events),
+            }
+        ), 200
+    except Exception as e:
+        logger.error(f"Error fetching URG subsystem reward ledger: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/rewards/operator/<operator_id>", methods=["GET"])
+def ugr_rewards_operator_profile(operator_id: str):
+    """Legacy alias for GET /api/ugr/reward/operator/<operator_id>."""
+    return ugr_reward_operator_profile(operator_id)
 
 
 @app.route("/api/ugr/rewards/ledger", methods=["GET"])
 def ugr_rewards_ledger():
-    """Paginated operator reward event ledger."""
+    """Legacy alias for reward ledger listing."""
     try:
         from src.ugr.rewards.operator_reward_engine import build_operator_reward_engine
         from src.ugr.platform.tenant_registry import normalize_tenant_id

@@ -58,18 +58,33 @@ def _default_policy_path() -> Path:
     return Path(__file__).resolve().parents[3] / "deploy" / "ugr" / "reward-policy.json"
 
 
+_policy_cache: dict[str, Any] | None = None
+
+
+def invalidate_reward_policy_cache() -> None:
+    global _policy_cache
+    _policy_cache = None
+
+
 def load_reward_policy(path: str | Path | None = None) -> dict[str, Any]:
+    global _policy_cache
+    if path is None and _policy_cache is not None:
+        return dict(_policy_cache)
+
     policy_path = Path(path) if path else _default_policy_path()
     if not policy_path.exists():
-        return dict(DEFAULT_POLICY)
-    payload = json.loads(policy_path.read_text(encoding="utf-8"))
-    merged = dict(DEFAULT_POLICY)
-    merged.update({k: v for k, v in payload.items() if k != "economy"})
-    if isinstance(payload.get("economy"), dict):
-        merged["economy"] = {**dict(DEFAULT_POLICY.get("economy") or {}), **payload["economy"]}
-    for key in ("discovery", "promotion", "adoption", "spend"):
-        if key in payload and isinstance(payload[key], dict):
-            merged[key] = {**dict(DEFAULT_POLICY.get(key) or {}), **payload[key]}
+        merged = dict(DEFAULT_POLICY)
+    else:
+        payload = json.loads(policy_path.read_text(encoding="utf-8"))
+        merged = dict(DEFAULT_POLICY)
+        merged.update({k: v for k, v in payload.items() if k != "economy"})
+        if isinstance(payload.get("economy"), dict):
+            merged["economy"] = {**dict(DEFAULT_POLICY.get("economy") or {}), **payload["economy"]}
+        for key in ("discovery", "promotion", "adoption", "spend"):
+            if key in payload and isinstance(payload[key], dict):
+                merged[key] = {**dict(DEFAULT_POLICY.get(key) or {}), **payload[key]}
+    if path is None:
+        _policy_cache = dict(merged)
     return merged
 
 

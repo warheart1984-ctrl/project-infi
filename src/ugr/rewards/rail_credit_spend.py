@@ -8,8 +8,8 @@ from hashlib import sha256
 from typing import Any
 from uuid import uuid4
 
-from src.ugr.rewards.operator_reward_store import OperatorRewardStore
-from src.ugr.rewards.reward_events import stable_json
+from src.ugr.rewards.reward_attribution import stable_json
+from src.ugr.rewards.reward_ledger import RewardLedger
 from src.ugr.rewards.reward_policy import (
     load_reward_policy,
     max_spendable_credits,
@@ -45,8 +45,8 @@ def spend_rail_credits(
     amount_f = float(amount or 0)
     if amount_f <= 0:
         return {"status": "rejected", "summary": "amount must be positive"}
-    store = OperatorRewardStore(runtime_dir=runtime_dir, tenant_id=tenant_id)
-    profile = store.load_profile(operator_id)
+    ledger = RewardLedger(runtime_dir=runtime_dir, tenant_id=tenant_id)
+    profile = ledger.load_balances(operator_id)
 
     min_rep = min_reputation_to_spend(policy)
     if profile.reputation_score < min_rep:
@@ -107,8 +107,8 @@ def spend_rail_credits(
 
     profile.rail_credits = max(0.0, profile.rail_credits - amount_f)
     profile.updated_at = issued_at
-    store.save_profile(profile)
-    store.save_spend_token(
+    ledger.save_balances(profile)
+    ledger.save_spend_token(
         spend_id,
         {
             **forge_boost,
@@ -141,11 +141,11 @@ def validate_forge_boost(boost: dict[str, Any] | None, *, runtime_dir: str | Non
     spend_id = str(boost.get("spend_id") or "").strip()
     if not spend_id:
         return False, "missing spend_id", {}
-    store = OperatorRewardStore(
+    ledger = RewardLedger(
         runtime_dir=runtime_dir,
         tenant_id=str(boost.get("tenant_id") or "global"),
     )
-    token = store.load_spend_token(spend_id)
+    token = ledger.load_spend_token(spend_id)
     if not token:
         return False, "unknown spend token", {}
     if token.get("consumed"):
@@ -162,8 +162,8 @@ def consume_forge_boost(boost: dict[str, Any] | None, *, runtime_dir: str | None
     spend_id = str((boost or {}).get("spend_id") or "").strip()
     if not spend_id:
         return
-    store = OperatorRewardStore(
+    ledger = RewardLedger(
         runtime_dir=runtime_dir,
         tenant_id=str((boost or {}).get("tenant_id") or "global"),
     )
-    store.mark_spend_consumed(spend_id)
+    ledger.mark_spend_consumed(spend_id)
