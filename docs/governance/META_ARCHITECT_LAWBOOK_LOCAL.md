@@ -4,11 +4,13 @@
 
 ## After clone or pull
 
-Keep your own copy at:
+Keep **one** copy at the **project-infi repo root** only:
 
 ```
 META_ARCHITECT_LAWBOOK.md
 ```
+
+Do not keep duplicates under `Project-Infinity1/` or other nested clones — remove those copies; the nested `Project-Infinity1/` tree is gitignored in the canonical workspace.
 
 If you previously had the file tracked in git, it remains on disk when removed from the index; new clones must add the lawbook locally (backup, prior checkout, or your governance source).
 
