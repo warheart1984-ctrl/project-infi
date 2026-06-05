@@ -1,6 +1,6 @@
 # Project Infinity — AAIS
 
-> **Adaptive Authority Intelligence System (AAIS)** — a law-governed Jarvis runtime with inspectable Universal Language (UL) structure, Project Infi admission, and operator-facing surfaces.
+> **Adaptive Autonomous Intelligence Substrate (AAIS)** — a law-governed Jarvis runtime with inspectable Universal Language (UL) structure, Project Infi admission, and operator-facing surfaces.
 
 **New operators start here:** [AAIS Operator Guide](docs/operators/AAIS_OPERATOR_GUIDE.md) — install, keys, start, desktop build (simple, no developer jargon).
 
