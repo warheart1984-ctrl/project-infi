@@ -13,6 +13,35 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 - (none yet)
 
+## [1.26.2] - 2026-06-05 — Constitutional Substrate + Readiness 99
+
+**Release 30.2** — bakes Meta Architect Lawbook and Human–AI Collaboration Charter into AAIS constitutional substrate; closes production npm audit debt; adds operator how-to guides.
+
+### Added
+
+- **Constitutional substrate** — `lawbook/` tracked copies, `src/substrate/meta_law_engine.py`, `src/substrate/ingress/collaboration_membrane.py`, `tests/test_constitutional_substrate.py`
+- **Operator guides** — [HOW_TO_USE_AAIS.md](docs/operators/HOW_TO_USE_AAIS.md) (human), [HOW_TO_USE_AAIS_FOR_AGENTS.md](docs/operators/HOW_TO_USE_AAIS_FOR_AGENTS.md) (agents)
+- **Production fail-closed defaults** — `AAIS_REQUIRE_CONSTITUTIONAL_LAW=1` and `AAIS_REQUIRE_COLLABORATION_CHARTER=1` when `ENVIRONMENT=production`
+
+### Changed
+
+- **Frontend/mobile** — axios pinned to `1.17.0`; `npm audit --omit=dev` 0 production vulnerabilities
+- **Naming** — `src/meta_law_engine_posture.py` replaces non-grandfathered `meta_architect_law_organ.py`
+- **Docs** — README links to new how-to guides; trust bundle v1.26.2 at 99/100
+
+### Verification (v1.26.2)
+
+```bash
+python tools/naming_protocol_lint.py
+make constitutional-substrate-gate
+python tools/proof/run_flagship_cross_machine_matrix.py --compare
+python -m pytest tests/test_constitutional_substrate.py -q
+cd frontend && npm run test:ci && npm run audit:prod
+cd ../mobile && npm run typecheck && npm audit --omit=dev
+```
+
+[1.26.2]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.2
+
 ## [1.26.1] - 2026-06-03 — OTEM Level 10 Safe Activation
 
 **Release 30.1** — activates OTEM capability level 10 (default); defers substrate persistence phase 2. **178 governed** genomes (Release 30 five-pack + Alt-13 wave promotions).

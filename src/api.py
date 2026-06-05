@@ -13690,7 +13690,7 @@ def get_project_infi_law_organ_status():
 @app.route("/api/jarvis/meta-architect-law/status", methods=["GET"])
 def get_meta_architect_law_organ_status():
     try:
-        from src.meta_architect_law_organ import build_meta_architect_law_status
+        from src.meta_law_engine_posture import build_meta_architect_law_status
 
         return jsonify(
             attach_ul_substrate({"meta_architect_law": build_meta_architect_law_status()})

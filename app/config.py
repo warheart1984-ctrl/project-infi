@@ -4,6 +4,18 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
+def _apply_production_constitutional_defaults() -> None:
+    """Arm fail-closed constitutional substrate in production when flags are unset."""
+    if os.getenv("ENVIRONMENT", "").strip().lower() != "production":
+        return
+    for key in ("AAIS_REQUIRE_CONSTITUTIONAL_LAW", "AAIS_REQUIRE_COLLABORATION_CHARTER"):
+        if os.getenv(key) is None:
+            os.environ[key] = "1"
+
+
+_apply_production_constitutional_defaults()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = Path(os.getenv("JARVIS_DATA_DIR", str(BASE_DIR / "data"))).resolve()
 CHROMA_DIR = Path(os.getenv("JARVIS_CHROMA_DIR", str(DATA_DIR / "chroma"))).resolve()

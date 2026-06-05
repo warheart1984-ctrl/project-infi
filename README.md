@@ -2,7 +2,9 @@
 
 > **Adaptive Authority Intelligence System (AAIS)** — a law-governed Jarvis runtime with inspectable Universal Language (UL) structure, Project Infi admission, and operator-facing surfaces.
 
-**New operators start here:** [AAIS Operator Guide](docs/operators/AAIS_OPERATOR_GUIDE.md) — install, keys, start, desktop build (simple, no developer jargon).
+**New operators start here:** [How to Use AAIS](docs/operators/HOW_TO_USE_AAIS.md) — install, keys, start, constitutional substrate (simple, no developer jargon).  
+**AI agents:** [How to Use AAIS (Agent Guide)](docs/operators/HOW_TO_USE_AAIS_FOR_AGENTS.md) — exact commands, gates, proof obligations.  
+**Desktop / offline:** [AAIS Operator Guide](docs/operators/AAIS_OPERATOR_GUIDE.md).
 
 ## What AAIS Is
 
@@ -61,7 +63,7 @@ make translate-mythic MYTHIC='V9 runtime steward'   # mythic → engineering_cla
 
 **Codex / Cursor naming (new code):** [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md) · **Meta-linguistic governance:** [AAIS_META_LINGUISTIC_GOVERNANCE.md](docs/contracts/AAIS_META_LINGUISTIC_GOVERNANCE.md) — mythic in comments, engineering in identifiers; legacy `*_organ` / `*_fabric` paths grandfathered until Wave 4 MP-X rename.
 
-**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.26.1 — Release 30.1 OTEM Level 10 Safe Activation](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.1) (tag on GitHub) · **URG Cloud Platform:** [docs/URG_CLOUD_PLATFORM.md](docs/URG_CLOUD_PLATFORM.md) · tag [`urg-cloud-platform-v1.9`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/urg-cloud-platform-v1.9) (federation; prior [`v1.6`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/urg-cloud-platform-v1.6)) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**License:** [Apache 2.0](LICENSE) · **Latest release:** [v1.26.2 — Constitutional Substrate + Readiness 99](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.2) (tag on GitHub) · **URG Cloud Platform:** [docs/URG_CLOUD_PLATFORM.md](docs/URG_CLOUD_PLATFORM.md) · tag [`urg-cloud-platform-v1.9`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/urg-cloud-platform-v1.9) (federation; prior [`v1.6`](https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/urg-cloud-platform-v1.6)) · **Release history:** [CHANGELOG.md](CHANGELOG.md) · **Onboarding:** [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -260,6 +262,14 @@ python -m tools.ul.smoke --lineage-graph tools/ul/fixtures/lineage_multi_hop.jso
 - **Node.js 18+** and **npm** — only if you need to rebuild the frontend (`frontend/`)
 - Optional: **Redis** — for Celery background jobs (`make worker`)
 - Optional: frontier provider API keys (local/mock presets work without them — see [Installing API keys](#installing-api-keys-frontier-models))
+
+### How to Start Operations
+
+| Audience | Guide |
+|----------|-------|
+| **Humans** | [How to Use AAIS](docs/operators/HOW_TO_USE_AAIS.md) |
+| **AI agents** | [How to Use AAIS (Agent Guide)](docs/operators/HOW_TO_USE_AAIS_FOR_AGENTS.md) |
+| **First-time tiers** | [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md) |
 
 ### Initialization Steps
 

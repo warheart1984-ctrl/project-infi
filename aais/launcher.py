@@ -146,10 +146,19 @@ def resolve_data_dir(explicit_data_dir: str | None) -> Path:
     return path
 
 
+def _apply_production_constitutional_defaults() -> None:
+    if os.getenv("ENVIRONMENT", "").strip().lower() != "production":
+        return
+    for key in ("AAIS_REQUIRE_CONSTITUTIONAL_LAW", "AAIS_REQUIRE_COLLABORATION_CHARTER"):
+        if os.getenv(key) is None:
+            os.environ[key] = "1"
+
+
 def configure_runtime_environment(*, data_dir: Path, static_dir: Path, app_base: str) -> None:
     os.environ["JARVIS_DATA_DIR"] = str(data_dir)
     os.environ["JARVIS_STATIC_DIR"] = str(static_dir)
     os.environ["AAIS_APP_BASE"] = normalize_app_base(app_base)
+    _apply_production_constitutional_defaults()
 
 
 def wait_for_http(url: str, timeout_seconds: int = 45) -> bool:

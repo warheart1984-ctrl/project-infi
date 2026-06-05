@@ -44,6 +44,6 @@ python tools/proof/run_flagship_cross_machine_matrix.py --compare
 
 ## Sign-off
 
-- Recorded at (UTC): 2026-06-05T18:25:50Z
-- Author: cursor-agent Phase 2 cross-machine pass
+- Recorded at (UTC): 2026-06-05T20:42:00Z (re-verified v1.26.2 readiness pass)
+- Author: cursor-agent Phase 2 cross-machine pass; v1.26.2 readiness re-run
 - Decision: **proven** for UL/CISIV gate matrix; full-suite cross-host **asserted**

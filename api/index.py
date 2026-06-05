@@ -13,5 +13,7 @@ if str(ROOT) not in sys.path:
 # Keep preview deployments lightweight by default.
 os.environ.setdefault("AAIS_MODEL_MODE", "mock")
 os.environ.setdefault("ENVIRONMENT", "production")
+for _constitutional_key in ("AAIS_REQUIRE_CONSTITUTIONAL_LAW", "AAIS_REQUIRE_COLLABORATION_CHARTER"):
+    os.environ.setdefault(_constitutional_key, "1")
 
 from src.api import app  # noqa: E402

@@ -1,4 +1,5 @@
-"""Meta Architect Law Organ — read-only constitutional substrate posture."""
+# Engineering: MetaLawEnginePostureSurface
+"""Meta Architect Law posture — read-only constitutional substrate status."""
 
 from __future__ import annotations
 
@@ -7,7 +8,7 @@ from typing import Any
 from src.substrate.meta_law_engine import ENGINE_ID, ENGINE_VERSION, resolve_constitutional_context
 
 MODULE_ID = "AAIS-MAL-01"
-ORGAN_VERSION = "meta_architect_law_organ.v1"
+SURFACE_VERSION = "meta_law_engine_posture.v1"
 
 
 def build_meta_architect_law_status() -> dict[str, Any]:
@@ -18,7 +19,7 @@ def build_meta_architect_law_status() -> dict[str, Any]:
         f"invariants={invariant_count};autonomous_mutation=0"
     )[:128]
     return {
-        "meta_architect_law_organ_version": ORGAN_VERSION,
+        "meta_architect_law_organ_version": SURFACE_VERSION,
         "module_id": MODULE_ID,
         "status_summary": summary,
         "engine_id": ENGINE_ID,
