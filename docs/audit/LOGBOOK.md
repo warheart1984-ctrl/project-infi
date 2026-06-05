@@ -27,6 +27,13 @@ Every major entry should name its CISIV stage explicitly.
 - verification note: `.runtime/pilot-ga-openrouter-verify.log`; `.runtime/pilot-ga-frontend-v1.log`; `.runtime/pilot-ga-mobile-v1.log`; `docs/audit/PILOT_GA_HARDENING_CHECKLIST.md`; `docs/audit/READINESS_82_TO_91_FIX_REPORT.md`
 - logbook entry by: cursor-agent readiness 82→91 pass
 
+### Constitutional Substrate — Meta Lawbook + Human-AI Charter
+- CISIV stage: `implementation` + `verification`
+- scope: normative specs (`docs/substrate/CONSTITUTIONAL_LAYER.md`, `INGRESS_COLLABORATION_MEMBRANE.md`); tracked `lawbook/` copies; `meta_law_engine` + `collaboration_membrane`; bootstrap wiring; `meta-law-gate` + `collaboration-charter-gate`; `project_infi_law` + `chat_turn_governance` integration
+- outcome: Meta Laws in constitutional spine; Charter in ingress membrane; both produce testable invariants. Gates PASS; 8 substrate tests PASS.
+- verification note: `make meta-law-gate collaboration-charter-gate`; `python -m pytest tests/test_constitutional_substrate.py -q`; `docs/substrate/CONSTITUTIONAL_LAYER.md`
+- logbook entry by: [constitutional substrate implementation](2ba08f91-96d3-4376-9969-e76ed77af532)
+
 ### AAIS Flagship Audit — Phase 2 Implementation Wave
 - CISIV stage: `verification`
 - scope: cross-machine UL/CISIV gate matrix; SSP linguistic closure (193→1 warning); UGR subsystem admission (discovery/rewards/mission genomes + Project Infi law wrappers); OTEM persistence phase 2; governance test harness bootstrap (session fixture, cold-start admission, collection reorder); pilot GA hardening checklist
