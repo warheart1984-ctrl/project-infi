@@ -35,6 +35,24 @@ Use this order when deciding what to trust first:
 
 This order is also consistent with the [AAIS Doc Protocol](../../docs/contracts/AAIS_DOC_PROTOCOL.md).
 
+## Supreme Constitutional Authority
+
+Above Project Infi law (`law_1`..`law_9`) and repo front-door laws, the **Meta Architect Lawbook** is supreme constitutional governance for this repository.
+
+| Authority | Path | Machine enforcement |
+|-----------|------|---------------------|
+| Meta Architect Lawbook | [lawbook/META_ARCHITECT_LAWBOOK.md](../../lawbook/META_ARCHITECT_LAWBOOK.md) | [src/substrate/meta_law_engine.py](../../src/substrate/meta_law_engine.py) |
+| Human-AI Co-Collaboration Charter | [lawbook/HUMAN_AI_CO_COLLABORATION_CHARTER.md](../../lawbook/HUMAN_AI_CO_COLLABORATION_CHARTER.md) | [src/substrate/ingress/collaboration_membrane.py](../../src/substrate/ingress/collaboration_membrane.py) |
+
+Constitutional precedence (binding): **Law > Blueprint > Contract > Implementation > Pipeline > Tool** — aligned with [src/aais_composed_runtime.py](../../src/aais_composed_runtime.py) `SPINE_PRECEDENCE`.
+
+Normative substrate specs:
+
+- [docs/substrate/CONSTITUTIONAL_LAYER.md](../../docs/substrate/CONSTITUTIONAL_LAYER.md)
+- [docs/substrate/INGRESS_COLLABORATION_MEMBRANE.md](../../docs/substrate/INGRESS_COLLABORATION_MEMBRANE.md)
+
+The charter is subordinate to the lawbook (Charter Article VI). `project_infi_law.require_contract()` attaches `constitutional_context` and evaluates `law_0_supreme_precedence` when the lawbook is present.
+
 ## Direct Repo Laws
 
 These are the clearest repo-wide laws in the project.

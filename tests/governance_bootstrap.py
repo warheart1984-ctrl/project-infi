@@ -62,6 +62,26 @@ def _seed_memory_membrane() -> dict[str, Any] | None:
         return None
 
 
+def ensure_constitutional_substrate() -> None:
+    """Load Meta Architect Lawbook spine; refuse start when constitutionally required."""
+    try:
+        from src.substrate.meta_law_engine import bootstrap_constitutional_lawbook
+
+        bootstrap_constitutional_lawbook()
+    except Exception:
+        return
+
+
+def ensure_collaboration_charter_ready() -> None:
+    """Verify Human-AI Co-Collaboration Charter readiness for governed turn ingress."""
+    try:
+        from src.substrate.ingress.collaboration_membrane import bootstrap_collaboration_charter
+
+        bootstrap_collaboration_charter()
+    except Exception:
+        return
+
+
 def ensure_memory_board_gateway_admitted() -> None:
     """Admit the live memory board gateway after module-governance resets in tests."""
     try:
@@ -98,6 +118,8 @@ def bootstrap_governance_harness(*, runtime_root: str | None = None) -> Governan
         os.environ["AAIS_DATA_DIR"] = runtime_root
 
     _register_core_lanes()
+    ensure_constitutional_substrate()
+    ensure_collaboration_charter_ready()
     _seed_memory_membrane()
 
     ensure_memory_board_gateway_admitted()

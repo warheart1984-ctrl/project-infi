@@ -293,6 +293,40 @@ def finalize_chat_turn_admission(
         details["response_contract"] = response_trace.get("contract")
         details["model_route"] = response_trace.get("model_route")
 
+    try:
+        from src.substrate.ingress.collaboration_membrane import evaluate_turn_collaboration_membrane
+
+        collaboration_membrane = evaluate_turn_collaboration_membrane(
+            session_id=session.session_id,
+            details={
+                "claim_label": (response_trace or {}).get("claim_label") or "asserted",
+                "reversible": True,
+                "human_override_acknowledged": True,
+                "epistemic_escalation_required": bool(
+                    (response_trace or {}).get("epistemic_escalation_required")
+                ),
+                "epistemic_escalation_acknowledged": bool(
+                    (response_trace or {}).get("epistemic_escalation_acknowledged")
+                    or not (response_trace or {}).get("epistemic_escalation_required")
+                ),
+            },
+        )
+        session.metadata["collaboration_membrane"] = collaboration_membrane
+        if not collaboration_membrane.get("admitted"):
+            blocked_message = (
+                "Jarvis held the reply because the Human-AI Co-Collaboration Charter "
+                "membrane blocked turn admission: "
+                + ", ".join(collaboration_membrane.get("blocking_invariants") or ["charter_invariant"])
+            )
+            return blocked_message, {
+                "error": blocked_message,
+                "collaboration_membrane": collaboration_membrane,
+                "cisiv_stage": infer_chat_turn_cisiv_stage(phase="admit"),
+                "status_code": 409,
+            }
+    except Exception:
+        pass
+
     contract, ul_snapshot, _ = project_infi_law.require_contract(
         surface=CHAT_TURN_SURFACE,
         action_id="chat_reply",

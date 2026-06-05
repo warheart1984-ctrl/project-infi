@@ -502,6 +502,29 @@ class ProjectInfiLaw:
         normalized_details = dict(details or {})
         normalized_plan = self._normalize_verification_plan(verification_plan)
         external_admission = _normalize_external_suggestion_admission(normalized_details)
+        try:
+            from src.substrate.meta_law_engine import (
+                build_law_0_supreme_precedence_check,
+                resolve_constitutional_context,
+            )
+
+            constitutional_context = resolve_constitutional_context()
+            law_0_check = build_law_0_supreme_precedence_check(constitutional_context)
+        except Exception:
+            constitutional_context = {
+                "status": "unavailable",
+                "lawbook_present": False,
+                "invariants": [],
+            }
+            law_0_check = _law_check(
+                law_id="law_0_supreme_precedence",
+                title="Supreme Constitutional Precedence",
+                core_principle="Meta Architect Lawbook governs precedence above Project Infi law without replacing it.",
+                passed=True,
+                status="not_applicable",
+                action="constitutional_spine_attachment",
+                detail="Constitutional engine unavailable; Project Infi law proceeds without supreme precedence attachment.",
+            )
         aris_enforcement = build_aris_enforcement(
             details=normalized_details,
             runtime_context="operator_runtime" if bool(repo_change) else "live_runtime",
@@ -526,6 +549,8 @@ class ProjectInfiLaw:
             missing.append("admitted_external_form")
         if not aris_enforcement["non_copy_clause"]["allowed"]:
             missing.append("non_copy_clause")
+        if constitutional_context.get("lawbook_present") and not law_0_check["passed"]:
+            missing.append("constitutional_precedence")
 
         shield = ShieldWard().check(
             GuardrailState(
@@ -616,6 +641,7 @@ class ProjectInfiLaw:
                 "admitted_form_summary": external_admission["admitted_form_summary"],
             },
             "aris_enforcement": aris_enforcement,
+            "constitutional_context": constitutional_context,
             "project_infi_layers": {
                 "entry": {
                     "status": "blocked" if blocked else "passed",
@@ -652,6 +678,7 @@ class ProjectInfiLaw:
             },
         }
         contract["law_checks"] = [
+            law_0_check,
             _law_check(
                 law_id="law_1_entry_governance",
                 title="Entry Governance Law",

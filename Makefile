@@ -453,6 +453,14 @@ alt9-1-gate: alt9-gate alt8-1-gate
 immune-substrate-gate:
 	python3 tools/governance/check_immune_substrate.py
 
+meta-law-gate:
+	python3 tools/governance/check_meta_law.py
+
+collaboration-charter-gate:
+	python3 tools/governance/check_collaboration_charter.py
+
+constitutional-substrate-gate: meta-law-gate collaboration-charter-gate
+
 alt9-2-gate: alt9-1-gate immune-substrate-gate
 
 alt9-governed-gate:

@@ -40,6 +40,20 @@ AAIS subsystems currently cluster into these architectural layers:
 - product shell and operator surfaces
 - hidden or seeded subsystem primitives
 
+### Constitutional substrate (Meta Lawbook + Charter)
+
+Same tier as naming genome, SSP bundles, UL substrate, governance bootstrap, and invariant engine.
+
+| Component | Status | Path | Ingress / attachment |
+|-----------|--------|------|----------------------|
+| Meta Architect Lawbook spine | `live` | `src/substrate/meta_law_engine.py` | `project_infi_law.require_contract()` → `constitutional_context`, `law_0_supreme_precedence` |
+| Human-AI collaboration membrane | `live` | `src/substrate/ingress/collaboration_membrane.py` | `chat_turn_governance.finalize_chat_turn_admission()` turn ingress |
+| Tracked lawbook artifacts | `live` | `lawbook/META_ARCHITECT_LAWBOOK.md`, `lawbook/HUMAN_AI_CO_COLLABORATION_CHARTER.md` | Gates: `meta-law-gate`, `collaboration-charter-gate` |
+
+Normative maps: [CONSTITUTIONAL_LAYER.md](../substrate/CONSTITUTIONAL_LAYER.md), [INGRESS_COLLABORATION_MEMBRANE.md](../substrate/INGRESS_COLLABORATION_MEMBRANE.md).
+
+Bootstrap: `tests/governance_bootstrap.py` (`ensure_constitutional_substrate`, `ensure_collaboration_charter_ready`). Refuse start when `AAIS_REQUIRE_CONSTITUTIONAL_LAW=1` and lawbook missing; refuse turn when `AAIS_REQUIRE_COLLABORATION_CHARTER=1` and charter missing.
+
 ## 3. Subsystem Records
 
 ### Jarvis Core Runtime

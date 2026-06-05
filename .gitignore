@@ -145,8 +145,9 @@ ProjectInfinity_UL_Documentation.pdf
 project_blueprints_infinity.html
 
 # Local-only governance and credits (not published to GitHub)
-META_ARCHITECT_LAWBOOK.md
-HUMAN_AI_CO_COLLABORATION_CHARTER.md
+# Tracked substrate copies live under lawbook/ (see docs/substrate/CONSTITUTIONAL_LAYER.md)
+/META_ARCHITECT_LAWBOOK.md
+/HUMAN_AI_CO_COLLABORATION_CHARTER.md
 REPO_PROOF_LAW.md
 CONTRIBUTORS.md
 

@@ -16,6 +16,26 @@ from src.state_hygiene import normalize_truth_scope, precedence_rank
 
 CANONICAL_DOCTRINE_DOCS = [
     {
+        "title": "Meta Architect Lawbook",
+        "path": "lawbook/META_ARCHITECT_LAWBOOK.md",
+        "role": "supreme constitutional governance",
+    },
+    {
+        "title": "Human-AI Co-Collaboration Charter",
+        "path": "lawbook/HUMAN_AI_CO_COLLABORATION_CHARTER.md",
+        "role": "ingress collaboration membrane (subordinate to lawbook)",
+    },
+    {
+        "title": "Constitutional Layer Spec",
+        "path": "docs/substrate/CONSTITUTIONAL_LAYER.md",
+        "role": "constitutional substrate normative map",
+    },
+    {
+        "title": "Ingress Collaboration Membrane Spec",
+        "path": "docs/substrate/INGRESS_COLLABORATION_MEMBRANE.md",
+        "role": "charter ingress normative map",
+    },
+    {
         "title": "AAIS Runtime Guide",
         "path": "docs/runtime/AAIS_RUNTIME_GUIDE.md",
         "role": "current runtime handbook",

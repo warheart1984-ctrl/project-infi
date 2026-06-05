@@ -13687,6 +13687,19 @@ def get_project_infi_law_organ_status():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/meta-architect-law/status", methods=["GET"])
+def get_meta_architect_law_organ_status():
+    try:
+        from src.meta_architect_law_organ import build_meta_architect_law_status
+
+        return jsonify(
+            attach_ul_substrate({"meta_architect_law": build_meta_architect_law_status()})
+        )
+    except Exception as e:
+        logger.error(f"Error reading meta architect law organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/run-ledger-binding/status", methods=["GET"])
 def get_run_ledger_binding_organ_status():
     try:
