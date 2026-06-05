@@ -1,0 +1,16 @@
+{
+  "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+  "gene": "module_governance_organ",
+  "status": "pending",
+  "urgency_score": 20.6,
+  "queue_generated_at": "2026-06-05T19:07:45Z",
+  "recommended_actions": [
+    {
+      "kind": "cascade_report",
+      "command": "python tools/linguistic_cascade_report.py --gene module_governance_organ",
+      "note": "Review lineage cascade impact"
+    }
+  ],
+  "operator_notes": "",
+  "updated_at": "2026-06-05T19:07:45Z"
+}

@@ -1,5 +1,6 @@
 """OTEM durable execution substrate — proposal to operator-approved apply."""
 
+# Engineering: OtemExecutionSubstrateEngine
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -8,7 +9,14 @@ from src.datetime_compat import UTC
 from typing import Any
 import uuid
 
-from src.phase_gate import Phase, GovernedComponent, register_component, assert_executable
+from src.phase_gate import (
+    ComponentNotRegisteredError,
+    Phase,
+    GovernedComponent,
+    register_component,
+    assert_executable,
+    get_component,
+)
 
 OTEM_EXECUTION_COMPONENT_ID = "jarvis.otem_execution_substrate"
 SUBSTRATE_VERSION = "otem_execution_substrate.v1"
@@ -52,16 +60,41 @@ class OTEMExecutionWorkflow:
 class OTEMExecutionSubstrate:
     """Bind OTEM proposals to governed coding-organ apply stack."""
 
-    def __init__(self) -> None:
+    def __init__(self, *, persist: bool = True) -> None:
         self._workflows: dict[str, OTEMExecutionWorkflow] = {}
+        self._persist = persist
         self._ensure_component()
+
+    def _persist_workflow(self, workflow: OTEMExecutionWorkflow) -> None:
+        if not self._persist:
+            return
+        from src.otem_execution_store import get_otem_execution_store
+
+        get_otem_execution_store().save_workflow_record(workflow.to_dict())
+
+    def _hydrate_workflow(self, workflow_id: str) -> OTEMExecutionWorkflow | None:
+        from src.otem_execution_store import get_otem_execution_store
+
+        record = get_otem_execution_store().load_workflow_record(workflow_id)
+        if record is None:
+            return None
+        workflow = OTEMExecutionWorkflow(
+            workflow_id=str(record["workflow_id"]),
+            stage=str(record["stage"]),
+            proposal=dict(record.get("proposal") or {}),
+            operator_approved=bool(record.get("operator_approved")),
+            preview=dict(record["preview"]) if isinstance(record.get("preview"), dict) else None,
+            apply_result=dict(record["apply_result"]) if isinstance(record.get("apply_result"), dict) else None,
+            created_at=str(record.get("created_at") or ""),
+            updated_at=str(record.get("updated_at") or ""),
+        )
+        self._workflows[workflow.workflow_id] = workflow
+        return workflow
 
     def _ensure_component(self) -> None:
         try:
-            from src.phase_gate import get_component
-
             get_component(OTEM_EXECUTION_COMPONENT_ID)
-        except Exception:
+        except ComponentNotRegisteredError:
             register_component(
                 GovernedComponent(
                     component_id=OTEM_EXECUTION_COMPONENT_ID,
@@ -75,6 +108,7 @@ class OTEMExecutionSubstrate:
             )
 
     def create_proposal(self, proposal: dict[str, Any], *, runtime_context: str) -> dict[str, Any]:
+        self._ensure_component()
         assert_executable(OTEM_EXECUTION_COMPONENT_ID, runtime_context)
         workflow_id = f"otem-exec-{uuid.uuid4().hex[:12]}"
         workflow = OTEMExecutionWorkflow(
@@ -83,9 +117,11 @@ class OTEMExecutionSubstrate:
             proposal=dict(proposal),
         )
         self._workflows[workflow_id] = workflow
+        self._persist_workflow(workflow)
         return workflow.to_dict()
 
     def approve(self, workflow_id: str, *, runtime_context: str, actor_id: str = "operator") -> dict[str, Any]:
+        self._ensure_component()
         assert_executable(OTEM_EXECUTION_COMPONENT_ID, runtime_context)
         workflow = self._require(workflow_id)
         if workflow.stage not in {"proposal", "operator_approval"}:
@@ -94,9 +130,11 @@ class OTEMExecutionSubstrate:
         workflow.stage = "execution_preview"
         workflow.updated_at = datetime.now(UTC).isoformat()
         workflow.preview = self._build_preview(workflow.proposal)
+        self._persist_workflow(workflow)
         return workflow.to_dict()
 
     def apply(self, workflow_id: str, *, runtime_context: str) -> dict[str, Any]:
+        self._ensure_component()
         assert_executable(OTEM_EXECUTION_COMPONENT_ID, runtime_context)
         workflow = self._require(workflow_id)
         if not workflow.operator_approved:
@@ -113,13 +151,17 @@ class OTEMExecutionSubstrate:
         }
         workflow.stage = "ledger_record"
         workflow.updated_at = datetime.now(UTC).isoformat()
+        self._persist_workflow(workflow)
         return workflow.to_dict()
 
     def get_workflow(self, workflow_id: str) -> dict[str, Any]:
         return self._require(workflow_id).to_dict()
 
     def _require(self, workflow_id: str) -> OTEMExecutionWorkflow:
-        workflow = self._workflows.get(str(workflow_id or "").strip())
+        normalized = str(workflow_id or "").strip()
+        workflow = self._workflows.get(normalized)
+        if workflow is None:
+            workflow = self._hydrate_workflow(normalized)
         if workflow is None:
             raise KeyError(f"Unknown OTEM execution workflow: {workflow_id}")
         return workflow
@@ -152,6 +194,16 @@ def get_otem_execution_substrate() -> OTEMExecutionSubstrate:
     return _default_substrate
 
 
+def reset_otem_execution_substrate(*, clear_persisted: bool = False) -> OTEMExecutionSubstrate:
+    """Reset in-process OTEM substrate state (tests / process isolation)."""
+    global _default_substrate
+    from src.otem_execution_store import reset_otem_execution_store
+
+    reset_otem_execution_store(clear_persisted=clear_persisted)
+    _default_substrate = OTEMExecutionSubstrate()
+    return _default_substrate
+
+
 def build_otem_execution_status() -> dict[str, Any]:
     substrate = get_otem_execution_substrate()
     return {
@@ -163,4 +215,6 @@ def build_otem_execution_status() -> dict[str, Any]:
         "operator_approval_required": True,
         "proposal_only": False,
         "read_only_posture": False,
+        "persistence_phase": 2,
+        "durable_store": True,
     }

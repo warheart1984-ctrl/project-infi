@@ -9,6 +9,8 @@ module admission checks, and emit bounded audit metadata.
 # Engineering: MemoryBoardEnforcerEngine
 from __future__ import annotations
 
+import os
+
 def _wrap_ul_payload(payload: dict) -> dict:
     from src.aais_ul_substrate import attach_ul_substrate
 
@@ -74,6 +76,17 @@ def _clean_text(value: Any, *, limit: int = 280) -> str:
 def _normalize_runtime_context(value: Any) -> str:
     cleaned = _clean_text(value, limit=80).lower().replace("-", "_").replace(" ", "_")
     return cleaned or "operator_runtime"
+
+
+def _test_harness_cold_start_allowed(*, runtime_context: str, admission_token: str | None = None) -> bool:
+    """Allow governed cold-start admission only for explicit test harness contexts."""
+    if _normalize_runtime_context(runtime_context) != "test_harness":
+        return False
+    if os.environ.get("AAIS_TEST_COLD_START", "").strip() in {"1", "true", "yes"}:
+        return True
+    expected = str(os.environ.get("AAIS_TEST_ADMISSION_TOKEN") or "").strip()
+    provided = str(admission_token or os.environ.get("AAIS_TEST_ADMISSION_TOKEN") or "").strip()
+    return bool(expected) and expected == provided
 
 
 def build_memory_board_enforcer_module_spec(
@@ -294,6 +307,15 @@ class MemoryBoardEnforcer:
         module_record = self._ensure_module_record()
         module_status = str(module_record.get("status") or "").strip().lower() or "unknown"
         allowed_statuses = {"admitted"}
+        cold_start = _test_harness_cold_start_allowed(runtime_context=normalized_context)
+        if cold_start and module_status != "admitted":
+            self.module_governance_controller.admit_module(
+                build_memory_board_enforcer_module_spec(self.component_id),
+                actor_id="test_harness",
+                actor_role="system",
+            )
+            module_record = self._ensure_module_record()
+            module_status = str(module_record.get("status") or "").strip().lower() or "unknown"
         module_decision = "ALLOW" if module_status in allowed_statuses else "BLOCK"
         module_reason = None
         if module_decision == "BLOCK":

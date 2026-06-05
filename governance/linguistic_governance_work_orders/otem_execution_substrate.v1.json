@@ -1,0 +1,20 @@
+{
+  "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+  "gene": "otem_execution_substrate",
+  "status": "pending",
+  "urgency_score": 51.2,
+  "queue_generated_at": "2026-06-05T17:55:09Z",
+  "recommended_actions": [
+    {
+      "kind": "wave2_header",
+      "path": "src/otem_execution_substrate.py",
+      "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+    },
+    {
+      "kind": "recommendation",
+      "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+    }
+  ],
+  "operator_notes": "",
+  "updated_at": "2026-06-05T17:55:09Z"
+}

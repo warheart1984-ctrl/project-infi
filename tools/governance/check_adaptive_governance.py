@@ -19,18 +19,18 @@ def main() -> int:
     GenomeEngine.reload(_ROOT)
     reg = GenomeEngine.registry()
     errors: list[str] = []
-    pilot = reg.genomes.get("recipe_module")
+    pilot = reg.genomes.get("recipe_module_organ")
     if not pilot:
-        errors.append("recipe_module genome missing for Tier 5 pilot")
+        errors.append("recipe_module_organ genome missing for Tier 5 pilot")
     else:
         gov = pilot.get("governance") or {}
         if not gov.get("operator_lanes"):
-            errors.append("recipe_module missing operator_lanes")
+            errors.append("recipe_module_organ missing operator_lanes")
         if not gov.get("contextual_gates"):
-            errors.append("recipe_module missing contextual_gates")
+            errors.append("recipe_module_organ missing contextual_gates")
         for entry in gov.get("invariants") or []:
             if isinstance(entry, dict) and not entry.get("maturity"):
-                errors.append("recipe_module invariant missing maturity")
+                errors.append("recipe_module_organ invariant missing maturity")
 
     contract = _ROOT / "docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md"
     if not contract.is_file():

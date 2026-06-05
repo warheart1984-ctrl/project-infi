@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "story_forge_launcher_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "story_forge_launcher_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Story Forge Launcher",
+      "module_path": "src/story_forge_launcher_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/story_forge_launcher_organ.py",
+      "header": {
+        "mythic": "Story Forge Launcher Organ",
+        "engineering": "StoryForgeLauncherPosture"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Story Forge Launcher Organ\n# Engineering: StoryForgeLauncherPosture",
+          "mythic": "Story Forge Launcher Organ",
+          "engineering": "StoryForgeLauncherPosture"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Story Forge Launcher"
+      },
+      "active_doc": {
+        "title": "Story Forge Launcher"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "77c1f24d3308135343873d76ef185b7ede21e6df62541da5018e8e7424b31011",
+    "engineering": "cd61b83fa120ccf2c1e88d6d7ad7e1bfce3c2edf9c465176a485ea6e017ce6aa",
+    "combined": "53d8287a134b9b882ef426249034f64cecd630d0b36833c04fa2cfe5e3eb3e05"
+  }
+}

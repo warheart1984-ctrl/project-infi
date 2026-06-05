@@ -4,6 +4,50 @@ This is the canonical logbook for major project-alignment changes in `AAIS-main`
 
 Every major entry should name its CISIV stage explicitly.
 
+## 2026-06-05
+
+### AAIS Flagship Audit — 1-6 Fixes, UGR SSP Backfill, Alt-4, Gates Rerun
+- CISIV stage: `implementation` + `verification`
+- scope: Addressed audit report priority 1-6 (memory gateway stabilization in tests via explicit _register_core_lanes + ensure calls post-reset in TestChatApi + conftest autouse + operator workspace_root patch for resolve; naming/legacy/genome gates now fully PASS with 0 warnings; 3 UGR pending concepts backfilled with full Proof Posture/CISIV/schema sections + created matching ugr_*.v1.json schemas in schemas/ and ideas_pending/schemas/ to restore ssp-gate PASS at 173 concepts). Re-ran full gate suite + targeted tests post-edit. Refreshed flagship audit report with post-fix verification + struck/updated resolved items.
+- outcome: naming-gate / naming-genome-strict / meta-linguistic / ssp / genome / alt4 all PASS. The 5 TestChatApi memory/knowledge/browser tests (previously red) now green. UGR reward/discovery/mission have complete SSP bundles + governed genomes + spec entries. 179 genomes.
+- verification note: `python tools/governance/check_ssp_completeness.py` (PASS 173); `python tools/naming_protocol_lint.py` (PASS); `python tools/governance/check_naming_genome.py --snapshot --strict` (PASS); `python -m src.governance_organs... --gate` (PASS); re-ran the 5 api tests + enforcer + ugr rewards (all green); created 3 schemas + expanded 3 UGR_*.md specs.
+- logbook entry by: Grok 4.3 (user-directed 1-6 fix + ssp alt4 backfill + full audit rerun)
+
+### SSP Linguistic Closure — aris_standalone_service header
+- CISIV stage: `verification`
+- scope: final naming-genome warning — `# Mythic:` / `# Engineering:` headers on `aris_service/__init__.py` aligned to genome `ArisStandaloneServiceEngine`
+- outcome: naming-genome-gate **0 warnings** (strict + snapshot, 179 genomes). Readiness **85/100**.
+- verification note: `python tools/governance/check_naming_genome.py --snapshot`; `python tools/governance/check_naming_genome.py --strict`
+- logbook entry by: cursor-agent readiness 82→91 pass
+
+### Pilot GA Operator Verification — frontend/mobile + OpenRouter hygiene
+- CISIV stage: `verification`
+- scope: OpenRouter key audit (`rotate-openrouter-key.ps1 -VerifyOnly`); frontend `test:ci` + `build` + `audit:prod`; mobile `typecheck` + `audit --omit=dev` on Windows Node v24; restored missing `mobile/src/lib/api.ts`
+- outcome: pilot operator gates **proven** (logs archived). Frontend 30 passed, build OK; mobile typecheck OK. `npm audit --omit=dev` reports 3 prod vulns on each surface (axios/react-router/ws) — tracked as asserted debt. OpenRouter: no key configured; secret scan clean. Readiness **91/100**.
+- verification note: `.runtime/pilot-ga-openrouter-verify.log`; `.runtime/pilot-ga-frontend-v1.log`; `.runtime/pilot-ga-mobile-v1.log`; `docs/audit/PILOT_GA_HARDENING_CHECKLIST.md`; `docs/audit/READINESS_82_TO_91_FIX_REPORT.md`
+- logbook entry by: cursor-agent readiness 82→91 pass
+
+### AAIS Flagship Audit — Phase 2 Implementation Wave
+- CISIV stage: `verification`
+- scope: cross-machine UL/CISIV gate matrix; SSP linguistic closure (193→1 warning); UGR subsystem admission (discovery/rewards/mission genomes + Project Infi law wrappers); OTEM persistence phase 2; governance test harness bootstrap (session fixture, cold-start admission, collection reorder); pilot GA hardening checklist
+- outcome: Phase 2 backend hardening **proven** on workspace; pilot GA production security + frontend/mobile remain **asserted** (operator actions). Genome count 179; naming-genome gate 1 warning.
+- verification note: `python tools/proof/run_flagship_cross_machine_matrix.py --compare`; `python tools/governance/backfill_naming_genome.py --write`; `python tools/governance/check_subsystem_genome.py`; `python -m pytest tests/test_otem_execution_approval_bridge.py tests/test_ugr_operator_rewards.py -q`; `python -m aais doctor`
+- logbook entry by: cursor-agent Phase 2 roadmap implementation
+
+### AAIS Flagship Audit — Phase 1 Closure (Single-Machine Ship Gate)
+- CISIV stage: `verification`
+- scope: Phase 1 flagship pass — naming header closure (17 subsystem shells), OTEM Level 10 safe activation, TestChatApi/memory-gateway test harness (`ensure_memory_board_gateway_admitted` in conftest), browser `project-infi` scope alignment, full backend pytest green
+- outcome: single-machine ship gate **proven** (1911 passed, 0 failed, 12 skipped); naming-gate 0 warnings; meta-linguistic gate pass (observe mode). Governed MVP at v1.26.1 — operator pilot and single-host ship suitable; flagship GA remains **asserted** (cross-machine matrix, OTEM persistence phase 2, SSP linguistic closure, UGR subsystem admission, pilot hardening outstanding). Readiness estimate 75/100.
+- verification note: `.runtime/pytest-flagship-final-v2.log` (EXIT:0, 1:38:13); `docs/trust_bundles/2026-06-05-flagship-v1.26.1-readiness.md`; `docs/audit/AAIS_STATUS_AUDIT.md` §5/§7; `make v1.26.1-gate` targets; `python tools/naming_protocol_lint.py` exit 0
+- logbook entry by: cursor-agent flagship Phase 1 closure pass
+
+### AAIS Flagship Audit — Full Scale Canonical Review
+- CISIV stage: `verification`
+- scope: end-to-end audit of AAIS runtime (Jarvis authority, Project Infi law/state machine, UL/CISIV substrate, chat/forge/repo governance), 175+ governed genomes + 170 pending SSP bundles, linguistic governance fabric, UGR operator rewards proof-of-subsystem feature (current branch), naming protocol compliance, doc/code alignment, launcher/doctor, core tests, proofs, and CI artifacts.
+- outcome: core SSP/Alt-4/genome/governance-ledger gates PASS; 135+ core law/UL tests PASS (selected); UGR rewards/discovery tests + mission manifest PASS (32); 20 live + 12 partial subsystems mapped in SPEC vs 175 governed genomes. Naming/meta-linguistic gates FAIL (10 errors + 17+ warnings on legacy organs + missing headers on UGR/new code; 193 genome snapshot warnings). 170 pending concepts (161 legacy-named). UGR/rewards integrated in api.py + contract + code but lacks dedicated genome/SSP admission + dual naming headers. Forge gates show substrate ledger issues (non-core). Prior seams (Super Nova, Project Infi runtime, etc.) remain consistent with repaired status.
+- verification note: `python .github/scripts/validate-governance-ledger.py`, `python tools/governance/check_ssp_completeness.py`, `python tools/governance/check_subsystem_genome.py`, `python tools/governance/alt4_gate.py`, `python tools/naming_protocol_lint.py`, `python tools/governance/check_naming_genome.py --snapshot`, targeted pytest on project_infi/jarvis/ul/cisiv/gov paths, `python -m aais doctor`, static review of api.py/jarvis_operator/project_infi_law + UGR modules + contracts + SUBSYSTEM_SPEC + genomes + logbook + ci-artifacts + proofs. Full report: `docs/audit/AAIS_FLAGSHIP_AUDIT_2026-06-05.md`. Reproduction commands included in report.
+- logbook entry by: Grok 4.3 flagship audit pass (local workspace)
+
 ## 2026-06-03
 
 ### Subsystem MVP + Governed Integration Wave — Full Matrix Closure

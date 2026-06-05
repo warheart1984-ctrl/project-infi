@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "patch_execution_preview_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "patch_execution_preview_organ",
+      "engineering_class": "PatchExecutionPreviewEngine",
+      "mythic_label": "Patch Execution Preview Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Patch Execution Preview Organ",
+      "module_path": "src/patch_execution_preview_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/patch_execution_preview_organ.py",
+      "header": {
+        "mythic": "Patch Execution Preview Organ",
+        "engineering": "PatchExecutionPreviewEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Patch Execution Preview Organ\n# Engineering: PatchExecutionPreviewEngine",
+          "mythic": "Patch Execution Preview Organ",
+          "engineering": "PatchExecutionPreviewEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Patch Execution Preview Organ"
+      },
+      "active_doc": {
+        "title": "Patch Execution Preview Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "fcaf352ff14b8132911aefb028464b2ec8a2e598ec1211c2b96fc0d5e5d9b7c6",
+    "engineering": "752db5e101e8847cdef0438db8628ff9ef55bf0131643ef200e1fa6ccb3fcfa0",
+    "combined": "64647f923a64070bc21f26ef577f5f679d6ae1b924c7a7439b03c6cadf4c8ead"
+  }
+}

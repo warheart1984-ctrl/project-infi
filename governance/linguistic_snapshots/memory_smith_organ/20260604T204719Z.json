@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "memory_smith_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "memory_smith_organ",
+      "engineering_class": "MemorySmithEngine",
+      "mythic_label": "Memory Smith Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Memory Smith Subsystem",
+      "module_path": "src/memory_smith_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/memory_smith_organ.py",
+      "header": {
+        "mythic": "Memory Smith Organ",
+        "engineering": "MemorySmithEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Memory Smith Organ\n# Engineering: MemorySmithEngine",
+          "mythic": "Memory Smith Organ",
+          "engineering": "MemorySmithEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Memory Smith Subsystem"
+      },
+      "active_doc": {
+        "title": "Memory Smith Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "cb86462308f0101e45803346045322f8623ab8431015ec0cc2f2051e13aec78a",
+    "engineering": "6c3e2b52d8a1dde76c34fb4acd8f375dfc1f077ddfd474f5ed55953cdfbd230d",
+    "combined": "a6807edc1aae8b205eb4eab08482f1e0f889c676c1db444bf903ab54ef0078cd"
+  }
+}

@@ -21,19 +21,47 @@
   },
   "runtime": {
     "surface": [
-      {"kind": "module", "path": "src/patchforge_organ.py"},
-      {"kind": "gate", "path": "make coding-organs-gate"}
+      {
+        "kind": "module",
+        "path": "src/patchforge_organ.py"
+      },
+      {
+        "kind": "gate",
+        "path": "make coding-organs-gate"
+      }
     ]
   },
   "proof": {
-    "bundles": ["docs/proof/platform/CODING_ORGANS_V1_PROOF.md"],
+    "bundles": [
+      "docs/proof/platform/CODING_ORGANS_V1_PROOF.md"
+    ],
     "posture": "governed"
   },
   "lineage": {
+    "parents": [
+      "otem_bounded_organ"
+    ],
     "children": [
       "patchforge_organ",
       "change_scope_organ",
-      "patch_verification_organ"
+      "patch_verification_organ",
+      "otem_execution_substrate"
     ]
+  },
+  "activation": {
+    "order": 99,
+    "batch_id": "alt30-summon-wave-2026-06",
+    "notes": "Release 30 OTEM execution substrate and coding organs stack"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "engineering_class": "PatchforgeEngine",
+    "mythic_label": "Coding Organs Stack",
+    "linguistic_version": "1.0.0"
   }
 }

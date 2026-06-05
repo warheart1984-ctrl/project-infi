@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_work_order_history_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_work_order_history_organ",
+      "engineering_class": "LinguisticWorkOrderHistoryEngine",
+      "mythic_label": "Linguistic Work Order History Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Linguistic Work Order History Subsystem",
+      "module_path": "src/linguistic_work_order_history_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_work_order_history_organ.py",
+      "header": {
+        "mythic": "Linguistic Work Order History Organ",
+        "engineering": "LinguisticWorkOrderHistoryEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Work Order History Organ\n# Engineering: LinguisticWorkOrderHistoryEngine",
+          "mythic": "Linguistic Work Order History Organ",
+          "engineering": "LinguisticWorkOrderHistoryEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Work Order History Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Work Order History Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "402c246c474fb15148d78273f3b424b5b3be0c3429ba9d1ae37191c00579636c",
+    "engineering": "34e20a777e15bf4e64388ac9c52a2e19eceb6bcc837c3533bb6313b1d6469ec1",
+    "combined": "4db066de4e011a8c67df28cf43d7a74fc1d0a91718f92bc56039daf09043a696"
+  }
+}

@@ -1,13 +1,14 @@
 # Subsystems Remaining Map
 
 Living operator map for genome queue, partial→live families, and blocked/dormant work.
-Updated for **Release 29** (`alt29-summon-wave-2026-06`, `v1.25.0`).
+Updated for **Release 30.1** (`alt30-summon-wave-2026-06`, `v1.26.1`).
 
 ## Genome queue
 
 | Item | State |
 |------|--------|
-| Summon gene backlog | **Empty** — 170 governed genomes (169 post–Release 28 + `media_processor_bridge_organ`) |
+| Summon gene backlog | **Empty** — **178 governed** genomes (Release 30 five-pack + Alt-13 wave promotions) |
+| Release 30 five-pack | **Governed** — `coding_organs_stack`, `otem_execution_substrate`, `aris_standalone_service`, `dreamspace_organ`, `media_processor_family` |
 | Release 28 six-pack | **Governed** — promoted at Alt28; execution layer at Alt29 |
 
 ## Partial → live (§6 families — Release 29)
@@ -21,6 +22,13 @@ Updated for **Release 29** (`alt29-summon-wave-2026-06`, `v1.25.0`).
 
 Proof bundle: [INTEGRATION_UNIVERSAL_BUNDLE_V1_PROOF.md](../proof/platform/INTEGRATION_UNIVERSAL_BUNDLE_V1_PROOF.md)
 
+## Release 30 (OTEM + posture)
+
+| Governed gene(s) | Release 30 outcome |
+|------------------|-------------------|
+| `otem_execution_substrate`, `coding_organs_stack` | OTEM execution approval bridge; workflow approvals ingress |
+| `aris_standalone_service`, `dreamspace_organ`, `media_processor_family` | Governed posture aligned at Alt30 |
+
 ## Story Forge depth
 
 | Layer | State |
@@ -31,7 +39,7 @@ Proof bundle: [INTEGRATION_UNIVERSAL_BUNDLE_V1_PROOF.md](../proof/platform/INTEG
 
 ## Blocked / dormant (unchanged)
 
-Per [AAIS_SUBSYSTEM_SPEC.md](./AAIS_SUBSYSTEM_SPEC.md) §4: OTEM execution expansion, standalone ARIS service, Dreamspace — not in Alt29 scope.
+Per [AAIS_SUBSYSTEM_SPEC.md](./AAIS_SUBSYSTEM_SPEC.md) §4: OTEM execution **persistence phase 2** — deferred at v1.26.1.
 
 ## Coherence
 
@@ -41,5 +49,6 @@ Per [AAIS_SUBSYSTEM_SPEC.md](./AAIS_SUBSYSTEM_SPEC.md) §4: OTEM execution expan
 ## Gates
 
 ```bash
-make alt29-gate alt29-1-gate alt29-2-gate alt29-governed-gate
+make alt30-governed-gate v1.26.1-gate
+make alt29-governed-gate   # Release 29 historical proof (170 genomes)
 ```

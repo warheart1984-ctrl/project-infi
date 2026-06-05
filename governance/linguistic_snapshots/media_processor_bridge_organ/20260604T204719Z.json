@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "media_processor_bridge_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "media_processor_bridge_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Media Processor Bridge Organ",
+      "module_path": "src/media_processor_bridge_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/media_processor_bridge_organ.py",
+      "header": {
+        "mythic": "Media Processor Bridge Organ",
+        "engineering": "MediaProcessorBridgePosture"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Media Processor Bridge Organ\n# Engineering: MediaProcessorBridgePosture",
+          "mythic": "Media Processor Bridge Organ",
+          "engineering": "MediaProcessorBridgePosture"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Media Processor Bridge Organ"
+      },
+      "active_doc": {
+        "title": "Media Processor Bridge Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "b4a671d635a8d88447c5914c3fbdd3f40bb1ced5abdd401c470ae6dddbae7592",
+    "engineering": "2b2e99d27fa36a1958bbf7f940ce546ed4e2d975186778d8bb010667693f5224",
+    "combined": "dcb360fdb1270b6f380872afc2bcd686419704eb10cbbc94f61e078e59ef5c7d"
+  }
+}

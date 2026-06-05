@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "operator_workspace_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "operator_workspace_organ",
+      "engineering_class": "OperatorWorkspaceEngine",
+      "mythic_label": "Operator Workspace Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Operator Workspace Subsystem",
+      "module_path": "src/operator_workspace_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/operator_workspace_organ.py",
+      "header": {
+        "mythic": "Operator Workspace Organ",
+        "engineering": "OperatorWorkspaceEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Operator Workspace Organ\n# Engineering: OperatorWorkspaceEngine",
+          "mythic": "Operator Workspace Organ",
+          "engineering": "OperatorWorkspaceEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Operator Workspace Subsystem"
+      },
+      "active_doc": {
+        "title": "Operator Workspace Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "815acb0b63b60575ad3fd151057840e55f2eee46352f9f2c0d76a740659a6b20",
+    "engineering": "3adc46503d033e1c54bac58a08ce27eb7f4cceb4eb21f1dd74f094134208a675",
+    "combined": "9ff7d38ff7235750453703d6f35f6df50c457a21949f643a8b4df1441ee44543"
+  }
+}

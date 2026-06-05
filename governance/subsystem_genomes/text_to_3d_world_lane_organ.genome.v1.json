@@ -76,6 +76,9 @@
     "concept_spec": "docs/_future/ideas_pending/TEXT_TO_3D_WORLD_LANE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/TEXT_TO_3D_WORLD_LANE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/storyforge/TEXT_TO_3D_WORLD_LANE.md"
+    "active_doc": "docs/subsystems/storyforge/TEXT_TO_3D_WORLD_LANE.md",
+    "engineering_class": "TextTo3DWorldLanePosture",
+    "mythic_label": "Text-to-3D World Lane Organ",
+    "linguistic_version": "1.0.0"
   }
 }

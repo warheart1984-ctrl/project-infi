@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_governance_work_order_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_governance_work_order_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Linguistic Governance Work Order Subsystem",
+      "module_path": "src/linguistic_governance_work_order_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_governance_work_order_organ.py",
+      "header": {
+        "mythic": "Linguistic Governance Work Order Organ",
+        "engineering": "LinguisticGovernanceWorkOrderEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Governance Work Order Organ\n# Engineering: LinguisticGovernanceWorkOrderEngine",
+          "mythic": "Linguistic Governance Work Order Organ",
+          "engineering": "LinguisticGovernanceWorkOrderEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Governance Work Order Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Governance Work Order Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "f291f165271aeddd653bed6661e7429869c2cece007c60f55dae6a828c4eef66",
+    "engineering": "eb1abb225d85f1787df6ca94a8c8d319376ce0e73668b1d5f9e12c6d51e27df6",
+    "combined": "f9ed962bc7db4898d24c0faaeefddfe14cd5ce2bc2e813a30c3af74815023dae"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "v8_runtime_organ",
+  "captured_at": "2026-06-04T20:47:21Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "v8_runtime_organ",
+      "engineering_class": "V8RuntimeEngine",
+      "mythic_label": "V8 Runtime Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "V8 Runtime Organ",
+      "module_path": "src/v8_runtime_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/v8_runtime_organ.py",
+      "header": {
+        "mythic": "V8 Runtime Organ",
+        "engineering": "V8RuntimeEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: V8 Runtime Organ\n# Engineering: V8RuntimeEngine",
+          "mythic": "V8 Runtime Organ",
+          "engineering": "V8RuntimeEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "V8 Runtime Organ"
+      },
+      "active_doc": {
+        "title": "V8 Runtime Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "f7013e695fd2b76114249b6f714a5262af89684998da73407bfa62fc84398a6a",
+    "engineering": "1f56754cc33215a8529292f69bd18cd64a16cc570c9cb97ec0a84211eeecb544",
+    "combined": "d61a462b887ce3190db78001bde165438516b04d9fbf5c23f8715b15459f3934"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "ugr_operator_reward_engine",
+  "captured_at": "2026-06-05T18:32:40Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "ugr_operator_reward_engine",
+      "engineering_class": "OperatorRewardEngine",
+      "mythic_label": "Ugr Operator Reward Engine",
+      "linguistic_version": "1.0.0",
+      "display_name": "UGR Operator Reward Engine",
+      "module_path": "src/ugr/rewards/operator_reward_engine.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/ugr/rewards/operator_reward_engine.py",
+      "header": {
+        "engineering": "OperatorRewardEngine"
+      },
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "UGR Operator Reward Engine"
+      },
+      "active_doc": {
+        "title": "UGR Operator Reward Engine"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "88600934c26238fe3beea4f6e314321f7b65d490ebd0f910ec7e82574ffc6f94",
+    "engineering": "ecea7286550355112e3da3684f7257ba0b899b2ce9948c9003b5ca50e13f5208",
+    "combined": "24c2af50a836f0ce87c05152ccf0a115eda7acf2d29726485243a4a1de98a0b1"
+  }
+}

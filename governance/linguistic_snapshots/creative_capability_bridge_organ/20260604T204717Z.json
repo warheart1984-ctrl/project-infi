@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "creative_capability_bridge_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "creative_capability_bridge_organ",
+      "engineering_class": "CreativeCapabilityBridgeBridge",
+      "mythic_label": "Creative Capability Bridge Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Creative Capability Bridge Subsystem",
+      "module_path": "src/creative_capability_bridge_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/creative_capability_bridge_organ.py",
+      "header": {
+        "mythic": "Creative Capability Bridge Organ",
+        "engineering": "CreativeCapabilityBridgeBridge"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Creative Capability Bridge Organ\n# Engineering: CreativeCapabilityBridgeBridge",
+          "mythic": "Creative Capability Bridge Organ",
+          "engineering": "CreativeCapabilityBridgeBridge"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Creative Capability Bridge Subsystem"
+      },
+      "active_doc": {
+        "title": "Creative Capability Bridge Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "d32adf63539c7005418856a51e65b6eddd50965a753395d2bdc547446268638c",
+    "engineering": "54a74a331873c08beca4a5d5137f2df8b8e0a87c3ee9c27c8c2b1ad0797027db",
+    "combined": "1f1c9805eb6042c94131e34236823f058fe9e1cda46b597a954ce7b00fcd668a"
+  }
+}

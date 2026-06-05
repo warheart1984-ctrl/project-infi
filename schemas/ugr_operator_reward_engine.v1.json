@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ugr_operator_reward_engine.v1",
+  "title": "UGR Operator Reward Engine",
+  "description": "Governed incentive layer for Proof-of-Subsystem operator rewards (reputation + rail credits).",
+  "type": "object",
+  "required": [
+    "ugr_operator_reward_engine_version",
+    "engine_id",
+    "cisiv_stage",
+    "claim_label",
+    "created_at_utc"
+  ],
+  "properties": {
+    "ugr_operator_reward_engine_version": { "const": "ugr_operator_reward_engine.v1" },
+    "engine_id": { "type": "string", "minLength": 1 },
+    "cisiv_stage": {
+      "enum": ["concept", "identity", "structure", "implementation", "verification"]
+    },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] },
+    "created_at_utc": { "type": "string", "format": "date-time" },
+    "updated_at_utc": { "type": "string", "format": "date-time" },
+    "enabled": { "type": "boolean" },
+    "shadow_only": { "type": "boolean" }
+  },
+  "additionalProperties": false,
+  "$defs": {}
+}

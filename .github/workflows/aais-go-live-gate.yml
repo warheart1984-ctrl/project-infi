@@ -1,0 +1,67 @@
+name: AAIS Go-Live Gate
+
+on:
+  pull_request:
+    paths:
+      - "app/**"
+      - "src/**"
+      - "tests/**"
+      - "tools/governance/**"
+      - "governance/**"
+      - "Makefile"
+      - "pyproject.toml"
+      - ".github/workflows/aais-go-live-gate.yml"
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - "src/**"
+      - "tests/**"
+      - "tools/governance/**"
+      - "governance/**"
+      - "Makefile"
+      - "pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  go-live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    services:
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      AAIS_GENOME_BOOT: warn
+      AAIS_GOVERNED_PIPELINE_CACHE_SEC: "0"
+      AAIS_COHERENCE_FABRIC_CACHE_SEC: "0"
+      CELERY_BROKER_URL: redis://127.0.0.1:6379/0
+      CELERY_RESULT_BACKEND: redis://127.0.0.1:6379/1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install package and dev dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Release 30 governance gates
+        run: make alt30-governed-gate otem-execution-substrate-gate
+
+      - name: Full pytest suite
+        run: python -m pytest -q

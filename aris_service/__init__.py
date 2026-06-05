@@ -1,5 +1,7 @@
 """Standalone ARIS admission service (FastAPI)."""
 
+# Mythic: Aris Standalone Service
+# Engineering: ArisStandaloneServiceEngine
 from __future__ import annotations
 
 from typing import Any

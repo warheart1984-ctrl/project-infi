@@ -22,15 +22,50 @@
   },
   "runtime": {
     "surface": [
-      {"kind": "module", "path": "aris_service/__init__.py"},
-      {"kind": "module", "path": "src/aris_service_client.py"},
-      {"kind": "gate", "path": "make aris-standalone-gate"}
+      {
+        "kind": "module",
+        "path": "aris_service/__init__.py"
+      },
+      {
+        "kind": "module",
+        "path": "src/aris_service_client.py"
+      },
+      {
+        "kind": "gate",
+        "path": "make aris-standalone-gate"
+      }
     ]
   },
   "proof": {
-    "posture": "governed"
+    "bundles": [
+      "docs/proof/platform/ARIS_STANDALONE_SERVICE_V1_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/platform/ARIS_STANDALONE_SERVICE_V1_PROOF.md"
+    ]
   },
   "lineage": {
-    "parents": ["aris_boundary_organ", "aris_integration_organ"]
+    "parents": [
+      "aris_boundary_organ",
+      "aris_integration_organ"
+    ],
+    "children": []
+  },
+  "activation": {
+    "order": 99,
+    "batch_id": "alt30-summon-wave-2026-06",
+    "notes": "Release 30 ARIS standalone service posture"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "engineering_class": "ArisStandaloneServiceEngine",
+    "mythic_label": "Aris Standalone Service",
+    "linguistic_version": "1.0.0"
   }
 }

@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "cogos_runtime_bridge_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "cogos_runtime_bridge_organ",
+      "engineering_class": "CogosRuntimeBridgeBridge",
+      "mythic_label": "Cogos Runtime Bridge Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "CoGOS Runtime Bridge Organ",
+      "module_path": "src/cogos_runtime_bridge_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/cogos_runtime_bridge_organ.py",
+      "header": {
+        "mythic": "Cogos Runtime Bridge Organ",
+        "engineering": "CogosRuntimeBridgeBridge"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Cogos Runtime Bridge Organ\n# Engineering: CogosRuntimeBridgeBridge",
+          "mythic": "Cogos Runtime Bridge Organ",
+          "engineering": "CogosRuntimeBridgeBridge"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "CoGOS Runtime Bridge Organ"
+      },
+      "active_doc": {
+        "title": "Cogos Runtime Bridge Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "d9c459dd5d4a1ad8aa96e54e9a50afa5a9c48551e698dec98d9a77eba0f9a721",
+    "engineering": "c655f659cf43e7b1a0ea38d20931ecbb8d913a563026025cf3e3e1304f709b8e",
+    "combined": "78663c54ccf9a8a963716459a7bac873c7ab67cbf06489a2af5599c274e94faf"
+  }
+}

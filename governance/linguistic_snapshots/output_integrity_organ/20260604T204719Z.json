@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "output_integrity_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "output_integrity_organ",
+      "engineering_class": "OutputIntegrityEngine",
+      "mythic_label": "Output Integrity Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Output Integrity Organ",
+      "module_path": "src/output_integrity_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/output_integrity_organ.py",
+      "header": {
+        "mythic": "Output Integrity Organ",
+        "engineering": "OutputIntegrityEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Output Integrity Organ\n# Engineering: OutputIntegrityEngine",
+          "mythic": "Output Integrity Organ",
+          "engineering": "OutputIntegrityEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Output Integrity Organ"
+      },
+      "active_doc": {
+        "title": "Output Integrity Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "3451da94734b0836ff8200fe6b87a82c71425364656a37b7fcd2c00eb7c4c616",
+    "engineering": "7fca8c9b8a6824a068cba21e0d6a5e577ee9fe8a69213ecb1762e50d1c0ce71c",
+    "combined": "24f26f9dbd19b020052af0b097097a1fc5b96758cf686c16f1d2b2b395ea3b07"
+  }
+}

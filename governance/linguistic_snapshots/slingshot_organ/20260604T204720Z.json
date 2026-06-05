@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "slingshot_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "slingshot_organ",
+      "engineering_class": "SlingshotEngine",
+      "mythic_label": "Slingshot Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Slingshot Organ",
+      "module_path": "src/slingshot_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/slingshot_organ.py",
+      "header": {
+        "mythic": "Slingshot Organ",
+        "engineering": "SlingshotEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Slingshot Organ\n# Engineering: SlingshotEngine",
+          "mythic": "Slingshot Organ",
+          "engineering": "SlingshotEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Slingshot Organ"
+      },
+      "active_doc": {
+        "title": "Slingshot Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "d44d3547a2ae70340e8af822f54c2bb089124f99de2e7154fcb25637ed548e1b",
+    "engineering": "0de777e7b951602793450b11131a74152fec625cdcdd27ae6ddf700ad8b71ba7",
+    "combined": "5ff9641b12f1aee018f7178ca25b07288fe8a4d262299ff99bb8f38123232c1e"
+  }
+}

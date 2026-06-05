@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_governance_attestation_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_governance_attestation_organ",
+      "engineering_class": "LinguisticGovernanceAttestationEngine",
+      "mythic_label": "Linguistic Governance Attestation Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Linguistic Governance Attestation Subsystem",
+      "module_path": "src/linguistic_governance_attestation_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_governance_attestation_organ.py",
+      "header": {
+        "mythic": "Linguistic Governance Attestation Organ",
+        "engineering": "LinguisticGovernanceAttestationEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Governance Attestation Organ\n# Engineering: LinguisticGovernanceAttestationEngine",
+          "mythic": "Linguistic Governance Attestation Organ",
+          "engineering": "LinguisticGovernanceAttestationEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Governance Attestation Organ"
+      },
+      "active_doc": {
+        "title": "Linguistic Governance Attestation Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "a33d6ae0f16a71aba99baaa402a51e20d36270f4aff433ff48a150e8af613209",
+    "engineering": "5b092bc769f3799f9d4429ebb2e71285c007735830ed0fda5dac381c8d7e4b01",
+    "combined": "9b660f3e99ebda957f9816d84d3491e360affc35c2547641f9551de3c2605596"
+  }
+}

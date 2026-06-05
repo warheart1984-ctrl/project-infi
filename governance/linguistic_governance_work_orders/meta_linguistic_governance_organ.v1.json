@@ -1,0 +1,30 @@
+{
+  "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+  "gene": "meta_linguistic_governance_organ",
+  "status": "pending",
+  "urgency_score": 25.6,
+  "queue_generated_at": "2026-06-05T19:07:45Z",
+  "recommended_actions": [
+    {
+      "kind": "watch_cascade",
+      "command": "python tools/linguistic_cascade_report.py --gene naming_protocol_organ",
+      "note": "Parent at risk \u2014 monitor cascade"
+    },
+    {
+      "kind": "schedule_remediation",
+      "command": "python tools/governance/generate_linguistic_remediations.py --gene meta_linguistic_governance_organ",
+      "note": "Pre-generate remediation when predicted band materializes"
+    },
+    {
+      "kind": "recommendation",
+      "text": "Review recent MP-LING proposals; stabilize linguistic_version"
+    },
+    {
+      "kind": "cascade_report",
+      "command": "python tools/linguistic_cascade_report.py --gene meta_linguistic_governance_organ",
+      "note": "Review lineage cascade impact"
+    }
+  ],
+  "operator_notes": "",
+  "updated_at": "2026-06-05T19:07:45Z"
+}

@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "cisiv_operator_lineage_console",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "cisiv_operator_lineage_console",
+      "engineering_class": "CisivOperatorLineageConsole",
+      "mythic_label": "CISIV operator lineage console",
+      "linguistic_version": "1.0.0",
+      "display_name": "CISIV Operator Lineage Console",
+      "module_path": "src/ul_lineage.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/ul_lineage.py",
+      "header": {
+        "mythic": "Ul Lineage",
+        "engineering": "UlLineageEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Ul Lineage\n# Engineering: UlLineageEngine",
+          "mythic": "Ul Lineage",
+          "engineering": "UlLineageEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "CISIV Operator Lineage Console"
+      },
+      "active_doc": {
+        "title": "UL Lineage Console"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "8d41be26378d6e38266730015df3eeb0b0a07960ab115fb54b88875e667eee5d",
+    "engineering": "be1803c4d8446aa0fbcf1531060e881108ac811426846b6898f55dcead992df2",
+    "combined": "892f961216670989aa4ff337ad1bcd6b643b843ff91128c18a3c758f10ae637a"
+  }
+}

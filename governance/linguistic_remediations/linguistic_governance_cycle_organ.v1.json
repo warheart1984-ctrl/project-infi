@@ -1,25 +1,20 @@
 {
   "linguistic_remediation_playbook_version": "linguistic_remediation_playbook.v1",
   "gene": "linguistic_governance_cycle_organ",
-  "drift_band": "medium",
-  "drift_risk": 39,
+  "drift_band": "low",
+  "drift_risk": 16,
   "signals": {
-    "alignment_gap": 40.0,
-    "snapshot_velocity": 0.0,
-    "layer_skew": 80.0,
+    "alignment_gap": 0.0,
+    "snapshot_velocity": 45.0,
+    "layer_skew": 0.0,
     "gene_mythic_tokens": 0.0,
     "lineage_fanout": 60.0
   },
-  "generated_at": "2026-06-03T10:54:22Z",
+  "generated_at": "2026-06-05T19:08:34Z",
   "actions": [
     {
-      "kind": "wave2_header",
-      "path": "src/linguistic_governance_cycle_organ.py",
-      "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
-    },
-    {
       "kind": "recommendation",
-      "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+      "text": "Review recent MP-LING proposals; stabilize linguistic_version"
     }
   ]
 }

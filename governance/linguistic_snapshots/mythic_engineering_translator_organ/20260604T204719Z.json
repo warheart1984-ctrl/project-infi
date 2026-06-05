@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "mythic_engineering_translator_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "mythic_engineering_translator_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Mythic Engineering Translator Subsystem",
+      "module_path": "src/mythic_engineering_translator_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/mythic_engineering_translator_organ.py",
+      "header": {
+        "mythic": "Mythic Engineering Translator Organ",
+        "engineering": "MythicEngineeringTranslatorEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Mythic Engineering Translator Organ\n# Engineering: MythicEngineeringTranslatorEngine",
+          "mythic": "Mythic Engineering Translator Organ",
+          "engineering": "MythicEngineeringTranslatorEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Mythic Engineering Translator Subsystem"
+      },
+      "active_doc": {
+        "title": "Mythic Engineering Translator Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "f0ec4a90b6cd13d68fadd4c34ef9240346661638dd3ee3424323c01f1ef822a9",
+    "engineering": "add1f770d01badff18f6fc68d810e165cc2b76083b77630ecb3946845f336c10",
+    "combined": "c8494e2756dbed561eac9dca6823857c0421242040db39af132b9eb9bbd784f3"
+  }
+}

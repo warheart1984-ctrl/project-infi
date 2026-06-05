@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "narrative_trust_pack",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "narrative_trust_pack",
+      "engineering_class": "NarrativeTrustPackEngine",
+      "mythic_label": "Narrative trust pack",
+      "linguistic_version": "1.0.0",
+      "display_name": "Narrative Trust Pack",
+      "module_path": "src/capabilities/narrative_trust_pack.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/capabilities/narrative_trust_pack.py",
+      "header": {
+        "mythic": "Narrative Trust Pack Organ",
+        "engineering": "NarrativeTrustPackEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Narrative Trust Pack Organ\n# Engineering: NarrativeTrustPackEngine",
+          "mythic": "Narrative Trust Pack Organ",
+          "engineering": "NarrativeTrustPackEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Narrative Trust Pack"
+      },
+      "active_doc": {
+        "title": "Narrative Trust Pack (NTP)"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "817d1d48d62c71175bc5d8f09f47adf5d64c8750d601a0be5a543ee6b07ae73f",
+    "engineering": "02a1f382e9975713a38c6b1f2859ea046e235f27e7c437c5cb2a73ddd430b8ff",
+    "combined": "c0786924be67e730d00e2abc65db650336a983a082e9eac9a2d04dacefc3b42d"
+  }
+}

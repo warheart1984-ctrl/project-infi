@@ -160,3 +160,41 @@ class OnboardingCompleteRequest(ExternalSuggestionAdmissionRequest):
     goal: str = Field(default="", max_length=4000)
     tools: list[str] = Field(default_factory=list)
     cisiv_stage: str | None = Field(default=None, max_length=32)
+
+
+class AuthRegisterRequest(BaseModel):
+    username: str = Field(..., min_length=3, max_length=64, pattern=r"^[A-Za-z0-9._-]+$")
+    password: str = Field(..., min_length=8, max_length=128)
+
+
+class AuthLoginRequest(BaseModel):
+    username: str = Field(..., min_length=1, max_length=64)
+    password: str = Field(..., min_length=1, max_length=128)
+
+
+class AuthRefreshRequest(BaseModel):
+    refresh_token: str = Field(..., min_length=1, max_length=4096)
+
+
+class AuthUserResponse(BaseModel):
+    id: str
+    username: str
+    role: str
+    active: bool
+    created_at: str
+    updated_at: str
+
+
+class AuthTokenResponse(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str = "bearer"
+    expires_in: int
+    user: AuthUserResponse
+
+
+class AuthStatusResponse(BaseModel):
+    auth_required: bool
+    registration_allowed: bool
+    authenticated: bool
+    user: AuthUserResponse | None = None

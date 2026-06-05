@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "document_vision_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "document_vision_organ",
+      "engineering_class": "DocumentVisionEngine",
+      "mythic_label": "Document Vision Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Document Vision Organ",
+      "module_path": "src/document_vision_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/document_vision_organ.py",
+      "header": {
+        "mythic": "Document Vision Organ",
+        "engineering": "DocumentVisionEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Document Vision Organ\n# Engineering: DocumentVisionEngine",
+          "mythic": "Document Vision Organ",
+          "engineering": "DocumentVisionEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Document Vision Organ"
+      },
+      "active_doc": {
+        "title": "Document Vision Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "3e7e689ea7f580cb2f69b64e2a7ba4725a5c4338e0c8d2361a91fd64a4060f1f",
+    "engineering": "9ef27720e50a02521976cdb6bc77abcb1e5642ec1bb2e1bb61f2930b400c3d42",
+    "combined": "069550d1174c629287d3a1901b4cfd89ebcf1442b3624d43c73552154c2fe231"
+  }
+}

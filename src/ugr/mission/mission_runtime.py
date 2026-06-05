@@ -1,5 +1,6 @@
 """URG mission runtime — Governed Composite Mission v1.2."""
 
+# Engineering: MissionRuntimeEngine
 from __future__ import annotations
 
 import os
@@ -299,6 +300,15 @@ class UGRMissionRuntime:
         ).strip().upper()
         if explicit_rail in {"SAFE", "NORMAL", "EXPRESS"}:
             rail = explicit_rail
+            # Re-enforcement checkpoint after explicit override (mission can force higher than schedule_rail_for_ugr decision/law_ceiling):
+            # Re-apply cap using the originally scheduled law_ceiling if present in the bundle (cross-ref to bridge + rails cap).
+            from src.cloud_forge.types import Rail, cap_rail_at_ceiling
+            try:
+                ceiling_str = str(rail_decision.get("law_ceiling") or "EXPRESS").upper()
+                ceiling = Rail(ceiling_str) if ceiling_str in (r.value for r in Rail) else Rail.EXPRESS
+                rail = cap_rail_at_ceiling(Rail(rail), ceiling).value
+            except Exception:
+                pass  # defensive; fall back to explicit (logged elsewhere via invariants)
 
         manifold = build_cloud_manifold(
             request=payload,

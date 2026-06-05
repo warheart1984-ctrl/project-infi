@@ -1,0 +1,36 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "media_processor_family",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "media_processor_family",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Media Processor Family",
+      "module_path": "src/media_processor_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/media_processor_organ.py",
+      "header": {
+        "mythic": "Media Processor Organ",
+        "engineering": "MediaProcessorOrganGate"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Media Processor Organ\n# Engineering: MediaProcessorOrganGate",
+          "mythic": "Media Processor Organ",
+          "engineering": "MediaProcessorOrganGate"
+        }
+      ]
+    }
+  },
+  "fingerprints": {
+    "mythic": "a4e122add784bf868385a6b2490ae921326977f873e8ee616dcd0fd59f95d7e9",
+    "engineering": "f579a7a2e667ed8c997eb87947348ac334818201f6d894eb11bfb3ec0fcdeef7",
+    "combined": "0648d41d7183ba798eb515246c864f30e76363c5a54de3712ae45310ccc11d41"
+  }
+}

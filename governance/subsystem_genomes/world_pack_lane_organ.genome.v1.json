@@ -74,6 +74,9 @@
     "concept_spec": "docs/_future/ideas_pending/WORLD_PACK_LANE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/WORLD_PACK_LANE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/storyforge/WORLD_PACK_LANE.md"
+    "active_doc": "docs/subsystems/storyforge/WORLD_PACK_LANE.md",
+    "engineering_class": "WorldPackLanePosture",
+    "mythic_label": "World Pack Lane Organ",
+    "linguistic_version": "1.0.0"
   }
 }

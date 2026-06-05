@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_governance_day_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_governance_day_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Linguistic Governance Day Subsystem",
+      "module_path": "src/linguistic_governance_day_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_governance_day_organ.py",
+      "header": {
+        "mythic": "Linguistic Governance Day Organ",
+        "engineering": "LinguisticGovernanceDayEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Governance Day Organ\n# Engineering: LinguisticGovernanceDayEngine",
+          "mythic": "Linguistic Governance Day Organ",
+          "engineering": "LinguisticGovernanceDayEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Governance Day Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Governance Day Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "069d8f7d88ee67c1e6a0bfc3a1b6262864047bccd123cfb362ddd19c020ed066",
+    "engineering": "ece1be6ffbb947bac673e3dc4cafa53847ea4a42136e2b7beb035b50a6fdafb7",
+    "combined": "2da805c589dd9ac3b280e56b5fba8423ecfa47b73e1e6cab1dc1aafd3a510c97"
+  }
+}

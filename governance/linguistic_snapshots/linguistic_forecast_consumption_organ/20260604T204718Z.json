@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_forecast_consumption_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_forecast_consumption_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Linguistic Forecast Consumption Subsystem",
+      "module_path": "src/linguistic_forecast_consumption_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_forecast_consumption_organ.py",
+      "header": {
+        "mythic": "Linguistic Forecast Consumption Organ",
+        "engineering": "LinguisticForecastConsumptionEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Forecast Consumption Organ\n# Engineering: LinguisticForecastConsumptionEngine",
+          "mythic": "Linguistic Forecast Consumption Organ",
+          "engineering": "LinguisticForecastConsumptionEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Forecast Consumption Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Forecast Consumption Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "cc67ddf550c8d0db859552b9757271111ec9c5b29df35ff55e5cf251a3378788",
+    "engineering": "98d4566c4b5bf47514ee17ef606061137509cbfce985ce2c1159967e57e13271",
+    "combined": "28eb4cf7754d29d76cb53cd67650139fe278efe7f5a128ad8da37d2c1b105870"
+  }
+}

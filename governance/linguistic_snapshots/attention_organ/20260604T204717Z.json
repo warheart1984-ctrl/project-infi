@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "attention_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "attention_organ",
+      "engineering_class": "AttentionEngine",
+      "mythic_label": "Attention Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Attention Organ",
+      "module_path": "src/attention_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/attention_organ.py",
+      "header": {
+        "mythic": "Attention Organ",
+        "engineering": "AttentionEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Attention Organ\n# Engineering: AttentionEngine",
+          "mythic": "Attention Organ",
+          "engineering": "AttentionEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Attention Organ"
+      },
+      "active_doc": {
+        "title": "Attention Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "9808bb838c456cd9d9fd28604ff01ba8848e134295c966bc21a1d20ba1492bd9",
+    "engineering": "947174bc50b094acf6599b7b1ff3e30225e5048995284bf107cd5ebf9ddb06d6",
+    "combined": "aa655da9060d5406a870bbd58da3d8e8c848a8a637ec1647caf987d803dbdb8f"
+  }
+}

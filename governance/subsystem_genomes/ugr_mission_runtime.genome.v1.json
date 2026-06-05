@@ -1,0 +1,81 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "ugr_mission_runtime",
+    "version": "1.0.0",
+    "stage": "governed",
+    "display_name": "UGR Mission Runtime"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/URG_MISSION_CONTRACT.md",
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md"
+    ],
+    "invariants": [
+      "Tenant-scoped receipts and ledgers",
+      "Project Infi law finalization on mutating routes"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/urg_mission_receipt.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/ugr/mission/mission_runtime.py"
+      },
+      {
+        "kind": "api",
+        "path": "POST /api/ugr/mission/run"
+      },
+      {
+        "kind": "api",
+        "path": "POST /api/ugr/mission/governance"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/ugr/mission/receipt/<mission_id>"
+      },
+      {
+        "kind": "gate",
+        "path": "make ugr-mission-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/ugr/UGR_MISSION_RUNTIME_V1_PROOF.md"
+    ],
+    "posture": "governed"
+  },
+  "lineage": {
+    "parents": [
+      "ugr_operator_reward_engine",
+      "capability_service_bridge"
+    ],
+    "children": []
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "ugr-admission-wave-2026-06",
+    "notes": "UGR subsystem admission wave"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/UGR_MISSION_RUNTIME.md",
+    "mvp_plan": "docs/_future/ideas_pending/UGR_MISSION_RUNTIME_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/ugr/UGR_MISSION_RUNTIME.md",
+    "engineering_class": "MissionRuntimeEngine",
+    "mythic_label": "Ugr Mission Runtime",
+    "linguistic_version": "1.0.0"
+  }
+}

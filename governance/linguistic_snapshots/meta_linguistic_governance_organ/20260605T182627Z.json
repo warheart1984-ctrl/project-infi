@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "meta_linguistic_governance_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "meta_linguistic_governance_organ",
+      "engineering_class": "MetaLinguisticGovernanceEngine",
+      "mythic_label": "Meta Linguistic Governance Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Meta-Linguistic Governance Subsystem",
+      "module_path": "src/meta_linguistic_governance_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/meta_linguistic_governance_organ.py",
+      "header": {
+        "mythic": "Meta Linguistic Governance Organ",
+        "engineering": "MetaLinguisticGovernanceEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Meta Linguistic Governance Organ\n# Engineering: MetaLinguisticGovernanceEngine",
+          "mythic": "Meta Linguistic Governance Organ",
+          "engineering": "MetaLinguisticGovernanceEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Meta-Linguistic Governance Subsystem"
+      },
+      "active_doc": {
+        "title": "Meta Linguistic Governance Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "4d82f6442fe00b2960fa7998a70dd60876ed597100e2761924b3a9523d78117b",
+    "engineering": "5d19537515bc5f6b39be9fc6213026f2edb0f3e8b17f84eca4eb848ad85beede",
+    "combined": "9f43fa1f2f82b51062b8573234e8f7edc9c3ec4d0025c2a88425cd62bc216b13"
+  }
+}

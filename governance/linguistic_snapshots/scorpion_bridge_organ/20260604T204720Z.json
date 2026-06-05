@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "scorpion_bridge_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "scorpion_bridge_organ",
+      "engineering_class": "ScorpionBridgeBridge",
+      "mythic_label": "Scorpion Bridge Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Scorpion Bridge Organ",
+      "module_path": "src/scorpion_bridge_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/scorpion_bridge_organ.py",
+      "header": {
+        "mythic": "Scorpion Bridge Organ",
+        "engineering": "ScorpionBridgeBridge"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Scorpion Bridge Organ\n# Engineering: ScorpionBridgeBridge",
+          "mythic": "Scorpion Bridge Organ",
+          "engineering": "ScorpionBridgeBridge"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Scorpion Bridge Organ"
+      },
+      "active_doc": {
+        "title": "Scorpion Bridge Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "f13621b7c75d4d511170c4ab4d4ac3d9bcac88ce8505b2ea91c6f8786333c216",
+    "engineering": "7ea08397c1cae81224ca0c7736ce49c31d8399cd29107bb5f555f8c494240dcd",
+    "combined": "25682ee4e09ffdd7d36d2d9b64303259896fd4881c7e37dc415ca737c02c6b49"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_remediation_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_remediation_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Linguistic Remediation Subsystem",
+      "module_path": "src/linguistic_remediation_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_remediation_organ.py",
+      "header": {
+        "mythic": "Linguistic Remediation Organ",
+        "engineering": "LinguisticRemediationEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Remediation Organ\n# Engineering: LinguisticRemediationEngine",
+          "mythic": "Linguistic Remediation Organ",
+          "engineering": "LinguisticRemediationEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Remediation Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Remediation Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "c421508dcd7af5518b1261d52a01b970f978daa69f5ecabcae22604065ad76e0",
+    "engineering": "ab1ff7e19ea85d37fb3b6237188de28bc5f90e10970fa6b61c81a3a4243445ae",
+    "combined": "d8f3f6d37331dbf8e9678ba81b405d069748683434d7f692f8b4eb3e39e9a60a"
+  }
+}

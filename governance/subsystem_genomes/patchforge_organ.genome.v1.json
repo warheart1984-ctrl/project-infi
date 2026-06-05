@@ -51,7 +51,8 @@
   "lineage": {
     "parents": [
       "tracing_spine_organ",
-      "capability_module_organ"
+      "capability_module_organ",
+      "coding_organs_stack"
     ],
     "children": [
       "change_scope_organ",

@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "patch_verification_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "patch_verification_organ",
+      "engineering_class": "PatchVerificationEngine",
+      "mythic_label": "Patch Verification Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Patch Verification Organ",
+      "module_path": "src/patch_verification_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/patch_verification_organ.py",
+      "header": {
+        "mythic": "Patch Verification Organ",
+        "engineering": "PatchVerificationEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Patch Verification Organ\n# Engineering: PatchVerificationEngine",
+          "mythic": "Patch Verification Organ",
+          "engineering": "PatchVerificationEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Patch Verification Organ"
+      },
+      "active_doc": {
+        "title": "Patch Verification Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "4cb35da9aefa6743aaf89692674e366eb3728e7fc5760778dd471eb17cbeb285",
+    "engineering": "917cccd2476f0bf5a7ef73aae9edd58f6e361c45fa5f869452d539b3c6b772a8",
+    "combined": "5fe2192b8b317f01e3b4dd06151400e0a1d0e6f30eda70d09136be2dae9c1a67"
+  }
+}

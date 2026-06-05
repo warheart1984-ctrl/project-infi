@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "ui_vision_organ",
+  "captured_at": "2026-06-04T20:47:21Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "ui_vision_organ",
+      "engineering_class": "UiVisionEngine",
+      "mythic_label": "Ui Vision Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "UI Vision Organ",
+      "module_path": "src/ui_vision_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/ui_vision_organ.py",
+      "header": {
+        "mythic": "Ui Vision Organ",
+        "engineering": "UiVisionEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Ui Vision Organ\n# Engineering: UiVisionEngine",
+          "mythic": "Ui Vision Organ",
+          "engineering": "UiVisionEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "UI Vision Organ"
+      },
+      "active_doc": {
+        "title": "Ui Vision Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "4ef561cf08369e225e2a4702cb5e59a39d885936736f7f2840bf4895c99e036f",
+    "engineering": "30b1b0fb4bc6a8f5f31cb6ec1eb3b5e922722cc11bed588b9b15bdc358367d39",
+    "combined": "95ed037c922da8fb5a649145a85b1ca65dea81fae8b925804105249309a2cbef"
+  }
+}

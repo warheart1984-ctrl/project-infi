@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "spatial_reasoning_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "spatial_reasoning_organ",
+      "engineering_class": "SpatialReasoningEngine",
+      "mythic_label": "Spatial Reasoning Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Spatial Reasoning Organ",
+      "module_path": "src/spatial_reasoning_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/spatial_reasoning_organ.py",
+      "header": {
+        "mythic": "Spatial Reasoning Organ",
+        "engineering": "SpatialReasoningEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Spatial Reasoning Organ\n# Engineering: SpatialReasoningEngine",
+          "mythic": "Spatial Reasoning Organ",
+          "engineering": "SpatialReasoningEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Spatial Reasoning Organ"
+      },
+      "active_doc": {
+        "title": "Spatial Reasoning Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "226df229950347f82572510b96143825cb443ee56080ece31626e9fd52647c74",
+    "engineering": "1ed46d3823f1ca38912b16cf07b228e0a0b8252b15b06eaf7baf89fb59580b53",
+    "combined": "5b4415a14695df333ebecc69daaf037f98b37c1a133f8d5664a6d2b56624cfa6"
+  }
+}

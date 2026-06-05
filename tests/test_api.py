@@ -14,6 +14,7 @@ from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 import src.api as api
+from tests.governance_bootstrap import ensure_memory_board_gateway_admitted, _register_core_lanes
 from src.conversation_memory import conversation_memory
 from src.jarvis_memory_board import MemoryController, default_memory_slots
 from src.mock_ai import MockStreamingTextGenerator
@@ -55,6 +56,7 @@ class TestApiInitialization(unittest.TestCase):
         api.governance_layer.reset()
         api.module_governance.configure_runtime_dir(self.guard_root)
         api.module_governance.reset()
+        ensure_memory_board_gateway_admitted()
         api.cognitive_bridge_service.detachment_guard.configure_runtime_dir(self.guard_root)
         api.cognitive_bridge_service.detachment_guard.reset()
         api.continuity_profile_store.configure_runtime_dir(self.guard_root)
@@ -86,6 +88,7 @@ class TestApiInitialization(unittest.TestCase):
         api.immune_system.configure_runtime_dir(self.original_immune_runtime_dir)
         api.governance_layer.configure_runtime_dir(self.original_governance_runtime_dir)
         api.module_governance.configure_runtime_dir(self.original_module_governance_runtime_dir)
+        api.module_governance.reset()
         api.cognitive_bridge_service.detachment_guard.configure_runtime_dir(self.original_detachment_guard_runtime_dir)
         api.cognitive_bridge_service.detachment_guard.reset()
         api.continuity_profile_store.configure_runtime_dir(self.original_continuity_runtime_dir)
@@ -1481,7 +1484,7 @@ class TestChatApi(unittest.TestCase):
             encoding="utf-8",
         )
         self.original_memory_path = api.jarvis_operator.memory_store.memory_path
-        self.original_workspace_root = api.jarvis_operator.workspace_tools.workspace_root
+        self.original_workspace_root = getattr(api.jarvis_operator, "workspace_root", None) or api.jarvis_operator.workspace_tools.workspace_root
         self.original_evolving_workspace_root = api.jarvis_operator.evolving_workspace.workspace_root
         self.original_evolving_audit_runtime_dir = api.jarvis_operator.evolving_approval_audit.runtime_dir
         self.original_run_ledger_runtime_dir = api.jarvis_operator.run_ledger.runtime_dir
@@ -1503,6 +1506,9 @@ class TestChatApi(unittest.TestCase):
         api.jarvis_operator.memory_store.memory_path = self.temp_root / "jarvis_memory.json"
         api.jarvis_operator.workspace_tools.workspace_root = self.workspace_root
         api.jarvis_operator.evolving_workspace.workspace_root = self.workspace_root
+        if hasattr(api.jarvis_operator, "workspace_root"):
+            api.jarvis_operator.workspace_root = self.workspace_root
+        # Do not force PRIMARY_PROJECT_ENV here; let per-test dir creation (AAIS-main or project-infi under workspace_root) drive _preferred_project_name via dir checks.
         api.jarvis_operator.evolving_approval_audit.configure_runtime_dir(self.temp_root / "evolving-audit")
         api.jarvis_operator.run_ledger.configure_runtime_dir(self.temp_root / "run-ledger")
         api.jarvis_operator.patch_reviews.configure_runtime_dir(self.temp_root / "patch-reviews")
@@ -1523,6 +1529,8 @@ class TestChatApi(unittest.TestCase):
         api.governance_layer.reset()
         api.module_governance.configure_runtime_dir(self.temp_root / "module-governance")
         api.module_governance.reset()
+        _register_core_lanes()
+        ensure_memory_board_gateway_admitted()
         api.cognitive_bridge_service.detachment_guard.configure_runtime_dir(self.temp_root / "detachment-guard")
         api.cognitive_bridge_service.detachment_guard.reset()
         api.continuity_profile_store.configure_runtime_dir(self.temp_root / "continuity")
@@ -1538,6 +1546,17 @@ class TestChatApi(unittest.TestCase):
         document_module = api._load_module("src.document_rag")
         document_module.document_store.documents.clear()
         document_module.document_store._query_cache.clear()
+        from src.governed_direct_pipeline import clear_governed_pipeline_cache
+        from src.otem_execution_substrate import reset_otem_execution_substrate
+
+        os.environ["AAIS_GOVERNED_PIPELINE_CACHE_SEC"] = "0"
+        os.environ["AAIS_COHERENCE_FABRIC_CACHE_SEC"] = "0"
+        clear_governed_pipeline_cache()
+        reset_otem_execution_substrate()
+
+        # Ensure memory board gateway is admitted after all resets (phase + module gov)
+        _register_core_lanes()
+        ensure_memory_board_gateway_admitted()
 
     def tearDown(self):
         reset_registry()
@@ -1565,6 +1584,7 @@ class TestChatApi(unittest.TestCase):
         api.immune_system.configure_runtime_dir(self.original_immune_runtime_dir)
         api.governance_layer.configure_runtime_dir(self.original_governance_runtime_dir)
         api.module_governance.configure_runtime_dir(self.original_module_governance_runtime_dir)
+        api.module_governance.reset()
         api.cognitive_bridge_service.detachment_guard.configure_runtime_dir(self.original_detachment_guard_runtime_dir)
         api.cognitive_bridge_service.detachment_guard.reset()
         api.continuity_profile_store.configure_runtime_dir(self.original_continuity_runtime_dir)
@@ -9480,10 +9500,10 @@ class TestChatApi(unittest.TestCase):
 
     def test_browser_verification_endpoint_returns_workspace_grounding_and_action(self):
         """Browser verification should ground a rendered route back to local code and the V8 session."""
-        (self.workspace_root / "AAIS-main" / "frontend" / "src" / "pages").mkdir(parents=True)
+        (self.workspace_root / "project-infi" / "frontend" / "src" / "pages").mkdir(parents=True)
         (
             self.workspace_root
-            / "AAIS-main"
+            / "project-infi"
             / "frontend"
             / "src"
             / "pages"
@@ -9530,19 +9550,19 @@ class TestChatApi(unittest.TestCase):
         self.assertEqual(verification["suggested_action"]["id"], "build_frontend")
         self.assertEqual(verification["expectation_source"], "manual")
         self.assertEqual(payload["session_state"]["state"], "ready")
-        self.assertEqual(payload["browser_verification"]["workspace_context"]["project_scope"], "AAIS-main")
+        self.assertEqual(payload["browser_verification"]["workspace_context"]["project_scope"], "project-infi")
         self.assertTrue(
             payload["browser_verification"]["workspace_context"]["results"][0]["relative_path"]
             .replace("/", "\\")
-            .endswith("AAIS-main\\frontend\\src\\pages\\ImageAnalyzer.jsx")
+            .endswith("project-infi\\frontend\\src\\pages\\ImageAnalyzer.jsx")
         )
 
     def test_browser_verification_endpoint_can_infer_known_route_expectation(self):
         """Browser verification should auto-apply a built-in route guide when no manual expectation is provided."""
-        (self.workspace_root / "AAIS-main" / "frontend" / "src" / "pages").mkdir(parents=True)
+        (self.workspace_root / "project-infi" / "frontend" / "src" / "pages").mkdir(parents=True)
         (
             self.workspace_root
-            / "AAIS-main"
+            / "project-infi"
             / "frontend"
             / "src"
             / "pages"
@@ -9589,15 +9609,15 @@ class TestChatApi(unittest.TestCase):
         self.assertTrue(
             verification["workspace_context"]["results"][0]["relative_path"]
             .replace("/", "\\")
-            .endswith("AAIS-main\\frontend\\src\\pages\\Settings.jsx")
+            .endswith("project-infi\\frontend\\src\\pages\\Settings.jsx")
         )
 
     def test_browser_verification_auto_links_to_active_mission(self):
         """Browser verification should attach its route and file context to the active mission."""
-        (self.workspace_root / "AAIS-main" / "frontend" / "src" / "pages").mkdir(parents=True)
+        (self.workspace_root / "project-infi" / "frontend" / "src" / "pages").mkdir(parents=True)
         (
             self.workspace_root
-            / "AAIS-main"
+            / "project-infi"
             / "frontend"
             / "src"
             / "pages"
@@ -9657,7 +9677,7 @@ class TestChatApi(unittest.TestCase):
         self.assertIn("/settings", link_values)
         self.assertTrue(
             any(
-                str(value).replace("\\", "/").endswith("AAIS-main/frontend/src/pages/Settings.jsx")
+                str(value).replace("\\", "/").endswith("project-infi/frontend/src/pages/Settings.jsx")
                 for value in link_values
             )
         )

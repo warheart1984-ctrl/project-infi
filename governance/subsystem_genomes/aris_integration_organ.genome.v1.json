@@ -43,7 +43,7 @@
   },
   "proof": {
     "bundles": [
-      "E:\\project-infi\\docs\\proof\\platform\\ARIS_INTEGRATION_ORGAN_GOVERNED_PROOF.md"
+      "docs/proof/platform/ARIS_INTEGRATION_ORGAN_GOVERNED_PROOF.md"
     ],
     "posture": "governed",
     "target_bundles": [
@@ -55,7 +55,9 @@
       "project_infi_law_organ",
       "cognitive_bridge_organ"
     ],
-    "children": []
+    "children": [
+      "aris_standalone_service"
+    ]
   },
   "activation": {
     "order": 6,

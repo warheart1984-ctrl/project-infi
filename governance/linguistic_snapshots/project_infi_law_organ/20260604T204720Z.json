@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "project_infi_law_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "project_infi_law_organ",
+      "engineering_class": "ProjectInfiLawEngine",
+      "mythic_label": "Project Infi Law Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Project Infi Law Organ",
+      "module_path": "src/project_infi_law_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/project_infi_law_organ.py",
+      "header": {
+        "mythic": "Project Infi Law Organ",
+        "engineering": "ProjectInfiLawEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Project Infi Law Organ\n# Engineering: ProjectInfiLawEngine",
+          "mythic": "Project Infi Law Organ",
+          "engineering": "ProjectInfiLawEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Project Infi Law Organ"
+      },
+      "active_doc": {
+        "title": "Project Infi Law Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "c2ade64015fd5594f8d8397867548d7c5538abd51f3f47d582a92dd24da4ba76",
+    "engineering": "dc8c721ad55cbdc0849a418b7d097fdf0a9e0cb228a38dbd06a564046b3160df",
+    "combined": "088fd9e83dc9ce1cd29a06a9d7bc224d131e5426bcd66b843c83a3e65bfb73e2"
+  }
+}

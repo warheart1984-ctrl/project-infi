@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_forecast_archive_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_forecast_archive_organ",
+      "engineering_class": "LinguisticForecastArchiveEngine",
+      "mythic_label": "Linguistic Forecast Archive Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Linguistic Forecast Archive Subsystem",
+      "module_path": "src/linguistic_forecast_archive_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_forecast_archive_organ.py",
+      "header": {
+        "mythic": "Linguistic Forecast Archive Organ",
+        "engineering": "LinguisticForecastArchiveEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Forecast Archive Organ\n# Engineering: LinguisticForecastArchiveEngine",
+          "mythic": "Linguistic Forecast Archive Organ",
+          "engineering": "LinguisticForecastArchiveEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Forecast Archive Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Forecast Archive Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "90e31e22b9e7495ca533a3f6a3cdbc320e71f7f705c1783b88c21c39ce58c68f",
+    "engineering": "6739e14f408107a086c945f51a0ac688e6d818bf19788c08fc7ce32e631b2f5d",
+    "combined": "58a8a2ccc61958256bbc7b1704bc5c9ffd56f03601fc69af41f94e0ea10a57a5"
+  }
+}

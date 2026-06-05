@@ -30,8 +30,9 @@ def build_memory_path_governance_status() -> dict[str, Any]:
     controller = build_default_memory_controller()
     board = build_memory_board_snapshot(controller)
     slots = list(board.get("slots") or [])
-    installed = sum(1 for slot in slots if slot.get("installed"))
-    total_slots = len(slots)
+    active_slots = [slot for slot in slots if slot.get("active", True)]
+    installed = sum(1 for slot in active_slots if slot.get("installed"))
+    total_slots = len(active_slots)
     registry = build_memory_path_registry_snapshot(
         board_slots_installed=installed,
         board_slots_total=total_slots,

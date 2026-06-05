@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "human_voice_extraction",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "human_voice_extraction",
+      "engineering_class": "HumanVoiceExtractionEngine",
+      "mythic_label": "Human voice extraction",
+      "linguistic_version": "1.0.0",
+      "display_name": "Human Voice Extraction",
+      "module_path": "src/human_voice_extraction.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/human_voice_extraction.py",
+      "header": {
+        "mythic": "Human Voice Extraction Organ",
+        "engineering": "HumanVoiceExtractionEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Human Voice Extraction Organ\n# Engineering: HumanVoiceExtractionEngine",
+          "mythic": "Human Voice Extraction Organ",
+          "engineering": "HumanVoiceExtractionEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Human Voice Extraction"
+      },
+      "active_doc": {
+        "title": "Human Voice Extraction"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "1cb02e480d646367510af385eb863ffab474f13bf71d3d8fdd22bd93bed8a2fa",
+    "engineering": "b3b248b7c3843ab3bce542399d9030e94695ea6b2c61e0077cb65cd6175166a9",
+    "combined": "7b1c238b0add1ccaed96a42fb846a49ee137bb82e4db1dfb81e70e38fcd90817"
+  }
+}

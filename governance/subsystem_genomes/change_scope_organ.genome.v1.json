@@ -50,7 +50,8 @@
   },
   "lineage": {
     "parents": [
-      "patchforge_organ"
+      "patchforge_organ",
+      "coding_organs_stack"
     ],
     "children": [
       "operator_workbench_organ",

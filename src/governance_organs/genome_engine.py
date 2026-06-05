@@ -41,8 +41,9 @@ CALLABLE_STAGES = frozenset({"mvp", "governed"})
 
 # capability_id / module path fragments → registry gene
 GENE_ALIASES: dict[str, str] = {
-    "recipe": "recipe_module",
-    "recipe_module": "recipe_module",
+    "recipe": "recipe_module_organ",
+    "recipe_module": "recipe_module_organ",
+    "recipe_module_organ": "recipe_module_organ",
     "imagine": "imagine_generator",
     "imagine_generator": "imagine_generator",
     "human_voice": "human_voice_extraction",

@@ -169,6 +169,7 @@ GAP_COMPONENT_IDS = (
 
 class ConfiguredStoryForgeAudioModule:
     module_name = "story_forge_audio"
+    provider_name = "aais_story_forge"
     supported_actions = frozenset({"run"})
 
     def execute(self, action: str, payload: dict[str, Any]) -> dict[str, Any]:

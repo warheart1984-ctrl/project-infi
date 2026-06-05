@@ -1,2435 +1,1745 @@
 {
   "linguistic_drift_report_version": "linguistic_drift_report.v1",
-  "generated_at": "2026-06-03T12:02:56Z",
+  "generated_at": "2026-06-05T19:23:14Z",
   "scores": [
     {
-      "gene": "linguistic_drift_forecast_organ",
-      "drift_risk": 39,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_forecast_calibration_organ",
-      "drift_risk": 39,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_governance_cycle_organ",
-      "drift_risk": 39,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_predictive_governance_organ",
-      "drift_risk": 39,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "meta_linguistic_governance_organ",
-      "drift_risk": 39,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "naming_genome_organ",
-      "drift_risk": 39,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_closed_loop_fabric_organ",
-      "drift_risk": 34,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_drift_predictor_organ",
-      "drift_risk": 34,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_full_governance_cycle_organ",
-      "drift_risk": 34,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_governance_attestation_organ",
-      "drift_risk": 34,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_governance_queue_organ",
-      "drift_risk": 34,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_governed_lifecycle_fabric_organ",
-      "drift_risk": 34,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_mutation_organ",
-      "drift_risk": 34,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "naming_protocol_organ",
-      "drift_risk": 34,
-      "band": "medium",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_attestation_history_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_cascade_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_cycle_optimization_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_drift_report_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_forecast_archive_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_forecast_calibration_report_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_forecast_consumption_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_full_governance_cycle_history_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_governance_cadence_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_governance_cycle_history_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_governance_day_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_governance_work_order_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_lineage_viz_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_predictive_cycle_history_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_preemptive_remediation_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_remediation_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_subsystem_promotion_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "linguistic_work_order_history_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "meta_linguistic_registry_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "mythic_engineering_translator_organ",
-      "drift_risk": 30,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 80.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
       "gene": "capability_service_bridge",
-      "drift_risk": 29,
+      "drift_risk": 20,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 100.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "governed_direct_pipeline",
-      "drift_risk": 29,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 100.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "jarvis_memory_board",
-      "drift_risk": 29,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 100.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "jarvis_operator_organ",
-      "drift_risk": 29,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 100.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "operator_cognition_coherence_fabric",
-      "drift_risk": 29,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 100.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "operator_profile_organ",
-      "drift_risk": 29,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 100.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "safety_envelope_organ",
-      "drift_risk": 29,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 100.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "cisiv_operator_lineage_console",
-      "drift_risk": 23,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "cognitive_bridge_organ",
-      "drift_risk": 23,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "continuity_witness_organ",
-      "drift_risk": 23,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "creative_core_runtime_organ",
-      "drift_risk": 23,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
       "gene": "governance_layer_organ",
-      "drift_risk": 23,
+      "drift_risk": 20,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
+        "lineage_fanout": 100.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "jarvis_console_surface_organ",
-      "drift_risk": 23,
+      "gene": "governed_direct_pipeline",
+      "drift_risk": 20,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
+        "lineage_fanout": 100.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "jarvis_protocol_organ",
-      "drift_risk": 23,
+      "gene": "jarvis_memory_board",
+      "drift_risk": 20,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
+        "lineage_fanout": 100.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "patchforge_organ",
-      "drift_risk": 23,
+      "gene": "jarvis_operator_organ",
+      "drift_risk": 20,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
+        "lineage_fanout": 100.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "phase_gate_organ",
-      "drift_risk": 23,
+      "gene": "operator_cognition_coherence_fabric",
+      "drift_risk": 20,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
+        "lineage_fanout": 100.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "project_infi_law_organ",
-      "drift_risk": 23,
+      "gene": "operator_profile_organ",
+      "drift_risk": 20,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
+        "lineage_fanout": 100.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "realtime_event_cause_predictor_organ",
-      "drift_risk": 23,
+      "gene": "safety_envelope_organ",
+      "drift_risk": 20,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
+        "lineage_fanout": 100.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "reflection_runtime_organ",
-      "drift_risk": 23,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "workflow_shell_organ",
-      "drift_risk": 23,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 60.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "adaptive_lane_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "anti_drift_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "api_gateway_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "capability_module_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "change_scope_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "coherence_projection_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "conversation_memory_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "forge_contractor_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "imagine_generator",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "immune_observe_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "launcher_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "mechanic_handoff_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "memory_path_governance_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "memory_runtime_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "module_governance_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "narrative_continuity_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "narrative_trust_pack",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "nova_face_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "orchestration_spine_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "planning_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "policy_gate_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "reasoning_executive_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "recipe_module",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "route_choice_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "run_ledger_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "spatial_reasoning_organ",
-      "drift_risk": 18,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 30.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
       "gene": "story_forge_lane_organ",
-      "drift_risk": 18,
+      "drift_risk": 20,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 100.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "cisiv_operator_lineage_console",
+      "drift_risk": 16,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "coding_organs_stack",
+      "drift_risk": 16,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "linguistic_drift_forecast_organ",
+      "drift_risk": 16,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "linguistic_forecast_calibration_organ",
+      "drift_risk": 16,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "linguistic_governance_cycle_organ",
+      "drift_risk": 16,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "linguistic_predictive_governance_organ",
+      "drift_risk": 16,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "meta_linguistic_governance_organ",
+      "drift_risk": 16,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "naming_genome_organ",
+      "drift_risk": 16,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "cognitive_bridge_organ",
+      "drift_risk": 14,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "continuity_witness_organ",
+      "drift_risk": 14,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "creative_core_runtime_organ",
+      "drift_risk": 14,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "jarvis_console_surface_organ",
+      "drift_risk": 14,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "jarvis_protocol_organ",
+      "drift_risk": 14,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "module_governance_organ",
+      "drift_risk": 14,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "patchforge_organ",
+      "drift_risk": 14,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "phase_gate_organ",
+      "drift_risk": 14,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "project_infi_law_organ",
+      "drift_risk": 14,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "realtime_event_cause_predictor_organ",
+      "drift_risk": 14,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "reflection_runtime_organ",
+      "drift_risk": 14,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "workflow_shell_organ",
+      "drift_risk": 14,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 60.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "linguistic_closed_loop_fabric_organ",
+      "drift_risk": 11,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "ul_lineage_console_organ",
-      "drift_risk": 18,
+      "gene": "linguistic_drift_predictor_organ",
+      "drift_risk": 11,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "v10_runtime_organ",
-      "drift_risk": 18,
+      "gene": "linguistic_full_governance_cycle_organ",
+      "drift_risk": 11,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "verification_gate_organ",
-      "drift_risk": 18,
+      "gene": "linguistic_governance_attestation_organ",
+      "drift_risk": 11,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "aais_composed_runtime_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_governance_queue_organ",
+      "drift_risk": 11,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "aais_doctor_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_governed_lifecycle_fabric_organ",
+      "drift_risk": 11,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "aais_ul_substrate_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_mutation_organ",
+      "drift_risk": 11,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "ai_factory_organ",
-      "drift_risk": 14,
+      "gene": "naming_protocol_organ",
+      "drift_risk": 11,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "recipe_module",
+      "drift_risk": 11,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 30.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "adaptive_lane_organ",
+      "drift_risk": 9,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 30.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "anti_drift_organ",
+      "drift_risk": 9,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 30.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "api_gateway_organ",
+      "drift_risk": 9,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 30.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
       "gene": "aris_boundary_organ",
-      "drift_risk": 14,
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "aris_integration_organ",
-      "drift_risk": 14,
+      "gene": "capability_module_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "attention_organ",
-      "drift_risk": 14,
+      "gene": "change_scope_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "beatbox_lane_organ",
-      "drift_risk": 14,
+      "gene": "coherence_projection_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "blueprint_posture_organ",
-      "drift_risk": 14,
+      "gene": "conversation_memory_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "chat_turn_governance_organ",
-      "drift_risk": 14,
+      "gene": "forge_contractor_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "cognitive_execution_organ",
-      "drift_risk": 14,
+      "gene": "imagine_generator",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "cogos_runtime_bridge_organ",
-      "drift_risk": 14,
+      "gene": "immune_observe_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "continuity_substrate_organ",
-      "drift_risk": 14,
+      "gene": "launcher_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "cortex_arcs_organ",
-      "drift_risk": 14,
+      "gene": "mechanic_handoff_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "creative_capability_bridge_organ",
-      "drift_risk": 14,
+      "gene": "memory_path_governance_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "creative_console_interface_organ",
-      "drift_risk": 14,
+      "gene": "memory_runtime_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "creative_operator_handoff_organ",
-      "drift_risk": 14,
+      "gene": "movie_renderer_lane_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "dashboard_surface_organ",
-      "drift_risk": 14,
+      "gene": "narrative_continuity_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "deliberation_organ",
-      "drift_risk": 14,
+      "gene": "narrative_trust_pack",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "direct_challenge_organ",
-      "drift_risk": 14,
+      "gene": "nova_face_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "document_vision_organ",
-      "drift_risk": 14,
+      "gene": "orchestration_spine_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "evolve_engine_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "forensic_triangulation_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "forge_eval_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "governed_event_chain_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "governed_realtime_lane_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "human_voice_extraction",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "human_voice_extraction_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "imagine_generator_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "intent_agency_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "invariant_engine_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "jarvis_reasoning_lane_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "jarvis_runs_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "knowledge_authority_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "memory_bank_surface_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "memory_smith_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "mission_board_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "mystic_engine_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "narrative_trust_pack_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "nova_landing_surface_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "nova_workspace_interface_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "operator_console_interface_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "operator_health_sentinel_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "operator_workbench_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "operator_workspace_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
       "gene": "otem_bounded_organ",
-      "drift_risk": 14,
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "output_integrity_organ",
-      "drift_risk": 14,
+      "gene": "planning_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "patch_apply_organ",
-      "drift_risk": 14,
+      "gene": "policy_gate_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "patch_execution_preview_organ",
-      "drift_risk": 14,
+      "gene": "reasoning_executive_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "patch_verification_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "perception_gateway_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "perception_lane_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "platform_console_interfaces_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "predictor_immune_bridge_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "project_infi_state_machine_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "prompt_assembly_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "provider_route_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
-      ]
-    },
-    {
-      "gene": "reasoning_contract_organ",
-      "drift_risk": 14,
-      "band": "low",
-      "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
-        "layer_skew": 0.0,
-        "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
-      },
-      "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
       "gene": "recipe_module_organ",
-      "drift_risk": 14,
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 60.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 0.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "run_ledger_binding_organ",
-      "drift_risk": 14,
+      "gene": "route_choice_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "scorpion_bridge_organ",
-      "drift_risk": 14,
+      "gene": "run_ledger_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "security_protocol_organ",
-      "drift_risk": 14,
+      "gene": "spatial_reasoning_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "slingshot_organ",
-      "drift_risk": 14,
+      "gene": "story_forge_launcher_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "speakers_lane_organ",
-      "drift_risk": 14,
+      "gene": "ul_lineage_console_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "speaking_runtime_organ",
-      "drift_risk": 14,
+      "gene": "v10_runtime_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "specialist_route_organ",
-      "drift_risk": 14,
+      "gene": "verification_gate_organ",
+      "drift_risk": 9,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
-        "lineage_fanout": 0.0
+        "lineage_fanout": 30.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "state_hygiene_organ",
-      "drift_risk": 14,
+      "gene": "aris_standalone_service",
+      "drift_risk": 7,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 0.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "system_guard_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_attestation_history_organ",
+      "drift_risk": 7,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 0.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "tracing_spine_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_cascade_organ",
+      "drift_risk": 7,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 0.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "ui_vision_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_cycle_optimization_organ",
+      "drift_risk": 7,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 0.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "v10_action_engine_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_drift_report_organ",
+      "drift_risk": 7,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 0.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "v10_core_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_forecast_archive_organ",
+      "drift_risk": 7,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 0.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "v8_runtime_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_forecast_calibration_report_organ",
+      "drift_risk": 7,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 0.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "v9_core_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_forecast_consumption_organ",
+      "drift_risk": 7,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 0.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "v9_runtime_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_full_governance_cycle_history_organ",
+      "drift_risk": 7,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 0.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "wolf_rehydration_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_governance_cadence_organ",
+      "drift_risk": 7,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 0.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "workflow_interfaces_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_governance_cycle_history_organ",
+      "drift_risk": 7,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 0.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
-      "gene": "workflow_runtime_organ",
-      "drift_risk": 14,
+      "gene": "linguistic_governance_day_organ",
+      "drift_risk": 7,
       "band": "low",
       "signals": {
-        "alignment_gap": 40.0,
-        "snapshot_velocity": 0.0,
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 0.0
       },
       "recommendations": [
-        "Wave 2: add source # Engineering: header aligned with genome ssp"
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "linguistic_governance_work_order_organ",
+      "drift_risk": 7,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "linguistic_lineage_viz_organ",
+      "drift_risk": 7,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "linguistic_predictive_cycle_history_organ",
+      "drift_risk": 7,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "linguistic_preemptive_remediation_organ",
+      "drift_risk": 7,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "linguistic_remediation_organ",
+      "drift_risk": 7,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "linguistic_subsystem_promotion_organ",
+      "drift_risk": 7,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "linguistic_work_order_history_organ",
+      "drift_risk": 7,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "media_processor_family",
+      "drift_risk": 7,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "meta_linguistic_registry_organ",
+      "drift_risk": 7,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "mythic_engineering_translator_organ",
+      "drift_risk": 7,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "otem_execution_substrate",
+      "drift_risk": 7,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "temporal_replay_machine",
+      "drift_risk": 7,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 45.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "aais_composed_runtime_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "aais_doctor_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "aais_ul_substrate_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "ai_factory_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "aris_integration_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "attention_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "beatbox_lane_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "blueprint_posture_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "chat_turn_governance_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "cognitive_execution_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "cogos_runtime_bridge_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "continuity_substrate_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "cortex_arcs_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "creative_capability_bridge_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "creative_console_interface_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "creative_operator_handoff_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "dashboard_surface_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "deliberation_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "direct_challenge_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "document_vision_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "dreamspace_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "evolve_engine_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
       ]
     },
     {
@@ -2442,6 +1752,930 @@
         "layer_skew": 0.0,
         "gene_mythic_tokens": 0.0,
         "lineage_fanout": 30.0
+      },
+      "recommendations": []
+    },
+    {
+      "gene": "forensic_triangulation_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "forge_eval_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "game_front_door_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "governed_event_chain_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "governed_realtime_lane_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "human_voice_extraction",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "human_voice_extraction_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "imagine_generator_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "intent_agency_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "invariant_engine_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "jarvis_reasoning_lane_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "jarvis_runs_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "knowledge_authority_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "media_processor_bridge_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "memory_bank_surface_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "memory_smith_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "mission_board_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "mystic_engine_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "narrative_trust_pack_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "nova_landing_surface_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "nova_workspace_interface_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "operator_console_interface_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "operator_health_sentinel_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "operator_workbench_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "operator_workspace_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "output_integrity_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "patch_apply_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "patch_execution_preview_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "patch_verification_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "perception_gateway_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "perception_lane_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "platform_console_interfaces_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "predictor_immune_bridge_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "project_infi_state_machine_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "prompt_assembly_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "provider_route_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "reasoning_contract_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "run_ledger_binding_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "scorpion_bridge_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "security_protocol_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "slingshot_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "speakers_lane_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "speaking_runtime_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "specialist_route_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "state_hygiene_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "system_guard_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "text_game_to_video_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "text_to_3d_world_lane_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "tracing_spine_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "ui_vision_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "v10_action_engine_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "v10_core_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "v8_runtime_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "v9_core_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "v9_runtime_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "wolf_rehydration_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "workflow_interfaces_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "workflow_runtime_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "world_pack_lane_organ",
+      "drift_risk": 4,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 30.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": [
+        "Review recent MP-LING proposals; stabilize linguistic_version"
+      ]
+    },
+    {
+      "gene": "ugr_mission_runtime",
+      "drift_risk": 0,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 0.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": []
+    },
+    {
+      "gene": "ugr_operator_reward_engine",
+      "drift_risk": 0,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 0.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
+      },
+      "recommendations": []
+    },
+    {
+      "gene": "ugr_subsystem_discovery",
+      "drift_risk": 0,
+      "band": "low",
+      "signals": {
+        "alignment_gap": 0.0,
+        "snapshot_velocity": 0.0,
+        "layer_skew": 0.0,
+        "gene_mythic_tokens": 0.0,
+        "lineage_fanout": 0.0
       },
       "recommendations": []
     }

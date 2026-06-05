@@ -1,5 +1,6 @@
 """Governed Story Forge expansion organ execution paths (Release 29)."""
 
+# Engineering: StoryForgeOrgansEngine
 from __future__ import annotations
 
 from pathlib import Path

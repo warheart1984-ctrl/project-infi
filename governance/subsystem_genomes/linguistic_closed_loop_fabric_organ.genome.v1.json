@@ -77,6 +77,9 @@
     "concept_spec": "docs/_future/ideas_pending/LINGUISTIC_CLOSED_LOOP_FABRIC_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/LINGUISTIC_CLOSED_LOOP_FABRIC_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/LINGUISTIC_CLOSED_LOOP_FABRIC_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/LINGUISTIC_CLOSED_LOOP_FABRIC_ORGAN.md",
+    "engineering_class": "LinguisticClosedLoopFabricEngine",
+    "mythic_label": "Linguistic Closed Loop Fabric Organ",
+    "linguistic_version": "1.0.0"
   }
 }

@@ -1,0 +1,1564 @@
+{
+  "linguistic_work_order_snapshot_version": "linguistic_work_order_snapshot.v1",
+  "snapshot_id": "20260605T151346Z",
+  "generated_at": "2026-06-05T15:13:46Z",
+  "reason": "sync",
+  "summary": {
+    "total": 51,
+    "pending": 51,
+    "acknowledged": 0,
+    "completed": 0,
+    "deferred": 0
+  },
+  "work_orders": {
+    "capability_service_bridge": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "capability_service_bridge",
+      "status": "pending",
+      "urgency_score": 51.3,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/capability_service_bridge.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene capability_service_bridge",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/capability_service_bridge.py",
+          "snippet": "# Mythic: Capability service bridge\n# Engineering: CapabilityServiceBridge\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene capability_service_bridge",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "cisiv_operator_lineage_console": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "cisiv_operator_lineage_console",
+      "status": "pending",
+      "urgency_score": 48.3,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "wave2_header",
+          "path": "src/ul_lineage.py",
+          "snippet": "# Mythic: CISIV operator lineage console\n# Engineering: CisivOperatorLineageConsole\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene cisiv_operator_lineage_console",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "cognitive_bridge_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "cognitive_bridge_organ",
+      "status": "pending",
+      "urgency_score": 48.3,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "wave2_header",
+          "path": "src/cognitive_bridge_organ.py",
+          "snippet": "# Mythic: Cognitive Bridge Organ\n# Engineering: CognitiveBridgeBridge\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene cognitive_bridge_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "continuity_witness_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "continuity_witness_organ",
+      "status": "pending",
+      "urgency_score": 48.3,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "wave2_header",
+          "path": "src/continuity_witness_organ.py",
+          "snippet": "# Mythic: Continuity Witness Organ\n# Engineering: ContinuityWitnessEngine\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene continuity_witness_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "creative_core_runtime_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "creative_core_runtime_organ",
+      "status": "pending",
+      "urgency_score": 32.1,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "wave2_header",
+          "path": "src/creative_core_runtime_organ.py",
+          "snippet": "# Mythic: Creative Core Runtime Organ\n# Engineering: CreativeCoreRuntimeEngine\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene creative_core_runtime_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "governance_layer_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "governance_layer_organ",
+      "status": "pending",
+      "urgency_score": 28.1,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "wave2_header",
+          "path": "src/governance_layer_organ.py",
+          "snippet": "# Mythic: Governance Layer Organ\n# Engineering: GovernanceLayerEngine\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene governance_layer_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "governed_direct_pipeline": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "governed_direct_pipeline",
+      "status": "pending",
+      "urgency_score": 52.5,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/governed_direct_pipeline.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene capability_service_bridge",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene governed_direct_pipeline",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/governed_direct_pipeline.py",
+          "snippet": "# Mythic: Governed Direct Pipeline\n# Engineering: GovernedDirectPipelineEngine\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene governed_direct_pipeline",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "jarvis_console_surface_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "jarvis_console_surface_organ",
+      "status": "pending",
+      "urgency_score": 48.3,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "wave2_header",
+          "path": "src/jarvis_console_surface_organ.py",
+          "snippet": "# Mythic: Jarvis Console Surface Organ\n# Engineering: JarvisConsoleSurfaceInterface\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene jarvis_console_surface_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "jarvis_memory_board": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "jarvis_memory_board",
+      "status": "pending",
+      "urgency_score": 51.3,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/jarvis_memory_board.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene jarvis_memory_board",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/jarvis_memory_board.py",
+          "snippet": "# Mythic: Jarvis memory board\n# Engineering: JarvisMemoryBoard\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene jarvis_memory_board",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "jarvis_operator_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "jarvis_operator_organ",
+      "status": "pending",
+      "urgency_score": 51.3,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/jarvis_operator_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene jarvis_protocol_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene jarvis_operator_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/jarvis_operator_organ.py",
+          "snippet": "# Mythic: Jarvis Operator Organ\n# Engineering: JarvisOperatorEngine\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene jarvis_operator_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "jarvis_protocol_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "jarvis_protocol_organ",
+      "status": "pending",
+      "urgency_score": 48.7,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "wave2_header",
+          "path": "src/jarvis_protocol_organ.py",
+          "snippet": "# Mythic: Jarvis Protocol Organ\n# Engineering: JarvisProtocolEngine\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene jarvis_protocol_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "linguistic_cascade_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_cascade_organ",
+      "status": "pending",
+      "urgency_score": 50.0,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_cascade_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_lineage_viz_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_cascade_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/linguistic_cascade_organ.py",
+          "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_cascade_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_closed_loop_fabric_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_closed_loop_fabric_organ",
+      "status": "pending",
+      "urgency_score": 52.4,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_closed_loop_fabric_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_closed_loop_fabric_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Review recent MP-LING proposals; stabilize linguistic_version"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_closed_loop_fabric_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_cycle_optimization_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_cycle_optimization_organ",
+      "status": "pending",
+      "urgency_score": 49.6,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_cycle_optimization_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_governance_cycle_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_cycle_optimization_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/linguistic_cycle_optimization_organ.py",
+          "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_forecast_consumption_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_forecast_consumption_organ",
+      "status": "pending",
+      "urgency_score": 49.6,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_forecast_consumption_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_drift_forecast_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_forecast_consumption_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/linguistic_forecast_consumption_organ.py",
+          "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_governance_cycle_history_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_governance_cycle_history_organ",
+      "status": "pending",
+      "urgency_score": 49.6,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_governance_cycle_history_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_governance_cycle_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_governance_cycle_history_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/linguistic_governance_cycle_history_organ.py",
+          "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_governance_cycle_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_governance_cycle_organ",
+      "status": "pending",
+      "urgency_score": 38.9,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene meta_linguistic_governance_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_governance_cycle_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/linguistic_governance_cycle_organ.py",
+          "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_governance_cycle_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "linguistic_lineage_viz_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_lineage_viz_organ",
+      "status": "pending",
+      "urgency_score": 49.6,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_lineage_viz_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene cisiv_operator_lineage_console",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_lineage_viz_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/linguistic_lineage_viz_organ.py",
+          "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_lineage_viz_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_predictive_cycle_history_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_predictive_cycle_history_organ",
+      "status": "pending",
+      "urgency_score": 49.6,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_predictive_cycle_history_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_predictive_governance_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_predictive_cycle_history_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/linguistic_predictive_cycle_history_organ.py",
+          "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_preemptive_remediation_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_preemptive_remediation_organ",
+      "status": "pending",
+      "urgency_score": 49.6,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_preemptive_remediation_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_drift_forecast_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_preemptive_remediation_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/linguistic_preemptive_remediation_organ.py",
+          "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_preemptive_remediation_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_remediation_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_remediation_organ",
+      "status": "pending",
+      "urgency_score": 50.0,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_remediation_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_drift_predictor_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_remediation_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/linguistic_remediation_organ.py",
+          "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_remediation_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "mythic_engineering_translator_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "mythic_engineering_translator_organ",
+      "status": "pending",
+      "urgency_score": 50.0,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/mythic_engineering_translator_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene naming_protocol_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene mythic_engineering_translator_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/mythic_engineering_translator_organ.py",
+          "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "naming_genome_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "naming_genome_organ",
+      "status": "pending",
+      "urgency_score": 38.5,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene naming_protocol_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene naming_genome_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/naming_genome_organ.py",
+          "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene naming_genome_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "operator_cognition_coherence_fabric": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "operator_cognition_coherence_fabric",
+      "status": "pending",
+      "urgency_score": 47.8,
+      "queue_generated_at": "2026-06-05T12:18:05Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/operator_cognition_coherence_fabric.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_mp_ling",
+          "command": "python tools/governance/apply_linguistic_mutation.py --dry-run --gene operator_cognition_coherence_fabric",
+          "note": "Review draft linguistic delta before apply"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene operator_profile_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene operator_cognition_coherence_fabric",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/operator_cognition_coherence_fabric.py",
+          "snippet": "# Mythic: Coherence Fabric\n# Engineering: OperatorCognitionCoherenceLayer\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene operator_cognition_coherence_fabric",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T12:18:06Z"
+    },
+    "operator_profile_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "operator_profile_organ",
+      "status": "pending",
+      "urgency_score": 51.3,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/operator_profile_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene operator_profile_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "wave2_header",
+          "path": "src/operator_profile_organ.py",
+          "snippet": "# Mythic: Operator Profile Organ\n# Engineering: OperatorProfileEngine\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene operator_profile_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "phase_gate_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "phase_gate_organ",
+      "status": "pending",
+      "urgency_score": 48.3,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "wave2_header",
+          "path": "src/phase_gate_organ.py",
+          "snippet": "# Mythic: Phase Gate Organ\n# Engineering: PhaseGateGate\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene phase_gate_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "realtime_event_cause_predictor_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "realtime_event_cause_predictor_organ",
+      "status": "pending",
+      "urgency_score": 48.3,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "wave2_header",
+          "path": "src/realtime_event_cause_predictor_organ.py",
+          "snippet": "# Mythic: Realtime Event Cause Predictor Organ\n# Engineering: RealtimeEventCausePredictorEngine\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene realtime_event_cause_predictor_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "reflection_runtime_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "reflection_runtime_organ",
+      "status": "pending",
+      "urgency_score": 32.1,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "wave2_header",
+          "path": "src/reflection_runtime_organ.py",
+          "snippet": "# Mythic: Reflection Runtime Organ\n# Engineering: ReflectionRuntimeEngine\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene reflection_runtime_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "safety_envelope_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "safety_envelope_organ",
+      "status": "pending",
+      "urgency_score": 51.3,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "wave2_header",
+          "path": "src/safety_envelope.py",
+          "snippet": "# Mythic: Safety Envelope Organ\n# Engineering: SafetyEnvelopeEngine\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene safety_envelope_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "workflow_shell_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "workflow_shell_organ",
+      "status": "pending",
+      "urgency_score": 48.3,
+      "queue_generated_at": "2026-06-03T10:54:41Z",
+      "recommended_actions": [
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene workflow_shell_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-03T10:54:41Z"
+    },
+    "coding_organs_stack": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "coding_organs_stack",
+      "status": "pending",
+      "urgency_score": 56.8,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene coding_organs_stack",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_full_governance_cycle_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_full_governance_cycle_organ",
+      "status": "pending",
+      "urgency_score": 52.8,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_full_governance_cycle_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_forecast_calibration_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_full_governance_cycle_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Review recent MP-LING proposals; stabilize linguistic_version"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_full_governance_cycle_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_drift_predictor_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_drift_predictor_organ",
+      "status": "pending",
+      "urgency_score": 52.8,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_drift_predictor_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene naming_genome_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_drift_predictor_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Review recent MP-LING proposals; stabilize linguistic_version"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_drift_predictor_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_governance_attestation_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_governance_attestation_organ",
+      "status": "pending",
+      "urgency_score": 52.8,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_governance_attestation_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_full_governance_cycle_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_governance_attestation_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Review recent MP-LING proposals; stabilize linguistic_version"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_governance_attestation_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_governance_queue_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_governance_queue_organ",
+      "status": "pending",
+      "urgency_score": 52.4,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_governance_queue_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_governance_queue_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Review recent MP-LING proposals; stabilize linguistic_version"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_governance_queue_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_governed_lifecycle_fabric_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_governed_lifecycle_fabric_organ",
+      "status": "pending",
+      "urgency_score": 52.8,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_governed_lifecycle_fabric_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_governance_attestation_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_governed_lifecycle_fabric_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Review recent MP-LING proposals; stabilize linguistic_version"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_governed_lifecycle_fabric_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_mutation_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_mutation_organ",
+      "status": "pending",
+      "urgency_score": 52.4,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_mutation_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_mutation_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Review recent MP-LING proposals; stabilize linguistic_version"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_mutation_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "naming_protocol_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "naming_protocol_organ",
+      "status": "pending",
+      "urgency_score": 52.4,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/naming_protocol_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene naming_protocol_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Review recent MP-LING proposals; stabilize linguistic_version"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene naming_protocol_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_attestation_history_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_attestation_history_organ",
+      "status": "pending",
+      "urgency_score": 50.0,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_attestation_history_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_governance_attestation_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_attestation_history_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Review recent MP-LING proposals; stabilize linguistic_version"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_drift_report_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_drift_report_organ",
+      "status": "pending",
+      "urgency_score": 50.0,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_drift_report_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_drift_predictor_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_drift_report_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_forecast_archive_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_forecast_archive_organ",
+      "status": "pending",
+      "urgency_score": 49.6,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_forecast_archive_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_forecast_calibration_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_forecast_archive_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_forecast_calibration_report_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_forecast_calibration_report_organ",
+      "status": "pending",
+      "urgency_score": 49.6,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_forecast_calibration_report_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_forecast_calibration_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_forecast_calibration_report_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_full_governance_cycle_history_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_full_governance_cycle_history_organ",
+      "status": "pending",
+      "urgency_score": 50.0,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_full_governance_cycle_history_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_full_governance_cycle_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_full_governance_cycle_history_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_governance_cadence_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_governance_cadence_organ",
+      "status": "pending",
+      "urgency_score": 50.0,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_governance_cadence_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_governance_attestation_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_governance_cadence_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_governance_day_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_governance_day_organ",
+      "status": "pending",
+      "urgency_score": 50.0,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_governance_day_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_governed_lifecycle_fabric_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_governance_day_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_governance_work_order_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_governance_work_order_organ",
+      "status": "pending",
+      "urgency_score": 50.0,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/linguistic_governance_work_order_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "watch_cascade",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_governance_queue_organ",
+          "note": "Parent at risk \u2014 monitor cascade"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene linguistic_governance_work_order_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene linguistic_governance_work_order_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_subsystem_promotion_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_subsystem_promotion_organ",
+      "status": "pending",
+      "urgency_score": 49.6,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "linguistic_work_order_history_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "linguistic_work_order_history_organ",
+      "status": "pending",
+      "urgency_score": 50.0,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "meta_linguistic_registry_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "meta_linguistic_registry_organ",
+      "status": "pending",
+      "urgency_score": 48.4,
+      "queue_generated_at": "2026-06-05T14:01:23Z",
+      "recommended_actions": [
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene meta_linguistic_registry_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T14:01:23Z"
+    },
+    "recipe_module_organ": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "recipe_module_organ",
+      "status": "pending",
+      "urgency_score": 53.8,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "watch_wave2_header",
+          "path": "src/recipe_module_organ.py",
+          "note": "Add # Engineering header before band escalates"
+        },
+        {
+          "kind": "schedule_remediation",
+          "command": "python tools/governance/generate_linguistic_remediations.py --gene recipe_module_organ",
+          "note": "Pre-generate remediation when predicted band materializes"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Review recent MP-LING proposals; stabilize linguistic_version"
+        },
+        {
+          "kind": "cascade_report",
+          "command": "python tools/linguistic_cascade_report.py --gene recipe_module_organ",
+          "note": "Review lineage cascade impact"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    },
+    "otem_execution_substrate": {
+      "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+      "gene": "otem_execution_substrate",
+      "status": "pending",
+      "urgency_score": 50.0,
+      "queue_generated_at": "2026-06-05T15:13:45Z",
+      "recommended_actions": [
+        {
+          "kind": "wave2_header",
+          "path": "src/otem_execution_substrate.py",
+          "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+        },
+        {
+          "kind": "recommendation",
+          "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+        }
+      ],
+      "operator_notes": "",
+      "updated_at": "2026-06-05T15:13:45Z"
+    }
+  }
+}

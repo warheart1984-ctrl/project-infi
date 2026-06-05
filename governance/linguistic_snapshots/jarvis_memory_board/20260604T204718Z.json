@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "jarvis_memory_board",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "jarvis_memory_board",
+      "engineering_class": "JarvisMemoryBoard",
+      "mythic_label": "Jarvis memory board",
+      "linguistic_version": "1.0.0",
+      "display_name": "Jarvis Memory Board",
+      "module_path": "src/jarvis_memory_board.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/jarvis_memory_board.py",
+      "header": {
+        "mythic": "Jarvis memory board",
+        "engineering": "JarvisMemoryBoard"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Jarvis memory board\n# Engineering: JarvisMemoryBoard",
+          "mythic": "Jarvis memory board",
+          "engineering": "JarvisMemoryBoard"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Jarvis Memory Board"
+      },
+      "active_doc": {
+        "title": "Jarvis Memory Board"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "05f395f8e878ae105eeb3f7c4ad6b49da1390c8f198285a4f476ba44c968732c",
+    "engineering": "f290c4e0172d941cbf0bed72ff196c8e765b1bddcd82dc89598776e638fdc27a",
+    "combined": "13c5a5cfb7ae46295a0d0286982dd50fc23291787c58bdd07edc9ea9e956af2e"
+  }
+}

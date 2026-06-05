@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "project_infi_state_machine_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "project_infi_state_machine_organ",
+      "engineering_class": "ProjectInfiStateMachineEngine",
+      "mythic_label": "Project Infi State Machine Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Project Infi State Machine Organ",
+      "module_path": "src/project_infi_state_machine_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/project_infi_state_machine_organ.py",
+      "header": {
+        "mythic": "Project Infi State Machine Organ",
+        "engineering": "ProjectInfiStateMachineEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Project Infi State Machine Organ\n# Engineering: ProjectInfiStateMachineEngine",
+          "mythic": "Project Infi State Machine Organ",
+          "engineering": "ProjectInfiStateMachineEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Project Infi State Machine Organ"
+      },
+      "active_doc": {
+        "title": "Project Infi State Machine Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "1bb94ba30859864bd08c305e1ef3ce706e6781d6b7f225e119d972275272c210",
+    "engineering": "99ec44b2c387e862c4af792b55d29f24ad42be9938f7855034793a81768990cc",
+    "combined": "7c8f27796dc4816b22cf1258649cb58ed9042062fe67fd399f38aef7a5e16588"
+  }
+}

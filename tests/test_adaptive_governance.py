@@ -30,7 +30,7 @@ def test_recipe_module_has_tier5_fields():
     from src.governance_organs import GenomeEngine
 
     reg = GenomeEngine.reload(REPO)
-    gov = reg.genomes["recipe_module"]["governance"]
+    gov = reg.genomes["recipe_module_organ"]["governance"]
     assert gov.get("operator_lanes")
     assert gov.get("contextual_gates")
     assert isinstance(gov["invariants"][0], dict)

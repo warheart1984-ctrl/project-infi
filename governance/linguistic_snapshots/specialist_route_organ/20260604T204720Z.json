@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "specialist_route_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "specialist_route_organ",
+      "engineering_class": "SpecialistRouteInterface",
+      "mythic_label": "Specialist Route Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Specialist Route Organ",
+      "module_path": "src/specialist_route_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/specialist_route_organ.py",
+      "header": {
+        "mythic": "Specialist Route Organ",
+        "engineering": "SpecialistRouteInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Specialist Route Organ\n# Engineering: SpecialistRouteInterface",
+          "mythic": "Specialist Route Organ",
+          "engineering": "SpecialistRouteInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Specialist Route Organ"
+      },
+      "active_doc": {
+        "title": "Specialist Route Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "4c8eb65036521fb58f6fa693af89cec4aa6fc13f1c7d4faf14e429c75e2a1e45",
+    "engineering": "4e524e2ed64ac1e1a9d096d3741db347e333d70268038ec62afcce1e54e05153",
+    "combined": "e3f89b2289a883e3c932d8844f1ed8946d017df91b2f11d8d6152ee91372ccae"
+  }
+}

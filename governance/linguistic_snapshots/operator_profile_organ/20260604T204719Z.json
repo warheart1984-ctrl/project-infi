@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "operator_profile_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "operator_profile_organ",
+      "engineering_class": "OperatorProfileEngine",
+      "mythic_label": "Operator Profile Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Operator Profile Organ",
+      "module_path": "src/operator_profile_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/operator_profile_organ.py",
+      "header": {
+        "mythic": "Operator Profile Organ",
+        "engineering": "OperatorProfileEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Operator Profile Organ\n# Engineering: OperatorProfileEngine",
+          "mythic": "Operator Profile Organ",
+          "engineering": "OperatorProfileEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Operator Profile Organ"
+      },
+      "active_doc": {
+        "title": "Operator Profile Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "ef72e7f4898af9c1e1e1a6a9f9d84cff156a09f171acc210a124c0a831fc47b0",
+    "engineering": "4c0ac616dbd2bbec4550c15c57775772b94f25177fd0800d3bce7570173d5ff5",
+    "combined": "483560bed6d7e12aed659afd95b4dedb262d25fc2db78cec7f9755a38ef0183e"
+  }
+}

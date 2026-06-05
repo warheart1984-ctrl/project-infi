@@ -75,6 +75,21 @@
         ]
       },
       "notes": "P15 universal foundry: WIM/APFS/super.img classification + replay adapter contracts."
+    },
+    {
+      "id": "substrate.v2.rocky-live-classification",
+      "date": "2026-06-05",
+      "author": "forge-platform-program",
+      "change_type": "register",
+      "registry_version": "substrate-registry.v2",
+      "contract_version": "forge-substrate.v2",
+      "substrate_ids": ["rocky-live"],
+      "status": "experimental",
+      "verification": {
+        "tests": ["tests/test_universal_substrate.py"],
+        "scripts": ["wolf-cog-os/scripts/validate-substrate-invariants.py"]
+      },
+      "notes": "Rocky Linux LiveOS classification via fedora-liveos-layout replay adapter."
     }
   ]
 }

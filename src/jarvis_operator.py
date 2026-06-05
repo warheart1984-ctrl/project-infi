@@ -2745,6 +2745,8 @@ class WorkspaceTools:
             return configured
         try:
             workspace_root = self._resolve_workspace_root()
+            if (workspace_root / "project-infi").is_dir():
+                return "project-infi"
             if (workspace_root / "AAIS-main").is_dir():
                 return "AAIS-main"
         except OSError:

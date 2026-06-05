@@ -52,7 +52,10 @@ export default function PlatformJobDetail() {
           <h1>Job {jobId}</h1>
           {job && proofBadge(job.proof_status)}
         </div>
-        <button type="button" onClick={load}><FiRefreshCw /> Refresh</button>
+        <div className="platform-console__header-actions">
+          <Link to={`/operator/replay/platform_job/${encodeURIComponent(jobId)}`}>Replay Machine</Link>
+          <button type="button" onClick={load}><FiRefreshCw /> Refresh</button>
+        </div>
       </header>
       <div className="platform-console__controls">
         <input value={orgId} onChange={(e) => setOrgId(e.target.value)} placeholder="org_id" />

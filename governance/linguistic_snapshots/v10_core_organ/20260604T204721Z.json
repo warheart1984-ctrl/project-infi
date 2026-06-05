@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "v10_core_organ",
+  "captured_at": "2026-06-04T20:47:21Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "v10_core_organ",
+      "engineering_class": "V10CoreEngine",
+      "mythic_label": "V10 Core Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "V10 Core Subsystem",
+      "module_path": "src/v10_core_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/v10_core_organ.py",
+      "header": {
+        "mythic": "V10 Core Organ",
+        "engineering": "V10CoreEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: V10 Core Organ\n# Engineering: V10CoreEngine",
+          "mythic": "V10 Core Organ",
+          "engineering": "V10CoreEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "V10 Core Subsystem"
+      },
+      "active_doc": {
+        "title": "V10 Core Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "3fb3804bb26cfe74194d3383d3ce59d139fdafc7f7098fbe1f057a5563c2fa52",
+    "engineering": "b8ccc17088df1e231e936bb23993ec9038ab3b942f28ac6390f76b4333ed684d",
+    "combined": "d84ec72fb0210cbddad702e559ee2df6ef3935bbb57c1c7cad7840b8745a5140"
+  }
+}

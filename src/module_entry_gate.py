@@ -1,5 +1,6 @@
 """Universal module admission and phase-gate entry wrapper."""
 
+# Engineering: ModuleEntryGateEngine
 from __future__ import annotations
 
 from functools import wraps

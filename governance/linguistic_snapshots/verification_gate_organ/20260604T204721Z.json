@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "verification_gate_organ",
+  "captured_at": "2026-06-04T20:47:21Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "verification_gate_organ",
+      "engineering_class": "VerificationGateGate",
+      "mythic_label": "Verification Gate Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Verification Gate Organ",
+      "module_path": "src/verification_gate_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/verification_gate_organ.py",
+      "header": {
+        "mythic": "Verification Gate Organ",
+        "engineering": "VerificationGateGate"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Verification Gate Organ\n# Engineering: VerificationGateGate",
+          "mythic": "Verification Gate Organ",
+          "engineering": "VerificationGateGate"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Verification Gate Organ"
+      },
+      "active_doc": {
+        "title": "Verification Gate Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "dc421945e68c88b3d5107e10c87f22716ce84d9457c83937c14f680b0c1a6c65",
+    "engineering": "664b49518337f13493264ed279c0ed1253759e7dfeba71ab0a4a958f0aa3b1b1",
+    "combined": "f12b1e5029082dde251b056f9689861cb28eb13eae72877f267a59114bbf3a41"
+  }
+}

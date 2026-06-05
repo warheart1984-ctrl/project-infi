@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "jarvis_reasoning_lane_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "jarvis_reasoning_lane_organ",
+      "engineering_class": "JarvisReasoningLaneInterface",
+      "mythic_label": "Jarvis Reasoning Lane Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Jarvis Reasoning Lane Organ",
+      "module_path": "src/jarvis_reasoning_lane_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/jarvis_reasoning_lane_organ.py",
+      "header": {
+        "mythic": "Jarvis Reasoning Lane Organ",
+        "engineering": "JarvisReasoningLaneInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Jarvis Reasoning Lane Organ\n# Engineering: JarvisReasoningLaneInterface",
+          "mythic": "Jarvis Reasoning Lane Organ",
+          "engineering": "JarvisReasoningLaneInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Jarvis Reasoning Lane Organ"
+      },
+      "active_doc": {
+        "title": "Jarvis Reasoning Lane Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "9f9cff4b0a8cd68c4138e94aea63d2a4cd653b332c5bf8d0522bf36c7816bc54",
+    "engineering": "54effd6f90384dc09171de387b1f0e6f903405f175ad8d081004b2cdc523f44f",
+    "combined": "f6fd609b36d363ab097c9f985b40cf7e2ae82ff75891138bb5ccd7729f6beff3"
+  }
+}

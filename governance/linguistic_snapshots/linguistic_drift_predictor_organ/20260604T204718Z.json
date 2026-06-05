@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_drift_predictor_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_drift_predictor_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Linguistic Drift Predictor Subsystem",
+      "module_path": "src/linguistic_drift_predictor_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_drift_predictor_organ.py",
+      "header": {
+        "mythic": "Linguistic Drift Predictor Organ",
+        "engineering": "LinguisticDriftPredictorEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Drift Predictor Organ\n# Engineering: LinguisticDriftPredictorEngine",
+          "mythic": "Linguistic Drift Predictor Organ",
+          "engineering": "LinguisticDriftPredictorEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Drift Predictor Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Drift Predictor Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "d4c49058c3ae6d7734e5fd5bd55de2b3c903709c09c46e622346779a858ac00b",
+    "engineering": "99f7b11b3b7c93f5ccdc26db5323f252a769b386c1186742a16410f397ced089",
+    "combined": "3549dbb8e8244df365bfbea511458250e156699eb03f604ff48a0fb1c6c63298"
+  }
+}

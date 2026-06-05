@@ -31,6 +31,8 @@ python -m pip install -e ".[dev]"
 
 On Windows PowerShell, use the same commands (Python 3.10+ required).
 
+**Node.js (optional):** Only needed if you rebuild the frontend (`npm run build` in `frontend/`) or run frontend unit tests (`npm run test:ci`). Packaged operators can skip Node entirely — use `python -m aais prepare` instead. Verify with `node -v` and `npm -v` (Node 18+). Install from [nodejs.org](https://nodejs.org/) if those commands are missing on Windows.
+
 ### Step 2 — Add your AI keys (optional)
 
 Copy the template and edit only the keys you need:
@@ -87,9 +89,21 @@ Mock mode gives deterministic local replies — useful for testing with no cloud
 | Health check | http://127.0.0.1:8000/health |
 | App home | http://127.0.0.1:8000/app |
 | Jarvis console | http://127.0.0.1:8000/app/jarvis |
-| Legacy Jarvis API | http://127.0.0.1:8000/legacy_api/... |
+| Jarvis API | http://127.0.0.1:8000/api/... |
+
+Legacy mount `/legacy_api/api/...` remains for compatibility; the UI uses `/api/...` on the same host.
 
 Default port is **8000** (not 8790). Change with `--port 9000` if needed.
+
+### Workflow approvals (optional)
+
+**Jarvis chat works without Redis.** The workflow shell (queued runs, Celery jobs, `/workflows/approvals`, OTEM execution approvals) needs Redis and optionally a Celery worker.
+
+1. Copy `.env.example` to `.env` — Redis defaults to `127.0.0.1:6379`.
+2. Start Redis locally or via Docker.
+3. Check reachability: `curl -fsS http://127.0.0.1:8000/health/details` — look for `"redis_reachable": true`.
+
+Docker Compose deployments override `REDIS_URL` with the service hostname `redis`; bare-metal local start uses `127.0.0.1` by default.
 
 ### ARIS standalone (optional)
 

@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "state_hygiene_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "state_hygiene_organ",
+      "engineering_class": "StateHygieneEngine",
+      "mythic_label": "State Hygiene Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "State Hygiene Subsystem",
+      "module_path": "src/state_hygiene_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/state_hygiene_organ.py",
+      "header": {
+        "mythic": "State Hygiene Organ",
+        "engineering": "StateHygieneEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: State Hygiene Organ\n# Engineering: StateHygieneEngine",
+          "mythic": "State Hygiene Organ",
+          "engineering": "StateHygieneEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "State Hygiene Subsystem"
+      },
+      "active_doc": {
+        "title": "State Hygiene Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "ec4951ade7a89197ea173c6542b9ee0f4844ed5cb8f61c38a80f74057cb2f9db",
+    "engineering": "f408bcf76b7184cb605fe69ae0760ee4563640534b012da19dbab52ac625d957",
+    "combined": "3effe38b14219f8f564bc58d6358ebb508daef23c2eaacc58aff5456f46bc43f"
+  }
+}

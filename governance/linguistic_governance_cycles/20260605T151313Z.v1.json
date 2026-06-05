@@ -1,0 +1,186 @@
+{
+  "linguistic_governance_cycle_version": "linguistic_governance_cycle.v1",
+  "cycle_id": "20260605T151313Z",
+  "generated_at": "2026-06-05T15:13:13Z",
+  "policy_mode": "observe",
+  "remediation_min_band": "medium",
+  "metrics": {
+    "gene_count": 176,
+    "high_count": 0,
+    "medium_count": 7,
+    "low_count": 169,
+    "mean_drift_risk": 12.94,
+    "playbook_count": 0,
+    "playbook_coverage_pct": 100.0
+  },
+  "deltas_from_previous": {
+    "high_count_delta": 0,
+    "medium_count_delta": 0,
+    "mean_drift_risk_delta": 0.0,
+    "playbook_coverage_pct_delta": 0.0
+  },
+  "phases": {
+    "gates_passed": null,
+    "drift_refreshed": false,
+    "forecast_consumed": true,
+    "remediations_written": 20,
+    "cascade_parents_scanned": 7,
+    "queue_ref": "governance/linguistic_governance_queue.v1.json"
+  },
+  "optimization_recommendations": [
+    {
+      "kind": "remediation_min_band",
+      "suggested": "medium",
+      "reason": "adaptive band from current drift distribution"
+    },
+    {
+      "kind": "priority_genes",
+      "genes": [
+        "cisiv_operator_lineage_console",
+        "linguistic_drift_forecast_organ",
+        "linguistic_forecast_calibration_organ",
+        "linguistic_governance_cycle_organ",
+        "linguistic_predictive_governance_organ",
+        "meta_linguistic_governance_organ",
+        "naming_genome_organ"
+      ],
+      "reason": "top at-risk genes for operator review"
+    }
+  ],
+  "top_at_risk": [
+    {
+      "gene": "coding_organs_stack",
+      "drift_risk": 52,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_drift_predictor_organ",
+      "drift_risk": 62,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_full_governance_cycle_organ",
+      "drift_risk": 62,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_governance_attestation_organ",
+      "drift_risk": 62,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_governance_queue_organ",
+      "drift_risk": 61,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "recipe_module_organ",
+      "drift_risk": 66,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_governed_lifecycle_fabric_organ",
+      "drift_risk": 62,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_closed_loop_fabric_organ",
+      "drift_risk": 61,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_mutation_organ",
+      "drift_risk": 61,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "naming_protocol_organ",
+      "drift_risk": 61,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "cisiv_operator_lineage_console",
+      "drift_risk": 54,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_drift_forecast_organ",
+      "drift_risk": 56,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_forecast_calibration_organ",
+      "drift_risk": 54,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_governance_cycle_organ",
+      "drift_risk": 54,
+      "band": "medium",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_predictive_governance_organ",
+      "drift_risk": 54,
+      "band": "medium",
+      "source": "forecast"
+    }
+  ],
+  "cascade_summaries": [
+    {
+      "parent_gene": "cisiv_operator_lineage_console",
+      "child_count": 18,
+      "high_drift_children": 0,
+      "parent_drift_band": "medium"
+    },
+    {
+      "parent_gene": "linguistic_drift_forecast_organ",
+      "child_count": 18,
+      "high_drift_children": 0,
+      "parent_drift_band": "medium"
+    },
+    {
+      "parent_gene": "linguistic_forecast_calibration_organ",
+      "child_count": 11,
+      "high_drift_children": 0,
+      "parent_drift_band": "medium"
+    },
+    {
+      "parent_gene": "linguistic_governance_cycle_organ",
+      "child_count": 12,
+      "high_drift_children": 0,
+      "parent_drift_band": "medium"
+    },
+    {
+      "parent_gene": "linguistic_predictive_governance_organ",
+      "child_count": 14,
+      "high_drift_children": 0,
+      "parent_drift_band": "medium"
+    },
+    {
+      "parent_gene": "meta_linguistic_governance_organ",
+      "child_count": 25,
+      "high_drift_children": 0,
+      "parent_drift_band": "medium"
+    },
+    {
+      "parent_gene": "naming_genome_organ",
+      "child_count": 23,
+      "high_drift_children": 0,
+      "parent_drift_band": "medium"
+    }
+  ]
+}

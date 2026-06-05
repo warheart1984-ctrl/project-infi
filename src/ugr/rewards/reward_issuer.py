@@ -1,5 +1,6 @@
 """Single issue_reward entry — discovery receipt gate before any ledger write."""
 
+# Engineering: RewardIssuerEngine
 from __future__ import annotations
 
 import os

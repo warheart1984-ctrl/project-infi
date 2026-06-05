@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_drift_forecast_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_drift_forecast_organ",
+      "engineering_class": "LinguisticDriftForecastEngine",
+      "mythic_label": "Linguistic Drift Forecast Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Linguistic Drift Forecast Subsystem",
+      "module_path": "src/linguistic_drift_forecast_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_drift_forecast_organ.py",
+      "header": {
+        "mythic": "Linguistic Drift Forecast Organ",
+        "engineering": "LinguisticDriftForecastEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Drift Forecast Organ\n# Engineering: LinguisticDriftForecastEngine",
+          "mythic": "Linguistic Drift Forecast Organ",
+          "engineering": "LinguisticDriftForecastEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Drift Forecast Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Drift Forecast Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "5ef23d3fca9aae585c6f38d41d76d903afee4285bd8eeccd3d86b2bbe444b3a0",
+    "engineering": "8f1942138a514a32b3b93a9d206f6f91c87856ba3086e52bcba102ae9c084531",
+    "combined": "5dee7ad1ec0cd6ab642114ad943784606a4767c0195fa93a5655af93ecc419c6"
+  }
+}

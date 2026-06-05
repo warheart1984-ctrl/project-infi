@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "safety_envelope_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "safety_envelope_organ",
+      "engineering_class": "SafetyEnvelopeEngine",
+      "mythic_label": "Safety Envelope Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Safety Envelope Organ",
+      "module_path": "src/safety_envelope.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/safety_envelope.py",
+      "header": {
+        "mythic": "Safety Envelope",
+        "engineering": "SafetyEnvelopeEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Safety Envelope\n# Engineering: SafetyEnvelopeEngine",
+          "mythic": "Safety Envelope",
+          "engineering": "SafetyEnvelopeEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Safety Envelope Organ"
+      },
+      "active_doc": {
+        "title": "Safety Envelope Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "95633555ccf5734e4a50b7e97d84863fe54985e23e15c6133f70434ad5d42aaf",
+    "engineering": "2e555bab702b739f59bb4dc6758926edf14a590dd21c070d31241a3fc1056d43",
+    "combined": "899e05ed87184a68df11dc313089704cd1179c95b9c2c3c96b4c3ad793bdc419"
+  }
+}

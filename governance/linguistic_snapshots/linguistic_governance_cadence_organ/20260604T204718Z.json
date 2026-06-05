@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_governance_cadence_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_governance_cadence_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Linguistic Governance Cadence Subsystem",
+      "module_path": "src/linguistic_governance_cadence_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_governance_cadence_organ.py",
+      "header": {
+        "mythic": "Linguistic Governance Cadence Organ",
+        "engineering": "LinguisticGovernanceCadenceEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Governance Cadence Organ\n# Engineering: LinguisticGovernanceCadenceEngine",
+          "mythic": "Linguistic Governance Cadence Organ",
+          "engineering": "LinguisticGovernanceCadenceEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Governance Cadence Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Governance Cadence Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "f4f62a1eca5794af17de3191ab68ac4fc5cadd108e317e30459fc00677887f72",
+    "engineering": "5030629fba4ae00021be22d593ea31726b4376592a41be9612b7164471c90064",
+    "combined": "b8b62d0986137b86a348bba6c715bad206940f527a7c287ba278d7943ed9efe3"
+  }
+}

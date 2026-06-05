@@ -43,7 +43,7 @@ Architecture is unchanged; documentation and gates use standard engineering lang
 | Fabric | **Coherence Layer** |
 | Summon wave | **Release** |
 
-**Linguistic naming schema** — each governed subsystem schema carries mythic and engineering names on its SSP block (**170 governed** genomes at **v1.25.0**):
+**Linguistic naming schema** — each governed subsystem schema carries mythic and engineering names on its SSP block (**178 governed** genomes at **v1.26.1**):
 
 | SSP field | Example (Release 22) | Role |
 |-----------|----------------------|------|

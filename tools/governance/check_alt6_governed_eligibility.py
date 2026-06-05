@@ -18,7 +18,7 @@ FABRIC_MINIMUM_GENES = (
     "adaptive_lane_organ",
     "operator_profile_organ",
     "capability_service_bridge",
-    "recipe_module",
+    "recipe_module_organ",
     "governed_direct_pipeline",
 )
 

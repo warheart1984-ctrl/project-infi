@@ -19,9 +19,9 @@
   },
   "platforms": {
     "linux": {
-      "substrate_ids": ["debian-rootfs", "ubuntu-rootfs"],
-      "replay_adapter": "debian-rootfs-layout",
-      "backend": "debootstrap-backend",
+      "substrate_ids": ["debian-live", "ubuntu-live"],
+      "replay_adapter": "debian-live-layout",
+      "backend": "debootstrap",
       "required_invariants": [
         "rootfs_integrity",
         "systemd_unit_presence"

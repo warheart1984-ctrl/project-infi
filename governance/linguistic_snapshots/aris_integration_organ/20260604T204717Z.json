@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "aris_integration_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "aris_integration_organ",
+      "engineering_class": "ArisIntegrationEngine",
+      "mythic_label": "Aris Integration Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "ARIS Integration Organ",
+      "module_path": "src/aris_integration_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/aris_integration_organ.py",
+      "header": {
+        "mythic": "Aris Integration Organ",
+        "engineering": "ArisIntegrationEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Aris Integration Organ\n# Engineering: ArisIntegrationEngine",
+          "mythic": "Aris Integration Organ",
+          "engineering": "ArisIntegrationEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "ARIS Integration Organ"
+      },
+      "active_doc": {
+        "title": "Aris Integration Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "1ab57d2924d8cdc8f8fbbeadc2af46cf6d81d0ff3a9ab88c27860360100c0f1c",
+    "engineering": "0a0f60b4cbf914512c717f59f1e236edcbb43ccc62a6b124c21aec925f0929e2",
+    "combined": "278917ba5cac415f5e1be3ddc96cbbe53ba033d5c6c3466b5232ee63bbdf44f0"
+  }
+}

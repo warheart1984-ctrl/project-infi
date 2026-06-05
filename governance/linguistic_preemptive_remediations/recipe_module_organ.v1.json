@@ -1,0 +1,25 @@
+{
+  "linguistic_preemptive_playbook_version": "linguistic_preemptive_playbook.v1",
+  "gene": "recipe_module_organ",
+  "current_band": "low",
+  "predicted_band": "high",
+  "predicted_risk_30d": 68,
+  "lead_time_days": 30,
+  "drivers": [
+    "latent alignment gap (header/doc vs genome ssp)",
+    "rising linguistic snapshot trajectory"
+  ],
+  "generated_at": "2026-06-05T17:58:24Z",
+  "actions": [
+    {
+      "kind": "watch_wave2_header",
+      "path": "src/recipe_module_organ.py",
+      "note": "Add # Engineering header before band escalates"
+    },
+    {
+      "kind": "schedule_remediation",
+      "command": "python tools/governance/generate_linguistic_remediations.py --gene recipe_module_organ",
+      "note": "Pre-generate remediation when predicted band materializes"
+    }
+  ]
+}

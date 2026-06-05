@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_governed_lifecycle_fabric_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_governed_lifecycle_fabric_organ",
+      "engineering_class": "LinguisticGovernedLifecycleFabricEngine",
+      "mythic_label": "Linguistic Governed Lifecycle Fabric Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Linguistic Governed Lifecycle Fabric Subsystem",
+      "module_path": "src/linguistic_governed_lifecycle_fabric_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_governed_lifecycle_fabric_organ.py",
+      "header": {
+        "mythic": "Linguistic Governed Lifecycle Fabric Organ",
+        "engineering": "LinguisticGovernedLifecycleFabricEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Governed Lifecycle Fabric Organ\n# Engineering: LinguisticGovernedLifecycleFabricEngine",
+          "mythic": "Linguistic Governed Lifecycle Fabric Organ",
+          "engineering": "LinguisticGovernedLifecycleFabricEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Governed Lifecycle Fabric Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Governed Lifecycle Fabric Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "4c771d156ef57aa3595ddc4b1ea4efea68ba432a198e2d50afdd963b3ea77caf",
+    "engineering": "7338c78c9d01cfb7d93c7a1af9cc7503c2107d3b33710e2755c03ee229f5bed1",
+    "combined": "050a27741b042e1883deee237d86d0ecf8981d91d5bf8cf5afd0431ad6b729b9"
+  }
+}

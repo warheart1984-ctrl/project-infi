@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "jarvis_operator_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "jarvis_operator_organ",
+      "engineering_class": "JarvisOperatorEngine",
+      "mythic_label": "Jarvis Operator Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Jarvis Operator Organ",
+      "module_path": "src/jarvis_operator_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/jarvis_operator_organ.py",
+      "header": {
+        "mythic": "Jarvis Operator Organ",
+        "engineering": "JarvisOperatorEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Jarvis Operator Organ\n# Engineering: JarvisOperatorEngine",
+          "mythic": "Jarvis Operator Organ",
+          "engineering": "JarvisOperatorEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Jarvis Operator Organ"
+      },
+      "active_doc": {
+        "title": "Jarvis Operator Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "4f1d90798cf5afdac10870e0e42221e9c2d9e6fe234e2cc64069fdd6ec28ea48",
+    "engineering": "88604c2a5327d0177d08fbd84861af4c9cacbe7643d4b354e8d319aa89dacef7",
+    "combined": "fcc7f307b5c4d033aac682e8206bef843f9bc480edffe0959882fd29b373f3eb"
+  }
+}

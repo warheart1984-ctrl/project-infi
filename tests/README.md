@@ -24,11 +24,21 @@ Outside testing ideas may be compared or pressure-tested here, but they do not
 become canonical verification truth unless project law has filtered them and
 the admitted form is documented.
 
+## Governance Test Harness
+
+Session bootstrap (`tests/governance_bootstrap.py` + `tests/conftest.py`):
+
+- `governance_bootstrap` session fixture — registers lanes, seeds membrane, admits memory gateway, issues synthetic `AAIS_TEST_ADMISSION_TOKEN`
+- `governance_test_group_reset` module fixture — explicit registry reset between groups that call `module_governance.reset()`
+- `pytest_collection_modifyitems` — runs phase/module/memory governance tests before `test_api.py`
+- Cold-start admission — `AAIS_TEST_COLD_START=1` with `runtime_context=test_harness` only (never honored for live/operator runtime)
+
 ## Useful Commands
 
 ```bash
 python -m pytest tests/test_api.py -q
 python -m pytest tests/test_project_infi_law.py -q
+python -m pytest tests/test_memory_board_enforcer.py tests/test_api.py::TestChatApi -q
 ```
 
 ## Read Next

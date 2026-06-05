@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
-import app.auth as auth
+import app.config as config
 import app.db as db
 import app.workflow_runtime as workflow_runtime
 from app.workflow_recovery import sweep_workflow_runs
@@ -187,13 +187,13 @@ class WorkflowHardeningTests(unittest.TestCase):
     def setUp(self):
         self.tempdir = tempfile.TemporaryDirectory()
         self.original_db_path = db.DB_PATH
-        self.original_token = auth.APP_BEARER_TOKEN
+        self.original_token = config.APP_BEARER_TOKEN
         db.DB_PATH = Path(self.tempdir.name) / "workflow-tests.db"
-        auth.APP_BEARER_TOKEN = ""
+        config.APP_BEARER_TOKEN = ""
         db.init_db()
 
     def tearDown(self):
-        auth.APP_BEARER_TOKEN = self.original_token
+        config.APP_BEARER_TOKEN = self.original_token
         db.DB_PATH = self.original_db_path
         self.tempdir.cleanup()
 
@@ -733,13 +733,13 @@ class WorkflowApiContractTests(unittest.TestCase):
     def setUp(self):
         self.tempdir = tempfile.TemporaryDirectory()
         self.original_db_path = db.DB_PATH
-        self.original_token = auth.APP_BEARER_TOKEN
+        self.original_token = config.APP_BEARER_TOKEN
         db.DB_PATH = Path(self.tempdir.name) / "workflow-api-tests.db"
-        auth.APP_BEARER_TOKEN = ""
+        config.APP_BEARER_TOKEN = ""
         db.init_db()
 
     def tearDown(self):
-        auth.APP_BEARER_TOKEN = self.original_token
+        config.APP_BEARER_TOKEN = self.original_token
         db.DB_PATH = self.original_db_path
         self.tempdir.cleanup()
 
@@ -1103,6 +1103,14 @@ class WorkflowApiContractTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertIn("sessions", response.json())
+
+    def test_legacy_api_compat_mount_exposes_chat_routes_at_canonical_path(self):
+        with TestClient(main.app) as client:
+            response = client.get("/api/chat/sessions")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("sessions", response.json())
+        self.assertTrue(main.legacy_api_compat_mounted)
 
     def test_legacy_api_mount_bootstraps_ai_runtime(self):
         previous_app = main.legacy_api_bridge._app

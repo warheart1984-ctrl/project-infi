@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "platform_console_interfaces_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "platform_console_interfaces_organ",
+      "engineering_class": "PlatformConsoleInterfacesInterface",
+      "mythic_label": "Platform Console Interfaces Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Platform Console Interfaces Subsystem",
+      "module_path": "src/platform_console_interfaces_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/platform_console_interfaces_organ.py",
+      "header": {
+        "mythic": "Platform Console Interfaces Organ",
+        "engineering": "PlatformConsoleInterfacesInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Platform Console Interfaces Organ\n# Engineering: PlatformConsoleInterfacesInterface",
+          "mythic": "Platform Console Interfaces Organ",
+          "engineering": "PlatformConsoleInterfacesInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Platform Console Interfaces Subsystem"
+      },
+      "active_doc": {
+        "title": "Platform Console Interfaces Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "724af6354e2e5addc59b83e243ec45459a97e81134f9c7f7250a009c448f39cb",
+    "engineering": "6399e5ceaa58e954e2c0137a95c7d253f6f92cb3daef23f4cba9144f0a7a3d66",
+    "combined": "4d40d71ba498d444d4335103c302649370ca9d967ca99c38349ad7e4eb68d4b5"
+  }
+}

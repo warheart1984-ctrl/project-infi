@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "blueprint_posture_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "blueprint_posture_organ",
+      "engineering_class": "BlueprintPostureEngine",
+      "mythic_label": "Blueprint Posture Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Blueprint Posture Subsystem",
+      "module_path": "src/blueprint_posture_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/blueprint_posture_organ.py",
+      "header": {
+        "mythic": "Blueprint Posture Organ",
+        "engineering": "BlueprintPostureEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Blueprint Posture Organ\n# Engineering: BlueprintPostureEngine",
+          "mythic": "Blueprint Posture Organ",
+          "engineering": "BlueprintPostureEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Blueprint Posture Subsystem"
+      },
+      "active_doc": {
+        "title": "Blueprint Posture Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "361b97b4ff25fe8c15995e27e1faa4151279e8e43a9184e52e34be05e225d764",
+    "engineering": "547924396b1a343eb08a80645920d3b14a192f4c22ef654b526c3962f74423c2",
+    "combined": "c20db26e4228350bdc5c3237a3f63aa962717324725e774f59769227d094edf8"
+  }
+}

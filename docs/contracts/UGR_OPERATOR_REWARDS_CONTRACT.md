@@ -101,7 +101,7 @@ Failure returns `status: rejected` with `reason: discovery_receipt_unresolved`. 
 | Variable | Default | Purpose |
 |----------|---------|---------|
 | `UGR_OPERATOR_REWARDS_ENABLED` | `1` | Kill switch |
-| `UGR_REWARDS_SHADOW_ONLY` | `1` | Validate + audit; no balance writes |
+| `UGR_REWARDS_SHADOW_ONLY` | `1` | Validate + compute; no balance writes (audit is stricter preview-only) |
 | `UGR_REWARDS_AUDIT_ONLY` | `0` | Compute deltas + attribution preview; no ledger append |
 | `UGR_RAIL_CREDIT_TRANSFER_ENABLED` | `1` | Allow operator P2P credit transfer |
 | `UGR_RAIL_CREDIT_SPEND_ENABLED` | `1` | Allow spend + forge hook |

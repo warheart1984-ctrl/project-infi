@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_lineage_viz_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_lineage_viz_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Linguistic Lineage Viz Subsystem",
+      "module_path": "src/linguistic_lineage_viz_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_lineage_viz_organ.py",
+      "header": {
+        "mythic": "Linguistic Lineage Viz Organ",
+        "engineering": "LinguisticLineageVizEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Lineage Viz Organ\n# Engineering: LinguisticLineageVizEngine",
+          "mythic": "Linguistic Lineage Viz Organ",
+          "engineering": "LinguisticLineageVizEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Lineage Viz Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Lineage Viz Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "6d986059e45f58d14ccfad3b4aa60b636e9e4b2642286376d325abc1df71f1e0",
+    "engineering": "e41e0a6b4e549a9b08411bb856959d431dc051e50027de9d22665f2df83aa908",
+    "combined": "679d8a83fbabc4cb239242613cde06de6c02b5eaa045bb647bb8d707b5eaf6c3"
+  }
+}

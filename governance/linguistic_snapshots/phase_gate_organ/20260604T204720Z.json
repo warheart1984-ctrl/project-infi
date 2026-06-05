@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "phase_gate_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "phase_gate_organ",
+      "engineering_class": "PhaseGateGate",
+      "mythic_label": "Phase Gate Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Phase Gate Organ",
+      "module_path": "src/phase_gate_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/phase_gate_organ.py",
+      "header": {
+        "mythic": "Phase Gate Organ",
+        "engineering": "PhaseGateGate"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Phase Gate Organ\n# Engineering: PhaseGateGate",
+          "mythic": "Phase Gate Organ",
+          "engineering": "PhaseGateGate"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Phase Gate Organ"
+      },
+      "active_doc": {
+        "title": "Phase Gate Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "d1063caf1a56546f25402482572f15778342018fc466ca7f54c8b657346b00a5",
+    "engineering": "20e0809842c7a73917cde980172b8e3cc25a61859875c9e9970f517ffb13a51a",
+    "combined": "78e0c9bfaaf2bc843242af27bc97f2b722a48ab1535c6fd9faa039be4a9e9b68"
+  }
+}

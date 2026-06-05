@@ -76,7 +76,8 @@
       "aais_ul_substrate_organ",
       "forensic_triangulation",
       "linguistic_lineage_viz_organ",
-      "ul_lineage_console_organ"
+      "ul_lineage_console_organ",
+      "temporal_replay_machine"
     ]
   },
   "activation": {
@@ -95,8 +96,8 @@
     "mvp_plan": "docs/_future/ideas_pending/CISIV_OPERATOR_LINEAGE_CONSOLE_MVP_PLAN.md",
     "summon_eligible": false,
     "active_doc": "docs/runtime/UL_LINEAGE_CONSOLE.md",
-    "engineering_class": "CisivOperatorLineageConsole",
-    "mythic_label": "CISIV operator lineage console",
+    "engineering_class": "UlLineageEngine",
+    "mythic_label": "Ul Lineage",
     "linguistic_version": "1.0.0"
   }
 }

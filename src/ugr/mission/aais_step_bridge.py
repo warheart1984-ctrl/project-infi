@@ -1,5 +1,6 @@
 """Mission step → AAIS bridge-cleared deliberation (llm_bridge or full_deliberate)."""
 
+# Engineering: AaisStepBridgeEngine
 from __future__ import annotations
 
 import os

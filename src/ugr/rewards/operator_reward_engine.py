@@ -1,5 +1,6 @@
 """Operator reward engine — thin wrapper over reward_issuer.issue_reward."""
 
+# Engineering: OperatorRewardEngine
 from __future__ import annotations
 
 from typing import Any

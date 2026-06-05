@@ -2,9 +2,19 @@
 
 from __future__ import annotations
 
+import pytest
 from unittest.mock import patch
 
-from src.governed_direct_pipeline import build_governed_turn_pipeline
+from src.governed_direct_pipeline import build_governed_turn_pipeline, clear_governed_pipeline_cache
+
+
+@pytest.fixture(autouse=True)
+def _disable_pipeline_cache(monkeypatch):
+    monkeypatch.setenv("AAIS_GOVERNED_PIPELINE_CACHE_SEC", "0")
+    monkeypatch.setenv("AAIS_COHERENCE_FABRIC_CACHE_SEC", "0")
+    clear_governed_pipeline_cache()
+    yield
+    clear_governed_pipeline_cache()
 
 
 def _healthy_coherence_status() -> dict:

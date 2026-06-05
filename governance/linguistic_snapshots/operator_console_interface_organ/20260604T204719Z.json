@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "operator_console_interface_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "operator_console_interface_organ",
+      "engineering_class": "OperatorConsoleInterfaceInterface",
+      "mythic_label": "Operator Console Interface Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Operator Console Interface Subsystem",
+      "module_path": "src/operator_console_interface_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/operator_console_interface_organ.py",
+      "header": {
+        "mythic": "Operator Console Interface Organ",
+        "engineering": "OperatorConsoleInterfaceInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Operator Console Interface Organ\n# Engineering: OperatorConsoleInterfaceInterface",
+          "mythic": "Operator Console Interface Organ",
+          "engineering": "OperatorConsoleInterfaceInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Operator Console Interface Subsystem"
+      },
+      "active_doc": {
+        "title": "Operator Console Interface Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "5b54c55e3013309e8af74d13e5526b3e685ddf80b2a4b96d8069a436419f80eb",
+    "engineering": "1a8908d54ed62117e51835e4c054e232dc4d102f064a38122d3b7a7e3ed6b013",
+    "combined": "34202830df30fd61ce298dd8bdc17a747e652e00000db113337a1edd85d54556"
+  }
+}

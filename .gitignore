@@ -58,6 +58,8 @@ downloads/
 eggs/
 .eggs/
 lib/
+!mobile/src/lib/
+!mobile/src/lib/**
 !wolf-cog-os/scripts/lib/
 !wolf-cog-os/scripts/lib/profile-loader.sh
 lib64/

@@ -883,10 +883,17 @@ class CapabilityServiceBridge:
         }
 
     def _module_action_for_spec(self, spec: dict[str, Any]) -> str:
-        actions = tuple(spec["module"].supported_actions)
+        action = spec.get("action")
+        if action:
+            return str(action)
+        actions = tuple(getattr(spec.get("module"), "supported_actions", ()) or ())
         if actions:
-            return actions[0]
-        return spec["action"]
+            return str(actions[0])
+        cap_id = str(spec.get("capability_id") or "")
+        for (cid, cap_action) in self._selection_routes:
+            if cid == cap_id:
+                return cap_action
+        return "execute"
 
     def _phase_component_id(self, spec: dict[str, Any]) -> str:
         return f"jarvis.capability.{spec['capability_id']}"
@@ -1152,11 +1159,11 @@ class CapabilityServiceBridge:
                 except GenomeValidationError as exc:
                     return self._build_genome_block(spec, str(exc), args=args)
 
-        route_key = (spec["capability_id"], spec["action"])
-        if route_key not in self._selection_routes:
+        route_key = (spec["capability_id"], self._module_action_for_spec(spec))
+        if route_key not in self._selection_routes and spec.get("handler") is None:
             return self._build_genome_block(
                 spec,
-                f"unregistered bridge action: {spec['capability_id']}/{spec['action']}",
+                f"unregistered bridge action: {route_key[0]}/{route_key[1]}",
                 args=args,
             )
 
@@ -1559,6 +1566,13 @@ class CapabilityServiceBridge:
         self._events.append(event)
         if len(self._events) > MAX_AUDIT_EVENTS:
             self._events = self._events[-MAX_AUDIT_EVENTS:]
+        try:
+            from src.temporal_replay.bridge_audit import append_bridge_audit_event
+
+            session_key = str(capability_meta.get("trace_id") or capability_meta.get("session_id") or "")
+            append_bridge_audit_event(session_key, event)
+        except Exception:
+            pass
         return event
 
     def _finalize_result(

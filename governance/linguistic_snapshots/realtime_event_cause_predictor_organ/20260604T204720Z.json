@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "realtime_event_cause_predictor_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "realtime_event_cause_predictor_organ",
+      "engineering_class": "RealtimeEventCausePredictorEngine",
+      "mythic_label": "Realtime Event Cause Predictor Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Realtime Event Cause Predictor Organ",
+      "module_path": "src/realtime_event_cause_predictor_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/realtime_event_cause_predictor_organ.py",
+      "header": {
+        "mythic": "Realtime Event Cause Predictor Organ",
+        "engineering": "RealtimeEventCausePredictorEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Realtime Event Cause Predictor Organ\n# Engineering: RealtimeEventCausePredictorEngine",
+          "mythic": "Realtime Event Cause Predictor Organ",
+          "engineering": "RealtimeEventCausePredictorEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Realtime Event Cause Predictor Organ"
+      },
+      "active_doc": {
+        "title": "Realtime Event Cause Predictor Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "a7b109c2b3d66bc6cfca5930282d6f0e59377aa154d9ee9d5fa7c7c777706890",
+    "engineering": "90314c21cee8dc2a94381a294aa1f1b4050878ee7710d5b1096bdcf63b000d17",
+    "combined": "6985a0c969728d603a92ea64767c5058ad2640c5dc652d19c5fba4cc3e1dfe0e"
+  }
+}

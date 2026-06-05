@@ -1,0 +1,130 @@
+{
+  "linguistic_governance_cycle_version": "linguistic_governance_cycle.v1",
+  "cycle_id": "20260605T190706Z",
+  "generated_at": "2026-06-05T19:07:06Z",
+  "policy_mode": "observe",
+  "remediation_min_band": "low",
+  "metrics": {
+    "gene_count": 179,
+    "high_count": 0,
+    "medium_count": 0,
+    "low_count": 179,
+    "mean_drift_risk": 7.59,
+    "playbook_count": 0,
+    "playbook_coverage_pct": 100.0
+  },
+  "deltas_from_previous": {
+    "high_count_delta": 0,
+    "medium_count_delta": -7,
+    "mean_drift_risk_delta": -5.35,
+    "playbook_coverage_pct_delta": 0.0
+  },
+  "phases": {
+    "gates_passed": null,
+    "drift_refreshed": false,
+    "forecast_consumed": true,
+    "remediations_written": 20,
+    "cascade_parents_scanned": 0,
+    "queue_ref": "governance/linguistic_governance_queue.v1.json"
+  },
+  "optimization_recommendations": [
+    {
+      "kind": "remediation_min_band",
+      "suggested": "low",
+      "reason": "adaptive band from current drift distribution"
+    }
+  ],
+  "top_at_risk": [
+    {
+      "gene": "recipe_module_organ",
+      "drift_risk": 28,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "coding_organs_stack",
+      "drift_risk": 29,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_drift_predictor_organ",
+      "drift_risk": 26,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_full_governance_cycle_organ",
+      "drift_risk": 26,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_governance_attestation_organ",
+      "drift_risk": 26,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "meta_linguistic_governance_organ",
+      "drift_risk": 32,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "cisiv_operator_lineage_console",
+      "drift_risk": 31,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_drift_forecast_organ",
+      "drift_risk": 31,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_forecast_calibration_organ",
+      "drift_risk": 31,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_governance_cycle_organ",
+      "drift_risk": 31,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "naming_genome_organ",
+      "drift_risk": 31,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "linguistic_predictive_governance_organ",
+      "drift_risk": 30,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "operator_cognition_coherence_fabric",
+      "drift_risk": 30,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "capability_service_bridge",
+      "drift_risk": 29,
+      "band": "low",
+      "source": "forecast"
+    },
+    {
+      "gene": "governance_layer_organ",
+      "drift_risk": 27,
+      "band": "low",
+      "source": "forecast"
+    }
+  ],
+  "cascade_summaries": []
+}

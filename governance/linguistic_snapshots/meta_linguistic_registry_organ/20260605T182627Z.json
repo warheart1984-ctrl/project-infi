@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "meta_linguistic_registry_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "meta_linguistic_registry_organ",
+      "engineering_class": "MetaLinguisticRegistryEngine",
+      "mythic_label": "Meta Linguistic Registry Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Meta-Linguistic Registry Subsystem",
+      "module_path": "src/meta_linguistic_registry_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/meta_linguistic_registry_organ.py",
+      "header": {
+        "mythic": "Meta Linguistic Registry Organ",
+        "engineering": "MetaLinguisticRegistryEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Meta Linguistic Registry Organ\n# Engineering: MetaLinguisticRegistryEngine",
+          "mythic": "Meta Linguistic Registry Organ",
+          "engineering": "MetaLinguisticRegistryEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Meta-Linguistic Registry Subsystem"
+      },
+      "active_doc": {
+        "title": "Meta Linguistic Registry Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "1b2e53afbeaa9ea8a13d0582d0de0b9b8f28f8aff8b252a50c828e3795154400",
+    "engineering": "ed32f3234fb7734936ef4071ee7da1dda905b0ba1d314a4229fd255cce75f065",
+    "combined": "2a1c1a21b0bac20f1e699bf166638fbadd4cfb0e081bc9bc01738b1e0ec76dc6"
+  }
+}

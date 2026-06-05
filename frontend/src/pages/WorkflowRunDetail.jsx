@@ -144,7 +144,15 @@ function WorkflowRunDetail() {
             <p>Track progress, approvals, and step output as this run moves through the queue.</p>
           </div>
         </div>
-        <span className={`status-pill ${statusClasses(run.status)}`}>{run.status}</span>
+        <div className="workflow-detail-header-actions">
+          <Link
+            className="workflow-page-link"
+            to={`/operator/replay/workflow_run/${encodeURIComponent(run.id)}`}
+          >
+            Open in Replay Machine
+          </Link>
+          <span className={`status-pill ${statusClasses(run.status)}`}>{run.status}</span>
+        </div>
       </div>
 
       <div className="workflow-detail-grid">

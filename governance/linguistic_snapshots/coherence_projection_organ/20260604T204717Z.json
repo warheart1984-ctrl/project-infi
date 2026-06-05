@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "coherence_projection_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "coherence_projection_organ",
+      "engineering_class": "CoherenceProjectionLayer",
+      "mythic_label": "Coherence Projection Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Coherence Projection Organ",
+      "module_path": "src/coherence_projection_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/coherence_projection_organ.py",
+      "header": {
+        "mythic": "Coherence Projection Organ",
+        "engineering": "CoherenceProjectionLayer"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Coherence Projection Organ\n# Engineering: CoherenceProjectionLayer",
+          "mythic": "Coherence Projection Organ",
+          "engineering": "CoherenceProjectionLayer"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Coherence Projection Organ"
+      },
+      "active_doc": {
+        "title": "Coherence Projection Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "7d8a1b764f844ba250d36ede85c4751068a24ed1d96b365616c30731554083c6",
+    "engineering": "a8566c335c017b8a07c70d4b380191223924ae057152216242b3f03bbeb72fd3",
+    "combined": "d915008ef7b6cf5b281c2dd84ba69d1f92d09cbb90bf75f6180bba343cbbab9d"
+  }
+}

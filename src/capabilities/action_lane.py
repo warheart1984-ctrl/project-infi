@@ -1,5 +1,6 @@
 """Governed action-lane capability adapter for approval/action lifecycle tools."""
 
+# Engineering: ActionLaneEngine
 from __future__ import annotations
 
 from typing import Any

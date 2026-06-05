@@ -7,9 +7,9 @@
   "routes": {
     "health": "/health",
     "jarvis_chat": "/api/jarvis",
-    "jarvis_sessions": "/legacy_api/api/chat/sessions",
-    "jarvis_message": "/legacy_api/api/chat/sessions/{session_id}/message",
-    "jarvis_stream": "/legacy_api/api/chat/sessions/{session_id}/stream",
+    "jarvis_sessions": "/api/chat/sessions",
+    "jarvis_message": "/api/chat/sessions/{session_id}/message",
+    "jarvis_stream": "/api/chat/sessions/{session_id}/stream",
     "memory_write": "/api/memory/write"
   }
 }

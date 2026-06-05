@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "nova_landing_surface_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "nova_landing_surface_organ",
+      "engineering_class": "NovaLandingSurfaceInterface",
+      "mythic_label": "Nova Landing Surface Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Nova Landing Surface Organ",
+      "module_path": "src/nova_landing_surface_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/nova_landing_surface_organ.py",
+      "header": {
+        "mythic": "Nova Landing Surface Organ",
+        "engineering": "NovaLandingSurfaceInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Nova Landing Surface Organ\n# Engineering: NovaLandingSurfaceInterface",
+          "mythic": "Nova Landing Surface Organ",
+          "engineering": "NovaLandingSurfaceInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Nova Landing Surface Organ"
+      },
+      "active_doc": {
+        "title": "Nova Landing Surface Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "bd4200638adbe9676336603fe1ee0eea2dcde1dcc97c97328621763e9e6728f0",
+    "engineering": "a491b91358a7069c50e6141de2b0339c11299cc949c1293753ec05a48b7972a5",
+    "combined": "48116e7991b3032c9dd4edd4848296126493f302bad069e3feb619feba691b43"
+  }
+}

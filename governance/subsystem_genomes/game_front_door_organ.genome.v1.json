@@ -75,6 +75,9 @@
     "concept_spec": "docs/_future/ideas_pending/GAME_FRONT_DOOR_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/GAME_FRONT_DOOR_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/storyforge/GAME_FRONT_DOOR.md"
+    "active_doc": "docs/subsystems/storyforge/GAME_FRONT_DOOR.md",
+    "engineering_class": "GameFrontDoorPosture",
+    "mythic_label": "Game Front Door Organ",
+    "linguistic_version": "1.0.0"
   }
 }

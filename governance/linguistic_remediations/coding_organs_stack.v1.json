@@ -1,0 +1,20 @@
+{
+  "linguistic_remediation_playbook_version": "linguistic_remediation_playbook.v1",
+  "gene": "coding_organs_stack",
+  "drift_band": "low",
+  "drift_risk": 16,
+  "signals": {
+    "alignment_gap": 0.0,
+    "snapshot_velocity": 45.0,
+    "layer_skew": 0.0,
+    "gene_mythic_tokens": 0.0,
+    "lineage_fanout": 60.0
+  },
+  "generated_at": "2026-06-05T19:08:34Z",
+  "actions": [
+    {
+      "kind": "recommendation",
+      "text": "Review recent MP-LING proposals; stabilize linguistic_version"
+    }
+  ]
+}

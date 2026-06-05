@@ -56,6 +56,7 @@
     "children": [
       "linguistic_mutation_organ",
       "naming_protocol_organ",
+      "recipe_module",
       "recipe_module_organ"
     ]
   },

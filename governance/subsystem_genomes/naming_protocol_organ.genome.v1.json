@@ -77,6 +77,9 @@
     "concept_spec": "docs/_future/ideas_pending/NAMING_PROTOCOL_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/NAMING_PROTOCOL_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/NAMING_PROTOCOL_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/NAMING_PROTOCOL_ORGAN.md",
+    "engineering_class": "NamingProtocolEngine",
+    "mythic_label": "Naming Protocol Organ",
+    "linguistic_version": "1.0.0"
   }
 }

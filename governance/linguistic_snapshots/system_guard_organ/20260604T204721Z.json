@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "system_guard_organ",
+  "captured_at": "2026-06-04T20:47:21Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "system_guard_organ",
+      "engineering_class": "SystemGuardEngine",
+      "mythic_label": "System Guard Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "System Guard Organ",
+      "module_path": "src/system_guard_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/system_guard_organ.py",
+      "header": {
+        "mythic": "System Guard Organ",
+        "engineering": "SystemGuardEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: System Guard Organ\n# Engineering: SystemGuardEngine",
+          "mythic": "System Guard Organ",
+          "engineering": "SystemGuardEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "System Guard Organ"
+      },
+      "active_doc": {
+        "title": "System Guard Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "17b1a48eca438352ed4df3ae1c9b2868853e85d2c89d6b957e8994052ba1f8ca",
+    "engineering": "5991d6edfde6dd9c391321995dbe868da2dc03eadbb7e5244ab411fd9d87758c",
+    "combined": "a189b382fbec386e6f592c7290c749f72e568873fe6433064d58d96d445d4a6a"
+  }
+}

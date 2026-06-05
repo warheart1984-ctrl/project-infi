@@ -56,6 +56,14 @@ class RailDecisionLedger:
     ) -> dict[str, Any]:
         decision = dict(cloud_forge_bundle.get("rail_decision") or {})
         plan = dict(cloud_forge_bundle.get("cognition_plan") or {})
+        # Secondary checkpoint (defense-in-depth for Cloud Forge rail decisions):
+        # Direct RailDecisionLedger().append bypasses schedule_request_observed / integration / log_ledger flag.
+        # Require core decision data (task_id + rail) just like reward ledger guards on attribution + discovery_receipt_id.
+        if not decision.get("task_id") or not decision.get("rail"):
+            return {
+                "status": "refused_by_checkpoint",
+                "reason": "missing core rail_decision fields (task_id/rail) — possible direct ledger bypass of observed scheduling path",
+            }
         record_id = f"rail-{uuid4().hex[:12]}"
         digest = sha256(
             _stable_json(

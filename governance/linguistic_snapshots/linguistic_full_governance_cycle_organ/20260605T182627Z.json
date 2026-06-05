@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_full_governance_cycle_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_full_governance_cycle_organ",
+      "engineering_class": "LinguisticFullGovernanceCycleEngine",
+      "mythic_label": "Linguistic Full Governance Cycle Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Linguistic Full Governance Cycle Subsystem",
+      "module_path": "src/linguistic_full_governance_cycle_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_full_governance_cycle_organ.py",
+      "header": {
+        "mythic": "Linguistic Full Governance Cycle Organ",
+        "engineering": "LinguisticFullGovernanceCycleEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Full Governance Cycle Organ\n# Engineering: LinguisticFullGovernanceCycleEngine",
+          "mythic": "Linguistic Full Governance Cycle Organ",
+          "engineering": "LinguisticFullGovernanceCycleEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Full Governance Cycle Organ"
+      },
+      "active_doc": {
+        "title": "Linguistic Full Governance Cycle Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "44504dc6990b4e731783da091c7cb177f32331cb4ecb7a4307d9371b7f3be52e",
+    "engineering": "b8f5006020c109d2e0e9bdb5272297f2d4f01856e68ee5233f0962f3f6f1f5f1",
+    "combined": "c1a75ef342a268dde96e7127069441d96573a3269a0ffe293e89957b7b8b8ced"
+  }
+}

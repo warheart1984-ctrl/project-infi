@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "ul_lineage_console_organ",
+  "captured_at": "2026-06-04T20:47:21Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "ul_lineage_console_organ",
+      "engineering_class": "UlLineageConsoleInterface",
+      "mythic_label": "Ul Lineage Console Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "UL Lineage Console Organ",
+      "module_path": "src/ul_lineage_console_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/ul_lineage_console_organ.py",
+      "header": {
+        "mythic": "Ul Lineage Console Organ",
+        "engineering": "UlLineageConsoleInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Ul Lineage Console Organ\n# Engineering: UlLineageConsoleInterface",
+          "mythic": "Ul Lineage Console Organ",
+          "engineering": "UlLineageConsoleInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "UL Lineage Console Organ"
+      },
+      "active_doc": {
+        "title": "Ul Lineage Console Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "ac17bfc14ddece90c8b8080ea99d293f4c5931637531752dac87b43c97355bfd",
+    "engineering": "581ea6a4150a161b4cf44245f5c301e743523b87f5b3b0588a4dca7b275b787d",
+    "combined": "479d336ea0863484c6ebfe1025291e70d9fe27770a02447f6f35dd6075416728"
+  }
+}

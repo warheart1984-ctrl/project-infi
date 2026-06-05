@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "launcher_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "launcher_organ",
+      "engineering_class": "LauncherEngine",
+      "mythic_label": "Launcher Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Launcher Organ",
+      "module_path": "src/launcher_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/launcher_organ.py",
+      "header": {
+        "mythic": "Launcher Organ",
+        "engineering": "LauncherEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Launcher Organ\n# Engineering: LauncherEngine",
+          "mythic": "Launcher Organ",
+          "engineering": "LauncherEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Launcher Organ"
+      },
+      "active_doc": {
+        "title": "Launcher Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "1584df85827d5b81fb955b0331863e6bbeb9df0fdec988a4cec808721746c516",
+    "engineering": "67426b508abefc5d3d4c08760c005106481065bb0d8472c3869a5d496e56bf32",
+    "combined": "5ffcfe75203a07661a7032195a9f99dfd8b6e6f778608da05a1a0062a4dfdf32"
+  }
+}

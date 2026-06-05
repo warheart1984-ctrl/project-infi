@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "forge_eval_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "forge_eval_organ",
+      "engineering_class": "ForgeEvalEngine",
+      "mythic_label": "Forge Eval Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "ForgeEval Organ",
+      "module_path": "src/forge_eval_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/forge_eval_organ.py",
+      "header": {
+        "mythic": "Forge Eval Organ",
+        "engineering": "ForgeEvalEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Forge Eval Organ\n# Engineering: ForgeEvalEngine",
+          "mythic": "Forge Eval Organ",
+          "engineering": "ForgeEvalEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "ForgeEval Organ"
+      },
+      "active_doc": {
+        "title": "Forge Eval Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "2fbd8273589b08f5a6da8e6eca2f9fc44b7c42b99dc3f608aeaf8b27679c99e5",
+    "engineering": "9bddce1fd402c35f6e0029979d4b6e8e2042377fde13d0e8ccd88d00f6b89a72",
+    "combined": "a4991fd346a94e3b6a9da80ea28de93d56f7e99fdb5812adccd3990fc95114b5"
+  }
+}

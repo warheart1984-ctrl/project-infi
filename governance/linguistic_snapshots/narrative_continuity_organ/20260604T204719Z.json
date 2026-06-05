@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "narrative_continuity_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "narrative_continuity_organ",
+      "engineering_class": "NarrativeContinuityEngine",
+      "mythic_label": "Narrative Continuity Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Narrative Continuity Organ",
+      "module_path": "src/narrative_continuity_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/narrative_continuity_organ.py",
+      "header": {
+        "mythic": "Narrative Continuity Organ",
+        "engineering": "NarrativeContinuityEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Narrative Continuity Organ\n# Engineering: NarrativeContinuityEngine",
+          "mythic": "Narrative Continuity Organ",
+          "engineering": "NarrativeContinuityEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Narrative Continuity Organ"
+      },
+      "active_doc": {
+        "title": "Narrative Continuity Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "61c302a36a24fa8879cbbc2384f230a5302167a7389903dde1dad3e5c9f31e34",
+    "engineering": "4a1d8cdf683376f96639357d4b0a01cfa681c596f94b3fa587955253ac054c5c",
+    "combined": "07bfb2f810aab9ba8a6f954825227c46bf2318cc65730d9989845e83bbad9808"
+  }
+}

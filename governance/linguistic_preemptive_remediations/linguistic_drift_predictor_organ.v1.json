@@ -1,15 +1,22 @@
 {
   "linguistic_preemptive_playbook_version": "linguistic_preemptive_playbook.v1",
   "gene": "linguistic_drift_predictor_organ",
-  "current_band": "medium",
+  "current_band": "low",
   "predicted_band": "medium",
-  "predicted_risk_30d": 43,
-  "lead_time_days": 0,
+  "predicted_risk_30d": 65,
+  "lead_time_days": 17,
   "drivers": [
+    "latent alignment gap (header/doc vs genome ssp)",
+    "rising linguistic snapshot trajectory",
     "parent gene in forecast or cycle at-risk set"
   ],
-  "generated_at": "2026-06-03T10:54:14Z",
+  "generated_at": "2026-06-05T17:58:25Z",
   "actions": [
+    {
+      "kind": "watch_wave2_header",
+      "path": "src/linguistic_drift_predictor_organ.py",
+      "note": "Add # Engineering header before band escalates"
+    },
     {
       "kind": "watch_cascade",
       "command": "python tools/linguistic_cascade_report.py --gene naming_genome_organ",

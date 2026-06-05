@@ -1,5 +1,6 @@
 """Governed forge-lane capability adapter for PatchForge / forge routing."""
 
+# Engineering: ForgeLaneEngine
 from __future__ import annotations
 
 from typing import Any

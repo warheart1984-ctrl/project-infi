@@ -55,7 +55,9 @@
       "operator_profile_organ"
     ],
     "children": [
-      "direct_challenge_organ"
+      "direct_challenge_organ",
+      "otem_execution_substrate",
+      "coding_organs_stack"
     ]
   },
   "activation": {
@@ -64,7 +66,8 @@
     "notes": "Alt-12 wave 1"
   },
   "retirement": {
-    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md",
+    "migration_proof": "docs/subsystems/platform/OTEM_BOUNDED_ORGAN.md"
   },
   "mutation": {
     "history": []

@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "workflow_interfaces_organ",
+  "captured_at": "2026-06-04T20:47:21Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "workflow_interfaces_organ",
+      "engineering_class": "WorkflowInterfacesInterface",
+      "mythic_label": "Workflow Interfaces Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Workflow Interfaces Subsystem",
+      "module_path": "src/workflow_interfaces_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/workflow_interfaces_organ.py",
+      "header": {
+        "mythic": "Workflow Interfaces Organ",
+        "engineering": "WorkflowInterfacesInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Workflow Interfaces Organ\n# Engineering: WorkflowInterfacesInterface",
+          "mythic": "Workflow Interfaces Organ",
+          "engineering": "WorkflowInterfacesInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Workflow Interfaces Subsystem"
+      },
+      "active_doc": {
+        "title": "Workflow Interfaces Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "2dcf00ae123e7a4350ed82cda4bcb3619e8bdcb747e0b5c7ae0e01f68abdf43f",
+    "engineering": "ac6a51bbf445451b6abf82c04c27db05a87e9c8084ad3d804ee3272877a2c336",
+    "combined": "095f9d2c7679f55a022217d9967513ff5945659e21aa974523f9fc976a8870e9"
+  }
+}

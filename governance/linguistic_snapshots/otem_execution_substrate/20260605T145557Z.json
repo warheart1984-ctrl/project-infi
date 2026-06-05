@@ -1,0 +1,29 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "otem_execution_substrate",
+  "captured_at": "2026-06-05T14:55:57Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "otem_execution_substrate",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "OTEM Execution Substrate",
+      "module_path": "src/otem_execution_substrate.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/otem_execution_substrate.py",
+      "header": {
+        "engineering": "OtemExecutionSubstrateEngine"
+      },
+      "symbols": []
+    }
+  },
+  "fingerprints": {
+    "mythic": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "engineering": "a55aef156f6623f1217e6cd9b39343f7c35427c904029936e2b88831a18c3945",
+    "combined": "b3b446a88f388640638a25c741b9425320d2d05ac5318cc338926c255cc58fa4"
+  }
+}

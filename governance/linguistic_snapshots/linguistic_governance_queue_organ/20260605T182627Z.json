@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_governance_queue_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_governance_queue_organ",
+      "engineering_class": "LinguisticGovernanceQueueEngine",
+      "mythic_label": "Linguistic Governance Queue Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Linguistic Governance Queue Subsystem",
+      "module_path": "src/linguistic_governance_queue_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_governance_queue_organ.py",
+      "header": {
+        "mythic": "Linguistic Governance Queue Organ",
+        "engineering": "LinguisticGovernanceQueueEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Governance Queue Organ\n# Engineering: LinguisticGovernanceQueueEngine",
+          "mythic": "Linguistic Governance Queue Organ",
+          "engineering": "LinguisticGovernanceQueueEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Governance Queue Organ"
+      },
+      "active_doc": {
+        "title": "Linguistic Governance Queue Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "fba206ba93418d12cfc128b6f6185291dc7413f322808bdd77d7f65cd942affa",
+    "engineering": "81f42aa6fcaca57925232ca1ebb41cd76b82fac4e72a674ac7deab3fcc65c33e",
+    "combined": "70d9da42773fade817f2b7025f2b0af1e46bcb08b6fed79779308a892f580c3a"
+  }
+}

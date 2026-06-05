@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "world_pack_lane_organ",
+  "captured_at": "2026-06-05T18:26:29Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "world_pack_lane_organ",
+      "engineering_class": "WorldPackLanePosture",
+      "mythic_label": "World Pack Lane Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "World Pack Lane",
+      "module_path": "src/world_pack_lane_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/world_pack_lane_organ.py",
+      "header": {
+        "mythic": "World Pack Lane Organ",
+        "engineering": "WorldPackLanePosture"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: World Pack Lane Organ\n# Engineering: WorldPackLanePosture",
+          "mythic": "World Pack Lane Organ",
+          "engineering": "WorldPackLanePosture"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "World Pack Lane"
+      },
+      "active_doc": {
+        "title": "World Pack Lane"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "b85dc6de3b32c591f0c5a82bce478d03c2ff1d10c11bd333e19a9d5c9fddda51",
+    "engineering": "95809b7bce8bd745cfd8b4b170250f9a993c2b03c9ebd82e97afdf1a8a6ae8ac",
+    "combined": "f256e5df5c9bd95c7228dbc23cbb55ed4cea7a8f7533df93a11e148e54b7d2f7"
+  }
+}

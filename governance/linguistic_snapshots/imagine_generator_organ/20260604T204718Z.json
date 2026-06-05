@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "imagine_generator_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "imagine_generator_organ",
+      "engineering_class": "ImagineGeneratorEngine",
+      "mythic_label": "Imagine Generator Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Imagine Generator Organ",
+      "module_path": "src/imagine_generator_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/imagine_generator_organ.py",
+      "header": {
+        "mythic": "Imagine Generator Organ",
+        "engineering": "ImagineGeneratorEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Imagine Generator Organ\n# Engineering: ImagineGeneratorEngine",
+          "mythic": "Imagine Generator Organ",
+          "engineering": "ImagineGeneratorEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Imagine Generator Organ"
+      },
+      "active_doc": {
+        "title": "Imagine Generator Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "b0dc4b4e2f030238dbd1b00733e0dcd062be891342ddddc0df84fe4ea0bad45b",
+    "engineering": "58a5315bb629b1a1462b0b13ad4b54aab58163d2a7170dca7bd8dcaa210bf28c",
+    "combined": "e4ad4132da62677cd56af43d909927e0b29e3ea5e338a36f54ff125299fd581c"
+  }
+}

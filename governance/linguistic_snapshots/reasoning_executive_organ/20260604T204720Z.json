@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "reasoning_executive_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "reasoning_executive_organ",
+      "engineering_class": "ReasoningExecutiveEngine",
+      "mythic_label": "Reasoning Executive Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Reasoning Executive Organ",
+      "module_path": "src/reasoning_executive_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/reasoning_executive_organ.py",
+      "header": {
+        "mythic": "Reasoning Executive Organ",
+        "engineering": "ReasoningExecutiveEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Reasoning Executive Organ\n# Engineering: ReasoningExecutiveEngine",
+          "mythic": "Reasoning Executive Organ",
+          "engineering": "ReasoningExecutiveEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Reasoning Executive Organ"
+      },
+      "active_doc": {
+        "title": "Reasoning Executive Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "aed34ea6a05c962213956d2883b6d8815aacbd0915bd19eb6de34143dbba62a4",
+    "engineering": "74a8bbf737af442539fe5a58bfc5e25e6f2db98502a361a613172ec0480bda2a",
+    "combined": "92825c397d7e340d7e044df80c0ffb8cb080af6bf588735d545b28e7bb39a308"
+  }
+}

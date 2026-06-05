@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "creative_core_runtime_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "creative_core_runtime_organ",
+      "engineering_class": "CreativeCoreRuntimeEngine",
+      "mythic_label": "Creative Core Runtime Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Creative Core Runtime Subsystem",
+      "module_path": "src/creative_core_runtime_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/creative_core_runtime_organ.py",
+      "header": {
+        "mythic": "Creative Core Runtime Organ",
+        "engineering": "CreativeCoreRuntimeEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Creative Core Runtime Organ\n# Engineering: CreativeCoreRuntimeEngine",
+          "mythic": "Creative Core Runtime Organ",
+          "engineering": "CreativeCoreRuntimeEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Creative Core Runtime Subsystem"
+      },
+      "active_doc": {
+        "title": "Creative Core Runtime Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "504a2ec0f6ad1001919f06867c7ede4d89246ab13c772a5c30ec2bbb17b4caf5",
+    "engineering": "f7361b22422ce1fd1ec1dc132b760a832200fa3f6d0f732ee48d1314ccc145a8",
+    "combined": "f0acaca8d7df0b88828ca91af7f42ef93eaa41c030295d440e1e9d22dff2b18b"
+  }
+}

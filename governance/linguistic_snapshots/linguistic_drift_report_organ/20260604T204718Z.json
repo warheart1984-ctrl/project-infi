@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_drift_report_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_drift_report_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Linguistic Drift Report Subsystem",
+      "module_path": "src/linguistic_drift_report_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_drift_report_organ.py",
+      "header": {
+        "mythic": "Linguistic Drift Report Organ",
+        "engineering": "LinguisticDriftReportEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Drift Report Organ\n# Engineering: LinguisticDriftReportEngine",
+          "mythic": "Linguistic Drift Report Organ",
+          "engineering": "LinguisticDriftReportEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Drift Report Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Drift Report Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "2b235801862285623ef3e2cb135ba45982d1601609105a254114633f22ee5032",
+    "engineering": "a6eedabc5365a5d7007019c92fa0a9ec27fcf194f34fad5ed234fd14506cabf4",
+    "combined": "51715b612b8d01822d95ec8102750e369a32e113a5cdf6ba4bc287f0a31788c9"
+  }
+}

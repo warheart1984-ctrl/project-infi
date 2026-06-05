@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "dashboard_surface_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "dashboard_surface_organ",
+      "engineering_class": "DashboardSurfaceInterface",
+      "mythic_label": "Dashboard Surface Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Dashboard Surface Organ",
+      "module_path": "src/dashboard_surface_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/dashboard_surface_organ.py",
+      "header": {
+        "mythic": "Dashboard Surface Organ",
+        "engineering": "DashboardSurfaceInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Dashboard Surface Organ\n# Engineering: DashboardSurfaceInterface",
+          "mythic": "Dashboard Surface Organ",
+          "engineering": "DashboardSurfaceInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Dashboard Surface Organ"
+      },
+      "active_doc": {
+        "title": "Dashboard Surface Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "46c521d5ed44fa786b914b95519b2dd17b24f5c2d97889f0759226493e7af494",
+    "engineering": "a8e26871f7763db6f119504280c4025bc6782d592b5a8fd4e05d60dd535e1ef6",
+    "combined": "6b8a0b71115b1f04b839bfc4df215608eb92738ebd68983645e101483e71857d"
+  }
+}

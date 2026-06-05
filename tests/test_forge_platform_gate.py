@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 import sys
 import unittest
@@ -9,8 +10,10 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CHECKER = REPO_ROOT / ".github" / "scripts" / "check-forge-platform-gate.py"
+FORGE_GATES_AVAILABLE = sys.platform != "win32" and shutil.which("bash") is not None
 
 
+@unittest.skipUnless(FORGE_GATES_AVAILABLE, "forge platform gate requires bash on a Unix host")
 class ForgePlatformGateTests(unittest.TestCase):
     def test_platform_gate_produces_pass_report(self) -> None:
         output = REPO_ROOT / "ci-artifacts" / "test-forge-platform-gate-report.json"

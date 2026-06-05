@@ -1,0 +1,14 @@
+{
+  "linguistic_calibration_cycle_version": "linguistic_calibration_cycle.v1",
+  "cycle_id": "20260605T135941Z",
+  "generated_at": "2026-06-05T13:59:51Z",
+  "calibration_report": "governance/linguistic_forecast_calibration.v1.json",
+  "metrics": {
+    "gene_count": 175,
+    "band_hit_rate": 0.76,
+    "false_alarm_rate": 0.24,
+    "miss_rate": 0.0,
+    "stable_rate": 0.76,
+    "mean_abs_risk_error": 13.05
+  }
+}

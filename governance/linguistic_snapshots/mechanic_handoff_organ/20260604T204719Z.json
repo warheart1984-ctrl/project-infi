@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "mechanic_handoff_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "mechanic_handoff_organ",
+      "engineering_class": "MechanicHandoffBridge",
+      "mythic_label": "Mechanic Handoff Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Mechanic Handoff Organ",
+      "module_path": "src/mechanic_handoff_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/mechanic_handoff_organ.py",
+      "header": {
+        "mythic": "Mechanic Handoff Organ",
+        "engineering": "MechanicHandoffBridge"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Mechanic Handoff Organ\n# Engineering: MechanicHandoffBridge",
+          "mythic": "Mechanic Handoff Organ",
+          "engineering": "MechanicHandoffBridge"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Mechanic Handoff Organ"
+      },
+      "active_doc": {
+        "title": "Mechanic Handoff Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "ae1cfea19882748c33a17083f4660a1e31ce353a6c05a5d86919f79064634002",
+    "engineering": "9ed55ce5bbcb4f31b619cd4285a5d6827d485082341f7e542053481f8e20562b",
+    "combined": "dfbfd68d66afd970f2bb98689c249f63eb10bc23d65f73582101db272afce721"
+  }
+}

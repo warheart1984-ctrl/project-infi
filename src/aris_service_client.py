@@ -1,5 +1,6 @@
 """Client for standalone ARIS service with embedded fallback."""
 
+# Engineering: ArisServiceClientEngine
 from __future__ import annotations
 
 import os

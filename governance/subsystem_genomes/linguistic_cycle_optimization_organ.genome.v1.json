@@ -72,6 +72,9 @@
     "concept_spec": "docs/_future/ideas_pending/LINGUISTIC_CYCLE_OPTIMIZATION_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/LINGUISTIC_CYCLE_OPTIMIZATION_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/LINGUISTIC_CYCLE_OPTIMIZATION_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/LINGUISTIC_CYCLE_OPTIMIZATION_ORGAN.md",
+    "engineering_class": "LinguisticCycleOptimizationEngine",
+    "mythic_label": "Linguistic Cycle Optimization Organ",
+    "linguistic_version": "1.0.0"
   }
 }

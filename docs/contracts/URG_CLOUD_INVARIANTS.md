@@ -61,7 +61,7 @@ Peer steps require accepted bilateral grant with route capability; grant must no
 
 ### 11. Cloud Observed Promotion (v3.0)
 
-`UGR_CLOUD_FORGE_OBSERVED` ledger rows do not mutate `tenants.json`. `cloud_forge_submit_promotion` on mission ingress requires `URG_GOVERNANCE_APPLY=1` and governance `cloud_forge_profile_update`.
+`UGR_CLOUD_FORGE_OBSERVED` ledger rows do not mutate `tenants.json`. `cloud_forge_submit_promotion` on mission ingress requires `URG_GOVERNANCE_APPLY=1` (governance `cloud_forge_profile_update` is the orthogonal mechanism to mutate tenant profiles used by rail selection; the invariant check itself only requires the APPLY env).
 
 ## Implementation
 

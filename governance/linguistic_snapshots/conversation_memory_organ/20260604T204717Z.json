@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "conversation_memory_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "conversation_memory_organ",
+      "engineering_class": "ConversationMemoryEngine",
+      "mythic_label": "Conversation Memory Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Conversation Memory Organ",
+      "module_path": "src/conversation_memory_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/conversation_memory_organ.py",
+      "header": {
+        "mythic": "Conversation Memory Organ",
+        "engineering": "ConversationMemoryEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Conversation Memory Organ\n# Engineering: ConversationMemoryEngine",
+          "mythic": "Conversation Memory Organ",
+          "engineering": "ConversationMemoryEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Conversation Memory Organ"
+      },
+      "active_doc": {
+        "title": "Conversation Memory Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "86f3ecd7d574f1213b92f904603c8b4f73d152eb5893e99367bd406ef26d3778",
+    "engineering": "a71b7aba08d3061d51fffb48c235abf9891a09215d31a1bd8374c8d637c2112d",
+    "combined": "1a2fb8fa7bffe098572d5b6a2223b3274cbe5b3ac05b55e6040d4ceaea9c0300"
+  }
+}

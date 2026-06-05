@@ -1,0 +1,98 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "temporal_replay_machine",
+    "version": "1.0.0-governed",
+    "stage": "governed",
+    "display_name": "Temporal Replay Machine"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/UGR_OPERATOR_CONSOLE_CONTRACT.md",
+      "docs/contracts/URG_MISSION_RECEIPT_SCHEMA.md",
+      "schemas/temporal_replay_event.v1.json",
+      "schemas/temporal_replay_bundle.v1.json"
+    ],
+    "invariants": [
+      "Read-only ingestion from existing ledgers; timeline rebuild is idempotent",
+      "Dry-run forward replay is default; live_fork requires allowlisted subsystem",
+      "API responses include law_enforcement, ul_snapshot, law_event_log envelope",
+      "Verification fail-closed on Merkle root and receipt signature mismatch"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/temporal_replay_event.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/temporal_replay/service.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/operator/replay/<subject_type>/<subject_id>/timeline"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/operator/replay/<subject_type>/<subject_id>/state"
+      },
+      {
+        "kind": "api",
+        "path": "POST /api/operator/replay/<subject_type>/<subject_id>/verify"
+      },
+      {
+        "kind": "api",
+        "path": "POST /api/operator/replay/<subject_type>/<subject_id>/forward"
+      },
+      {
+        "kind": "api",
+        "path": "POST /api/operator/replay/compare"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/operator/replay/<subject_type>/<subject_id>/bundle"
+      },
+      {
+        "kind": "ui",
+        "path": "frontend/src/pages/TemporalReplay/TemporalReplay.jsx"
+      },
+      {
+        "kind": "gate",
+        "path": "make temporal-replay-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/aais-ul/TEMPORAL_REPLAY_MACHINE_V1_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": []
+  },
+  "lineage": {
+    "parents": [
+      "cisiv_operator_lineage_console"
+    ],
+    "children": []
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "temporal-replay-v1",
+    "notes": "Operator flight recorder"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "active_doc": "docs/proof/aais-ul/TEMPORAL_REPLAY_MACHINE_V1_PROOF.md",
+    "summon_eligible": false,
+    "engineering_class": "TemporalReplayMachineEngine",
+    "mythic_label": "Temporal Replay Machine",
+    "linguistic_version": "1.0.0"
+  }
+}

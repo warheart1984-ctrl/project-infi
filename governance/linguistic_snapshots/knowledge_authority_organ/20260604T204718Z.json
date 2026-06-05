@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "knowledge_authority_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "knowledge_authority_organ",
+      "engineering_class": "KnowledgeAuthorityEngine",
+      "mythic_label": "Knowledge Authority Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Knowledge Authority Organ",
+      "module_path": "src/knowledge_authority_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/knowledge_authority_organ.py",
+      "header": {
+        "mythic": "Knowledge Authority Organ",
+        "engineering": "KnowledgeAuthorityEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Knowledge Authority Organ\n# Engineering: KnowledgeAuthorityEngine",
+          "mythic": "Knowledge Authority Organ",
+          "engineering": "KnowledgeAuthorityEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Knowledge Authority Organ"
+      },
+      "active_doc": {
+        "title": "Knowledge Authority Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "9506582d75644ed1d80f3a98c04004810ed5988a5a0a4daa82e6e7d5477ea3ae",
+    "engineering": "90e6badc28ca46d46c4ff9a43566f24c10869a436bd01fe71c9816db2355fb27",
+    "combined": "7af6ff419ea102e3579b34ee46f5095434f49e15a168f613e10aaa890f8b993e"
+  }
+}

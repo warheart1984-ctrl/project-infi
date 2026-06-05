@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aais.temporal_replay_bundle.v1",
+  "title": "Temporal Replay Bundle v1",
+  "type": "object",
+  "required": [
+    "bundle_version",
+    "subject",
+    "fork_at",
+    "law_pin",
+    "timeline_hash",
+    "verification_report",
+    "claim_label"
+  ],
+  "properties": {
+    "bundle_version": { "const": "aais.temporal_replay_bundle.v1" },
+    "subject": {
+      "type": "object",
+      "required": ["subject_type", "subject_id"],
+      "properties": {
+        "subject_type": { "type": "string" },
+        "subject_id": { "type": "string" },
+        "tenant_id": { "type": "string" }
+      }
+    },
+    "fork_at": { "type": "string" },
+    "law_pin": { "type": "object" },
+    "timeline_hash": { "type": "string" },
+    "verification_report": { "type": "object" },
+    "artifact_hashes": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "claim_label": { "enum": ["asserted", "proven", "rejected"] },
+    "runtime_effect": { "const": "readout_only" }
+  }
+}

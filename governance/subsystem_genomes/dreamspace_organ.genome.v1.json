@@ -7,8 +7,13 @@
     "display_name": "Dreamspace Organ"
   },
   "governance": {
-    "contracts": ["docs/contracts/DREAMSPACE_RUNTIME.md"],
-    "invariants": ["opt_in_required", "default_off"]
+    "contracts": [
+      "docs/contracts/DREAMSPACE_RUNTIME.md"
+    ],
+    "invariants": [
+      "opt_in_required",
+      "default_off"
+    ]
   },
   "schema": {
     "ref": "schemas/dreamspace_organ.v1.json",
@@ -16,11 +21,43 @@
   },
   "runtime": {
     "surface": [
-      {"kind": "module", "path": "src/dreamspace_organ.py"},
-      {"kind": "gate", "path": "make dreamspace-organ-gate"}
+      {
+        "kind": "module",
+        "path": "src/dreamspace_organ.py"
+      },
+      {
+        "kind": "gate",
+        "path": "make dreamspace-organ-gate"
+      }
     ]
   },
   "proof": {
-    "posture": "governed"
+    "bundles": [
+      "docs/proof/platform/DREAMSPACE_ORGAN_V1_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/platform/DREAMSPACE_ORGAN_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [],
+    "children": []
+  },
+  "activation": {
+    "order": 99,
+    "batch_id": "alt30-summon-wave-2026-06",
+    "notes": "Release 30 dreamspace organ governed posture"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "engineering_class": "DreamspaceOrganGate",
+    "mythic_label": "Dreamspace Organ",
+    "linguistic_version": "1.0.0"
   }
 }

@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "policy_gate_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "policy_gate_organ",
+      "engineering_class": "PolicyGateGate",
+      "mythic_label": "Policy Gate Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Policy Gate Organ",
+      "module_path": "src/policy_gate_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/policy_gate_organ.py",
+      "header": {
+        "mythic": "Policy Gate Organ",
+        "engineering": "PolicyGateGate"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Policy Gate Organ\n# Engineering: PolicyGateGate",
+          "mythic": "Policy Gate Organ",
+          "engineering": "PolicyGateGate"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Policy Gate Organ"
+      },
+      "active_doc": {
+        "title": "Policy Gate Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "a32e07b1e09c7d0a0e3aeac8d7070ee446de8277ea2f0530abe189079aff272c",
+    "engineering": "48f58ca59935fa46fb6b45d4f92c0a9e03f3fb1afb531e26bbbc08e497250a92",
+    "combined": "7777e225684700d32a250624d99c03c215e30f59cd1dd6bf182209c4efe303f5"
+  }
+}

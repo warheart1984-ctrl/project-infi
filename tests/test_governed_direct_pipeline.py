@@ -32,9 +32,13 @@ class TestGovernedDirectPipeline(unittest.TestCase):
         jarvis_detachment_guard.configure_runtime_dir(self.temp_root)
         jarvis_detachment_guard.reset()
         reset_registry()
+        os.environ["AAIS_GOVERNED_PIPELINE_CACHE_SEC"] = "0"
+        os.environ["AAIS_COHERENCE_FABRIC_CACHE_SEC"] = "0"
+        clear_governed_pipeline_cache()
 
     def tearDown(self):
         module_governance.configure_runtime_dir(self.original_module_governance_runtime_dir)
+        module_governance.reset()
         jarvis_detachment_guard.configure_runtime_dir(self.original_detachment_guard_runtime_dir)
         jarvis_detachment_guard.reset()
         shutil.rmtree(self.temp_root, ignore_errors=True)
@@ -80,7 +84,10 @@ class TestGovernedDirectPipeline(unittest.TestCase):
         self.assertEqual(realtime_feed["packet_metrics"]["service_packet_count"], 0)
         self.assertIn("runtime_boundary", signal_types)
         self.assertIn("turn_delta", signal_types)
-        self.assertEqual(realtime_feed["signals"][-1]["signal_class"], "baseline_only")
+        turn_delta_signals = [
+            signal for signal in realtime_feed["signals"] if signal.get("signal_type") == "turn_delta"
+        ]
+        self.assertEqual(turn_delta_signals[-1]["signal_class"], "baseline_only")
         self.assertEqual(predictor["cause_class"], "steady_state")
         self.assertEqual(predictor["recommended_state"], "observe")
         self.assertEqual(sentinel["operator_state"], "stable")

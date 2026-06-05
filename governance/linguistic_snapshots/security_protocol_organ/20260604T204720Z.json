@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "security_protocol_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "security_protocol_organ",
+      "engineering_class": "SecurityProtocolEngine",
+      "mythic_label": "Security Protocol Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Security Protocol Organ",
+      "module_path": "src/security_protocol_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/security_protocol_organ.py",
+      "header": {
+        "mythic": "Security Protocol Organ",
+        "engineering": "SecurityProtocolEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Security Protocol Organ\n# Engineering: SecurityProtocolEngine",
+          "mythic": "Security Protocol Organ",
+          "engineering": "SecurityProtocolEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Security Protocol Organ"
+      },
+      "active_doc": {
+        "title": "Security Protocol Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "59a1e0d57628becb8ee176aff6801014ef865a038e0cf996b176a5939937a441",
+    "engineering": "39a357c85061b8a9ce6ef07ec6ffe7ad3c8f6b477465d448cb049717dddc0257",
+    "combined": "ed36c8fe169785ac16a150fc94bbb79f235750b4d6939566c21d248431cd1343"
+  }
+}

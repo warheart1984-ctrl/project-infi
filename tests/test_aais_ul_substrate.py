@@ -1,6 +1,7 @@
 """Tests for the AAIS UL runtime substrate layer."""
 
 import unittest
+from pathlib import Path
 
 from src.aais_ul import (
     adapt_ingress,
@@ -17,6 +18,10 @@ from src.aais_ul_substrate import (
     wrap_capability_result,
     wrap_pipeline,
 )
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+ARIS_UL_AVAILABLE = (REPO_ROOT / "aris").is_dir()
 
 
 class TestAAISULAdapters(unittest.TestCase):
@@ -148,12 +153,14 @@ class TestAAISULSubstrate(unittest.TestCase):
         self.assertIn("ul_substrate", wrapped)
         self.assertIn("tool_results", wrapped["ul_trace"]["sections"])
 
+    @unittest.skipUnless(ARIS_UL_AVAILABLE, "aris ul_substrate package not present")
     def test_execute_governed_command_allowed(self):
         substrate = AAISULSubstrate(registry=build_default_registry())
         result = substrate.execute_governed_command("cat jumps x2")
         self.assertTrue(result["allowed"])
         self.assertIn("ul_substrate", result)
 
+    @unittest.skipUnless(ARIS_UL_AVAILABLE, "aris ul_substrate package not present")
     def test_execute_governed_command_blocked(self):
         substrate = AAISULSubstrate(registry=build_default_registry())
         result = substrate.execute_governed_command("cat delete_repo x1")

@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "nova_face_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "nova_face_organ",
+      "engineering_class": "NovaFaceEngine",
+      "mythic_label": "Nova Face Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Nova Face Organ",
+      "module_path": "src/nova_face_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/nova_face_organ.py",
+      "header": {
+        "mythic": "Nova Face Organ",
+        "engineering": "NovaFaceEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Nova Face Organ\n# Engineering: NovaFaceEngine",
+          "mythic": "Nova Face Organ",
+          "engineering": "NovaFaceEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Nova Face Organ"
+      },
+      "active_doc": {
+        "title": "Nova Face Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "0c1c6e60a6694238d2f43777cb33ed8cc8ca2738ea78222c5bffbcf8781fdcfe",
+    "engineering": "2a90afa2e04272d6b2e5ca4eec2be0553eb0f522335aab6f20ac3454909f1f72",
+    "combined": "1723e7e3514a3ad5b596f6322040c5755836b94c9854247187d6b80c431b5542"
+  }
+}

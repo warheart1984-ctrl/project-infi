@@ -74,6 +74,9 @@
     "concept_spec": "docs/_future/ideas_pending/META_LINGUISTIC_REGISTRY_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/META_LINGUISTIC_REGISTRY_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/META_LINGUISTIC_REGISTRY_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/META_LINGUISTIC_REGISTRY_ORGAN.md",
+    "engineering_class": "MetaLinguisticRegistryEngine",
+    "mythic_label": "Meta Linguistic Registry Organ",
+    "linguistic_version": "1.0.0"
   }
 }

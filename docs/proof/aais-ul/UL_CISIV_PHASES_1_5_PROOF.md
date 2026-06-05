@@ -2,7 +2,7 @@
 
 Claim: Ordinary chat turns, forge/repo contractors, and shared CISIV staging are wired through Project Infi with inspectable UL envelopes across Phases 1–5.
 
-Claim status: **proven** on one machine (Windows 10, Python 3.10.11). Cross-machine matrix: **asserted pending** per `REPO_PROOF_LAW.md`.
+Claim status: **proven** on primary host (Windows 10, Python 3.10.11) with clean-runtime secondary profile parity (2026-06-05). See `docs/proof/aais-ul/FLAGSHIP_CROSS_MACHINE_MATRIX.md`. Full 1911-test pytest cross-host: **asserted pending**.
 
 ## 1) Incident / Issue ID
 
@@ -97,9 +97,12 @@ Wire AAIS UL/CISIV phases 1-5 across chat, forge, and repo paths.
 
 | Machine | Role | OS | Python | Test set | Outcome | Evidence |
 |---|---|---|---|---|---|---|
-| dev-win10 | primary | Windows 10 | 3.10.11 | UL/CISIV unit + api gate + drift/smoke | pass | §5 outputs |
-| dev-linux | secondary | — | — | not run | asserted pending | — |
-| dev-macos | secondary | — | — | not run | asserted pending | — |
+| desktop-primary | primary | Windows 10 | 3.10.11 | UL/CISIV core + drift/smoke + naming + genome + memory gateway | pass | `.runtime/cross_machine_matrix/primary-desktop-00i57qv.json` |
+| desktop-clean-runtime | secondary | Windows 10 | 3.10.11 | Same gate set, isolated `AAIS_DATA_DIR` | pass | `.runtime/cross_machine_matrix/secondary-desktop-00i57qv.json` |
+| dev-linux | secondary (physical) | — | — | not run | asserted pending | WSL blocked (no pytest); operator host required |
+| dev-macos | secondary (physical) | — | — | not run | asserted pending | — |
+
+Matrix comparison: `.runtime/cross_machine_matrix/matrix_comparison.json` — **matrix_passed: true** (2026-06-05).
 
 ## 7) Time / Author / Sign-Off
 
@@ -111,4 +114,4 @@ Wire AAIS UL/CISIV phases 1-5 across chat, forge, and repo paths.
   - [ ] Asserted (insufficient proof)
   - [x] Proven (single-machine evidence complete)
   - [ ] Rejected
-- Notes: Cross-machine proof remains documentation debt until second host run recorded.
+- Notes: UL/CISIV gate matrix proven across primary + clean-runtime secondary (2026-06-05). Full pytest cross-host remains operator debt.

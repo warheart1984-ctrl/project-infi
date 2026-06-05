@@ -32,7 +32,12 @@ def apply_cloud_forge_profile_update(
     spec = dict(tenants.get(normalized) or {})
     if not spec:
         return False, f"unknown tenant {normalized}", ""
-    spec["cloud_forge"] = dict(cloud_forge or {})
+    # Structured merge (defense-in-depth / symmetry with reward_policy _merge_policy):
+    # Preserve existing sub-keys (e.g. "actor") if gov payload supplies only partial profile.
+    # Prior: full destructive replace could silently drop actor/weights on partial updates.
+    current_cf = dict(spec.get("cloud_forge") or {})
+    patch = dict(cloud_forge or {})
+    spec["cloud_forge"] = {**current_cf, **patch}
     tenants[normalized] = spec
     payload["tenants"] = tenants
     serialized = json.dumps(payload, indent=2, sort_keys=True) + "\n"

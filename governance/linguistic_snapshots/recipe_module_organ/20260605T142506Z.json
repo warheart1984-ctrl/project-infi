@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "recipe_module_organ",
+  "captured_at": "2026-06-05T14:25:06Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "mvp",
+  "layers": {
+    "genome": {
+      "gene": "recipe_module_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Recipe Module Organ",
+      "module_path": "src/recipe_module_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/recipe_module_organ.py",
+      "header": {
+        "mythic": "Recipe Module Organ",
+        "engineering": "RecipeModuleEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Recipe Module Organ\n# Engineering: RecipeModuleEngine",
+          "mythic": "Recipe Module Organ",
+          "engineering": "RecipeModuleEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Recipe Module Organ"
+      },
+      "active_doc": {
+        "title": "Recipe Module Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "ff925b41310ac29e21d0cdb44d668ebfaaa3e691d2d46209f85b9cc8632917bf",
+    "engineering": "8e57251dc4a5d5f4bf76947656c93674d860225e46d93d9bfb158c920b9f70dc",
+    "combined": "3625855d8069763640a80112cdada09459c0c631b8e3f91a8ad824aeb2afb977"
+  }
+}

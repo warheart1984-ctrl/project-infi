@@ -1,6 +1,10 @@
 # AAIS Status Audit
 
-Snapshot date: 2026-04-29
+**Last updated:** 2026-06-05  
+**Release baseline:** v1.26.1 (Release 30.1 — OTEM Level 10 safe activation)  
+**Readiness posture:** Governed MVP — not flagship GA (see [2026-06-05-flagship-v1.26.1-readiness.md](../trust_bundles/2026-06-05-flagship-v1.26.1-readiness.md))
+
+Snapshot date: 2026-04-29 (original inventory below; §7 adds 2026-06-05 verification delta)
 
 This file is the working inventory of what is clearly documented, what is intentionally unfinished, and what currently needs repair or cleanup.
 
@@ -85,10 +89,10 @@ These files currently do a good job of describing the live system or one bounded
 
 These are not hidden bugs. They are explicit limits in the current design.
 
-- OTEM is implemented through v5 only.
-  - `README.md` calls out the current ceiling explicitly.
-  - [src/otem_runtime.py](../../src/otem_runtime.py) keeps OTEM proposal-only and sets `version_ceiling` to `v5`.
-  - Out of scope right now: direct execution, workflow creation without confirmation, and durable OTEM writes by default.
+- OTEM chat remains proposal-only; **OTEM Level 10** (v1.26.1) adds operator-approved execution via workflow approvals and the execution substrate.
+  - `README.md` and [v1.26.1 release notes](../releases/v1.26.1-release30-1-otem-level-10-activation.md) document the L10 boundary.
+  - [src/otem_execution_substrate.py](../../src/otem_execution_substrate.py) implements proposal → approval → apply; persistence phase 2 remains deferred.
+  - Out of scope at v1.26.1: durable OTEM writes beyond the approval bridge, autonomous workflow creation, direct chat execution.
 - PatchForge is still a review-first planning surface, not a true autonomous patch author.
   - [src/patchforge.py](../../src/patchforge.py) still emits `after_snippet` placeholder text, `status="proposal_only"`, and `preview_only=True`.
   - [src/patch_apply_engine.py](../../src/patch_apply_engine.py) explicitly blocks placeholder text from being applied.
@@ -155,6 +159,21 @@ These are not hidden bugs. They are explicit limits in the current design.
 
 ## 5. Verification Snapshot
 
+**2026-06-05 delta (flagship pass — labels per [REPO_PROOF_LAW.md](../../REPO_PROOF_LAW.md)):**
+
+| Check | Result | Label |
+|-------|--------|-------|
+| naming-gate | PASS — 163 grandfathered legacy paths, **0 warnings** | **proven** |
+| naming-genome-gate `--snapshot` | PASS — 176 genomes, 193 warnings (SSP linguistic fields on legacy genomes) | **proven** (gate pass); warnings **asserted** debt |
+| genome-gate | PASS — 175 genomes valid | **proven** |
+| alt30-governed-gate | PASS | **proven** |
+| meta-linguistic-gate | PASS (8 gates, observe mode) | **proven** |
+| pytest collection | **1923** tests collected | **proven** |
+| Full pytest suite | **1911 passed, 0 failed**, 12 skipped (`.runtime/pytest-flagship-final-v2.log`, 1:38:13, EXIT:0). Fixes: TestChatApi tearDown, memory gateway conftest admission, jarvis protocol ordering, browser `project-infi` scope | **proven** |
+| OTEM execution substrate workflow | `test_otem_execution_substrate_workflow` passes | **proven** |
+
+**Prior snapshot (2026-04-29):**
+
 - Backend tests: latest verified snapshot is `668 passed`, `12 subtests passed`
 - Frontend tests: `47 passed`, `0 failed`
 - Frontend production build: passes
@@ -172,3 +191,22 @@ These are not hidden bugs. They are explicit limits in the current design.
   [FOLDER_DOCUMENTATION_AUDIT.md](FOLDER_DOCUMENTATION_AUDIT.md), starting with
   `api/`, `tests/`, `evals/`, `data/`, and `docs/`.
 - Turn [roadmap.csv](../_archive/legacy/workspace/roadmap.csv) into a real maintained tracker or leave it clearly archived as planning-only material.
+
+## 7. 2026-06-05 Flagship Pass Notes
+
+**Readiness:** Governed MVP at v1.26.1 with **full single-machine pytest green** — suitable for operator pilot and single-host ship gate; **not** flagship general availability (cross-machine, pilot GA, OTEM persistence phase 2 outstanding). Estimated readiness **75/100** (see trust bundle).
+
+**Naming closure:** 17 subsystem shells received `# Engineering:` headers; naming-gate now **0 warnings** (was 17).
+
+**Genome duplication finding (`recipe_module` vs `recipe_module_organ`):**
+- `governance/subsystem_genomes/recipe_module.genome.v1.json` carries `identity.gene: "recipe_module_organ"` and points at `src/recipe_module_organ.py` — same surface as `recipe_module_organ.genome.v1.json`.
+- `src/recipe_module.py` exists as the distinct recipe-pack module; README lists both genomes separately.
+- **Assessment:** filename/gene mismatch — likely Alt-13 promotion copy drift. Not fixed in this pass (requires SSP remediation wave); tracked as governance debt.
+
+**P0 test fix applied:** `TestChatApi.setUp` incorrectly ran tearDown logic (reset workspace/module-governance and deleted temp dir before tests). Moved to proper `tearDown` method.
+
+**Phase 2 delta (2026-06-05):** UL/CISIV cross-machine gate matrix proven; SSP linguistic closure (193→1 warning); UGR discovery/rewards/mission admitted; OTEM persistence phase 2; governance test harness bootstrap; pilot GA backend checklist.
+
+**SSP linguistic closure (2026-06-05):** naming-genome-gate **0 warnings** (strict + snapshot, 179 genomes) after `aris_service/__init__.py` header closure. Readiness **85/100**.
+
+**Remaining flagship blockers:** full pytest cross-host matrix, OpenRouter rotation, frontend/mobile re-verification.

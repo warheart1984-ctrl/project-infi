@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "game_front_door_organ",
+  "captured_at": "2026-06-05T18:26:26Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "game_front_door_organ",
+      "engineering_class": "GameFrontDoorPosture",
+      "mythic_label": "Game Front Door Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Game Front Door",
+      "module_path": "src/game_front_door_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/game_front_door_organ.py",
+      "header": {
+        "mythic": "Game Front Door Organ",
+        "engineering": "GameFrontDoorPosture"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Game Front Door Organ\n# Engineering: GameFrontDoorPosture",
+          "mythic": "Game Front Door Organ",
+          "engineering": "GameFrontDoorPosture"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Game Front Door"
+      },
+      "active_doc": {
+        "title": "Game Front Door"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "cbad4dd344a56dd4c9f13b6b4ee5f0d1d32e5f7db19ef35b0cbe39658eed1a9a",
+    "engineering": "2f4dc63f29093f4f6361a3d071992d2a08ffd567136e6af09e2b71e49692cb67",
+    "combined": "f15c00cb54e99d6eea9bc60189398b3046ba0133774662745732dfe1ff0b4e98"
+  }
+}

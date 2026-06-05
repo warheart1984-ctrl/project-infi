@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "creative_console_interface_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "creative_console_interface_organ",
+      "engineering_class": "CreativeConsoleInterfaceInterface",
+      "mythic_label": "Creative Console Interface Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Creative Console Interface Subsystem",
+      "module_path": "src/creative_console_interface_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/creative_console_interface_organ.py",
+      "header": {
+        "mythic": "Creative Console Interface Organ",
+        "engineering": "CreativeConsoleInterfaceInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Creative Console Interface Organ\n# Engineering: CreativeConsoleInterfaceInterface",
+          "mythic": "Creative Console Interface Organ",
+          "engineering": "CreativeConsoleInterfaceInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Creative Console Interface Subsystem"
+      },
+      "active_doc": {
+        "title": "Creative Console Interface Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "c6a72b84a9e3361ff36de87a4514147b953124b050ce660033cdb32c4b33ddc1",
+    "engineering": "3975b7b058c7bc2dd0be88d7ccbd485790b595f22c43a35f7a3932b12b9af11b",
+    "combined": "d76b63f3c2c70541cb722f838977c1eaea7e052034c7cf200e7edece6887d430"
+  }
+}

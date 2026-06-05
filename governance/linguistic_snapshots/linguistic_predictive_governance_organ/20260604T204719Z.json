@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_predictive_governance_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_predictive_governance_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Linguistic Predictive Governance Subsystem",
+      "module_path": "src/linguistic_predictive_governance_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_predictive_governance_organ.py",
+      "header": {
+        "mythic": "Linguistic Predictive Governance Organ",
+        "engineering": "LinguisticPredictiveGovernanceEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Predictive Governance Organ\n# Engineering: LinguisticPredictiveGovernanceEngine",
+          "mythic": "Linguistic Predictive Governance Organ",
+          "engineering": "LinguisticPredictiveGovernanceEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Predictive Governance Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Predictive Governance Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "1474e29a406a857aeb50e3886a8413ba26845843e7adc67c3951ebaedb5aae1a",
+    "engineering": "86b6a9ceb48a98ad1ae973aa4f7760883ae9167e4f73ca24eb7b722d1376d399",
+    "combined": "2ee0803f04f056f23ef08ca1567aaa819aa3461e06704484050b91be598313c4"
+  }
+}

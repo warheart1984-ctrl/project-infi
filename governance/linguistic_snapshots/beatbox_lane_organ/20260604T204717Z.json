@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "beatbox_lane_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "beatbox_lane_organ",
+      "engineering_class": "BeatboxLaneInterface",
+      "mythic_label": "Beatbox Lane Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Beatbox Lane Organ",
+      "module_path": "src/beatbox_lane_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/beatbox_lane_organ.py",
+      "header": {
+        "mythic": "Beatbox Lane Organ",
+        "engineering": "BeatboxLaneInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Beatbox Lane Organ\n# Engineering: BeatboxLaneInterface",
+          "mythic": "Beatbox Lane Organ",
+          "engineering": "BeatboxLaneInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Beatbox Lane Organ"
+      },
+      "active_doc": {
+        "title": "Beatbox Lane Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "9a2c0d721804b6f8b5eac3e78051fbe50ad10efeb346cf99fd87c399fe803838",
+    "engineering": "334e631a84248301cf919ff8db635e52eae1e98230fb8112e4803e792786fff3",
+    "combined": "7b5c28dd9a9bd246b676b66dff995f4310801003421df8cd6fe4bef49b0c304c"
+  }
+}

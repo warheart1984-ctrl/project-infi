@@ -2,8 +2,8 @@
   "subsystem_genome_version": "subsystem_genome.v1",
   "identity": {
     "gene": "recipe_module",
-    "version": "1.0.0-governed",
-    "stage": "governed",
+    "version": "0.1.0-concept",
+    "stage": "mvp",
     "display_name": "Recipe Module"
   },
   "governance": {
@@ -12,69 +12,22 @@
       "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
       "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
       "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
-      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md",
-      "docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md"
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
     ],
     "invariants": [
-      {
-        "text": "Recipes propose missions and steps; no auto-apply repo mutations",
-        "maturity": "constitutional"
-      },
-      {
-        "text": "signoff_required defaults true on recipe packs",
-        "maturity": "stable"
-      },
-      {
-        "text": "No sovereign subsystem front door \u2014 admission via Mission Board",
-        "maturity": "stable"
-      },
-      {
-        "text": "No secrets or credentials embedded in recipe packs",
-        "maturity": "constitutional"
-      }
-    ],
-    "operator_lanes": [
-      {
-        "lane_id": "operator",
-        "weight": 1.0,
-        "capabilities": [
-          "approve_policy_changes",
-          "promote_policies_to_production"
-        ]
-      }
-    ],
-    "contextual_gates": [
-      {
-        "gate_id": "recipe_mission_flow",
-        "activate_on": [
-          "operator_runtime",
-          "recipe"
-        ],
-        "make_target": "recipe-module-gate"
-      }
+      "Governed workflow recipe packs remain subordinate to Mission Board admission",
+      "module_id frozen to AAIS-RM-01"
     ]
   },
   "schema": {
     "ref": "schemas/recipe_module.v1.json",
-    "frozen": true
+    "frozen": false
   },
   "runtime": {
     "surface": [
       {
         "kind": "module",
         "path": "src/recipe_module.py"
-      },
-      {
-        "kind": "module",
-        "path": "src/mission_board.py#create_from_recipe"
-      },
-      {
-        "kind": "api",
-        "path": "POST /api/jarvis/missions/from-recipe"
-      },
-      {
-        "kind": "tool",
-        "path": "python -m tools.recipe --recipe-id"
       },
       {
         "kind": "gate",
@@ -86,32 +39,36 @@
     "bundles": [
       "docs/proof/platform/RECIPE_MODULE_GOVERNED_PROOF.md"
     ],
-    "posture": "governed",
+    "posture": "mvp",
     "target_bundles": [
       "docs/proof/platform/RECIPE_MODULE_V1_PROOF.md"
     ]
   },
   "lineage": {
     "parents": [
-      "capability_service_bridge",
-      "jarvis",
-      "mission_board"
+      "module_governance_organ",
+      "capability_service_bridge"
     ],
     "children": [
-      "imagine_generator",
-      "recipe_module_organ"
+      "recipe_module_organ",
+      "imagine_generator"
     ]
   },
   "activation": {
-    "order": 6,
-    "batch_id": "alt27-summon-wave-2026-06",
-    "notes": "Release 27 wave 6"
+    "order": 2,
+    "batch_id": "alt13-summon-wave-2026-06",
+    "notes": "Alt-13 wave 2 — distinct recipe pack module (not organ shell)"
   },
   "retirement": {
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
   },
   "mutation": {
-    "history": []
+    "history": [
+      {
+        "recorded_at": "2026-06-05T18:30:00Z",
+        "reason": "SSP remediation wave — corrected gene drift from recipe_module_organ duplicate"
+      }
+    ]
   },
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/RECIPE_MODULE.md",
@@ -119,7 +76,7 @@
     "summon_eligible": false,
     "active_doc": "docs/subsystems/platform/RECIPE_MODULE.md",
     "engineering_class": "RecipeModuleEngine",
-    "mythic_label": "Recipe module",
+    "mythic_label": "Recipe Module",
     "linguistic_version": "1.0.0"
   }
 }

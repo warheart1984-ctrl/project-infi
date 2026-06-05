@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "speaking_runtime_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "speaking_runtime_organ",
+      "engineering_class": "SpeakingRuntimeEngine",
+      "mythic_label": "Speaking Runtime Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Speaking Runtime Organ",
+      "module_path": "src/speaking_runtime_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/speaking_runtime_organ.py",
+      "header": {
+        "mythic": "Speaking Runtime Organ",
+        "engineering": "SpeakingRuntimeEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Speaking Runtime Organ\n# Engineering: SpeakingRuntimeEngine",
+          "mythic": "Speaking Runtime Organ",
+          "engineering": "SpeakingRuntimeEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Speaking Runtime Organ"
+      },
+      "active_doc": {
+        "title": "Speaking Runtime Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "f11eaf0052dc04f0f04094893a528926b988ced7aa265ac18bb663a5cc53853c",
+    "engineering": "c9e6058073491b54df26c52c621520dacf9570fbb6d895089b7fe22375e78da4",
+    "combined": "87492a63875295efbe9ad455e63187711324c7fbfd41a62e88c7fda028d5ee45"
+  }
+}

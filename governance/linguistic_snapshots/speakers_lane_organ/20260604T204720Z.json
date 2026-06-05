@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "speakers_lane_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "speakers_lane_organ",
+      "engineering_class": "SpeakersLaneInterface",
+      "mythic_label": "Speakers Lane Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Speakers Lane Organ",
+      "module_path": "src/speakers_lane_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/speakers_lane_organ.py",
+      "header": {
+        "mythic": "Speakers Lane Organ",
+        "engineering": "SpeakersLaneInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Speakers Lane Organ\n# Engineering: SpeakersLaneInterface",
+          "mythic": "Speakers Lane Organ",
+          "engineering": "SpeakersLaneInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Speakers Lane Organ"
+      },
+      "active_doc": {
+        "title": "Speakers Lane Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "e30cbb3327b4161f702c63dc26cb64190a20ad8c0a69b6ee53fd4553647ab52c",
+    "engineering": "75fb94f287d2f2f4b1ae1ff728279141681e7c34b9d8d5db76b451d9dd367f4d",
+    "combined": "f91d9edb1e67ada2a8256d4f9be111cb1a1b08570fb609cfbef93223f744ec1a"
+  }
+}

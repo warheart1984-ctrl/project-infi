@@ -61,7 +61,8 @@
     "notes": "Alt-10 wave 3"
   },
   "retirement": {
-    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md",
+    "migration_proof": "docs/subsystems/platform/KNOWLEDGE_AUTHORITY_ORGAN.md"
   },
   "mutation": {
     "history": []

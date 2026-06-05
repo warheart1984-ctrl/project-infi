@@ -66,6 +66,9 @@
     "concept_spec": "docs/_future/ideas_pending/MEDIA_PROCESSOR_BRIDGE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/MEDIA_PROCESSOR_BRIDGE_ORGAN_MVP_PLAN.md",
     "summon_eligible": true,
-    "active_doc": "docs/subsystems/platform/MEDIA_PROCESSOR_BRIDGE_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/MEDIA_PROCESSOR_BRIDGE_ORGAN.md",
+    "engineering_class": "MediaProcessorBridgePosture",
+    "mythic_label": "Media Processor Bridge Organ",
+    "linguistic_version": "1.0.0"
   }
 }

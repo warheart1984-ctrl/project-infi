@@ -90,6 +90,8 @@
       "operator_workspace_organ",
       "phase_gate_organ",
       "recipe_module",
+      "ugr_mission_runtime",
+      "ugr_subsystem_discovery",
       "story_forge_lane_organ",
       "v10_core_organ",
       "v9_core_organ",

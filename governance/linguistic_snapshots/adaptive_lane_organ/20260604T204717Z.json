@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "adaptive_lane_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "adaptive_lane_organ",
+      "engineering_class": "AdaptiveLaneInterface",
+      "mythic_label": "Adaptive Lane Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Adaptive Lane Organ",
+      "module_path": "src/adaptive_lane_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/adaptive_lane_organ.py",
+      "header": {
+        "mythic": "Adaptive Lane Organ",
+        "engineering": "AdaptiveLaneInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Adaptive Lane Organ\n# Engineering: AdaptiveLaneInterface",
+          "mythic": "Adaptive Lane Organ",
+          "engineering": "AdaptiveLaneInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Adaptive Lane Organ"
+      },
+      "active_doc": {
+        "title": "Adaptive Lane Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "2376887ea23c143c7c9bd23136689f8832c2ebe6f3272ba3ef2e193513880e50",
+    "engineering": "fa5dfc60e252a9790cb69079e97195beb7b8faee42f96ab2c4f7a8259c692f79",
+    "combined": "97af4003f6067e2a3e5c3f8e3c0727d14312874e5906fedc965cd2383f42d3b0"
+  }
+}

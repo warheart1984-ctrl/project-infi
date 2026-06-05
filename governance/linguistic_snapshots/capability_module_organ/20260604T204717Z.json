@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "capability_module_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "capability_module_organ",
+      "engineering_class": "CapabilityModuleEngine",
+      "mythic_label": "Capability Module Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Capability Module Organ",
+      "module_path": "src/capability_module_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/capability_module_organ.py",
+      "header": {
+        "mythic": "Capability Module Organ",
+        "engineering": "CapabilityModuleEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Capability Module Organ\n# Engineering: CapabilityModuleEngine",
+          "mythic": "Capability Module Organ",
+          "engineering": "CapabilityModuleEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Capability Module Organ"
+      },
+      "active_doc": {
+        "title": "Capability Module Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "84387dcf1a3c3dd618ef5f7150215d268c5f9e0a35649c2ee4929d2904c6cd89",
+    "engineering": "bbc01ceb066d495288c3577effae05083aac0ce73ccbd309c3876b93fbba9bc5",
+    "combined": "7cf8924d93f8d67a7e5d78f080b1e3bf8f25147ec00ff301abbd59b3f83cf8c0"
+  }
+}

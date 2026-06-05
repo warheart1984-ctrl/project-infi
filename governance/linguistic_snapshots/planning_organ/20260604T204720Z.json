@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "planning_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "planning_organ",
+      "engineering_class": "PlanningEngine",
+      "mythic_label": "Planning Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Planning Organ",
+      "module_path": "src/planning_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/planning_organ.py",
+      "header": {
+        "mythic": "Planning Organ",
+        "engineering": "PlanningEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Planning Organ\n# Engineering: PlanningEngine",
+          "mythic": "Planning Organ",
+          "engineering": "PlanningEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Planning Organ"
+      },
+      "active_doc": {
+        "title": "Planning Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "29e6d7c3cc106700f017dbb2349ad7e32bfca7b0fa59fed5bb3ff82d23f68a24",
+    "engineering": "b328e98ebc539df0dde1976d5fad32dbc51aa2255216450ec7dda1d74ce3604a",
+    "combined": "36a6eb273fcb47aaf93b7f01b5fea977ad114ddb4657797a0c34dac65d633ffa"
+  }
+}

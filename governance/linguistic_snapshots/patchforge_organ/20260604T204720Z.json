@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "patchforge_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "patchforge_organ",
+      "engineering_class": "PatchforgeEngine",
+      "mythic_label": "Patchforge Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Patchforge Organ",
+      "module_path": "src/patchforge_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/patchforge_organ.py",
+      "header": {
+        "mythic": "Patchforge Organ",
+        "engineering": "PatchforgeEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Patchforge Organ\n# Engineering: PatchforgeEngine",
+          "mythic": "Patchforge Organ",
+          "engineering": "PatchforgeEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Patchforge Organ"
+      },
+      "active_doc": {
+        "title": "Patchforge Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "60d688964c8898a6116371bc13b913790c2f23ab38f9a2b9441363f44fe03203",
+    "engineering": "f72a25f8f6570adeadabf9e3485821a2a4e36274a636d20b1ec0f081f91f4cd3",
+    "combined": "1f9e8d311937f70d8bda3c65498e0ad5483d03f8fca6101b304d73943c0a94b2"
+  }
+}

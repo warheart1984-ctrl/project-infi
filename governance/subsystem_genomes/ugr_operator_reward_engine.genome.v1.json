@@ -1,0 +1,86 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "ugr_operator_reward_engine",
+    "version": "1.0.0",
+    "stage": "governed",
+    "display_name": "UGR Operator Reward Engine"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/UGR_OPERATOR_REWARDS_CONTRACT.md",
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md"
+    ],
+    "invariants": [
+      "Tenant-scoped receipts and ledgers",
+      "Project Infi law finalization on mutating routes"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/ugr_operator_reward_receipt.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/ugr/rewards/operator_reward_engine.py"
+      },
+      {
+        "kind": "api",
+        "path": "POST /api/ugr/reward/issue"
+      },
+      {
+        "kind": "api",
+        "path": "POST /api/ugr/reward/transfer"
+      },
+      {
+        "kind": "api",
+        "path": "POST /api/ugr/reward/exchange"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/ugr/reward/operator/<operator_id>"
+      },
+      {
+        "kind": "gate",
+        "path": "make ugr-rewards-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/ugr/UGR_OPERATOR_REWARD_ENGINE_V1_PROOF.md"
+    ],
+    "posture": "governed"
+  },
+  "lineage": {
+    "parents": [
+      "ugr_subsystem_discovery"
+    ],
+    "children": [
+      "ugr_mission_runtime"
+    ]
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "ugr-admission-wave-2026-06",
+    "notes": "UGR subsystem admission wave"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/UGR_OPERATOR_REWARD_ENGINE.md",
+    "mvp_plan": "docs/_future/ideas_pending/UGR_OPERATOR_REWARD_ENGINE_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/ugr/UGR_OPERATOR_REWARD_ENGINE.md",
+    "engineering_class": "OperatorRewardEngine",
+    "mythic_label": "Ugr Operator Reward Engine",
+    "linguistic_version": "1.0.0"
+  }
+}

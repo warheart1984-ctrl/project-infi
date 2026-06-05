@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "invariant_engine_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "invariant_engine_organ",
+      "engineering_class": "InvariantEngineEngine",
+      "mythic_label": "Invariant Engine Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Invariant Engine Organ",
+      "module_path": "src/invariant_engine_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/invariant_engine_organ.py",
+      "header": {
+        "mythic": "Invariant Engine Organ",
+        "engineering": "InvariantEngineEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Invariant Engine Organ\n# Engineering: InvariantEngineEngine",
+          "mythic": "Invariant Engine Organ",
+          "engineering": "InvariantEngineEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Invariant Engine Organ"
+      },
+      "active_doc": {
+        "title": "Invariant Engine Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "84bdf4e9f9aa3d5046c6567afa0f88f198d70ab6bab6cd8570d5bcfa9546b6b4",
+    "engineering": "c4fbc004177024c802407efd5cc186cb17ba17d065a984c6a7663a064baa718c",
+    "combined": "864a11d2a21ce2314528443659c0b4fda238e5a58f7a7a6c6d9d4e579b3a6b82"
+  }
+}

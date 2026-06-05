@@ -143,8 +143,8 @@ def derive_engineering_class(gene: str) -> tuple[str, str]:
 # Manual overrides for non-organ genes without alias entries
 GENE_OVERRIDES: dict[str, tuple[str, str]] = {
     "cisiv_operator_lineage_console": (
-        "CisivOperatorLineageConsole",
-        "CISIV operator lineage console",
+        "UlLineageEngine",
+        "Ul Lineage",
     ),
     "forensic_triangulation": (
         "ForensicTriangulationEngine",

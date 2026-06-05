@@ -72,7 +72,7 @@ py -3.12 tools/proof/run_ugr_mission_demo.py
 | `UGR_SUBSYSTEM_DISCOVERY_ENABLED` | `1` (default) — Proof-of-Subsystem discovery API |
 | `UGR_DISCOVERY_SHADOW_ONLY` | `1` (default) — discovery receipts + catalog only; block `promote` writes |
 | `UGR_OPERATOR_REWARDS_ENABLED` | `1` (default) — Proof-of-Subsystem operator incentives |
-| `UGR_REWARDS_SHADOW_ONLY` | `1` (default) — validate rewards; no balance writes unless `URG_GOVERNANCE_APPLY=1` path clears shadow |
+| `UGR_REWARDS_SHADOW_ONLY` | `1` (default) — validate rewards; no balance writes (governed mutations use separate URG_GOVERNANCE_APPLY) |
 | `UGR_REWARDS_AUDIT_ONLY` | `0` (default) — compute reward preview without ledger append |
 | `UGR_RAIL_CREDIT_TRANSFER_ENABLED` | `1` (default) — P2P rail credit transfer between operators (same tenant) |
 | `UGR_RAIL_CREDIT_SPEND_ENABLED` | `1` (default) — rail credit spend + Cloud Forge boost hook |

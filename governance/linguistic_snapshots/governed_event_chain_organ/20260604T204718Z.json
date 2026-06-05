@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "governed_event_chain_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "governed_event_chain_organ",
+      "engineering_class": "GovernedEventChainEngine",
+      "mythic_label": "Governed Event Chain Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Governed Event Chain Organ",
+      "module_path": "src/governed_event_chain_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/governed_event_chain_organ.py",
+      "header": {
+        "mythic": "Governed Event Chain Organ",
+        "engineering": "GovernedEventChainEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Governed Event Chain Organ\n# Engineering: GovernedEventChainEngine",
+          "mythic": "Governed Event Chain Organ",
+          "engineering": "GovernedEventChainEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Governed Event Chain Organ"
+      },
+      "active_doc": {
+        "title": "Governed Event Chain Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "493bb444960e9c7602a68a8119cc11fa7fd39ac08ed7f395b10b0cfac0ab49d3",
+    "engineering": "d3ad31d4285f2b28a1dcc3242da5e5331d5e42236d93792db9b74924f0beb829",
+    "combined": "f58064977b8a441f349c459e38977eb875a53ea56211a2688d792c29a6de2183"
+  }
+}

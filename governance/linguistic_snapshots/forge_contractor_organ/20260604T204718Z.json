@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "forge_contractor_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "forge_contractor_organ",
+      "engineering_class": "ForgeContractorEngine",
+      "mythic_label": "Forge Contractor Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Forge Contractor Organ",
+      "module_path": "src/forge_contractor_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/forge_contractor_organ.py",
+      "header": {
+        "mythic": "Forge Contractor Organ",
+        "engineering": "ForgeContractorEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Forge Contractor Organ\n# Engineering: ForgeContractorEngine",
+          "mythic": "Forge Contractor Organ",
+          "engineering": "ForgeContractorEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Forge Contractor Organ"
+      },
+      "active_doc": {
+        "title": "Forge Contractor Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "47fc6fefc436a7fa67615f5f871a410a01951bccb3faba93c227b0f7f98f4c2e",
+    "engineering": "356810a4b931b4ac259dd44b0800d21fe7ff1f9a32dbcffc319be4f443475ab5",
+    "combined": "8816f773ac222e881cb196d3e5f99ba36447264e13f34c93dce31f4e64c4e4ec"
+  }
+}

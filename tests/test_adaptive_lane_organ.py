@@ -32,7 +32,7 @@ def test_recipe_module_lane_in_registry():
     from src.adaptive_lane_organ import wake_adaptive_lanes
 
     report = wake_adaptive_lanes(REPO)
-    assert "recipe_module" in report["genes_with_lanes"]
+    assert "recipe_module_organ" in report["genes_with_lanes"]
     lane_ids = {lane["lane_id"] for lane in report["lanes"]}
     assert "operator" in lane_ids
 
@@ -50,15 +50,15 @@ def test_fabric_minimum_genes_in_awakened_registry():
 def test_resolve_lane_for_gene():
     from src.adaptive_lane_organ import resolve_lane_for_gene
 
-    resolution = resolve_lane_for_gene("recipe_module", root=REPO)
+    resolution = resolve_lane_for_gene("recipe_module_organ", root=REPO)
     assert resolution.lane_id == "operator"
-    assert resolution.gene == "recipe_module"
+    assert resolution.gene == "recipe_module_organ"
 
 
 def test_lane_authorizes_non_policy_capability():
     from src.adaptive_lane_organ import lane_authorizes_capability, resolve_lane_for_gene
 
-    resolution = resolve_lane_for_gene("recipe_module", root=REPO)
+    resolution = resolve_lane_for_gene("recipe_module_organ", root=REPO)
     allowed = lane_authorizes_capability(resolution, "mystic")
     assert allowed.allowed
 

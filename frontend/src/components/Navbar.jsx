@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { useAuth } from './AuthProvider';
 import './Navbar.css';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { authenticated, user, signOut } = useAuth();
   const isHomeRoute = location.pathname === '/' || location.pathname.startsWith('/nova');
   const isJarvisRoute =
     location.pathname.startsWith('/jarvis')
@@ -15,6 +18,11 @@ function Navbar() {
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
+  const handleSignOut = () => {
+    signOut();
+    closeMenu();
+    navigate('/');
+  };
   const linkClassName = ({ isActive }) => `nav-link ${isActive ? 'active' : ''}`;
   const navItems = isJarvisRoute
     ? [
@@ -68,6 +76,20 @@ function Navbar() {
               )}
             </li>
           ))}
+          <li className="nav-item nav-item--auth">
+            {authenticated && user?.username ? (
+              <>
+                <span className="nav-user">{user.username}</span>
+                <button type="button" className="nav-link nav-link--button" onClick={handleSignOut}>
+                  Sign out
+                </button>
+              </>
+            ) : (
+              <NavLink to="/login" className={linkClassName} onClick={closeMenu}>
+                Sign in
+              </NavLink>
+            )}
+          </li>
         </ul>
       </div>
     </nav>

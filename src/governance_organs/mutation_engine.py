@@ -410,12 +410,17 @@ class MutationEngine:
         self._append_invariant(gov, invariant)
 
         history = data.setdefault("mutation", {}).setdefault("history", [])
+        backup_note = str(backup)
+        try:
+            backup_note = str(backup.relative_to(self.root))
+        except ValueError:
+            pass
         history.append(
             {
                 "proposal_id": mp_id,
                 "status": "promoted",
                 "schema_delta_ref": proposal.operator_lanes_delta_ref or proposal.schema_delta_ref,
-                "notes": f"backup: {backup.relative_to(self.root)}",
+                "notes": f"backup: {backup_note}",
             }
         )
         version = str((data.get("identity") or {}).get("version") or "1.0.0")

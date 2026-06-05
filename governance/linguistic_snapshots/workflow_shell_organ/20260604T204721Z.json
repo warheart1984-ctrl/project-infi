@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "workflow_shell_organ",
+  "captured_at": "2026-06-04T20:47:21Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "workflow_shell_organ",
+      "engineering_class": "WorkflowShellEngine",
+      "mythic_label": "Workflow Shell Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Workflow Shell Organ",
+      "module_path": "src/workflow_shell_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/workflow_shell_organ.py",
+      "header": {
+        "mythic": "Workflow Shell Organ",
+        "engineering": "WorkflowShellEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Workflow Shell Organ\n# Engineering: WorkflowShellEngine",
+          "mythic": "Workflow Shell Organ",
+          "engineering": "WorkflowShellEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Workflow Shell Organ"
+      },
+      "active_doc": {
+        "title": "Workflow Shell Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "ff93378962d7809c8d5cba6097b161c57e002f90400eccb9b2445b9a58a806f7",
+    "engineering": "7c4db0e90a34ba6d9fc66c2e5c63c0739a5bd396778b464aaea21024070c5609",
+    "combined": "8ed0342911a38298eb3e34cfa6d0b48bcf91b022bb3ebfa1b992ea30d49a7838"
+  }
+}

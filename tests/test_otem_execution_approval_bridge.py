@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
-import app.auth as auth
+import app.config as config
 import app.db as db
 import app.main as main
 from src.jarvis_operator import JarvisOperator
@@ -26,16 +26,25 @@ from src.otem_execution_substrate import get_otem_execution_substrate
 
 class OtemExecutionApprovalBridgeTests(unittest.TestCase):
     def setUp(self):
+        from src.otem_execution_substrate import reset_otem_execution_substrate
+
         self.tempdir = tempfile.TemporaryDirectory()
         self.original_db_path = db.DB_PATH
-        self.original_token = auth.APP_BEARER_TOKEN
+        self.original_token = config.APP_BEARER_TOKEN
+        self.original_otem_store_dir = os.environ.get("AAIS_OTEM_EXECUTION_STORE_DIR")
+        os.environ["AAIS_OTEM_EXECUTION_STORE_DIR"] = str(Path(self.tempdir.name) / "otem-store")
+        reset_otem_execution_substrate(clear_persisted=True)
         db.DB_PATH = Path(self.tempdir.name) / "otem-approval-bridge.db"
-        auth.APP_BEARER_TOKEN = ""
+        config.APP_BEARER_TOKEN = ""
         db.init_db()
 
     def tearDown(self):
-        auth.APP_BEARER_TOKEN = self.original_token
+        config.APP_BEARER_TOKEN = self.original_token
         db.DB_PATH = self.original_db_path
+        if self.original_otem_store_dir is None:
+            os.environ.pop("AAIS_OTEM_EXECUTION_STORE_DIR", None)
+        else:
+            os.environ["AAIS_OTEM_EXECUTION_STORE_DIR"] = self.original_otem_store_dir
         self.tempdir.cleanup()
 
     def _handoff_otem_result(self) -> dict:
@@ -73,14 +82,32 @@ class OtemExecutionApprovalBridgeTests(unittest.TestCase):
         self.assertEqual(len(otem_pending), 1)
 
     def test_resolve_approve_rejects_stale_substrate_after_restart(self):
+        from src.otem_execution_store import get_otem_execution_store
+
         queue_meta = maybe_enqueue_otem_execution_approval("session-otem-stale", self._handoff_otem_result())
         approval = db.get_workflow_approval(queue_meta["approval_id"])
         substrate = get_otem_execution_substrate()
-        substrate._workflows.pop(queue_meta["otem_execution_workflow_id"], None)
+        workflow_id = queue_meta["otem_execution_workflow_id"]
+        substrate._workflows.pop(workflow_id, None)
+        get_otem_execution_store().delete_workflow(workflow_id)
 
         with self.assertRaises(KeyError) as ctx:
             resolve_otem_execution_approval(approval, "approve")
         self.assertIn("stale after restart", str(ctx.exception))
+
+    def test_resolve_approve_rehydrates_persisted_substrate_after_restart(self):
+        from src.otem_execution_substrate import reset_otem_execution_substrate
+
+        queue_meta = maybe_enqueue_otem_execution_approval("session-otem-persist", self._handoff_otem_result())
+        approval = db.get_workflow_approval(queue_meta["approval_id"])
+        workflow_id = queue_meta["otem_execution_workflow_id"]
+
+        reset_otem_execution_substrate(clear_persisted=False)
+
+        result = resolve_otem_execution_approval(approval, "approve")
+        self.assertEqual(result["status"], "approved")
+        self.assertEqual(result["substrate"]["stage"], "ledger_record")
+        self.assertEqual(result["substrate"]["workflow_id"], workflow_id)
 
     def test_resolve_approve_runs_substrate_through_ledger(self):
         queue_meta = maybe_enqueue_otem_execution_approval("session-otem-2", self._handoff_otem_result())
@@ -121,13 +148,22 @@ class OtemExecutionApprovalBridgeTests(unittest.TestCase):
 
 class OtemOperatorEnqueueTests(unittest.TestCase):
     def setUp(self):
+        from src.otem_execution_substrate import reset_otem_execution_substrate
+
         self.tempdir = tempfile.TemporaryDirectory()
         self.original_db_path = db.DB_PATH
+        self.original_otem_store_dir = os.environ.get("AAIS_OTEM_EXECUTION_STORE_DIR")
+        os.environ["AAIS_OTEM_EXECUTION_STORE_DIR"] = str(Path(self.tempdir.name) / "otem-store")
+        reset_otem_execution_substrate(clear_persisted=True)
         db.DB_PATH = Path(self.tempdir.name) / "otem-operator-enqueue.db"
         db.init_db()
 
     def tearDown(self):
         db.DB_PATH = self.original_db_path
+        if self.original_otem_store_dir is None:
+            os.environ.pop("AAIS_OTEM_EXECUTION_STORE_DIR", None)
+        else:
+            os.environ["AAIS_OTEM_EXECUTION_STORE_DIR"] = self.original_otem_store_dir
         self.tempdir.cleanup()
 
     def test_build_otem_turn_result_attaches_execution_approval_queue(self):

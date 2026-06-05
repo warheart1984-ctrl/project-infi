@@ -15,7 +15,7 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 
 ## [1.26.1] - 2026-06-03 — OTEM Level 10 Safe Activation
 
-**Release 30.1** — activates OTEM capability level 10 (default); defers substrate persistence phase 2.
+**Release 30.1** — activates OTEM capability level 10 (default); defers substrate persistence phase 2. **178 governed** genomes (Release 30 five-pack + Alt-13 wave promotions).
 
 ### Added
 
@@ -35,18 +35,20 @@ CoGOS ISO releases are tracked separately — see [docs/releases/README.md](docs
 ### Verification (v1.26.1)
 
 ```bash
+make alt30-governed-gate v1.26.1-gate
 AAIS_GENOME_BOOT=warn python -m pytest \
   tests/test_otem_capability.py \
   tests/test_otem_bounded_organ.py \
   tests/test_otem_execution_approval_bridge.py \
   tests/otem/test_otem_stabilization.py -q
+AAIS_GENOME_BOOT=warn python -m pytest -q
 ```
 
 [1.26.1]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.1
 
 ## [1.26.0] - 2026-06-03 — OTEM Execution Approval Bridge
 
-**Release 30** — wires session-bound OTEM `workflow_handoff` into existing `/workflows/approvals`; operator approve runs OTEM execution substrate `approve()` + `apply()` without Celery.
+**Release 30** — wires session-bound OTEM `workflow_handoff` into existing `/workflows/approvals`; operator approve runs OTEM execution substrate `approve()` + `apply()` without Celery. **178 governed** genomes after Alt30 summon (five-pack: coding stack, OTEM substrate, ARIS standalone, dreamspace, media processor family).
 
 ### Added
 
@@ -65,7 +67,7 @@ AAIS_GENOME_BOOT=warn python -m pytest \
 
 ```bash
 python -m pytest tests/test_otem_execution_approval_bridge.py -q
-make otem-execution-substrate-gate
+make otem-execution-substrate-gate alt30-governed-gate
 ```
 
 [1.26.0]: https://github.com/warheart1984-ctrl/Project-Infinity1/releases/tag/v1.26.0

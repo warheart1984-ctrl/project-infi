@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "continuity_witness_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "continuity_witness_organ",
+      "engineering_class": "ContinuityWitnessEngine",
+      "mythic_label": "Continuity Witness Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Continuity Witness Organ",
+      "module_path": "src/continuity_witness_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/continuity_witness_organ.py",
+      "header": {
+        "mythic": "Continuity Witness Organ",
+        "engineering": "ContinuityWitnessEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Continuity Witness Organ\n# Engineering: ContinuityWitnessEngine",
+          "mythic": "Continuity Witness Organ",
+          "engineering": "ContinuityWitnessEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Continuity Witness Organ"
+      },
+      "active_doc": {
+        "title": "Continuity Witness Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "ce44d707bf931c10796eb308e76178017b867c97487ef73539424c64b50e7940",
+    "engineering": "23d8d3b447c67d8aff93cfee070d4d57752310ff33496b52da214c0bd7e1a2ce",
+    "combined": "7e0526a5b8788bb6cc2ea600a6069811c97b9c89f585d4416429c914dd2d852f"
+  }
+}

@@ -119,10 +119,13 @@ def resolve_lane_for_gene(
     authority = str(authority_lane or build_operator_profile().get("authority_lane") or "operator")
     if not gene:
         return LaneResolution(lane_id=authority, weight=1.0, capabilities=())
+    from src.governance_organs.genome_engine import GenomeEngine
+
+    resolved_gene = GenomeEngine.resolve_gene(gene) or gene
     by_gene = collect_operator_lanes(root)
-    lanes = by_gene.get(gene) or []
+    lanes = by_gene.get(resolved_gene) or []
     if not lanes:
-        return LaneResolution(lane_id=authority, weight=1.0, capabilities=(), gene=gene)
+        return LaneResolution(lane_id=authority, weight=1.0, capabilities=(), gene=resolved_gene)
     best = max(lanes, key=lambda lane: float(lane.get("weight") or 0.0))
     lane_id = str(best.get("lane_id") or authority)
     caps = tuple(str(c) for c in (best.get("capabilities") or []))
@@ -130,7 +133,7 @@ def resolve_lane_for_gene(
         lane_id=lane_id,
         weight=float(best.get("weight") or 0.0),
         capabilities=caps,
-        gene=gene,
+        gene=resolved_gene,
         allowed=True,
     )
 

@@ -1,0 +1,37 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "ugr_mission_runtime",
+  "captured_at": "2026-06-05T18:32:40Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "ugr_mission_runtime",
+      "engineering_class": "MissionRuntimeEngine",
+      "mythic_label": "Ugr Mission Runtime",
+      "linguistic_version": "1.0.0",
+      "display_name": "UGR Mission Runtime",
+      "module_path": "src/ugr/mission/mission_runtime.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/ugr/mission/mission_runtime.py",
+      "header": {
+        "engineering": "MissionRuntimeEngine"
+      },
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "UGR Mission Runtime"
+      },
+      "active_doc": {
+        "title": "UGR Mission Runtime"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "4cedbd4dd12025c42e96a249690c46cbd0b4d27ac455a409d3429acb451a4f81",
+    "engineering": "b5628e47b02101bad7bf20460963b6583e72370a9148a16fbcfb408a05d7c0c5",
+    "combined": "ef045c35845a0edef27c7f4b4b263d2b9fe94e3f83646b31186a3bb7034bd526"
+  }
+}

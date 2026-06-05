@@ -154,9 +154,19 @@ class TestJarvisProtocol(unittest.TestCase):
 
         self.assertEqual(provider_messages[0].role, "system")
         self.assertEqual(provider_messages[0].content, "Use a grounded operator voice.")
-        self.assertEqual(provider_messages[1].content, "Workspace context:\nWorkspace hit: src/api.py")
-        self.assertEqual(provider_messages[2].content, "Knowledge context:\nResearch source: release notes")
-        self.assertEqual(provider_messages[3].role, "user")
+        workspace_messages = [
+            message.content
+            for message in provider_messages
+            if message.content.startswith("Workspace context:\n")
+        ]
+        knowledge_messages = [
+            message.content
+            for message in provider_messages
+            if message.content.startswith("Knowledge context:\n")
+        ]
+        self.assertEqual(workspace_messages, ["Workspace context:\nWorkspace hit: src/api.py"])
+        self.assertEqual(knowledge_messages, ["Knowledge context:\nResearch source: release notes"])
+        self.assertEqual(provider_messages[-1].role, "user")
 
     def test_modular_provider_preview_exposes_modules_and_provider_payload(self):
         """Protocol previews should expose the modular context blocks derived from evolving_ai patterns."""
@@ -180,12 +190,20 @@ class TestJarvisProtocol(unittest.TestCase):
             mode="builder",
         )
 
-        self.assertEqual(preview["modules"][0]["channel"], "orchestration")
-        self.assertEqual(preview["provider_messages"][0]["role"], "system")
-        self.assertTrue(preview["provider_messages"][0]["content"].startswith("Mission context:\n"))
-        self.assertEqual(preview["provider_payload"]["metadata"]["module_count"], 1)
+        module_channels = [module["channel"] for module in preview["modules"]]
+        self.assertIn("governance", module_channels)
+        self.assertIn("orchestration", module_channels)
+        mission_messages = [
+            message["content"]
+            for message in preview["provider_messages"]
+            if str(message.get("content", "")).startswith("Mission context:\n")
+        ]
+        self.assertEqual(len(mission_messages), 1)
+        self.assertTrue(mission_messages[0].startswith("Mission context:\n"))
+        self.assertEqual(preview["provider_payload"]["metadata"]["module_count"], 2)
         self.assertIn("ProviderPayloadModule", preview["context_modules"])
         self.assertIn("ProtocolContextModule", preview["provider_payload"]["metadata"]["module_names"])
+        self.assertIn("OperatorGovernanceCoherenceModule", preview["provider_payload"]["metadata"]["module_names"])
         self.assertEqual(preview["pipeline_mode"], "default")
         self.assertEqual(preview["guardrail_state"]["status"], "nominal")
         self.assertTrue(preview["guardrail_state"]["preserve_core"])

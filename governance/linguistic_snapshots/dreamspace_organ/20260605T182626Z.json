@@ -1,0 +1,36 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "dreamspace_organ",
+  "captured_at": "2026-06-05T18:26:26Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "dreamspace_organ",
+      "engineering_class": "DreamspaceOrganGate",
+      "mythic_label": "Dreamspace Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Dreamspace Organ",
+      "module_path": "src/dreamspace_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/dreamspace_organ.py",
+      "header": {
+        "mythic": "Dreamspace Organ",
+        "engineering": "DreamspaceOrganGate"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Dreamspace Organ\n# Engineering: DreamspaceOrganGate",
+          "mythic": "Dreamspace Organ",
+          "engineering": "DreamspaceOrganGate"
+        }
+      ]
+    }
+  },
+  "fingerprints": {
+    "mythic": "9d8d87cdc317e465a320335bf73ff54702887743d6d6e1c003307659b18beaf7",
+    "engineering": "0ea261fb5f8c1f87e9ce41877d13c9645bfe753fe1bd8240d487caa6385c64bf",
+    "combined": "af956f66f1931de276d484e7b47e10c29d770f0efd2ad19e4b721798fd3f8740"
+  }
+}

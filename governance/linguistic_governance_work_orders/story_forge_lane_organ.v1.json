@@ -1,0 +1,20 @@
+{
+  "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+  "gene": "story_forge_lane_organ",
+  "status": "pending",
+  "urgency_score": 25.2,
+  "queue_generated_at": "2026-06-05T19:07:45Z",
+  "recommended_actions": [
+    {
+      "kind": "recommendation",
+      "text": "Review recent MP-LING proposals; stabilize linguistic_version"
+    },
+    {
+      "kind": "cascade_report",
+      "command": "python tools/linguistic_cascade_report.py --gene story_forge_lane_organ",
+      "note": "Review lineage cascade impact"
+    }
+  ],
+  "operator_notes": "",
+  "updated_at": "2026-06-05T19:07:45Z"
+}

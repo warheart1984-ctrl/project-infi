@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import { AuthGate, AuthProvider } from './components/AuthProvider';
 import './App.css';
 
 const routerBasename = (() => {
@@ -33,6 +34,7 @@ const WorkflowRunDetail = lazy(() => import('./pages/WorkflowRunDetail'));
 const WorkflowApprovals = lazy(() => import('./pages/WorkflowApprovals'));
 const WorkflowTemplates = lazy(() => import('./pages/WorkflowTemplates'));
 const OperatorConsole = lazy(() => import('./pages/OperatorConsole'));
+const TemporalReplay = lazy(() => import('./pages/TemporalReplay/TemporalReplay'));
 const PlatformConsole = lazy(() => import('./pages/PlatformConsole'));
 const PlatformJobDetail = lazy(() => import('./pages/PlatformJobDetail'));
 const PlatformArtifacts = lazy(() => import('./pages/PlatformArtifacts'));
@@ -41,6 +43,8 @@ const PlatformAssistant = lazy(() => import('./pages/PlatformAssistant'));
 const PlatformWorkflow = lazy(() => import('./pages/PlatformWorkflow'));
 const PlatformMesh = lazy(() => import('./pages/PlatformMesh'));
 const PlatformMarketplace = lazy(() => import('./pages/PlatformMarketplace'));
+const Login = lazy(() => import('./pages/Login'));
+const Onboarding = lazy(() => import('./pages/Onboarding'));
 
 function RouteFallback() {
   return (
@@ -54,13 +58,15 @@ function AppShell() {
   const location = useLocation();
   const isNovaRoute = location.pathname === '/' || location.pathname.startsWith('/nova');
   const isJarvisRoute = location.pathname.startsWith('/jarvis');
+  const isLoginRoute = location.pathname === '/login';
 
   return (
-    <div className={`App ${isNovaRoute ? 'App--nova' : ''} ${isJarvisRoute ? 'App--jarvis' : ''}`}>
-      <Navbar />
+    <div className={`App ${isNovaRoute ? 'App--nova' : ''} ${isJarvisRoute ? 'App--jarvis' : ''} ${isLoginRoute ? 'App--login' : ''}`}>
+      {!isLoginRoute ? <Navbar /> : null}
       <main className={`main-content ${isNovaRoute ? 'main-content--nova' : ''} ${isJarvisRoute ? 'main-content--jarvis' : ''}`}>
         <Suspense fallback={<RouteFallback />}>
           <Routes>
+            <Route path="/login" element={<Login />} />
             <Route path="/" element={<NovaPage />} />
             <Route path="/nova" element={<NovaPage />} />
             <Route path="/nova-the-north-star" element={<NovaPage />} />
@@ -84,6 +90,8 @@ function AppShell() {
             <Route path="/workflows/approvals" element={<WorkflowApprovals />} />
             <Route path="/workflows/templates" element={<WorkflowTemplates />} />
             <Route path="/operator" element={<OperatorConsole />} />
+            <Route path="/operator/replay" element={<TemporalReplay />} />
+            <Route path="/operator/replay/:subjectType/:subjectId" element={<TemporalReplay />} />
             <Route path="/platform" element={<PlatformConsole />} />
             <Route path="/platform/jobs/:jobId" element={<PlatformJobDetail />} />
             <Route path="/platform/artifacts" element={<PlatformArtifacts />} />
@@ -114,7 +122,11 @@ function AppShell() {
 function App() {
   return (
     <Router basename={routerBasename}>
-      <AppShell />
+      <AuthProvider>
+        <AuthGate>
+          <AppShell />
+        </AuthGate>
+      </AuthProvider>
     </Router>
   );
 }

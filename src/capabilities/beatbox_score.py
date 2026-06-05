@@ -1,5 +1,6 @@
 """Beatbox downstream lane capability adapter."""
 
+# Engineering: BeatboxScoreEngine
 from __future__ import annotations
 
 from typing import Any

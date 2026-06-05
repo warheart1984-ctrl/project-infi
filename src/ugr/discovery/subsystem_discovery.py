@@ -1,5 +1,6 @@
 """Subsystem discovery orchestrator — validate, search, receipt, promote."""
 
+# Engineering: SubsystemDiscoveryEngine
 from __future__ import annotations
 
 import os

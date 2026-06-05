@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "direct_challenge_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "direct_challenge_organ",
+      "engineering_class": "DirectChallengeEngine",
+      "mythic_label": "Direct Challenge Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Direct Challenge Organ",
+      "module_path": "src/direct_challenge_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/direct_challenge_organ.py",
+      "header": {
+        "mythic": "Direct Challenge Organ",
+        "engineering": "DirectChallengeEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Direct Challenge Organ\n# Engineering: DirectChallengeEngine",
+          "mythic": "Direct Challenge Organ",
+          "engineering": "DirectChallengeEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Direct Challenge Organ"
+      },
+      "active_doc": {
+        "title": "Direct Challenge Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "ad33e310e7b947d7933e5b91e865d0078dce77d7015b82b5a22b1dc41e4eb05d",
+    "engineering": "d020b7c993168428a2c79a9c1f9d4023ad6696b1256b463ecf20e962774d97a0",
+    "combined": "32bc60828e8375416d95577153ea85991cadc270ac70a1bc7e3fe26669aacd89"
+  }
+}

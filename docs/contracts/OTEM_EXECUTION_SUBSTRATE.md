@@ -28,12 +28,13 @@ Safe activation means operators can complete the governed path in a **single run
 
 Substrate workflow objects are **not** required to survive process restart for activation to be safe. Approval rows persist in the workflow DB; only the in-memory substrate graph is ephemeral until phase 2.
 
-## Persistence (phase 2 — optional durability)
+## Persistence (phase 2 — durable substrate store)
 
-**Not required for Level 10 activation.**
+**Implemented at v1.26.1+ (phase 2).**
 
-- Substrate workflow state remains **in-process** until a durable store lands (e.g. when build-persistence-memory or cross-restart OTEM execution queue is a product requirement).
-- **Operator caveat:** After restart, a pending approval may reference an `otem_execution_workflow_id` that no longer exists in memory. **Reject** the stale approval and re-run the OTEM handoff in the same session, or approve only before restart. Approve on a missing workflow returns **409** with an explicit message.
+- Substrate workflow records persist under `AAIS_DATA_DIR/otem-execution/` (override: `AAIS_OTEM_EXECUTION_STORE_DIR`).
+- Process restart rehydrates workflows from the durable store on `approve()` / `apply()` / `get_workflow()`.
+- **Operator caveat:** If both memory and durable store lack the workflow id, reject the stale approval and re-run the OTEM handoff. Approve on a missing workflow returns **409** with an explicit message.
 
 ## Capability level (default 10)
 

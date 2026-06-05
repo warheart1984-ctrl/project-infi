@@ -79,6 +79,9 @@
     "concept_spec": "docs/_future/ideas_pending/LINGUISTIC_GOVERNANCE_CYCLE_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/LINGUISTIC_GOVERNANCE_CYCLE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/LINGUISTIC_GOVERNANCE_CYCLE_ORGAN.md"
+    "active_doc": "docs/subsystems/platform/LINGUISTIC_GOVERNANCE_CYCLE_ORGAN.md",
+    "engineering_class": "LinguisticGovernanceCycleEngine",
+    "mythic_label": "Linguistic Governance Cycle Organ",
+    "linguistic_version": "1.0.0"
   }
 }

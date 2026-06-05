@@ -1,13 +1,21 @@
 {
   "linguistic_preemptive_playbook_version": "linguistic_preemptive_playbook.v1",
   "gene": "naming_protocol_organ",
-  "current_band": "medium",
+  "current_band": "low",
   "predicted_band": "medium",
-  "predicted_risk_30d": 39,
-  "lead_time_days": 0,
-  "drivers": [],
-  "generated_at": "2026-06-03T10:23:37Z",
+  "predicted_risk_30d": 64,
+  "lead_time_days": 18,
+  "drivers": [
+    "latent alignment gap (header/doc vs genome ssp)",
+    "rising linguistic snapshot trajectory"
+  ],
+  "generated_at": "2026-06-05T17:58:25Z",
   "actions": [
+    {
+      "kind": "watch_wave2_header",
+      "path": "src/naming_protocol_organ.py",
+      "note": "Add # Engineering header before band escalates"
+    },
     {
       "kind": "schedule_remediation",
       "command": "python tools/governance/generate_linguistic_remediations.py --gene naming_protocol_organ",

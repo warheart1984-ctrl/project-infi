@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "tracing_spine_organ",
+  "captured_at": "2026-06-04T20:47:21Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "tracing_spine_organ",
+      "engineering_class": "TracingSpineEngine",
+      "mythic_label": "Tracing Spine Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Tracing Spine Organ",
+      "module_path": "src/tracing_spine_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/tracing_spine_organ.py",
+      "header": {
+        "mythic": "Tracing Spine Organ",
+        "engineering": "TracingSpineEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Tracing Spine Organ\n# Engineering: TracingSpineEngine",
+          "mythic": "Tracing Spine Organ",
+          "engineering": "TracingSpineEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Tracing Spine Organ"
+      },
+      "active_doc": {
+        "title": "Tracing Spine Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "97605e8358968b69598047b229a7b738b6b2757f127b7f2b7c8f6ce7bd6466ff",
+    "engineering": "e28d3702fb4bccdfda2cb61e165c12824ab10042d19454004327657a694ed374",
+    "combined": "fec69f5e983e922efcc3edc566cc33441c1b84ded2c8d4baa7bebff1bf11e2f3"
+  }
+}

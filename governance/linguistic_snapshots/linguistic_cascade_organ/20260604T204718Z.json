@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_cascade_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_cascade_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Linguistic Cascade Subsystem",
+      "module_path": "src/linguistic_cascade_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_cascade_organ.py",
+      "header": {
+        "mythic": "Linguistic Cascade Organ",
+        "engineering": "LinguisticCascadeEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Cascade Organ\n# Engineering: LinguisticCascadeEngine",
+          "mythic": "Linguistic Cascade Organ",
+          "engineering": "LinguisticCascadeEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Cascade Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Cascade Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "4a7aa1c80f701b60166a98a10de629dbb3482053e83e780d5a44083f91fdbc7a",
+    "engineering": "ddec4350b5524ead2577052e92ab3981d53eb520622ea1da31b9a8b455174058",
+    "combined": "9eddb6e362f8a705fd3032c0821dcc5a5fe0a6451ab1c60a66a692a88242373f"
+  }
+}

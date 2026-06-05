@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_preemptive_remediation_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_preemptive_remediation_organ",
+      "engineering_class": "LinguisticPreemptiveRemediationEngine",
+      "mythic_label": "Linguistic Preemptive Remediation Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Linguistic Preemptive Remediation Subsystem",
+      "module_path": "src/linguistic_preemptive_remediation_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_preemptive_remediation_organ.py",
+      "header": {
+        "mythic": "Linguistic Preemptive Remediation Organ",
+        "engineering": "LinguisticPreemptiveRemediationEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Preemptive Remediation Organ\n# Engineering: LinguisticPreemptiveRemediationEngine",
+          "mythic": "Linguistic Preemptive Remediation Organ",
+          "engineering": "LinguisticPreemptiveRemediationEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Preemptive Remediation Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Preemptive Remediation Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "cbc54400582ed172b38a8e00e18834198eb570a6e162c30625bae95315156791",
+    "engineering": "402ddf0f11369aeffd1e3a8fa9eb5945d6fcf1ff457c921fd4d42acb6790d2ed",
+    "combined": "e593597ecb0d25963fec3f9a997172f0bcaf0754964834b8b0c72671479e6685"
+  }
+}

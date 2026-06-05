@@ -1,0 +1,36 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "coding_organs_stack",
+  "captured_at": "2026-06-05T18:27:03Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "coding_organs_stack",
+      "engineering_class": "PatchforgeEngine",
+      "mythic_label": "Coding Organs Stack",
+      "linguistic_version": "1.0.0",
+      "display_name": "Coding Organs Stack",
+      "module_path": "src/patchforge_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/patchforge_organ.py",
+      "header": {
+        "mythic": "Patchforge Organ",
+        "engineering": "PatchforgeEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Patchforge Organ\n# Engineering: PatchforgeEngine",
+          "mythic": "Patchforge Organ",
+          "engineering": "PatchforgeEngine"
+        }
+      ]
+    }
+  },
+  "fingerprints": {
+    "mythic": "ac54d209128cccd8a0e7bbea72fd5589b7c57d6f06d197af0ddd1572ab78d960",
+    "engineering": "f72a25f8f6570adeadabf9e3485821a2a4e36274a636d20b1ec0f081f91f4cd3",
+    "combined": "0beedd071c36e68f0c1666ca9ed2eaa74353fc54c2c13aba000e57c9642902cf"
+  }
+}

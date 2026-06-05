@@ -38,6 +38,13 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 OPENAI_MAIN_MODEL = os.getenv("OPENAI_MAIN_MODEL", "gpt-4o-mini")
 OPENAI_FAST_MODEL = os.getenv("OPENAI_FAST_MODEL", OPENAI_MAIN_MODEL)
 APP_BEARER_TOKEN = os.getenv("APP_BEARER_TOKEN", "").strip()
+AUTH_REQUIRED = os.getenv("AUTH_REQUIRED", "").strip().lower() in {"1", "true", "yes", "on"}
+ALLOW_OPERATOR_REGISTRATION = os.getenv("ALLOW_OPERATOR_REGISTRATION", "true").strip().lower() not in {
+    "0",
+    "false",
+    "no",
+    "off",
+}
 APP_CORS_ORIGINS = [
     origin.strip()
     for origin in os.getenv(
@@ -48,9 +55,9 @@ APP_CORS_ORIGINS = [
 ]
 SLACK_WEBHOOK_URL = os.getenv("SLACK_WEBHOOK_URL", "").strip()
 
-REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379/0")
+REDIS_URL = os.getenv("REDIS_URL", "redis://127.0.0.1:6379/0")
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", REDIS_URL)
-CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/1")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://127.0.0.1:6379/1")
 
 WORKFLOW_LEASE_SECONDS = int(os.getenv("WORKFLOW_LEASE_SECONDS", "45"))
 WORKFLOW_HEARTBEAT_INTERVAL_SECONDS = int(os.getenv("WORKFLOW_HEARTBEAT_INTERVAL_SECONDS", "10"))

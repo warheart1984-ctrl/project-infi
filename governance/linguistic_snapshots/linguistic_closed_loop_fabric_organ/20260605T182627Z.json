@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_closed_loop_fabric_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_closed_loop_fabric_organ",
+      "engineering_class": "LinguisticClosedLoopFabricEngine",
+      "mythic_label": "Linguistic Closed Loop Fabric Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Linguistic Closed Loop Fabric Subsystem",
+      "module_path": "src/linguistic_closed_loop_fabric_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_closed_loop_fabric_organ.py",
+      "header": {
+        "mythic": "Linguistic Closed Loop Fabric Organ",
+        "engineering": "LinguisticClosedLoopFabricEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Closed Loop Fabric Organ\n# Engineering: LinguisticClosedLoopFabricEngine",
+          "mythic": "Linguistic Closed Loop Fabric Organ",
+          "engineering": "LinguisticClosedLoopFabricEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Closed Loop Fabric Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Closed Loop Fabric Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "f84fff60cfe6fc96807efd710c21e63218c838798e1525a8a9bd665ede70de14",
+    "engineering": "7bdd144af1ded7a3f770fbe8a44dc1a87685abca4016929cfa4fc985feb0e57e",
+    "combined": "70058a70a1d2097a6a823963c0d3c94ffe49e13bf7e7ac432be5d1824f4a4637"
+  }
+}

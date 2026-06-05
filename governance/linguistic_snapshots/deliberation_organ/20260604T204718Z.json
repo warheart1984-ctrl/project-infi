@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "deliberation_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "deliberation_organ",
+      "engineering_class": "DeliberationEngine",
+      "mythic_label": "Deliberation Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Deliberation Organ",
+      "module_path": "src/deliberation_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/deliberation_organ.py",
+      "header": {
+        "mythic": "Deliberation Organ",
+        "engineering": "DeliberationEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Deliberation Organ\n# Engineering: DeliberationEngine",
+          "mythic": "Deliberation Organ",
+          "engineering": "DeliberationEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Deliberation Organ"
+      },
+      "active_doc": {
+        "title": "Deliberation Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "fa3e826a67eb21e7eaf25c9b39aee903a9c210f7c0e2d64b9e2b5ace82044894",
+    "engineering": "adf23d763d4587902e83ebcddda18dda749d1e52ca4be3a6543f514e41ca5cea",
+    "combined": "b722d5073457662e3244d266c6d16eabf4ea9b343f23a82752fc9a1a5325f1f1"
+  }
+}

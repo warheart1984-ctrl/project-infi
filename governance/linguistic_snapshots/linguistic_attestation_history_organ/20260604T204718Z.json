@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_attestation_history_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_attestation_history_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Linguistic Attestation History Subsystem",
+      "module_path": "src/linguistic_attestation_history_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_attestation_history_organ.py",
+      "header": {
+        "mythic": "Linguistic Attestation History Organ",
+        "engineering": "LinguisticAttestationHistoryEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Attestation History Organ\n# Engineering: LinguisticAttestationHistoryEngine",
+          "mythic": "Linguistic Attestation History Organ",
+          "engineering": "LinguisticAttestationHistoryEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Attestation History Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Attestation History Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "6f4c16e491e7a0dd054cbc41448d5c1d4d8ba6731e8a59d9a58d5d84bb8778d3",
+    "engineering": "eef7e4ac2fe750855df4bb7a7cd71c4011fe39341898c274afb0933a4997c55b",
+    "combined": "2290321b49b92d4caa9434852cd699981ea00607e11c613e19d7e9013f9a3d3f"
+  }
+}

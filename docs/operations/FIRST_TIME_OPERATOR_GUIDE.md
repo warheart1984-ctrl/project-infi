@@ -72,19 +72,19 @@ Developer alternative: `make run` (uvicorn on `:8000`).
 | Health | http://127.0.0.1:8000/health |
 | App shell | http://127.0.0.1:8000/app |
 | Jarvis console | http://127.0.0.1:8000/app/jarvis |
-| Jarvis API | `/legacy_api` (Flask, bridged through FastAPI) |
+| Jarvis API | `/api/...` (canonical; `/legacy_api/api/...` remains for compatibility) |
 
 ### 5. Verify with curl
 
 ```bash
 curl -fsS http://127.0.0.1:8000/health
 
-curl -fsS -X POST http://127.0.0.1:8000/legacy_api/api/chat/sessions \
+curl -fsS -X POST http://127.0.0.1:8000/api/chat/sessions \
   -H "Content-Type: application/json" \
   -d "{\"system_prompt\":\"You are Jarvis.\"}"
 
 # Use session_id from response:
-curl -fsS -X POST http://127.0.0.1:8000/legacy_api/api/chat/sessions/<session_id>/message \
+curl -fsS -X POST http://127.0.0.1:8000/api/chat/sessions/<session_id>/message \
   -H "Content-Type: application/json" \
   -d "{\"message\":\"Summarize AAIS.\",\"response_mode\":\"operator\"}"
 ```

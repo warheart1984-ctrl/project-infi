@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "text_to_3d_world_lane_organ",
+  "captured_at": "2026-06-04T20:47:21Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "text_to_3d_world_lane_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Text-to-3D World Lane",
+      "module_path": "src/text_to_3d_world_lane_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/text_to_3d_world_lane_organ.py",
+      "header": {
+        "mythic": "Text-to-3D World Lane Organ",
+        "engineering": "TextTo3DWorldLanePosture"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Text-to-3D World Lane Organ\n# Engineering: TextTo3DWorldLanePosture",
+          "mythic": "Text-to-3D World Lane Organ",
+          "engineering": "TextTo3DWorldLanePosture"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Text-to-3D World Lane"
+      },
+      "active_doc": {
+        "title": "Text-to-3D World Lane"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "38a0057af5fdece1c70d596d279e5f8ce59902a00cccc3e270050d21a3901b55",
+    "engineering": "b9a1f3d6d7f0130ad7c2f3955fdbb32bf6ea9c5b43d61105cec6f4a162898cfd",
+    "combined": "382d8465c3fc719e0d480935f4e71c831ba583de072310f3000a48771e6de422"
+  }
+}

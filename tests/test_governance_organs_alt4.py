@@ -35,7 +35,7 @@ def test_promotion_evaluate_recipe_module():
     from src.governance_organs.promotion_engine import PromotionEngine
 
     engine = PromotionEngine(REPO)
-    decision = engine.evaluate("recipe_module")
+    decision = engine.evaluate("recipe_module_organ")
     assert decision.current_stage == "governed"
     assert decision.target_stage is None
     assert decision.passed
@@ -45,7 +45,7 @@ def test_promotion_idempotent_at_governed():
     from src.governance_organs.promotion_engine import PromotionEngine
 
     engine = PromotionEngine(REPO)
-    decision = engine.evaluate("recipe_module")
+    decision = engine.evaluate("recipe_module_organ")
     assert decision.current_stage == "governed"
     applied = engine.apply(decision, dry_run=False)
     assert applied.passed
@@ -55,12 +55,12 @@ def test_promotion_rollback_restores_backup():
     from src.governance_organs.promotion_engine import PromotionEngine
 
     engine = PromotionEngine(REPO)
-    path = engine._genome_path("recipe_module")
+    path = engine._genome_path("recipe_module_organ")
     original = json.loads(path.read_text(encoding="utf-8"))
     modified = json.loads(path.read_text(encoding="utf-8"))
     modified["identity"]["stage"] = "governed"
-    engine._write_genome("recipe_module", modified)
-    assert engine.rollback("recipe_module")
+    engine._write_genome("recipe_module_organ", modified)
+    assert engine.rollback("recipe_module_organ")
     restored = json.loads(path.read_text(encoding="utf-8"))
     assert restored["identity"]["stage"] == original["identity"]["stage"]
 
@@ -115,7 +115,7 @@ def test_retirement_emission_monitor():
     from src.governance_organs.retirement_engine import RetirementEngine
 
     engine = RetirementEngine(REPO)
-    report = engine.emission_unused("recipe_module")
+    report = engine.emission_unused("recipe_module_organ")
     assert "releases_since_activity" in report
     assert "releases_required" in report
 
@@ -132,7 +132,7 @@ ORIGINAL_SIX = frozenset(
         "cisiv_operator_lineage_console",
         "forensic_triangulation",
         "narrative_trust_pack",
-        "recipe_module",
+        "recipe_module_organ",
         "imagine_generator",
         "human_voice_extraction",
     }

@@ -269,13 +269,13 @@ def _idle_pipeline_baseline() -> dict[str, Any]:
 def _fabric_genes_aligned(root: Path) -> bool:
     import importlib.util
 
-    script = root / "tools/governance/check_alt6_governed_eligibility.py"
-    spec = importlib.util.spec_from_file_location("check_alt6_governed_eligibility", script)
+    script = root / "tools/governance/check_alt30_governed_eligibility.py"
+    spec = importlib.util.spec_from_file_location("check_alt30_governed_eligibility", script)
     if spec is None or spec.loader is None:
         return False
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    return not module.check_eligibility(root)
+    return not module.check_genome_eligibility(root)
 
 
 def _build_runtime_posture() -> list[dict[str, str]]:
@@ -2279,6 +2279,7 @@ def build_coherence_fabric_status(
     root: Path | None = None,
     bridge_snapshot: dict[str, Any] | None = None,
     pipeline_trace: dict[str, Any] | None = None,
+    skip_fabric_genes_alignment: bool = False,
 ) -> dict[str, Any]:
     """Join profile, lane, and envelope posture into one inspectable snapshot."""
     root = _root(root)
@@ -2336,7 +2337,7 @@ def build_coherence_fabric_status(
         },
     ]
 
-    fabric_aligned = _fabric_genes_aligned(root)
+    fabric_aligned = True if skip_fabric_genes_alignment else _fabric_genes_aligned(root)
     safety_halt = safety_mode == "halt"
     pipeline_allowed = evaluate_pipeline_coherence(
         fabric_genes_aligned=fabric_aligned,

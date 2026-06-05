@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "api_gateway_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "api_gateway_organ",
+      "engineering_class": "ApiGatewayGate",
+      "mythic_label": "Api Gateway Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "API Gateway Organ",
+      "module_path": "src/api_gateway_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/api_gateway_organ.py",
+      "header": {
+        "mythic": "Api Gateway Organ",
+        "engineering": "ApiGatewayGate"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Api Gateway Organ\n# Engineering: ApiGatewayGate",
+          "mythic": "Api Gateway Organ",
+          "engineering": "ApiGatewayGate"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "API Gateway Organ"
+      },
+      "active_doc": {
+        "title": "Api Gateway Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "5805e3c7f85c939d8e830ac06f51ecb00646666ced226bb9c0d282f6705f4434",
+    "engineering": "ff81cedb1f53d1af26bff0065c917f3255cdf6faf0f8f1f827b45d4c7d4fc67e",
+    "combined": "52b61aac05bb6726167e8901c69e5ba39bfe0a908030a3eab37fc3bd426c1eba"
+  }
+}

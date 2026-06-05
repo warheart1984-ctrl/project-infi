@@ -7,8 +7,12 @@
     "display_name": "Media Processor Family"
   },
   "governance": {
-    "contracts": ["docs/contracts/MEDIA_PROCESSOR_FAMILY.md"],
-    "invariants": ["bridge_safe only"]
+    "contracts": [
+      "docs/contracts/MEDIA_PROCESSOR_FAMILY.md"
+    ],
+    "invariants": [
+      "bridge_safe only"
+    ]
   },
   "schema": {
     "ref": "schemas/media_processor_organ.v1.json",
@@ -16,11 +20,43 @@
   },
   "runtime": {
     "surface": [
-      {"kind": "module", "path": "src/media_processor_organ.py"},
-      {"kind": "gate", "path": "make media-processor-gate"}
+      {
+        "kind": "module",
+        "path": "src/media_processor_organ.py"
+      },
+      {
+        "kind": "gate",
+        "path": "make media-processor-gate"
+      }
     ]
   },
   "proof": {
-    "posture": "governed"
+    "bundles": [
+      "docs/proof/platform/MEDIA_PROCESSOR_FAMILY_V1_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/platform/MEDIA_PROCESSOR_FAMILY_V1_PROOF.md"
+    ]
+  },
+  "lineage": {
+    "parents": [],
+    "children": []
+  },
+  "activation": {
+    "order": 99,
+    "batch_id": "alt30-summon-wave-2026-06",
+    "notes": "Release 30 media processor family governed posture"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "engineering_class": "MediaProcessorOrganGate",
+    "mythic_label": "Media Processor Family",
+    "linguistic_version": "1.0.0"
   }
 }

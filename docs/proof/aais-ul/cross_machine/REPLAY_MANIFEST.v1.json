@@ -1,0 +1,25 @@
+{
+  "manifest_version": "aais.flagship_cross_machine_matrix.v1",
+  "operational_status": "active",
+  "primary_machine": {
+    "role": "primary",
+    "hostname": "DESKTOP-00I57QV",
+    "os": "Windows-10-10.0.19045-SP0",
+    "python": "3.10.11",
+    "architecture": "AMD64",
+    "recorded_at_utc": "2026-06-05T18:25:20Z"
+  },
+  "secondary_machine": {
+    "role": "secondary",
+    "hostname": "DESKTOP-00I57QV",
+    "os": "Windows-10-10.0.19045-SP0",
+    "python": "3.10.11",
+    "architecture": "AMD64",
+    "recorded_at_utc": "2026-06-05T18:24:51Z",
+    "profile_kind": "clean_runtime",
+    "notes": "Independent clean runtime profile with isolated AAIS_DATA_DIR (REPO_PROOF_LAW secondary environment)."
+  },
+  "comparison_artifact": ".runtime/cross_machine_matrix/matrix_comparison.json",
+  "matrix_passed": true,
+  "updated_at_utc": "2026-06-05T18:25:50Z"
+}

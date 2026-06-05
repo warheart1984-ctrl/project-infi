@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "orchestration_spine_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "orchestration_spine_organ",
+      "engineering_class": "OrchestrationSpineEngine",
+      "mythic_label": "Orchestration Spine Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Orchestration Spine Organ",
+      "module_path": "src/orchestration_spine_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/orchestration_spine_organ.py",
+      "header": {
+        "mythic": "Orchestration Spine Organ",
+        "engineering": "OrchestrationSpineEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Orchestration Spine Organ\n# Engineering: OrchestrationSpineEngine",
+          "mythic": "Orchestration Spine Organ",
+          "engineering": "OrchestrationSpineEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Orchestration Spine Organ"
+      },
+      "active_doc": {
+        "title": "Orchestration Spine Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "b4c0263ed8a2c510ce93e0a7905e2c1bfba1f66996cb7a8e8a121ea67aa3b877",
+    "engineering": "346c16b6bfe4fe158b124202ed3606d79b99ca55cafa28165075aed2944cf2e3",
+    "combined": "747454eaf0d7d8d9794f1b2b36a78c085d112cbe8d49c57f4f29904b1b437782"
+  }
+}

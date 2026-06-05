@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "reflection_runtime_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "reflection_runtime_organ",
+      "engineering_class": "ReflectionRuntimeEngine",
+      "mythic_label": "Reflection Runtime Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Reflection Runtime Organ",
+      "module_path": "src/reflection_runtime_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/reflection_runtime_organ.py",
+      "header": {
+        "mythic": "Reflection Runtime Organ",
+        "engineering": "ReflectionRuntimeEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Reflection Runtime Organ\n# Engineering: ReflectionRuntimeEngine",
+          "mythic": "Reflection Runtime Organ",
+          "engineering": "ReflectionRuntimeEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Reflection Runtime Organ"
+      },
+      "active_doc": {
+        "title": "Reflection Runtime Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "2c9b8e4013e68225e109b2f530de35f51aad7abe76cce992718619d0eb32fd79",
+    "engineering": "e0dbaa8ea86a4401a72b64ae9791b0faa22713f9bb26112e8055e0cf112e41b5",
+    "combined": "9386c39a1ababe2bbc5476af4ba0ee14594f633c41ad8bdb66ac7b03945c9cb2"
+  }
+}

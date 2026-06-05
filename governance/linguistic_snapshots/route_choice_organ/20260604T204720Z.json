@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "route_choice_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "route_choice_organ",
+      "engineering_class": "RouteChoiceInterface",
+      "mythic_label": "Route Choice Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Route Choice Organ",
+      "module_path": "src/route_choice_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/route_choice_organ.py",
+      "header": {
+        "mythic": "Route Choice Organ",
+        "engineering": "RouteChoiceInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Route Choice Organ\n# Engineering: RouteChoiceInterface",
+          "mythic": "Route Choice Organ",
+          "engineering": "RouteChoiceInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Route Choice Organ"
+      },
+      "active_doc": {
+        "title": "Route Choice Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "b51c4fe103563a9305c1b3dd067b48614108b480295549d6ec3632847fbd12d8",
+    "engineering": "e3687c258e9da462c51b27c36f8a20192ed9ad831a18a244555cef3ccf5264d7",
+    "combined": "5d5add9c5c2194c65d91676418a9eeb74fa1683605d5f29186ccefc97bfbda06"
+  }
+}

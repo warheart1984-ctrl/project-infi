@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "naming_protocol_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "naming_protocol_organ",
+      "engineering_class": "NamingProtocolEngine",
+      "mythic_label": "Naming Protocol Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Naming Protocol Subsystem",
+      "module_path": "src/naming_protocol_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/naming_protocol_organ.py",
+      "header": {
+        "mythic": "Naming Protocol Organ",
+        "engineering": "NamingProtocolEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Naming Protocol Organ\n# Engineering: NamingProtocolEngine",
+          "mythic": "Naming Protocol Organ",
+          "engineering": "NamingProtocolEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Naming Protocol Subsystem"
+      },
+      "active_doc": {
+        "title": "Naming Protocol Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "37580b4ef78b01ed2a69d36df037604d4fc0a53a531f8fcf4d32ab3c6db4e476",
+    "engineering": "06d2d5d3948edde8956a4217c91928a75751a147ae3acf670ccdb403b6afd054",
+    "combined": "bced8fad9108ff1922a456a54a80abb0086bd550b3e0ce48b04eb9860a4de7a6"
+  }
+}

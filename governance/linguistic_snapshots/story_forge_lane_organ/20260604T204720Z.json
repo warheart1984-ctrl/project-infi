@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "story_forge_lane_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "story_forge_lane_organ",
+      "engineering_class": "StoryForgeLaneInterface",
+      "mythic_label": "Story Forge Lane Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Story Forge Lane Organ",
+      "module_path": "src/story_forge_lane_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/story_forge_lane_organ.py",
+      "header": {
+        "mythic": "Story Forge Lane Organ",
+        "engineering": "StoryForgeLaneInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Story Forge Lane Organ\n# Engineering: StoryForgeLaneInterface",
+          "mythic": "Story Forge Lane Organ",
+          "engineering": "StoryForgeLaneInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Story Forge Lane Organ"
+      },
+      "active_doc": {
+        "title": "Story Forge Lane Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "18f37ee2fe0ba78d5983413e2b2bee2a6212c634bb9841bbea96ff1c585760f3",
+    "engineering": "956d5c3bf98d65c0321d921f0b87a542956847ef2fab95fc75fe6cdcf05c5ef3",
+    "combined": "3fcd07b6323f60dc3068d2de9dd17f5bd87b09a118bbe64064656248db3b11ea"
+  }
+}

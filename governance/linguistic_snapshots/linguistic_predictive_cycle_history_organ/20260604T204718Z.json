@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_predictive_cycle_history_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_predictive_cycle_history_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Linguistic Predictive Cycle History Subsystem",
+      "module_path": "src/linguistic_predictive_cycle_history_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_predictive_cycle_history_organ.py",
+      "header": {
+        "mythic": "Linguistic Predictive Cycle History Organ",
+        "engineering": "LinguisticPredictiveCycleHistoryEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Predictive Cycle History Organ\n# Engineering: LinguisticPredictiveCycleHistoryEngine",
+          "mythic": "Linguistic Predictive Cycle History Organ",
+          "engineering": "LinguisticPredictiveCycleHistoryEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Predictive Cycle History Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Predictive Cycle History Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "5ea3f6bd56f80a42463f57577d0fc3f22cadb511fe80790aa6d23ee06dcdce3f",
+    "engineering": "747a72b63379223d1afa852b2530b23018fb413d7bfd3bf102f4387df069e4f5",
+    "combined": "2d7f2fa9d6952a79c551541818a9008602cdec1b9b2b084db0e20022dfd1e11e"
+  }
+}

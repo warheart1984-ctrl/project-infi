@@ -1,0 +1,37 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "ugr_subsystem_discovery",
+  "captured_at": "2026-06-05T18:32:40Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "ugr_subsystem_discovery",
+      "engineering_class": "SubsystemDiscoveryEngine",
+      "mythic_label": "Ugr Subsystem Discovery",
+      "linguistic_version": "1.0.0",
+      "display_name": "UGR Subsystem Discovery",
+      "module_path": "src/ugr/discovery/subsystem_discovery.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/ugr/discovery/subsystem_discovery.py",
+      "header": {
+        "engineering": "SubsystemDiscoveryEngine"
+      },
+      "symbols": []
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "UGR Subsystem Discovery"
+      },
+      "active_doc": {
+        "title": "UGR Subsystem Discovery"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "55657f59acf65a84ade97a347a513e97fb55171fa643865db5a903aa5c7b1441",
+    "engineering": "03e43b9aa7fab8cda800239150b15eea2c15d4dce16819922deaa7e99e39059b",
+    "combined": "d8bfe1f2cd576a65e393a0f9cf61b0bfae6f96b0b3999b7eb56441ccef62d6ab"
+  }
+}

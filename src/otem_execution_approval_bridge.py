@@ -1,5 +1,6 @@
 """Bridge OTEM workflow handoffs into workflow_approvals and substrate execution."""
 
+# Engineering: OtemExecutionApprovalBridgeEngine
 from __future__ import annotations
 
 import json

@@ -81,7 +81,7 @@ class RealtimeFeedAdapter:
         for source in self._sources:
             for event in source():
                 events.append(
-                    _wrap(
+                    _wrap_ul(
                         {
                             "source": event.source,
                             "event_type": event.event_type,

@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "ai_factory_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "ai_factory_organ",
+      "engineering_class": "AiFactoryEngine",
+      "mythic_label": "Ai Factory Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "AI Factory Organ",
+      "module_path": "src/ai_factory_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/ai_factory_organ.py",
+      "header": {
+        "mythic": "Ai Factory Organ",
+        "engineering": "AiFactoryEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Ai Factory Organ\n# Engineering: AiFactoryEngine",
+          "mythic": "Ai Factory Organ",
+          "engineering": "AiFactoryEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "AI Factory Organ"
+      },
+      "active_doc": {
+        "title": "Ai Factory Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "a2d482230126efe03f46cf69ef0a9dd335f9b2c82f5651277e5b53e8cf6639c2",
+    "engineering": "2b685aa245713931f36a29d45b09e1310cdf68c2a6f68c8dca331078bedb9913",
+    "combined": "a96bd5f6c207f391fe4d9c71784ae400a3b2ca4ea71ba26fdd33a382413d31b6"
+  }
+}

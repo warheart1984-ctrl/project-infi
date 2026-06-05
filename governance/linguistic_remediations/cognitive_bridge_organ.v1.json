@@ -2,24 +2,19 @@
   "linguistic_remediation_playbook_version": "linguistic_remediation_playbook.v1",
   "gene": "cognitive_bridge_organ",
   "drift_band": "low",
-  "drift_risk": 23,
+  "drift_risk": 14,
   "signals": {
-    "alignment_gap": 40.0,
-    "snapshot_velocity": 0.0,
+    "alignment_gap": 0.0,
+    "snapshot_velocity": 30.0,
     "layer_skew": 0.0,
     "gene_mythic_tokens": 0.0,
     "lineage_fanout": 60.0
   },
-  "generated_at": "2026-06-03T10:22:18Z",
+  "generated_at": "2026-06-05T19:08:34Z",
   "actions": [
     {
-      "kind": "wave2_header",
-      "path": "src/cognitive_bridge_organ.py",
-      "snippet": "# Mythic: Cognitive Bridge Organ\n# Engineering: CognitiveBridgeBridge\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
-    },
-    {
       "kind": "recommendation",
-      "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+      "text": "Review recent MP-LING proposals; stabilize linguistic_version"
     }
   ]
 }

@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "immune_observe_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "immune_observe_organ",
+      "engineering_class": "ImmuneObserveEngine",
+      "mythic_label": "Immune Observe Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Immune Observe Organ",
+      "module_path": "src/immune_observe_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/immune_observe_organ.py",
+      "header": {
+        "mythic": "Immune Observe Organ",
+        "engineering": "ImmuneObserveEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Immune Observe Organ\n# Engineering: ImmuneObserveEngine",
+          "mythic": "Immune Observe Organ",
+          "engineering": "ImmuneObserveEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Immune Observe Organ"
+      },
+      "active_doc": {
+        "title": "Immune Observe Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "5db12eaa42476201eb14631eb6e812966429eaa60d912ec9934b2bc219fb81eb",
+    "engineering": "e8e5e47e19430cc81eabe132ab27f6475714ce2b660b56f577237f1d01a23024",
+    "combined": "6c61e7672fc727cc44f78fd316a2c96312f8f1987a89560018ae0222b5933a40"
+  }
+}

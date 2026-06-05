@@ -8,49 +8,49 @@
       "artifact": "bound_capability",
       "claim_label": "asserted",
       "exists": true,
-      "path": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\BOUND_CAPABILITY_PROFILE.json",
+      "path": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\BOUND_CAPABILITY_PROFILE.json",
       "sha256": "591067893c91101d57757d2b8552aaba808b68606312e9515a3d950bc3fdd0e0"
     },
     {
       "artifact": "build_spec",
       "claim_label": "asserted",
       "exists": true,
-      "path": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\AI_BUILD_SPEC.json",
+      "path": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\AI_BUILD_SPEC.json",
       "sha256": "0b6c21acf9512b26d98b8fc2d3b42064ce2a23f7866a7003e7bebb72cb2cc9b0"
     },
     {
       "artifact": "cortex_bundle",
       "claim_label": "asserted",
       "exists": true,
-      "path": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\CORTEX_RUNTIME_BUNDLE.json",
+      "path": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\CORTEX_RUNTIME_BUNDLE.json",
       "sha256": "4d89d4d3431a8ff912562ad9e07c71cb1da22c0dbffec719dbf0d502fcfdb85c"
     },
     {
       "artifact": "proof_bundle_md",
       "claim_label": "asserted",
       "exists": true,
-      "path": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\AI_PROOF_BUNDLE.md",
+      "path": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\AI_PROOF_BUNDLE.md",
       "sha256": "51043083aa56e8961d3a9ae9589c1824651038fbdd5294ebe9e5a01dd6f07beb"
     },
     {
       "artifact": "proof_manifest",
       "claim_label": "asserted",
       "exists": true,
-      "path": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\proof_manifest.json",
-      "sha256": "c63608724d85e598807333d250cb08af22a0d892651e02320f4318cdd6eec5e9"
+      "path": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\proof_manifest.json",
+      "sha256": "f9c26f252a7be38c295f6c5b57c89b444ed93a2a1498dd253784e22a4cd5e1cf"
     },
     {
       "artifact": "spine_profile",
       "claim_label": "asserted",
       "exists": true,
-      "path": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\SpineProfile.json",
+      "path": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\SpineProfile.json",
       "sha256": "6e0c05f5627ef6289c085f7e4046bffbe237e7fc21cf6e613ca5555c5167cf57"
     }
   ],
   "lifecycle_status": "active",
-  "output_dir": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default",
-  "proof_bundle_ref": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\AI_PROOF_BUNDLE.md",
-  "proof_manifest_ref": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\proof_manifest.json",
+  "output_dir": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default",
+  "proof_bundle_ref": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\AI_PROOF_BUNDLE.md",
+  "proof_manifest_ref": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\proof_manifest.json",
   "receipt_version": "ai_factory.build_receipt.v1",
   "risk_rating": "low",
   "spine_profile_id": "nova-default.spine",
@@ -58,7 +58,7 @@
     "binding": {
       "build_id": "nova-default",
       "content_hash": "17ead496ad4520326a057d72db9cc2a0e5844bcd8bb139c52b9280b1ae98d28c",
-      "output": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\BOUND_CAPABILITY_PROFILE.json",
+      "output": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\BOUND_CAPABILITY_PROFILE.json",
       "station": "binding",
       "station_version": "ai_factory.binding_station.v1",
       "status": "ok",
@@ -74,8 +74,8 @@
       "lanes_passed": 1,
       "lanes_run": 1,
       "outputs": {
-        "proof_bundle": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\AI_PROOF_BUNDLE.md",
-        "proof_manifest": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\proof_manifest.json"
+        "proof_bundle": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\AI_PROOF_BUNDLE.md",
+        "proof_manifest": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\proof_manifest.json"
       },
       "station": "proof",
       "station_version": "ai_factory.proof_station.v1",
@@ -91,7 +91,7 @@
       "bundle_id": "nova-default.cortex",
       "content_hash": "2abbee81c8cb73d278971c6ce094e30dd48f6aeee976a3c59afb3a176831b5c1",
       "enabled_runtime_count": 8,
-      "output": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\CORTEX_RUNTIME_BUNDLE.json",
+      "output": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\CORTEX_RUNTIME_BUNDLE.json",
       "station": "runtime",
       "station_version": "ai_factory.runtime_station.v1",
       "status": "ok",
@@ -105,7 +105,7 @@
     "spec": {
       "build_id": "nova-default",
       "content_hash": "f8ebdb12acfab7f57c24c6a4c0d5992a8abcc9c09b91db62840429055b361041",
-      "output": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\AI_BUILD_SPEC.json",
+      "output": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\AI_BUILD_SPEC.json",
       "source_spec": "E:\\project-infi\\factory\\specs\\nova-default.yaml",
       "station": "spec",
       "station_version": "ai_factory.spec_station.v1",
@@ -119,7 +119,7 @@
     "spine": {
       "build_id": "nova-default",
       "content_hash": "d3879b29516244f2d733becf24696e1cde75e1f3fbc2f9bbf1bf7c0d9e8fae69",
-      "output": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-10\\test_deploy_active_build_with_0\\factory_out\\nova-default\\SpineProfile.json",
+      "output": "C:\\Users\\randj\\AppData\\Local\\Temp\\pytest-of-randj\\pytest-81\\test_deploy_active_build_with_0\\factory_out\\nova-default\\SpineProfile.json",
       "pipeline_id": "nova.spine.v1",
       "profile_id": "nova-default.spine",
       "station": "spine",

@@ -1,0 +1,127 @@
+{
+  "linguistic_predictive_cycle_version": "linguistic_predictive_cycle.v1",
+  "cycle_id": "20260605T191104Z",
+  "generated_at": "2026-06-05T19:11:04Z",
+  "policy_mode": "observe",
+  "metrics": {
+    "gene_count": 179,
+    "predicted_high": 0,
+    "predicted_medium": 0,
+    "predicted_low": 179,
+    "preemptive_written": 0
+  },
+  "phases": {
+    "drift_refreshed": false,
+    "baseline_loaded": true,
+    "forecast_report": "governance/linguistic_drift_forecast.v1.json",
+    "preemptive_written": 0
+  },
+  "preemptive_recommendations": [],
+  "top_predicted": [
+    {
+      "gene": "cisiv_operator_lineage_console",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 31,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "linguistic_forecast_calibration_organ",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 31,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "linguistic_governance_cycle_organ",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 31,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "meta_linguistic_governance_organ",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 31,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "operator_cognition_coherence_fabric",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 31,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "linguistic_drift_forecast_organ",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 30,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "linguistic_predictive_governance_organ",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 30,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "naming_genome_organ",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 30,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "capability_service_bridge",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 29,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "coding_organs_stack",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 29,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "governed_direct_pipeline",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 29,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "jarvis_memory_board",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 28,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "recipe_module_organ",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 28,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "story_forge_lane_organ",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 28,
+      "lead_time_days": 0
+    },
+    {
+      "gene": "governance_layer_organ",
+      "current_band": "low",
+      "predicted_band": "low",
+      "predicted_risk_30d": 27,
+      "lead_time_days": 0
+    }
+  ]
+}

@@ -9,6 +9,7 @@ from typing import Any
 from uuid import uuid4
 
 from src.ugr.rewards.reward_attribution import stable_json
+from src.ugr.rewards.reward_issuer import rewards_audit_only, rewards_shadow_only
 from src.ugr.rewards.reward_ledger import RewardLedger
 from src.ugr.rewards.reward_policy import (
     load_reward_policy,
@@ -104,6 +105,46 @@ def spend_rail_credits(
         }
     )
     forge_boost["spend_digest"] = sha256(canonical.encode("utf-8")).hexdigest()
+
+    # Align spend with the rest of the operator rewards toolchain (audit/shadow checkpoints).
+    # Previously spend always mutated regardless of UGR_REWARDS_*_ONLY (unlike issuer + transfers).
+    if rewards_audit_only():
+        spend_receipt = {
+            "spend_id": spend_id,
+            "operator_id": operator_id,
+            "tenant_id": tenant_id,
+            "amount": amount_f,
+            "balance_after": max(0.0, profile.rail_credits - amount_f),
+            "issued_at": issued_at,
+            "expires_at": expires_at,
+        }
+        return {
+            "status": "audit",
+            "summary": "spend computed (audit-only, no ledger write)",
+            "spend_receipt": spend_receipt,
+            "forge_boost": forge_boost,
+            "profile_preview": profile.to_dict(),
+            "economy": {"reputation_primary": True},
+        }
+
+    if rewards_shadow_only():
+        spend_receipt = {
+            "spend_id": spend_id,
+            "operator_id": operator_id,
+            "tenant_id": tenant_id,
+            "amount": amount_f,
+            "balance_after": max(0.0, profile.rail_credits - amount_f),
+            "issued_at": issued_at,
+            "expires_at": expires_at,
+        }
+        return {
+            "status": "shadow",
+            "summary": "spend validated (shadow-only, no balance write)",
+            "spend_receipt": spend_receipt,
+            "forge_boost": forge_boost,
+            "profile_preview": profile.to_dict(),
+            "economy": {"reputation_primary": True},
+        }
 
     profile.rail_credits = max(0.0, profile.rail_credits - amount_f)
     profile.updated_at = issued_at

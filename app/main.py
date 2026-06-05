@@ -58,7 +58,8 @@ from app.db import (
     get_workflow_approval, get_workflow_run, list_pending_workflow_approvals,
     list_workflow_runs, list_workflows, now_iso, update_workflow, update_workflow_approval, update_workflow_run,
 )
-from app.auth import require_token, check_sse_token, check_ws_token
+from app.auth import require_token, check_sse_token, check_ws_token, validate_access_token, is_auth_required
+from app.auth_routes import router as auth_router
 from app.tasks import run_agent_job, run_workflow_job
 from app.rag import index_project, query_project
 from src.cisiv import normalize_cisiv_stage
@@ -87,6 +88,16 @@ def _normalize_app_shell_base_path(value: str | None) -> str:
 
 
 APP_SHELL_BASE_PATH = _normalize_app_shell_base_path(os.getenv("AAIS_APP_BASE"))
+
+
+def _redis_reachable(redis_url: str) -> bool:
+    try:
+        import redis
+
+        client = redis.from_url(redis_url, socket_connect_timeout=1, socket_timeout=1)
+        return bool(client.ping())
+    except Exception:
+        return False
 
 
 class LegacyFlaskApiBridge:
@@ -118,8 +129,24 @@ class LegacyFlaskApiBridge:
         return app(environ, start_response)
 
 
+class LegacyApiCompatibilityBridge:
+    """Restore Flask `/api/*` paths after a Starlette mount strips the `/api` prefix."""
+
+    def __init__(self, bridge: LegacyFlaskApiBridge, api_prefix: str = "/api") -> None:
+        self._bridge = bridge
+        self._api_prefix = api_prefix
+
+    def __call__(self, environ, start_response):
+        path_info = environ.get("PATH_INFO") or ""
+        if not path_info.startswith(self._api_prefix):
+            environ = {**environ, "PATH_INFO": f"{self._api_prefix}{path_info}"}
+        return self._bridge(environ, start_response)
+
+
 legacy_api_bridge = LegacyFlaskApiBridge()
+legacy_api_compat_bridge = LegacyApiCompatibilityBridge(legacy_api_bridge)
 legacy_api_mounted = True
+legacy_api_compat_mounted = False
 
 
 @asynccontextmanager
@@ -141,6 +168,10 @@ async def lifespan(_app: FastAPI):
 
 
 app = FastAPI(title="AAIS Workflow Shell", version="11.0.0", lifespan=lifespan)
+app.include_router(auth_router)
+from lab.routes import router as lab_router
+
+app.include_router(lab_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=APP_CORS_ORIGINS,
@@ -181,6 +212,7 @@ def _build_operator_health_payload() -> dict:
         "environment": os.getenv("ENVIRONMENT", "development"),
         "legacy_api_mount_path": LEGACY_API_MOUNT_PATH,
         "legacy_api_mounted": legacy_api_mounted,
+        "legacy_api_compat_mounted": legacy_api_compat_mounted,
         "legacy_api_loaded": legacy_api_bridge.loaded,
         "legacy_api_mount_error": legacy_api_bridge.load_error,
         "requested_model_mode": None,
@@ -375,8 +407,12 @@ def _authorize_workflow_webhook(request: Request, workflow: dict) -> None:
             raise HTTPException(status_code=401, detail="Invalid workflow webhook secret")
         return
 
-    if APP_BEARER_TOKEN and _extract_bearer_token(request) != APP_BEARER_TOKEN:
-        raise HTTPException(status_code=401, detail="Unauthorized")
+    if not is_auth_required():
+        return
+
+    if validate_access_token(_extract_bearer_token(request)):
+        return
+    raise HTTPException(status_code=401, detail="Unauthorized")
 
 
 def _queue_workflow_run_record(
@@ -557,12 +593,14 @@ def health_details():
         {
             "status": "ok",
             "redis_url": REDIS_URL,
+            "redis_reachable": _redis_reachable(REDIS_URL),
             "celery_broker_url": CELERY_BROKER_URL,
             "celery_result_backend": CELERY_RESULT_BACKEND,
             "main_model": OPENAI_MAIN_MODEL,
             "fast_model": OPENAI_FAST_MODEL,
             "legacy_api_mount_path": LEGACY_API_MOUNT_PATH,
             "legacy_api_mounted": legacy_api_mounted,
+            "legacy_api_compat_mounted": legacy_api_compat_mounted,
             "legacy_api_loaded": legacy_api_bridge.loaded,
             "legacy_api_mount_error": legacy_api_bridge.load_error,
         },
@@ -608,6 +646,15 @@ def write_memory(req: JarvisMemoryWriteRequest, response: FastAPIResponse):
     status_code, payload = _forward_legacy_runtime_json_request("/api/jarvis/memory", req.model_dump())
     response.status_code = status_code
     return payload
+
+
+def _mount_legacy_api_compatibility() -> None:
+    global legacy_api_compat_mounted
+    app.mount("/api", WSGIMiddleware(legacy_api_compat_bridge))
+    legacy_api_compat_mounted = True
+
+
+_mount_legacy_api_compatibility()
 
 
 @app.post("/chat/stream", dependencies=[Depends(require_token)], include_in_schema=False)

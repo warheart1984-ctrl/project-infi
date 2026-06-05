@@ -43,7 +43,7 @@
   },
   "proof": {
     "bundles": [
-      "E:\\project-infi\\docs\\proof\\platform\\AAIS_COMPOSED_RUNTIME_ORGAN_GOVERNED_PROOF.md"
+      "docs/proof/platform/AAIS_COMPOSED_RUNTIME_ORGAN_GOVERNED_PROOF.md"
     ],
     "posture": "governed",
     "target_bundles": [

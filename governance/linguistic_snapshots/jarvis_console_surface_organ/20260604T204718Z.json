@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "jarvis_console_surface_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "jarvis_console_surface_organ",
+      "engineering_class": "JarvisConsoleSurfaceInterface",
+      "mythic_label": "Jarvis Console Surface Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Jarvis Console Surface Organ",
+      "module_path": "src/jarvis_console_surface_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/jarvis_console_surface_organ.py",
+      "header": {
+        "mythic": "Jarvis Console Surface Organ",
+        "engineering": "JarvisConsoleSurfaceInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Jarvis Console Surface Organ\n# Engineering: JarvisConsoleSurfaceInterface",
+          "mythic": "Jarvis Console Surface Organ",
+          "engineering": "JarvisConsoleSurfaceInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Jarvis Console Surface Organ"
+      },
+      "active_doc": {
+        "title": "Jarvis Console Surface Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "6da9345bfc5af59b4dc6f5e67d6a885ab32642519eb86cae6357035341852fbb",
+    "engineering": "955dae863a9b4ef06e7197b2190335093a585e60ee9715a4b190640bda6db48b",
+    "combined": "474594267f2e7a9a2439e6e00c4514e23a0165027c03ac0ab3927d70b8d17229"
+  }
+}

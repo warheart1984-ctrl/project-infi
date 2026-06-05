@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_mutation_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_mutation_organ",
+      "engineering_class": "LinguisticMutationEngine",
+      "mythic_label": "Linguistic Mutation Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Linguistic Mutation Subsystem",
+      "module_path": "src/linguistic_mutation_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_mutation_organ.py",
+      "header": {
+        "mythic": "Linguistic Mutation Organ",
+        "engineering": "LinguisticMutationEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Mutation Organ\n# Engineering: LinguisticMutationEngine",
+          "mythic": "Linguistic Mutation Organ",
+          "engineering": "LinguisticMutationEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Mutation Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Mutation Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "5a8c8d22cf7cdf1ce051e976862f55d5e0362ca4f2d8391a6711891eef6f342e",
+    "engineering": "960a4d64dfae31a0ee2ce865d891f651d28f3690bde413a89ab26dea980a2300",
+    "combined": "d7d90c2039f84395e60c585522ca71f6d4dd3b371a2ad0b30610834b54526dcc"
+  }
+}

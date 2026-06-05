@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "forensic_triangulation_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "forensic_triangulation_organ",
+      "engineering_class": "ForensicTriangulationEngine",
+      "mythic_label": "Forensic Triangulation Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Forensic Triangulation Organ",
+      "module_path": "src/forensic_triangulation_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/forensic_triangulation_organ.py",
+      "header": {
+        "mythic": "Forensic Triangulation Organ",
+        "engineering": "ForensicTriangulationEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Forensic Triangulation Organ\n# Engineering: ForensicTriangulationEngine",
+          "mythic": "Forensic Triangulation Organ",
+          "engineering": "ForensicTriangulationEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Forensic Triangulation Organ"
+      },
+      "active_doc": {
+        "title": "Forensic Triangulation Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "395039cf9163f053d870783519370f5aa4080b486e9f02fc3cb1c0ae83faed89",
+    "engineering": "2093cd644d1b7c76c9eaf20cdd32545c00b00874469ac8debd70a84af43466e6",
+    "combined": "2e4596b5675bdc70ee11247b8255af424f7406da6b0232d326f6d6d59b78d61d"
+  }
+}

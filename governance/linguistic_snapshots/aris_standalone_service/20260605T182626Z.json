@@ -1,0 +1,27 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "aris_standalone_service",
+  "captured_at": "2026-06-05T18:26:26Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "aris_standalone_service",
+      "engineering_class": "ArisStandaloneServiceEngine",
+      "mythic_label": "Aris Standalone Service",
+      "linguistic_version": "1.0.0",
+      "display_name": "ARIS Standalone Service",
+      "module_path": "aris_service/__init__.py"
+    },
+    "source": {
+      "path": "E:/project-infi/aris_service/__init__.py",
+      "header": {},
+      "symbols": []
+    }
+  },
+  "fingerprints": {
+    "mythic": "63de70e1c41f6f1760099f5c42a43a70578264c2136ad1a7bb855368b4231095",
+    "engineering": "9d1cec4bcd248c3b6b02f347e4b9a7151cf629db64b2490f1ab5569e899c98ac",
+    "combined": "52d8021bd38f6af12972771b2b4238849d15a2fdb459bf470a8b651e4344e611"
+  }
+}

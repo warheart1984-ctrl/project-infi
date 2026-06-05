@@ -11,7 +11,13 @@ from typing import Any
 from src.ugr.mission.tenant_manifold import tenant_path_slug
 from src.ugr.platform.tenant_registry import normalize_tenant_id
 from src.ugr.rewards.operator_profile import OperatorProfile
-from src.ugr.rewards.operator_reward_spec import EVENT_RAIL_CREDITS_SENT, TRANSFER_EVENT_TYPES
+from src.ugr.rewards.operator_reward_spec import (
+    EVENT_RAIL_CREDITS_SENT,
+    EVENT_SUBSYSTEM_ADOPTED,
+    EVENT_SUBSYSTEM_DISCOVERED,
+    EVENT_SUBSYSTEM_PROMOTED,
+    TRANSFER_EVENT_TYPES,
+)
 
 
 def _default_runtime_dir() -> Path:
@@ -107,6 +113,14 @@ class RewardLedger:
         event_id = str(record.get("event_id") or "")
         if event_id and self.has_event(event_id):
             return False
+        # Secondary checkpoint (defense-in-depth for Proof-of-Subsystem):
+        # PoS reward events must carry attribution + discovery_receipt_id (and typically the signed receipt).
+        # This guards against direct ledger appends that bypass reward_issuer.issue_reward + resolve_valid_discovery_receipt.
+        event_type = str(record.get("event_type") or "")
+        POS_REWARD_EVENTS = {EVENT_SUBSYSTEM_DISCOVERED, EVENT_SUBSYSTEM_PROMOTED, EVENT_SUBSYSTEM_ADOPTED}
+        if event_type in POS_REWARD_EVENTS:
+            if not record.get("attribution") or not str(record.get("discovery_receipt_id") or "").strip():
+                return False  # refuse un-attributed / un-receipted PoS events at storage layer
         with self.tenant_rewards_path.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(record, sort_keys=True, default=str) + "\n")
         return True

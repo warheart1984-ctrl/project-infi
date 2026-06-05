@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "cognitive_execution_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "cognitive_execution_organ",
+      "engineering_class": "CognitiveExecutionEngine",
+      "mythic_label": "Cognitive Execution Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Cognitive Execution Organ",
+      "module_path": "src/cognitive_execution_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/cognitive_execution_organ.py",
+      "header": {
+        "mythic": "Cognitive Execution Organ",
+        "engineering": "CognitiveExecutionEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Cognitive Execution Organ\n# Engineering: CognitiveExecutionEngine",
+          "mythic": "Cognitive Execution Organ",
+          "engineering": "CognitiveExecutionEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Cognitive Execution Organ"
+      },
+      "active_doc": {
+        "title": "Cognitive Execution Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "1bd6cc5ef20383bfe9820f9f19edf756d2af3255a40392669a54e0a35392e524",
+    "engineering": "1a932fab92b052a3666bab435bcd07b5d8f3b7f37784df97ee141217e65a0251",
+    "combined": "a634a31ae2683c10167586fd115f9f754245dea0b94b6a241d7ac09a49f37365"
+  }
+}

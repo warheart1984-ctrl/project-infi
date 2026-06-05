@@ -1,0 +1,25 @@
+{
+  "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+  "gene": "patchforge_organ",
+  "status": "pending",
+  "urgency_score": 21.0,
+  "queue_generated_at": "2026-06-05T19:07:45Z",
+  "recommended_actions": [
+    {
+      "kind": "wave2_header",
+      "path": "src/patchforge_organ.py",
+      "snippet": "# Mythic: Patchforge Organ\n# Engineering: PatchforgeEngine\n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
+    },
+    {
+      "kind": "recommendation",
+      "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+    },
+    {
+      "kind": "cascade_report",
+      "command": "python tools/linguistic_cascade_report.py --gene patchforge_organ",
+      "note": "Review lineage cascade impact"
+    }
+  ],
+  "operator_notes": "",
+  "updated_at": "2026-06-05T19:07:45Z"
+}

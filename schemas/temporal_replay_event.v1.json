@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aais.temporal_replay_event.v1",
+  "title": "Temporal Replay Event v1",
+  "type": "object",
+  "required": [
+    "event_version",
+    "event_id",
+    "subject_type",
+    "subject_id",
+    "timestamp_utc",
+    "sequence",
+    "kind"
+  ],
+  "properties": {
+    "event_version": { "const": "aais.temporal_replay_event.v1" },
+    "event_id": { "type": "string" },
+    "subject_type": {
+      "enum": ["mission", "session", "workflow_run", "ugr_trace", "slingshot_case", "jarvis_run"]
+    },
+    "subject_id": { "type": "string" },
+    "timestamp_utc": { "type": "string" },
+    "sequence": { "type": "integer", "minimum": 0 },
+    "kind": {
+      "enum": [
+        "ledger_transition",
+        "mission_receipt",
+        "deliberation",
+        "lineage_node",
+        "law_event",
+        "jarvis_run_step",
+        "slingshot_receipt",
+        "invariant_check",
+        "capability_audit",
+        "cognitive_step",
+        "otem_gate",
+        "nova_coherence",
+        "intent_agency",
+        "platform_job"
+      ]
+    },
+    "summary": { "type": "string" },
+    "emitter": {
+      "type": "object",
+      "properties": {
+        "subsystem_id": { "type": "string" },
+        "module": { "type": "string" },
+        "genome_ref": { "type": "string" }
+      }
+    },
+    "law_context": {
+      "type": "object",
+      "properties": {
+        "law_id": { "type": "string" },
+        "law_version": { "type": "string" },
+        "contract_version": { "type": "string" },
+        "invariant_version": { "type": "string" }
+      }
+    },
+    "boundary": {
+      "type": "object",
+      "properties": {
+        "boundary_digest": { "type": "string" },
+        "tenant_id": { "type": "string" },
+        "cloud_identity_hash": { "type": "string" }
+      }
+    },
+    "causal_parents": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "payload_ref": {
+      "type": "object",
+      "properties": {
+        "store": { "type": "string" },
+        "path": { "type": "string" },
+        "hash": { "type": "string" }
+      }
+    },
+    "receipt_ref": {
+      "type": "object",
+      "properties": {
+        "mission_id": { "type": "string" },
+        "ledger_root": { "type": "string" },
+        "receipt_sig": { "type": "string" }
+      }
+    },
+    "invariant_flags": {
+      "type": "object",
+      "properties": {
+        "hard_fail": { "type": "boolean" },
+        "codes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

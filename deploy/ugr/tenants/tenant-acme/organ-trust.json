@@ -1,3 +1,5 @@
 {
-  "scores": {}
+  "scores": {
+    "organ-local-tiny": 0.928879121431914
+  }
 }

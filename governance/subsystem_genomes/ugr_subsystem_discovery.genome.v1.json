@@ -1,0 +1,82 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "ugr_subsystem_discovery",
+    "version": "1.0.0",
+    "stage": "governed",
+    "display_name": "UGR Subsystem Discovery"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/UGR_SUBSYSTEM_DISCOVERY_CONTRACT.md",
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md"
+    ],
+    "invariants": [
+      "Tenant-scoped receipts and ledgers",
+      "Project Infi law finalization on mutating routes"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/ugr_subsystem_discovery_receipt.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/ugr/discovery/subsystem_discovery.py"
+      },
+      {
+        "kind": "api",
+        "path": "POST /api/ugr/discover/subsystem"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/ugr/discover/subsystem/<subsystem_id>"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/ugr/discover/subsystems"
+      },
+      {
+        "kind": "gate",
+        "path": "make ugr-discovery-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/ugr/UGR_SUBSYSTEM_DISCOVERY_V1_PROOF.md"
+    ],
+    "posture": "governed"
+  },
+  "lineage": {
+    "parents": [
+      "capability_service_bridge"
+    ],
+    "children": [
+      "ugr_operator_reward_engine"
+    ]
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "ugr-admission-wave-2026-06",
+    "notes": "UGR subsystem admission wave"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/_future/ideas_pending/UGR_SUBSYSTEM_DISCOVERY.md",
+    "mvp_plan": "docs/_future/ideas_pending/UGR_SUBSYSTEM_DISCOVERY_MVP_PLAN.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/ugr/UGR_SUBSYSTEM_DISCOVERY.md",
+    "engineering_class": "SubsystemDiscoveryEngine",
+    "mythic_label": "Ugr Subsystem Discovery",
+    "linguistic_version": "1.0.0"
+  }
+}

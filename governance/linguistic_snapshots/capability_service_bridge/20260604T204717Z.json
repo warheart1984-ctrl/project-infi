@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "capability_service_bridge",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "capability_service_bridge",
+      "engineering_class": "CapabilityServiceBridge",
+      "mythic_label": "Capability service bridge",
+      "linguistic_version": "1.0.0",
+      "display_name": "Capability Service Bridge",
+      "module_path": "src/capability_service_bridge.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/capability_service_bridge.py",
+      "header": {
+        "mythic": "Capability service bridge",
+        "engineering": "CapabilityServiceBridge"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Capability service bridge\n# Engineering: CapabilityServiceBridge",
+          "mythic": "Capability service bridge",
+          "engineering": "CapabilityServiceBridge"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Capability Service Bridge"
+      },
+      "active_doc": {
+        "title": "Capability Service Bridge"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "c6176f434bb1ed7c321bc5e1bf3f13c0c9547039d81e04b2065c32c905987375",
+    "engineering": "b888f904513c2ad7daf1e32847138bf4e31ec724e720d09a1dbbc11eda4629b1",
+    "combined": "35343614e6d1a2c5fa00134ed99563f7b585d4cd74f0129a941a17a3658c6c3d"
+  }
+}

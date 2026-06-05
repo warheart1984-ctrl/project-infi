@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "memory_runtime_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "memory_runtime_organ",
+      "engineering_class": "MemoryRuntimeEngine",
+      "mythic_label": "Memory Runtime Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Memory Runtime Organ",
+      "module_path": "src/memory_runtime_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/memory_runtime_organ.py",
+      "header": {
+        "mythic": "Memory Runtime Organ",
+        "engineering": "MemoryRuntimeEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Memory Runtime Organ\n# Engineering: MemoryRuntimeEngine",
+          "mythic": "Memory Runtime Organ",
+          "engineering": "MemoryRuntimeEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Memory Runtime Organ"
+      },
+      "active_doc": {
+        "title": "Memory Runtime Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "9f829e89bf5498fd074ffdee6e938414f7bcc23034db405f975d956ae0c82395",
+    "engineering": "3ef5885873b3182acd646d934fb182e26bba4eedb5958808db4eeb80dc21f3a2",
+    "combined": "89442b6f414f87adc594ff081f3b07474a328edfd54185a286fafa650c868532"
+  }
+}

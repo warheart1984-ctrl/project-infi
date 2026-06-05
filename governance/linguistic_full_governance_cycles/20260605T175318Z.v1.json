@@ -1,0 +1,39 @@
+{
+  "linguistic_full_governance_cycle_version": "linguistic_full_governance_cycle.v1",
+  "cycle_id": "20260605T175318Z",
+  "generated_at": "2026-06-05T17:53:18Z",
+  "phases": {
+    "forecast_archive": "governance/linguistic_forecast_archive/20260605T175318Z.v1.json",
+    "calibration": {
+      "cycle_id": "20260605T175318Z",
+      "skipped": false,
+      "skip_reason": "",
+      "metrics": {
+        "gene_count": 175,
+        "band_hit_rate": 0.76,
+        "false_alarm_rate": 0.24,
+        "miss_rate": 0.0,
+        "stable_rate": 0.76,
+        "mean_abs_risk_error": 14.17
+      },
+      "archive_aware": true
+    },
+    "predictive": {
+      "cycle_id": "20260605T175340Z",
+      "passed": true,
+      "predicted_medium": 48
+    },
+    "reactive": {
+      "cycle_id": "20260605T175419Z",
+      "remediation_band": "high",
+      "remediations_written": 1
+    },
+    "queue": "governance/linguistic_governance_queue.v1.json",
+    "work_orders_synced": 30,
+    "attestation": "governance/linguistic_governance_attestation.v1.json",
+    "meta_gates_passed": null
+  },
+  "passed": true,
+  "errors": [],
+  "warnings": []
+}

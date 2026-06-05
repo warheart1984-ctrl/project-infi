@@ -4563,6 +4563,14 @@ function MissionBoardCard({
               Chronological chain for the active mission. This shows what happened first,
               so critic judgments read in context instead of as isolated scores.
             </p>
+            {activeMission?.id ? (
+              <Link
+                className="jarvis-secondary-button"
+                to={`/operator/replay/mission/${encodeURIComponent(activeMission.id)}`}
+              >
+                Open in Replay Machine
+              </Link>
+            ) : null}
             <div className="mission-replay-list">
               {activeMissionHistory.slice(-8).map((entry) => (
                 <div key={entry.id} className="mission-replay-item">

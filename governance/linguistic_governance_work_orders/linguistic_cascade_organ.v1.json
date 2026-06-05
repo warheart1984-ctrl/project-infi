@@ -2,8 +2,8 @@
   "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
   "gene": "linguistic_cascade_organ",
   "status": "pending",
-  "urgency_score": 45.2,
-  "queue_generated_at": "2026-06-03T10:54:41Z",
+  "urgency_score": 51.2,
+  "queue_generated_at": "2026-06-05T17:55:09Z",
   "recommended_actions": [
     {
       "kind": "watch_wave2_header",
@@ -36,5 +36,5 @@
     }
   ],
   "operator_notes": "",
-  "updated_at": "2026-06-03T10:54:41Z"
+  "updated_at": "2026-06-05T17:55:09Z"
 }

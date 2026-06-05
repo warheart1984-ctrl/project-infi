@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "continuity_substrate_organ",
+  "captured_at": "2026-06-04T20:47:17Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "continuity_substrate_organ",
+      "engineering_class": "ContinuitySubstrateEngine",
+      "mythic_label": "Continuity Substrate Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Continuity Substrate Organ",
+      "module_path": "src/continuity_substrate_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/continuity_substrate_organ.py",
+      "header": {
+        "mythic": "Continuity Substrate Organ",
+        "engineering": "ContinuitySubstrateEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Continuity Substrate Organ\n# Engineering: ContinuitySubstrateEngine",
+          "mythic": "Continuity Substrate Organ",
+          "engineering": "ContinuitySubstrateEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Continuity Substrate Organ"
+      },
+      "active_doc": {
+        "title": "Continuity Substrate Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "80f0d43551e226b21e73e98cb543d58a105f94ed159ca07940c044c05111f835",
+    "engineering": "402975b9d564ef6c604914d4a1d8a33b66e8c10fd99ca01f8c6ae1848d6b7d7e",
+    "combined": "a2b1f70365e6e0c6690779555a38b9bafb84ec7029c99d69ac35e6cb5b0dfca5"
+  }
+}

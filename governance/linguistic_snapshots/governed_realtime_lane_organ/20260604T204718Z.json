@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "governed_realtime_lane_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "governed_realtime_lane_organ",
+      "engineering_class": "GovernedRealtimeLaneInterface",
+      "mythic_label": "Governed Realtime Lane Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Governed Realtime Lane Organ",
+      "module_path": "src/governed_realtime_lane_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/governed_realtime_lane_organ.py",
+      "header": {
+        "mythic": "Governed Realtime Lane Organ",
+        "engineering": "GovernedRealtimeLaneInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Governed Realtime Lane Organ\n# Engineering: GovernedRealtimeLaneInterface",
+          "mythic": "Governed Realtime Lane Organ",
+          "engineering": "GovernedRealtimeLaneInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Governed Realtime Lane Organ"
+      },
+      "active_doc": {
+        "title": "Governed Realtime Lane Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "0f397e70b66b215cf6c8c5832f12cd25fdfec12129c5a86410ef7e6a0c816bdd",
+    "engineering": "6506b7ec42c66e544a26bebf144af3c20c492bd282c736b98ace83bbb3613248",
+    "combined": "648d059eb7486493fe7432703f86ea416098944fa08e289e2e7c742ac4852199"
+  }
+}

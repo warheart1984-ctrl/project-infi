@@ -21,14 +21,46 @@
   },
   "runtime": {
     "surface": [
-      {"kind": "module", "path": "src/otem_execution_substrate.py"},
-      {"kind": "gate", "path": "make otem-execution-substrate-gate"}
+      {
+        "kind": "module",
+        "path": "src/otem_execution_substrate.py"
+      },
+      {
+        "kind": "gate",
+        "path": "make otem-execution-substrate-gate"
+      }
     ]
   },
   "proof": {
-    "posture": "governed"
+    "bundles": [
+      "docs/proof/platform/OTEM_EXECUTION_SUBSTRATE_V1_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": [
+      "docs/proof/platform/OTEM_EXECUTION_SUBSTRATE_V1_PROOF.md"
+    ]
   },
   "lineage": {
-    "parents": ["coding_organs_stack", "otem_bounded_organ"]
+    "parents": [
+      "coding_organs_stack",
+      "otem_bounded_organ"
+    ],
+    "children": []
+  },
+  "activation": {
+    "order": 99,
+    "batch_id": "alt30-summon-wave-2026-06",
+    "notes": "Release 30 OTEM execution approval bridge substrate"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "engineering_class": "OtemExecutionSubstrateEngine",
+    "mythic_label": "Otem Execution Substrate",
+    "linguistic_version": "1.0.0"
   }
 }

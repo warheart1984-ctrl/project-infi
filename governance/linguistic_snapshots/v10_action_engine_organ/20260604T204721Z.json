@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "v10_action_engine_organ",
+  "captured_at": "2026-06-04T20:47:21Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "v10_action_engine_organ",
+      "engineering_class": "V10ActionEngineEngine",
+      "mythic_label": "V10 Action Engine Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "V10 Action Engine Subsystem",
+      "module_path": "src/v10_action_engine_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/v10_action_engine_organ.py",
+      "header": {
+        "mythic": "V10 Action Engine Organ",
+        "engineering": "V10ActionEngineEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: V10 Action Engine Organ\n# Engineering: V10ActionEngineEngine",
+          "mythic": "V10 Action Engine Organ",
+          "engineering": "V10ActionEngineEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "V10 Action Engine Subsystem"
+      },
+      "active_doc": {
+        "title": "V10 Action Engine Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "079a2b58e89ebf3db8045ccacb2d9f61b3ceb3520555fa37333213f2c35c61bf",
+    "engineering": "bd018f35bf0bdbd5aa45f498588da315b77a99e6d73daf7f96b1d92a1632d53b",
+    "combined": "0ad65fafadc19caeded9994488f10291f83d91faa841113ee46ca85cfcd2af92"
+  }
+}

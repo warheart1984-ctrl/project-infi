@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "intent_agency_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "intent_agency_organ",
+      "engineering_class": "IntentAgencyEngine",
+      "mythic_label": "Intent Agency Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Intent Agency Organ",
+      "module_path": "src/intent_agency_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/intent_agency_organ.py",
+      "header": {
+        "mythic": "Intent Agency Organ",
+        "engineering": "IntentAgencyEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Intent Agency Organ\n# Engineering: IntentAgencyEngine",
+          "mythic": "Intent Agency Organ",
+          "engineering": "IntentAgencyEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Intent Agency Organ"
+      },
+      "active_doc": {
+        "title": "Intent Agency Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "928b1dbeabd97be7e5227ab14a95ba60a0bca83f97e4f4fb63b9457e531e129d",
+    "engineering": "209fe7b29af8a393c5d73cba50dc8900f98772cc1ec575044f812c0c38486743",
+    "combined": "9ecd9c30206662347b5ed4bcf0f2bef87776293eb2d0b3e6ed731bf296aa51b4"
+  }
+}

@@ -3,12 +3,13 @@
   "gene": "meta_linguistic_governance_organ",
   "current_band": "medium",
   "predicted_band": "medium",
-  "predicted_risk_30d": 44,
+  "predicted_risk_30d": 54,
   "lead_time_days": 0,
   "drivers": [
+    "rising linguistic snapshot trajectory",
     "parent gene in forecast or cycle at-risk set"
   ],
-  "generated_at": "2026-06-03T10:54:14Z",
+  "generated_at": "2026-06-05T12:22:01Z",
   "actions": [
     {
       "kind": "watch_cascade",

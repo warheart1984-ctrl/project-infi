@@ -31,8 +31,6 @@ def load_swarm_law_excerpt(root: Path | None = None) -> str:
 def build_envelope_status(*, root: Path | None = None) -> dict[str, Any]:
     thresholds = dict(DEFAULT_THRESHOLDS)
     excerpt = load_swarm_law_excerpt(root)
-    if "halt" in excerpt.lower():
-        thresholds["halt_required"] = "crossed" in excerpt.lower()
     return {
         "safety_envelope_organ_version": "safety_envelope_organ.v1",
         "envelope_id": "default",

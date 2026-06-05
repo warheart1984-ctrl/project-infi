@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "memory_bank_surface_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "memory_bank_surface_organ",
+      "engineering_class": "MemoryBankSurfaceInterface",
+      "mythic_label": "Memory Bank Surface Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Memory Bank Surface Organ",
+      "module_path": "src/memory_bank_surface_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/memory_bank_surface_organ.py",
+      "header": {
+        "mythic": "Memory Bank Surface Organ",
+        "engineering": "MemoryBankSurfaceInterface"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Memory Bank Surface Organ\n# Engineering: MemoryBankSurfaceInterface",
+          "mythic": "Memory Bank Surface Organ",
+          "engineering": "MemoryBankSurfaceInterface"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Memory Bank Surface Organ"
+      },
+      "active_doc": {
+        "title": "Memory Bank Surface Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "47f2616cbb1277b144fa4f29d2ab55af22e7531fef2dae061207c7151d9d8709",
+    "engineering": "53160711bb7879396bdcd5532ea28a985da504ea20c1bf464d70911704b6b9c4",
+    "combined": "3db118463395ac378df04a13912342c8d1afca7cba000be80bfb8be10a2f2f55"
+  }
+}

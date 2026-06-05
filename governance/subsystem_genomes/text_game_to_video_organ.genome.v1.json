@@ -77,6 +77,9 @@
     "concept_spec": "docs/_future/ideas_pending/TEXT_GAME_TO_VIDEO_ORGAN.md",
     "mvp_plan": "docs/_future/ideas_pending/TEXT_GAME_TO_VIDEO_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/storyforge/TEXT_GAME_TO_VIDEO.md"
+    "active_doc": "docs/subsystems/storyforge/TEXT_GAME_TO_VIDEO.md",
+    "engineering_class": "TextGameToVideoFrontDoor",
+    "mythic_label": "Text-Game-to-Video Organ",
+    "linguistic_version": "1.0.0"
   }
 }

@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "naming_genome_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "naming_genome_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Naming Genome Subsystem",
+      "module_path": "src/naming_genome_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/naming_genome_organ.py",
+      "header": {
+        "mythic": "Naming Genome Organ",
+        "engineering": "NamingGenomeEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Naming Genome Organ\n# Engineering: NamingGenomeEngine",
+          "mythic": "Naming Genome Organ",
+          "engineering": "NamingGenomeEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Naming Genome Subsystem"
+      },
+      "active_doc": {
+        "title": "Naming Genome Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "48dc33c678396fafb1a6c303aa33ae32472bd55486f9c38d9eebf7567d996fa1",
+    "engineering": "594b9dc5683515806af0187f6f2a97bcb2f784670e2e9bf1b2732c4a6f2731d6",
+    "combined": "bf0ff724aadabe630f8077f71adf7e602969850b104afb43fb7be2ba497c77dc"
+  }
+}

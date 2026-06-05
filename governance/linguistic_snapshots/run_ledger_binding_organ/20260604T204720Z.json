@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "run_ledger_binding_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "run_ledger_binding_organ",
+      "engineering_class": "RunLedgerBindingEngine",
+      "mythic_label": "Run Ledger Binding Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Run Ledger Binding Organ",
+      "module_path": "src/run_ledger_binding_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/run_ledger_binding_organ.py",
+      "header": {
+        "mythic": "Run Ledger Binding Organ",
+        "engineering": "RunLedgerBindingEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Run Ledger Binding Organ\n# Engineering: RunLedgerBindingEngine",
+          "mythic": "Run Ledger Binding Organ",
+          "engineering": "RunLedgerBindingEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Run Ledger Binding Organ"
+      },
+      "active_doc": {
+        "title": "Run Ledger Binding Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "d30e56251727912edd851985903d3a7e537544ac62662d95d4db1a1e7077971d",
+    "engineering": "48234752cad9570075b0bfd98311f0af29588e6e7da37f576c200d16f122e3bb",
+    "combined": "16f56b950cca7df0d1bf7583afa5a24daec71594baf3eb5b817cb357323c2ab2"
+  }
+}

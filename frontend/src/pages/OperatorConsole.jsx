@@ -111,6 +111,9 @@ export default function OperatorConsolePage() {
             <Link to="/jarvis" className="workbench-button ghost">
               <FiArrowLeft /> Back to Console
             </Link>
+            <Link to="/operator/replay" className="workbench-button ghost">
+              Temporal Replay
+            </Link>
             <button type="button" className="workbench-button primary" onClick={loadSnapshot} disabled={loading}>
               <FiRefreshCw /> Refresh
             </button>

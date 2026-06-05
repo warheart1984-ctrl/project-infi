@@ -1,0 +1,78 @@
+{
+  "linguistic_governance_attestation_version": "linguistic_governance_attestation.v1",
+  "generated_at": "2026-06-05T17:29:17Z",
+  "closed_loop_score": 80,
+  "policy_mode": "observe",
+  "registry_summary": {
+    "policy_mode": "observe",
+    "last_gate_run_at": "2026-06-05T17:29:16Z",
+    "last_forecast_at": "2026-06-05T17:27:20Z",
+    "last_calibration_at": "2026-06-05T17:27:07Z",
+    "last_cycle_at": "2026-06-05T17:28:12Z",
+    "last_work_order_sync_at": "2026-06-05T17:29:16Z",
+    "last_attestation_at": "2026-06-05T16:51:22Z"
+  },
+  "forecast_summary": {
+    "present": true,
+    "generated_at": "2026-06-05T17:27:44Z",
+    "predicted_medium_high": 50,
+    "stale": false
+  },
+  "calibration_summary": {
+    "present": true,
+    "generated_at": "2026-06-05T17:27:20Z",
+    "band_hit_rate": 0.76,
+    "false_alarm_rate": 0.24,
+    "miss_rate": 0.0,
+    "stale": false
+  },
+  "queue_summary": {
+    "present": true,
+    "generated_at": "2026-06-05T17:29:16Z",
+    "item_count": 30,
+    "top_genes": [
+      "recipe_module_organ",
+      "coding_organs_stack",
+      "linguistic_drift_predictor_organ",
+      "linguistic_full_governance_cycle_organ",
+      "linguistic_governance_attestation_organ"
+    ]
+  },
+  "work_order_summary": {
+    "total": 51,
+    "pending": 51,
+    "acknowledged": 0,
+    "completed": 0,
+    "deferred": 0
+  },
+  "full_cycle_summary": {
+    "present": true,
+    "cycle_id": "20260605T164931Z",
+    "generated_at": "2026-06-05T16:49:31Z",
+    "passed": true,
+    "phase_keys": [
+      "attestation",
+      "calibration",
+      "forecast_archive",
+      "meta_gates_passed",
+      "predictive",
+      "queue",
+      "reactive",
+      "work_orders_synced"
+    ]
+  },
+  "governed_lifecycle_summary": {
+    "aligned": true,
+    "operator_execution_aligned": true,
+    "lifecycle_artifact_aligned": true
+  },
+  "meta_gate_summary": {
+    "last_gate_run_at": "2026-06-05T17:29:16Z"
+  },
+  "recommendations": [
+    {
+      "action": "triage_work_orders",
+      "reason": "51 pending work order(s)"
+    }
+  ]
+}

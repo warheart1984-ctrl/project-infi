@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "imagine_generator",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "imagine_generator",
+      "engineering_class": "ImagineGeneratorEngine",
+      "mythic_label": "Imagine generator",
+      "linguistic_version": "1.0.0",
+      "display_name": "Imagine Generator",
+      "module_path": "src/imagine_generator.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/imagine_generator.py",
+      "header": {
+        "mythic": "Imagine Generator Organ",
+        "engineering": "ImagineGeneratorEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Imagine Generator Organ\n# Engineering: ImagineGeneratorEngine",
+          "mythic": "Imagine Generator Organ",
+          "engineering": "ImagineGeneratorEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Imagine Generator"
+      },
+      "active_doc": {
+        "title": "Imagine Generator"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "c78d29718fc7f45fa451b75b2bbde5e9bd1fb4db89b116d4b14047311e5bd4de",
+    "engineering": "58a5315bb629b1a1462b0b13ad4b54aab58163d2a7170dca7bd8dcaa210bf28c",
+    "combined": "4eb83329e4566a8107a81afef9f9b0302313ed14a2cd1e04665f4b2e581320d9"
+  }
+}

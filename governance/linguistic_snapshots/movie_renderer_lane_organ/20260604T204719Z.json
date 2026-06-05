@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "movie_renderer_lane_organ",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "movie_renderer_lane_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Movie Renderer Lane",
+      "module_path": "src/movie_renderer_lane_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/movie_renderer_lane_organ.py",
+      "header": {
+        "mythic": "Movie Renderer Lane Organ",
+        "engineering": "MovieRendererLanePosture"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Movie Renderer Lane Organ\n# Engineering: MovieRendererLanePosture",
+          "mythic": "Movie Renderer Lane Organ",
+          "engineering": "MovieRendererLanePosture"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Movie Renderer Lane"
+      },
+      "active_doc": {
+        "title": "Movie Renderer Lane"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "1e29af89e338931f196af2cd9a7b0e8d4a6fcf2929820389c7707d6bd9c448d2",
+    "engineering": "1a45b2042512325063812ad17045bfc3adc4c700d3b2f888ecd1a418865436f7",
+    "combined": "c244f8d1f3fda2c1ddbccb9a212174b915c1982309346e0612f10a3546b99dfb"
+  }
+}

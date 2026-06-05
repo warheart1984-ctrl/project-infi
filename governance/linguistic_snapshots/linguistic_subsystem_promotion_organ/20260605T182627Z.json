@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_subsystem_promotion_organ",
+  "captured_at": "2026-06-05T18:26:27Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_subsystem_promotion_organ",
+      "engineering_class": "LinguisticSubsystemPromotionEngine",
+      "mythic_label": "Linguistic Subsystem Promotion Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Linguistic Subsystem Promotion Subsystem",
+      "module_path": "src/linguistic_subsystem_promotion_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_subsystem_promotion_organ.py",
+      "header": {
+        "mythic": "Linguistic Subsystem Promotion Organ",
+        "engineering": "LinguisticSubsystemPromotionEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Subsystem Promotion Organ\n# Engineering: LinguisticSubsystemPromotionEngine",
+          "mythic": "Linguistic Subsystem Promotion Organ",
+          "engineering": "LinguisticSubsystemPromotionEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Subsystem Promotion Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Subsystem Promotion Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "d6c6261759ffb7a444aa4d437351f78bdee245f6b49486928bce89a0dc69cfc4",
+    "engineering": "8874610d063c5612581beb318b158542a290f5dc4aef65d2a83e16420b389c85",
+    "combined": "181354e9287036d8c56daae302fc8fb218ad4dd7c3be4de7908ddefa7448c740"
+  }
+}

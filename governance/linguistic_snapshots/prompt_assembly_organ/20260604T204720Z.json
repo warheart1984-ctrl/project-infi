@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "prompt_assembly_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "prompt_assembly_organ",
+      "engineering_class": "PromptAssemblyEngine",
+      "mythic_label": "Prompt Assembly Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Prompt Assembly Organ",
+      "module_path": "src/prompt_assembly_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/prompt_assembly_organ.py",
+      "header": {
+        "mythic": "Prompt Assembly Organ",
+        "engineering": "PromptAssemblyEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Prompt Assembly Organ\n# Engineering: PromptAssemblyEngine",
+          "mythic": "Prompt Assembly Organ",
+          "engineering": "PromptAssemblyEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Prompt Assembly Organ"
+      },
+      "active_doc": {
+        "title": "Prompt Assembly Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "26cfd270573002f299baf715177483918e07263e1f1ff17da1bc9021b15f6fa4",
+    "engineering": "46075a7a20013081507168c23b6c4334c5421865c290c543c463514accef59c5",
+    "combined": "c8e2dc4547bd08b0f1dd1ccfcedbb812172a5f80544f42f47ccec2db8aa04f3b"
+  }
+}

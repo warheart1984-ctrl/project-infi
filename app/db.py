@@ -131,6 +131,17 @@ def init_db() -> None:
             updated_at TEXT NOT NULL
         )
         """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS operator_users (
+            id TEXT PRIMARY KEY,
+            username TEXT NOT NULL UNIQUE COLLATE NOCASE,
+            password_hash TEXT NOT NULL,
+            role TEXT NOT NULL DEFAULT 'operator',
+            active INTEGER NOT NULL DEFAULT 1,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL
+        )
+        """)
         _ensure_column(conn, "workflows", "cisiv_stage", "TEXT")
         _ensure_column(conn, "workflow_runs", "cisiv_stage", "TEXT")
         _ensure_column(conn, "workflow_approvals", "cisiv_stage", "TEXT")
@@ -1027,3 +1038,79 @@ def complete_onboarding(goal: str, tools: list[str], cisiv_stage: str | None = N
             ),
         )
     return get_onboarding_state()
+
+
+def _serialize_operator_user_row(row) -> dict | None:
+    if not row:
+        return None
+    return {
+        "id": row[0],
+        "username": row[1],
+        "password_hash": row[2],
+        "role": row[3],
+        "active": bool(row[4]),
+        "created_at": row[5],
+        "updated_at": row[6],
+    }
+
+
+def count_operator_users() -> int:
+    with get_conn() as conn:
+        row = conn.execute("SELECT COUNT(*) FROM operator_users").fetchone()
+    return int(row[0] if row else 0)
+
+
+def create_operator_user(username: str, password_hash: str, role: str = "operator") -> dict:
+    user_id = str(uuid.uuid4())
+    ts = now_iso()
+    normalized_username = username.strip()
+    normalized_role = role.strip() or "operator"
+    with get_conn() as conn:
+        conn.execute(
+            """
+            INSERT INTO operator_users (id, username, password_hash, role, active, created_at, updated_at)
+            VALUES (?, ?, ?, ?, 1, ?, ?)
+            """,
+            (user_id, normalized_username, password_hash, normalized_role, ts, ts),
+        )
+    return get_operator_user_by_id(user_id)
+
+
+def get_operator_user_by_id(user_id: str) -> dict | None:
+    with get_conn() as conn:
+        row = conn.execute(
+            """
+            SELECT id, username, password_hash, role, active, created_at, updated_at
+            FROM operator_users
+            WHERE id = ?
+            """,
+            (user_id,),
+        ).fetchone()
+    return _serialize_operator_user_row(row)
+
+
+def get_operator_user_by_username(username: str) -> dict | None:
+    normalized_username = username.strip()
+    with get_conn() as conn:
+        row = conn.execute(
+            """
+            SELECT id, username, password_hash, role, active, created_at, updated_at
+            FROM operator_users
+            WHERE username = ? COLLATE NOCASE
+            """,
+            (normalized_username,),
+        ).fetchone()
+    return _serialize_operator_user_row(row)
+
+
+def public_operator_user(user: dict | None) -> dict | None:
+    if not user:
+        return None
+    return {
+        "id": user["id"],
+        "username": user["username"],
+        "role": user["role"],
+        "active": user["active"],
+        "created_at": user["created_at"],
+        "updated_at": user["updated_at"],
+    }

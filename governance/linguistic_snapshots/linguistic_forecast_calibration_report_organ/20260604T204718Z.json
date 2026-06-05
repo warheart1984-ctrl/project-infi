@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "linguistic_forecast_calibration_report_organ",
+  "captured_at": "2026-06-04T20:47:18Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "linguistic_forecast_calibration_report_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Linguistic Forecast Calibration Report Subsystem",
+      "module_path": "src/linguistic_forecast_calibration_report_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/linguistic_forecast_calibration_report_organ.py",
+      "header": {
+        "mythic": "Linguistic Forecast Calibration Report Organ",
+        "engineering": "LinguisticForecastCalibrationReportEngine"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Linguistic Forecast Calibration Report Organ\n# Engineering: LinguisticForecastCalibrationReportEngine",
+          "mythic": "Linguistic Forecast Calibration Report Organ",
+          "engineering": "LinguisticForecastCalibrationReportEngine"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Linguistic Forecast Calibration Report Subsystem"
+      },
+      "active_doc": {
+        "title": "Linguistic Forecast Calibration Report Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "85effa7aac5cf5cd6e675715378e715e8d3d7e5656e2f79d9307f17c17812ecc",
+    "engineering": "60ef67b126765a0c0dd1960a039d66899388239203e2172109249de51e0d4c41",
+    "combined": "1f9bb3dfecfead33da2e98117bfc240c15c871c7c5f8dc95f040ca5d70ee017f"
+  }
+}

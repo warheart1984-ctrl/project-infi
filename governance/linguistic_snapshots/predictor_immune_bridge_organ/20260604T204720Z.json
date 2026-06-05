@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "predictor_immune_bridge_organ",
+  "captured_at": "2026-06-04T20:47:20Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "predictor_immune_bridge_organ",
+      "engineering_class": "PredictorImmuneBridgeBridge",
+      "mythic_label": "Predictor Immune Bridge Organ",
+      "linguistic_version": "1.0.0",
+      "display_name": "Predictor Immune Bridge Organ",
+      "module_path": "src/predictor_immune_bridge_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/predictor_immune_bridge_organ.py",
+      "header": {
+        "mythic": "Predictor Immune Bridge Organ",
+        "engineering": "PredictorImmuneBridgeBridge"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Predictor Immune Bridge Organ\n# Engineering: PredictorImmuneBridgeBridge",
+          "mythic": "Predictor Immune Bridge Organ",
+          "engineering": "PredictorImmuneBridgeBridge"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Predictor Immune Bridge Organ"
+      },
+      "active_doc": {
+        "title": "Predictor Immune Bridge Organ"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "32b6342577744930c5b2398a28f96cdb917e28da9f58b456b441d9adeaea062a",
+    "engineering": "40bac138012fa6544978e2fbc8364fe568797e9f08102836db17b6838c69b958",
+    "combined": "45bc2fbd0efed2c619e23778ddfe15923df08f7b6c7f414ccd52d2962f0fa687"
+  }
+}

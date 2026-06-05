@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "text_game_to_video_organ",
+  "captured_at": "2026-06-04T20:47:21Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "text_game_to_video_organ",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Text-Game-to-Video Front Door",
+      "module_path": "src/text_game_to_video_organ.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/text_game_to_video_organ.py",
+      "header": {
+        "mythic": "Text-Game-to-Video Organ",
+        "engineering": "TextGameToVideoFrontDoor"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Text-Game-to-Video Organ\n# Engineering: TextGameToVideoFrontDoor",
+          "mythic": "Text-Game-to-Video Organ",
+          "engineering": "TextGameToVideoFrontDoor"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Text-Game-to-Video Front Door"
+      },
+      "active_doc": {
+        "title": "Text-Game-to-Video Front Door"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "e1a3ea7fd0eb697c4f5555d1a7a43f592c0e9e3141f088f2c7ff802a07590a28",
+    "engineering": "63b264f68aeaedcf4fa7d5bd30903b9fea735d8c1adffdfe614a7bac83d93e15",
+    "combined": "5cdaf65bacb13ec0e70857a32f4fe8b78f949ac49be79cdb7a63c9a92cfff11b"
+  }
+}

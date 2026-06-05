@@ -1,0 +1,44 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "operator_cognition_coherence_fabric",
+  "captured_at": "2026-06-04T20:47:19Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "operator_cognition_coherence_fabric",
+      "engineering_class": "OperatorCognitionCoherenceLayer",
+      "mythic_label": "Coherence Fabric",
+      "linguistic_version": "1.0.0",
+      "display_name": "Operator Cognition Coherence Fabric",
+      "module_path": "src/operator_cognition_coherence_fabric.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/operator_cognition_coherence_fabric.py",
+      "header": {
+        "mythic": "Coherence Fabric",
+        "engineering": "OperatorCognitionCoherenceLayer"
+      },
+      "symbols": [
+        {
+          "raw": "# Mythic: Coherence Fabric\n# Engineering: OperatorCognitionCoherenceLayer",
+          "mythic": "Coherence Fabric",
+          "engineering": "OperatorCognitionCoherenceLayer"
+        }
+      ]
+    },
+    "docs": {
+      "concept_spec": {
+        "title": "Operator\u2013Cognition Coherence Fabric"
+      },
+      "active_doc": {
+        "title": "Operator Cognition Coherence Fabric"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "d4d5b30ca85afc43c6c3f8740fe50943e40b9cad14c45dffa4bd69bc79d51bdb",
+    "engineering": "b2ef1f528c51420aabf18b697c25d33f672af79045006c461a40e7ac5609a9b9",
+    "combined": "6a26dbccd3f471cfae8760ab7ce407fbc52711b9d48987f3980f67fb7e304aaf"
+  }
+}

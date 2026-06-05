@@ -1,0 +1,32 @@
+{
+  "linguistic_snapshot_version": "linguistic_snapshot.v1",
+  "gene": "temporal_replay_machine",
+  "captured_at": "2026-06-04T20:47:21Z",
+  "capture_source": "naming-genome-gate",
+  "genome_stage": "governed",
+  "layers": {
+    "genome": {
+      "gene": "temporal_replay_machine",
+      "engineering_class": "",
+      "mythic_label": "",
+      "linguistic_version": "",
+      "display_name": "Temporal Replay Machine",
+      "module_path": "src/temporal_replay/service.py"
+    },
+    "source": {
+      "path": "E:/project-infi/src/temporal_replay/service.py",
+      "header": {},
+      "symbols": []
+    },
+    "docs": {
+      "active_doc": {
+        "title": "Temporal Replay Machine v1 Proof"
+      }
+    }
+  },
+  "fingerprints": {
+    "mythic": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "engineering": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "combined": "af60ab5be9ad4965eaa1059028902dc21b4b010385fbd5bfd03807f26e68aaf3"
+  }
+}

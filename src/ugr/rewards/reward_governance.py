@@ -20,7 +20,7 @@ def _merge_policy(base: dict[str, Any], patch: dict[str, Any]) -> dict[str, Any]
     for key, value in patch.items():
         if key == "economy" and isinstance(value, dict):
             merged["economy"] = {**dict(merged.get("economy") or {}), **value}
-        elif key in ("discovery", "promotion", "adoption", "spend") and isinstance(value, dict):
+        elif key in ("discovery", "promotion", "adoption", "spend", "transfer") and isinstance(value, dict):
             merged[key] = {**dict(merged.get(key) or {}), **value}
         else:
             merged[key] = value

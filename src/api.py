@@ -11265,6 +11265,22 @@ def ugr_discover_subsystem():
         if not str(data.get("aais_instance_id") or "").strip():
             return jsonify({"error": "aais_instance_id is required"}), 400
         result = build_subsystem_discovery_service().discover(data)
+        from src.ugr.ugr_runtime_governance import (
+            UGR_DISCOVERY_SURFACE,
+            attach_ugr_law_enforcement,
+            finalize_ugr_runtime_action,
+        )
+
+        law_enforcement, _, _ = finalize_ugr_runtime_action(
+            surface=UGR_DISCOVERY_SURFACE,
+            action_id="ugr_discover_subsystem",
+            target=str(data.get("subsystem_id") or data.get("spec_hash") or "discovery"),
+            result=result,
+            summary="UGR subsystem discovery completed.",
+            actor_id=str(data.get("operator_id") or "ugr_operator"),
+            details={"tenant_id": data.get("tenant_id"), "aais_instance_id": data.get("aais_instance_id")},
+        )
+        result = attach_ugr_law_enforcement(result, law_enforcement)
         status = str(result.get("status") or "")
         if status == "discovered":
             code = 200
@@ -11328,6 +11344,23 @@ def ugr_reward_issue():
             promotion_organ_id=str(data.get("promotion_organ_id") or "").strip() or None,
             governance_status=str(data.get("governance_status") or "").strip() or None,
         )
+        from src.ugr.ugr_runtime_governance import (
+            UGR_REWARD_SURFACE,
+            attach_ugr_law_enforcement,
+            finalize_ugr_runtime_action,
+        )
+
+        law_enforcement, _, _ = finalize_ugr_runtime_action(
+            surface=UGR_REWARD_SURFACE,
+            action_id="ugr_reward_issue",
+            target=subsystem_id,
+            result=result,
+            summary="UGR operator reward issuance completed.",
+            cisiv_stage="verification",
+            actor_id=operator_id,
+            details={"tenant_id": tenant_id, "event_type": event_type},
+        )
+        result = attach_ugr_law_enforcement(result, law_enforcement)
         status = str(result.get("status") or "")
         code = 200 if status in {"issued", "idempotent", "skipped", "shadow", "audit", "disabled"} else 400
         if status == "rejected":
@@ -11427,8 +11460,9 @@ def ugr_reward_transfer():
         if not from_op or not to_op:
             return jsonify({"error": "from_operator_id and to_operator_id are required"}), 400
         amount = float(data.get("amount") or 0)
+        tenant_id = normalize_tenant_id(str(data.get("tenant_id") or "global"))
         result = transfer_rail_credits(
-            tenant_id=normalize_tenant_id(str(data.get("tenant_id") or "global")),
+            tenant_id=tenant_id,
             from_operator_id=from_op,
             to_operator_id=to_op,
             amount=amount,
@@ -11436,6 +11470,23 @@ def ugr_reward_transfer():
             transfer_id=str(data.get("transfer_id") or "").strip() or None,
             memo=str(data.get("memo") or "").strip() or None,
         )
+        from src.ugr.ugr_runtime_governance import (
+            UGR_REWARD_SURFACE,
+            attach_ugr_law_enforcement,
+            finalize_ugr_runtime_action,
+        )
+
+        law_enforcement, _, _ = finalize_ugr_runtime_action(
+            surface=UGR_REWARD_SURFACE,
+            action_id="ugr_reward_transfer",
+            target=f"{from_op}->{to_op}",
+            result=result,
+            summary="UGR rail credit transfer completed.",
+            cisiv_stage="implementation",
+            actor_id=from_op,
+            details={"tenant_id": tenant_id, "amount": amount},
+        )
+        result = attach_ugr_law_enforcement(result, law_enforcement)
         status = str(result.get("status") or "")
         code = 200 if status in {"ok", "rejected", "shadow", "audit", "idempotent", "disabled"} else 500
         return jsonify(result), code
@@ -11456,8 +11507,9 @@ def ugr_reward_exchange():
         op_b = str(data.get("operator_b") or "").strip()
         if not op_a or not op_b:
             return jsonify({"error": "operator_a and operator_b are required"}), 400
+        tenant_id = normalize_tenant_id(str(data.get("tenant_id") or "global"))
         result = exchange_rail_credits(
-            tenant_id=normalize_tenant_id(str(data.get("tenant_id") or "global")),
+            tenant_id=tenant_id,
             operator_a=op_a,
             operator_b=op_b,
             amount_a=float(data.get("amount_a") or 0),
@@ -11465,6 +11517,23 @@ def ugr_reward_exchange():
             trace_id=str(data.get("trace_id") or ""),
             exchange_id=str(data.get("exchange_id") or "").strip() or None,
         )
+        from src.ugr.ugr_runtime_governance import (
+            UGR_REWARD_SURFACE,
+            attach_ugr_law_enforcement,
+            finalize_ugr_runtime_action,
+        )
+
+        law_enforcement, _, _ = finalize_ugr_runtime_action(
+            surface=UGR_REWARD_SURFACE,
+            action_id="ugr_reward_exchange",
+            target=f"{op_a}<->{op_b}",
+            result=result,
+            summary="UGR rail credit exchange completed.",
+            cisiv_stage="implementation",
+            actor_id=op_a,
+            details={"tenant_id": tenant_id},
+        )
+        result = attach_ugr_law_enforcement(result, law_enforcement)
         status = str(result.get("status") or "")
         code = 200 if status in {"ok", "rejected", "shadow", "audit", "disabled"} else 500
         return jsonify(result), code
@@ -11574,6 +11643,23 @@ def ugr_mission_governance():
         if not str(mission_payload.get("mutation_target") or "").strip():
             return jsonify({"error": "mutation_target is required"}), 400
         result = build_mission_runtime().run_mission(mission_payload)
+        from src.ugr.ugr_runtime_governance import (
+            UGR_MISSION_SURFACE,
+            attach_ugr_law_enforcement,
+            finalize_ugr_runtime_action,
+        )
+
+        law_enforcement, _, _ = finalize_ugr_runtime_action(
+            surface=UGR_MISSION_SURFACE,
+            action_id="ugr_mission_governance",
+            target=str(mission_payload.get("mutation_target") or "governance_mutation"),
+            result=result,
+            summary="UGR governance mission completed.",
+            cisiv_stage="verification",
+            actor_id=str(mission_payload.get("operator_id") or "ugr_operator"),
+            details={"mission_kind": "governance_mutation"},
+        )
+        result = attach_ugr_law_enforcement(result, law_enforcement)
         status_code = 200 if result.get("status") in {"ok", "blocked", "rejected"} else 500
         return jsonify(result), status_code
     except Exception as e:
@@ -11597,6 +11683,23 @@ def ugr_mission_run():
         if not str(mission_payload.get("aais_instance_id") or "").strip():
             return jsonify({"error": "aais_instance_id is required"}), 400
         result = build_mission_runtime().run_mission(mission_payload)
+        from src.ugr.ugr_runtime_governance import (
+            UGR_MISSION_SURFACE,
+            attach_ugr_law_enforcement,
+            finalize_ugr_runtime_action,
+        )
+
+        law_enforcement, _, _ = finalize_ugr_runtime_action(
+            surface=UGR_MISSION_SURFACE,
+            action_id="ugr_mission_run",
+            target=str(mission_payload.get("mission_id") or mission_payload.get("aais_instance_id") or "mission"),
+            result=result,
+            summary="UGR mission run completed.",
+            cisiv_stage="implementation",
+            actor_id=str(mission_payload.get("operator_id") or "ugr_operator"),
+            details={"step_count": len(steps)},
+        )
+        result = attach_ugr_law_enforcement(result, law_enforcement)
         status_code = 200 if result.get("status") in {"ok", "blocked", "rejected"} else 500
         return jsonify(result), status_code
     except Exception as e:
