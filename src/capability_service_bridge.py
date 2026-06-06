@@ -1559,6 +1559,21 @@ class CapabilityServiceBridge:
         self._events.append(event)
         if len(self._events) > MAX_AUDIT_EVENTS:
             self._events = self._events[-MAX_AUDIT_EVENTS:]
+        if capability_meta.get("ok"):
+            try:
+                from src.ugr.rewards.reward_hooks import emit_capability_bridge_executed
+
+                emit_capability_bridge_executed(
+                    tenant_id=str(capability_meta.get("tenant_id") or "global"),
+                    operator_id=str(capability_meta.get("operator_id") or "operator"),
+                    trace_id=str(capability_meta.get("trace_id") or ""),
+                    module=str(capability_meta.get("module") or ""),
+                    action=str(capability_meta.get("action") or ""),
+                    audit_sequence=event.get("sequence"),
+                    ok=True,
+                )
+            except Exception:
+                pass
         return event
 
     def _finalize_result(

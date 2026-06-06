@@ -1,0 +1,1 @@
+"""Per-type contribution validators."""

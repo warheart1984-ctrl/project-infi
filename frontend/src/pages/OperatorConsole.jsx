@@ -31,6 +31,23 @@ function toneForPollStatus(value) {
   return 'missing';
 }
 
+function UGRRewardsCompact({ rewards }) {
+  const data = rewards || {};
+  return (
+    <div className="workbench-chip-row" data-testid="ugr-rewards-compact">
+      <span className={`workbench-chip ${data.enabled ? 'aligned' : 'missing'}`}>
+        rewards={data.enabled ? 'on' : 'off'}
+      </span>
+      <span className={`workbench-chip ${data.shadow_only ? 'warning' : 'aligned'}`}>
+        shadow={data.shadow_only ? 'yes' : 'no'}
+      </span>
+      <span className="workbench-chip aligned">
+        purchase_max={data.purchase?.max_per_purchase ?? '—'}
+      </span>
+    </div>
+  );
+}
+
 export default function OperatorConsolePage() {
   const [snapshot, setSnapshot] = useState(null);
   const [meshHealth, setMeshHealth] = useState(null);
@@ -96,6 +113,7 @@ export default function OperatorConsolePage() {
   const platformDashboard = forgePlatform.dashboard || {};
   const platformGates = platformDashboard.gates || [];
   const platformSubstrates = platformDashboard.substrates || {};
+  const operatorRewards = snapshot?.operator_rewards || {};
 
   return (
     <section className="workbench operator-console-page" data-testid="operator-console-page">
@@ -144,6 +162,7 @@ export default function OperatorConsolePage() {
 
       <div className="operator-console-grid">
         <UGRCloudForgeConsoleCard compact meshHealth={mesh} />
+        <UGRRewardsCompact rewards={operatorRewards} />
 
         <section className="workbench-section page-panel" data-testid="operator-mesh-health">
           <div className="workbench-section-head">

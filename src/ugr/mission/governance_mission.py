@@ -227,6 +227,19 @@ def run_governance_mission(
                 organ_id=str(payload.get("organ_id") or ""),
             )
             apply_note = msg if ok_apply else f"apply_failed: {msg}"
+            if ok_apply and mutation_op == "organ_admit":
+                try:
+                    from src.ugr.rewards.reward_hooks import emit_provider_organ_admitted
+
+                    emit_provider_organ_admitted(
+                        tenant_id=tenant_manifold.tenant_id,
+                        operator_id=str(payload.get("operator_id") or "operator"),
+                        organ_id=str(payload.get("organ_id") or ""),
+                        governance_mission_id=mission_id,
+                        aais_instance_id=str(payload.get("aais_instance_id") or "aais-local"),
+                    )
+                except Exception:
+                    pass
             if not ok_apply and os.getenv("URG_GOVERNANCE_APPLY", "").strip().lower() in {"1", "true", "yes", "on"}:
                 return {
                     "status": "blocked",

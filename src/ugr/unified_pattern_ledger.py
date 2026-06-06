@@ -213,6 +213,18 @@ class UnifiedPatternLedger:
                     support_type="supports",
                     weight=float(claim.get("confidence") or 0.5),
                 )
+        if str(record.get("status") or "") == "accepted":
+            try:
+                from src.ugr.rewards.reward_hooks import emit_pattern_claim_accepted
+
+                emit_pattern_claim_accepted(
+                    tenant_id=str(record.get("tenant_scope") or "global"),
+                    operator_id=str(claim.get("operator_id") or "operator"),
+                    claim_id=str(record.get("claim_id") or ""),
+                    classification="accepted",
+                )
+            except Exception:
+                pass
         return record
 
     def append_evidence(

@@ -140,6 +140,29 @@ def _build_cloud_forge_snapshot() -> dict[str, Any]:
     }
 
 
+def _build_rewards_snapshot() -> dict[str, Any]:
+    try:
+        from src.ugr.rewards.reward_issuer import rewards_enabled, rewards_shadow_only
+        from src.ugr.rewards.reward_policy import load_reward_policy
+
+        policy = load_reward_policy()
+        return {
+            "status": "ok",
+            "enabled": rewards_enabled(),
+            "shadow_only": rewards_shadow_only(),
+            "economy": dict(policy.get("economy") or {}),
+            "purchase": dict(policy.get("purchase") or {}),
+            "routes": {
+                "discover": "/api/ugr/discover/contribution",
+                "spend": "/api/ugr/rewards/spend",
+                "purchase": "/api/ugr/credits/purchase",
+                "operator_profile": "/api/ugr/reward/operator/<operator_id>",
+            },
+        }
+    except Exception as exc:
+        return {"status": "error", "summary": str(exc)}
+
+
 def build_operator_console_snapshot(*, runtime: Any | None = None) -> dict[str, Any]:
     """Build advisory operator console snapshot for UI + workbench."""
     if runtime is None:
@@ -176,7 +199,8 @@ def build_operator_console_snapshot(*, runtime: Any | None = None) -> dict[str, 
         "forge_platform": forge_platform,
         "trust_bundle": trust,
         "debt_register": debt,
-        "gates": GATE_COMMANDS,
+        "operator_rewards": _build_rewards_snapshot(),
+        "gates": GATE_COMMANDS + ["make ugr-rewards-gate"],
         "verification_command": "make ugr-operator-console-gate",
     }
     snapshot["readout"] = build_operator_readout(snapshot)

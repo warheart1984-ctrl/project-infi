@@ -116,6 +116,66 @@ def check_cloud_boundary(
     return results
 
 
+FORGE_PEER_RAIL_CAPABILITIES = frozenset({"forge_peer_rail", "route_step"})
+
+
+def check_cloud_forge_rail(
+    mission_state: dict[str, Any],
+    step_assignment: dict[str, Any],
+    *,
+    manifold: CloudManifoldState | None = None,
+    home_rail: str | None = None,
+    federation_peer_tenant: str | None = None,
+    federation_grant_id: str | None = None,
+    grant_capabilities: tuple[str, ...] | None = None,
+) -> list[dict[str, Any]]:
+    """Cloud Forge rail family: scheduled rail lawful vs B_cloud and grant."""
+    results: list[dict[str, Any]] = []
+    frozen = manifold or CloudManifoldState.from_dict(mission_state.get("cloud_manifold") or {})
+    rail = str(step_assignment.get("rail") or frozen.rail or "NORMAL").upper()
+    organ_id = str(step_assignment.get("organ_id") or "").strip()
+    home = str(home_rail or frozen.rail or "NORMAL").upper()
+
+    if federation_peer_tenant:
+        caps = {str(c).strip().lower() for c in (grant_capabilities or ())}
+        if not caps.intersection(FORGE_PEER_RAIL_CAPABILITIES):
+            results.append(
+                _invariant(
+                    "cloud_forge_rail",
+                    "hard_fail",
+                    "grant lacks forge_peer_rail or route_step capability",
+                )
+            )
+            return results
+        if not federation_grant_id:
+            results.append(
+                _invariant("cloud_forge_rail", "hard_fail", "federated step missing grant_id")
+            )
+            return results
+
+    key = (
+        str(mission_state.get("region_id") or frozen.region_id or "").strip(),
+        str(step_assignment.get("provider") or "").strip(),
+        rail,
+    )
+    allowed = frozen.boundary_tuples()
+    if allowed and key not in allowed:
+        results.append(
+            _invariant(
+                "cloud_forge_rail",
+                "hard_fail",
+                f"scheduled rail {rail} not in runtime B_cloud",
+            )
+        )
+        return results
+
+    detail = f"rail={rail} organ={organ_id}"
+    if federation_peer_tenant and rail != home:
+        detail = f"peer_rail={rail} home_rail={home} grant={federation_grant_id}"
+    results.append(_invariant("cloud_forge_rail", "pass", detail))
+    return results
+
+
 def check_cloud_continuity(
     prev_state: dict[str, Any] | MissionCloudState | None,
     next_state: dict[str, Any] | MissionCloudState,

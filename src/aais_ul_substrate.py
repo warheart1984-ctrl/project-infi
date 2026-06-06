@@ -167,8 +167,25 @@ class AAISULSubstrate:
             wrapped["tool_result"] = {**tool_result, "ul_substrate": envelope, "ul_trace": envelope["ul_trace"]}
         return wrapped
 
+    def _maybe_emit_substrate_reward(self, payload: dict[str, Any], *, surface: str) -> None:
+        trace_id = str(payload.get("trace_id") or payload.get("mission_id") or "")
+        if not trace_id:
+            return
+        try:
+            from src.ugr.rewards.reward_hooks import emit_substrate_envelope_attached
+
+            emit_substrate_envelope_attached(
+                tenant_id=str(payload.get("tenant_id") or "global"),
+                operator_id=str(payload.get("operator_id") or "operator"),
+                trace_id=trace_id,
+                surface=surface,
+            )
+        except Exception:
+            pass
+
     def wrap_ugr_response(self, response: dict[str, Any]) -> dict[str, Any]:
         """Attach UL substrate to one UGR runtime response."""
+        self._maybe_emit_substrate_reward(response, surface="ugr_response")
         envelope = self.build_envelope(
             ingress=[response],
             bridge_results=[response.get("bridge")] if response.get("bridge") else None,

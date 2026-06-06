@@ -1,0 +1,98 @@
+{
+  "version": "1.2",
+  "economy": {
+    "reputation_primary": true,
+    "reputation_to_credit_ratio_min": 2.0,
+    "credit_earn_cap_fraction_of_reputation": 0.35,
+    "min_reputation_to_spend_credits": 10,
+    "max_spend_per_reputation_point": 0.15
+  },
+  "discovery": {
+    "reputation": 15,
+    "rail_credits": 3,
+    "search_efficiency_bonus": {
+      "max_attempts": 8,
+      "reputation": 3,
+      "rail_credits": 0
+    }
+  },
+  "promotion": {
+    "reputation": 40,
+    "rail_credits": 8
+  },
+  "adoption": {
+    "reputation": 10,
+    "rail_credits": 0,
+    "multiplier_increment": 0.1,
+    "multiplier_cap": 3.0,
+    "reputation_scales_with_multiplier": true
+  },
+  "workflow": {
+    "reputation": 12,
+    "rail_credits": 2
+  },
+  "workflow_library": {
+    "reputation": 20,
+    "rail_credits": 4
+  },
+  "organ": {
+    "reputation": 25,
+    "rail_credits": 5
+  },
+  "organ_promotion": {
+    "reputation": 30,
+    "rail_credits": 6
+  },
+  "proof": {
+    "reputation": 18,
+    "rail_credits": 2
+  },
+  "trust_bundle": {
+    "reputation": 22,
+    "rail_credits": 3
+  },
+  "invariant": {
+    "reputation": 14,
+    "rail_credits": 2
+  },
+  "capability": {
+    "reputation": 8,
+    "rail_credits": 1
+  },
+  "capability_module": {
+    "reputation": 16,
+    "rail_credits": 3
+  },
+  "substrate": {
+    "reputation": 10,
+    "rail_credits": 2
+  },
+  "substrate_envelope": {
+    "reputation": 5,
+    "rail_credits": 1
+  },
+  "spend": {
+    "express_boost": {
+      "credits_per_point": 1,
+      "max_threshold_reduction": 30,
+      "ttl_seconds": 300
+    }
+  },
+  "purchase": {
+    "enabled": true,
+    "max_per_purchase": 100,
+    "max_per_operator_per_day": 200,
+    "admin_scope_required": "ugr:credits:purchase",
+    "spend_without_reputation_floor": true
+  },
+  "transfer": {
+    "min_reputation_to_send": 10,
+    "max_per_transfer": 25,
+    "max_outbound_per_day": 50,
+    "max_transfers_per_day": 20,
+    "transfer_fee_fraction": 0.02,
+    "min_amount": 0.01,
+    "cooldown_seconds": 30,
+    "earned_only": true
+  }
+}

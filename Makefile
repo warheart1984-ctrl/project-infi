@@ -1,4 +1,4 @@
-.PHONY: run worker test governance-check rootfs iso-tree rootfs-forge iso-tree-forge forge-installer forge-shippable-gate forge-platform-gate forge-dashboard forge-nightly-evolution forge-nightly-build installer-smoke installer-integration sign-artifacts verify-artifacts ugr-cloud-gate ugr-ingestion-gate ugr-platform-gate ugr-graph-index-gate ugr-embryo-gate ugr-causal-graph-gate ugr-llm-provider-gate ugr-cogos-write-path-gate ugr-graph-backend-gate ugr-trust-bundle-gate ugr-operator-console-gate ugr-mission-gate forge-clean forge-rocky forge-rocky-fallback fetch-rocky-substrate ai-factory-build ai-factory-gate synthetic-mind-gate repo-hygiene-gate lab-init lab-gate mechanic-gate slingshot-gate lineage-gate triangulation-gate narrative-gate recipe-module-gate imagine-generator-gate human-voice-extraction-gate alt3-gate ssp-gate genome-gate alt4-gate promotion-scan recipe-module-prototype-gate imagine-generator-prototype-gate human-voice-extraction-prototype-gate narrative-trust-pack-prototype-gate forensic-triangulation-prototype-gate cisiv-operator-lineage-console-prototype-gate recipe-module-mutation-gate narrative-trust-pack-mutation-gate platform-gate platform-smoke platform-up library-gate workflow-family-gate brain-proposal-gate operator-workflow-stack-gate infinity1-flagship-verification
+.PHONY: run worker test governance-check rootfs iso-tree rootfs-forge iso-tree-forge forge-installer forge-shippable-gate forge-platform-gate forge-dashboard forge-nightly-evolution forge-nightly-build installer-smoke installer-integration sign-artifacts verify-artifacts ugr-cloud-gate ugr-rewards-gate ugr-ingestion-gate ugr-platform-gate ugr-graph-index-gate ugr-embryo-gate ugr-causal-graph-gate ugr-llm-provider-gate ugr-cogos-write-path-gate ugr-graph-backend-gate ugr-trust-bundle-gate ugr-operator-console-gate ugr-mission-gate forge-clean forge-rocky forge-rocky-fallback fetch-rocky-substrate ai-factory-build ai-factory-gate synthetic-mind-gate repo-hygiene-gate lab-init lab-gate mechanic-gate slingshot-gate lineage-gate triangulation-gate narrative-gate recipe-module-gate imagine-generator-gate human-voice-extraction-gate alt3-gate ssp-gate genome-gate alt4-gate promotion-scan recipe-module-prototype-gate imagine-generator-prototype-gate human-voice-extraction-prototype-gate narrative-trust-pack-prototype-gate forensic-triangulation-prototype-gate cisiv-operator-lineage-console-prototype-gate recipe-module-mutation-gate narrative-trust-pack-mutation-gate platform-gate platform-smoke platform-up library-gate workflow-family-gate brain-proposal-gate operator-workflow-stack-gate infinity1-flagship-verification
 
 REPO_HYGIENE_MODE ?= fail
 
@@ -91,6 +91,9 @@ verify-artifacts:
 ugr-cloud-gate:
 	python3 wolf-cog-os/scripts/validate-ugr-cloud-manifest.py --mode fail
 	pytest tests/test_ugr_cloud.py -q
+
+ugr-rewards-gate:
+	pytest tests/test_ugr_contribution_discovery.py tests/test_ugr_operator_rewards.py tests/test_ugr_rail_credit_purchase.py tests/test_ugr_cloud_forge_bridge.py -q
 
 ugr-ingestion-gate:
 	python3 wolf-cog-os/scripts/validate-ugr-ingestion-manifest.py --mode fail

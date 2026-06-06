@@ -223,6 +223,13 @@ app = Flask(__name__)
 CORS(app)
 
 try:
+    from src.ugr.rewards.api_routes import register_ugr_rewards_routes
+
+    register_ugr_rewards_routes(app)
+except Exception as _ugr_rewards_route_exc:
+    logger.warning("UGR rewards routes not registered: %s", _ugr_rewards_route_exc)
+
+try:
     from src.governance_organs import Alt4Runtime, Tier5Governance
 
     Alt4Runtime.boot_validate()

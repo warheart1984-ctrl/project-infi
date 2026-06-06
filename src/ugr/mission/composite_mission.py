@@ -364,6 +364,27 @@ def issue_mission_receipt(
             counterparty_receipt_ref=dict(fed_ingress.get("counterparty_receipt_ref") or {}),
             federation_digest=str(fed_ingress.get("federation_digest") or ""),
         )
+    try:
+        from src.operator_decision_ledger import append_urg_receipt_event
+
+        federation_block = None
+        if fed_ingress.get("federation_digest"):
+            federation_block = {
+                "federation_digest": str(fed_ingress.get("federation_digest") or ""),
+                "counterparty_receipt_ref": dict(fed_ingress.get("counterparty_receipt_ref") or {}),
+            }
+            grant_id = str((federation_block.get("counterparty_receipt_ref") or {}).get("grant_id") or "")
+            if grant_id:
+                federation_block["grant_id"] = grant_id
+        append_urg_receipt_event(
+            mission_id=mission_id,
+            tenant_id=tenant_norm,
+            session_id=str(goal.get("session_id") or req.get("session_id") or "").strip() or None,
+            outcome="completed" if str(gcm.get("status") or "") == "ok" else "failed",
+            federation=federation_block,
+        )
+    except Exception:
+        pass
     return legacy, schema_signed
 
 
@@ -435,6 +456,20 @@ def attach_gcm_to_response(
     updated["governed_composite_mission"] = gcm
     updated["mission_receipt"] = legacy_receipt
     updated["mission_receipt_schema"] = schema_receipt
+    if str(response.get("status") or "") == "ok" and schema_receipt:
+        try:
+            from src.ugr.rewards.reward_hooks import emit_cloud_invariant_set_passed
+
+            emit_cloud_invariant_set_passed(
+                tenant_id=str(ingress.get("tenant_id") or request.get("tenant_id") or "global"),
+                operator_id=str(ingress.get("operator_id") or request.get("operator_id") or "operator"),
+                mission_id=str(ingress.get("mission_id") or ""),
+                invariant_digest=str(schema_receipt.get("invariant_digest") or ""),
+                invariant_version=str(schema_receipt.get("invariant_version") or ""),
+                aais_instance_id=str(ingress.get("aais_instance_id") or "aais-local"),
+            )
+        except Exception:
+            pass
     updated["urg_phases"] = {
         "decompose": decomposition,
         "assign": assignment,
