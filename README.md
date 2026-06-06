@@ -2,7 +2,8 @@
 
 > **Adaptive Autonomous Intelligence Substrate (AAIS)** — a law-governed Jarvis runtime with inspectable Universal Language (UL) structure, Project Infi admission, and operator-facing surfaces.
 
-**New operators start here:** [AAIS Operator Guide](docs/operators/AAIS_OPERATOR_GUIDE.md) — install, keys, start, desktop build (simple, no developer jargon).
+**New operators start here:** [AAIS Operator Guide](docs/operators/AAIS_OPERATOR_GUIDE.md) — install, keys, start, desktop build (simple, no developer jargon).  
+**Operator workflows & skills:** [Operator Workflow Skills](docs/operators/OPERATOR_WORKFLOW_SKILLS.md) — Cursor skills, HF agent skills, workflow bundles, Organs, Brain sessions, and governed chain execution.
 
 ## What AAIS Is
 
@@ -150,6 +151,28 @@ Expect `otem_runtime_version`: `v10_governed`, `otem_capability_level`: `10`, `e
 **After server restart:** Pending approvals may reference an in-memory substrate workflow that no longer exists. Reject the stale row and re-run the OTEM handoff, or approve before restarting. Substrate **persistence phase 2** is deferred until cross-restart durability is required.
 
 Contract: [OTEM_EXECUTION_SUBSTRATE.md](docs/contracts/OTEM_EXECUTION_SUBSTRATE.md) · Onboarding: [FIRST_TIME_OPERATOR_GUIDE.md](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md) § OTEM Level 10.
+
+### Operator Workflow Skills (Infinity 1)
+
+Governed admission of **Cursor skills**, **Hugging Face agent skills**, and **workflow bundle chains** into six workflow-family organs — with Brain-layer proposals, fitness scoring, sessions, and deliberation on top.
+
+| Surface | URL | Purpose |
+|---------|-----|---------|
+| Plugins + Organs | `/operator/plugins` | Plug registry, libraries, workflow bundles, manual chain run |
+| Brain Sessions | `/operator/brain` | Proposals, organ/chain rankings, deliberation timeline, accept/reject/defer |
+| Workflow Approvals | `/workflows/approvals` | OTEM Level 10 execution gate |
+
+**Skill libraries:** 5 Cursor (`lib_skill_*`), 11 HF (`lib_hf_*`), 27 workflow bundles (`lib_workflow_*`). Full catalog: [OPERATOR_WORKFLOW_SKILLS.md](docs/operators/OPERATOR_WORKFLOW_SKILLS.md).
+
+**Contracts:** [BRAIN_PROPOSAL_CONTRACT](docs/contracts/BRAIN_PROPOSAL_CONTRACT.md) · [BRAIN_SESSION_CONTRACT](docs/contracts/BRAIN_SESSION_CONTRACT.md) · [BRAIN_DELIBERATION_CONTRACT](docs/contracts/BRAIN_DELIBERATION_CONTRACT.md)
+
+**Verification:**
+
+```bash
+make workflow-family-gate brain-proposal-gate library-gate
+```
+
+Architecture: [AAIS_ANATOMICAL_LAYERS.md](docs/runtime/AAIS_ANATOMICAL_LAYERS.md) · Capability map: [AAIS_AGENT_WORKFLOW_CAPABILITY_MAP.md](docs/runtime/AAIS_AGENT_WORKFLOW_CAPABILITY_MAP.md)
 
 ### Alt-3 partial-live subsystems (v0.3.0)
 
