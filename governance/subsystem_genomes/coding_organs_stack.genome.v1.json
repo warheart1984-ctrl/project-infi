@@ -33,7 +33,8 @@
     "children": [
       "patchforge_organ",
       "change_scope_organ",
-      "patch_verification_organ"
+      "patch_verification_organ",
+      "otem_execution_substrate"
     ]
   }
 }

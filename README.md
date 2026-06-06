@@ -162,14 +162,15 @@ Governed admission of **Cursor skills**, **Hugging Face agent skills**, and **wo
 | Brain Sessions | `/operator/brain` | Proposals, organ/chain rankings, deliberation timeline, accept/reject/defer |
 | Workflow Approvals | `/workflows/approvals` | OTEM Level 10 execution gate |
 
-**Skill libraries:** 5 Cursor (`lib_skill_*`), 11 HF (`lib_hf_*`), 27 workflow bundles (`lib_workflow_*`). Full catalog: [OPERATOR_WORKFLOW_SKILLS.md](docs/operators/OPERATOR_WORKFLOW_SKILLS.md).
+**Skill libraries:** 5 Cursor (`lib_skill_*`), 10 HF (`lib_hf_*`), 27 workflow bundles (`lib_workflow_*`). Full catalog: [OPERATOR_WORKFLOW_SKILLS.md](docs/operators/OPERATOR_WORKFLOW_SKILLS.md).
 
 **Contracts:** [BRAIN_PROPOSAL_CONTRACT](docs/contracts/BRAIN_PROPOSAL_CONTRACT.md) · [BRAIN_SESSION_CONTRACT](docs/contracts/BRAIN_SESSION_CONTRACT.md) · [BRAIN_DELIBERATION_CONTRACT](docs/contracts/BRAIN_DELIBERATION_CONTRACT.md)
 
 **Verification:**
 
 ```bash
-make workflow-family-gate brain-proposal-gate library-gate
+make operator-workflow-stack-gate
+make infinity1-flagship-verification
 ```
 
 Architecture: [AAIS_ANATOMICAL_LAYERS.md](docs/runtime/AAIS_ANATOMICAL_LAYERS.md) · Capability map: [AAIS_AGENT_WORKFLOW_CAPABILITY_MAP.md](docs/runtime/AAIS_AGENT_WORKFLOW_CAPABILITY_MAP.md)

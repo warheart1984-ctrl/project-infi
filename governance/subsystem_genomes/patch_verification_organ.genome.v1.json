@@ -51,7 +51,8 @@
   "lineage": {
     "parents": [
       "change_scope_organ",
-      "patchforge_organ"
+      "patchforge_organ",
+      "coding_organs_stack"
     ],
     "children": [
       "patch_apply_organ"

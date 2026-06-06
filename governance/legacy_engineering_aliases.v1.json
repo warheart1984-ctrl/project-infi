@@ -1073,6 +1073,27 @@
       "engineering_class": "WorkflowShellEngine",
       "mythic_label": "Workflow Shell Organ",
       "grandfathered": true
+    },
+    {
+      "gene": "text_to_3d_world_lane_organ",
+      "legacy_path": "src/text_to_3d_world_lane_organ.py",
+      "engineering_class": "TextTo3dWorldLaneEngine",
+      "mythic_label": "Text To 3d World Lane Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "world_pack_lane_organ",
+      "legacy_path": "src/world_pack_lane_organ.py",
+      "engineering_class": "WorldPackLaneEngine",
+      "mythic_label": "World Pack Lane Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "provider_organ",
+      "legacy_path": "src/ugr/mission/provider_organ.py",
+      "engineering_class": "ProviderEngine",
+      "mythic_label": "Provider Organ",
+      "grandfathered": true
     }
   ]
 }

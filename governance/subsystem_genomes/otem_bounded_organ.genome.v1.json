@@ -55,7 +55,8 @@
       "operator_profile_organ"
     ],
     "children": [
-      "direct_challenge_organ"
+      "direct_challenge_organ",
+      "otem_execution_substrate"
     ]
   },
   "activation": {

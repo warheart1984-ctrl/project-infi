@@ -8,6 +8,8 @@ system.
 
 ## What Lives Here
 
+- flagship verification sweeps such as
+  [AAIS_FLAGSHIP_AUDIT_2026-06-06.md](./AAIS_FLAGSHIP_AUDIT_2026-06-06.md)
 - current audits
 - cleanup audits
 - component inventories

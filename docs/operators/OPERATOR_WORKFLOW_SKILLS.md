@@ -244,13 +244,21 @@ curl -s -X POST http://127.0.0.1:8000/legacy_api/api/operator/brain/sessions/<se
 ## Verification gates
 
 ```bash
+make operator-workflow-stack-gate
+make infinity1-flagship-verification
+```
+
+Individual gates:
+
+```bash
+make library-gate
 make workflow-family-gate
 make brain-proposal-gate
-make library-gate
 ```
 
 Proof packets:
 
+- [INFINITY1_FLAGSHIP_VERIFICATION_V1_PROOF.md](../proof/platform/INFINITY1_FLAGSHIP_VERIFICATION_V1_PROOF.md)
 - [BRAIN_SCORING_SESSIONS_V1_PROOF.md](../proof/platform/BRAIN_SCORING_SESSIONS_V1_PROOF.md)
 - [BRAIN_DELIBERATION_V1_PROOF.md](../proof/platform/BRAIN_DELIBERATION_V1_PROOF.md)
 

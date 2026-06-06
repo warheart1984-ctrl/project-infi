@@ -1,0 +1,57 @@
+{
+  "brain_session_version": "brain_session.v1",
+  "session_id": "sess-7f3c2a10-9b4e-4d1a-8c2f-001122334455",
+  "created_at": "2026-06-05T12:05:00Z",
+  "updated_at": "2026-06-05T12:05:00Z",
+  "status": "open",
+  "operator_decision": "pending",
+  "operator_text": "research a topic and draft a brief",
+  "proposals": [
+    {
+      "brain_proposal_version": "brain_proposal.v1",
+      "proposal_id": "660e8400-e29b-41d4-a716-446655440001",
+      "emitted_at": "2026-06-05T12:05:00Z",
+      "status": "proposal_only",
+      "proposal_kind": "routing_recommendation",
+      "source": {
+        "layer_id": "aais.brain.nova_cortex",
+        "cortex_family_id": "nova.cortex",
+        "cortex_version": "1.2.0",
+        "emitter": "brain_session_store"
+      },
+      "intent": {
+        "restated_task": "Research a topic and draft a brief.",
+        "frame_kind": "companion",
+        "confidence": 0.8
+      },
+      "utterances": [
+        {
+          "utterance_id": "u1",
+          "utterance_class": "recommendation",
+          "text": "Top candidate chain: research_brief under knowledge_work.",
+          "artifact_refs": [],
+          "max_chars": 512
+        }
+      ],
+      "routing": {
+        "suggested_workflow_chain": {
+          "workflow_id": "research_brief",
+          "display_name": "Research Brief",
+          "family_id": "knowledge_work"
+        }
+      },
+      "authority_boundary": {
+        "nova_may": ["recommend workflow-family routing"],
+        "nova_must_not": ["self-authorize tool execution"],
+        "jarvis_must": ["authorize tool/action paths"]
+      },
+      "governance": {
+        "cisiv_stage": "structure",
+        "claim_label": "asserted",
+        "replay_pointer": null
+      }
+    }
+  ],
+  "deliberations": [],
+  "active_deliberation_id": null
+}
