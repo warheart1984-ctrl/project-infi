@@ -18,6 +18,8 @@ def build_mission_board_status(*, session_id: str | None = None) -> dict[str, An
     snap = mission_board.snapshot(session_id=session_id, limit=12)
     missions = list(snap.get("missions") or [])
     active = sum(1 for m in missions if str(m.get("status") or "") == "active")
+    active_mission = snap.get("active_mission") if isinstance(snap.get("active_mission"), dict) else None
+    universal_lane_authority = bool(active_mission and str(active_mission.get("status") or "") == "active")
     gate = build_verification_gate_status()
     summary = (
         f"missions={len(missions)};active={active};"
@@ -30,7 +32,8 @@ def build_mission_board_status(*, session_id: str | None = None) -> dict[str, An
         "mission_count": len(missions),
         "active_mission_count": active,
         "preset_count": len(mission_board.list_presets()),
-        "universal_lane_authority": False,
+        "universal_lane_authority": universal_lane_authority,
+        "active_mission_id": (active_mission or {}).get("id"),
         "verification_gate_decision": gate.get("gate_decision"),
         "cisiv_stage": "implementation",
         "claim_label": "asserted",

@@ -58,6 +58,7 @@
     ],
     "children": [
       "conversation_memory_organ",
+      "jarvis_lora_training",
       "jarvis_operator_organ",
       "jarvis_reasoning_lane_organ",
       "reasoning_contract_organ"

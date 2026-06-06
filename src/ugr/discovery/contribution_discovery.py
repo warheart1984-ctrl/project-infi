@@ -1,5 +1,7 @@
 """Unified contribution discovery orchestrator."""
 
+# Mythic: Contribution Discovery
+# Engineering: ContributionDiscoveryEngine
 from __future__ import annotations
 
 import os

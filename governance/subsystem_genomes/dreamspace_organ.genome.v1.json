@@ -21,6 +21,22 @@
     ]
   },
   "proof": {
+    "bundles": ["docs/proof/platform/DREAMSPACE_ORGAN_V1_PROOF.md"],
     "posture": "governed"
+  },
+  "lineage": {
+    "parents": [],
+    "children": []
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "dreamspace-organ-v1",
+    "notes": "Dreamspace organ governed opt-in wave"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
   }
 }

@@ -92,7 +92,11 @@ from src.generation_utils import DEFAULT_CHAT_CONTEXT_LIMIT, resolve_input_token
 from src.governance_layer import governance_layer
 from src.god_brain import build_god_brain_trace
 from src.capability_service_bridge import to_bridge_envelope
-from src.governed_direct_pipeline import build_governed_turn_pipeline, to_pipeline_envelope
+from src.governed_direct_pipeline import (
+    build_governed_turn_pipeline,
+    consult_pipeline_transport_substrate,
+    to_pipeline_envelope,
+)
 from src.jarvis_memory_board import to_memory_board_envelope
 from src.immune_system import immune_system
 from src.jarvis_operator import jarvis_operator
@@ -215,12 +219,19 @@ from src.super_nova_interface import (
 )
 from src.super_nova_runtime import build_default_super_nova_scaffold
 from forge.foundation_laws import CONTRACT_VERSION as FORGE_LAW_CONTRACT_VERSION, FOUNDATION_LAW_IDS as FORGE_FOUNDATION_LAW_IDS
+from src.jarvis_organ_status_routes import register_jarvis_organ_status_routes
+from src.operator_api_routes import register_operator_api_routes
 
 logger = get_logger(__name__)
 config = get_config()
 
+conversation_memory.bind_memory_enforcer(jarvis_operator.memory_enforcer)
+
 app = Flask(__name__)
 CORS(app)
+
+register_operator_api_routes(app)
+register_jarvis_organ_status_routes(app)
 
 try:
     from src.ugr.rewards.api_routes import register_ugr_rewards_routes
@@ -1520,16 +1531,22 @@ def bootstrap_ai_runtime(reason="startup", prefer_real=False):
         ai_bootstrap_fallback = False
 
     if not prefer_real and _startup_should_use_mock_fallback():
-        model, streamer = _initialize_mock_ai(reason=f"{bootstrap_reason}_startup_safe_fallback")
+        reason_tag = "explicit_mock" if _get_model_mode() == "mock" else "startup_safe_fallback"
+        model, streamer = _initialize_mock_ai(reason=f"{bootstrap_reason}_{reason_tag}")
         with ai_bootstrap_lock:
             ai_bootstrap_status = "initialized"
             ai_bootstrap_reason = bootstrap_reason
-            ai_bootstrap_fallback = True
+            ai_bootstrap_fallback = _get_model_mode() != "mock"
         return model, streamer
 
     try:
         model, streamer = init_ai()
     except Exception as exc:
+        model_mode = _get_model_mode()
+        allow_fallback = model_mode in ("mock", "auto", "") or os.getenv("AAIS_ALLOW_STARTUP_FALLBACK", "1").lower() in ("1", "true", "yes", "on")
+        if not allow_fallback:
+            logger.error("AI runtime bootstrap failed in strict mode (preset requires real): %s", exc)
+            raise RuntimeError(f"AI bootstrap failed in strict mode: {exc}") from exc
         logger.warning(
             "AI runtime bootstrap failed during %s; forcing mock fallback: %s",
             reason,
@@ -1561,7 +1578,9 @@ def _build_ai_runtime_status():
         "ai_init_error": ai_init_error,
         "ai_bootstrap_status": ai_bootstrap_status,
         "ai_bootstrap_reason": ai_bootstrap_reason,
-        "ai_fallback_active": bool(ai_bootstrap_fallback or ai_mode == "mock"),
+        "mock_mode_active": ai_mode == "mock",
+        # Only surface ai_fallback_active when it's a real (non-explicit-mock) fallback to reduce noise in mock dev runs
+        **({"ai_fallback_active": True} if (ai_bootstrap_fallback and ai_mode != "mock") else {}),
     }
 
 
@@ -2786,6 +2805,18 @@ def _finalize_visible_response(
         user_message,
         finalized_text,
         response_trace=response_trace,
+    )
+
+
+def _attach_pipeline_transport_substrate(session, response_mode: str) -> None:
+    """Consult governed pipeline transport before composed-turn parallel routing."""
+    transport_contract = RESPONSE_MODE_CONTRACTS.get(
+        normalize_response_mode(response_mode), {}
+    ).get("contract")
+    session.metadata["pipeline_transport"] = consult_pipeline_transport_substrate(
+        response_mode=response_mode,
+        contract=transport_contract,
+        runtime_context="live_runtime",
     )
 
 
@@ -5297,6 +5328,10 @@ def _build_tool_response_trace(
             (tool_result or {}).get("summary")
             or "Jarvis handled an explicit operator correction without using the text model."
         )
+    # Append contractor usage to the main Jarvis response trace for observability
+    via = (tool_result or {}).get("via")
+    if via and "live_" in str(via):
+        steps.append(f"Contractor handoff: {via} (see tool_result for job details and results).")
     elif tool_type == "memory_rejection":
         summary = "Jarvis rejected the requested memory write and kept live canonical memory unchanged."
         rejection = (tool_result or {}).get("memory_rejection") or {}
@@ -8858,12 +8893,20 @@ def execute_capability_bridge_selection():
             execution_profile=execution_profile,
             runtime_context="operator_runtime",
         )
-        result["response_trace"] = _build_tool_response_trace(
+        trace = _build_tool_response_trace(
             "operator",
             tool_result=result.get("tool_result"),
             turn_contract={"contract_label": "direct_tool"},
             runtime_context="operator_runtime",
         )
+        # Append contractor usage to the main Jarvis response trace for non-OTEM capability flows
+        tool_res = result.get("tool_result") or {}
+        if tool_res.get("via") and "live_" in str(tool_res.get("via")):
+            _append_response_trace_step(
+                trace,
+                f"Contractor: {tool_res.get('via')} result attached (job info in tool_result)."
+            )
+        result["response_trace"] = trace
         result["capability_bridge"] = jarvis_operator.capability_bridge_snapshot()
         return jsonify(attach_ul_substrate(result)), _phase_gate_http_status(result)
     except ValueError as e:
@@ -11674,6 +11717,24 @@ def ugr_v1_causal_rebuild():
         return jsonify({"error": str(e)}), 500
 
 
+# Infinity 1 operator product seam (see src/operator_api_routes.py):
+# GET /api/operator/ledger
+# GET /api/operator/ledger/digest
+# GET /api/operator/ledger/query
+# GET /api/operator/ledger/diff
+# GET /api/operator/ledger/federation/
+# GET /api/operator/replay/<subject_type>/<subject_id>/timeline
+# GET /api/operator/plugins
+# GET /api/operator/plugins/libraries
+# GET /api/operator/plugins/workflows
+# POST /api/operator/plugins/rescan
+# GET /api/operator/organs
+# POST /api/operator/workflows/<workflow_id>/execute
+# GET /api/operator/brain/sessions
+# POST /api/operator/brain/sessions
+# GET /api/jarvis/operator-decision-ledger/status
+
+
 @app.route("/api/operator/console", methods=["GET"])
 def get_operator_console():
     """UGR + Cloud Forge operator console snapshot (advisory readout only)."""
@@ -11985,22 +12046,6 @@ def get_verification_gate_organ_status():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route("/api/jarvis/memory-path-governance/status", methods=["GET"])
-def get_memory_path_governance_status():
-    """Read-only Memory Path Governance organ snapshot (Alt-10 wave)."""
-    try:
-        from src.memory_path_governance_organ import build_memory_path_governance_status
-
-        return jsonify(
-            attach_ul_substrate(
-                {"memory_path_governance": build_memory_path_governance_status()}
-            )
-        )
-    except Exception as e:
-        logger.error(f"Error reading memory path governance status: {e}")
-        return jsonify({"error": str(e)}), 500
-
-
 @app.route("/api/jarvis/knowledge-authority/status", methods=["GET"])
 def get_knowledge_authority_organ_status():
     """Read-only Knowledge Authority organ snapshot (Alt-10 wave)."""
@@ -12160,23 +12205,6 @@ def get_tracing_spine_organ_status():
         )
     except Exception as e:
         logger.error(f"Error reading tracing spine status: {e}")
-        return jsonify({"error": str(e)}), 500
-
-
-@app.route("/api/jarvis/mission-board/status", methods=["GET"])
-def get_mission_board_organ_status():
-    """Read-only Mission Board organ snapshot (Alt-11 wave)."""
-    try:
-        from src.mission_board_organ import build_mission_board_status
-
-        session_id = str(request.args.get("session_id") or "").strip() or None
-        return jsonify(
-            attach_ul_substrate(
-                {"mission_board": build_mission_board_status(session_id=session_id)}
-            )
-        )
-    except Exception as e:
-        logger.error(f"Error reading mission board organ status: {e}")
         return jsonify({"error": str(e)}), 500
 
 
@@ -15840,6 +15868,7 @@ def chat_message(session_id):
             user_message,
             companion_turn=companion_turn,
         )
+        _attach_pipeline_transport_substrate(session, response_mode)
         _configure_cognitive_runtime_turn(
             session,
             data,
@@ -16488,6 +16517,7 @@ def chat_message_stream(session_id):
             user_message,
             companion_turn=companion_turn,
         )
+        _attach_pipeline_transport_substrate(session, response_mode)
         _configure_cognitive_runtime_turn(
             session,
             data,

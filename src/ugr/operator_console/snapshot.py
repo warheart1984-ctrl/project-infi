@@ -17,7 +17,7 @@ from src.ugr.operator_console.readout import build_operator_readout
 from src.ugr.operator_console.trace_viewer import load_deliberation_traces
 
 
-CONSOLE_VERSION = "1.1"
+CONSOLE_VERSION = "1.2"
 CONSOLE_ID = "aais.operator.ugr_cloud_console"
 
 GATE_COMMANDS = [
@@ -186,12 +186,20 @@ def build_operator_console_snapshot(*, runtime: Any | None = None) -> dict[str, 
     trust_proven = trust.get("claim_status") == "proven" and trust.get("overall_status") == "pass"
     overall_claim = "proven" if trust_proven and proven_debt >= 1 else "asserted"
 
+    try:
+        from src.operator_infinity1_dashboard import build_infinity1_dashboard_snapshot
+
+        infinity1 = build_infinity1_dashboard_snapshot()
+    except Exception as exc:
+        infinity1 = {"status": "error", "summary": str(exc), "runtime_effect": "readout_only"}
+
     snapshot = {
         "console_id": CONSOLE_ID,
         "console_version": CONSOLE_VERSION,
         "status": "ok",
         "claim_status": overall_claim,
         "runtime_effect": "readout_only",
+        "infinity1": infinity1,
         "ugr": ugr,
         "cloud_forge": forge,
         "mesh_health": mesh_health,

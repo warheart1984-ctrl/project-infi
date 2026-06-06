@@ -11,6 +11,7 @@ BOARD_GOVERNED_PATHS: tuple[str, ...] = (
     "memory_smith.curate",
     "memory_board_enforcer.read",
     "memory_board_enforcer.mutate",
+    "conversation_memory.write",
     "conversation_memory.session_metadata",
     "conversation_memory.read_filter",
     "mission_board.attach_memory",
@@ -21,18 +22,16 @@ BOARD_GOVERNED_PATHS: tuple[str, ...] = (
 )
 
 # Retired legacy paths — kept for audit only; must remain empty when aligned.
-LEGACY_PATHS: tuple[str, ...] = (
-    "conversation_memory.write",
-    "conversation_memory.read_filter",
-    "mission_board.attach_memory",
-)
+LEGACY_PATHS: tuple[str, ...] = ()
 
 _ALIGNMENT_THRESHOLD = 1.0
 
 
 def memory_paths_aligned(*, board_slots_installed: int, board_slots_total: int) -> bool:
-    """True when board slots are fully installed and no legacy bypass paths remain."""
+    """True when active board slots are fully installed and no legacy bypass paths remain."""
     if board_slots_total <= 0:
+        return False
+    if LEGACY_PATHS:
         return False
     coverage = board_slots_installed / board_slots_total
     return coverage >= _ALIGNMENT_THRESHOLD

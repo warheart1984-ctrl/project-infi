@@ -1533,12 +1533,62 @@ def build_governed_turn_pipeline(
         from src.cloud_forge.rails import attach_cloud_forge_to_pipeline
 
         pipeline = attach_cloud_forge_to_pipeline(pipeline, cloud_forge_context)
+    pipeline = apply_transport_lane_from_packets(pipeline)
+    if pipeline.get("active_lane"):
+        try:
+            from src.collective_pattern_ledger_lanes import emit_lane_pattern_candidate
+
+            emit_lane_pattern_candidate(
+                str(pipeline.get("active_lane")),
+                signature=str(pipeline.get("summary") or pipeline.get("contract") or "pipeline_turn"),
+                source="governed_direct_pipeline",
+                metadata={"pipeline_id": pipeline.get("pipeline_id")},
+            )
+        except Exception:
+            pass
     if cache_eligible:
         _GOVERNED_PIPELINE_CACHE[cache_key] = (
             time.monotonic(),
             _pipeline_without_ul_wrap(pipeline),
         )
     return pipeline
+
+
+def apply_transport_lane_from_packets(pipeline: dict[str, Any]) -> dict[str, Any]:
+    """When transport substrate is active, derive active_lane from forward packets."""
+    if not pipeline.get("transport_substrate"):
+        return pipeline
+    updated = dict(pipeline)
+    packets = list(updated.get("forward_packets") or [])
+    if not packets:
+        return updated
+    packet_lane = str(packets[0].get("lane") or "").strip()
+    if packet_lane:
+        updated["active_lane"] = packet_lane
+        updated["lane_source"] = "transport_packet"
+    return updated
+
+
+def consult_pipeline_transport_substrate(
+    *,
+    response_mode: str,
+    contract: str | None = None,
+    runtime_context: str = "live_runtime",
+) -> dict[str, Any]:
+    """Build a lightweight transport consultation for chat hot-path routing."""
+    if not pipeline_as_transport_enabled():
+        return {"enabled": False, "active_lane": None, "transport_substrate": False}
+    pipeline = build_governed_turn_pipeline(
+        response_mode=response_mode,
+        contract=contract,
+        runtime_context=runtime_context,
+    )
+    return {
+        "enabled": True,
+        "active_lane": pipeline.get("active_lane"),
+        "transport_substrate": bool(pipeline.get("transport_substrate")),
+        "lane_source": pipeline.get("lane_source"),
+    }
 
 
 def _utc_now_iso() -> str:

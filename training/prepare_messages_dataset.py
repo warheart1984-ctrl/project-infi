@@ -8,6 +8,9 @@ from pathlib import Path
 
 
 ALLOWED_ROLES = {"system", "user", "assistant"}
+SEED_DEFAULT = Path("training/data/jarvis_seed_messages.jsonl")
+HF_SUPPLEMENT_DEFAULT = Path("training/data/hf_sft_supplement.jsonl")
+HF_SUPPLEMENT_ADMISSION_ID = "jarvis-lora-hf-ultrachat-200k-v1"
 
 
 def _read_jsonl(path: Path):
@@ -68,27 +71,76 @@ def _iter_private_paths(raw_values):
                 yield Path(cleaned)
 
 
+def _classify_source(path: Path, seed_path: Path) -> str:
+    """Map an input file to a governed dataset source kind."""
+    resolved = path.resolve()
+    if resolved == seed_path.resolve():
+        return "seed"
+    if resolved == HF_SUPPLEMENT_DEFAULT.resolve():
+        return "external"
+    return "private"
+
+
 def build_dataset(seed_path: Path, private_paths: list[Path] | None):
     """Combine the checked-in seed set with private operator examples."""
     examples = []
+    source_files: list[dict] = []
 
+    seed_count = 0
     for index, record in enumerate(_read_jsonl(seed_path), start=1):
         examples.append(_normalize_messages(record, f"{seed_path.name}:{index}"))
+        seed_count += 1
+    source_files.append(
+        {
+            "path": str(seed_path),
+            "source_kind": "seed",
+            "example_count": seed_count,
+        }
+    )
 
     for private_path in private_paths or []:
         if not private_path.exists():
             continue
+        file_count = 0
         for index, record in enumerate(_read_jsonl(private_path), start=1):
             examples.append(_normalize_messages(record, f"{private_path.name}:{index}"))
+            file_count += 1
+        source_files.append(
+            {
+                "path": str(private_path),
+                "source_kind": _classify_source(private_path, seed_path),
+                "example_count": file_count,
+            }
+        )
 
-    return examples
+    return examples, source_files
+
+
+def build_dataset_manifest(output_path: Path, source_files: list[dict], example_count: int):
+    """Write a governed dataset manifest sidecar for training envelopes."""
+    sources = sorted({entry["source_kind"] for entry in source_files})
+    admission_ids = []
+    if "external" in sources:
+        admission_ids.append(HF_SUPPLEMENT_ADMISSION_ID)
+
+    manifest = {
+        "manifest_version": "jarvis_lora_dataset_manifest.v1",
+        "output_path": str(output_path),
+        "example_count": example_count,
+        "sources": sources,
+        "admission_ids": admission_ids,
+        "source_files": source_files,
+    }
+    manifest_path = output_path.with_name("dataset_manifest.json")
+    manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    return manifest_path
 
 
 def main():
     parser = argparse.ArgumentParser(description="Prepare a Jarvis chat fine-tuning dataset.")
     parser.add_argument(
         "--seed",
-        default="training/data/jarvis_seed_messages.jsonl",
+        default=str(SEED_DEFAULT),
         help="Checked-in seed dataset in conversational JSONL format.",
     )
     parser.add_argument(
@@ -108,7 +160,7 @@ def main():
     private_paths = [path for path in _iter_private_paths(args.private)]
     output_path = Path(args.output)
 
-    examples = build_dataset(
+    examples, source_files = build_dataset(
         seed_path,
         [path for path in private_paths if path.exists()],
     )
@@ -118,10 +170,13 @@ def main():
         for example in examples:
             handle.write(json.dumps(example, ensure_ascii=True) + "\n")
 
+    manifest_path = build_dataset_manifest(output_path, source_files, len(examples))
+
     seed_count = sum(1 for _ in _read_jsonl(seed_path))
     private_count = max(0, len(examples) - seed_count)
 
     print(f"Wrote {len(examples)} examples to {output_path}")
+    print(f"Wrote dataset manifest to {manifest_path}")
     print(f"Seed examples: {seed_count}")
     print(f"Private examples: {private_count}")
 

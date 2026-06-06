@@ -67,7 +67,13 @@
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
   },
   "mutation": {
-    "history": []
+    "history": [
+      {
+        "mutation_id": "mp-x-conversation-memory-write-2026-06",
+        "applied_at": "2026-06-06",
+        "summary": "Moved conversation_memory.write to board-governed paths; zero legacy bypass paths"
+      }
+    ]
   },
   "ssp": {
     "concept_spec": "docs/_future/ideas_pending/MEMORY_PATH_GOVERNANCE_ORGAN.md",

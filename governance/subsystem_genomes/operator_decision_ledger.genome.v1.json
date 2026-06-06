@@ -1,0 +1,84 @@
+{
+  "subsystem_genome_version": "subsystem_genome.v1",
+  "identity": {
+    "gene": "operator_decision_ledger",
+    "version": "0.1.0-governed",
+    "stage": "governed",
+    "display_name": "Operator Decision Ledger"
+  },
+  "governance": {
+    "contracts": [
+      "docs/contracts/AAIS_SSP_PROTOCOL.md",
+      "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
+      "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/subsystems/platform/OPERATOR_DECISION_LEDGER.md",
+      "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    ],
+    "invariants": [
+      "Append-only JSONL store under AAIS_RUNTIME_DIR/operator_ledger",
+      "Cross-plane causal graph links pipeline, OTEM, and URG receipt events",
+      "Checkpoint policy gates irreversible LIVE execution when drift critical"
+    ]
+  },
+  "schema": {
+    "ref": "schemas/operator_decision_ledger.v1.json",
+    "frozen": true
+  },
+  "runtime": {
+    "surface": [
+      {
+        "kind": "module",
+        "path": "src/operator_decision_ledger.py"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/jarvis/operator-decision-ledger/status"
+      },
+      {
+        "kind": "api",
+        "path": "GET /api/operator/ledger"
+      },
+      {
+        "kind": "gate",
+        "path": "make operator-decision-ledger-gate"
+      }
+    ]
+  },
+  "proof": {
+    "bundles": [
+      "docs/proof/platform/OPERATOR_DECISION_LEDGER_V1_PROOF.md",
+      "docs/proof/platform/OPERATOR_DECISION_LEDGER_GOVERNED_PROOF.md"
+    ],
+    "posture": "governed",
+    "target_bundles": []
+  },
+  "lineage": {
+    "parents": [
+      "run_ledger_organ",
+      "temporal_replay_machine",
+      "operator_cognition_coherence_fabric"
+    ],
+    "children": []
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "operator-decision-ledger-2026-06",
+    "notes": "Cross-plane operator accountability ledger"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
+  },
+  "ssp": {
+    "concept_spec": "docs/subsystems/platform/OPERATOR_DECISION_LEDGER.md",
+    "mvp_plan": "docs/subsystems/platform/OPERATOR_DECISION_LEDGER.md",
+    "summon_eligible": false,
+    "active_doc": "docs/subsystems/platform/OPERATOR_DECISION_LEDGER.md",
+    "engineering_class": "OperatorDecisionLedgerEngine",
+    "mythic_label": "Operator Decision Ledger",
+    "linguistic_version": "1.0.0"
+  }
+}

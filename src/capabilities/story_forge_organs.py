@@ -1,5 +1,7 @@
 """Governed Story Forge expansion organ execution paths (Release 29)."""
 
+# Mythic: Story Forge Organs
+# Engineering: StoryForgeOrgansEngine
 from __future__ import annotations
 
 from pathlib import Path
@@ -105,6 +107,19 @@ def execute_game_front_door_admit(
     operator_ack = bool(payload.get("operator_ack") or payload.get("operator_gated_ack"))
     engine = root / "external/story_forge/src/story_forge/engine.py"
     admitted = engine.is_file() and bool(session_id) and operator_ack
+    engine_status = None
+    if admitted:
+        import sys
+
+        sf_src = root / "external/story_forge/src"
+        if sf_src.is_dir() and str(sf_src) not in sys.path:
+            sys.path.insert(0, str(sf_src))
+        try:
+            from story_forge.engine import StoryForgeEngine
+
+            engine_status = {"engine_class": StoryForgeEngine.__name__, "session_id": session_id}
+        except Exception as exc:
+            engine_status = {"engine_error": str(exc)[:200]}
     return {
         "ok": admitted,
         "organ": "game_front_door_organ",
@@ -112,7 +127,8 @@ def execute_game_front_door_admit(
         "session_id": session_id or None,
         "front_door_active": admitted,
         "operator_gated": True,
-        "proposal_only": not admitted,
+        "engine_status": engine_status,
+        "proposal_only": not (admitted and engine_status and "engine_class" in engine_status),
         "claim_label": "asserted" if admitted else "blocked",
         "message": "session admitted" if admitted else "session_id and operator_ack required",
     }

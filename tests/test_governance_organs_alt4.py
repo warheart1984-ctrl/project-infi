@@ -14,7 +14,6 @@ REPO = Path(__file__).resolve().parents[1]
 @pytest.fixture(autouse=True)
 def _repo_root(monkeypatch):
     monkeypatch.setenv("AAIS_REPO_ROOT", str(REPO))
-    monkeypatch.setenv("AAIS_GENOME_BOOT", "warn")
 
 
 def test_genome_registry_valid():
@@ -25,9 +24,10 @@ def test_genome_registry_valid():
     assert len(reg.genomes) >= 6
 
 
-def test_genome_boot_warn_mode():
+def test_genome_boot_warn_mode(monkeypatch):
     from src.governance_organs import Alt4Runtime
 
+    monkeypatch.setenv("AAIS_GENOME_BOOT", "warn")
     Alt4Runtime.boot_validate()
 
 

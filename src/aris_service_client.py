@@ -1,5 +1,7 @@
 """Client for standalone ARIS service with embedded fallback."""
 
+# Mythic: Aris Service Client
+# Engineering: ArisServiceClientEngine
 from __future__ import annotations
 
 import os

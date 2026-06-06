@@ -21,6 +21,22 @@
     ]
   },
   "proof": {
+    "bundles": ["docs/proof/platform/MEDIA_PROCESSOR_FAMILY_V1_PROOF.md"],
     "posture": "governed"
+  },
+  "lineage": {
+    "parents": ["capability_service_bridge"],
+    "children": ["media_processor_bridge_organ"]
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "media-processor-family-v1",
+    "notes": "Media processor family governed wave"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
   }
 }

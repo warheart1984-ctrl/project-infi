@@ -188,6 +188,9 @@ GENE_GATES: dict[str, str] = {
     "linguistic_governance_day_organ": "linguistic-governance-day-organ-gate",
     "linguistic_work_order_history_organ": "linguistic-work-order-history-organ-gate",
     "linguistic_attestation_history_organ": "linguistic-attestation-history-organ-gate",
+    "plug_adapter_runtime": "plug-adapter-gate",
+    "operator_decision_ledger": "operator-decision-ledger-gate",
+    "temporal_replay_machine": "operator-decision-ledger-v2-graph-gate",
 }
 
 GATE_SCRIPTS: dict[str, list[str]] = {
@@ -596,6 +599,14 @@ GATE_SCRIPTS: dict[str, list[str]] = {
     ],
     "linguistic-attestation-history-organ-gate": [
         ".github/scripts/check-linguistic-attestation-history-organ-governance.py"
+    ],
+    "plug-adapter-gate": [".github/scripts/check-plug-adapter-governance.py"],
+    "brain-layer-gate": [".github/scripts/check-brain-layer-governance.py"],
+    "operator-decision-ledger-gate": [
+        ".github/scripts/check-operator-decision-ledger-governance.py"
+    ],
+    "operator-decision-ledger-v2-graph-gate": [
+        ".github/scripts/check-operator-decision-ledger-v2-graph-governance.py"
     ],
 }
 

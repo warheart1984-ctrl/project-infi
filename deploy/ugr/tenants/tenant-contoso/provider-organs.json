@@ -1,0 +1,38 @@
+{
+  "registry_version": "1.0",
+  "organs": {
+    "organ-fed-test-v19": {
+      "organ_id": "organ-fed-test-v19",
+      "identity": {
+        "label": "Federation test organ",
+        "tier": "tiny"
+      },
+      "envelope": {
+        "execution_backend": "local",
+        "proposal_only": true
+      },
+      "function": {
+        "capabilities": [
+          "text"
+        ],
+        "max_tokens": 64
+      },
+      "contract": {
+        "risk_ceiling": "low",
+        "allowed_regions": [
+          "tenant-us",
+          "tenant-eu"
+        ],
+        "admissible_rails": [
+          "SAFE",
+          "NORMAL"
+        ]
+      },
+      "tenant_scope": "tenant:contoso",
+      "status": "admitted",
+      "governance_tier": "standard",
+      "trust_score": 0.5,
+      "admission_receipt_id": null
+    }
+  }
+}

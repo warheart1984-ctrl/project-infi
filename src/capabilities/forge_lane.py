@@ -1,5 +1,7 @@
 """Governed forge-lane capability adapter for PatchForge / forge routing."""
 
+# Mythic: Forge Lane
+# Engineering: ForgeLane
 from __future__ import annotations
 
 from typing import Any

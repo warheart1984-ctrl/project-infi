@@ -123,11 +123,31 @@ class EvolveEngineService:
         self.backend = LocalEvolutionBackend(self.evaluator)
 
     def health(self) -> EvolveHealthResponse:
+        forge_eval_reachable = False
+        forge_eval_error = None
+        try:
+            # Lightweight probe to the evaluator (used for evolution jobs).
+            # Timeout short so health stays fast.
+            resp = self.evaluator.session.get(
+                f"{self.forge_eval_base_url}/health",
+                timeout=2.0,
+            )
+            forge_eval_reachable = resp.status_code < 500
+        except Exception as exc:
+            forge_eval_error = str(exc)[:200]
+
+        status = "ready" if forge_eval_reachable else "degraded"
+        if not forge_eval_reachable:
+            # Still report as runnable for MVP, but clearly note the missing dependency.
+            status = "degraded"
+
         return EvolveHealthResponse(
-            status="ready",
+            status=status,
             service="evolve_engine",
             storage_root=str(self.storage_root),
             forge_eval_base_url=self.forge_eval_base_url,
+            forge_eval_reachable=forge_eval_reachable,
+            forge_eval_error=forge_eval_error,
             contract_version=CONTRACT_VERSION,
             foundation_laws=[
                 "law_1_admission_control",

@@ -1,5 +1,6 @@
 import { spawn } from 'node:child_process';
 import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
 
 const rawArgs = process.argv.slice(2);
 const passthroughArgs = [];
@@ -24,7 +25,8 @@ for (const arg of rawArgs) {
   passthroughArgs.push(arg);
 }
 
-const vitestEntry = require.resolve('vitest/vitest.mjs');
+const vitestPackage = require('vitest/package.json');
+const vitestEntry = join(dirname(require.resolve('vitest/package.json')), vitestPackage.bin.vitest);
 const args = [vitestEntry, ...(shouldRunOnce ? ['run'] : []), ...passthroughArgs];
 
 const child = spawn(process.execPath, args, {

@@ -1,5 +1,7 @@
 """Runtime hooks — emit operator rewards from governed contribution events."""
 
+# Mythic: Reward Hooks
+# Engineering: RewardHooksEngine
 from __future__ import annotations
 
 import os

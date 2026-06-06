@@ -299,6 +299,29 @@ Still runs entirely on your machine. Nothing is sent to the cloud except when yo
 
 ---
 
+## 12. Production path (early adopters)
+
+Simple install gets you running. **Production** means you ran the gates and signed your review.
+
+| Step | Document |
+|------|----------|
+| Philosophy | [EARLY_ADOPTER_CHARTER.md](../operations/EARLY_ADOPTER_CHARTER.md) |
+| Full runbook (tiers A/B/C, gates, rollback) | [AAIS_PRODUCTION_OPERATOR_RUNBOOK.md](../operations/AAIS_PRODUCTION_OPERATOR_RUNBOOK.md) |
+| Pilot Docker stack | [INFINITY_PILOT_EARLY_ADOPTER.md](../operations/INFINITY_PILOT_EARLY_ADOPTER.md) |
+| Human sign-off template | [OPERATOR_GA_REVIEW_PROTOCOL.md](../operations/OPERATOR_GA_REVIEW_PROTOCOL.md) |
+
+**Operator dashboard** (after start): http://127.0.0.1:8000/operator
+
+**Minimum gate block:**
+
+```bash
+make production-hardening-gate infinity1-flagship-verification ga-signoff-gate
+```
+
+Knowledge is freely given in those docs. Trust is earned when your operators reproduce the proof on their machines.
+
+---
+
 ## Quick reference
 
 ```bash

@@ -33,6 +33,12 @@ const WorkflowRunDetail = lazy(() => import('./pages/WorkflowRunDetail'));
 const WorkflowApprovals = lazy(() => import('./pages/WorkflowApprovals'));
 const WorkflowTemplates = lazy(() => import('./pages/WorkflowTemplates'));
 const OperatorConsole = lazy(() => import('./pages/OperatorConsole'));
+const OperatorPlugins = lazy(() => import('./pages/OperatorPlugins'));
+const OperatorBrainSessions = lazy(() => import('./pages/OperatorBrainSessions'));
+const OperatorLedger = lazy(() => import('./pages/OperatorLedger'));
+const OperatorLedgerGraph = lazy(() => import('./pages/OperatorLedgerGraph'));
+const TemporalReplay = lazy(() => import('./pages/TemporalReplay/TemporalReplay'));
+const Onboarding = lazy(() => import('./pages/Onboarding'));
 const PlatformConsole = lazy(() => import('./pages/PlatformConsole'));
 const PlatformJobDetail = lazy(() => import('./pages/PlatformJobDetail'));
 const PlatformArtifacts = lazy(() => import('./pages/PlatformArtifacts'));
@@ -84,6 +90,11 @@ function AppShell() {
             <Route path="/workflows/approvals" element={<WorkflowApprovals />} />
             <Route path="/workflows/templates" element={<WorkflowTemplates />} />
             <Route path="/operator" element={<OperatorConsole />} />
+            <Route path="/operator/plugins" element={<OperatorPlugins />} />
+            <Route path="/operator/brain" element={<OperatorBrainSessions />} />
+            <Route path="/operator/ledger" element={<OperatorLedger />} />
+            <Route path="/operator/ledger/graph" element={<OperatorLedgerGraph />} />
+            <Route path="/operator/replay/:subjectType/:subjectId" element={<TemporalReplay />} />
             <Route path="/platform" element={<PlatformConsole />} />
             <Route path="/platform/jobs/:jobId" element={<PlatformJobDetail />} />
             <Route path="/platform/artifacts" element={<PlatformArtifacts />} />

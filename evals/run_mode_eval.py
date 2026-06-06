@@ -154,6 +154,11 @@ def main():
         action="store_true",
         help="Use a deterministic mock model for a fast eval smoke test.",
     )
+    parser.add_argument(
+        "--adapter-metadata",
+        default=None,
+        help="Optional adapter_metadata.json path to attach eval_report_path on completion.",
+    )
     args = parser.parse_args()
 
     root = ROOT
@@ -201,6 +206,21 @@ def main():
     }
 
     output_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
+
+    if args.adapter_metadata:
+        metadata_path = (
+            (root / args.adapter_metadata).resolve()
+            if not Path(args.adapter_metadata).is_absolute()
+            else Path(args.adapter_metadata)
+        )
+        if metadata_path.exists():
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+            metadata["eval_report_path"] = str(output_path)
+            metadata["promotion_status"] = "eval_passed"
+            metadata_path.write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+            print(f"Updated adapter metadata: {metadata_path}")
+        else:
+            print(f"Adapter metadata not found: {metadata_path}")
 
     print(f"Saved mode eval report to: {output_path}")
     for mode in ("fast", "think"):

@@ -4,13 +4,14 @@
 
 | Claim | Label |
 |-------|-------|
-| Memory path coverage map is documented | asserted |
-| All memory paths board-governed | none_yet |
+| Memory path coverage map is documented | proven |
+| All memory paths board-governed | proven |
+| `conversation_memory.write` routes through memory board enforcer | proven |
 
-## Gaps
+## Notes
 
-- `conversation_memory.write` remains on legacy path
-- Full board enforcement deferred to future MP-X
+- Active board slots (6/6) must be installed; reserved slots excluded from coverage ratio.
+- Legacy bypass path list is empty when aligned.
 
 ## Reproduction
 

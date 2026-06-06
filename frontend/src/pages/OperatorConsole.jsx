@@ -3,11 +3,17 @@ import { Link } from 'react-router-dom';
 import { FiActivity, FiArrowLeft, FiRefreshCw } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { apiGet, getApiErrorMessage } from '../lib/api';
-import { UGRCloudForgeConsoleCard } from '../components/operator/UGRCloudForgeConsoleCard';
+import { UGRCloudForgeConsoleCard } from '../components/UGRCloudForgeConsoleCard';
+import { SeamStressPanel } from '../components/operator/SeamStressPanel';
+import { WorkflowStackPanel } from '../components/operator/WorkflowStackPanel';
+import { LedgerDigestCompact } from '../components/operator/LedgerDigestCompact';
+import { BrainQueueCompact } from '../components/operator/BrainQueueCompact';
+import { MonitoringAlertsPanel } from '../components/operator/MonitoringAlertsPanel';
 import '../pages/Dashboard.css';
 import './OperatorConsole.css';
 
 const MESH_POLL_MS = 15000;
+const SEAM_POLL_MS = 15000;
 
 function toneForClaim(value) {
   const normalized = String(value || '').toLowerCase();
@@ -51,6 +57,7 @@ function UGRRewardsCompact({ rewards }) {
 export default function OperatorConsolePage() {
   const [snapshot, setSnapshot] = useState(null);
   const [meshHealth, setMeshHealth] = useState(null);
+  const [seamHealth, setSeamHealth] = useState(null);
   const [selectedTrace, setSelectedTrace] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -76,6 +83,15 @@ export default function OperatorConsolePage() {
     }
   }, []);
 
+  const loadSeamHealth = useCallback(async () => {
+    try {
+      const response = await apiGet('/api/operator/dashboard/seam-health');
+      setSeamHealth(response.data || null);
+    } catch {
+      setSeamHealth(null);
+    }
+  }, []);
+
   const loadTraceDetail = useCallback(async (traceId) => {
     if (!traceId) {
       setSelectedTrace(null);
@@ -97,10 +113,24 @@ export default function OperatorConsolePage() {
 
   useEffect(() => {
     loadMeshHealth();
-    const timer = window.setInterval(loadMeshHealth, MESH_POLL_MS);
-    return () => window.clearInterval(timer);
-  }, [loadMeshHealth]);
+    loadSeamHealth();
+    const meshTimer = window.setInterval(loadMeshHealth, MESH_POLL_MS);
+    const seamTimer = window.setInterval(loadSeamHealth, SEAM_POLL_MS);
+    return () => {
+      window.clearInterval(meshTimer);
+      window.clearInterval(seamTimer);
+    };
+  }, [loadMeshHealth, loadSeamHealth]);
 
+  const infinity1 = {
+    ...(snapshot?.infinity1 || {}),
+    ...(seamHealth
+      ? {
+          health: seamHealth.health,
+          seam_stress: seamHealth.seam_stress,
+        }
+      : {}),
+  };
   const debtItems = snapshot?.debt_register?.items || [];
   const gates = snapshot?.gates || [];
   const trust = snapshot?.trust_bundle || {};
@@ -119,22 +149,37 @@ export default function OperatorConsolePage() {
     <section className="workbench operator-console-page" data-testid="operator-console-page">
       <header className="workbench-hero">
         <div className="workbench-hero-copy">
-          <p className="eyebrow">Operator Console</p>
-          <h1>UGR + Cloud Forge</h1>
+          <p className="eyebrow">Infinity-1 Operator Dashboard</p>
+          <h1>Seam health + accountability</h1>
           <p>
-            Jarvis-style advisory surface for governed runtime health, Cloud Forge rails,
-            trust bundle status, and program debt. Readouts are evidence-first and do not mutate runtime state.
+            Unified operator landing for SEAM_LAW runtime closure, workflow stack gates,
+            decision ledger and Brain proposal readouts, plus UGR + Cloud Forge advisory panels below.
+            All surfaces are read-only evidence — no execution authority.
           </p>
           <div className="workbench-hero-actions">
             <Link to="/jarvis" className="workbench-button ghost">
               <FiArrowLeft /> Back to Console
             </Link>
+            <Link to="/operator/plugins" className="workbench-button ghost">Plugins</Link>
+            <Link to="/operator/brain" className="workbench-button ghost">Brain</Link>
+            <Link to="/operator/ledger" className="workbench-button ghost">Ledger</Link>
+            <Link to="/operator/replay/operator_session/global" className="workbench-button ghost">Replay</Link>
             <button type="button" className="workbench-button primary" onClick={loadSnapshot} disabled={loading}>
               <FiRefreshCw /> Refresh
             </button>
           </div>
         </div>
         <div className="workbench-hero-side page-panel">
+          <div className="workbench-health-row">
+            <span>Infinity-1 claim</span>
+            <strong className={`operator-claim-${toneForClaim(infinity1?.claim_status)}`}>
+              {infinity1?.claim_status || 'asserted'}
+            </strong>
+          </div>
+          <div className="workbench-health-row">
+            <span>Seam closure</span>
+            <strong>{infinity1?.seam_stress?.closure_status || 'unknown'}</strong>
+          </div>
           <div className="workbench-health-row">
             <span>Console claim</span>
             <strong className={`operator-claim-${toneForClaim(snapshot?.claim_status)}`}>
@@ -160,6 +205,15 @@ export default function OperatorConsolePage() {
         </div>
       </header>
 
+      <div className="operator-console-grid infinity1-dashboard-grid" data-testid="infinity1-dashboard-grid">
+        <SeamStressPanel infinity1={infinity1} />
+        <WorkflowStackPanel workflowStack={infinity1?.workflow_stack} />
+        <LedgerDigestCompact ledgerDigest={infinity1?.ledger_digest} />
+        <BrainQueueCompact brain={infinity1?.brain} />
+        <MonitoringAlertsPanel monitoring={infinity1?.monitoring} />
+      </div>
+
+      <h2 className="operator-console-section-title">UGR + Cloud Forge (advisory)</h2>
       <div className="operator-console-grid">
         <UGRCloudForgeConsoleCard compact meshHealth={mesh} />
         <UGRRewardsCompact rewards={operatorRewards} />

@@ -99,7 +99,13 @@ def pipeline_transport_ready(*, root: Path | None = None) -> bool:
     pipeline_path = root / "src/governed_direct_pipeline.py"
     if not api_path.is_file() or not pipeline_path.is_file():
         return False
-    return "build_governed_turn_pipeline" in api_path.read_text(encoding="utf-8")
+    api_text = api_path.read_text(encoding="utf-8")
+    pipeline_text = pipeline_path.read_text(encoding="utf-8")
+    return (
+        "consult_pipeline_transport_substrate" in api_text
+        and "apply_transport_lane_from_packets" in pipeline_text
+        and "pipeline_as_transport_enabled" in pipeline_text
+    )
 
 
 def perception_router_ready(*, root: Path | None = None) -> bool:

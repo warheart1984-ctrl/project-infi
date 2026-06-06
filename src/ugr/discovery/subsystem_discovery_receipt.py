@@ -1,5 +1,7 @@
 """Subsystem discovery receipt v1 — hash-anchored proof of valid spec."""
 
+# Mythic: Subsystem Discovery Receipt
+# Engineering: SubsystemDiscoveryReceiptEngine
 from __future__ import annotations
 
 import time

@@ -30,11 +30,23 @@
     "posture": "governed"
   },
   "lineage": {
+    "parents": [],
     "children": [
       "patchforge_organ",
       "change_scope_organ",
       "patch_verification_organ",
       "otem_execution_substrate"
     ]
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "coding-organs-v1",
+    "notes": "Coding organs stack governed wave"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
   }
 }

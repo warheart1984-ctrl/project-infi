@@ -1,5 +1,7 @@
 """Contribution discovery receipt v1 — hash-anchored proof of valid contribution."""
 
+# Mythic: Contribution Receipt
+# Engineering: ContributionReceiptEngine
 from __future__ import annotations
 
 import time

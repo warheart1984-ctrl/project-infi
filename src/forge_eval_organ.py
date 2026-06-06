@@ -15,9 +15,10 @@ ORGAN_VERSION = "forge_eval_organ.v1"
 def build_forge_eval_status() -> dict[str, Any]:
     reachable = False
     health_error = ""
+    live_health: dict[str, Any] = {}
     try:
-        health = forge_eval_client.health()
-        reachable = bool(health)
+        live_health = forge_eval_client.health() or {}
+        reachable = bool(live_health)
     except Exception as exc:
         health_error = str(exc)[:120]
 
@@ -32,6 +33,7 @@ def build_forge_eval_status() -> dict[str, Any]:
         "service_reachable": reachable,
         "valid_modes": sorted(VALID_MODES),
         "health_error": health_error or None,
+        "live_health": {k: v for k, v in live_health.items() if k in ("status", "service", "storage_root")},
         "cisiv_stage": "implementation",
         "claim_label": "asserted",
         "read_only": True,

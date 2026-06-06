@@ -56,7 +56,9 @@
     "children": [
       "jarvis_runs_organ",
       "project_infi_law_organ",
-      "run_ledger_binding_organ"
+      "run_ledger_binding_organ",
+      "operator_decision_ledger",
+      "temporal_replay_machine"
     ]
   },
   "activation": {

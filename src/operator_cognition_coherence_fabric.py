@@ -1486,6 +1486,32 @@ def _law_cycle_aligned(posture: list[dict[str, Any]]) -> bool:
     return True
 
 
+def _build_operator_decision_layer(scope_id: str | None = None) -> list[dict[str, Any]]:
+    from src.operator_decision_ledger import build_operator_decision_ledger_status
+
+    snap = build_operator_decision_ledger_status(scope_id)
+    return [
+        _organ_posture_item(
+            "operator_decision_ledger",
+            snap,
+            entry_count=int(snap.get("entry_count") or 0),
+            pending_count=int(snap.get("pending_count") or 0),
+            drift_band=str(snap.get("latest_drift_band") or "idle"),
+        )
+    ]
+
+
+def _operator_decision_aligned(posture: list[dict[str, Any]]) -> bool:
+    if not posture:
+        return False
+    for item in posture:
+        if str(item.get("claim_label") or "") == "rejected":
+            return False
+        if str(item.get("drift_band") or "") == "critical":
+            return False
+    return True
+
+
 def _build_turn_admission_posture() -> list[dict[str, Any]]:
     from src.aais_ul_substrate_organ import build_aais_ul_substrate_status
     from src.aris_integration_organ import build_aris_integration_status
@@ -2372,6 +2398,9 @@ def build_coherence_fabric_status(
     authority_shell_posture = _build_authority_shell_posture()
     response_integrity_posture = _build_response_integrity_posture()
     law_cycle_posture = _build_law_cycle_posture()
+    operator_decision_layer = _build_operator_decision_layer(
+        str((pipeline_source or {}).get("session_id") or "") or None
+    )
     turn_admission_posture = _build_turn_admission_posture()
     governance_control_posture = _build_governance_control_posture()
     product_shell_posture = _build_product_shell_posture()
@@ -2583,6 +2612,8 @@ def build_coherence_fabric_status(
         ),
         "law_cycle_posture": law_cycle_posture,
         "law_cycle_aligned": _law_cycle_aligned(law_cycle_posture),
+        "operator_decision_layer": operator_decision_layer,
+        "operator_decision_aligned": _operator_decision_aligned(operator_decision_layer),
         "turn_admission_posture": turn_admission_posture,
         "turn_admission_aligned": _turn_admission_aligned(turn_admission_posture),
         "governance_control_posture": governance_control_posture,

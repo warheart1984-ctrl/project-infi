@@ -36,6 +36,20 @@ OPERATOR_WORKFLOW_STEPS = [
         "brain-proposal-gate",
         [sys.executable, ".github/scripts/check-brain-proposal-governance.py"],
     ),
+    Step("plug-adapter-gate", [sys.executable, ".github/scripts/check-plug-adapter-governance.py"]),
+    Step("brain-layer-gate", [sys.executable, ".github/scripts/check-brain-layer-governance.py"]),
+    Step(
+        "operator-decision-ledger-gate",
+        [sys.executable, ".github/scripts/check-operator-decision-ledger-governance.py"],
+    ),
+    Step(
+        "operator-decision-ledger-v2-graph-gate",
+        [sys.executable, ".github/scripts/check-operator-decision-ledger-v2-graph-governance.py"],
+    ),
+    Step(
+        "operator-workflow-runtime-gate",
+        [sys.executable, "-m", "pytest", "tests/test_operator_workflow_api.py", "-q"],
+    ),
 ]
 
 

@@ -43,7 +43,11 @@ def get_optimal_device():
 
 def get_optimal_dtype(device: str):
     """Select the best dtype for the given device"""
-    import torch
+    try:
+        import torch
+    except ImportError:
+        logger.warning("PyTorch not installed; dtype selection unavailable")
+        return None
 
     precision = os.getenv("MODEL_PRECISION", "auto")
 

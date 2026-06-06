@@ -1,5 +1,7 @@
 """Governed action-lane capability adapter for approval/action lifecycle tools."""
 
+# Mythic: Action Lane
+# Engineering: ActionLane
 from __future__ import annotations
 
 from typing import Any

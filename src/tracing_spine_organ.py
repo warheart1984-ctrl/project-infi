@@ -30,9 +30,14 @@ def build_tracing_spine_status(*, root: Path | None = None) -> dict[str, Any]:
         [contract_present, bridge_present, pipeline_present, event_chain_present, seam_log_present]
     )
     fail_closed = stages_ok
+    from src.firetiger_otel import firetiger_export_status, is_firetiger_export_configured
+
+    otel_status = firetiger_export_status()
+    otel_export_enabled = is_firetiger_export_configured()
     summary = (
         f"contract={contract_present};stages_ok={stages_ok};"
-        f"pipeline={PIPELINE_ID};fail_closed={fail_closed}"
+        f"pipeline={PIPELINE_ID};fail_closed={fail_closed};"
+        f"otel_export={otel_export_enabled}"
     )[:128]
     return {
         "tracing_spine_organ_version": ORGAN_VERSION,
@@ -43,7 +48,8 @@ def build_tracing_spine_status(*, root: Path | None = None) -> dict[str, Any]:
         "pipeline_id": PIPELINE_ID,
         "pipeline_version": PIPELINE_VERSION,
         "missing_trace_fail_closed": fail_closed,
-        "otel_export_enabled": False,
+        "otel_export_enabled": otel_export_enabled,
+        "firetiger_export": otel_status,
         "cisiv_stage": "implementation",
         "claim_label": "asserted",
         "read_only": True,

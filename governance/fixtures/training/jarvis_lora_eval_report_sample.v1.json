@@ -1,0 +1,51 @@
+{
+  "jarvis_lora_eval_report_version": "jarvis_lora_eval_report.v1",
+  "run_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+  "generated_at": "2026-06-05T16:00:00Z",
+  "adapter_metadata_path": "training/out/jarvis-qwen-lora/final/adapter_metadata.json",
+  "acceptance_profile": "default",
+  "mock_model": true,
+  "base": {
+    "fast": {
+      "runs": 4,
+      "avg_latency_ms": 120.5,
+      "avg_workspace_hits": 1.0,
+      "plan_pass_rate": 0.5
+    },
+    "think": {
+      "runs": 4,
+      "avg_latency_ms": 180.2,
+      "avg_workspace_hits": 1.25,
+      "plan_pass_rate": 0.75
+    }
+  },
+  "adapter": {
+    "fast": {
+      "runs": 4,
+      "avg_latency_ms": 130.0,
+      "avg_workspace_hits": 1.5,
+      "plan_pass_rate": 0.5
+    },
+    "think": {
+      "runs": 4,
+      "avg_latency_ms": 190.0,
+      "avg_workspace_hits": 1.5,
+      "plan_pass_rate": 0.75
+    }
+  },
+  "deltas": {
+    "fast": {
+      "avg_workspace_hits": 0.5,
+      "plan_pass_rate": 0.0
+    },
+    "think": {
+      "avg_workspace_hits": 0.25,
+      "plan_pass_rate": 0.0
+    }
+  },
+  "comparisons": [],
+  "acceptance": {
+    "passed": true,
+    "failures": []
+  }
+}

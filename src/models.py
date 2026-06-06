@@ -168,6 +168,7 @@ class MultiModalAI:
         self.image_generator = None
         self.text_adapter_aliases = {}
         self.active_text_adapter = None
+        self.adapter_governance = {}
         self.last_generation_metadata = {}
         self._load_models()
 
@@ -251,10 +252,62 @@ class MultiModalAI:
 
         return {key: value for key, value in adapter_paths.items() if value}
 
+    def _read_adapter_metadata(self, adapter_path: str):
+        """Load adapter metadata when present."""
+        from pathlib import Path
+        import json
+
+        metadata_path = Path(adapter_path) / "adapter_metadata.json"
+        if not metadata_path.is_file():
+            return None
+        try:
+            return json.loads(metadata_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return None
+
+    def _filter_adapter_paths_by_governance(self, adapter_paths: dict[str, str]) -> dict[str, str]:
+        """Drop adapter paths that fail governed load checks."""
+        from src.jarvis_lora_training_validator import evaluate_adapter_load_gate
+
+        runtime_base_model = str(getattr(self, "text_model_name", "") or os.getenv("AAIS_TEXT_MODEL_NAME", "")).strip()
+        allowed_paths: dict[str, str] = {}
+        blocked: list[dict] = []
+
+        for mode, adapter_path in adapter_paths.items():
+            metadata = self._read_adapter_metadata(adapter_path)
+            allowed, reason, governance = evaluate_adapter_load_gate(
+                metadata,
+                runtime_base_model,
+                label=f"{mode}:{adapter_path}",
+            )
+            if allowed:
+                allowed_paths[mode] = adapter_path
+            else:
+                blocked.append({"mode": mode, "adapter_path": adapter_path, "reason": reason, **governance})
+                logger.warning(
+                    "Skipping text adapter for %s (%s): %s",
+                    mode,
+                    adapter_path,
+                    reason,
+                )
+
+        self.adapter_governance = {
+            "runtime_base_model": runtime_base_model,
+            "allowed_paths": allowed_paths,
+            "blocked": blocked,
+        }
+        return allowed_paths
+
     def _maybe_apply_text_adapter(self):
         """Attach a fine-tuned adapter when one is configured."""
         adapter_paths = self._resolve_text_adapter_paths()
         if not adapter_paths:
+            self.adapter_governance = {}
+            return
+
+        adapter_paths = self._filter_adapter_paths_by_governance(adapter_paths)
+        if not adapter_paths:
+            logger.warning("No governed text adapters passed load gate")
             return
 
         primary_key = "fast" if adapter_paths.get("fast") else next(iter(adapter_paths))
@@ -590,6 +643,7 @@ class MultiModalAI:
                 "output_tokens": _estimate_token_count(cached),
                 "output_token_budget": int(max_length or 0),
                 "cache_hit": True,
+                "adapter_governance": dict(self.adapter_governance or {}),
             }
             return cached
 
@@ -612,6 +666,7 @@ class MultiModalAI:
             "output_tokens": 0,
             "output_token_budget": int(max_length or 0),
             "cache_hit": False,
+            "adapter_governance": dict(self.adapter_governance or {}),
         }
 
         sample_tokens = max(0, int(min_new_tokens or 0))

@@ -10,6 +10,16 @@ The first version is a LoRA adapter on top of:
 
 - `Qwen/Qwen2.5-1.5B-Instruct`
 
+## Governed Contract
+
+Normative law: [docs/contracts/JARVIS_LORA_TRAINING_CONTRACT.md](../docs/contracts/JARVIS_LORA_TRAINING_CONTRACT.md)
+
+Verification:
+
+```powershell
+make jarvis-lora-training-gate
+```
+
 ## External Suggestion Admission
 
 This training folder inherits the project-wide external suggestion admission
@@ -18,6 +28,10 @@ law.
 Outside model, dataset, or tuning proposals may be compared or pressure-tested
 here, but they do not become canonical AAIS training truth unless project law
 has filtered them and the admitted form is documented.
+
+Admitted HF supplement (v1): `HuggingFaceH4/ultrachat_200k` via
+`training/import_hf_sft_supplement.py` with admission ID
+`jarvis-lora-hf-ultrachat-200k-v1`.
 
 That gives you:
 
@@ -33,6 +47,8 @@ That gives you:
   Combines the checked-in seed set with your private examples.
 - `training/train_jarvis_lora.py`
   Runs SFT fine-tuning with LoRA/QLoRA.
+- `training/import_hf_sft_supplement.py`
+  Imports an admitted HF SFT supplement into Jarvis JSONL format.
 
 ## 1. Install Training Extras
 
@@ -73,6 +89,14 @@ Good examples are:
 That writes:
 
 `training/out/jarvis_train_messages.jsonl`
+`training/out/dataset_manifest.json`
+
+Optional admitted HF supplement:
+
+```powershell
+.\.venv\Scripts\python training\import_hf_sft_supplement.py --limit 20
+.\.venv\Scripts\python training\prepare_messages_dataset.py --private training/data/hf_sft_supplement.jsonl
+```
 
 You can also build mode-specific datasets:
 
@@ -100,7 +124,11 @@ For split response modes, train separate adapters:
 
 ## 5. Load It In AAIS
 
+Base model alignment is required. Training uses `Qwen/Qwen2.5-1.5B-Instruct`, so
+runtime must match before loading the adapter:
+
 ```powershell
+$env:AAIS_TEXT_MODEL_NAME="Qwen/Qwen2.5-1.5B-Instruct"
 $env:AAIS_TEXT_ADAPTER_PATH="training/out/jarvis-qwen-lora/final"
 .\start-personal.ps1
 ```
@@ -116,14 +144,25 @@ $env:AAIS_TEXT_ADAPTER_THINK_PATH="training/out/jarvis-think-lora-1p5b/final"
 
 `.\start-personal.ps1 -UseAdapters` also auto-detects those split adapter folders if they already exist.
 
-## 6. Evaluate It
+## 6. Evaluate It (v2 acceptance)
 
 ```powershell
 $env:AAIS_MODEL_MODE="real"
 $env:AAIS_MODEL_PROFILE="lite"
 $env:AAIS_HF_LOCAL_ONLY="1"
-.\.venv\Scripts\python evals\run_mode_eval.py
+.\.venv\Scripts\python evals\run_adapter_eval.py --adapter-metadata training/out/jarvis-qwen-lora/final/adapter_metadata.json --mock-model
 ```
+
+`run_adapter_eval.py` compares base vs adapter on the same prompts and sets
+`promotion_status: eval_passed` only when acceptance passes.
+
+## 7. Promote It
+
+```powershell
+py -3 tools/ops/promote_jarvis_adapter.py --run-id <uuid> --print-env
+```
+
+Or use Operator Console → Training adapters → Promote (after eval_passed).
 
 Recent reports are written under:
 

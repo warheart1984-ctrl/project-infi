@@ -1,0 +1,23 @@
+{
+  "admission_version": "external_suggestion_admission.v1",
+  "admission_id": "jarvis-lora-hf-ultrachat-200k-v1",
+  "admitted_at": "2026-06-05T12:00:00Z",
+  "status": "admitted",
+  "source_kind": "external_dataset",
+  "source_label": "HuggingFaceH4/ultrachat_200k train_sft supplement",
+  "hub_dataset": "HuggingFaceH4/ultrachat_200k",
+  "hub_split": "train_sft",
+  "license": "mit",
+  "admitted_form": {
+    "import_script": "training/import_hf_sft_supplement.py",
+    "output_path": "training/data/hf_sft_supplement.jsonl",
+    "system_prompt": "You are Jarvis, a private local AI partner for one person only.",
+    "use": "Optional conversational SFT supplement prepended with Jarvis system prompt"
+  },
+  "law_filter": {
+    "rule": "EXTERNAL_SUGGESTION_ADMISSION_RULE",
+    "notes": "Filtered for messages schema compatibility and MIT license; raw Hub rows are transformed, not copied verbatim into architecture truth."
+  },
+  "operator_scope": "training_only",
+  "promotion_requires": ["dataset_manifest.sources includes external", "admission_ids includes jarvis-lora-hf-ultrachat-200k-v1"]
+}

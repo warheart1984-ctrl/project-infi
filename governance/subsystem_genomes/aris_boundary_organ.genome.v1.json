@@ -54,6 +54,7 @@
       "cognitive_bridge_organ"
     ],
     "children": [
+      "aris_standalone_service",
       "capability_module_organ"
     ]
   },

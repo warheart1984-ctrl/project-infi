@@ -1,36 +1,28 @@
 {
   "subsystem_genome_version": "subsystem_genome.v1",
   "identity": {
-    "gene": "recipe_module",
-    "version": "1.0.0-governed",
+    "gene": "recipe_module_organ",
+    "version": "0.1.0-concept",
     "stage": "governed",
-    "display_name": "Recipe Module"
+    "display_name": "Recipe Module Organ"
   },
   "governance": {
     "contracts": [
       "docs/contracts/AAIS_SSP_PROTOCOL.md",
       "docs/contracts/AAIS_SSP_PROMOTION_PROTOCOL.md",
       "docs/contracts/AAIS_SUBSYSTEM_GENOME.md",
+      "docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md",
       "docs/contracts/AAIS_SUBSYSTEM_MUTATION_PATH.md",
-      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md",
-      "docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md"
+      "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
     ],
     "invariants": [
       {
-        "text": "Recipes propose missions and steps; no auto-apply repo mutations",
+        "text": "Read-only v1 — organ does not mutate upstream authority",
         "maturity": "constitutional"
       },
       {
-        "text": "signoff_required defaults true on recipe packs",
+        "text": "module_id frozen to AAIS-RMO-01",
         "maturity": "stable"
-      },
-      {
-        "text": "No sovereign subsystem front door \u2014 admission via Mission Board",
-        "maturity": "stable"
-      },
-      {
-        "text": "No secrets or credentials embedded in recipe packs",
-        "maturity": "constitutional"
       }
     ],
     "operator_lanes": [
@@ -38,74 +30,61 @@
         "lane_id": "operator",
         "weight": 1.0,
         "capabilities": [
-          "approve_policy_changes",
-          "promote_policies_to_production"
+          "create_recipe_mission",
+          "inspect_recipe_module"
         ]
       }
     ],
     "contextual_gates": [
       {
         "gate_id": "recipe_mission_flow",
-        "activate_on": [
-          "operator_runtime",
-          "recipe"
-        ],
-        "make_target": "recipe-module-gate"
+        "activate_on": ["operator_runtime", "recipe_mission"],
+        "make_target": "recipe-module-organ-gate"
       }
     ]
   },
   "schema": {
-    "ref": "schemas/recipe_module.v1.json",
+    "ref": "schemas/recipe_module_organ.v1.json",
     "frozen": true
   },
   "runtime": {
     "surface": [
       {
         "kind": "module",
-        "path": "src/recipe_module.py"
-      },
-      {
-        "kind": "module",
-        "path": "src/mission_board.py#create_from_recipe"
+        "path": "src/recipe_module_organ.py"
       },
       {
         "kind": "api",
-        "path": "POST /api/jarvis/missions/from-recipe"
-      },
-      {
-        "kind": "tool",
-        "path": "python -m tools.recipe --recipe-id"
+        "path": "GET /api/jarvis/recipe-module/status"
       },
       {
         "kind": "gate",
-        "path": "make recipe-module-gate"
+        "path": "make recipe-module-organ-gate"
       }
     ]
   },
   "proof": {
     "bundles": [
-      "docs/proof/platform/RECIPE_MODULE_GOVERNED_PROOF.md"
+      "docs/proof/platform/RECIPE_MODULE_ORGAN_GOVERNED_PROOF.md"
     ],
     "posture": "governed",
     "target_bundles": [
-      "docs/proof/platform/RECIPE_MODULE_V1_PROOF.md"
+      "docs/proof/platform/RECIPE_MODULE_ORGAN_V1_PROOF.md"
     ]
   },
   "lineage": {
     "parents": [
-      "capability_service_bridge",
-      "jarvis",
-      "mission_board"
+      "module_governance_organ",
+      "recipe_module"
     ],
     "children": [
-      "imagine_generator",
-      "recipe_module_organ"
+      "imagine_generator_organ"
     ]
   },
   "activation": {
-    "order": 6,
-    "batch_id": "alt27-summon-wave-2026-06",
-    "notes": "Release 27 wave 6"
+    "order": 3,
+    "batch_id": "alt13-summon-wave-2026-06",
+    "notes": "Alt-13 wave 3"
   },
   "retirement": {
     "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
@@ -114,12 +93,12 @@
     "history": []
   },
   "ssp": {
-    "concept_spec": "docs/_future/ideas_pending/RECIPE_MODULE.md",
-    "mvp_plan": "docs/_future/ideas_pending/RECIPE_MODULE_MVP_PLAN.md",
+    "concept_spec": "docs/_future/ideas_pending/RECIPE_MODULE_ORGAN.md",
+    "mvp_plan": "docs/_future/ideas_pending/RECIPE_MODULE_ORGAN_MVP_PLAN.md",
     "summon_eligible": false,
-    "active_doc": "docs/subsystems/platform/RECIPE_MODULE.md",
+    "active_doc": "docs/subsystems/platform/RECIPE_MODULE_ORGAN.md",
     "engineering_class": "RecipeModuleEngine",
-    "mythic_label": "Recipe module",
+    "mythic_label": "Recipe Module Organ",
     "linguistic_version": "1.0.0"
   }
 }

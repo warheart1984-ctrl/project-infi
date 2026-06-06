@@ -25,9 +25,9 @@ import {
 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { apiDelete, apiGet, apiPatch, apiPost, apiPostStream, getApiErrorMessage } from '../lib/api';
-import { NetworkStatusCard } from '../components/network-status/NetworkStatusCard';
-import { UGRCloudForgeConsoleCard } from '../components/operator/UGRCloudForgeConsoleCard';
-import { buildNetworkStatusData } from '../components/network-status/networkStatusLogic';
+import { NetworkStatusCard } from '../components/NetworkStatusCard';
+import { UGRCloudForgeConsoleCard } from '../components/UGRCloudForgeConsoleCard';
+import { buildNetworkStatusData } from '../components/networkStatusLogic';
 import { addHistoryEntry } from '../lib/history';
 import {
   applyPersonaProfileSelection,

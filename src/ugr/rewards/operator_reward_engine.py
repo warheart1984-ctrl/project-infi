@@ -1,5 +1,7 @@
 """Operator reward engine — contribution-aware reward issuance."""
 
+# Mythic: Operator Reward Engine
+# Engineering: OperatorRewardEngine
 from __future__ import annotations
 
 from typing import Any

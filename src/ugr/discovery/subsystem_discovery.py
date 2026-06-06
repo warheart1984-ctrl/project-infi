@@ -1,5 +1,7 @@
 """Subsystem discovery orchestrator — validate, search, receipt, promote."""
 
+# Mythic: Subsystem Discovery
+# Engineering: SubsystemDiscoveryEngine
 from __future__ import annotations
 
 import os

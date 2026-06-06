@@ -9,7 +9,7 @@
 
 ## Gaps
 
-- `conversation_memory.write` remains on legacy path
+- `conversation_memory.write` is board-governed (MP-X closure 2026-06)
 - Full board enforcement deferred to future MP-X
 
 ## Reproduction

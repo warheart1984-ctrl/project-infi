@@ -4,6 +4,17 @@
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
+.operator-console-page .infinity1-dashboard-grid {
+  margin-bottom: 1.5rem;
+}
+
+.operator-console-page .operator-console-section-title {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
 .operator-console-page .operator-claim-connected {
   color: var(--success-color, #22c55e);
 }

@@ -329,7 +329,7 @@ GOVERN         Capability matrix, identity guard, ARIS, Jarvis
 | PLAT-D32 | Inter-Membrane Exchange IMXP (v45–v46) | medium | platform | **asserted** — `PLATFORM_V45_V46_PROOF_BUNDLE.md` |
 | PLAT-D33 | Platform Ledger v2 (v47–v48) | low | platform | **asserted** — `PLATFORM_V47_V48_PROOF_BUNDLE.md` |
 | PLAT-D34 | Sovereign Runtime (v49–v50) | low | ops | **asserted** — `PLATFORM_V49_V50_PROOF_BUNDLE.md` |
-| PLAT-PILOT-D1 | Infinity Pilot K8s multi-tenant hardening | high | ops | **rejected** until isolation proof |
+| PLAT-PILOT-D1 | Infinity Pilot K8s multi-tenant hardening | high | ops | **proven** — PLATFORM_K8S_ISOLATION_PROOF |
 | PLAT-PILOT-D2 | Infinity Pilot deploy compose smoke | medium | ops | **asserted** — `PLATFORM_PILOT_DEPLOY_PROOF_BUNDLE.md`, `scripts/pilot_compose_smoke.py` |
 | UGR-D9 | UGR Ledger Bridge v1 | medium | runtime | **asserted** — `UGR_LEDGER_BRIDGE_V1_PROOF_BUNDLE.md` |
 

@@ -1154,9 +1154,17 @@ class ConversationTurn:
 class ConversationSession:
     """A conversation session with history and Spiral-inspired runtime state."""
 
-    def __init__(self, session_id: str, max_turns: int = 50, system_prompt: str = None):
+    def __init__(
+        self,
+        session_id: str,
+        max_turns: int = 50,
+        system_prompt: str = None,
+        *,
+        memory_enforcer=None,
+    ):
         self.session_id = session_id
         self.max_turns = max_turns
+        self._memory_enforcer = memory_enforcer
         self.turns = []
         self.created_at = datetime.now(UTC)
         self.updated_at = datetime.now(UTC)
@@ -1217,6 +1225,20 @@ class ConversationSession:
         self.turns.append(turn)
         self.updated_at = turn.timestamp
         self._update_runtime_state(role, content, metadata=turn.metadata)
+        if self._memory_enforcer is not None and role in {"user", "assistant"}:
+            enforcer = self._memory_enforcer
+            try:
+                enforcer.record_board_event(
+                    action="conversation_memory.write",
+                    slot_id="slot_03",
+                    memory={"session_id": self.session_id, "role": role},
+                    source="conversation_memory",
+                    detail=f"turn write ({role})",
+                    meta={"path": "conversation_memory.write"},
+                    runtime_context="live_runtime",
+                )
+            except Exception:
+                logger.debug("conversation_memory.write board event skipped", exc_info=True)
 
         if len(self.turns) > self.max_turns:
             system_turns = [t for t in self.turns if t.role == "system"]
@@ -2257,6 +2279,11 @@ class ConversationMemory:
         self.max_turns = max_turns
         self.sessions = OrderedDict()
         self._lock = threading.Lock()
+        self._memory_enforcer = None
+
+    def bind_memory_enforcer(self, enforcer) -> None:
+        """Route durable conversation writes through the governed memory board gateway."""
+        self._memory_enforcer = enforcer
 
     def create_session(self, system_prompt: str = None) -> str:
         """Create a new conversation session and return its ID."""
@@ -2267,6 +2294,7 @@ class ConversationMemory:
                 session_id=session_id,
                 max_turns=self.max_turns,
                 system_prompt=system_prompt,
+                memory_enforcer=self._memory_enforcer,
             )
             logger.info(f"Created conversation session: {session_id}")
             return session_id

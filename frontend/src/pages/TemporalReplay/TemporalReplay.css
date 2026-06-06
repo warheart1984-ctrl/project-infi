@@ -1,0 +1,10 @@
+.temporal-replay-page { padding: 1rem; }
+.temporal-replay-header { margin-bottom: 1rem; }
+.temporal-replay-controls { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
+.temporal-replay-panel { background: rgba(255,255,255,0.04); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+.temporal-replay-chip { display: inline-block; margin-right: 0.5rem; padding: 0.15rem 0.5rem; border-radius: 4px; background: rgba(255,255,255,0.08); font-size: 0.85rem; }
+.temporal-replay-pre { overflow: auto; max-height: 320px; font-size: 0.8rem; }
+.temporal-replay-scrubber input[type="range"] { width: 100%; margin-top: 0.5rem; }
+.temporal-replay-event { margin-bottom: 0.5rem; padding: 0.5rem; border-radius: 6px; cursor: pointer; }
+.temporal-replay-event.is-active { background: rgba(255,255,255,0.1); }
+.temporal-replay-detail { margin-bottom: 1rem; padding: 0.75rem; border-radius: 8px; background: rgba(255,255,255,0.06); }

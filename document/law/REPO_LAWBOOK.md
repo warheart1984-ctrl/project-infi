@@ -157,7 +157,15 @@ These are not always named “law,” but they act as governing contracts for ma
 
 **Source:** [docs/contracts/JARVIS_REASONING_PROTOCOL.md](../../docs/contracts/JARVIS_REASONING_PROTOCOL.md)
 
-### 12. AAIS Capability Module Spec
+### 12. Jarvis LoRA Training Contract
+
+**What it governs:** bounded LoRA/QLoRA adapter training, dataset admission, metadata, and promotion into runtime.
+
+**Core idea:** training produces artifacts; eval acceptance and operator promotion are required before runtime loads an adapter (v2 enforcement).
+
+**Source:** [docs/contracts/JARVIS_LORA_TRAINING_CONTRACT.md](../../docs/contracts/JARVIS_LORA_TRAINING_CONTRACT.md)
+
+### 13. AAIS Capability Module Spec
 
 **What it governs:** the boundary contract for external capability execution.
 
@@ -215,6 +223,7 @@ For quick scanning, these are the main law-bearing files collected in this lawbo
 - [docs/contracts/AAIS_DOC_PROTOCOL.md](../../docs/contracts/AAIS_DOC_PROTOCOL.md)
 - [docs/contracts/JARVIS_PROTOCOL.md](../../docs/contracts/JARVIS_PROTOCOL.md)
 - [docs/contracts/JARVIS_REASONING_PROTOCOL.md](../../docs/contracts/JARVIS_REASONING_PROTOCOL.md)
+- [docs/contracts/JARVIS_LORA_TRAINING_CONTRACT.md](../../docs/contracts/JARVIS_LORA_TRAINING_CONTRACT.md)
 - [docs/contracts/AAIS_CAPABILITY_MODULE_SPEC.md](../../docs/contracts/AAIS_CAPABILITY_MODULE_SPEC.md)
 - [document/governance/DOCUMENT_SCOPE_LAW.md](../governance/DOCUMENT_SCOPE_LAW.md)
 - [src/project_infi_law.py](../../src/project_infi_law.py)

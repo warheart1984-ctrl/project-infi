@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "jarvis_lora_training_run.v1",
+  "title": "Jarvis LoRA Training Run v1",
+  "description": "Governed envelope describing a proposed or completed Jarvis LoRA training run.",
+  "type": "object",
+  "required": [
+    "jarvis_lora_training_run_version",
+    "run_id",
+    "created_at",
+    "status",
+    "base_model",
+    "dataset",
+    "hyperparams",
+    "output_dir",
+    "authority"
+  ],
+  "properties": {
+    "jarvis_lora_training_run_version": {
+      "const": "jarvis_lora_training_run.v1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": ["proposed", "running", "completed", "rejected"]
+    },
+    "base_model": {
+      "enum": ["Qwen/Qwen2.5-1.5B-Instruct"]
+    },
+    "dataset": {
+      "$ref": "#/$defs/dataset"
+    },
+    "hyperparams": {
+      "$ref": "#/$defs/hyperparams"
+    },
+    "output_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority": {
+      "$ref": "#/$defs/authority"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "dataset": {
+      "type": "object",
+      "required": ["path", "example_count", "sources"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "example_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "enum": ["seed", "private", "external"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "admission_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "hyperparams": {
+      "type": "object",
+      "required": [
+        "epochs",
+        "learning_rate",
+        "max_length",
+        "lora_rank",
+        "lora_alpha",
+        "lora_dropout",
+        "per_device_batch_size",
+        "gradient_accumulation_steps",
+        "use_4bit"
+      ],
+      "properties": {
+        "epochs": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "learning_rate": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "max_length": {
+          "type": "integer",
+          "minimum": 64
+        },
+        "lora_rank": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "lora_alpha": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "lora_dropout": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "per_device_batch_size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "gradient_accumulation_steps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "use_4bit": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "authority": {
+      "type": "object",
+      "required": ["proposed_by"],
+      "properties": {
+        "proposed_by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "executed_by": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

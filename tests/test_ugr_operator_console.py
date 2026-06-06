@@ -24,7 +24,11 @@ class TestOperatorConsoleSnapshot(unittest.TestCase):
         self.assertIn("mesh_health", snapshot)
         self.assertIn("deliberation_traces", snapshot)
         self.assertIn("forge_platform", snapshot)
-        self.assertEqual(snapshot.get("console_version"), "1.1")
+        self.assertEqual(snapshot.get("console_version"), "1.2")
+        self.assertIn("infinity1", snapshot)
+        infinity1 = snapshot.get("infinity1") or {}
+        self.assertEqual(infinity1.get("runtime_effect"), "readout_only")
+        self.assertIn("seam_stress", infinity1)
         self.assertEqual(snapshot["readout"].get("runtime_effect"), "readout_only")
 
     def test_trust_bundle_status_from_runtime(self):

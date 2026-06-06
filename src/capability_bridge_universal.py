@@ -19,6 +19,8 @@ from src.capabilities.speakers_mix import SPEAKERS_LANE_COMPONENT_ID, SpeakersMi
 from src.capabilities.ui_vision import UI_VISION_COMPONENT_ID, UiVisionCapability
 from src.capabilities.workspace_lane import WORKSPACE_LANE_COMPONENT_ID, WorkspaceLaneCapability
 from src.capability_service_bridge import DEFAULT_GOVERNANCE_MODES, CapabilityServiceBridge
+from src.forge_client import forge_client
+from src.evolve_client import evolve_client
 
 
 def _normalize_name(value: str | None) -> str:
@@ -130,6 +132,60 @@ def _generic_handler(bridge: CapabilityServiceBridge, spec: dict[str, Any]):
         phase_gate: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         payload = dict(args or {})
+        tool = spec.get("tool", "")
+        cap_id = spec.get("capability_id", "")
+
+        # MVP wiring for non-OTEM capability bridge flows: delegate forge/evolve to live contractors if reachable.
+        # This makes direct capability.execute (used by some agents/workflows) use the live services (6060/6062)
+        # and records the via + results for observability, falling back to local module otherwise.
+        if "forge" in tool.lower() or "forge" in cap_id.lower():
+            try:
+                forge_client.health()
+                kind = payload.get("kind", "generate_diff")
+                ctx = payload.get("context") or payload
+                result = forge_client.request(kind=kind, context=dict(ctx))
+                cap_res = {"ok": True, "data": result, "via": "live_forge"}
+                return bridge._finalize_result(
+                    spec=spec,
+                    tool_result={
+                        "type": spec["tool"],
+                        "tool": spec["tool"],
+                        "status": "completed",
+                        "args": payload,
+                        "result": result,
+                        "via": "live_forge",
+                    },
+                    capability_result=cap_res,
+                    response=f"{spec['tool']} completed via live Forge.",
+                    execution_profile=execution_profile,
+                    phase_gate=phase_gate,
+                )
+            except Exception:
+                pass  # fall to local
+        if "evolve" in tool.lower() or "evolve" in cap_id.lower():
+            try:
+                evolve_client.health()
+                task = payload.get("task") or payload.get("goal") or "evolve"
+                result = evolve_client.evolve(task=task, config=dict(payload.get("config") or {}))
+                cap_res = {"ok": True, "data": result, "via": "live_evolve"}
+                return bridge._finalize_result(
+                    spec=spec,
+                    tool_result={
+                        "type": spec["tool"],
+                        "tool": spec["tool"],
+                        "status": "completed",
+                        "args": payload,
+                        "result": result,
+                        "via": "live_evolve",
+                    },
+                    capability_result=cap_res,
+                    response=f"{spec['tool']} completed via live Evolve.",
+                    execution_profile=execution_profile,
+                    phase_gate=phase_gate,
+                )
+            except Exception:
+                pass  # fall to local
+
         capability_result = spec["module"].execute(spec["action"], payload)
         response = (
             f"{spec['tool']} completed."
@@ -168,8 +224,22 @@ GAP_COMPONENT_IDS = (
 
 
 class ConfiguredStoryForgeAudioModule:
+    """Story Forge audio capability module.
+
+    This follows the same shape as other capability modules so that
+    CapabilityServiceBridge / _spec / generic handlers can read
+    .provider_name, .module_name, .supported_actions etc. on the *instance*.
+    """
+
     module_name = "story_forge_audio"
+    provider_name = "aais_story_forge"
     supported_actions = frozenset({"run"})
+
+    def __init__(self) -> None:
+        # Ensure instance attributes exist (some bridge code does getattr on instances).
+        self.module_name = self.module_name
+        self.provider_name = self.provider_name
+        self.supported_actions = self.supported_actions
 
     def execute(self, action: str, payload: dict[str, Any]) -> dict[str, Any]:
         from src.capabilities.story_forge_audio import run_story_forge_audio_capability

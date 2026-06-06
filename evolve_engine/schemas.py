@@ -368,6 +368,8 @@ class EvolveHealthResponse(SchemaMixin):
     service: str
     storage_root: str
     forge_eval_base_url: str
+    forge_eval_reachable: bool = False
+    forge_eval_error: str | None = None
     limits: dict[str, Any] = field(default_factory=dict)
     contract_version: str | None = None
     foundation_laws: list[str] = field(default_factory=list)

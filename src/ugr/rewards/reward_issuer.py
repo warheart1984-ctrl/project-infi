@@ -1,5 +1,7 @@
 """Single issue_reward entry — contribution receipt gate before any ledger write."""
 
+# Mythic: Reward Issuer
+# Engineering: RewardIssuerEngine
 from __future__ import annotations
 
 import os

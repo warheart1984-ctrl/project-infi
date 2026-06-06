@@ -13,8 +13,9 @@ Jarvis-style **advisory** operator console for UGR + Cloud Forge:
 
 ## Version
 
-- Console snapshot version: **1.1**
-- Adds live mesh health polling, deliberation trace viewer, Forge platform dashboard JSON
+- Console snapshot version: **1.2**
+- v1.1: live mesh health polling, deliberation trace viewer, Forge platform dashboard JSON
+- v1.2: adds `infinity1` dashboard aggregate (see [INFINITY1_OPERATOR_DASHBOARD_CONTRACT.md](./INFINITY1_OPERATOR_DASHBOARD_CONTRACT.md))
 
 ## Invariants
 
@@ -35,10 +36,11 @@ Jarvis-style **advisory** operator console for UGR + Cloud Forge:
 | Trace viewer | `GET /api/operator/console/traces?limit=20&trace_id=<optional>` |
 | Forge platform | `GET /api/operator/console/forge-platform?live=0` |
 
-## Snapshot keys (v1.1)
+## Snapshot keys (v1.2)
 
 | Key | Source |
 |---|---|
+| `infinity1` | `build_infinity1_dashboard_snapshot()` |
 | `mesh_health` | `poll_mesh_health()` |
 | `deliberation_traces` | `load_deliberation_traces()` from `{runtime}/ugr/traces.jsonl` |
 | `forge_platform` | `load_forge_platform_dashboard()` via `forge-platform-dashboard.py --json` |

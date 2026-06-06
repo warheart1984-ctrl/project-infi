@@ -17,6 +17,7 @@ govern AAIS behavior.
 - immune protocol and collective pattern ledger law
 - swarm coordination law
 - Jarvis protocol and reasoning contracts
+- Jarvis LoRA training contract (bounded adapter fine-tuning)
 - reasoning exchange protocol for external packet admission
 - memory doctrine
 - tracing protocol and proof-layer contract

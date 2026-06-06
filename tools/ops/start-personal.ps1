@@ -91,7 +91,7 @@ $fastAdapter = Join-Path $root "training\out\jarvis-fast-lora-1p5b\final"
 $thinkAdapter = Join-Path $root "training\out\jarvis-think-lora-1p5b\final"
 $legacyFastAdapter = Join-Path $root "training\out\jarvis-fast-lora\final"
 $legacyThinkAdapter = Join-Path $root "training\out\jarvis-think-lora\final"
-$singleAdapter = Join-Path $root "training\out\jarvis-qwen-lora-firstpass\final"
+$singleAdapter = Join-Path $root "training\out\jarvis-qwen-lora\final"
 
 if (-not (Test-Path $fastAdapter) -and (Test-Path $legacyFastAdapter)) {
     $fastAdapter = $legacyFastAdapter

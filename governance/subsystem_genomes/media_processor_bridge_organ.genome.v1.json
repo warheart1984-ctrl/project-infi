@@ -47,7 +47,8 @@
   "lineage": {
     "parents": [
       "capability_service_bridge",
-      "capability_module_organ"
+      "capability_module_organ",
+      "media_processor_family"
     ],
     "children": []
   },

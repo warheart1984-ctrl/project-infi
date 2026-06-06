@@ -10,6 +10,8 @@ from typing import Any, Callable
 from src.datetime_compat import UTC
 
 from src.capability_module import AAISCapabilityModule
+from src.forge_client import forge_client
+from src.evolve_client import evolve_client
 from src.phase_gate import (
     ComponentNotRegisteredError,
     GovernedComponent,
@@ -122,6 +124,7 @@ class CapabilityServiceBridge:
         self._render_v10 = render_v10
         self._event_counter = 0
         self._events: list[dict[str, Any]] = []
+        self._contractors_reachable = self._probe_contractors()
 
         self._spatial_module = ConfiguredCapabilityModule(
             module_name="spatial",
@@ -882,6 +885,23 @@ class CapabilityServiceBridge:
             for spec in self._route_specs
         }
 
+    def _probe_contractors(self) -> dict[str, bool]:
+        """Lightweight reachability for the isolated contractors (Forge, Evolve).
+        Used to decide live vs simulation for capability bridge (non-OTEM) flows.
+        """
+        reachable = {}
+        try:
+            forge_client.health()
+            reachable["forge"] = True
+        except Exception:
+            reachable["forge"] = False
+        try:
+            evolve_client.health()
+            reachable["evolve"] = True
+        except Exception:
+            reachable["evolve"] = False
+        return reachable
+
     def _module_action_for_spec(self, spec: dict[str, Any]) -> str:
         actions = tuple(spec["module"].supported_actions)
         if actions:
@@ -1175,10 +1195,16 @@ class CapabilityServiceBridge:
             )
 
         from src.adaptive_lane_organ import lane_authorizes_capability, resolve_lane_for_gene
+        from src.mission_board import mission_board
 
+        session_id = str((args or {}).get("session_id") or "").strip() or None
+        mission_context = (
+            mission_board.build_session_context(session_id) if session_id else None
+        )
         lane_resolution = lane_authorizes_capability(
             resolve_lane_for_gene(gene),
             spec.get("capability_id"),
+            mission_context=mission_context,
         )
         if not lane_resolution.allowed:
             return self._build_genome_block(
@@ -1274,7 +1300,11 @@ class CapabilityServiceBridge:
                 status = "degraded"
             health[capability_id] = {
                 "module": spec["module"].module_name,
-                "provider": spec["module"].provider_name,
+                "provider": getattr(
+                    spec["module"],
+                    "provider_name",
+                    getattr(spec["module"], "module_name", "unknown"),
+                ),
                 "status": status,
                 "tool": spec["tool"],
                 "action": spec["action"],

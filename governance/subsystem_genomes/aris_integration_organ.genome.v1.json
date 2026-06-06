@@ -55,7 +55,9 @@
       "project_infi_law_organ",
       "cognitive_bridge_organ"
     ],
-    "children": []
+    "children": [
+      "aris_standalone_service"
+    ]
   },
   "activation": {
     "order": 6,

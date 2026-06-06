@@ -1,3 +1,7 @@
+opentelemetry-distro>=0.48b0
+opentelemetry-exporter-otlp>=1.27.0
+opentelemetry-instrumentation-fastapi>=0.48b0
+opentelemetry-instrumentation-flask>=0.48b0
 sentence-transformers>=2.7.0
 PyPDF2>=3.0.0
 beautifulsoup4>=4.12.0

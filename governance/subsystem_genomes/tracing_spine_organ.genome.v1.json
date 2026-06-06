@@ -55,7 +55,8 @@
       "cognitive_bridge_organ"
     ],
     "children": [
-      "patchforge_organ"
+      "patchforge_organ",
+      "plug_adapter_runtime"
     ]
   },
   "activation": {

@@ -86,7 +86,10 @@
       "linguistic_closed_loop_fabric_organ",
       "naming_genome_organ",
       "project_infi_state_machine_organ",
-      "reasoning_executive_organ"
+      "reasoning_executive_organ",
+      "operator_decision_ledger",
+      "temporal_replay_machine",
+      "plug_adapter_runtime"
     ]
   },
   "activation": {

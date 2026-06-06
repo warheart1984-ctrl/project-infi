@@ -49,7 +49,6 @@ export default function PlatformMesh() {
   useEffect(() => {
     if (!orgId) return undefined;
     const base = import.meta.env.VITE_PLATFORM_API_URL || '';
-    const key = localStorage.getItem('platform_api_key') || '';
     const url = `${base}/v1/orgs/${encodeURIComponent(orgId)}/mesh/events/stream`;
     try {
       const es = new EventSource(url, { withCredentials: false });

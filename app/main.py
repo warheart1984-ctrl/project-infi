@@ -11,9 +11,16 @@ import importlib
 import json
 import logging
 import os
+import sys
+import time
 import uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
+
+try:
+    import requests
+except ImportError:
+    requests = None  # health will degrade gracefully if missing
 from a2wsgi import WSGIMiddleware
 from fastapi import FastAPI, Depends, HTTPException, Request, Response as FastAPIResponse, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
@@ -102,6 +109,26 @@ class LegacyFlaskApiBridge:
             raise RuntimeError(self.load_error)
 
         try:
+            import importlib
+            from pathlib import Path
+
+            # Defense-in-depth: ensure project root is on path for src.* / app.* imports.
+            # This helps when people run uvicorn directly instead of `python -m aais start`.
+            try:
+                here = Path(__file__).resolve()
+                # Walk up until we see both app/ and src/ (or pyproject.toml)
+                root = here
+                for _ in range(6):
+                    if (root / "app" / "main.py").exists() and (root / "src" / "api.py").exists():
+                        root_str = str(root)
+                        if root_str not in sys.path:
+                            sys.path.insert(0, root_str)
+                        break
+                    root = root.parent
+            except Exception:
+                pass
+
+            importlib.import_module("src.operator_api_routes")
             from src.api import app as legacy_flask_app, bootstrap_ai_runtime
         except Exception as exc:  # pragma: no cover - only exercised in misconfigured envs
             self.load_error = str(exc)
@@ -125,6 +152,29 @@ legacy_api_mounted = True
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     init_db()
+    try:
+        from src.firetiger_otel import init_firetiger_otel
+
+        flask_app = None
+        try:
+            flask_app = legacy_api_bridge._load_app()
+        except Exception as exc:
+            model_mode = os.getenv("AAIS_MODEL_MODE", "").strip().lower()
+            allow_fallback = model_mode in ("mock", "") or os.getenv("AAIS_ALLOW_BRIDGE_FALLBACK", "0").lower() in ("1", "true", "yes")
+            if not allow_fallback:
+                # Stricter startup for MVP: surface mis-wiring immediately instead of silent degraded
+                logger.error("Legacy Jarvis bridge failed to load in strict mode (preset=%s): %s", model_mode or "default", exc)
+                raise RuntimeError(f"Legacy bridge required but failed to load: {exc}") from exc
+            flask_app = None
+            logger.warning("Legacy Jarvis bridge load failed (allowed fallback for mock/default): %s", exc)
+        if init_firetiger_otel(
+            service_name=os.getenv("OTEL_SERVICE_NAME", "aais-workflow-shell"),
+            fastapi_app=_app,
+            flask_app=flask_app,
+        ):
+            logger.info("Firetiger OpenTelemetry export enabled")
+    except Exception as exc:
+        logger.warning("Firetiger OpenTelemetry bootstrap skipped: %s", exc)
     try:
         from src.governance_organs import Alt4Runtime
 
@@ -174,9 +224,33 @@ def _serve_frontend_index() -> FileResponse:
     return FileResponse(STATIC_DIR / "index.html")
 
 
+def _probe_contractor(name: str, port: int, path: str = "/health") -> dict:
+    """Lightweight probe for optional contractors. Short timeout so health stays snappy."""
+    url = f"http://127.0.0.1:{port}{path}"
+    if requests is None:
+        return {"name": name, "url": url, "reachable": False, "error": "requests not installed"}
+    try:
+        r = requests.get(url, timeout=1.0)
+        data = r.json() if r.headers.get("content-type", "").startswith("application/json") else {}
+        out = {
+            "name": name,
+            "url": url,
+            "reachable": r.status_code < 500,
+            "status": data.get("status"),
+        }
+        if "forge_eval_reachable" in data:
+            out["forge_eval_reachable"] = data["forge_eval_reachable"]
+        return out
+    except Exception as exc:
+        return {"name": name, "url": url, "reachable": False, "error": str(exc)[:120]}
+
+
 def _build_operator_health_payload() -> dict:
+    legacy_ok = legacy_api_bridge.loaded and not legacy_api_bridge.load_error
+    model_mode = os.getenv("AAIS_MODEL_MODE", "").strip().lower()
+    strict_startup = model_mode not in ("mock", "") and os.getenv("AAIS_ALLOW_STARTUP_FALLBACK", "1").lower() not in ("1", "true", "yes", "on")
     payload = {
-        "status": "degraded",
+        "status": "healthy" if legacy_ok else "degraded",
         "service": "AAIS Workflow Shell",
         "environment": os.getenv("ENVIRONMENT", "development"),
         "legacy_api_mount_path": LEGACY_API_MOUNT_PATH,
@@ -190,6 +264,13 @@ def _build_operator_health_payload() -> dict:
         "ai_bootstrap_status": "not_initialized",
         "ai_bootstrap_reason": None,
         "ai_fallback_active": False,
+        "mock_mode_active": model_mode == "mock",
+        "strict_startup": strict_startup,
+        "contractors": [
+            _probe_contractor("forge", 6060),
+            _probe_contractor("forge_eval", 6061),
+            _probe_contractor("evolve", 6062),
+        ],
     }
 
     try:
@@ -198,15 +279,28 @@ def _build_operator_health_payload() -> dict:
         if callable(bootstrap):
             bootstrap(reason="canonical_health")
         runtime_status = legacy_api._build_ai_runtime_status()
-        payload.update(runtime_status)
+        # Only pull lightweight ai status for the compact health.
+        # Heavy snapshots (system_guard, dreamspace, full law traces)
+        # live in /health/details to keep the happy-path response small.
         payload.update(
             {
-                "status": "healthy",
-                "service": "AAIS Multi-Modal AI",
-                "system_guard": legacy_api.system_guard.snapshot(limit_events=4),
-                "dreamspace": legacy_api.dreamspace.snapshot(limit_dreams=2),
+                k: runtime_status.get(k)
+                for k in (
+                    "requested_model_mode",
+                    "active_model_mode",
+                    "ai_status",
+                    "ai_init_error",
+                    "ai_bootstrap_status",
+                    "ai_bootstrap_reason",
+                    "ai_fallback_active",
+                    "mock_mode_active",
+                )
             }
         )
+        # Ensure overall status reflects legacy bridge health
+        if legacy_ok:
+            payload["status"] = "healthy"
+            payload["service"] = payload.get("service") or "AAIS"
     except Exception as exc:  # pragma: no cover - only exercised when the bridge env is broken
         logger.warning("Legacy runtime health unavailable: %s", exc)
         payload["ai_init_error"] = str(exc)
@@ -506,27 +600,23 @@ def _queue_workflow_run_record(
 
 
 def _forward_legacy_jarvis_request(payload: dict) -> tuple[int, dict]:
-    """Send one shell-owned Jarvis request through the canonical legacy runtime lane."""
+    """Send one shell-owned Jarvis request through the shared runtime service layer."""
     try:
-        flask_app = legacy_api_bridge._load_app()
+        from src.jarvis_runtime_service import invoke_jarvis_compat
+
+        return invoke_jarvis_compat(payload)
     except Exception as exc:  # pragma: no cover - only exercised when the legacy runtime is broken
         raise HTTPException(status_code=503, detail=f"Jarvis runtime unavailable: {exc}") from exc
-
-    with flask_app.test_client() as client:
-        response = client.post("/api/jarvis", json=payload)
-    return response.status_code, response.get_json(silent=True) or {}
 
 
 def _forward_legacy_runtime_json_request(path: str, payload: dict) -> tuple[int, dict]:
-    """Forward one shell-owned JSON request to the mounted legacy runtime."""
+    """Forward one shell-owned JSON request through the shared runtime service layer."""
     try:
-        flask_app = legacy_api_bridge._load_app()
+        from src.jarvis_runtime_service import invoke_legacy_json_post
+
+        return invoke_legacy_json_post(path, payload)
     except Exception as exc:  # pragma: no cover - only exercised when the legacy runtime is broken
         raise HTTPException(status_code=503, detail=f"Jarvis runtime unavailable: {exc}") from exc
-
-    with flask_app.test_client() as client:
-        response = client.post(path, json=payload)
-    return response.status_code, response.get_json(silent=True) or {}
 
 @app.get("/")
 def index():
@@ -535,37 +625,79 @@ def index():
     return _serve_frontend_index()
 
 @app.get("/health")
-def health():
+def health(request: Request):
+    """Compact, operator-friendly health for MVP happy path.
+
+    Returns a small, fast summary. The full governed law/UL trace
+    and internal snapshots (dreamspace, system_guard, etc.) live in
+    /health/details or ?full=1.
+    """
     payload = _build_operator_health_payload()
-    return _govern_project_wide_payload(
-        payload,
-        action_id="workflow_shell_health_snapshot",
-        target="operator_health",
-        cisiv_stage="verification",
-        summary="Workflow shell health snapshot served.",
-        action_status="completed" if payload.get("status") == "healthy" else "degraded",
-        details={
-            "legacy_api_mounted": bool(payload.get("legacy_api_mounted")),
-            "legacy_api_loaded": bool(payload.get("legacy_api_loaded")),
-            "active_model_mode": payload.get("active_model_mode"),
-        },
-    )
+
+    # Compact summary for daily use (MVP-friendly, low noise)
+    compact = {
+        "status": payload.get("status"),
+        "service": "AAIS",
+        "legacy_api_loaded": bool(payload.get("legacy_api_loaded")),
+        "active_model_mode": payload.get("active_model_mode"),
+        "mock_mode_active": payload.get("mock_mode_active"),
+        "strict_startup": payload.get("strict_startup"),
+        "contractors": payload.get("contractors", []),
+    }
+    # Only include ai_fallback_active in compact if it's a real fallback (not explicit mock)
+    if payload.get("ai_fallback_active") and not payload.get("mock_mode_active"):
+        compact["ai_fallback_active"] = True
+
+    if request.query_params.get("full"):
+        # Opt-in to the full governed view
+        return _govern_project_wide_payload(
+            payload,
+            action_id="workflow_shell_health_snapshot",
+            target="operator_health",
+            cisiv_stage="verification",
+            summary="Workflow shell health snapshot served (full).",
+            action_status="completed" if payload.get("status") == "healthy" else "degraded",
+        )
+
+    return compact
 
 @app.get("/health/details")
 def health_details():
+    """Rich, fully governed health details (the previous /health behavior).
+
+    Includes law enforcement, UL snapshots, dreamspace, system_guard, etc.
+    Use this when you need the full trace for debugging or compliance.
+    """
+    base = {
+        "status": "ok",
+        "redis_url": REDIS_URL,
+        "celery_broker_url": CELERY_BROKER_URL,
+        "celery_result_backend": CELERY_RESULT_BACKEND,
+        "main_model": OPENAI_MAIN_MODEL,
+        "fast_model": OPENAI_FAST_MODEL,
+        "legacy_api_mount_path": LEGACY_API_MOUNT_PATH,
+        "legacy_api_mounted": legacy_api_mounted,
+        "legacy_api_loaded": legacy_api_bridge.loaded,
+        "legacy_api_mount_error": legacy_api_bridge.load_error,
+    }
+
+    # Pull the heavy internal snapshots that used to bloat the top-level health
+    try:
+        legacy_api = importlib.import_module("src.api")
+        bootstrap = getattr(legacy_api, "bootstrap_ai_runtime", None)
+        if callable(bootstrap):
+            bootstrap(reason="health_details")
+        runtime_status = legacy_api._build_ai_runtime_status()
+        base.update(runtime_status)
+        base.update({
+            "system_guard": legacy_api.system_guard.snapshot(limit_events=8),
+            "dreamspace": legacy_api.dreamspace.snapshot(limit_dreams=4),
+        })
+    except Exception as exc:
+        base["internal_snapshot_error"] = str(exc)[:200]
+
     return _govern_project_wide_payload(
-        {
-            "status": "ok",
-            "redis_url": REDIS_URL,
-            "celery_broker_url": CELERY_BROKER_URL,
-            "celery_result_backend": CELERY_RESULT_BACKEND,
-            "main_model": OPENAI_MAIN_MODEL,
-            "fast_model": OPENAI_FAST_MODEL,
-            "legacy_api_mount_path": LEGACY_API_MOUNT_PATH,
-            "legacy_api_mounted": legacy_api_mounted,
-            "legacy_api_loaded": legacy_api_bridge.loaded,
-            "legacy_api_mount_error": legacy_api_bridge.load_error,
-        },
+        base,
         action_id="workflow_shell_health_details",
         target="operator_health_details",
         cisiv_stage="verification",

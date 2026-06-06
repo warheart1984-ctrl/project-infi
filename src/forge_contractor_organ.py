@@ -16,10 +16,11 @@ def build_forge_contractor_status() -> dict[str, Any]:
     reachable = False
     health_claim = "asserted"
     health_error = ""
+    live_health: dict[str, Any] = {}
     try:
-        health = forge_client.health()
-        reachable = bool(health)
-        health_claim = str(health.get("claim_label") or "asserted")
+        live_health = forge_client.health() or {}
+        reachable = bool(live_health)
+        health_claim = str(live_health.get("claim_label") or "asserted")
     except Exception as exc:
         health_error = str(exc)[:120]
 
@@ -37,6 +38,7 @@ def build_forge_contractor_status() -> dict[str, Any]:
         "auto_approve_allowed": False,
         "health_claim_label": health_claim,
         "health_error": health_error or None,
+        "live_health": {k: v for k, v in live_health.items() if k in ("status", "service", "storage_root")},
         "cisiv_stage": "implementation",
         "claim_label": "asserted",
         "read_only": True,

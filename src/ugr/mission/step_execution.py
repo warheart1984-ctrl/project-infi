@@ -1,5 +1,7 @@
 """Step execution lifecycle — planned → dispatched → committed."""
 
+# Mythic: Step Execution
+# Engineering: StepExecutionEngine
 from __future__ import annotations
 
 from hashlib import sha256

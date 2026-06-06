@@ -78,6 +78,16 @@ class TestFederationV19Acceptance(unittest.TestCase):
         self.assertEqual(gov_result["status"], "ok", gov_result.get("summary"))
 
         mission_id = gov_result["mission_id"]
+
+        from src.operator_decision_ledger import build_federation_graph, operator_decision_ledger_store
+
+        odl_scope = "tenant:acme"
+        odl_rows = operator_decision_ledger_store.list_events(odl_scope)
+        urg_rows = [r for r in odl_rows if r.get("decision_kind") == "urg_receipt"]
+        self.assertTrue(urg_rows, "expected ODL urg_receipt row after governance mission")
+        self.assertEqual(urg_rows[-1].get("mission_id"), mission_id)
+        fed_graph = build_federation_graph(grant.grant_id, home_scope=odl_scope)
+        self.assertEqual(fed_graph.get("grant_id"), grant.grant_id)
         acme_ledger = (
             self.temp_root
             / "collective-pattern-ledger"

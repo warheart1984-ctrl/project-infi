@@ -12,6 +12,7 @@ spec:
       labels:
         app: platform-api
     spec:
+      serviceAccountName: {{ include "platform-membrane.fullname" . }}-api
       containers:
         - name: api
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -19,7 +20,19 @@ spec:
           command: ["python", "-m", "platform", "serve", "--host", "0.0.0.0", "--port", "8090"]
           ports:
             - containerPort: {{ .Values.api.port }}
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu | quote }}
+              memory: {{ .Values.resources.requests.memory | quote }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu | quote }}
+              memory: {{ .Values.resources.limits.memory | quote }}
           env:
+            - name: PLATFORM_MASTER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "platform-membrane.fullname" . }}-api
+                  key: PLATFORM_MASTER_API_KEY
             - name: PLATFORM_REDIS_URL
               value: {{ .Values.redis.url | quote }}
             - name: PLATFORM_REQUIRE_API_KEY

@@ -8,6 +8,8 @@ It supports runtime verification but does not define runtime truth.
 
 - [`run_mode_eval.py`](./run_mode_eval.py)
   - local evaluation runner
+- [`run_adapter_eval.py`](./run_adapter_eval.py)
+  - base-vs-adapter eval with governed acceptance criteria (v2)
 - [`mode_eval_prompts.json`](./mode_eval_prompts.json)
   - prompt set used by the local runner
 

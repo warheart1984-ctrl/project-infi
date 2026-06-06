@@ -7,22 +7,10 @@ from __future__ import annotations
 from typing import Any
 
 from src.jarvis_memory_board import build_default_memory_controller, build_memory_board_snapshot
-from src.memory_path_registry import build_memory_path_registry_snapshot
+from src.memory_path_registry import BOARD_GOVERNED_PATHS, build_memory_path_registry_snapshot
 
 MODULE_ID = "AAIS-MPG-01"
 ORGAN_VERSION = "memory_path_governance_organ.v1"
-
-BOARD_GOVERNED_PATHS = (
-    "jarvis_memory_board.install",
-    "jarvis_memory_board.snapshot",
-    "memory_smith.curate",
-    "memory_board_enforcer.read",
-    "memory_board_enforcer.mutate",
-    "knowledge_authority.snapshot",
-    "api.jarvis_memory_routes",
-    "jarvis_operator.memory_promotion",
-    "mission_board.attach_memory",
-)
 
 
 def build_memory_path_governance_status() -> dict[str, Any]:
@@ -30,8 +18,9 @@ def build_memory_path_governance_status() -> dict[str, Any]:
     controller = build_default_memory_controller()
     board = build_memory_board_snapshot(controller)
     slots = list(board.get("slots") or [])
-    installed = sum(1 for slot in slots if slot.get("installed"))
-    total_slots = len(slots)
+    active_slots = [slot for slot in slots if slot.get("active")]
+    installed = sum(1 for slot in active_slots if slot.get("installed"))
+    total_slots = len(active_slots)
     registry = build_memory_path_registry_snapshot(
         board_slots_installed=installed,
         board_slots_total=total_slots,

@@ -2,8 +2,35 @@
 
 > **Adaptive Autonomous Intelligence Substrate (AAIS)** — a law-governed Jarvis runtime with inspectable Universal Language (UL) structure, Project Infi admission, and operator-facing surfaces.
 
+**Early adopters:** Knowledge is freely given; trust is earned. Start with the [Early Adopter Charter](docs/operations/EARLY_ADOPTER_CHARTER.md), then run the [Production Operator Runbook](docs/operations/AAIS_PRODUCTION_OPERATOR_RUNBOOK.md) gates on your environment before you call it production.
+
 **New operators start here:** [AAIS Operator Guide](docs/operators/AAIS_OPERATOR_GUIDE.md) — install, keys, start, desktop build (simple, no developer jargon).  
-**Operator workflows & skills:** [Operator Workflow Skills](docs/operators/OPERATOR_WORKFLOW_SKILLS.md) — Cursor skills, HF agent skills, workflow bundles, Organs, Brain sessions, and governed chain execution.
+**Operator workflows & skills:** [Operator Workflow Skills](docs/operators/OPERATOR_WORKFLOW_SKILLS.md) — Cursor skills, HF agent skills, workflow bundles, Organs, Brain sessions, and governed chain execution.  
+**Full pilot stack (Platform + UGR + AAIS):** [Infinity Pilot Early Adopter](docs/operations/INFINITY_PILOT_EARLY_ADOPTER.md) · GA evidence: [INFINITY_PILOT_GA_SIGNOFF](docs/audit/INFINITY_PILOT_GA_SIGNOFF.md)
+
+### Infinity 1 operator product (2026-06)
+
+| Surface | URL | Purpose |
+|---------|-----|---------|
+| **Operator dashboard** | `/operator` | Seam health, monitoring alerts, Infinity-1 console snapshot |
+| Plugins + Organs | `/operator/plugins` | Skill libraries, workflow bundles, chain run |
+| Brain sessions | `/operator/brain` | Proposals, deliberation, accept/reject/defer |
+| Decision ledger | `/operator/ledger` | Governed decision graph (v1 + v2) |
+| Workflow approvals | `/workflows/approvals` | OTEM Level 10 execution gate |
+
+**API:** `GET /api/operator/dashboard/seam-health` · `GET /api/operator/dashboard/monitoring`
+
+**Production verification (run locally):**
+
+```bash
+make production-hardening-gate stack-pilot-gate wave6-transition-gate
+make infinity1-flagship-verification
+make ga-signoff-gate
+```
+
+Windows: same gates via `python .github/scripts/check-production-hardening.py`, `python tools/governance/run_infinity1_flagship_verification.py`, and `python .github/scripts/check-ga-signoff.py --mode fail`.
+
+Baseline posture: **GA-ready** ([checklist](docs/baseline/INFINITY_PILOT_BASELINE_CHECKLIST.md)) — your deployment is production when **your** operators complete [OPERATOR_GA_REVIEW_PROTOCOL](docs/operations/OPERATOR_GA_REVIEW_PROTOCOL.md).
 
 ## What AAIS Is
 

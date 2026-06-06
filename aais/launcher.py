@@ -15,6 +15,18 @@ from pathlib import Path
 import uvicorn
 
 
+def ensure_project_root_on_path(root: Path) -> None:
+    """Ensure the project root is first on sys.path so that
+    `import src.xxx` and `import app.xxx` work reliably regardless of
+    how the process was invoked (uvicorn, -m aais, direct python, Windows, etc).
+    This is critical for the legacy Flask bridge and capability wiring.
+    """
+    root_str = str(root)
+    if root_str not in sys.path:
+        sys.path.insert(0, root_str)
+
+
+
 APP_NAME = "AAIS"
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8000
@@ -197,6 +209,7 @@ def runtime_summary(root: Path, data_dir: Path, app_base: str) -> dict[str, obje
 
 def handle_prepare(args: argparse.Namespace) -> int:
     root = discover_project_root()
+    ensure_project_root_on_path(root)
     static_dir = prepare_frontend_bundle(root, args.app_base, force_build=args.force_build)
     summary = runtime_summary(root, resolve_data_dir(args.data_dir), args.app_base)
     summary["prepared_static_dir"] = str(static_dir)
@@ -206,6 +219,7 @@ def handle_prepare(args: argparse.Namespace) -> int:
 
 def handle_doctor(args: argparse.Namespace) -> int:
     root = discover_project_root()
+    ensure_project_root_on_path(root)
     summary = runtime_summary(root, resolve_data_dir(args.data_dir), args.app_base)
     print(json.dumps(summary, indent=2))
     return 0
@@ -213,6 +227,7 @@ def handle_doctor(args: argparse.Namespace) -> int:
 
 def handle_start(args: argparse.Namespace) -> int:
     root = discover_project_root()
+    ensure_project_root_on_path(root)
     static_dir = prepare_frontend_bundle(root, args.app_base, force_build=args.force_build)
     data_dir = resolve_data_dir(args.data_dir)
     configure_runtime_environment(data_dir=data_dir, static_dir=static_dir, app_base=args.app_base)

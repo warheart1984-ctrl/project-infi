@@ -29,4 +29,4 @@ Infinity Pilot full stack: Platform Membrane v6, UGR Ledger Bridge v1, AAIS oper
 
 ## Claim posture
 
-Pilot readiness: **asserted** with local `stack-pilot-gate`. GA: **rejected** until PLAT-PILOT-D1 closed.
+Pilot readiness: **proven** with local `stack-pilot-gate`. GA: **proven** as of 2026-06-06 ([INFINITY_PILOT_GA_SIGNOFF.md](../audit/INFINITY_PILOT_GA_SIGNOFF.md)).

@@ -2,7 +2,7 @@
 
 Project: Infinity Pilot (Platform Membrane v6 + UGR + AAIS/Jarvis)  
 Owner: platform + ugr  
-Last updated (UTC): 2026-05-31  
+Last updated (UTC): 2026-06-06  
 Review cadence: monthly
 
 ## 1) Required Blueprint Documents
@@ -19,7 +19,7 @@ Review cadence: monthly
 - [x] Platform runbook — [OPERATIONAL_RUNBOOK.md](../subsystems/platform/OPERATIONAL_RUNBOOK.md)
 - [x] Early adopter onboarding — [INFINITY_PILOT_EARLY_ADOPTER.md](../operations/INFINITY_PILOT_EARLY_ADOPTER.md)
 - [x] Pilot deploy proof — [PLATFORM_PILOT_DEPLOY_PROOF_BUNDLE.md](../proof/platform/PLATFORM_PILOT_DEPLOY_PROOF_BUNDLE.md)
-- [ ] Monitoring/alerting (pilot: manual health checks only)
+- [x] Monitoring/alerting — Infinity-1 dashboard `infinity1-monitoring-alerts` panel
 - [x] Troubleshooting — OPERATIONAL_RUNBOOK failsafe section
 - [x] Release procedure — pilot compose + `make stack-pilot-gate`
 
@@ -35,7 +35,7 @@ Review cadence: monthly
 
 | Debt ID | Description | Owner | Severity | Due Date | Status |
 |---------|-------------|-------|----------|----------|--------|
-| PLAT-PILOT-D1 | Multi-tenant K8s hardening + isolation proof | ops | high | TBD | open |
+| PLAT-PILOT-D1 | Multi-tenant K8s hardening + isolation proof | ops | high | 2026-06-06 | closed |
 | PLAT-D8 | Full OIDC IdP integration per org | platform | medium | TBD | partial |
 | UGR-D5 | Cross-physical-machine trust matrix | ops | medium | TBD | open |
 | UGR-D7 | Neo4j v2 graph backend | architect | low | TBD | open |
@@ -43,6 +43,7 @@ Review cadence: monthly
 ## 5) Sign-Off
 
 - [ ] Not ready
-- [x] Pilot-ready (governed early adopter — not GA)
+- [ ] Pilot-ready (governed early adopter — not GA)
+- [x] GA-ready (full general availability — see [INFINITY_PILOT_GA_SIGNOFF.md](../audit/INFINITY_PILOT_GA_SIGNOFF.md))
 
-Notes: Production pilot = governed deployment with proven local gates; GA blocked on PLAT-PILOT-D1.
+Notes: GA admitted 2026-06-06 after PLAT-PILOT-D1 closure and production deploy sign-off. Post-GA: PLAT-GA-D2 legacy bridge removal.

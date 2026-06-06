@@ -1,5 +1,7 @@
 """Beatbox downstream lane capability adapter."""
 
+# Mythic: Beatbox Score
+# Engineering: BeatboxScoreEngine
 from __future__ import annotations
 
 from typing import Any

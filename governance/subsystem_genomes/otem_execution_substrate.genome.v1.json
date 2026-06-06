@@ -26,9 +26,22 @@
     ]
   },
   "proof": {
+    "bundles": ["docs/proof/platform/OTEM_EXECUTION_SUBSTRATE_V1_PROOF.md"],
     "posture": "governed"
   },
   "lineage": {
-    "parents": ["coding_organs_stack", "otem_bounded_organ"]
+    "parents": ["coding_organs_stack", "otem_bounded_organ"],
+    "children": []
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "otem-execution-substrate-v1",
+    "notes": "OTEM execution substrate governed wave"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
   }
 }

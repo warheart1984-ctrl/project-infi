@@ -1,5 +1,7 @@
 """UGR rewards and discovery API route handlers."""
 
+# Mythic: Rewards API Routes
+# Engineering: RewardsApiRoutesEngine
 from __future__ import annotations
 
 import os

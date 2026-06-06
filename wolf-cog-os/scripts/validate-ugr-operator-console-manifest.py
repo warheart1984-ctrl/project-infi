@@ -18,8 +18,13 @@ REQUIRED = [
     "docs/contracts/UGR_OPERATOR_CONSOLE_CONTRACT.md",
     "docs/proof/ugr/UGR_OPERATOR_CONSOLE_PROOF.md",
     "frontend/src/pages/OperatorConsole.jsx",
-    "frontend/src/components/operator/UGRCloudForgeConsoleCard.jsx",
+    "frontend/src/components/UGRCloudForgeConsoleCard.jsx",
+    "src/operator_infinity1_dashboard.py",
+    "docs/contracts/INFINITY1_OPERATOR_DASHBOARD_CONTRACT.md",
+    "docs/proof/platform/INFINITY1_OPERATOR_DASHBOARD_V1_PROOF.md",
     "tests/test_ugr_operator_console.py",
+    "tests/test_operator_infinity1_dashboard.py",
+    "frontend/src/components/operator/MonitoringAlertsPanel.jsx",
 ]
 
 

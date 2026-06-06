@@ -2,6 +2,9 @@
 
 Governed full-stack pilot: **Platform Membrane** (ops) + **UGR** (cognition/proof) + **AAIS/Jarvis** (operator executive).
 
+**Charter:** [EARLY_ADOPTER_CHARTER.md](./EARLY_ADOPTER_CHARTER.md) — knowledge is freely given; trust is earned.  
+**Production runbook:** [AAIS_PRODUCTION_OPERATOR_RUNBOOK.md](./AAIS_PRODUCTION_OPERATOR_RUNBOOK.md) — exact steps for tiers A/B/C and gate blocks.
+
 ## Prerequisites
 
 - Docker 24+, Docker Compose v2
@@ -47,14 +50,25 @@ Platform console (if frontend built): `/platform`
 
 ```bash
 make stack-pilot-gate
+make production-hardening-gate
+make plat-pilot-k8s-gate
+make wave6-transition-gate
+make infinity1-flagship-verification
+make ga-signoff-gate
 ```
+
+Record output and complete [OPERATOR_GA_REVIEW_PROTOCOL.md](./OPERATOR_GA_REVIEW_PROTOCOL.md) when claiming GA-ready posture locally.
+
+## Operator dashboard (Infinity 1)
+
+After AAIS is up: http://127.0.0.1:8000/operator — seam health and monitoring panels. See [AAIS_PRODUCTION_OPERATOR_RUNBOOK.md](./AAIS_PRODUCTION_OPERATOR_RUNBOOK.md) §3.3.
 
 ## Support
 
 See [INFINITY_PILOT_SLA_ORIENTATION.md](./INFINITY_PILOT_SLA_ORIENTATION.md). Escalation: platform ops owner + constitutional review for MA-13 class violations.
 
-## Debt (known limits)
+## Posture and debt
 
-- Not GA — see [INFINITY_PILOT_BASELINE_CHECKLIST.md](../baseline/INFINITY_PILOT_BASELINE_CHECKLIST.md)
-- PLAT-D8 OIDC partial; PLAT-PILOT-D1 K8s multi-tenant hardening open
-- UGR-D5 cross-machine matrix open
+- Repository baseline: **GA-ready** — [INFINITY_PILOT_BASELINE_CHECKLIST.md](../baseline/INFINITY_PILOT_BASELINE_CHECKLIST.md) · [INFINITY_PILOT_GA_SIGNOFF.md](../audit/INFINITY_PILOT_GA_SIGNOFF.md)
+- PLAT-PILOT-D1 K8s isolation: **closed** — [PLATFORM_K8S_ISOLATION_PROOF.md](../proof/platform/PLATFORM_K8S_ISOLATION_PROOF.md)
+- Open: PLAT-D8 OIDC partial; UGR-D5 cross-machine matrix; OTEM cross-restart durability (phase 2)

@@ -28,9 +28,22 @@
     ]
   },
   "proof": {
+    "bundles": ["docs/proof/platform/ARIS_STANDALONE_SERVICE_V1_PROOF.md"],
     "posture": "governed"
   },
   "lineage": {
-    "parents": ["aris_boundary_organ", "aris_integration_organ"]
+    "parents": ["aris_boundary_organ", "aris_integration_organ"],
+    "children": []
+  },
+  "activation": {
+    "order": 1,
+    "batch_id": "aris-standalone-v1",
+    "notes": "ARIS standalone service governed wave"
+  },
+  "retirement": {
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+  },
+  "mutation": {
+    "history": []
   }
 }

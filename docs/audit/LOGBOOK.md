@@ -4,6 +4,29 @@ This is the canonical logbook for major project-alignment changes in `AAIS-main`
 
 Every major entry should name its CISIV stage explicitly.
 
+## 2026-06-06
+
+### Full GA Blocker Closure — Production deploy + K8s + monitoring
+- CISIV stage: `verification`
+- scope: production-hardening-gate, plat-pilot-k8s-gate, wave6-transition-gate, monitoring dashboard v1.1, INFINITY_PILOT_GA_SIGNOFF
+- outcome: PLAT-PILOT-D1 closed; baseline GA-ready; SLA GA proven
+- verification note: `make production-hardening-gate stack-pilot-gate plat-pilot-k8s-gate wave6-transition-gate ga-signoff-gate`
+- logbook entry by: cursor-agent full-ga-blocker-closure
+
+### Seam Stress Runtime Closure + Infinity-1 Operator Dashboard
+- CISIV stage: `verification`
+- scope: SEAM_STRESS_RUN executive summary, operator sign-off, Wave 5 governance closure (13/13 flagship PASS), Infinity-1 dashboard snapshot v1.2 on `/operator`
+- outcome: Runtime seams proven closed (187 probes, 559 live requests); governance Wave 5 green; unified operator landing page with seam health, workflow stack, ledger, brain readouts
+- verification note: `python tools/stress/seam_discovery_stress.py`; `python tools/governance/run_infinity1_flagship_verification.py`; `pytest tests/test_operator_infinity1_dashboard.py tests/test_ugr_operator_console.py -q`
+- logbook entry by: cursor-agent seam-stress-closure
+
+### Infinity 1 Operator Seam + ODL Accountability — combined implementation
+- CISIV stage: `implementation` + `verification`
+- scope: Phase 1 plug adapter runtime, brain layer, organs/workflows APIs, OperatorPlugins/Brain UI; Phase 2 operator decision ledger v1+v2, temporal replay ingest, OperatorLedger/TemporalReplay UI, emit hooks (pipeline/OTEM/URG/plug/brain)
+- outcome: Runnable operator product seam with accountability spine — `/api/operator/plugins/*`, `/api/operator/brain/*`, `/api/operator/ledger/*`, `/api/operator/replay/*`
+- verification note: `make operator-workflow-runtime-gate`; `make operator-decision-ledger-gate`; `make operator-decision-ledger-v2-graph-gate`; 19 pytest targets green
+- logbook entry by: cursor-agent infinity1-odl-combined
+
 ## 2026-06-03
 
 ### Subsystem MVP + Governed Integration Wave — Full Matrix Closure
@@ -4155,5 +4178,23 @@ Every major entry should name its CISIV stage explicitly.
 
 - CISIV stage: `verification`
 - scope: Promotion Engine full-auto — `media_processor_bridge_organ` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Plug Adapter Runtime — MVP Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `plug_adapter_runtime` `mvp` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `mvp`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Operator Decision Ledger — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `operator_decision_ledger` `governed` via Alt-4 runtime organ
+- outcome: genome `identity.stage` and `proof.posture` set to `governed`
+- verification note: `make genome-gate`; `make alt4-gate`
+### Temporal Replay Machine — Governed Promotion (Alt-4 Runtime)
+
+- CISIV stage: `verification`
+- scope: Promotion Engine full-auto — `temporal_replay_machine` `governed` via Alt-4 runtime organ
 - outcome: genome `identity.stage` and `proof.posture` set to `governed`
 - verification note: `make genome-gate`; `make alt4-gate`

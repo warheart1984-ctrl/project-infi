@@ -214,6 +214,13 @@
       "grandfathered": true
     },
     {
+      "gene": "dreamspace_organ",
+      "legacy_path": "src/dreamspace_organ.py",
+      "engineering_class": "DreamspaceOrganGate",
+      "mythic_label": "Dreamspace Organ",
+      "grandfathered": true
+    },
+    {
       "gene": "document_vision_organ",
       "legacy_path": "src/document_vision_organ.py",
       "engineering_class": "DocumentVisionEngine",
@@ -246,6 +253,13 @@
       "legacy_path": "src/forge_eval_organ.py",
       "engineering_class": "ForgeEvalEngine",
       "mythic_label": "Forge Eval Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "game_front_door_organ",
+      "legacy_path": "src/game_front_door_organ.py",
+      "engineering_class": "GameFrontDoorPosture",
+      "mythic_label": "Game Front Door",
       "grandfathered": true
     },
     {
@@ -564,6 +578,20 @@
       "grandfathered": true
     },
     {
+      "gene": "media_processor_bridge_organ",
+      "legacy_path": "src/media_processor_bridge_organ.py",
+      "engineering_class": "MediaProcessorBridgePosture",
+      "mythic_label": "Media Processor Bridge Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "media_processor_organ",
+      "legacy_path": "src/media_processor_organ.py",
+      "engineering_class": "MediaProcessorOrganGate",
+      "mythic_label": "Media Processor Organ",
+      "grandfathered": true
+    },
+    {
       "gene": "memory_bank_surface_organ",
       "legacy_path": "src/memory_bank_surface_organ.py",
       "engineering_class": "MemoryBankSurfaceInterface",
@@ -589,6 +617,13 @@
       "legacy_path": "src/memory_smith_organ.py",
       "engineering_class": "MemorySmithEngine",
       "mythic_label": "Memory Smith Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "movie_renderer_lane_organ",
+      "legacy_path": "src/movie_renderer_lane_organ.py",
+      "engineering_class": "MovieRendererLanePosture",
+      "mythic_label": "Movie Renderer Lane",
       "grandfathered": true
     },
     {
@@ -963,6 +998,13 @@
       "grandfathered": true
     },
     {
+      "gene": "story_forge_launcher_organ",
+      "legacy_path": "src/story_forge_launcher_organ.py",
+      "engineering_class": "StoryForgeLauncherPosture",
+      "mythic_label": "Story Forge Launcher",
+      "grandfathered": true
+    },
+    {
       "gene": "story_forge_lane_organ",
       "legacy_path": "src/story_forge_lane_organ.py",
       "engineering_class": "StoryForgeLaneInterface",
@@ -1072,6 +1114,13 @@
       "legacy_path": "src/workflow_shell_organ.py",
       "engineering_class": "WorkflowShellEngine",
       "mythic_label": "Workflow Shell Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "text_game_to_video_organ",
+      "legacy_path": "src/text_game_to_video_organ.py",
+      "engineering_class": "TextGameToVideoFrontDoor",
+      "mythic_label": "Text-Game-to-Video Front Door",
       "grandfathered": true
     },
     {

@@ -1,5 +1,7 @@
 """URG mission runtime — Governed Composite Mission v1.2."""
 
+# Mythic: Mission Runtime
+# Engineering: MissionRuntimeEngine
 from __future__ import annotations
 
 import os

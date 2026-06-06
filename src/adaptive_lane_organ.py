@@ -140,9 +140,15 @@ def lane_authorizes_capability(
     capability_id: str | None,
     *,
     authority_lane: str | None = None,
+    mission_context: dict | None = None,
 ) -> LaneResolution:
     """When a gene lane declares capabilities, require authority alignment for policy caps."""
     authority = str(authority_lane or build_operator_profile().get("authority_lane") or "operator")
+    if isinstance(mission_context, dict):
+        active = mission_context.get("active_mission")
+        if isinstance(active, dict) and str(active.get("status") or "") == "active":
+            mission_lane = str(active.get("lane_id") or active.get("preset_id") or "operator")
+            authority = mission_lane or authority
     if not resolution.capabilities or not capability_id:
         return resolution
     cap = capability_id.replace("-", "_").strip().lower()

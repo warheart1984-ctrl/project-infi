@@ -2,6 +2,8 @@
 
 This is the consolidated onboarding path for Project Infinity / AAIS. It stitches together the README quick start, Infinity Pilot Docker bootstrap, and pointers to advanced subsystems.
 
+**Running like production?** Read [EARLY_ADOPTER_CHARTER.md](./EARLY_ADOPTER_CHARTER.md) and follow [AAIS_PRODUCTION_OPERATOR_RUNBOOK.md](./AAIS_PRODUCTION_OPERATOR_RUNBOOK.md) after Tier 1 — knowledge is freely given; trust is earned through gates and sign-off.
+
 For constitutional law and proof requirements, see the root README governance section. For subsystem depth, follow links at the end.
 
 ---
@@ -70,8 +72,10 @@ Developer alternative: `make run` (uvicorn on `:8000`).
 | Surface | URL |
 |---|---|
 | Health | http://127.0.0.1:8000/health |
+| Operator dashboard | http://127.0.0.1:8000/operator |
 | App shell | http://127.0.0.1:8000/app |
 | Jarvis console | http://127.0.0.1:8000/app/jarvis |
+| Workflow approvals | http://127.0.0.1:8000/workflows/approvals |
 | Jarvis API | `/legacy_api` (Flask, bridged through FastAPI) |
 
 ### 5. Verify with curl
@@ -219,8 +223,10 @@ Read [SECURITY.md](../../SECURITY.md) before any internet-facing deployment.
 
 ## Next Reading
 
-1. [README.md](../../README.md) — architecture and governance summary
-2. [docs/README.md](../README.md) — documentation map
-3. [docs/runtime/AAIS_RUNTIME_GUIDE.md](../runtime/AAIS_RUNTIME_GUIDE.md) — runtime handbook
-4. [docs/runtime/AAIS_SUBSYSTEM_SPEC.md](../runtime/AAIS_SUBSYSTEM_SPEC.md) — subsystem status map
-5. [CHANGELOG.md](../../CHANGELOG.md) — release history
+1. [AAIS_PRODUCTION_OPERATOR_RUNBOOK.md](./AAIS_PRODUCTION_OPERATOR_RUNBOOK.md) — production tiers, gates, rollback
+2. [EARLY_ADOPTER_CHARTER.md](./EARLY_ADOPTER_CHARTER.md) — early adopter philosophy
+3. [README.md](../../README.md) — architecture and governance summary
+4. [docs/README.md](../README.md) — documentation map
+5. [docs/runtime/AAIS_RUNTIME_GUIDE.md](../runtime/AAIS_RUNTIME_GUIDE.md) — runtime handbook
+6. [docs/runtime/AAIS_SUBSYSTEM_SPEC.md](../runtime/AAIS_SUBSYSTEM_SPEC.md) — subsystem status map
+7. [CHANGELOG.md](../../CHANGELOG.md) — release history

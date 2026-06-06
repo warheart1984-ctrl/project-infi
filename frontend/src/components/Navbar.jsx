@@ -19,7 +19,10 @@ function Navbar() {
   const navItems = isJarvisRoute
     ? [
         { type: 'route', to: '/jarvis', label: 'Console' },
-        { type: 'route', to: '/operator', label: 'UGR / Forge' },
+        { type: 'route', to: '/operator', label: 'Dashboard' },
+        { type: 'route', to: '/operator/plugins', label: 'Plugins' },
+        { type: 'route', to: '/operator/brain', label: 'Brain' },
+        { type: 'route', to: '/operator/ledger', label: 'Ledger' },
         { type: 'route', to: '/platform', label: 'Platform Ops' },
         { type: 'route', to: '/jarvis/repo-manager', label: 'Repo Manager' },
         { type: 'route', to: '/memory', label: 'Memory Bank' },

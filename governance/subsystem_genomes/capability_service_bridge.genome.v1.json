@@ -86,6 +86,8 @@
       "launcher_organ",
       "mechanic_handoff_organ",
       "media_processor_bridge_organ",
+      "media_processor_family",
+      "plug_adapter_runtime",
       "operator_cognition_coherence_fabric",
       "operator_workspace_organ",
       "phase_gate_organ",

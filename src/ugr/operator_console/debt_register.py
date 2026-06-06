@@ -131,8 +131,16 @@ DEBT_REGISTER: list[dict[str, Any]] = [
         "item": "Infinity Pilot K8s multi-tenant production hardening",
         "severity": "high",
         "owner": "ops",
+        "status": "closed",
+        "claim_status": "proven",
+    },
+    {
+        "id": "PLAT-GA-D2",
+        "item": "Full WSGI legacy bridge removal and single-path FastAPI Jarvis",
+        "severity": "medium",
+        "owner": "platform",
         "status": "open",
-        "claim_status": "rejected",
+        "claim_status": "asserted",
     },
     {
         "id": "PLAT-PILOT-D2",

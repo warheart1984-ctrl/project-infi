@@ -127,7 +127,7 @@ Overrides expire after single request unless renewed.
 - `rail.cache_law_mismatch` count
 - Immune `immune.elevated` correlated with rail domain
 
-Alerts are **asserted** until wired to operator dashboard.
+Alerts are **proven** — wired to Infinity-1 operator dashboard (`infinity1-monitoring-alerts` panel; `GET /api/operator/dashboard/monitoring`).
 
 ## Related surfaces
 

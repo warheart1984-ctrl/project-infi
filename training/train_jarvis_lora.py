@@ -3,9 +3,20 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
+import subprocess
+import sys
+import uuid
+from datetime import datetime, timezone
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from src.jarvis_lora_training_validator import validate_training_run
 
 import torch
 from datasets import load_dataset
@@ -16,6 +27,8 @@ from trl import SFTConfig, SFTTrainer
 
 
 DEFAULT_BASE_MODEL = "Qwen/Qwen2.5-1.5B-Instruct"
+ADAPTER_METADATA_VERSION = "jarvis_lora_adapter_metadata.v1"
+TRAINING_RUN_VERSION = "jarvis_lora_training_run.v1"
 
 
 def _should_prefer_local_files():
@@ -86,6 +99,128 @@ def _load_model(model_source: str, use_4bit: bool):
     return model
 
 
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return f"sha256:{digest.hexdigest()}"
+
+
+def _git_commit_best_effort() -> str | None:
+    try:
+        completed = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    commit = completed.stdout.strip()
+    return commit or None
+
+
+def _load_dataset_manifest(dataset_path: Path) -> dict:
+    manifest_path = dataset_path.with_name("dataset_manifest.json")
+    if not manifest_path.exists():
+        return {
+            "sources": ["seed"],
+            "admission_ids": [],
+        }
+    return json.loads(manifest_path.read_text(encoding="utf-8"))
+
+
+def _load_run_envelope(path: Path | None) -> dict | None:
+    if path is None:
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _build_training_run_envelope(
+    *,
+    run_id: str,
+    args,
+    dataset_path: Path,
+    example_count: int,
+    manifest: dict,
+    hyperparams: dict,
+    status: str,
+) -> dict:
+    admission_ids = list(manifest.get("admission_ids") or [])
+    return {
+        "jarvis_lora_training_run_version": TRAINING_RUN_VERSION,
+        "run_id": run_id,
+        "created_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+        "status": status,
+        "base_model": args.base_model,
+        "dataset": {
+            "path": str(dataset_path),
+            "example_count": example_count,
+            "sources": list(manifest.get("sources") or ["seed"]),
+            "admission_ids": admission_ids,
+        },
+        "hyperparams": hyperparams,
+        "output_dir": args.output_dir,
+        "authority": {
+            "proposed_by": "operator",
+            "executed_by": "train_jarvis_lora.py",
+        },
+    }
+
+
+def _validate_training_run_envelope(envelope: dict) -> None:
+    errors = validate_training_run(envelope, label="training_run")
+    if errors:
+        joined = "; ".join(errors)
+        raise ValueError(f"Invalid training run envelope: {joined}")
+
+
+def _build_hyperparams(args, use_4bit: bool) -> dict:
+    return {
+        "epochs": args.epochs,
+        "learning_rate": args.learning_rate,
+        "max_length": args.max_length,
+        "lora_rank": args.lora_rank,
+        "lora_alpha": args.lora_alpha,
+        "lora_dropout": args.lora_dropout,
+        "per_device_batch_size": args.per_device_batch_size,
+        "gradient_accumulation_steps": args.gradient_accumulation_steps,
+        "use_4bit": use_4bit,
+    }
+
+
+def _build_adapter_metadata(
+    *,
+    run_id: str,
+    args,
+    dataset_path: Path,
+    example_count: int,
+    manifest: dict,
+    hyperparams: dict,
+) -> dict:
+    admission_ids = list(manifest.get("admission_ids") or [])
+    return {
+        "jarvis_lora_adapter_metadata_version": ADAPTER_METADATA_VERSION,
+        "run_id": run_id,
+        "created_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+        "base_model": args.base_model,
+        "dataset": {
+            "path": str(dataset_path),
+            "example_count": example_count,
+            "sources": list(manifest.get("sources") or ["seed"]),
+            "admission_ids": admission_ids,
+        },
+        "hyperparams": hyperparams,
+        "output_dir": args.output_dir,
+        "dataset_checksum": _sha256_file(dataset_path),
+        "git_commit": _git_commit_best_effort(),
+        "promotion_status": "draft",
+        "eval_report_path": None,
+        "admission_ids": admission_ids,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description="Train a Jarvis LoRA adapter.")
     parser.add_argument(
@@ -102,6 +237,11 @@ def main():
         "--output-dir",
         default="training/out/jarvis-qwen-lora",
         help="Where to save checkpoints and the final adapter.",
+    )
+    parser.add_argument(
+        "--run-envelope",
+        default=None,
+        help="Optional jarvis_lora_training_run.v1 envelope JSON path.",
     )
     parser.add_argument("--epochs", type=float, default=3.0)
     parser.add_argument("--max-steps", type=int, default=-1)
@@ -127,9 +267,27 @@ def main():
         )
 
     dataset = load_dataset("json", data_files=str(dataset_path), split="train")
+    manifest = _load_dataset_manifest(dataset_path)
+    use_4bit = not args.disable_4bit
+    hyperparams = _build_hyperparams(args, use_4bit=use_4bit)
+
+    run_envelope = _load_run_envelope(Path(args.run_envelope)) if args.run_envelope else None
+    run_id = str((run_envelope or {}).get("run_id") or uuid.uuid4())
+    if run_envelope is None:
+        run_envelope = _build_training_run_envelope(
+            run_id=run_id,
+            args=args,
+            dataset_path=dataset_path,
+            example_count=len(dataset),
+            manifest=manifest,
+            hyperparams=hyperparams,
+            status="proposed",
+        )
+    _validate_training_run_envelope(run_envelope)
+
     model_source = _resolve_model_source(args.base_model)
     tokenizer = _load_tokenizer(model_source)
-    model = _load_model(model_source, use_4bit=not args.disable_4bit)
+    model = _load_model(model_source, use_4bit=use_4bit)
     use_bf16, use_fp16 = _resolve_precision_flags()
 
     peft_config = LoraConfig(
@@ -178,19 +336,28 @@ def main():
     trainer.model.save_pretrained(final_dir)
     tokenizer.save_pretrained(final_dir)
 
-    metadata = {
-        "base_model": args.base_model,
-        "dataset": str(dataset_path),
-        "examples": len(dataset),
-        "epochs": args.epochs,
-        "learning_rate": args.learning_rate,
-        "max_length": args.max_length,
-    }
+    metadata = _build_adapter_metadata(
+        run_id=run_id,
+        args=args,
+        dataset_path=dataset_path,
+        example_count=len(dataset),
+        manifest=manifest,
+        hyperparams=hyperparams,
+    )
     with (final_dir / "adapter_metadata.json").open("w", encoding="utf-8") as handle:
         json.dump(metadata, handle, indent=2)
 
+    completed_envelope = dict(run_envelope)
+    completed_envelope["status"] = "completed"
+    with (final_dir / "training_run.json").open("w", encoding="utf-8") as handle:
+        json.dump(completed_envelope, handle, indent=2)
+
     print(f"Saved final adapter to {final_dir}")
-    print("To use it in AAIS, set AAIS_TEXT_ADAPTER_PATH to that folder.")
+    print(f"Saved training run envelope to {final_dir / 'training_run.json'}")
+    print("Promotion requires eval, operator approval, and env vars.")
+    print("Set AAIS_TEXT_MODEL_NAME to match base_model before loading the adapter.")
+    print(f"Example: $env:AAIS_TEXT_MODEL_NAME=\"{args.base_model}\"")
+    print(f"Example: $env:AAIS_TEXT_ADAPTER_PATH=\"{final_dir}\"")
 
 
 if __name__ == "__main__":
