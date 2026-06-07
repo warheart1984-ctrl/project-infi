@@ -101,17 +101,18 @@ def execute_game_front_door_admit(
     root: Path | None = None,
 ) -> dict[str, Any]:
     """Operator-gated session flag + bridge admission check."""
-    root = root or Path(__file__).resolve().parents[2]
+    runtime_root = root or Path(__file__).resolve().parents[2]
+    repo_root = Path(__file__).resolve().parents[2]
     payload = dict(args or {})
     session_id = _clean_source_ref(payload.get("session_id"))
     operator_ack = bool(payload.get("operator_ack") or payload.get("operator_gated_ack"))
-    engine = root / "external/story_forge/src/story_forge/engine.py"
+    engine = repo_root / "external/story_forge/src/story_forge/engine.py"
     admitted = engine.is_file() and bool(session_id) and operator_ack
     engine_status = None
     if admitted:
         import sys
 
-        sf_src = root / "external/story_forge/src"
+        sf_src = repo_root / "external/story_forge/src"
         if sf_src.is_dir() and str(sf_src) not in sys.path:
             sys.path.insert(0, str(sf_src))
         try:
@@ -120,6 +121,19 @@ def execute_game_front_door_admit(
             engine_status = {"engine_class": StoryForgeEngine.__name__, "session_id": session_id}
         except Exception as exc:
             engine_status = {"engine_error": str(exc)[:200]}
+    lane_result = None
+    prompt = _clean_source_ref(payload.get("prompt") or payload.get("text"))
+    if admitted and prompt:
+        lane_result = execute_text_to_3d_world_lane_route(
+            {
+                "prompt": prompt,
+                "seed": payload.get("seed"),
+                "session_id": session_id,
+                "operator_ack": operator_ack,
+                "export_playable": payload.get("export_playable", True),
+            },
+            root=runtime_root,
+        )
     return {
         "ok": admitted,
         "organ": "game_front_door_organ",
@@ -128,7 +142,14 @@ def execute_game_front_door_admit(
         "front_door_active": admitted,
         "operator_gated": True,
         "engine_status": engine_status,
-        "proposal_only": not (admitted and engine_status and "engine_class" in engine_status),
+        "lane_result": lane_result,
+        "proposal_only": not (
+            admitted
+            and (
+                (engine_status and "engine_class" in engine_status and not prompt)
+                or (lane_result and lane_result.get("ok"))
+            )
+        ),
         "claim_label": "asserted" if admitted else "blocked",
         "message": "session admitted" if admitted else "session_id and operator_ack required",
     }
@@ -139,20 +160,82 @@ def execute_text_to_3d_world_lane_route(
     *,
     root: Path | None = None,
 ) -> dict[str, Any]:
-    """Read-only world-lane posture; returns not_configured until lane is live."""
-    root = root or Path(__file__).resolve().parents[2]
-    lane = root / "external/story_forge/src/story_forge/text_to_3d_world_lane.py"
-    configured = bool((args or {}).get("force_configured")) and lane.is_file()
+    """Operator-gated deterministic text-to-3D world-pack generation route."""
+    runtime_root = root or Path(__file__).resolve().parents[2]
+    repo_root = Path(__file__).resolve().parents[2]
+    payload = dict(args or {})
+    prompt = _clean_source_ref(payload.get("prompt") or payload.get("text") or payload.get("source_ref"))
+    if not prompt:
+        return {
+            "ok": False,
+            "organ": "text_to_3d_world_lane_organ",
+            "action": "world_lane_route",
+            "lane_module_present": True,
+            "route_status": "blocked",
+            "aais_live_lane": False,
+            "proposal_only": True,
+            "claim_label": "blocked",
+            "message": "prompt required",
+        }
+    operator_ack = bool(payload.get("operator_ack") or payload.get("operator_gated_ack"))
+    if not operator_ack:
+        return {
+            "ok": False,
+            "organ": "text_to_3d_world_lane_organ",
+            "action": "world_lane_route",
+            "lane_module_present": True,
+            "route_status": "blocked",
+            "aais_live_lane": False,
+            "proposal_only": True,
+            "claim_label": "blocked",
+            "message": "operator_ack required",
+        }
+    import sys
+
+    sf_src = repo_root / "external/story_forge/src"
+    if sf_src.is_dir() and str(sf_src) not in sys.path:
+        sys.path.insert(0, str(sf_src))
+    from story_forge.text_to_3d_game_pipeline import build_text_to_3d_world_pack
+
+    output_root = runtime_root / ".runtime" / "story_forge" / "text_to_3d_world"
+    result = build_text_to_3d_world_pack(
+        prompt=prompt,
+        seed=payload.get("seed"),
+        session_id=payload.get("session_id") or payload.get("sessionId"),
+        output_root=output_root,
+        export_playable=payload.get("export_playable", True) is not False,
+    )
+    if not result.get("ok"):
+        return {
+            "ok": False,
+            "organ": "text_to_3d_world_lane_organ",
+            "action": "world_lane_route",
+            "lane_module_present": True,
+            "route_status": "blocked",
+            "aais_live_lane": False,
+            "proposal_only": True,
+            "claim_label": "blocked",
+            "message": result.get("message", "world lane generation blocked"),
+        }
+    world_pack_path = Path(result["world_pack_path"])
     return {
         "ok": True,
         "organ": "text_to_3d_world_lane_organ",
         "action": "world_lane_route",
-        "lane_module_present": lane.is_file(),
-        "route_status": "configured" if configured else "not_configured",
-        "aais_live_lane": configured,
-        "proposal_only": True,
+        "lane_id": "lane.text_to_3d_world",
+        "lane_module_present": True,
+        "route_status": "configured",
+        "aais_live_lane": True,
+        "proposal_only": False,
+        "world_id": result["world_id"],
+        "world_spec_ref": str(world_pack_path / "world.spec.json"),
+        "gameplay_spec_ref": str(world_pack_path / "gameplay.spec.json"),
+        "scene_manifest_ref": str(world_pack_path / "scene.manifest.json"),
+        "world_pack_ref": str(world_pack_path),
+        "playable_ref": str(world_pack_path / "index.html") if result["playable_manifest"].get("entrypoint") else None,
+        "receipt": result["receipt"],
         "claim_label": "asserted",
-        "message": "world lane route stub (not_configured)" if not configured else "world lane stub route",
+        "message": "world pack generated",
     }
 
 

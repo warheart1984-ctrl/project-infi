@@ -25,10 +25,11 @@ def execute_text_to_3d_world_lane_route(
 def build_text_to_3d_world_lane_status(*, root: Path | None = None) -> dict[str, Any]:
     root = root or Path(__file__).resolve().parents[1]
     lane = root / "external/story_forge/src/story_forge/text_to_3d_world_lane.py"
+    pipeline = root / "external/story_forge/src/story_forge/text_to_3d_game_pipeline.py"
     genome = root / "governance/subsystem_genomes/text_to_3d_world_lane_organ.genome.v1.json"
     proof = root / "docs/proof/storyforge/TEXT_TO_3D_WORLD_LANE_ORGAN_EXECUTION_V1_PROOF.md"
     present = lane.is_file()
-    execution_ready = present and proof.is_file()
+    execution_ready = present and pipeline.is_file() and proof.is_file()
     summary = f"lane={LANE_ID};module={int(present)};exec={int(execution_ready)}"[:128]
     return {
         "text_to_3d_world_lane_organ_version": ORGAN_VERSION,
@@ -36,13 +37,14 @@ def build_text_to_3d_world_lane_status(*, root: Path | None = None) -> dict[str,
         "status_summary": summary,
         "lane_id": LANE_ID,
         "lane_module_present": present,
+        "pipeline_module_present": pipeline.is_file(),
         "parent_genome_present": genome.is_file(),
         "execution_path_ready": execution_ready,
-        "aais_live_lane": False,
-        "route_status": "not_configured",
+        "aais_live_lane": execution_ready,
+        "route_status": "configured" if execution_ready else "not_configured",
         "operator_gated": True,
         "bridge_safe": True,
-        "proposal_only": True,
+        "proposal_only": not execution_ready,
         "cisiv_stage": "implementation",
         "claim_label": "asserted",
         "read_only": True,
