@@ -77,7 +77,7 @@ Manual start (venv already installed): `.venv\Scripts\python.exe -m aais start -
 
 **Verify locally (optional):** `python tools/governance/run_infinity1_flagship_verification.py` · `make flagship-chaos-stack`
 
-**Deeper docs:** [Operator Guide](docs/operators/AAIS_OPERATOR_GUIDE.md) · [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md) · [Workflow Skills](docs/operators/OPERATOR_WORKFLOW_SKILLS.md) · [Infinity Pilot (Docker)](docs/operations/INFINITY_PILOT_EARLY_ADOPTER.md)
+**Deeper docs:** [Operator Guide](docs/operators/AAIS_OPERATOR_GUIDE.md) · [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md) · [Workflow Skills](docs/operators/OPERATOR_WORKFLOW_SKILLS.md) · [Infinity Pilot (Docker)](docs/operations/INFINITY_PILOT_EARLY_ADOPTER.md) · [GitHub Packages / GHCR](docs/operations/GITHUB_PACKAGES_AND_GHCR.md)
 
 ### Operator surfaces (reference)
 
@@ -362,7 +362,7 @@ python -m tools.ul.smoke --lineage-graph tools/ul/fixtures/lineage_multi_hop.jso
 | Path | Time | Start here | Outcome |
 |---|---|---|---|
 | **Tier 1 — AAIS local** | ~5 min | **`scripts/start-infinity1.ps1`** or **`scripts/start-infinity1.sh`** | Mock Jarvis on `:8000` |
-| **Tier 2 — Infinity Pilot** | ~15 min | [Guide §2](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-2-infinity-pilot-docker-15-minutes) | Docker: Platform + UGR + AAIS |
+| **Tier 2 — Infinity Pilot** | ~15 min | [Guide §2](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-2-infinity-pilot-docker-15-minutes) or [GHCR pull](docs/operations/GITHUB_PACKAGES_AND_GHCR.md) | Docker: Platform + UGR + AAIS |
 | **Tier 3 — Full monorepo** | Advanced | [Guide §3](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-3-advanced-subsystems) | ISO forge, Platform v6+, subsystems |
 
 ### Prerequisites

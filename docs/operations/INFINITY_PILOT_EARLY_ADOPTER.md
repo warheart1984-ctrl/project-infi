@@ -13,6 +13,8 @@ Governed full-stack pilot: **Platform Membrane** (ops) + **UGR** (cognition/proo
 
 ## 15-minute bootstrap
 
+**Local build (default):**
+
 ```bash
 cd deploy/pilot
 cp .env.example .env
@@ -20,6 +22,19 @@ cp .env.example .env
 docker compose up --build -d
 python ../../scripts/pilot_compose_smoke.py --base-url http://127.0.0.1:8090 --api-key <your-key>
 ```
+
+**Pre-built images (optional GHCR — no local build):**
+
+```bash
+cd deploy/pilot
+cp .env.example .env
+export AAIS_IMAGE_TAG=v1.26.1
+export PLATFORM_IMAGE_TAG=v1.26.1
+docker compose -f docker-compose.ghcr.yml pull
+docker compose -f docker-compose.ghcr.yml up -d
+```
+
+Images publish on GitHub version tags via `.github/workflows/publish-ghcr.yml`. Policy: [GITHUB_PACKAGES_AND_GHCR.md](./GITHUB_PACKAGES_AND_GHCR.md).
 
 AAIS UI: http://127.0.0.1:8000  
 Platform API: http://127.0.0.1:8090  
