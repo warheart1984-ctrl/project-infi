@@ -422,6 +422,9 @@ governed-civilization-body-gate:
 	python3 tools/governance/run_governed_civilization_body_verification.py
 	python3 -m pytest tests/test_governed_civilization_observe.py tests/test_governed_civilization_adopt.py -q
 
+civilizational-arc-smoke:
+	python3 -m pytest tests/test_inter_substrate_diplomacy_observe.py tests/test_norm_federation_observe.py tests/test_constitutional_evolution_observe.py -q
+
 civilizational-arc-gate: inter-substrate-diplomacy-body-gate norm-federation-body-gate constitutional-evolution-body-gate governed-civilization-body-gate
 
 beyond-body-arc-gate: culture-of-beings-body-gate constitutional-ecosystem-body-gate governance-membrane-body-gate

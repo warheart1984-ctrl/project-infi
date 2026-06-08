@@ -4,6 +4,31 @@ Thank you for contributing. This repository is **law-governed**: implementation 
 
 **Precedence:** Law > Blueprint > Contract > Implementation > Pipeline > Tool
 
+**Help Wanted hub:** [`docs/community/HELP_WANTED_HUB.md`](docs/community/HELP_WANTED_HUB.md) · Pinned call: [Stage 18 — Call for Co-Builders](https://github.com/warheart1984-ctrl/Project-Infinity1/discussions/9)
+
+## Contribution tiers
+
+We grow contributors in layers. You do not need permission to start at **Reviewer** — claim a bite-sized issue and open a PR.
+
+| Tier | Typical work | How to level up |
+|------|----------------|-----------------|
+| **Reviewer** | Triage `help wanted` issues, review PRs, run local gates, improve docs | Merge 1–2 focused PRs with green CI |
+| **Subsystem owner** | Own one civilizational or body subsystem, its tests, and proof bundle | Sustained ownership of a subsystem + verification scripts |
+| **Core** | Cross-cutting runtime, lawbook, flagship gates, release train | Invitation after track record; charter alignment required |
+
+**Entry path:** README [**How to join in 10 minutes**](README.md#how-to-join-in-10-minutes) → pick an issue from the [co-builder discussion](https://github.com/warheart1984-ctrl/Project-Infinity1/discussions/9) → run the gate listed in the issue body.
+
+**Gates by change type:**
+
+| Change | Minimum local check |
+|--------|---------------------|
+| Civilizational arc (diplomacy, norms, evolution) | `make civilizational-arc-smoke` or subsystem body gate in issue |
+| Operator / dashboard docs | Mock start + link to operator URLs in PR |
+| Docker / Infinity Pilot | `docs/operations/INFINITY_PILOT_EARLY_ADOPTER.md` + compose smoke |
+| Broad runtime / law | `make infinity1-flagship-verification` (heavy — ask in discussion first) |
+
+Escalation and co-collaboration rules: [`HUMAN_AI_CO_COLLABORATION_CHARTER.md`](HUMAN_AI_CO_COLLABORATION_CHARTER.md).
+
 ## Before you open a PR
 
 1. Read [`META_ARCHITECT_LAWBOOK.md`](META_ARCHITECT_LAWBOOK.md) and [`REPO_PROOF_LAW.md`](REPO_PROOF_LAW.md).
@@ -23,7 +48,7 @@ python -m aais start --data-dir ./.runtime/aais-data --preset mock --no-browser
 ```
 
 Full operator onboarding: [`docs/operations/FIRST_TIME_OPERATOR_GUIDE.md`](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)  
-Quick start: [`README.md`](README.md) — **How to Make It Work**  
+Quick start: [`README.md`](README.md#how-to-join-in-10-minutes) — **How to join in 10 minutes** (mock mode)  
 Release history: [`CHANGELOG.md`](CHANGELOG.md)
 
 ## What not to commit

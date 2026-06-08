@@ -43,6 +43,25 @@ Manual start (venv already installed): `.venv\Scripts\python.exe -m aais start -
 
 ---
 
+## How to join in 10 minutes
+
+**Goal:** run AAIS locally in **mock mode** (no API keys), confirm health, then pick one [Help Wanted](docs/community/HELP_WANTED_HUB.md) ticket.
+
+| Step | Action |
+|------|--------|
+| 1 | Fork + clone [`Project-Infinity1`](https://github.com/warheart1984-ctrl/Project-Infinity1) |
+| 2 | Start mock runtime — Windows: `.\scripts\start-infinity1.ps1` · Mac/Linux: `./scripts/start-infinity1.sh` |
+| 3 | Open http://127.0.0.1:8000/health — expect a healthy response |
+| 4 | Skim [`CONTRIBUTING.md`](CONTRIBUTING.md#contribution-tiers) (reviewer → subsystem owner → core) |
+| 5 | Comment on an entry ticket in [Stage 18 — Call for Co-Builders](https://github.com/warheart1984-ctrl/Project-Infinity1/discussions/9) (*"I'd like to take #N"*) |
+| 6 | Branch, implement, run the gate named in the issue, open a PR linking the issue |
+
+**Fast arc smoke (optional, ~1–2 min):** `make civilizational-arc-smoke` (or `python -m pytest tests/test_inter_substrate_diplomacy_observe.py tests/test_norm_federation_observe.py tests/test_constitutional_evolution_observe.py -q`)
+
+**Next:** [`docs/community/HELP_WANTED_HUB.md`](docs/community/HELP_WANTED_HUB.md) · [`docs/operations/FIRST_TIME_OPERATOR_GUIDE.md`](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+
+---
+
 ## What's in Infinity 1 (this repo)
 
 | Layer | What you get |
