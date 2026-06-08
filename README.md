@@ -1,8 +1,10 @@
 # Project Infinity 1 — AAIS
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20587377.svg)](https://doi.org/10.5281/zenodo.20587377)
+
 **Adaptive Autonomous Intelligence Substrate (AAIS)** — a law-governed Jarvis runtime with operator dashboard, brain sessions, decision ledger, plugins/workflows, and 199 governed subsystem schemas.
 
-License: [Apache 2.0](LICENSE) · Repo: [Project-Infinity1](https://github.com/warheart1984-ctrl/Project-Infinity1)
+License: [Apache 2.0](LICENSE) · Repo: [Project-Infinity1](https://github.com/warheart1984-ctrl/Project-Infinity1) · Audit report: [Zenodo](https://zenodo.org/records/20587377)
 
 ---
 
