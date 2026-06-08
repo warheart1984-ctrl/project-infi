@@ -77,7 +77,14 @@
       "tracing_spine_organ",
       "operator_cognition_coherence_fabric"
     ],
-    "children": []
+    "children": [
+      "workflow_family_business",
+      "workflow_family_creative",
+      "workflow_family_data",
+      "workflow_family_knowledge",
+      "workflow_family_ops",
+      "workflow_family_personal"
+    ]
   },
   "activation": {
     "order": 1,

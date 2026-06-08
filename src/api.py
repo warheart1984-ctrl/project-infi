@@ -26,6 +26,7 @@ from uuid import uuid4
 
 from flask import Flask, Response, jsonify, request
 from flask_cors import CORS
+from werkzeug.exceptions import HTTPException
 
 from src.anti_drift import (
     build_thread_contract as build_anti_drift_thread_contract,
@@ -10103,6 +10104,37 @@ def list_immune_incidents():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/jarvis/immune/resilience", methods=["GET"])
+def get_immune_resilience_status():
+    """Expose defend-heal-harden resilience posture."""
+    try:
+        from src.immune_resilience_organ import build_immune_resilience_status
+
+        return jsonify({"immune_resilience": build_immune_resilience_status()})
+    except Exception as e:
+        logger.error(f"Error reading immune resilience status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/jarvis/immune/heal", methods=["POST"])
+def trigger_immune_heal():
+    """Operator-triggered immune heal (audited, bounded)."""
+    try:
+        data = request.json or {}
+        reason = str(data.get("reason") or "operator_heal_request").strip() or "operator_heal_request"
+        healed_by = str(data.get("actor_id") or "operator").strip() or "operator"
+        result = immune_system.attempt_heal(reason=reason, healed_by=healed_by)
+        return jsonify(
+            {
+                "heal_result": result,
+                "immune_system": immune_system.snapshot(limit_events=6, limit_incidents=6),
+            }
+        )
+    except Exception as e:
+        logger.error(f"Error triggering immune heal: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/jarvis/governance", methods=["GET"])
 def get_governance_snapshot():
     """Expose governance posture, policy requests, and break-glass state."""
@@ -15057,17 +15089,32 @@ def _build_jarvis_compat_message_payload(data: dict | None) -> tuple[dict, dict,
     return context, message_payload, mode
 
 
+def _parse_json_object_body(*, require_object: bool = True) -> tuple[dict[str, Any], tuple[Any, int] | None]:
+    """Parse JSON request body; return (data, None) or ({}, error_response)."""
+    data = request.get_json(silent=True)
+    if data is None and request.data:
+        return {}, (jsonify({"error": "Request body must be valid JSON"}), 400)
+    if require_object and data is not None and not isinstance(data, dict):
+        return {}, (jsonify({"error": "Request body must be a JSON object"}), 400)
+    return dict(data or {}), None
+
+
 @app.route("/api/chat/sessions", methods=["POST"])
 def create_chat_session():
     """Create a new chat session"""
     try:
-        session = _create_chat_session_from_payload(request.json or {})
+        payload, error = _parse_json_object_body()
+        if error is not None:
+            return error
+        session = _create_chat_session_from_payload(payload)
         return jsonify(
             _serialize_session_payload(session)
             if session
             else {"session_id": None, "error": "Unable to create session"}
         ), 201
 
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error creating session: {e}")
         return jsonify({"error": str(e)}), 500
@@ -15077,7 +15124,9 @@ def create_chat_session():
 def jarvis_chat_compat():
     """Expose one simplified Jarvis chat endpoint on top of the session runtime."""
     try:
-        request_payload = dict(request.json or {})
+        request_payload, error = _parse_json_object_body()
+        if error is not None:
+            return error
         context, message_payload, mode = _build_jarvis_compat_message_payload(request_payload)
         session_id = str(context.get("session_id") or "").strip()
 
@@ -15140,6 +15189,8 @@ def jarvis_chat_compat():
         if mode:
             normalized_payload["mode"] = mode
         return jsonify(normalized_payload), chat_response.status_code
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error in jarvis_chat_compat: {e}")
         payload = {
@@ -15723,7 +15774,9 @@ def chat_message(session_id):
         if not session:
             return jsonify({"error": "Session not found or expired"}), 404
 
-        data = request.json or {}
+        data, error = _parse_json_object_body()
+        if error is not None:
+            return error
         _bind_mechanic_case_from_payload(session, data)
         user_message = data.get("message")
         use_research = bool(data["use_research"]) if "use_research" in data else None
@@ -16327,6 +16380,8 @@ def chat_message(session_id):
             ), 403
         logger.warning(f"Chat turn blocked by memory governance gateway before session payload: {e}")
         return _build_memory_enforcer_block_response(e)
+    except HTTPException:
+        raise
     except Exception as e:
         if "session" in locals() and session:
             _transition_session_state(
@@ -16349,7 +16404,9 @@ def chat_message_stream(session_id):
         if not session:
             return jsonify({"error": "Session not found or expired"}), 404
 
-        data = request.json or {}
+        data, error = _parse_json_object_body()
+        if error is not None:
+            return error
         _bind_mechanic_case_from_payload(session, data)
         user_message = data.get("message")
         use_research = bool(data["use_research"]) if "use_research" in data else None
@@ -17355,6 +17412,8 @@ def chat_message_stream(session_id):
             ), 403
         logger.warning(f"Streaming route blocked by memory governance gateway before session payload: {e}")
         return _build_memory_enforcer_block_response(e)
+    except HTTPException:
+        raise
     except Exception as e:
         if "session" in locals() and session:
             _transition_session_state(

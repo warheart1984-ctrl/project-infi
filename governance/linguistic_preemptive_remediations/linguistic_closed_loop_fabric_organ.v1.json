@@ -3,13 +3,14 @@
   "gene": "linguistic_closed_loop_fabric_organ",
   "current_band": "low",
   "predicted_band": "medium",
-  "predicted_risk_30d": 44,
-  "lead_time_days": 30,
+  "predicted_risk_30d": 51,
+  "lead_time_days": 24,
   "drivers": [
     "latent alignment gap (header/doc vs genome ssp)",
-    "parent gene in forecast or cycle at-risk set"
+    "parent gene in forecast or cycle at-risk set",
+    "ecosystem mean drift trending upward"
   ],
-  "generated_at": "2026-06-03T10:54:14Z",
+  "generated_at": "2026-06-07T20:37:34Z",
   "actions": [
     {
       "kind": "watch_wave2_header",

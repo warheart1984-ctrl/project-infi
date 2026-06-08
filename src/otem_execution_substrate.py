@@ -240,11 +240,38 @@ class OTEMExecutionSubstrate:
         return workflow.to_dict()
 
     def _persist_workflow(self, workflow: OTEMExecutionWorkflow) -> None:
+        row = workflow.to_dict()
+        try:
+            from src.otem_substrate_store import persist_substrate_workflow
+
+            persist_substrate_workflow(row)
+        except Exception:
+            pass
         self._persist_path.parent.mkdir(parents=True, exist_ok=True)
         with self._persist_path.open("a", encoding="utf-8") as handle:
-            handle.write(json.dumps(workflow.to_dict(), sort_keys=True) + "\n")
+            handle.write(json.dumps(row, sort_keys=True) + "\n")
 
     def _load_persisted(self) -> None:
+        try:
+            from src.otem_substrate_store import load_all_substrate_workflows
+
+            for row in load_all_substrate_workflows():
+                workflow_id = str(row.get("workflow_id") or "").strip()
+                if workflow_id:
+                    self._workflows[workflow_id] = OTEMExecutionWorkflow(
+                        workflow_id=workflow_id,
+                        stage=str(row.get("stage") or "proposal"),
+                        proposal=dict(row.get("proposal") or {}),
+                        operator_approved=bool(row.get("operator_approved")),
+                        preview=dict(row.get("preview") or {}) if row.get("preview") else None,
+                        apply_result=dict(row.get("apply_result") or {}) if row.get("apply_result") else None,
+                        created_at=str(row.get("created_at") or datetime.now(UTC).isoformat()),
+                        updated_at=str(row.get("updated_at") or datetime.now(UTC).isoformat()),
+                    )
+            if self._workflows:
+                return
+        except Exception:
+            pass
         if not self._persist_path.is_file():
             return
         latest: dict[str, dict[str, Any]] = {}
@@ -297,6 +324,9 @@ class OTEMExecutionSubstrate:
 
     def _preview_contractor_usage(self, proposal: dict[str, Any]) -> dict[str, Any]:
         """Dry-run preview of which contractors the plan would hit (no actual execution)."""
+        from src.evolve_client import evolve_client
+        from src.forge_client import forge_client
+
         reachable = {}
         try:
             forge_client.health()
@@ -355,6 +385,12 @@ def get_otem_execution_substrate() -> OTEMExecutionSubstrate:
     if _default_substrate is None:
         _default_substrate = OTEMExecutionSubstrate()
     return _default_substrate
+
+
+def reset_otem_execution_substrate() -> None:
+    """Clear the process-wide substrate singleton (test isolation only)."""
+    global _default_substrate
+    _default_substrate = None
 
 
 def build_otem_execution_status() -> dict[str, Any]:

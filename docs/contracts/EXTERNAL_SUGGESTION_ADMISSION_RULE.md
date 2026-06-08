@@ -87,6 +87,11 @@ External input may be accepted only when it survives filtering in a form that:
 Any external suggestion admitted after filtering must be documented as admitted
 form.
 
+Admitted optional backends must name their projection role explicitly. Example:
+[`MEMORY_VECTOR_BACKEND_ADMISSION.md`](./MEMORY_VECTOR_BACKEND_ADMISSION.md)
+documents ScyllaDB Cloud Vector Search as an optional Memory Board retrieval
+projection; Chroma remains the default local backend.
+
 Suggestion is not truth.
 
 Law decides admission.

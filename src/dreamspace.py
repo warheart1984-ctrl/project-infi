@@ -22,6 +22,7 @@ from pathlib import Path
 import threading
 import time
 import uuid
+from typing import Any
 
 from src.logger import get_logger
 from src.memory_board_enforcer import MemoryBoardEnforcerError
@@ -322,6 +323,7 @@ class DreamspaceController:
             self._last_cycle_started_at = now
             try:
                 self._weave_dreams(trigger="auto", max_entries=self._state.max_dreams_per_cycle)
+                self._emit_consolidation_proposal(trigger="auto")
             except MemoryBoardEnforcerError as exc:
                 logger.warning("Dreamspace auto cycle paused by memory governance: %s", exc)
                 self._pause_for_context_block(exc)
@@ -369,6 +371,181 @@ class DreamspaceController:
             self._persist_locked()
 
         return latest_entry
+
+    def _emit_consolidation_proposal(self, *, trigger: str) -> dict | None:
+        """Emit proposal-only consolidation summary to operator ledger (no authority)."""
+        context = self._get_context()
+        open_threads = list(context.get("open_threads") or [])[:8]
+        habit_candidates: list[dict[str, Any]] = []
+        try:
+            from src.culture_habit_runtime import culture_habit_runtime
+
+            for thread in open_threads:
+                text = str(thread if isinstance(thread, str) else thread.get("text") or thread.get("label") or "")
+                if text:
+                    habit_candidates.extend(culture_habit_runtime.rank_habit_candidates(text)[:2])
+        except Exception:
+            habit_candidates = []
+        identity_drift_summary: dict[str, Any] = {}
+        identity_claim_candidates: list[dict[str, Any]] = []
+        try:
+            from src.identity_self_model_runtime import identity_self_model_runtime
+
+            drift = identity_self_model_runtime.observe_identity_drift()
+            identity_drift_summary = {
+                "drift_event_count": drift.get("drift_event_count"),
+                "anchor_aligned": drift.get("anchor_aligned"),
+            }
+            identity_claim_candidates = list(drift.get("candidates") or [])[:8]
+        except Exception:
+            identity_drift_summary = {}
+            identity_claim_candidates = []
+        narrative_drift_summary: dict[str, Any] = {}
+        narrative_beat_candidates: list[dict[str, Any]] = []
+        try:
+            from src.narrative_continuity_runtime import narrative_continuity_runtime
+
+            ndrift = narrative_continuity_runtime.observe_narrative_drift()
+            narrative_drift_summary = {
+                "drift_event_count": ndrift.get("drift_event_count"),
+                "identity_aligned": ndrift.get("identity_aligned"),
+                "continuity_score": ndrift.get("continuity_score"),
+            }
+            narrative_beat_candidates = list(ndrift.get("candidates") or [])[:8]
+        except Exception:
+            narrative_drift_summary = {}
+            narrative_beat_candidates = []
+        autobiographical_drift_summary: dict[str, Any] = {}
+        autobiographical_episode_candidates: list[dict[str, Any]] = []
+        try:
+            from src.autobiographical_agency_runtime import autobiographical_agency_runtime
+
+            adrift = autobiographical_agency_runtime.observe_autobiographical_drift()
+            autobiographical_drift_summary = {
+                "drift_event_count": adrift.get("drift_event_count"),
+                "identity_aligned": adrift.get("identity_aligned"),
+                "ongoing_work_count": adrift.get("ongoing_work_count"),
+            }
+            autobiographical_episode_candidates = list(adrift.get("candidates") or [])[:8]
+        except Exception:
+            autobiographical_drift_summary = {}
+            autobiographical_episode_candidates = []
+        social_drift_summary: dict[str, Any] = {}
+        social_bond_candidates: list[dict[str, Any]] = []
+        try:
+            from src.social_continuity_runtime import social_continuity_runtime
+
+            sdrift = social_continuity_runtime.observe_social_drift()
+            social_drift_summary = {
+                "drift_event_count": sdrift.get("drift_event_count"),
+                "identity_aligned": sdrift.get("identity_aligned"),
+                "federated_peer_count": sdrift.get("federated_peer_count"),
+            }
+            social_bond_candidates = list(sdrift.get("candidates") or [])[:8]
+        except Exception:
+            social_drift_summary = {}
+            social_bond_candidates = []
+        multi_being_drift_summary: dict[str, Any] = {}
+        multi_being_pact_candidates: list[dict[str, Any]] = []
+        try:
+            from src.multi_being_continuity_runtime import multi_being_continuity_runtime
+
+            mdrift = multi_being_continuity_runtime.observe_multi_being_drift()
+            multi_being_drift_summary = {
+                "drift_event_count": mdrift.get("drift_event_count"),
+                "identity_aligned": mdrift.get("identity_aligned"),
+                "digest_verified_count": mdrift.get("digest_verified_count"),
+                "cross_organism_peer_count": mdrift.get("cross_organism_peer_count"),
+            }
+            multi_being_pact_candidates = list(mdrift.get("candidates") or [])[:8]
+        except Exception:
+            multi_being_drift_summary = {}
+            multi_being_pact_candidates = []
+        culture_of_beings_drift_summary: dict[str, Any] = {}
+        shared_norm_candidates: list[dict[str, Any]] = []
+        try:
+            from src.culture_of_beings_runtime import culture_of_beings_runtime
+
+            cob = culture_of_beings_runtime.observe_culture_of_beings_drift()
+            culture_of_beings_drift_summary = {
+                "drift_event_count": cob.get("drift_event_count"),
+                "pact_aligned": cob.get("pact_aligned"),
+                "adopted_pact_count": cob.get("adopted_pact_count"),
+            }
+            shared_norm_candidates = list(cob.get("candidates") or [])[:8]
+        except Exception:
+            culture_of_beings_drift_summary = {}
+            shared_norm_candidates = []
+        ecosystem_drift_summary: dict[str, Any] = {}
+        ecosystem_charter_candidates: list[dict[str, Any]] = []
+        try:
+            from src.constitutional_ecosystem_runtime import constitutional_ecosystem_runtime
+
+            edrift = constitutional_ecosystem_runtime.observe_ecosystem_drift()
+            ecosystem_drift_summary = {
+                "drift_event_count": edrift.get("drift_event_count"),
+                "adopted_pact_count": edrift.get("adopted_pact_count"),
+            }
+            ecosystem_charter_candidates = list(edrift.get("candidates") or [])[:8]
+        except Exception:
+            ecosystem_drift_summary = {}
+            ecosystem_charter_candidates = []
+        membrane_drift_summary: dict[str, Any] = {}
+        membrane_policy_candidates: list[dict[str, Any]] = []
+        try:
+            from src.multi_organism_governance_membrane_runtime import (
+                multi_organism_governance_membrane_runtime,
+            )
+
+            mmem = multi_organism_governance_membrane_runtime.observe_membrane_drift()
+            membrane_drift_summary = {"drift_event_count": mmem.get("drift_event_count")}
+            membrane_policy_candidates = list(mmem.get("candidates") or [])[:8]
+        except Exception:
+            membrane_drift_summary = {}
+            membrane_policy_candidates = []
+        proposal = {
+            "trigger": trigger,
+            "open_threads": open_threads,
+            "dream_count": len(self._dream_log),
+            "habit_candidates": habit_candidates[:8],
+            "identity_drift_summary": identity_drift_summary,
+            "identity_claim_candidates": identity_claim_candidates,
+            "narrative_drift_summary": narrative_drift_summary,
+            "narrative_beat_candidates": narrative_beat_candidates,
+            "autobiographical_drift_summary": autobiographical_drift_summary,
+            "autobiographical_episode_candidates": autobiographical_episode_candidates,
+            "social_drift_summary": social_drift_summary,
+            "social_bond_candidates": social_bond_candidates,
+            "multi_being_drift_summary": multi_being_drift_summary,
+            "multi_being_pact_candidates": multi_being_pact_candidates,
+            "culture_of_beings_drift_summary": culture_of_beings_drift_summary,
+            "shared_norm_candidates": shared_norm_candidates,
+            "ecosystem_drift_summary": ecosystem_drift_summary,
+            "ecosystem_charter_candidates": ecosystem_charter_candidates,
+            "membrane_drift_summary": membrane_drift_summary,
+            "membrane_policy_candidates": membrane_policy_candidates,
+            "proposal_only": True,
+            "summary": (
+                f"Dreamspace consolidation: {len(open_threads)} open threads, "
+                f"{len(habit_candidates)} habit candidates, "
+                f"{len(identity_claim_candidates)} identity candidates, "
+                f"{len(narrative_beat_candidates)} narrative candidates, "
+                f"{len(autobiographical_episode_candidates)} autobiographical candidates, "
+                f"{len(social_bond_candidates)} social candidates, "
+                f"{len(multi_being_pact_candidates)} multi-being candidates, "
+                f"{len(shared_norm_candidates)} culture-of-beings candidates, "
+                f"{len(ecosystem_charter_candidates)} ecosystem candidates, "
+                f"{len(membrane_policy_candidates)} membrane candidates"
+            ),
+        }
+        try:
+            from src.operator_decision_ledger import append_dreamspace_consolidation_event
+
+            append_dreamspace_consolidation_event("global", proposal=proposal)
+        except Exception as exc:
+            logger.warning("Dreamspace consolidation ledger emit failed: %s", exc)
+            return None
+        return proposal
 
     def _get_context(self) -> dict:
         if self._context_callback is None:

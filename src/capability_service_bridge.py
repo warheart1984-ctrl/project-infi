@@ -1172,11 +1172,18 @@ class CapabilityServiceBridge:
                 except GenomeValidationError as exc:
                     return self._build_genome_block(spec, str(exc), args=args)
 
-        route_key = (spec["capability_id"], spec["action"])
+        action = spec.get("action")
+        if not action:
+            return self._build_genome_block(
+                spec,
+                "missing bridge action",
+                args=args,
+            )
+        route_key = (spec["capability_id"], action)
         if route_key not in self._selection_routes:
             return self._build_genome_block(
                 spec,
-                f"unregistered bridge action: {spec['capability_id']}/{spec['action']}",
+                f"unregistered bridge action: {spec['capability_id']}/{action}",
                 args=args,
             )
 

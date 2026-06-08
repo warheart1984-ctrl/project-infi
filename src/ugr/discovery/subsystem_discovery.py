@@ -31,6 +31,12 @@ URG_GOVERNANCE_APPLY_ENV = "URG_GOVERNANCE_APPLY"
 DEFAULT_MAX_ATTEMPTS = 64
 MAX_ATTEMPTS_CAP = 256
 
+_POD_CONTEXT_KEYS = ("discovery_pod_id", "pod_id", "pod_display_name", "display_name")
+
+
+def _pod_context_from_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    return {key: payload[key] for key in _POD_CONTEXT_KEYS if payload.get(key)}
+
 
 def discovery_enabled() -> bool:
     raw = os.getenv(UGR_SUBSYSTEM_DISCOVERY_ENABLED_ENV, "1").strip().lower()
@@ -127,6 +133,7 @@ class SubsystemDiscoveryService:
 
         promote = bool(payload.get("promote"))
         search_trail: list[dict[str, Any]] = []
+        pod_context = _pod_context_from_payload(payload)
 
         if _is_complete_spec(merged_seed) and max_attempts == 0:
             return self._finalize_discovery(
@@ -139,6 +146,7 @@ class SubsystemDiscoveryService:
                 search_attempts=0,
                 search_trail=search_trail,
                 promote=promote,
+                pod_context=pod_context,
             )
 
         candidates = [merged_seed] if _is_complete_spec(merged_seed) else []
@@ -175,6 +183,7 @@ class SubsystemDiscoveryService:
                     search_trail=search_trail,
                     promote=promote,
                     validity=validity,
+                    pod_context=pod_context,
                 )
 
         return {
@@ -197,6 +206,7 @@ class SubsystemDiscoveryService:
         search_trail: list[dict[str, Any]],
         promote: bool,
         validity: ValidityResult | None = None,
+        pod_context: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         validity = validity or validate_subsystem_spec(
             spec,
@@ -232,6 +242,17 @@ class SubsystemDiscoveryService:
                 existing,
                 skip_if_idempotent=True,
             )
+            response["discovery_pod_ledger"] = self._upgrade_pod_ledger(
+                operator_id=operator_id,
+                tenant_id=tenant_id,
+                contribution_id=sid,
+                spec=spec,
+                pod_context=pod_context,
+                receipt=existing,
+                idempotent_rediscovery=True,
+                operator_rewards=response.get("operator_rewards"),
+                receipt_verified=ok,
+            )
             return response
 
         receipt = build_subsystem_discovery_receipt(
@@ -256,6 +277,16 @@ class SubsystemDiscoveryService:
             "catalog_status": "shadow",
         }
         response["operator_rewards"] = self._emit_discovery_rewards(receipt)
+        response["discovery_pod_ledger"] = self._upgrade_pod_ledger(
+            operator_id=operator_id,
+            tenant_id=tenant_id,
+            contribution_id=sid,
+            spec=spec,
+            pod_context=pod_context,
+            receipt=receipt,
+            idempotent_rediscovery=False,
+            operator_rewards=response.get("operator_rewards"),
+        )
 
         if promote:
             response["promotion"] = self._attempt_promotion(
@@ -267,6 +298,34 @@ class SubsystemDiscoveryService:
                 aais_instance_id=aais_instance_id,
             )
         return response
+
+    def _upgrade_pod_ledger(
+        self,
+        *,
+        operator_id: str,
+        tenant_id: str,
+        contribution_id: str,
+        spec: SubsystemSpec,
+        pod_context: dict[str, Any] | None,
+        receipt: dict[str, Any],
+        idempotent_rediscovery: bool,
+        operator_rewards: dict[str, Any] | None = None,
+        receipt_verified: bool | None = None,
+    ) -> dict[str, Any]:
+        from src.ugr.discovery.discovery_pod_ledger import attach_discovery_pod_ledger
+
+        spec_payload = {**spec.canonical_dict(), **dict(pod_context or {})}
+        return attach_discovery_pod_ledger(
+            operator_id=operator_id,
+            tenant_id=tenant_id,
+            contribution_id=contribution_id,
+            contribution_type="subsystem",
+            spec_payload=spec_payload,
+            receipt=receipt,
+            idempotent_rediscovery=idempotent_rediscovery,
+            operator_rewards=operator_rewards,
+            receipt_verified=receipt_verified,
+        )
 
     def _attempt_promotion(
         self,

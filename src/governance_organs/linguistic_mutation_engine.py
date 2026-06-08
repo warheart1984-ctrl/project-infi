@@ -182,8 +182,10 @@ def apply_linguistic_mutation(
 
 def rollback_linguistic_mutation(mp_id: str, gene: str, root: Path | None = None) -> bool:
     root = root or repo_root()
+    from src.governance_organs._paths import list_gene_backups
+
     backup_dir = runtime_governance_dir() / "mutation_backups"
-    backups = sorted(backup_dir.glob(f"{gene}_*.genome.v1.json"))
+    backups = list_gene_backups(backup_dir, gene)
     if not backups:
         return False
     genome_path = genome_path_for_gene(gene, root)

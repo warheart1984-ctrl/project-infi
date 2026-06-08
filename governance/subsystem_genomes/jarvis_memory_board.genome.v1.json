@@ -58,7 +58,9 @@
     "children": [
       "cisiv_operator_lineage_console",
       "conversation_memory_organ",
+      "culture_habit_runtime",
       "governed_direct_pipeline",
+      "identity_self_model_runtime",
       "memory_bank_surface_organ",
       "memory_path_governance_organ",
       "memory_smith_organ",

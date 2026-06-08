@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -21,7 +22,7 @@ from src.otem_execution_approval_bridge import (
     maybe_enqueue_otem_execution_approval,
     resolve_otem_execution_approval,
 )
-from src.otem_execution_substrate import get_otem_execution_substrate
+from src.otem_execution_substrate import get_otem_execution_substrate, reset_otem_execution_substrate
 
 
 class OtemExecutionApprovalBridgeTests(unittest.TestCase):
@@ -77,10 +78,34 @@ class OtemExecutionApprovalBridgeTests(unittest.TestCase):
         approval = db.get_workflow_approval(queue_meta["approval_id"])
         substrate = get_otem_execution_substrate()
         substrate._workflows.pop(queue_meta["otem_execution_workflow_id"], None)
+        with db.get_conn() as conn:
+            conn.execute(
+                "DELETE FROM otem_substrate_workflows WHERE workflow_id = ?",
+                (queue_meta["otem_execution_workflow_id"],),
+            )
+        payload = dict(approval.get("payload") or {})
+        payload.pop("proposal_snapshot", None)
+        with db.get_conn() as conn:
+            conn.execute(
+                "UPDATE workflow_approvals SET payload_json = ? WHERE id = ?",
+                (json.dumps(payload), approval["id"]),
+            )
+        approval = db.get_workflow_approval(queue_meta["approval_id"])
 
         with self.assertRaises(KeyError) as ctx:
             resolve_otem_execution_approval(approval, "approve")
         self.assertIn("stale after restart", str(ctx.exception))
+
+    def test_resolve_approve_succeeds_after_restart_with_durable_substrate(self):
+        queue_meta = maybe_enqueue_otem_execution_approval("session-otem-restart", self._handoff_otem_result())
+        approval = db.get_workflow_approval(queue_meta["approval_id"])
+        workflow_id = queue_meta["otem_execution_workflow_id"]
+        reset_otem_execution_substrate()
+        reloaded = get_otem_execution_substrate()
+        self.assertIn(workflow_id, reloaded._workflows)
+        result = resolve_otem_execution_approval(approval, "approve")
+        self.assertEqual(result["status"], "approved")
+        self.assertEqual(result["substrate"]["stage"], "ledger_record")
 
     def test_resolve_approve_runs_substrate_through_ledger(self):
         queue_meta = maybe_enqueue_otem_execution_approval("session-otem-2", self._handoff_otem_result())

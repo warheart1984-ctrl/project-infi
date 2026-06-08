@@ -46,6 +46,21 @@ The active canonical doc in this folder is
 
 If Nova docs conflict with runtime code, runtime code wins.
 
+## Nova Cortex PDF — multi-substrate boundary (Stage 15)
+
+The [Nova Cortex PDF](../../../Nova%20Cortex_%20A%20Constitutional,%20Runtime%E2%80%91Composed%20Cognitive%20Architecture%20for%20Synthetic%20Minds.pdf) §11
+future work (multi-substrate cognition, distributed cortex clusters) is **not** implemented as
+new diplomacy lobes in [`src/cog_runtime/nova.py`](../../../src/cog_runtime/nova.py).
+
+| Concern | Layer | Module |
+|---------|-------|--------|
+| Modular lobes (attention, deliberation, memory, speaking) | Nova Cortex | `cog_runtime/nova.py` |
+| Cross-substrate accords, drift, dual-gate adoption | Civilizational governance (Stage 15) | `inter_substrate_diplomacy_runtime.py` |
+| Authorization / no self-expansion | Jarvis Core | `jarvis_diplomacy_authority.py` |
+
+Nova may **interpret** substrate posture for operators; Jarvis must **authorize** diplomatic adoption.
+ISD is the governance answer to multi-substrate coordination — not an extension of cortex lobes.
+
 ## Pending Future Ideas
 
 - [Reflection Runtime Organ](../../_future/ideas_pending/REFLECTION_RUNTIME_ORGAN.md)

@@ -21,3 +21,15 @@ def runtime_governance_dir() -> Path:
         base = repo_root() / ".runtime" / "governance"
     base.mkdir(parents=True, exist_ok=True)
     return base
+
+
+def list_gene_backups(backup_dir: Path, gene: str, *, suffix: str = ".genome.v1.json") -> list[Path]:
+    """Return sorted backups for ``gene``, excluding longer gene prefix collisions."""
+    prefix = f"{gene}_"
+    matches: list[Path] = []
+    for path in backup_dir.glob(f"{gene}_*{suffix}"):
+        remainder = path.name[len(prefix) :]
+        if not remainder or not remainder[0].isdigit():
+            continue
+        matches.append(path)
+    return sorted(matches)

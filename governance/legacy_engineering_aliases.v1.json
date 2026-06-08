@@ -1143,6 +1143,76 @@
       "engineering_class": "ProviderEngine",
       "mythic_label": "Provider Organ",
       "grandfathered": true
+    },
+    {
+      "gene": "norm_federation_organ",
+      "legacy_path": "src/norm_federation_organ.py",
+      "engineering_class": "NormFederationEngine",
+      "mythic_label": "Norm Federation Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "social_continuity_organ",
+      "legacy_path": "src/social_continuity_organ.py",
+      "engineering_class": "SocialContinuityEngine",
+      "mythic_label": "Social Continuity Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "multi_organism_governance_membrane_organ",
+      "legacy_path": "src/multi_organism_governance_membrane_organ.py",
+      "engineering_class": "GovernanceMembraneEngine",
+      "mythic_label": "Multi-Organism Governance Membrane Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "constitutional_ecosystem_organ",
+      "legacy_path": "src/constitutional_ecosystem_organ.py",
+      "engineering_class": "ConstitutionalEcosystemEngine",
+      "mythic_label": "Constitutional Ecosystem Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "constitutional_evolution_organ",
+      "legacy_path": "src/constitutional_evolution_organ.py",
+      "engineering_class": "ConstitutionalEvolutionEngine",
+      "mythic_label": "Constitutional Evolution Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "culture_of_beings_organ",
+      "legacy_path": "src/culture_of_beings_organ.py",
+      "engineering_class": "CultureOfBeingsEngine",
+      "mythic_label": "Culture-of-Beings Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "governed_civilization_organ",
+      "legacy_path": "src/governed_civilization_organ.py",
+      "engineering_class": "GovernedCivilizationEngine",
+      "mythic_label": "Governed Civilization Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "immune_resilience_organ",
+      "legacy_path": "src/immune_resilience_organ.py",
+      "engineering_class": "ImmuneResilienceEngine",
+      "mythic_label": "Immune Resilience Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "inter_substrate_diplomacy_organ",
+      "legacy_path": "src/inter_substrate_diplomacy_organ.py",
+      "engineering_class": "InterSubstrateDiplomacyEngine",
+      "mythic_label": "Inter-Substrate Diplomacy Organ",
+      "grandfathered": true
+    },
+    {
+      "gene": "multi_being_continuity_organ",
+      "legacy_path": "src/multi_being_continuity_organ.py",
+      "engineering_class": "MultiBeingContinuityEngine",
+      "mythic_label": "Multi-Being Continuity Organ",
+      "grandfathered": true
     }
   ]
 }

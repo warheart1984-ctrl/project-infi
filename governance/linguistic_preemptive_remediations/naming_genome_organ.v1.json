@@ -1,19 +1,20 @@
 {
   "linguistic_preemptive_playbook_version": "linguistic_preemptive_playbook.v1",
   "gene": "naming_genome_organ",
-  "current_band": "medium",
+  "current_band": "low",
   "predicted_band": "medium",
-  "predicted_risk_30d": 47,
-  "lead_time_days": 0,
+  "predicted_risk_30d": 54,
+  "lead_time_days": 25,
   "drivers": [
-    "parent gene in forecast or cycle at-risk set"
+    "latent alignment gap (header/doc vs genome ssp)",
+    "ecosystem mean drift trending upward"
   ],
-  "generated_at": "2026-06-03T10:54:14Z",
+  "generated_at": "2026-06-07T20:37:33Z",
   "actions": [
     {
-      "kind": "watch_cascade",
-      "command": "python tools/linguistic_cascade_report.py --gene naming_protocol_organ",
-      "note": "Parent at risk \u2014 monitor cascade"
+      "kind": "watch_wave2_header",
+      "path": "src/naming_genome_organ.py",
+      "note": "Add # Engineering header before band escalates"
     },
     {
       "kind": "schedule_remediation",

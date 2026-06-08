@@ -34,6 +34,15 @@ brain-proposal-gate:
 plug-adapter-gate:
 	python3 .github/scripts/check-plug-adapter-governance.py
 
+plugins-bootstrap:
+	python3 scripts/bootstrap_operator_plugins.py --dry-run
+
+plugins-bootstrap-apply:
+	python3 scripts/bootstrap_operator_plugins.py
+
+plugins-bootstrap-full:
+	python3 scripts/bootstrap_operator_plugins.py --mcp-from-cursor --platform-org demo-org --report-out .runtime/bootstrap_report.json
+
 brain-layer-gate:
 	python3 .github/scripts/check-brain-layer-governance.py
 
@@ -52,6 +61,14 @@ operator-workflow-runtime-gate: plug-adapter-gate brain-layer-gate
 seam-stress-gate:
 	python3 -m pytest tests/test_seam_discovery_stress.py -q
 	python3 tools/stress/seam_discovery_stress.py --offline
+
+federation-chaos-gate:
+	python3 tools/stress/federation_chaos_hammer.py
+
+flagship-chaos-stack:
+	python3 tools/stress/chaos_hammer.py
+	python3 tools/stress/federation_chaos_hammer.py
+	python3 tools/stress/seam_discovery_stress.py
 
 operator-workflow-stack-gate: library-gate workflow-family-gate brain-proposal-gate operator-workflow-runtime-gate operator-decision-ledger-gate operator-decision-ledger-v2-graph-gate jarvis-lora-training-gate seam-stress-gate
 
@@ -339,6 +356,76 @@ coding-organs-gate:
 otem-execution-substrate-gate:
 	python3 .github/scripts/check-subsystem-mvp-integration-governance.py
 
+otem-autonomic-gate:
+	python3 -m pytest tests/test_otem_autonomic_routines.py -q
+
+nova-touch-admission-gate:
+	python3 -m pytest tests/test_nova_touch_admission.py tests/test_immune_policy_enrollment.py -q
+
+body-completeness-gate:
+	python3 tools/governance/run_body_completeness_verification.py
+	python3 -m pytest tests/test_otem_execution_approval_bridge.py tests/test_workflow_family_registry.py tests/test_workflow_chain_executor.py tests/test_otem_autonomic_routines.py tests/test_nova_touch_admission.py tests/test_immune_policy_enrollment.py -q
+
+organ-mesh-gate:
+	python3 tools/governance/run_organ_mesh_verification.py
+	python3 -m pytest tests/test_organ_coordination_plan.py tests/test_organ_coordination_execute.py -q
+
+culture-habit-gate:
+	python3 tools/governance/run_culture_habit_verification.py
+	python3 -m pytest tests/test_culture_habit_observe.py tests/test_culture_habit_adopt.py -q
+
+identity-self-model-gate:
+	python3 tools/governance/run_identity_self_model_verification.py
+	python3 -m pytest tests/test_identity_self_model_observe.py tests/test_identity_self_model_adopt.py -q
+
+narrative-continuity-body-gate:
+	python3 tools/governance/run_narrative_continuity_body_verification.py
+	python3 -m pytest tests/test_narrative_continuity_observe.py tests/test_narrative_continuity_adopt.py -q
+
+autobiographical-agency-body-gate:
+	python3 tools/governance/run_autobiographical_agency_body_verification.py
+	python3 -m pytest tests/test_autobiographical_agency_observe.py tests/test_autobiographical_agency_adopt.py -q
+
+social-continuity-body-gate:
+	python3 tools/governance/run_social_continuity_body_verification.py
+	python3 -m pytest tests/test_social_continuity_observe.py tests/test_social_continuity_adopt.py -q
+
+multi-being-continuity-body-gate:
+	python3 tools/governance/run_multi_being_continuity_body_verification.py
+	python3 -m pytest tests/test_multi_being_continuity_observe.py tests/test_multi_being_continuity_adopt.py -q
+
+culture-of-beings-body-gate:
+	python3 tools/governance/run_culture_of_beings_body_verification.py
+	python3 -m pytest tests/test_culture_of_beings_observe.py tests/test_culture_of_beings_adopt.py -q
+
+constitutional-ecosystem-body-gate:
+	python3 tools/governance/run_constitutional_ecosystem_body_verification.py
+	python3 -m pytest tests/test_constitutional_ecosystem_observe.py tests/test_constitutional_ecosystem_adopt.py -q
+
+governance-membrane-body-gate:
+	python3 tools/governance/run_governance_membrane_body_verification.py
+	python3 -m pytest tests/test_governance_membrane_observe.py tests/test_governance_membrane_adopt.py -q
+
+inter-substrate-diplomacy-body-gate:
+	python3 tools/governance/run_inter_substrate_diplomacy_body_verification.py
+	python3 -m pytest tests/test_inter_substrate_diplomacy_observe.py tests/test_inter_substrate_diplomacy_adopt.py -q
+
+norm-federation-body-gate:
+	python3 tools/governance/run_norm_federation_body_verification.py
+	python3 -m pytest tests/test_norm_federation_observe.py tests/test_norm_federation_adopt.py -q
+
+constitutional-evolution-body-gate:
+	python3 tools/governance/run_constitutional_evolution_body_verification.py
+	python3 -m pytest tests/test_constitutional_evolution_observe.py tests/test_constitutional_evolution_adopt.py -q
+
+governed-civilization-body-gate:
+	python3 tools/governance/run_governed_civilization_body_verification.py
+	python3 -m pytest tests/test_governed_civilization_observe.py tests/test_governed_civilization_adopt.py -q
+
+civilizational-arc-gate: inter-substrate-diplomacy-body-gate norm-federation-body-gate constitutional-evolution-body-gate governed-civilization-body-gate
+
+beyond-body-arc-gate: culture-of-beings-body-gate constitutional-ecosystem-body-gate governance-membrane-body-gate
+
 aris-standalone-gate:
 	python3 .github/scripts/check-subsystem-mvp-integration-governance.py
 
@@ -513,6 +600,9 @@ forensic-triangulation-organ-gate:
 
 immune-observe-organ-gate:
 	python3 .github/scripts/check-immune-observe-organ-governance.py
+
+immune-resilience-organ-gate:
+	python3 tools/governance/check_immune_resilience_closure.py
 
 policy-gate-organ-gate:
 	python3 .github/scripts/check-policy-gate-organ-governance.py

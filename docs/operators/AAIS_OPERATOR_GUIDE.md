@@ -19,9 +19,13 @@ Your data and keys stay on your machine unless you explicitly connect to a cloud
 
 ---
 
-## 2. First-Time Setup (3 Steps)
+## 2. First-Time Setup
 
-### Step 1 — Install
+**Recommended:** from the repo root run `.\scripts\start-infinity1.ps1` (Windows) or `./scripts/start-infinity1.sh` (Mac/Linux). That installs dependencies, prepares data, and starts mock mode.
+
+### Manual setup (3 steps)
+
+#### Step 1 — Install
 
 ```bash
 git clone https://github.com/warheart1984-ctrl/Project-Infinity1.git

@@ -10,6 +10,10 @@ from typing import Any
 from src.ugr.platform.tenant_registry import normalize_tenant_id
 from src.ugr.rewards.operator_reward_receipt import build_operator_reward_receipt
 from src.ugr.rewards.operator_reward_spec import get_event_spec
+from src.ugr.discovery.proven_contribution import (
+    is_proven_contribution,
+    proven_rewards_persist_enabled,
+)
 from src.ugr.rewards.reward_attribution import build_reward_event, resolve_valid_contribution_receipt
 from src.ugr.rewards.reward_calculator import compute_deltas
 from src.ugr.rewards.reward_ledger import RewardLedger
@@ -52,6 +56,8 @@ def issue_reward(
     skip_if_exists: bool = True,
     primary_anchor: str | None = None,
     secondary_anchor: str | None = None,
+    discovery_receipt: dict[str, Any] | None = None,
+    force_persist: bool = False,
 ) -> dict[str, Any]:
     """Fail-closed reward issuance — valid contribution receipt required."""
     if not rewards_enabled():
@@ -75,18 +81,44 @@ def issue_reward(
     if spec_errors:
         return {"status": "rejected", "summary": "; ".join(spec_errors)}
 
-    discovery_receipt, gate_reason = resolve_valid_contribution_receipt(
-        tenant_id=tenant_norm,
-        contribution_id=cid,
-        discovery_receipt_id=discovery_receipt_id,
-        runtime_dir=runtime_dir,
-    )
-    if discovery_receipt is None:
-        return {
-            "status": "rejected",
-            "summary": gate_reason,
-            "reason": "discovery_receipt_unresolved",
-        }
+    if discovery_receipt is not None:
+        inline = dict(discovery_receipt)
+        inline_cid = str(inline.get("contribution_id") or inline.get("subsystem_id") or "").strip()
+        if inline_cid != cid:
+            return {
+                "status": "rejected",
+                "summary": "inline discovery receipt contribution_id mismatch",
+                "reason": "discovery_receipt_mismatch",
+            }
+        if normalize_tenant_id(inline.get("tenant_id")) != tenant_norm:
+            return {
+                "status": "rejected",
+                "summary": "inline discovery receipt tenant mismatch",
+                "reason": "discovery_receipt_mismatch",
+            }
+        expected_rid = str(discovery_receipt_id or "").strip()
+        actual_rid = str(inline.get("receipt_id") or "").strip()
+        if expected_rid and actual_rid and expected_rid != actual_rid:
+            return {
+                "status": "rejected",
+                "summary": "inline discovery receipt receipt_id mismatch",
+                "reason": "discovery_receipt_mismatch",
+            }
+        resolved_receipt = inline
+    else:
+        resolved_receipt, gate_reason = resolve_valid_contribution_receipt(
+            tenant_id=tenant_norm,
+            contribution_id=cid,
+            discovery_receipt_id=discovery_receipt_id,
+            runtime_dir=runtime_dir,
+        )
+        if resolved_receipt is None:
+            return {
+                "status": "rejected",
+                "summary": gate_reason,
+                "reason": "discovery_receipt_unresolved",
+            }
+    discovery_receipt = resolved_receipt
 
     pol = policy or load_reward_policy()
     ledger = RewardLedger(runtime_dir=runtime_dir, tenant_id=tenant_norm)
@@ -147,10 +179,14 @@ def issue_reward(
         "profile_preview": profile.to_dict(),
     }
 
+    persist = bool(force_persist) or (
+        is_proven_contribution(discovery_receipt) and proven_rewards_persist_enabled()
+    )
+
     if rewards_audit_only():
         return preview
 
-    if rewards_shadow_only():
+    if not persist and rewards_shadow_only():
         return {
             **preview,
             "status": "shadow",

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { isAmplifyAuthEnabled } from '../lib/auth';
 import './Navbar.css';
 
 function Navbar() {
@@ -24,6 +25,7 @@ function Navbar() {
         { type: 'route', to: '/operator/brain', label: 'Brain' },
         { type: 'route', to: '/operator/ledger', label: 'Ledger' },
         { type: 'route', to: '/platform', label: 'Platform Ops' },
+        ...(isAmplifyAuthEnabled() ? [{ type: 'route', to: '/auth/sign-in', label: 'Sign in' }] : []),
         { type: 'route', to: '/jarvis/repo-manager', label: 'Repo Manager' },
         { type: 'route', to: '/memory', label: 'Memory Bank' },
   { type: 'route', to: '/', label: 'Small Nova' },

@@ -12,6 +12,19 @@ from flask import Flask, jsonify, request
 logger = logging.getLogger(__name__)
 
 
+def require_workos_operator_permission(route_key: str):
+    """Apply WorkOS RBAC to operator routes when AAIS_WORKOS_BRIDGE is enabled."""
+    from src.workos_governance_bridge import OPERATOR_ROUTE_PERMISSIONS, require_workos_permission
+
+    permission = OPERATOR_ROUTE_PERMISSIONS.get(route_key)
+    if not permission:
+        def passthrough(view):
+            return view
+
+        return passthrough
+    return require_workos_permission(permission)
+
+
 def _session_scope() -> str:
     body = request.get_json(silent=True) or {}
     scope = str(request.args.get("session_id") or body.get("session_id") or "").strip()
@@ -114,6 +127,7 @@ def register_operator_api_routes(app: Flask) -> None:
         return jsonify({"workflows": workflows, "count": len(workflows)}), 200
 
     @app.route("/api/operator/plugins/rescan", methods=["POST"])
+    @require_workos_operator_permission("POST /api/operator/plugins/rescan")
     def operator_plugins_rescan():
         from src.plug_adapter_runtime import plug_adapter_runtime
 
@@ -134,10 +148,822 @@ def register_operator_api_routes(app: Flask) -> None:
 
     @app.route("/api/operator/organs", methods=["GET"])
     def operator_organs_list():
-        from src.workflow_family_registry import list_workflow_families
+        from src.workflow_family_readiness import list_families_with_readiness
 
-        organs = list_workflow_families()
+        organs = list_families_with_readiness()
         return jsonify({"organs": organs, "count": len(organs)}), 200
+
+    @app.route("/api/operator/organs/<family_id>", methods=["GET"])
+    def operator_organs_detail(family_id: str):
+        from src.workflow_family_readiness import family_detail_with_readiness
+
+        detail = family_detail_with_readiness(family_id)
+        if not detail:
+            return jsonify({"error": "organ not found", "family_id": family_id}), 404
+        return jsonify({"organ": detail, **detail}), 200
+
+    @app.route("/api/operator/organs/mesh", methods=["GET"])
+    def operator_organs_mesh():
+        from src.organ_coordination_runtime import organ_coordination_runtime
+
+        return jsonify(organ_coordination_runtime.mesh_snapshot()), 200
+
+    @app.route("/api/operator/organs/mesh/plan", methods=["POST"])
+    def operator_organs_mesh_plan():
+        from src.organ_coordination_runtime import organ_coordination_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        plan = organ_coordination_runtime.plan_mesh_run(
+            intent_text=str(body.get("intent_text") or body.get("text") or ""),
+            source_family_id=str(body.get("source_family_id") or "") or None,
+            handoff_edge_index=int(body.get("handoff_edge_index") or 0),
+        )
+        status = 200 if plan.get("outcome") != "blocked" else 400
+        return jsonify({"plan": plan, **plan}), status
+
+    @app.route("/api/operator/organs/mesh/runs", methods=["POST"])
+    def operator_organs_mesh_runs():
+        from src.jarvis_organ_mesh_authority import authorize_mesh_run
+        from src.organ_coordination_runtime import organ_coordination_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        session_id = str(body.get("session_id") or "global")
+        operator_approved = bool(body.get("operator_approved"))
+        dry_run = bool(body.get("dry_run", True))
+        operator_ack = bool(body.get("operator_ack"))
+        plan = dict(body.get("plan") or {})
+        if not plan:
+            plan = organ_coordination_runtime.plan_mesh_run(
+                intent_text=str(body.get("intent_text") or body.get("text") or ""),
+            )
+        auth = authorize_mesh_run(plan, session_id=session_id)
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False}), 403
+        run = organ_coordination_runtime.execute_mesh_run(
+            plan,
+            session_id=session_id,
+            operator_approved=operator_approved,
+            dry_run=dry_run,
+            operator_ack=operator_ack,
+            jarvis_authorization=auth,
+        )
+        if run.get("reason") == "occ2_requires_operator_ack":
+            return jsonify({"error": run.get("reason"), "run": run}), 403
+        status = 200 if run.get("outcome") == "completed" else 400
+        return jsonify({"run": run, **run}), status
+
+    @app.route("/api/operator/organs/mesh/runs/<run_id>", methods=["GET"])
+    def operator_organs_mesh_run_detail(run_id: str):
+        from src.organ_coordination_runtime import organ_coordination_runtime
+
+        run = organ_coordination_runtime.get_run(run_id)
+        if not run:
+            return jsonify({"error": "run not found", "run_id": run_id}), 404
+        return jsonify({"run": run, **run}), 200
+
+    @app.route("/api/operator/culture", methods=["GET"])
+    def operator_culture_snapshot():
+        from src.culture_habit_runtime import culture_habit_runtime
+
+        return jsonify(culture_habit_runtime.culture_snapshot()), 200
+
+    @app.route("/api/operator/culture/observe", methods=["POST"])
+    def operator_culture_observe():
+        from src.culture_habit_runtime import culture_habit_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = culture_habit_runtime.mine_habit_patterns(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/culture/habits", methods=["GET"])
+    def operator_culture_habits_list():
+        from src.culture_habit_registry import adopted_habits
+        from src.culture_habit_runtime import culture_habit_runtime
+
+        return jsonify(
+            {
+                "adopted_habits": adopted_habits(),
+                "recent_candidates": culture_habit_runtime.list_candidates(limit=50),
+                "posture": culture_habit_runtime.culture_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/culture/habits/adopt", methods=["POST"])
+    def operator_culture_habits_adopt():
+        from src.culture_habit_runtime import culture_habit_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("habit_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in culture_habit_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        result = culture_habit_runtime.adopt_habit(
+            candidate,
+            operator_approved=bool(body.get("operator_approved")),
+            session_id=str(body.get("session_id") or "global"),
+        )
+        if result.get("reason") == "operator_approved required":
+            return jsonify({"error": result.get("reason"), **result}), 403
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/identity", methods=["GET"])
+    def operator_identity_snapshot():
+        from src.identity_self_model_runtime import identity_self_model_runtime
+
+        return jsonify(identity_self_model_runtime.identity_snapshot()), 200
+
+    @app.route("/api/operator/identity/observe", methods=["POST"])
+    def operator_identity_observe():
+        from src.identity_self_model_runtime import identity_self_model_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = identity_self_model_runtime.observe_identity_drift(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/identity/claims", methods=["GET"])
+    def operator_identity_claims_list():
+        from src.identity_self_model_registry import adopted_claims
+        from src.identity_self_model_runtime import identity_self_model_runtime
+
+        return jsonify(
+            {
+                "adopted_claims": adopted_claims(),
+                "recent_candidates": identity_self_model_runtime.list_candidates(limit=50),
+                "posture": identity_self_model_runtime.identity_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/identity/claims/adopt", methods=["POST"])
+    def operator_identity_claims_adopt():
+        from src.jarvis_identity_authority import authorize_foundation_admission
+        from src.identity_self_model_runtime import identity_self_model_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("identity_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in identity_self_model_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        session_id = str(body.get("session_id") or "global")
+        if not bool(body.get("operator_approved")):
+            return jsonify({"error": "operator_approved required"}), 403
+        auth = authorize_foundation_admission(candidate, session_id=session_id)
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False, **auth}), 403
+        result = identity_self_model_runtime.adopt_identity_claim(
+            candidate,
+            operator_approved=True,
+            jarvis_authorization=auth,
+            session_id=session_id,
+        )
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/narrative", methods=["GET"])
+    def operator_narrative_snapshot():
+        from src.narrative_continuity_runtime import narrative_continuity_runtime
+
+        return jsonify(narrative_continuity_runtime.narrative_snapshot()), 200
+
+    @app.route("/api/operator/narrative/observe", methods=["POST"])
+    def operator_narrative_observe():
+        from src.narrative_continuity_runtime import narrative_continuity_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = narrative_continuity_runtime.observe_narrative_drift(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/narrative/beats", methods=["GET"])
+    def operator_narrative_beats_list():
+        from src.narrative_continuity_registry import adopted_beats
+        from src.narrative_continuity_runtime import narrative_continuity_runtime
+
+        return jsonify(
+            {
+                "adopted_beats": adopted_beats(),
+                "recent_candidates": narrative_continuity_runtime.list_candidates(limit=50),
+                "posture": narrative_continuity_runtime.narrative_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/narrative/beats/adopt", methods=["POST"])
+    def operator_narrative_beats_adopt():
+        from src.jarvis_narrative_authority import authorize_session_admission
+        from src.narrative_continuity_runtime import narrative_continuity_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("narrative_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in narrative_continuity_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        session_id = str(body.get("session_id") or "global")
+        if not bool(body.get("operator_approved")):
+            return jsonify({"error": "operator_approved required"}), 403
+        auth = authorize_session_admission(candidate, session_id=session_id)
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False, **auth}), 403
+        result = narrative_continuity_runtime.adopt_narrative_beat(
+            candidate,
+            operator_approved=True,
+            jarvis_authorization=auth,
+            session_id=session_id,
+        )
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/autobiographical", methods=["GET"])
+    def operator_autobiographical_snapshot():
+        from src.autobiographical_agency_runtime import autobiographical_agency_runtime
+
+        return jsonify(autobiographical_agency_runtime.autobiographical_snapshot()), 200
+
+    @app.route("/api/operator/autobiographical/observe", methods=["POST"])
+    def operator_autobiographical_observe():
+        from src.autobiographical_agency_runtime import autobiographical_agency_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = autobiographical_agency_runtime.observe_autobiographical_drift(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/autobiographical/episodes", methods=["GET"])
+    def operator_autobiographical_episodes_list():
+        from src.autobiographical_agency_registry import adopted_episodes
+        from src.autobiographical_agency_runtime import autobiographical_agency_runtime
+
+        return jsonify(
+            {
+                "adopted_episodes": adopted_episodes(),
+                "recent_candidates": autobiographical_agency_runtime.list_candidates(limit=50),
+                "posture": autobiographical_agency_runtime.autobiographical_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/autobiographical/episodes/adopt", methods=["POST"])
+    def operator_autobiographical_episodes_adopt():
+        from src.jarvis_autobiographical_authority import authorize_operational_admission
+        from src.autobiographical_agency_runtime import autobiographical_agency_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("autobiographical_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in autobiographical_agency_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        session_id = str(body.get("session_id") or "global")
+        if not bool(body.get("operator_approved")):
+            return jsonify({"error": "operator_approved required"}), 403
+        auth = authorize_operational_admission(candidate, session_id=session_id)
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False, **auth}), 403
+        result = autobiographical_agency_runtime.adopt_autobiographical_episode(
+            candidate,
+            operator_approved=True,
+            jarvis_authorization=auth,
+            session_id=session_id,
+        )
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/social", methods=["GET"])
+    def operator_social_snapshot():
+        from src.social_continuity_runtime import social_continuity_runtime
+
+        return jsonify(social_continuity_runtime.social_snapshot()), 200
+
+    @app.route("/api/operator/social/observe", methods=["POST"])
+    def operator_social_observe():
+        from src.social_continuity_runtime import social_continuity_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = social_continuity_runtime.observe_social_drift(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/social/bonds", methods=["GET"])
+    def operator_social_bonds_list():
+        from src.social_continuity_registry import adopted_bonds
+        from src.social_continuity_runtime import social_continuity_runtime
+
+        return jsonify(
+            {
+                "adopted_bonds": adopted_bonds(),
+                "recent_candidates": social_continuity_runtime.list_candidates(limit=50),
+                "posture": social_continuity_runtime.social_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/social/bonds/adopt", methods=["POST"])
+    def operator_social_bonds_adopt():
+        from src.jarvis_social_authority import authorize_archive_admission
+        from src.social_continuity_runtime import social_continuity_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("social_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in social_continuity_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        session_id = str(body.get("session_id") or "global")
+        if not bool(body.get("operator_approved")):
+            return jsonify({"error": "operator_approved required"}), 403
+        auth = authorize_archive_admission(candidate, session_id=session_id)
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False, **auth}), 403
+        result = social_continuity_runtime.adopt_social_bond(
+            candidate,
+            operator_approved=True,
+            jarvis_authorization=auth,
+            session_id=session_id,
+        )
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/multi-being", methods=["GET"])
+    def operator_multi_being_snapshot():
+        from src.multi_being_continuity_runtime import multi_being_continuity_runtime
+
+        return jsonify(multi_being_continuity_runtime.multi_being_snapshot()), 200
+
+    @app.route("/api/operator/multi-being/observe", methods=["POST"])
+    def operator_multi_being_observe():
+        from src.multi_being_continuity_runtime import multi_being_continuity_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = multi_being_continuity_runtime.observe_multi_being_drift(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/multi-being/pacts", methods=["GET"])
+    def operator_multi_being_pacts_list():
+        from src.multi_being_continuity_registry import adopted_pacts
+        from src.multi_being_continuity_runtime import multi_being_continuity_runtime
+
+        return jsonify(
+            {
+                "adopted_pacts": adopted_pacts(),
+                "recent_candidates": multi_being_continuity_runtime.list_candidates(limit=50),
+                "posture": multi_being_continuity_runtime.multi_being_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/multi-being/pacts/adopt", methods=["POST"])
+    def operator_multi_being_pacts_adopt():
+        from src.jarvis_multi_being_authority import authorize_federation_slot_admission
+        from src.multi_being_continuity_runtime import multi_being_continuity_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("multi_being_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in multi_being_continuity_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        session_id = str(body.get("session_id") or "global")
+        if not bool(body.get("operator_approved")):
+            return jsonify({"error": "operator_approved required"}), 403
+        auth = authorize_federation_slot_admission(candidate, session_id=session_id)
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False, **auth}), 403
+        result = multi_being_continuity_runtime.adopt_multi_being_pact(
+            candidate,
+            operator_approved=True,
+            jarvis_authorization=auth,
+            session_id=session_id,
+        )
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/culture-of-beings", methods=["GET"])
+    def operator_culture_of_beings_snapshot():
+        from src.culture_of_beings_runtime import culture_of_beings_runtime
+
+        return jsonify(culture_of_beings_runtime.culture_of_beings_snapshot()), 200
+
+    @app.route("/api/operator/culture-of-beings/observe", methods=["POST"])
+    def operator_culture_of_beings_observe():
+        from src.culture_of_beings_runtime import culture_of_beings_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = culture_of_beings_runtime.observe_culture_of_beings_drift(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/culture-of-beings/norms", methods=["GET"])
+    def operator_culture_of_beings_norms_list():
+        from src.culture_of_beings_registry import adopted_norms
+        from src.culture_of_beings_runtime import culture_of_beings_runtime
+
+        return jsonify(
+            {
+                "adopted_norms": adopted_norms(),
+                "recent_candidates": culture_of_beings_runtime.list_candidates(limit=50),
+                "posture": culture_of_beings_runtime.culture_of_beings_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/culture-of-beings/norms/adopt", methods=["POST"])
+    def operator_culture_of_beings_norms_adopt():
+        from src.culture_of_beings_runtime import culture_of_beings_runtime
+        from src.jarvis_culture_of_beings_authority import authorize_culture_of_beings_slot_admission
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("shared_norm_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in culture_of_beings_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        session_id = str(body.get("session_id") or "global")
+        if not bool(body.get("operator_approved")):
+            return jsonify({"error": "operator_approved required"}), 403
+        auth = authorize_culture_of_beings_slot_admission(candidate, session_id=session_id)
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False, **auth}), 403
+        result = culture_of_beings_runtime.adopt_shared_norm(
+            candidate,
+            operator_approved=True,
+            jarvis_authorization=auth,
+            session_id=session_id,
+        )
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/ecosystems", methods=["GET"])
+    def operator_ecosystems_snapshot():
+        from src.constitutional_ecosystem_runtime import constitutional_ecosystem_runtime
+
+        return jsonify(constitutional_ecosystem_runtime.ecosystem_snapshot()), 200
+
+    @app.route("/api/operator/ecosystems/observe", methods=["POST"])
+    def operator_ecosystems_observe():
+        from src.constitutional_ecosystem_runtime import constitutional_ecosystem_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = constitutional_ecosystem_runtime.observe_ecosystem_drift(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/ecosystems/charters", methods=["GET"])
+    def operator_ecosystems_charters_list():
+        from src.constitutional_ecosystem_registry import adopted_charters
+        from src.constitutional_ecosystem_runtime import constitutional_ecosystem_runtime
+
+        return jsonify(
+            {
+                "adopted_charters": adopted_charters(),
+                "recent_candidates": constitutional_ecosystem_runtime.list_candidates(limit=50),
+                "posture": constitutional_ecosystem_runtime.ecosystem_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/ecosystems/charters/adopt", methods=["POST"])
+    def operator_ecosystems_charters_adopt():
+        from src.constitutional_ecosystem_runtime import constitutional_ecosystem_runtime
+        from src.jarvis_ecosystem_authority import authorize_ecosystem_slot_admission
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("charter_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in constitutional_ecosystem_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        session_id = str(body.get("session_id") or "global")
+        if not bool(body.get("operator_approved")):
+            return jsonify({"error": "operator_approved required"}), 403
+        auth = authorize_ecosystem_slot_admission(candidate, session_id=session_id)
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False, **auth}), 403
+        result = constitutional_ecosystem_runtime.adopt_ecosystem_charter(
+            candidate,
+            operator_approved=True,
+            jarvis_authorization=auth,
+            session_id=session_id,
+        )
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/diplomacy", methods=["GET"])
+    def operator_diplomacy_snapshot():
+        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+
+        return jsonify(inter_substrate_diplomacy_runtime.diplomacy_snapshot()), 200
+
+    @app.route("/api/operator/diplomacy/observe", methods=["POST"])
+    def operator_diplomacy_observe():
+        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = inter_substrate_diplomacy_runtime.observe_substrate_drift(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/diplomacy/accords", methods=["GET"])
+    def operator_diplomacy_accords_list():
+        from src.inter_substrate_diplomacy_registry import adopted_accords
+        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+
+        return jsonify(
+            {
+                "adopted_accords": adopted_accords(),
+                "recent_candidates": inter_substrate_diplomacy_runtime.list_candidates(limit=50),
+                "posture": inter_substrate_diplomacy_runtime.diplomacy_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/diplomacy/accords/adopt", methods=["POST"])
+    def operator_diplomacy_accords_adopt():
+        from src.jarvis_diplomacy_authority import authorize_diplomacy_overlay_admission
+        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("accord_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in inter_substrate_diplomacy_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        session_id = str(body.get("session_id") or "global")
+        if not bool(body.get("operator_approved")):
+            return jsonify({"error": "operator_approved required"}), 403
+        auth = authorize_diplomacy_overlay_admission(candidate, session_id=session_id)
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False, **auth}), 403
+        result = inter_substrate_diplomacy_runtime.adopt_diplomatic_accord(
+            candidate,
+            operator_approved=True,
+            jarvis_authorization=auth,
+            session_id=session_id,
+        )
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/norm-federations", methods=["GET"])
+    def operator_norm_federations_snapshot():
+        from src.norm_federation_runtime import norm_federation_runtime
+
+        return jsonify(norm_federation_runtime.federation_snapshot()), 200
+
+    @app.route("/api/operator/norm-federations/observe", methods=["POST"])
+    def operator_norm_federations_observe():
+        from src.norm_federation_runtime import norm_federation_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = norm_federation_runtime.observe_federation_drift(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/norm-federations/treaties", methods=["GET"])
+    def operator_norm_federations_treaties_list():
+        from src.norm_federation_registry import adopted_treaties
+        from src.norm_federation_runtime import norm_federation_runtime
+
+        return jsonify(
+            {
+                "adopted_treaties": adopted_treaties(),
+                "recent_candidates": norm_federation_runtime.list_candidates(limit=50),
+                "posture": norm_federation_runtime.federation_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/norm-federations/treaties/adopt", methods=["POST"])
+    def operator_norm_federations_treaties_adopt():
+        from src.jarvis_norm_federation_authority import authorize_norm_federation_overlay_admission
+        from src.norm_federation_runtime import norm_federation_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("treaty_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in norm_federation_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        session_id = str(body.get("session_id") or "global")
+        if not bool(body.get("operator_approved")):
+            return jsonify({"error": "operator_approved required"}), 403
+        auth = authorize_norm_federation_overlay_admission(candidate, session_id=session_id)
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False, **auth}), 403
+        result = norm_federation_runtime.adopt_federation_treaty(
+            candidate,
+            operator_approved=True,
+            jarvis_authorization=auth,
+            session_id=session_id,
+        )
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/constitutional-evolution", methods=["GET"])
+    def operator_constitutional_evolution_snapshot():
+        from src.constitutional_evolution_runtime import constitutional_evolution_runtime
+
+        return jsonify(constitutional_evolution_runtime.evolution_snapshot()), 200
+
+    @app.route("/api/operator/constitutional-evolution/observe", methods=["POST"])
+    def operator_constitutional_evolution_observe():
+        from src.constitutional_evolution_runtime import constitutional_evolution_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = constitutional_evolution_runtime.observe_evolution_drift(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/constitutional-evolution/amendments", methods=["GET"])
+    def operator_constitutional_evolution_amendments_list():
+        from src.constitutional_evolution_registry import adopted_amendments
+        from src.constitutional_evolution_runtime import constitutional_evolution_runtime
+
+        return jsonify(
+            {
+                "adopted_amendments": adopted_amendments(),
+                "recent_candidates": constitutional_evolution_runtime.list_candidates(limit=50),
+                "posture": constitutional_evolution_runtime.evolution_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/constitutional-evolution/amendments/adopt", methods=["POST"])
+    def operator_constitutional_evolution_amendments_adopt():
+        from src.jarvis_constitutional_evolution_authority import authorize_amendment_overlay_admission
+        from src.constitutional_evolution_runtime import constitutional_evolution_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("amendment_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in constitutional_evolution_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        session_id = str(body.get("session_id") or "global")
+        if not bool(body.get("operator_approved")):
+            return jsonify({"error": "operator_approved required"}), 403
+        auth = authorize_amendment_overlay_admission(candidate, session_id=session_id)
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False, **auth}), 403
+        result = constitutional_evolution_runtime.adopt_charter_amendment(
+            candidate,
+            operator_approved=True,
+            jarvis_authorization=auth,
+            session_id=session_id,
+        )
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/civilizations", methods=["GET"])
+    def operator_civilizations_snapshot():
+        from src.governed_civilization_runtime import governed_civilization_runtime
+
+        return jsonify(governed_civilization_runtime.civilization_snapshot()), 200
+
+    @app.route("/api/operator/civilizations/observe", methods=["POST"])
+    def operator_civilizations_observe():
+        from src.governed_civilization_runtime import governed_civilization_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = governed_civilization_runtime.observe_civilization_drift(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/civilizations/charters", methods=["GET"])
+    def operator_civilizations_charters_list():
+        from src.governed_civilization_registry import adopted_civilizations
+        from src.governed_civilization_runtime import governed_civilization_runtime
+
+        return jsonify(
+            {
+                "adopted_civilizations": adopted_civilizations(),
+                "recent_candidates": governed_civilization_runtime.list_candidates(limit=50),
+                "posture": governed_civilization_runtime.civilization_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/civilizations/charters/adopt", methods=["POST"])
+    def operator_civilizations_charters_adopt():
+        from src.governed_civilization_runtime import governed_civilization_runtime
+        from src.jarvis_civilization_authority import authorize_civilization_overlay_admission
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("civilization_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in governed_civilization_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        session_id = str(body.get("session_id") or "global")
+        if not bool(body.get("operator_approved")):
+            return jsonify({"error": "operator_approved required"}), 403
+        auth = authorize_civilization_overlay_admission(candidate, session_id=session_id)
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False, **auth}), 403
+        result = governed_civilization_runtime.adopt_civilization_charter(
+            candidate,
+            operator_approved=True,
+            jarvis_authorization=auth,
+            session_id=session_id,
+        )
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/governance-membrane", methods=["GET"])
+    def operator_governance_membrane_snapshot():
+        from src.multi_organism_governance_membrane_runtime import multi_organism_governance_membrane_runtime
+
+        return jsonify(multi_organism_governance_membrane_runtime.membrane_snapshot()), 200
+
+    @app.route("/api/operator/governance-membrane/observe", methods=["POST"])
+    def operator_governance_membrane_observe():
+        from src.multi_organism_governance_membrane_runtime import multi_organism_governance_membrane_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = multi_organism_governance_membrane_runtime.observe_membrane_drift(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/governance-membrane/policies", methods=["GET"])
+    def operator_governance_membrane_policies_list():
+        from src.multi_organism_governance_membrane_registry import adopted_policies
+        from src.multi_organism_governance_membrane_runtime import multi_organism_governance_membrane_runtime
+
+        return jsonify(
+            {
+                "adopted_policies": adopted_policies(),
+                "recent_candidates": multi_organism_governance_membrane_runtime.list_candidates(limit=50),
+                "posture": multi_organism_governance_membrane_runtime.membrane_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/governance-membrane/policies/adopt", methods=["POST"])
+    def operator_governance_membrane_policies_adopt():
+        from src.jarvis_membrane_authority import authorize_membrane_slot_admission
+        from src.multi_organism_governance_membrane_runtime import multi_organism_governance_membrane_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("policy_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in multi_organism_governance_membrane_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        session_id = str(body.get("session_id") or "global")
+        if not bool(body.get("operator_approved")):
+            return jsonify({"error": "operator_approved required"}), 403
+        auth = authorize_membrane_slot_admission(candidate, session_id=session_id)
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False, **auth}), 403
+        result = multi_organism_governance_membrane_runtime.adopt_membrane_policy(
+            candidate,
+            operator_approved=True,
+            jarvis_authorization=auth,
+            session_id=session_id,
+        )
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/workflows/<workflow_id>/runs/<run_id>", methods=["GET"])
+    def operator_workflow_run_detail(workflow_id: str, run_id: str):
+        from src.workflow_chain_executor import workflow_chain_executor
+
+        run = workflow_chain_executor.get_run(workflow_id, run_id)
+        if not run:
+            return jsonify({"error": "run not found", "workflow_id": workflow_id, "run_id": run_id}), 404
+        return jsonify({"run": run, **run}), 200
 
     @app.route("/api/operator/training/adapters", methods=["GET"])
     def operator_training_adapters_list():
@@ -275,13 +1101,11 @@ def register_operator_api_routes(app: Flask) -> None:
         session = brain_session_store.decide(session_id, decision)
         if not session:
             return jsonify({"error": "invalid session or decision"}), 400
-        scope = str(body.get("session_scope") or session_id).strip() or session_id
         try:
             append_brain_decision_event(
-                scope,
-                session_id=session_id,
+                session_id,
                 decision=decision,
-                summary=f"brain session {decision}",
+                session=session,
             )
         except Exception as exc:
             logger.warning("brain decision ledger emit failed: %s", exc)
@@ -305,3 +1129,38 @@ def register_operator_api_routes(app: Flask) -> None:
         from src.operator_infinity1_dashboard import build_monitoring_poll
 
         return jsonify(build_monitoring_poll()), 200
+
+    @app.route("/api/operator/dashboard/somatic-health", methods=["GET"])
+    def operator_dashboard_somatic_health():
+        from src.operator_somatic_health import build_somatic_health_snapshot
+
+        return jsonify(build_somatic_health_snapshot()), 200
+
+    @app.route("/api/jarvis/nova/touch", methods=["POST"])
+    def jarvis_nova_touch_admit():
+        from src.nova_touch_admission import admit_touch_event
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = admit_touch_event(body)
+        status = 200 if result.get("admitted") else 400
+        return jsonify(result), status
+
+    @app.route("/api/jarvis/nova/touch/status", methods=["GET"])
+    def jarvis_nova_touch_status():
+        from src.nova_touch_admission import build_nova_touch_admission_status
+
+        return jsonify(build_nova_touch_admission_status()), 200
+
+    @app.route("/api/operator/otem/autonomic/<routine_id>", methods=["POST"])
+    def operator_otem_autonomic_routine(routine_id: str):
+        from src.otem_autonomic_routines import execute_autonomic_routine
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        session_id = str(body.get("session_id") or _session_scope())
+        result = execute_autonomic_routine(
+            routine_id,
+            session_id=session_id,
+            args=dict(body.get("args") or {}),
+        )
+        status = 200 if result.get("outcome") == "completed" else 400
+        return jsonify(result), status

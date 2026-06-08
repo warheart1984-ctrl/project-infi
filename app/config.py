@@ -9,6 +9,37 @@ DATA_DIR = Path(os.getenv("JARVIS_DATA_DIR", str(BASE_DIR / "data"))).resolve()
 CHROMA_DIR = Path(os.getenv("JARVIS_CHROMA_DIR", str(DATA_DIR / "chroma"))).resolve()
 DB_PATH = Path(os.getenv("JARVIS_DB_PATH", str(DATA_DIR / "jarvis.db"))).resolve()
 
+# Durable OTEM substrate co-located with workflow DB (Release 31 circulation).
+OTEM_SUBSTRATE_USE_DB = os.getenv("AAIS_OTEM_SUBSTRATE_USE_DB", "1").lower() in (
+    "1",
+    "true",
+    "yes",
+    "on",
+)
+
+# Optional Temporal.io orchestration for OTEM approve → apply (worker required when enabled).
+OTEM_TEMPORAL_ENABLED = os.getenv("AAIS_OTEM_TEMPORAL_ENABLED", "0").lower() in (
+    "1",
+    "true",
+    "yes",
+    "on",
+)
+TEMPORAL_ADDRESS = os.getenv("TEMPORAL_ADDRESS", "localhost:7233").strip() or "localhost:7233"
+OTEM_TEMPORAL_TASK_QUEUE = (
+    os.getenv("AAIS_OTEM_TEMPORAL_TASK_QUEUE", "aais-otem-exec").strip() or "aais-otem-exec"
+)
+TEMPORAL_NAMESPACE = os.getenv("TEMPORAL_NAMESPACE", "default").strip() or "default"
+
+# Optional ScyllaDB Cloud vector projection for governed Memory Board retrieval.
+AAIS_VECTOR_BACKEND = os.getenv("AAIS_VECTOR_BACKEND", "chroma").strip().lower()
+AAIS_VECTOR_TENANT_ID = os.getenv("AAIS_VECTOR_TENANT_ID", "default").strip() or "default"
+SCYLLA_CONTACT_POINTS = os.getenv("SCYLLA_CONTACT_POINTS", "").strip()
+SCYLLA_PORT = int(os.getenv("SCYLLA_PORT", "9042"))
+SCYLLA_USERNAME = os.getenv("SCYLLA_USERNAME", "scylla").strip()
+SCYLLA_PASSWORD = os.getenv("SCYLLA_PASSWORD", "")
+SCYLLA_KEYSPACE = os.getenv("SCYLLA_KEYSPACE", "jarvis_memory").strip()
+SCYLLA_LOCAL_DC = os.getenv("SCYLLA_LOCAL_DC", "").strip()
+
 
 def _has_modern_frontend_bundle(directory: Path) -> bool:
     return (directory / "index.html").exists() and (directory / "assets").is_dir()
@@ -47,6 +78,13 @@ APP_CORS_ORIGINS = [
     if origin.strip()
 ]
 SLACK_WEBHOOK_URL = os.getenv("SLACK_WEBHOOK_URL", "").strip()
+
+# Twilio operator pager (immune / governance escalations — see src/operator_pager.py)
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "").strip()
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "").strip()
+TWILIO_FROM_NUMBER = os.getenv("TWILIO_FROM_NUMBER", "").strip()
+TWILIO_MESSAGING_SERVICE_SID = os.getenv("TWILIO_MESSAGING_SERVICE_SID", "").strip()
+OPERATOR_PAGER_TO = os.getenv("OPERATOR_PAGER_TO", "").strip()
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379/0")
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", REDIS_URL)

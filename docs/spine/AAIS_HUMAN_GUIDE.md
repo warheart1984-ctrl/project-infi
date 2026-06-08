@@ -183,14 +183,14 @@ The system should not silently flatten everything into generic success or failur
 
 ## What Is Still Not Finished
 
-The project is now stable enough to build on, but some larger pieces are still incomplete.
+The Body Completeness Program (Releases 31–34+) closed the eight major anatomical gaps. See [AAIS_BODY_COMPLETENESS_MATRIX.md](../runtime/AAIS_BODY_COMPLETENESS_MATRIX.md) for delivery status and verification gates.
 
-The biggest remaining items are:
+Remaining larger items:
 
-- OTEM is still capped and not a full execution layer
 - PatchForge is still not a full autonomous authoring system
-- broader Super Nova immune automation beyond the current observe-only governed path is not yet implemented
-- some older docs are still lineage/reference material rather than canonical current truth
+- Super Nova expansion beyond the guarded lane remains bounded
+- Cross-machine wolf metal reboot proofs for narrative/intent remain debt
+- Some older docs are still lineage/reference material rather than canonical current truth
 
 ## Best Reading Path
 

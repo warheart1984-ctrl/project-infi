@@ -144,3 +144,9 @@ project_blueprints_infinity.html
 # Cursor local session state (rules under .cursor/rules/ are tracked)
 .cursor/projects/
 .cursor/**/*.log
+
+# Amplify Gen 2 (deploy/amplify spike)
+deploy/amplify/node_modules/
+deploy/amplify/.amplify/
+deploy/amplify/amplify_outputs.json
+frontend/src/amplify_outputs.json

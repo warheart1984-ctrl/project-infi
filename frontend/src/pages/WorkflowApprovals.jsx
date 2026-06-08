@@ -54,7 +54,12 @@ function WorkflowApprovals() {
         navigate(`/workflows/runs/${approval.workflow_run_id}`);
       }
     } catch (error) {
-      toast.error(getApiErrorMessage(error, 'Approval action failed'));
+      const message = getApiErrorMessage(error, 'Approval action failed');
+      if (message.toLowerCase().includes('stale')) {
+        toast.error(`${message} Reject this row and re-run the OTEM handoff.`);
+      } else {
+        toast.error(message);
+      }
     } finally {
       setBusyId('');
       setBusyAction('');

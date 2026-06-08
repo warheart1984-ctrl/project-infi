@@ -104,13 +104,17 @@ services:
       - platform_runtime:/app/.runtime
 
   postgres:
-    image: postgres:16-alpine
+    # ParadeDB: Postgres + pg_search (BM25). Drop-in for platform persistence.
+    image: paradedb/paradedb:latest
     environment:
       POSTGRES_USER: platform
       POSTGRES_PASSWORD: platform
       POSTGRES_DB: platform
+    ports:
+      - "5433:5432"
     volumes:
       - platform_pg:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
 
   redis:
     image: redis:7-alpine

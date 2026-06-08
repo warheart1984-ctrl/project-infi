@@ -70,7 +70,8 @@
     "notes": "Alt-11 wave 1"
   },
   "retirement": {
-    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md"
+    "path": "docs/contracts/AAIS_SUBSYSTEM_RETIREMENT_PROTOCOL.md",
+    "migration_proof": "docs/subsystems/platform/COGNITIVE_BRIDGE_ORGAN.md"
   },
   "mutation": {
     "history": []

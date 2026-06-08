@@ -353,6 +353,11 @@ class SecurityProtocolCore:
                 for item in immune_snapshot.get("quarantined_resources", [])
                 if item.get("resource_id")
             }
+            blacklisted_modules = {
+                item.get("module_id")
+                for item in immune_snapshot.get("blacklisted_modules", [])
+                if item.get("module_id")
+            }
             disabled_tools = {
                 item.get("tool_id")
                 for item in immune_snapshot.get("disabled_tools", [])
@@ -361,6 +366,14 @@ class SecurityProtocolCore:
             caller_overrides = immune_snapshot.get("caller_overrides") or {}
             caller_override = caller_overrides.get(caller.id) or {}
             system_mode = str(immune_snapshot.get("system_mode") or "normal").strip().lower()
+
+            if resource.id in blacklisted_modules:
+                return (
+                    AccessDecision.DENY,
+                    0.97,
+                    "Resource is blacklisted by the immune layer.",
+                    f"{policy_rule}.blacklist",
+                )
 
             if resource.id in quarantined and resource.type != ResourceType.OUTPUT_CHANNEL:
                 return AccessDecision.DENY, 0.94, "Resource is quarantined by the immune layer.", f"{policy_rule}.quarantine"

@@ -94,5 +94,16 @@
     "min_amount": 0.01,
     "cooldown_seconds": 30,
     "earned_only": true
+  },
+  "pod_arc_multipliers": {
+    "default": 1.0,
+    "low": 2.0,
+    "med": 4.0,
+    "medium": 4.0,
+    "med_high": 7.0,
+    "med-high": 7.0,
+    "high": 10.0,
+    "beyond_body": 10.0,
+    "civilizational": 10.0
   }
 }

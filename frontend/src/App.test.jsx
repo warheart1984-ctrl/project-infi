@@ -3,6 +3,15 @@ import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import App from './App';
 
+vi.mock('./lib/amplifyAuth', () => ({
+  isAmplifyAuthActive: () => false,
+  ensureAmplifySession: async () => '',
+  initAmplifyAuth: async () => false,
+  refreshAmplifySession: async () => false,
+  signOutAmplify: async () => {},
+  teardownAmplifyAuth: () => {},
+}));
+
 vi.mock('./pages/NovaPage', () => ({
   default: function MockNovaPage() {
     return (

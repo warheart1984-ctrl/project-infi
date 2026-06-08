@@ -305,6 +305,11 @@ def _build_mind_posture(
     from src.continuity_witness_organ import build_continuity_witness_status
     from src.intent_agency_organ import build_intent_agency_status
     from src.narrative_continuity_organ import build_narrative_continuity_status
+    from src.social_continuity_organ import build_social_continuity_status
+    from src.multi_being_continuity_organ import build_multi_being_continuity_status
+    from src.culture_of_beings_organ import build_culture_of_beings_status
+    from src.constitutional_ecosystem_organ import build_constitutional_ecosystem_status
+    from src.multi_organism_governance_membrane_organ import build_governance_membrane_status
 
     posture: list[dict[str, Any]] = []
     witness = build_continuity_witness_status(governed_pipeline=pipeline_trace)
@@ -332,6 +337,51 @@ def _build_mind_posture(
             "stage": str(intent.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
             "claim_label": str(intent.get("claim_label") or "asserted")[:32],
             "agency_claim_posture": str(intent.get("agency_claim_posture") or "asserted")[:32],
+        }
+    )
+    social = build_social_continuity_status()
+    posture.append(
+        {
+            "organ_id": "social_continuity_organ",
+            "stage": str(social.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(social.get("claim_label") or "asserted")[:32],
+            "adopted_bonds": int(social.get("adopted_bonds") or 0),
+        }
+    )
+    multi_being = build_multi_being_continuity_status()
+    posture.append(
+        {
+            "organ_id": "multi_being_continuity_organ",
+            "stage": str(multi_being.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(multi_being.get("claim_label") or "asserted")[:32],
+            "adopted_pacts": int(multi_being.get("adopted_pacts") or 0),
+        }
+    )
+    cob = build_culture_of_beings_status()
+    posture.append(
+        {
+            "organ_id": "culture_of_beings_organ",
+            "stage": str(cob.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(cob.get("claim_label") or "asserted")[:32],
+            "adopted_norms": int(cob.get("adopted_norms") or 0),
+        }
+    )
+    ecosystem = build_constitutional_ecosystem_status()
+    posture.append(
+        {
+            "organ_id": "constitutional_ecosystem_organ",
+            "stage": str(ecosystem.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(ecosystem.get("claim_label") or "asserted")[:32],
+            "adopted_charters": int(ecosystem.get("adopted_charters") or 0),
+        }
+    )
+    membrane = build_governance_membrane_status()
+    posture.append(
+        {
+            "organ_id": "governance_membrane_organ",
+            "stage": str(membrane.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(membrane.get("claim_label") or "asserted")[:32],
+            "adopted_policies": int(membrane.get("adopted_policies") or 0),
         }
     )
     return posture
@@ -488,10 +538,22 @@ def _build_immune_observe_posture(
     pipeline_trace: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     from src.immune_observe_organ import build_immune_observe_status
+    from src.immune_resilience_organ import build_immune_resilience_status
     from src.policy_gate_organ import build_policy_gate_status
     from src.predictor_immune_bridge_organ import build_predictor_immune_bridge_status
 
     posture: list[dict[str, Any]] = []
+    resilience = build_immune_resilience_status()
+    posture.append(
+        {
+            "organ_id": "immune_resilience_organ",
+            "stage": str(resilience.get("cisiv_stage") or "implementation")[:MAX_FIELD_LEN],
+            "claim_label": str(resilience.get("claim_label") or "asserted")[:32],
+            "defense_generation": int(resilience.get("defense_generation") or 0),
+            "heal_eligible": bool(resilience.get("heal_eligible")),
+            "defensive_only": bool(resilience.get("defensive_only")),
+        }
+    )
     immune = build_immune_observe_status()
     posture.append(
         {
@@ -525,12 +587,22 @@ def _build_immune_observe_posture(
     return posture
 
 
+def _immune_resilience_aligned(immune_posture: list[dict[str, Any]]) -> bool:
+    resilience = next(
+        (item for item in immune_posture if item.get("organ_id") == "immune_resilience_organ"),
+        None,
+    )
+    if not resilience:
+        return False
+    return bool(resilience.get("defensive_only")) and int(resilience.get("defense_generation") or 0) >= 0
+
+
 def _immune_observe_aligned(
     immune_posture: list[dict[str, Any]],
     *,
     require_bridge: bool = False,
 ) -> bool:
-    if len(immune_posture) < 3:
+    if len(immune_posture) < 4:
         return False
     bridged = False
     for item in immune_posture:
@@ -1583,6 +1655,188 @@ def _product_shell_aligned(posture: list[dict[str, Any]]) -> bool:
     )
 
 
+def _build_organ_mesh_posture() -> dict[str, Any]:
+    try:
+        from src.organ_coordination_runtime import organ_coordination_runtime
+
+        return organ_coordination_runtime.mesh_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _organ_mesh_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
+def _build_culture_posture() -> dict[str, Any]:
+    try:
+        from src.culture_habit_runtime import culture_habit_runtime
+
+        return culture_habit_runtime.culture_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _culture_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
+def _build_identity_posture() -> dict[str, Any]:
+    try:
+        from src.identity_self_model_runtime import identity_self_model_runtime
+
+        return identity_self_model_runtime.identity_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _identity_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
+def _build_narrative_posture() -> dict[str, Any]:
+    try:
+        from src.narrative_continuity_runtime import narrative_continuity_runtime
+
+        return narrative_continuity_runtime.narrative_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _narrative_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
+def _build_autobiographical_posture() -> dict[str, Any]:
+    try:
+        from src.autobiographical_agency_runtime import autobiographical_agency_runtime
+
+        return autobiographical_agency_runtime.autobiographical_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _autobiographical_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
+def _build_social_posture() -> dict[str, Any]:
+    try:
+        from src.social_continuity_runtime import social_continuity_runtime
+
+        return social_continuity_runtime.social_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _social_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
+def _build_multi_being_posture() -> dict[str, Any]:
+    try:
+        from src.multi_being_continuity_runtime import multi_being_continuity_runtime
+
+        return multi_being_continuity_runtime.multi_being_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _multi_being_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
+def _build_culture_of_beings_posture() -> dict[str, Any]:
+    try:
+        from src.culture_of_beings_runtime import culture_of_beings_runtime
+
+        return culture_of_beings_runtime.culture_of_beings_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _culture_of_beings_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
+def _build_ecosystem_posture() -> dict[str, Any]:
+    try:
+        from src.constitutional_ecosystem_runtime import constitutional_ecosystem_runtime
+
+        return constitutional_ecosystem_runtime.ecosystem_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _ecosystem_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
+def _build_governance_membrane_posture() -> dict[str, Any]:
+    try:
+        from src.multi_organism_governance_membrane_runtime import multi_organism_governance_membrane_runtime
+
+        return multi_organism_governance_membrane_runtime.membrane_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _governance_membrane_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
+def _build_diplomacy_posture() -> dict[str, Any]:
+    try:
+        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+
+        return inter_substrate_diplomacy_runtime.diplomacy_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _diplomacy_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
+def _build_norm_federation_posture() -> dict[str, Any]:
+    try:
+        from src.norm_federation_runtime import norm_federation_runtime
+
+        return norm_federation_runtime.federation_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _norm_federation_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
+def _build_constitutional_evolution_posture() -> dict[str, Any]:
+    try:
+        from src.constitutional_evolution_runtime import constitutional_evolution_runtime
+
+        return constitutional_evolution_runtime.evolution_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _constitutional_evolution_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
+def _build_governed_civilization_posture() -> dict[str, Any]:
+    try:
+        from src.governed_civilization_runtime import governed_civilization_runtime
+
+        return governed_civilization_runtime.civilization_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "claim_label": "rejected"}
+
+
+def _governed_civilization_aligned(posture: dict[str, Any]) -> bool:
+    return str(posture.get("claim_label") or "asserted") != "rejected" and not posture.get("error")
+
+
 def _build_operator_surface_posture() -> list[dict[str, Any]]:
     from src.dashboard_surface_organ import build_dashboard_surface_status
     from src.jarvis_console_surface_organ import build_jarvis_console_surface_status
@@ -2404,6 +2658,20 @@ def build_coherence_fabric_status(
     turn_admission_posture = _build_turn_admission_posture()
     governance_control_posture = _build_governance_control_posture()
     product_shell_posture = _build_product_shell_posture()
+    organ_mesh_posture = _build_organ_mesh_posture()
+    culture_posture = _build_culture_posture()
+    identity_posture = _build_identity_posture()
+    narrative_posture = _build_narrative_posture()
+    autobiographical_posture = _build_autobiographical_posture()
+    social_posture = _build_social_posture()
+    multi_being_posture = _build_multi_being_posture()
+    culture_of_beings_posture = _build_culture_of_beings_posture()
+    ecosystem_posture = _build_ecosystem_posture()
+    governance_membrane_posture = _build_governance_membrane_posture()
+    diplomacy_posture = _build_diplomacy_posture()
+    norm_federation_posture = _build_norm_federation_posture()
+    constitutional_evolution_posture = _build_constitutional_evolution_posture()
+    governed_civilization_posture = _build_governed_civilization_posture()
     operator_surface_posture = _build_operator_surface_posture()
     composed_runtime_posture = _build_composed_runtime_posture()
     workspace_memory_layer = _build_workspace_memory_layer()
@@ -2539,6 +2807,7 @@ def build_coherence_fabric_status(
             immune_posture,
             require_bridge=bool(pipeline_source),
         ),
+        "immune_resilience_aligned": _immune_resilience_aligned(immune_posture),
         "authority_trace_posture": authority_trace_posture,
         "authority_trace_aligned": _authority_trace_aligned(authority_trace_posture),
         "mission_boundary_posture": mission_boundary_posture,
@@ -2627,6 +2896,34 @@ def build_coherence_fabric_status(
         ),
         "product_shell_posture": product_shell_posture,
         "product_shell_aligned": _product_shell_aligned(product_shell_posture),
+        "organ_mesh_posture": organ_mesh_posture,
+        "organ_mesh_aligned": _organ_mesh_aligned(organ_mesh_posture),
+        "culture_posture": culture_posture,
+        "culture_aligned": _culture_aligned(culture_posture),
+        "identity_posture": identity_posture,
+        "identity_aligned": _identity_aligned(identity_posture),
+        "narrative_posture": narrative_posture,
+        "narrative_aligned": _narrative_aligned(narrative_posture),
+        "autobiographical_posture": autobiographical_posture,
+        "autobiographical_aligned": _autobiographical_aligned(autobiographical_posture),
+        "social_posture": social_posture,
+        "social_aligned": _social_aligned(social_posture),
+        "multi_being_posture": multi_being_posture,
+        "multi_being_aligned": _multi_being_aligned(multi_being_posture),
+        "culture_of_beings_posture": culture_of_beings_posture,
+        "culture_of_beings_aligned": _culture_of_beings_aligned(culture_of_beings_posture),
+        "ecosystem_posture": ecosystem_posture,
+        "ecosystem_aligned": _ecosystem_aligned(ecosystem_posture),
+        "governance_membrane_posture": governance_membrane_posture,
+        "governance_membrane_aligned": _governance_membrane_aligned(governance_membrane_posture),
+        "diplomacy_posture": diplomacy_posture,
+        "diplomacy_aligned": _diplomacy_aligned(diplomacy_posture),
+        "norm_federation_posture": norm_federation_posture,
+        "norm_federation_aligned": _norm_federation_aligned(norm_federation_posture),
+        "constitutional_evolution_posture": constitutional_evolution_posture,
+        "constitutional_evolution_aligned": _constitutional_evolution_aligned(constitutional_evolution_posture),
+        "governed_civilization_posture": governed_civilization_posture,
+        "governed_civilization_aligned": _governed_civilization_aligned(governed_civilization_posture),
         "operator_surface_posture": operator_surface_posture,
         "operator_surface_aligned": _operator_surface_aligned(
             operator_surface_posture
@@ -2810,6 +3107,7 @@ def build_governance_coherence_projection(
         "forensics_handoff_aligned": bool(snapshot.get("forensics_handoff_aligned")),
         "immune_observe_posture": list(snapshot.get("immune_observe_posture") or [])[:4],
         "immune_observe_aligned": bool(snapshot.get("immune_observe_aligned")),
+        "immune_resilience_aligned": bool(snapshot.get("immune_resilience_aligned")),
         "authority_trace_posture": list(snapshot.get("authority_trace_posture") or [])[:4],
         "authority_trace_aligned": bool(snapshot.get("authority_trace_aligned")),
         "mission_boundary_posture": list(snapshot.get("mission_boundary_posture") or [])[:4],

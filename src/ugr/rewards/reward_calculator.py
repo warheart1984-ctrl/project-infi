@@ -21,7 +21,42 @@ from src.ugr.rewards.operator_reward_spec import (
     EVENT_WORKFLOW_CHAIN_COMPLETED,
     EVENT_WORKFLOW_LIBRARY_ADMITTED,
 )
+from src.ugr.discovery.pod_arc_multiplier import (
+    apply_pod_arc_multiplier_to_deltas,
+    resolve_pod_arc_context,
+)
 from src.ugr.rewards.reward_policy import cap_rail_credit_earn, load_reward_policy
+
+def _finalize_deltas(
+    deltas: dict[str, float],
+    discovery_receipt: dict[str, Any],
+    profile: OperatorProfile,
+    *,
+    policy: dict[str, Any],
+) -> dict[str, float]:
+    """Apply governance-arc pod multiplier and re-cap rail credits after scaling."""
+    receipt = dict(discovery_receipt or {})
+    arc = resolve_pod_arc_context(
+        spec_payload=dict(receipt.get("payload") or {}),
+        receipt=receipt,
+        policy=policy,
+    )
+    if arc.multiplier <= 1.0:
+        return deltas
+    scaled = apply_pod_arc_multiplier_to_deltas(
+        deltas,
+        multiplier=arc.multiplier,
+        arc_context=arc,
+    )
+    scaled["rail_credits"] = cap_rail_credit_earn(
+        float(scaled.get("reputation") or 0),
+        float(scaled.get("rail_credits") or 0),
+        profile_reputation=profile.reputation_score,
+        policy=policy,
+    )
+    scaled["earned_rail_credits"] = scaled["rail_credits"]
+    return scaled
+
 
 POLICY_SECTION_BY_EVENT = {
     EVENT_SUBSYSTEM_DISCOVERED: "discovery",
@@ -85,12 +120,17 @@ def compute_deltas(
             profile_reputation=profile.reputation_score,
             policy=pol,
         )
-        return {
-            "reputation": reputation,
-            "rail_credits": rail_credits,
-            "earned_rail_credits": rail_credits,
-            "adoption_multiplier": adoption_delta,
-        }
+        return _finalize_deltas(
+            {
+                "reputation": reputation,
+                "rail_credits": rail_credits,
+                "earned_rail_credits": rail_credits,
+                "adoption_multiplier": adoption_delta,
+            },
+            discovery_receipt,
+            profile,
+            policy=pol,
+        )
     else:
         section = POLICY_SECTION_BY_EVENT.get(event)
         if not section:
@@ -105,9 +145,14 @@ def compute_deltas(
         profile_reputation=profile.reputation_score,
         policy=pol,
     )
-    return {
-        "reputation": reputation,
-        "rail_credits": rail_credits,
-        "earned_rail_credits": rail_credits,
-        "adoption_multiplier": 0.0,
-    }
+    return _finalize_deltas(
+        {
+            "reputation": reputation,
+            "rail_credits": rail_credits,
+            "earned_rail_credits": rail_credits,
+            "adoption_multiplier": 0.0,
+        },
+        discovery_receipt,
+        profile,
+        policy=pol,
+    )

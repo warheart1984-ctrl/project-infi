@@ -152,6 +152,7 @@ legacy_api_mounted = True
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     init_db()
+    _run_otem_substrate_reconcile()
     try:
         from src.firetiger_otel import init_firetiger_otel
 
@@ -188,6 +189,17 @@ async def lifespan(_app: FastAPI):
             raise
         logger.warning("Alt-4 genome boot validation (workflow shell): %s", exc)
     yield
+
+
+def _run_otem_substrate_reconcile() -> None:
+    try:
+        from src.otem_substrate_reconciler import reconcile_otem_substrate_on_startup
+
+        summary = reconcile_otem_substrate_on_startup()
+        if summary.get("stale_count") or summary.get("rehydrated_count"):
+            logger.info("OTEM substrate reconcile: %s", summary)
+    except Exception as exc:
+        logger.warning("OTEM substrate reconcile skipped: %s", exc)
 
 
 app = FastAPI(title="AAIS Workflow Shell", version="11.0.0", lifespan=lifespan)
@@ -1257,8 +1269,14 @@ def workflow_approval_action(approval_id: str, req: WorkflowApprovalActionReques
             result = resolve_otem_execution_approval(approval, req.action)
         except PermissionError as exc:
             raise HTTPException(status_code=403, detail=str(exc)) from exc
-        except (ValueError, KeyError) as exc:
-            raise HTTPException(status_code=409, detail=str(exc)) from exc
+        except Exception as exc:
+            from src.operator_decision_ledger import OperatorDecisionCheckpointError
+
+            if isinstance(exc, OperatorDecisionCheckpointError):
+                raise HTTPException(status_code=403, detail=str(exc)) from exc
+            if isinstance(exc, (ValueError, KeyError)):
+                raise HTTPException(status_code=409, detail=str(exc)) from exc
+            raise
         action_status = "approved" if result.get("status") == "approved" else "failed"
         return _govern_project_wide_payload(
             {"ok": True, "status": result.get("status")},

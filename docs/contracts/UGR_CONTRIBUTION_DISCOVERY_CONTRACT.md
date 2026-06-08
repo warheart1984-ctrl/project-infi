@@ -30,3 +30,54 @@ Governed Proof-of-Discovery for six contribution types under URG cloud law.
 
 - `src/ugr/discovery/contribution_discovery.py`
 - `src/ugr/discovery/validators/`
+- `src/ugr/discovery/proven_contribution.py` — proven detection for auto-reward
+- `src/ugr/discovery/discovery_pod_ledger.py` — `pod_proven` events and registry totals
+- `src/ugr/discovery/pod_admission.py` — automatic pod worthiness evaluation
+
+## Discovery Pod auto-admission
+
+New pods are **not** registered on every discovery. After resolving operator/pod context, the pipeline evaluates **`deploy/ugr/discovery-pod-admission.json`** (override: `UGR_DISCOVERY_POD_ADMISSION_POLICY_PATH`):
+
+| Signal | Effect |
+|---|---|
+| `discovery_pod_id` / `pod_display_name` in payload | Admit when `explicit_pod_requires_receipt` is false (default); otherwise require verified signed receipt |
+| `claim_label: proven` on signed receipt | Admit |
+| Proven `capability` / `substrate` when `admit_deferred_types_when_proven` is true | Admit (`deferred_type_proven:*`) even if `admit_on_proven` is false |
+| Contribution type in `admit_contribution_types` + verified receipt + invariant passes | Admit |
+| Types in `defer_types_until_proven` (e.g. capability, substrate) without proven | Skip registration |
+| Denied operator slugs (`system`, `anonymous`, …) | Skip |
+
+When admission fails, `discovery_pod_ledger.skipped` is true and `skip_reason` explains why (no `pod_registered` row). Existing pods still receive `pod_discovered` on later eligible discoveries.
+
+Admission outcomes increment in-process counters (`src/ugr/discovery/pod_admission_metrics.py`): `admit_total`, `skip_total`, and `admit:*` / `skip:*` by reason (e.g. `skip:insufficient_invariant_passes`). Optional snapshot: `write_metrics_snapshot(path)`.
+
+Both discovery routes run the same admission path:
+
+- **Unified contribution discovery** (`ContributionDiscoveryService.discover` without legacy `spec`-only shortcut)
+- **Subsystem-only discovery** (`SubsystemDiscoveryService.discover` when `contribution_type=subsystem` and `spec` is present)
+
+Override the minimum invariant pass threshold with `UGR_POD_MIN_INVARIANT_PASS_COUNT` (policy default: `min_invariant_pass_count` in `discovery-pod-admission.json`, currently `1`).
+
+Require a verified receipt for explicit pod fields with policy `explicit_pod_requires_receipt: true` or env `UGR_POD_EXPLICIT_REQUIRES_RECEIPT=1`.
+
+Disable auto-admission entirely with `UGR_POD_AUTO_ADMIT=0`. Manual CLI registration remains available.
+
+## Governance arc pod reward multiplier
+
+Contributions tagged **High / Beyond the Body** (`governance_arc: high`, anatomical layers 14–16, `beyond-body` batch ids) or **Civilizational** (`governance_arc: civilizational`, layers 17+, `civilizational-arc` batches) receive a **10×** multiplier on reputation and rail credits (policy: `pod_arc_multipliers` in `deploy/ugr/reward-policy.json` and `discovery-pod-admission.json`).
+
+Env overrides: `UGR_POD_ARC_MULTIPLIER_HIGH`, `UGR_POD_ARC_MULTIPLIER_CIVILIZATIONAL`, or global `UGR_POD_ARC_MULTIPLIER`.
+
+Reward deltas include `governance_arc_tier` and `pod_reward_multiplier`. Pod ledger events and registry entries expose the highest arc tier and multiplier observed per pod.
+
+## Proven contributions and operator rewards
+
+When a discovery receipt carries `claim_label: proven` (or equivalent proof invariant pass), the discovery pipeline:
+
+1. **Issues operator rewards** using the inline signed receipt (no store re-resolution).
+2. **Persists balances** even when `UGR_REWARDS_SHADOW_ONLY=1`, unless `UGR_REWARDS_PROVEN_PERSIST=0`.
+3. **Upgrades the pod ledger** with a `pod_proven` event and updates registry fields: `proven_count`, `total_reputation_awarded`, `last_proven_at_utc`.
+
+Idempotent rediscovery of a proven contribution still attempts reward issuance once (subsequent calls return `idempotent` if already issued).
+
+Discovery responses include `operator_rewards` and `discovery_pod_ledger.pod_proven` when applicable.

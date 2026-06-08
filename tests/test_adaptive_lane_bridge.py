@@ -37,15 +37,36 @@ class TestAdaptiveLaneBridge(unittest.TestCase):
             render_v10=lambda result: "unused",
         )
 
-    def _recipe_spec(self, *, capability_id: str, handler):
+    def _recipe_spec(
+        self,
+        *,
+        capability_id: str,
+        handler,
+        action: str | None = None,
+        action_label: str | None = None,
+    ):
+        if action is None:
+            if capability_id == "approve_policy_changes":
+                action = "approve"
+                action_label = action_label or "Approve Policy"
+            else:
+                action = "create_mission"
+                action_label = action_label or "Create Mission"
+        else:
+            action_label = action_label or action.replace("_", " ").title()
         return {
             "capability_id": capability_id,
             "capability_label": "Recipe Module",
             "tool": "recipe_module",
             "gene": "recipe_module",
+            "action": action,
+            "action_label": action_label,
             "module": SimpleNamespace(module_name="recipe_module"),
             "handler": handler,
         }
+
+    def _register_test_route(self, bridge, spec):
+        bridge._selection_routes[(spec["capability_id"], spec["action"])] = spec
 
     def test_execute_spec_blocks_policy_cap_lane_mismatch(self):
         bridge = self._build_bridge()
@@ -60,6 +81,7 @@ class TestAdaptiveLaneBridge(unittest.TestCase):
             gene="recipe_module",
         )
 
+        self._register_test_route(bridge, spec)
         with patch(
             "src.adaptive_lane_organ.resolve_lane_for_gene",
             return_value=mismatch,
@@ -84,6 +106,7 @@ class TestAdaptiveLaneBridge(unittest.TestCase):
 
         spec = self._recipe_spec(capability_id="recipe_module", handler=handler)
 
+        self._register_test_route(bridge, spec)
         with patch(
             "src.adaptive_lane_organ.resolve_lane_for_gene",
             return_value=LaneResolution(
@@ -107,6 +130,20 @@ class TestAdaptiveLaneBridge(unittest.TestCase):
 
         self.assertTrue(called["value"])
         self.assertEqual(result["response"], "ok")
+
+    def test_execute_spec_blocks_missing_action(self):
+        bridge = self._build_bridge()
+        spec = {
+            "capability_id": "recipe_module",
+            "capability_label": "Recipe Module",
+            "tool": "recipe_module",
+            "gene": "recipe_module",
+            "module": SimpleNamespace(module_name="recipe_module"),
+            "handler": lambda *args, **kwargs: {"response": "should not run"},
+        }
+        result = bridge._execute_spec(spec, {})
+        self.assertEqual(result["tool_result"]["status"], "blocked")
+        self.assertIn("missing bridge action", result["response"].lower())
 
 
 if __name__ == "__main__":

@@ -2,23 +2,18 @@
   "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
   "gene": "naming_genome_organ",
   "status": "pending",
-  "urgency_score": 38.5,
-  "queue_generated_at": "2026-06-03T10:54:41Z",
+  "urgency_score": 57.6,
+  "queue_generated_at": "2026-06-07T20:33:13Z",
   "recommended_actions": [
     {
-      "kind": "watch_cascade",
-      "command": "python tools/linguistic_cascade_report.py --gene naming_protocol_organ",
-      "note": "Parent at risk \u2014 monitor cascade"
+      "kind": "watch_wave2_header",
+      "path": "src/naming_genome_organ.py",
+      "note": "Add # Engineering header before band escalates"
     },
     {
       "kind": "schedule_remediation",
       "command": "python tools/governance/generate_linguistic_remediations.py --gene naming_genome_organ",
       "note": "Pre-generate remediation when predicted band materializes"
-    },
-    {
-      "kind": "wave2_header",
-      "path": "src/naming_genome_organ.py",
-      "snippet": "# Mythic: \n# Engineering: \n# Responsibilities: TBD\n# Non-responsibilities: TBD\n# Invariants: TBD\n"
     },
     {
       "kind": "recommendation",
@@ -31,5 +26,5 @@
     }
   ],
   "operator_notes": "",
-  "updated_at": "2026-06-03T10:54:41Z"
+  "updated_at": "2026-06-07T20:33:13Z"
 }

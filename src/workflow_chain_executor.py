@@ -12,8 +12,8 @@ from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
-from src.plug_discovery import match_plug_pattern
 from src.plug_adapter_runtime import plug_adapter_runtime
+from src.workflow_family_readiness import resolve_plug_id_for_step
 from src.workflow_plugin_catalog import workflow_by_id
 
 MODULE_ID = "AAIS-WCE-01"
@@ -54,7 +54,9 @@ class WorkflowChainExecutor:
         steps_out: list[dict[str, Any]] = []
         for index, step in enumerate(list(bundle.get("steps") or [])):
             pattern = str(step.get("plug_pattern") or "")
-            plug_id = pattern.rstrip(".*")
+            plug_id = resolve_plug_id_for_step(pattern)
+            if not plug_id:
+                plug_id = pattern.rstrip(".*")
             exec_result = plug_adapter_runtime.execute_plug(
                 plug_id,
                 args={"workflow_id": workflow_id, "step_index": index, **dict(args or {})},
@@ -62,6 +64,18 @@ class WorkflowChainExecutor:
                 operator_approved=operator_approved,
             )
             steps_out.append({"step": step, "result": exec_result})
+            try:
+                from src.operator_decision_ledger import append_plug_execution_event
+
+                append_plug_execution_event(
+                    str((args or {}).get("session_id") or "global"),
+                    plug_id=plug_id,
+                    outcome=str(exec_result.get("outcome") or exec_result.get("status") or "completed"),
+                    execution_id=run_id,
+                    source_kind="workflow_chain",
+                )
+            except Exception:
+                pass
         run = {
             "run_id": run_id,
             "workflow_id": workflow_id,

@@ -9,6 +9,8 @@ from src.jarvis_memory_board import (
     MemoryController,
     MemoryModule,
     default_memory_slots,
+    resolve_retrieval_slots,
+    slot_retrieval_metadata,
     to_memory_board_envelope,
 )
 
@@ -189,6 +191,17 @@ class TestJarvisMemoryBoard(unittest.TestCase):
         self.assertEqual(envelope["jarvis_memory_board_version"], "jarvis_memory_board.v1")
         self.assertGreaterEqual(len(envelope["slots"]), 1)
         self.assertTrue(envelope["controller_state"]["approval_required"])
+
+    def test_retrieval_slot_metadata_maps_board_law_to_vector_partitions(self):
+        """Installed slots should expose memory_slot and trust_class for vector routing."""
+        controller = build_default_memory_controller()
+        preference_slots = resolve_retrieval_slots(controller, "preference")
+        self.assertIn("slot_06", preference_slots)
+
+        session_meta = slot_retrieval_metadata(controller, "slot_03")
+        self.assertEqual(session_meta["memory_slot"], "session_v1")
+        self.assertEqual(session_meta["trust_class"], "working")
+        self.assertEqual(session_meta["module_class"], "session")
 
 
 if __name__ == "__main__":

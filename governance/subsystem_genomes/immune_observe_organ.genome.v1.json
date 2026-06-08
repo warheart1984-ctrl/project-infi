@@ -55,6 +55,7 @@
     ],
     "children": [
       "governance_layer_organ",
+      "immune_resilience_organ",
       "policy_gate_organ"
     ]
   },

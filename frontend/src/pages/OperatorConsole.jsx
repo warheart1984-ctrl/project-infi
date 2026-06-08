@@ -58,6 +58,8 @@ export default function OperatorConsolePage() {
   const [snapshot, setSnapshot] = useState(null);
   const [meshHealth, setMeshHealth] = useState(null);
   const [seamHealth, setSeamHealth] = useState(null);
+  const [monitoring, setMonitoring] = useState(null);
+  const [somaticHealth, setSomaticHealth] = useState(null);
   const [selectedTrace, setSelectedTrace] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -92,6 +94,24 @@ export default function OperatorConsolePage() {
     }
   }, []);
 
+  const loadMonitoring = useCallback(async () => {
+    try {
+      const response = await apiGet('/api/operator/dashboard/monitoring');
+      setMonitoring(response.data || null);
+    } catch {
+      setMonitoring(null);
+    }
+  }, []);
+
+  const loadSomaticHealth = useCallback(async () => {
+    try {
+      const response = await apiGet('/api/operator/dashboard/somatic-health');
+      setSomaticHealth(response.data || null);
+    } catch {
+      setSomaticHealth(null);
+    }
+  }, []);
+
   const loadTraceDetail = useCallback(async (traceId) => {
     if (!traceId) {
       setSelectedTrace(null);
@@ -114,13 +134,19 @@ export default function OperatorConsolePage() {
   useEffect(() => {
     loadMeshHealth();
     loadSeamHealth();
+    loadMonitoring();
+    loadSomaticHealth();
     const meshTimer = window.setInterval(loadMeshHealth, MESH_POLL_MS);
     const seamTimer = window.setInterval(loadSeamHealth, SEAM_POLL_MS);
+    const monitoringTimer = window.setInterval(loadMonitoring, MESH_POLL_MS);
+    const somaticTimer = window.setInterval(loadSomaticHealth, MESH_POLL_MS);
     return () => {
       window.clearInterval(meshTimer);
       window.clearInterval(seamTimer);
+      window.clearInterval(monitoringTimer);
+      window.clearInterval(somaticTimer);
     };
-  }, [loadMeshHealth, loadSeamHealth]);
+  }, [loadMeshHealth, loadSeamHealth, loadMonitoring, loadSomaticHealth]);
 
   const infinity1 = {
     ...(snapshot?.infinity1 || {}),
@@ -130,6 +156,7 @@ export default function OperatorConsolePage() {
           seam_stress: seamHealth.seam_stress,
         }
       : {}),
+    ...(monitoring ? { monitoring } : {}),
   };
   const debtItems = snapshot?.debt_register?.items || [];
   const gates = snapshot?.gates || [];
@@ -211,6 +238,85 @@ export default function OperatorConsolePage() {
         <LedgerDigestCompact ledgerDigest={infinity1?.ledger_digest} />
         <BrainQueueCompact brain={infinity1?.brain} />
         <MonitoringAlertsPanel monitoring={infinity1?.monitoring} />
+
+        <section className="workbench-section page-panel" data-testid="operator-somatic-health">
+          <h2>Somatic health</h2>
+          <p className="section-lead">Unified operator/system posture map.</p>
+          <div className="workbench-chip-row">
+            <span className={`workbench-chip ${toneForPollStatus(somaticHealth?.overall_posture === 'nominal' ? 'ok' : 'partial')}`}>
+              overall={somaticHealth?.overall_posture || 'unknown'}
+            </span>
+            <span className="workbench-chip aligned">
+              pending_otem={somaticHealth?.substrate_posture?.pending_otem_approvals ?? '—'}
+            </span>
+            <span className="workbench-chip missing">
+              stale_otem={somaticHealth?.substrate_posture?.stale_otem_approvals ?? '—'}
+            </span>
+            <span className={`workbench-chip ${somaticHealth?.doctor?.healthy ? 'aligned' : 'missing'}`}>
+              doctor={somaticHealth?.doctor?.healthy ? 'ok' : 'check'}
+            </span>
+            <span className="workbench-chip aligned">
+              active_mesh={somaticHealth?.active_mesh_runs ?? somaticHealth?.organ_mesh_posture?.active_mesh_runs ?? '—'}
+            </span>
+            <span className="workbench-chip missing">
+              blocked_handoffs={somaticHealth?.blocked_handoffs ?? somaticHealth?.organ_mesh_posture?.blocked_handoffs ?? '—'}
+            </span>
+            <span className="workbench-chip aligned">
+              adopted_habits={somaticHealth?.adopted_habits ?? somaticHealth?.culture_posture?.adopted_habits ?? '—'}
+            </span>
+            <span className="workbench-chip missing">
+              habit_candidates={somaticHealth?.habit_candidates ?? somaticHealth?.culture_posture?.candidate_habits ?? '—'}
+            </span>
+            <span className="workbench-chip aligned">
+              adopted_claims={somaticHealth?.adopted_claims ?? somaticHealth?.identity_posture?.adopted_claims ?? '—'}
+            </span>
+            <span className="workbench-chip missing">
+              identity_drift={somaticHealth?.identity_drift_events ?? somaticHealth?.identity_posture?.identity_drift_events ?? '—'}
+            </span>
+            <span className="workbench-chip aligned">
+              adopted_beats={somaticHealth?.adopted_beats ?? somaticHealth?.narrative_posture?.adopted_beats ?? '—'}
+            </span>
+            <span className="workbench-chip missing">
+              narrative_drift={somaticHealth?.narrative_drift_events ?? somaticHealth?.narrative_posture?.narrative_drift_events ?? '—'}
+            </span>
+            <span className="workbench-chip aligned">
+              adopted_episodes={somaticHealth?.adopted_episodes ?? somaticHealth?.autobiographical_posture?.adopted_episodes ?? '—'}
+            </span>
+            <span className="workbench-chip missing">
+              autobiographical_drift={somaticHealth?.autobiographical_drift_events ?? somaticHealth?.autobiographical_posture?.autobiographical_drift_events ?? '—'}
+            </span>
+            <span className="workbench-chip aligned">
+              ongoing_work={somaticHealth?.ongoing_work_count ?? somaticHealth?.autobiographical_posture?.ongoing_work_count ?? '—'}
+            </span>
+            <span className="workbench-chip aligned">
+              adopted_bonds={somaticHealth?.adopted_bonds ?? somaticHealth?.social_posture?.adopted_bonds ?? '—'}
+            </span>
+            <span className="workbench-chip missing">
+              social_drift={somaticHealth?.social_drift_events ?? somaticHealth?.social_posture?.social_drift_events ?? '—'}
+            </span>
+            <span className="workbench-chip aligned">
+              federated_peers={somaticHealth?.federated_peer_count ?? somaticHealth?.social_posture?.federated_peer_count ?? '—'}
+            </span>
+            <span className="workbench-chip aligned">
+              adopted_pacts={somaticHealth?.adopted_pacts ?? somaticHealth?.multi_being_posture?.adopted_pacts ?? '—'}
+            </span>
+            <span className="workbench-chip missing">
+              multi_being_drift={somaticHealth?.multi_being_drift_events ?? somaticHealth?.multi_being_posture?.multi_being_drift_events ?? '—'}
+            </span>
+            <span className="workbench-chip aligned">
+              cross_organism_peers={somaticHealth?.cross_organism_peer_count ?? somaticHealth?.multi_being_posture?.cross_organism_peer_count ?? '—'}
+            </span>
+            <span className="workbench-chip aligned">
+              adopted_norms={somaticHealth?.adopted_norms ?? somaticHealth?.culture_of_beings_posture?.adopted_norms ?? '—'}
+            </span>
+            <span className="workbench-chip aligned">
+              adopted_charters={somaticHealth?.adopted_charters ?? somaticHealth?.ecosystem_posture?.adopted_charters ?? '—'}
+            </span>
+            <span className="workbench-chip aligned">
+              membrane_policies={somaticHealth?.adopted_membrane_policies ?? somaticHealth?.governance_membrane_posture?.adopted_policies ?? '—'}
+            </span>
+          </div>
+        </section>
       </div>
 
       <h2 className="operator-console-section-title">UGR + Cloud Forge (advisory)</h2>

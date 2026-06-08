@@ -99,6 +99,7 @@ class OperatorRewardEngine:
         promotion_organ_id: str | None = None,
         governance_status: str | None = None,
         skip_if_exists: bool = True,
+        force_persist: bool = False,
     ) -> dict[str, Any]:
         cid = str(receipt.get("contribution_id") or receipt.get("subsystem_id") or "")
         return issue_reward(
@@ -113,6 +114,8 @@ class OperatorRewardEngine:
             runtime_dir=self.runtime_dir,
             policy=self.policy,
             skip_if_exists=skip_if_exists,
+            discovery_receipt=receipt,
+            force_persist=force_persist,
         )
 
     def emit_for_discovery(

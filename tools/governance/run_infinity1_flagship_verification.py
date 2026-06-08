@@ -50,6 +50,10 @@ OPERATOR_WORKFLOW_STEPS = [
         "operator-workflow-runtime-gate",
         [sys.executable, "-m", "pytest", "tests/test_operator_workflow_api.py", "-q"],
     ),
+    Step(
+        "body-completeness-gate",
+        [sys.executable, "tools/governance/run_body_completeness_verification.py"],
+    ),
 ]
 
 

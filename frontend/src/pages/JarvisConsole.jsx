@@ -1285,6 +1285,8 @@ function ImmuneSystemCard({ immuneSystem }) {
   const recentEvents = immuneSystem?.recent_events || [];
   const activeIncident = immuneSystem?.active_incident || null;
   const tightenedCallers = Object.entries(immuneSystem?.caller_overrides || {});
+  const hardening = immuneSystem?.hardening || {};
+  const healEligible = Boolean(immuneSystem?.heal_eligible?.eligible);
 
   return (
     <div className="jarvis-side-card page-panel">
@@ -1315,6 +1317,19 @@ function ImmuneSystemCard({ immuneSystem }) {
             <span className="inline-meta-chip">{(immuneSystem?.quarantined_resources || []).length} quarantined</span>
             <span className="inline-meta-chip">{tightenedCallers.length} tightened callers</span>
             <span className="inline-meta-chip">{(immuneSystem?.disabled_tools || []).length} disabled tools</span>
+            <span className="inline-meta-chip">streak {immuneSystem?.clean_streak ?? 0}</span>
+            <span className="inline-meta-chip">gen {immuneSystem?.defense_generation ?? hardening?.defense_generation ?? 0}</span>
+            {healEligible ? <span className="inline-meta-chip success">heal ready</span> : null}
+          </div>
+
+          <div className="jarvis-inline-meta">
+            <span className="inline-meta-chip">defensive only</span>
+            {immuneSystem?.last_heal_at ? (
+              <span className="inline-meta-chip">healed {immuneSystem.last_heal_at}</span>
+            ) : null}
+            {hardening?.summary_char_limit ? (
+              <span className="inline-meta-chip">clamp {hardening.summary_char_limit} chars</span>
+            ) : null}
           </div>
 
           {activeIncident ? (

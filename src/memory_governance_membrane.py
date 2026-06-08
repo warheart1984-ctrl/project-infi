@@ -17,6 +17,15 @@ from src.cog_runtime.narrative_store import (
 from src.cogos_runtime_bridge import seed_session_nova_intent, seed_session_nova_narrative
 
 
+def _mgm_allows_memory_attach(metadata: dict[str, Any]) -> bool:
+    try:
+        from src.multi_organism_governance_membrane_runtime import multi_organism_governance_membrane_runtime
+
+        return multi_organism_governance_membrane_runtime.check_memory_permeability(metadata)
+    except Exception:
+        return True
+
+
 def resolve_operator_identity_id(session) -> str:
     metadata = getattr(session, "metadata", None) or {}
     if not isinstance(metadata, dict):
@@ -62,7 +71,7 @@ def seed_session_memory_membrane(
         metadata.update(seeded_intent)
         membrane["intent_rehydrated"] = bool(metadata.get("nova_intent"))
 
-    if jarvis_operator is not None:
+    if jarvis_operator is not None and _mgm_allows_memory_attach(metadata):
         try:
             snapshot = jarvis_operator.memory_enforcer.get_memory_board_snapshot(
                 runtime_context="operator_runtime",

@@ -37,17 +37,39 @@ class TestCoherenceFabricBridge(unittest.TestCase):
             render_v10=lambda result: "unused",
         )
 
-    def _recipe_spec(self, *, capability_id: str, handler):
+    def _recipe_spec(
+        self,
+        *,
+        capability_id: str,
+        handler,
+        action: str | None = None,
+        action_label: str | None = None,
+    ):
+        if action is None:
+            if capability_id == "approve_policy_changes":
+                action = "approve"
+                action_label = action_label or "Approve Policy"
+            else:
+                action = "create_mission"
+                action_label = action_label or "Create Mission"
+        else:
+            action_label = action_label or action.replace("_", " ").title()
         return {
             "capability_id": capability_id,
             "capability_label": "Recipe Module",
             "tool": "recipe_module",
             "gene": "recipe_module",
+            "action": action,
+            "action_label": action_label,
             "module": SimpleNamespace(module_name="recipe_module"),
             "handler": handler,
         }
 
+    def _register_test_route(self, bridge, spec):
+        bridge._selection_routes[(spec["capability_id"], spec["action"])] = spec
+
     def _run_spec(self, bridge, spec):
+        self._register_test_route(bridge, spec)
         with patch(
             "src.adaptive_lane_organ.resolve_lane_for_gene",
             return_value=LaneResolution(

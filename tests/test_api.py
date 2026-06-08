@@ -1607,6 +1607,25 @@ class TestChatApi(unittest.TestCase):
         self.assertEqual(payload["session_state"]["state"], "idle")
         self.assertEqual(payload["policy_status"]["status"], "allow")
 
+    def test_create_chat_session_rejects_malformed_json(self):
+        """Invalid JSON bodies must return 400, not 500."""
+        response = self.client.post(
+            "/api/chat/sessions",
+            data=b"{not json",
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 400)
+        payload = response.get_json()
+        self.assertIn("error", payload)
+
+    def test_create_chat_session_rejects_non_object_json(self):
+        response = self.client.post(
+            "/api/chat/sessions",
+            data=json.dumps(["not", "an", "object"]),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 400)
+
     def test_create_chat_session_locks_tiny_nova_to_tiny_mode(self):
         """Tiny Nova sessions should replace the legacy Jarvis identity prompt and lock to tiny mode."""
         response = self.client.post(
@@ -4681,8 +4700,12 @@ class TestChatApi(unittest.TestCase):
                 "active"
             ]
         )
-        board_event = api.jarvis_operator.memory_store.last_board_event()
-        self.assertEqual(board_event["action"], "expiry_review")
+        board_response = self.client.get("/api/jarvis/memory/board")
+        self.assertEqual(board_response.status_code, 200)
+        recent_events = board_response.get_json()["memory_board"]["governance"]["recent_events"]
+        expiry_events = [event for event in recent_events if event.get("action") == "expiry_review"]
+        self.assertEqual(len(expiry_events), 1)
+        board_event = expiry_events[0]
         self.assertEqual(board_event["meta"]["targeting_mode"], "explicit_id")
         self.assertEqual(board_event["meta"]["requested_target_ids"], [blocker["id"]])
         self.assertEqual(board_event["meta"]["archived_ids"], [blocker["id"]])

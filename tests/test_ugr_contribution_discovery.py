@@ -21,7 +21,14 @@ class TestContributionDiscovery(unittest.TestCase):
         os.environ["UGR_REWARDS_SHADOW_ONLY"] = "1"
 
     def tearDown(self):
-        for key in ("AAIS_RUNTIME_DIR", "URG_RECEIPT_SIGNING_KEY", "UGR_SUBSYSTEM_DISCOVERY_ENABLED", "UGR_REWARDS_SHADOW_ONLY"):
+        for key in (
+            "AAIS_RUNTIME_DIR",
+            "URG_RECEIPT_SIGNING_KEY",
+            "UGR_SUBSYSTEM_DISCOVERY_ENABLED",
+            "UGR_REWARDS_SHADOW_ONLY",
+            "UGR_DISCOVERY_POD_LEDGER_PATH",
+            "UGR_DISCOVERY_POD_REGISTRY_PATH",
+        ):
             os.environ.pop(key, None)
         shutil.rmtree(self.temp_root, ignore_errors=True)
 
@@ -81,6 +88,34 @@ class TestContributionDiscovery(unittest.TestCase):
             aais_instance_id="aais-local",
         )
         self.assertFalse(result.valid)
+
+    def test_discover_upgrades_pod_ledger(self):
+        ledger_path = self.temp_root / "pods.jsonl"
+        registry_path = self.temp_root / "pods-registry.json"
+        os.environ["UGR_DISCOVERY_POD_LEDGER_PATH"] = str(ledger_path)
+        os.environ["UGR_DISCOVERY_POD_REGISTRY_PATH"] = str(registry_path)
+
+        service = ContributionDiscoveryService(runtime_dir=str(self.temp_root))
+        result = service.discover(
+            {
+                "tenant_id": "tenant:acme",
+                "operator_id": "operator:ledger-test",
+                "aais_instance_id": "aais-local",
+                "contribution_type": "workflow",
+                "payload": {
+                    "workflow_id": "wf-pod-ledger",
+                    "run_id": "wfr_pod_ledger_1",
+                    "step_count": 2,
+                    "dry_run": False,
+                },
+            }
+        )
+        self.assertEqual(result.get("status"), "discovered")
+        pod_ledger = result.get("discovery_pod_ledger") or {}
+        self.assertTrue(pod_ledger.get("ok"))
+        self.assertEqual(pod_ledger.get("pod_id"), "pod:ledger-test")
+        self.assertEqual(pod_ledger.get("discovery_count"), 1)
+        self.assertTrue(ledger_path.exists())
 
 
 if __name__ == "__main__":

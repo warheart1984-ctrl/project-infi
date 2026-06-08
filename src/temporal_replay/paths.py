@@ -15,6 +15,17 @@ REPLAY_SUBJECT_TYPES = frozenset(
         "jarvis_run",
         "operator_session",
         "platform_job",
+        "operator_narrative",
+        "operator_autobiographical",
+        "operator_social",
+        "operator_multi_being",
+        "operator_culture_of_beings",
+        "operator_ecosystem",
+        "operator_governance_membrane",
+        "operator_diplomacy",
+        "operator_norm_federation",
+        "operator_constitutional_evolution",
+        "operator_civilization",
     }
 )
 

@@ -26,8 +26,8 @@ Proof bundle: [INTEGRATION_UNIVERSAL_BUNDLE_V1_PROOF.md](../proof/platform/INTEG
 | Layer | State |
 |-------|--------|
 | Status-only (Alt28) | Six organs — governed status APIs |
-| Execution (Alt29) | Bridge actions + `story_forge_execution_layer` in coherence **v1.24** |
-| Stubs | `text_to_3d_world_lane` returns `not_configured`; world pack inspect read-only |
+| Execution (Alt29–34) | Bridge actions + execution layer; movie/video/world-pack lanes execute with `operator_ack` |
+| text_to_3d_world_lane | Live deterministic pipeline (Release 34) |
 
 ## Blocked / dormant (unchanged)
 

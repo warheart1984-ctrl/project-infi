@@ -1,36 +1,76 @@
-# Project Infinity — AAIS
+# Project Infinity 1 — AAIS
 
-> **Adaptive Autonomous Intelligence Substrate (AAIS)** — a law-governed Jarvis runtime with inspectable Universal Language (UL) structure, Project Infi admission, and operator-facing surfaces.
+**Adaptive Autonomous Intelligence Substrate (AAIS)** — a law-governed Jarvis runtime with operator dashboard, brain sessions, decision ledger, plugins/workflows, and 199 governed subsystem schemas.
 
-**Early adopters:** Knowledge is freely given; trust is earned. Start with the [Early Adopter Charter](docs/operations/EARLY_ADOPTER_CHARTER.md), then run the [Production Operator Runbook](docs/operations/AAIS_PRODUCTION_OPERATOR_RUNBOOK.md) gates on your environment before you call it production.
+License: [Apache 2.0](LICENSE) · Repo: [Project-Infinity1](https://github.com/warheart1984-ctrl/Project-Infinity1)
 
-**New operators start here:** [AAIS Operator Guide](docs/operators/AAIS_OPERATOR_GUIDE.md) — install, keys, start, desktop build (simple, no developer jargon).  
-**Operator workflows & skills:** [Operator Workflow Skills](docs/operators/OPERATOR_WORKFLOW_SKILLS.md) — Cursor skills, HF agent skills, workflow bundles, Organs, Brain sessions, and governed chain execution.  
-**Full pilot stack (Platform + UGR + AAIS):** [Infinity Pilot Early Adopter](docs/operations/INFINITY_PILOT_EARLY_ADOPTER.md) · GA evidence: [INFINITY_PILOT_GA_SIGNOFF](docs/audit/INFINITY_PILOT_GA_SIGNOFF.md)
+---
 
-### Infinity 1 operator product (2026-06)
+## Quick start (after clone)
+
+**Windows (PowerShell):**
+
+```powershell
+git clone https://github.com/warheart1984-ctrl/Project-Infinity1.git
+cd Project-Infinity1
+.\scripts\start-infinity1.ps1
+```
+
+If port 8000 is busy: `.\scripts\start-infinity1.ps1 -ReplaceExisting`
+
+**Mac / Linux:**
+
+```bash
+git clone https://github.com/warheart1984-ctrl/Project-Infinity1.git
+cd Project-Infinity1
+chmod +x scripts/start-infinity1.sh
+./scripts/start-infinity1.sh
+```
+
+The script creates a `.venv`, runs `pip install -e ".[dev]"`, prepares runtime data, and starts AAIS in **mock mode** (no API keys required).
+
+| Surface | URL |
+|---------|-----|
+| Health | http://127.0.0.1:8000/health |
+| App / Jarvis | http://127.0.0.1:8000/app/jarvis |
+| Operator dashboard | http://127.0.0.1:8000/operator |
+| Plugins & workflows | http://127.0.0.1:8000/operator/plugins |
+| Brain sessions | http://127.0.0.1:8000/operator/brain |
+| Decision ledger | http://127.0.0.1:8000/operator/ledger |
+| Workflow approvals (OTEM L10) | http://127.0.0.1:8000/workflows/approvals |
+
+Manual start (venv already installed): `.venv\Scripts\python.exe -m aais start --data-dir ./.runtime/aais-data --preset mock --no-browser` (Windows) or `.venv/bin/python -m aais start ...` (Unix).
+
+---
+
+## What's in Infinity 1 (this repo)
+
+| Layer | What you get |
+|-------|----------------|
+| **Operator product** | Dashboard, plugins, brain proposals, ODL ledger (v1 + v2 graph), workflow families, OTEM Level 10 approvals |
+| **Jarvis runtime** | Flask cognition authority (`src/api.py`) + FastAPI shell (`app/main.py`) with legacy bridge at `/legacy_api` |
+| **Governance** | 199 subsystem genomes, naming gate, flagship verification (14 steps), proof bundles |
+| **Body runtime wave** | Culture, identity, narrative, social, organ mesh, somatic health — operator API routes live |
+| **Civilizational arc** | Norm federations, diplomacy, constitutional evolution, governed civilization — observe/adopt dual-gate APIs |
+| **Stress / chaos** | Chaos hammer, federation-grade chaos, seam discovery — see `docs/audit/` |
+
+**Verify locally (optional):** `python tools/governance/run_infinity1_flagship_verification.py` · `make flagship-chaos-stack`
+
+**Deeper docs:** [Operator Guide](docs/operators/AAIS_OPERATOR_GUIDE.md) · [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md) · [Workflow Skills](docs/operators/OPERATOR_WORKFLOW_SKILLS.md) · [Infinity Pilot (Docker)](docs/operations/INFINITY_PILOT_EARLY_ADOPTER.md)
+
+### Operator surfaces (reference)
 
 | Surface | URL | Purpose |
 |---------|-----|---------|
-| **Operator dashboard** | `/operator` | Seam health, monitoring alerts, Infinity-1 console snapshot |
+| **Operator dashboard** | `/operator` | Seam health, monitoring, console snapshot |
 | Plugins + Organs | `/operator/plugins` | Skill libraries, workflow bundles, chain run |
 | Brain sessions | `/operator/brain` | Proposals, deliberation, accept/reject/defer |
 | Decision ledger | `/operator/ledger` | Governed decision graph (v1 + v2) |
 | Workflow approvals | `/workflows/approvals` | OTEM Level 10 execution gate |
 
-**API:** `GET /api/operator/dashboard/seam-health` · `GET /api/operator/dashboard/monitoring`
+**Production gates:** `make infinity1-flagship-verification` (Windows: `python tools/governance/run_infinity1_flagship_verification.py`)
 
-**Production verification (run locally):**
-
-```bash
-make production-hardening-gate stack-pilot-gate wave6-transition-gate
-make infinity1-flagship-verification
-make ga-signoff-gate
-```
-
-Windows: same gates via `python .github/scripts/check-production-hardening.py`, `python tools/governance/run_infinity1_flagship_verification.py`, and `python .github/scripts/check-ga-signoff.py --mode fail`.
-
-Baseline posture: **GA-ready** ([checklist](docs/baseline/INFINITY_PILOT_BASELINE_CHECKLIST.md)) — your deployment is production when **your** operators complete [OPERATOR_GA_REVIEW_PROTOCOL](docs/operations/OPERATOR_GA_REVIEW_PROTOCOL.md).
+Baseline: [INFINITY_PILOT_BASELINE_CHECKLIST](docs/baseline/INFINITY_PILOT_BASELINE_CHECKLIST.md) · Early adopters: [Charter](docs/operations/EARLY_ADOPTER_CHARTER.md)
 
 ## What AAIS Is
 
@@ -300,33 +340,43 @@ python -m tools.ul.smoke --lineage-graph tools/ul/fixtures/lineage_multi_hop.jso
 
 | Path | Time | Start here | Outcome |
 |---|---|---|---|
-| **Tier 1 — AAIS local** | ~10 min | [First-Time Operator Guide §1](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-1-run-aais-locally-10-minutes) + steps below | Mock Jarvis on `:8000` |
-| **Tier 2 — Infinity Pilot** | ~15 min | [Guide §2](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-2-infinity-pilot-docker-15-minutes) + [Early Adopter Guide](docs/operations/INFINITY_PILOT_EARLY_ADOPTER.md) | Docker stack: Platform + UGR + AAIS |
-| **Tier 3 — Full monorepo** | Advanced | [Guide §3](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-3-advanced-subsystems) + [Wolf-CoG-OS forge](wolf-cog-os/forge/README.md) | ISO forge, Platform v6+, subsystems |
+| **Tier 1 — AAIS local** | ~5 min | **`scripts/start-infinity1.ps1`** or **`scripts/start-infinity1.sh`** | Mock Jarvis on `:8000` |
+| **Tier 2 — Infinity Pilot** | ~15 min | [Guide §2](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-2-infinity-pilot-docker-15-minutes) | Docker: Platform + UGR + AAIS |
+| **Tier 3 — Full monorepo** | Advanced | [Guide §3](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md#tier-3-advanced-subsystems) | ISO forge, Platform v6+, subsystems |
 
 ### Prerequisites
 
-- **Python 3.10+**
-- **Git**
-- **Node.js 18+** and **npm** — only if you need to rebuild the frontend (`frontend/`)
-- Optional: **Redis** — for Celery background jobs (`make worker`)
-- Optional: frontier provider API keys (local/mock presets work without them — see [Installing API keys](#installing-api-keys-frontier-models))
+- **Python 3.10+** and **Git**
+- Optional: **Node.js 18+** — only to rebuild the frontend (`frontend/`)
+- Optional: API keys in `.env` for frontier models (mock preset needs none)
 
-### Initialization Steps
+### Install and start (automated)
 
-#### Clone and install
+Use the bootstrap script (recommended):
+
+```powershell
+# Windows
+.\scripts\start-infinity1.ps1
+```
+
+```bash
+# Mac / Linux
+./scripts/start-infinity1.sh
+```
+
+### Manual install (alternative)
 
 ```bash
 git clone https://github.com/warheart1984-ctrl/Project-Infinity1.git
 cd Project-Infinity1
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# Unix:    source .venv/bin/activate
 python -m pip install -e ".[dev]"
-```
-
-Copy environment template and set keys only for providers you want:
-
-```bash
 cp .env.example .env
-# Edit .env — see "Installing API keys" below; mock/laptop presets need no keys
+python -m aais prepare --data-dir ./.runtime/aais-data
+python -m aais doctor --data-dir ./.runtime/aais-data
+python -m aais start --data-dir ./.runtime/aais-data --preset mock --no-browser
 ```
 
 ### Installing API keys (frontier models)
@@ -377,7 +427,7 @@ AAIS_SLINGSHOT_CACHE_SEC=30
 
 Set any cache to `0` to disable.
 
-#### Prepare runtime data (first run)
+#### Prepare runtime data (if not using bootstrap script)
 
 ```bash
 python -m aais prepare --data-dir ./.runtime/aais-data
@@ -390,7 +440,9 @@ python -m aais doctor --data-dir ./.runtime/aais-data
 
 #### Start AAIS
 
-**Recommended (cross-platform launcher):**
+**Recommended:** `.\scripts\start-infinity1.ps1` (Windows) or `./scripts/start-infinity1.sh` (Unix)
+
+**Manual:**
 
 ```bash
 python -m aais start --data-dir ./.runtime/aais-data --preset mock --no-browser

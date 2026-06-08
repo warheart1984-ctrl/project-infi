@@ -409,6 +409,101 @@ def build_default_memory_controller() -> MemoryController:
     return controller
 
 
+def resolve_retrieval_slots(controller: MemoryController, query_type: str) -> list[str]:
+    """Return installed slot ids in doctrine-aligned order for a query type."""
+    ordered_slot_ids = controller.route_query(query_type)
+    installed: list[str] = []
+    for slot_id in ordered_slot_ids:
+        slot = controller.slots.get(slot_id)
+        if slot and slot.active and slot.module and slot.module.enabled:
+            installed.append(slot_id)
+    return installed
+
+
+def slot_retrieval_metadata(
+    controller: MemoryController,
+    slot_id: str,
+) -> dict[str, str]:
+    """Map a board slot to vector-store metadata for governed retrieval."""
+    from src.memory_vector_store import memory_slot_for_slot_id
+
+    slot = controller.slots[slot_id]
+    module = slot.module
+    if module is None:
+        raise MemoryBoardViolation(f"{slot_id} has no installed module for retrieval.")
+    return {
+        "slot_id": slot_id,
+        "memory_slot": memory_slot_for_slot_id(slot_id),
+        "trust_class": module.trust_class,
+        "module_class": module.module_class,
+        "module_id": module.module_id,
+    }
+
+
+def store_board_memory(
+    controller: MemoryController,
+    text: str,
+    *,
+    session_id: str = "default",
+    query_type: str = "task",
+    source: str = "chat",
+) -> list[str]:
+    """Store text into the primary slot for a query type with board metadata."""
+    from src.memory_vector_store import store_memory
+
+    slot_ids = resolve_retrieval_slots(controller, query_type)
+    if not slot_ids:
+        return []
+    primary_slot = slot_ids[0]
+    meta = slot_retrieval_metadata(controller, primary_slot)
+    store_memory(
+        text,
+        session_id,
+        memory_slot=meta["memory_slot"],
+        trust_class=meta["trust_class"],
+        source=source,
+    )
+    return [primary_slot]
+
+
+def retrieve_board_memory(
+    controller: MemoryController,
+    query: str,
+    *,
+    session_id: str = "default",
+    query_type: str = "task",
+    n_results: int = 4,
+    require_trust_match: bool = True,
+) -> list[str]:
+    """Retrieve memory across doctrine-routed slots, honoring trust class."""
+    from src.memory_vector_store import retrieve_memory
+
+    if not query.strip():
+        return []
+    slot_ids = resolve_retrieval_slots(controller, query_type)
+    seen: set[str] = set()
+    results: list[str] = []
+    per_slot = max(1, n_results // max(len(slot_ids), 1))
+    for slot_id in slot_ids:
+        meta = slot_retrieval_metadata(controller, slot_id)
+        trust_class = meta["trust_class"] if require_trust_match else None
+        rows = retrieve_memory(
+            query,
+            session_id,
+            memory_slot=meta["memory_slot"],
+            trust_class=trust_class,
+            n_results=per_slot,
+        )
+        for row in rows:
+            if row in seen:
+                continue
+            seen.add(row)
+            results.append(row)
+            if len(results) >= n_results:
+                return results
+    return results
+
+
 def build_memory_board_snapshot(controller: MemoryController) -> dict[str, object]:
     """Return an inspectable snapshot of the current memory board state."""
     slots = []

@@ -280,6 +280,18 @@ class OperatorDecisionLedgerStore:
             operator_decision_ledger_index.append_index_entry(scope, row)
         except Exception:
             pass
+        try:
+            from src.workos_governance_bridge import maybe_emit_ledger_audit_event
+
+            maybe_emit_ledger_audit_event(row)
+        except Exception:
+            pass
+        try:
+            from src.appwrite_governance_sink import maybe_mirror_ledger_event
+
+            maybe_mirror_ledger_event(scope, row)
+        except Exception:
+            pass
         return row
 
     def list_events(
@@ -501,6 +513,1290 @@ def append_pipeline_turn_event(
             "blast_radius": {"risk_level": "low", "affected_files": []},
             "drift_context": _drift_context_from_pipeline(governed_pipeline),
             "summary": summary or f"Pipeline turn {pipeline_id or 'unknown'}",
+        },
+    )
+
+
+def append_dreamspace_consolidation_event(
+    session_id: str,
+    *,
+    proposal: dict[str, Any],
+) -> dict[str, Any] | None:
+    scope = _normalize_scope_id(session_id)
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "dreamspace_consolidation",
+            "decision": "proposed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "summary": str(proposal.get("summary") or "Dreamspace consolidation proposal"),
+            "proposal": dict(proposal),
+        },
+    )
+
+
+def append_immune_escalation_event(
+    session_id: str,
+    *,
+    escalation: dict[str, Any],
+    incident: dict[str, Any] | None = None,
+) -> dict[str, Any] | None:
+    scope = _normalize_scope_id(session_id)
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "immune_escalation",
+            "decision": str(escalation.get("response") or "ALLOW").lower(),
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "summary": f"Immune escalation {escalation.get('response')} allowed={escalation.get('allowed')}",
+            "escalation": dict(escalation),
+            "incident": dict(incident or {}),
+        },
+    )
+
+
+def append_autonomic_routine_event(
+    session_id: str,
+    *,
+    routine_id: str,
+    arc_class: str,
+    outcome: str = "completed",
+) -> dict[str, Any] | None:
+    scope = _normalize_scope_id(session_id)
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "autonomic_routine",
+            "decision": outcome if outcome in _DECISIONS else "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "summary": f"Autonomic routine {routine_id} ({arc_class}): {outcome}",
+            "routine_id": routine_id,
+            "arc_class": arc_class,
+        },
+    )
+
+
+def append_substrate_reconcile_event(summary: dict[str, Any]) -> dict[str, Any] | None:
+    """Record OTEM substrate startup reconciliation (Release 31 circulation)."""
+    scope = _normalize_scope_id("global")
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "substrate_reconcile",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "summary": (
+                f"OTEM substrate reconcile: loaded={summary.get('loaded_count', 0)} "
+                f"rehydrated={summary.get('rehydrated_count', 0)} "
+                f"stale={summary.get('stale_count', 0)}"
+            ),
+            "reconcile_summary": dict(summary),
+        },
+    )
+
+
+def append_organ_handoff_event(
+    session_id: str,
+    *,
+    handoff: dict[str, Any],
+    mesh_run_id: str,
+) -> dict[str, Any] | None:
+    """Record mediated inter-organ handoff receipt (Release 35)."""
+    if not session_id or not mesh_run_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    src = str(handoff.get("source_family_id") or "")
+    tgt = str(handoff.get("target_family_id") or "")
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "organ_handoff",
+            "decision": "completed",
+            "reversibility": "cannot_undo",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Organ handoff {src} -> {tgt} ({mesh_run_id[:12]})",
+            "mesh_run_id": mesh_run_id,
+            "handoff": dict(handoff),
+        },
+    )
+
+
+def append_organ_mesh_run_event(
+    session_id: str,
+    *,
+    run: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record organ mesh run completion or block (Release 35)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    run_id = str(run.get("run_id") or "")
+    status = str(run.get("status") or "unknown")
+    decision = "completed" if status == "completed" else "failed" if status == "failed" else "blocked"
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "organ_mesh_run",
+            "decision": decision,
+            "reversibility": "cannot_undo",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Organ mesh run {status} ({run_id[:12]})",
+            "mesh_run_id": run_id,
+            "mesh_run": {k: run.get(k) for k in ("status", "dry_run", "occ_class", "handoffs") if k in run},
+        },
+    )
+
+
+def append_habit_candidate_event(
+    session_id: str,
+    *,
+    candidate: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record habit candidate observation (Release 36)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    pattern_key = str(candidate.get("pattern_key") or candidate.get("candidate_id") or "")
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "habit_candidate",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Habit candidate observed ({pattern_key[:32]})",
+            "habit_candidate": dict(candidate),
+        },
+    )
+
+
+def append_habit_adoption_event(
+    session_id: str,
+    *,
+    habit: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record operator-promoted habit adoption (Release 36)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    habit_id = str(habit.get("habit_id") or "")
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "habit_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Habit adopted ({habit_id[:12]})",
+            "habit": dict(habit),
+        },
+    )
+
+
+def append_habit_influence_event(
+    session_id: str,
+    *,
+    plan: dict[str, Any],
+    jarvis_receipt_id: str | None = None,
+) -> dict[str, Any] | None:
+    """Record habit-influenced routing elevation (Release 36)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "habit_influence",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": "Habit-influenced plan authorized",
+            "jarvis_receipt_id": jarvis_receipt_id,
+            "plan_summary": {k: plan.get(k) for k in ("outcome", "plan_id", "occ_class") if k in plan},
+        },
+    )
+
+
+def append_identity_drift_event(
+    session_id: str,
+    *,
+    drift: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record identity drift observation (Release 37)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "identity_drift",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(drift.get("summary") or "Identity drift observed")[:200],
+            "identity_drift": dict(drift),
+        },
+    )
+
+
+def append_identity_claim_event(
+    session_id: str,
+    *,
+    candidate: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record identity claim candidate (Release 37)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    cid = str(candidate.get("candidate_id") or "")
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "identity_claim",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Identity claim candidate ({cid[:12]})",
+            "identity_candidate": dict(candidate),
+        },
+    )
+
+
+def append_identity_adoption_event(
+    session_id: str,
+    *,
+    claim: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record operator-promoted identity claim adoption (Release 37)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    claim_id = str(claim.get("claim_id") or "")
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "identity_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Identity claim adopted ({claim_id[:12]})",
+            "identity_claim": dict(claim),
+        },
+    )
+
+
+def append_identity_influence_event(
+    session_id: str,
+    *,
+    plan: dict[str, Any],
+    jarvis_receipt_id: str | None = None,
+) -> dict[str, Any] | None:
+    """Record identity-influenced routing elevation (Release 37)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "identity_influence",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": "Identity-influenced plan authorized",
+            "jarvis_receipt_id": jarvis_receipt_id,
+            "plan_summary": {k: plan.get(k) for k in ("outcome", "plan_id", "icc_class") if k in plan},
+        },
+    )
+
+
+def append_narrative_drift_event(
+    session_id: str,
+    *,
+    drift: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record narrative drift observation (Release 38)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "narrative_drift",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(drift.get("summary") or "Narrative drift observed")[:200],
+            "narrative_drift": dict(drift),
+        },
+    )
+
+
+def append_narrative_beat_event(
+    session_id: str,
+    *,
+    candidate: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record narrative beat candidate (Release 38)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    cid = str(candidate.get("candidate_id") or "")
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "narrative_beat",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Narrative beat candidate ({cid[:12]})",
+            "narrative_candidate": dict(candidate),
+        },
+    )
+
+
+def append_narrative_adoption_event(
+    session_id: str,
+    *,
+    beat: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record operator-promoted narrative beat adoption (Release 38)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    beat_id = str(beat.get("beat_id") or "")
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "narrative_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Narrative beat adopted ({beat_id[:12]})",
+            "narrative_beat": dict(beat),
+        },
+    )
+
+
+def append_narrative_influence_event(
+    session_id: str,
+    *,
+    plan: dict[str, Any],
+    jarvis_receipt_id: str | None = None,
+) -> dict[str, Any] | None:
+    """Record narrative-influenced routing elevation (Release 38)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "narrative_influence",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": "Narrative-influenced plan authorized",
+            "jarvis_receipt_id": jarvis_receipt_id,
+            "plan_summary": {k: plan.get(k) for k in ("outcome", "plan_id", "ncc_class") if k in plan},
+        },
+    )
+
+
+def append_autobiographical_drift_event(
+    session_id: str,
+    *,
+    drift: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record autobiographical drift observation (Release 39)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "autobiographical_drift",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(drift.get("summary") or "Autobiographical drift observed")[:200],
+            "autobiographical_drift": dict(drift),
+        },
+    )
+
+
+def append_autobiographical_episode_event(
+    session_id: str,
+    *,
+    candidate: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record autobiographical episode candidate (Release 39)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    cid = str(candidate.get("candidate_id") or "")
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "autobiographical_episode",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Autobiographical episode candidate ({cid[:12]})",
+            "autobiographical_candidate": dict(candidate),
+        },
+    )
+
+
+def append_autobiographical_adoption_event(
+    session_id: str,
+    *,
+    episode: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record operator-promoted autobiographical episode adoption (Release 39)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    episode_id = str(episode.get("episode_id") or "")
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "autobiographical_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Autobiographical episode adopted ({episode_id[:12]})",
+            "autobiographical_episode": dict(episode),
+        },
+    )
+
+
+def append_autobiographical_influence_event(
+    session_id: str,
+    *,
+    plan: dict[str, Any],
+    jarvis_receipt_id: str | None = None,
+) -> dict[str, Any] | None:
+    """Record agency-influenced routing elevation (Release 39)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "autobiographical_influence",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": "Agency-influenced plan authorized",
+            "jarvis_receipt_id": jarvis_receipt_id,
+            "plan_summary": {k: plan.get(k) for k in ("outcome", "plan_id", "aac_class") if k in plan},
+        },
+    )
+
+
+def append_social_drift_event(
+    session_id: str,
+    *,
+    drift: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record social drift observation (Release 40)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "social_drift",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(drift.get("summary") or "Social drift observed")[:200],
+            "social_drift": dict(drift),
+        },
+    )
+
+
+def append_social_bond_event(
+    session_id: str,
+    *,
+    candidate: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record social bond candidate (Release 40)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    cid = str(candidate.get("candidate_id") or "")
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "social_bond",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Social bond candidate ({cid[:12]})",
+            "social_candidate": dict(candidate),
+        },
+    )
+
+
+def append_social_adoption_event(
+    session_id: str,
+    *,
+    bond: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record operator-promoted social bond adoption (Release 40)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    bond_id = str(bond.get("bond_id") or "")
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "social_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Social bond adopted ({bond_id[:12]})",
+            "social_bond": dict(bond),
+        },
+    )
+
+
+def append_social_influence_event(
+    session_id: str,
+    *,
+    plan: dict[str, Any],
+    jarvis_receipt_id: str | None = None,
+) -> dict[str, Any] | None:
+    """Record social-influenced routing elevation (Release 40)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "social_influence",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": "Social-influenced plan authorized",
+            "jarvis_receipt_id": jarvis_receipt_id,
+            "plan_summary": {k: plan.get(k) for k in ("outcome", "plan_id", "scc_class") if k in plan},
+        },
+    )
+
+
+def append_social_arbitration_event(
+    session_id: str,
+    *,
+    conflict: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record conflicting social bond arbitration (Release 40)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "social_arbitration",
+            "decision": "blocked",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(conflict.get("summary") or "Social bond conflict")[:200],
+            "social_arbitration": dict(conflict),
+        },
+    )
+
+
+def append_multi_being_drift_event(
+    session_id: str,
+    *,
+    drift: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record multi-being drift observation (Release 41)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "multi_being_drift",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(drift.get("summary") or "Multi-being drift observed")[:200],
+            "multi_being_drift": dict(drift),
+        },
+    )
+
+
+def append_multi_being_pact_event(
+    session_id: str,
+    *,
+    candidate: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record multi-being pact candidate (Release 41)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    cid = str(candidate.get("candidate_id") or "")
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "multi_being_pact",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Multi-being pact candidate ({cid[:12]})",
+            "multi_being_candidate": dict(candidate),
+        },
+    )
+
+
+def append_multi_being_adoption_event(
+    session_id: str,
+    *,
+    pact: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record operator-promoted multi-being pact adoption (Release 41)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    pact_id = str(pact.get("pact_id") or "")
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "multi_being_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Multi-being pact adopted ({pact_id[:12]})",
+            "multi_being_pact": dict(pact),
+        },
+    )
+
+
+def append_multi_being_influence_event(
+    session_id: str,
+    *,
+    plan: dict[str, Any],
+    jarvis_receipt_id: str | None = None,
+) -> dict[str, Any] | None:
+    """Record federation-influenced routing elevation (Release 41)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "multi_being_influence",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": "Federation-influenced plan authorized",
+            "jarvis_receipt_id": jarvis_receipt_id,
+            "plan_summary": {k: plan.get(k) for k in ("outcome", "plan_id", "mbc_class") if k in plan},
+        },
+    )
+
+
+def append_multi_being_arbitration_event(
+    session_id: str,
+    *,
+    conflict: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Record conflicting multi-being pact arbitration (Release 41)."""
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "multi_being_arbitration",
+            "decision": "blocked",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(conflict.get("summary") or "Multi-being pact conflict")[:200],
+            "multi_being_arbitration": dict(conflict),
+        },
+    )
+
+
+def append_culture_of_beings_drift_event(
+    session_id: str,
+    *,
+    drift: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "culture_of_beings_drift",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(drift.get("summary") or "Culture-of-beings drift observed")[:200],
+            "culture_of_beings_drift": dict(drift),
+        },
+    )
+
+
+def append_culture_of_beings_adoption_event(
+    session_id: str,
+    *,
+    norm: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "culture_of_beings_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Shared norm adopted ({str(norm.get('norm_id', ''))[:12]})",
+            "shared_norm": dict(norm),
+        },
+    )
+
+
+def append_ecosystem_drift_event(
+    session_id: str,
+    *,
+    drift: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "ecosystem_drift",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(drift.get("summary") or "Ecosystem drift observed")[:200],
+            "ecosystem_drift": dict(drift),
+        },
+    )
+
+
+def append_ecosystem_adoption_event(
+    session_id: str,
+    *,
+    charter: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "ecosystem_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Ecosystem charter adopted ({str(charter.get('charter_id', ''))[:12]})",
+            "ecosystem_charter": dict(charter),
+        },
+    )
+
+
+def append_ecosystem_arbitration_event(
+    session_id: str,
+    *,
+    conflict: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "ecosystem_arbitration",
+            "decision": "blocked",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(conflict.get("summary") or "Ecosystem charter conflict")[:200],
+            "ecosystem_arbitration": dict(conflict),
+        },
+    )
+
+
+def append_membrane_drift_event(
+    session_id: str,
+    *,
+    drift: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "membrane_drift",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(drift.get("summary") or "Membrane drift observed")[:200],
+            "membrane_drift": dict(drift),
+        },
+    )
+
+
+def append_membrane_adoption_event(
+    session_id: str,
+    *,
+    policy: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "membrane_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Membrane policy adopted ({str(policy.get('policy_id', ''))[:12]})",
+            "membrane_policy": dict(policy),
+        },
+    )
+
+
+def append_membrane_arbitration_event(
+    session_id: str,
+    *,
+    conflict: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "membrane_arbitration",
+            "decision": "blocked",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(conflict.get("summary") or "Membrane policy conflict")[:200],
+            "membrane_arbitration": dict(conflict),
+        },
+    )
+
+
+def append_substrate_drift_event(
+    session_id: str,
+    *,
+    drift: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "substrate_drift",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(drift.get("summary") or "Substrate drift observed")[:200],
+            "substrate_drift": dict(drift),
+        },
+    )
+
+
+def append_diplomatic_adoption_event(
+    session_id: str,
+    *,
+    accord: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "diplomatic_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Diplomatic accord adopted ({str(accord.get('accord_id', ''))[:12]})",
+            "diplomatic_accord": dict(accord),
+        },
+    )
+
+
+def append_diplomatic_arbitration_event(
+    session_id: str,
+    *,
+    conflict: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "diplomatic_arbitration",
+            "decision": "blocked",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(conflict.get("summary") or "Diplomatic accord conflict")[:200],
+            "diplomatic_arbitration": dict(conflict),
+        },
+    )
+
+
+def append_norm_federation_drift_event(
+    session_id: str,
+    *,
+    drift: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "norm_federation_drift",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(drift.get("summary") or "Norm federation drift observed")[:200],
+            "norm_federation_drift": dict(drift),
+        },
+    )
+
+
+def append_norm_federation_adoption_event(
+    session_id: str,
+    *,
+    treaty: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "norm_federation_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Norm federation treaty adopted ({str(treaty.get('treaty_id', ''))[:12]})",
+            "norm_federation_treaty": dict(treaty),
+        },
+    )
+
+
+def append_evolution_drift_event(
+    session_id: str,
+    *,
+    drift: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "evolution_drift",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(drift.get("summary") or "Constitutional evolution drift observed")[:200],
+            "evolution_drift": dict(drift),
+        },
+    )
+
+
+def append_charter_amendment_adoption_event(
+    session_id: str,
+    *,
+    amendment: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "evolution_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Charter amendment adopted ({str(amendment.get('amendment_id', ''))[:12]})",
+            "charter_amendment": dict(amendment),
+        },
+    )
+
+
+def append_civilization_drift_event(
+    session_id: str,
+    *,
+    drift: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "civilization_drift",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(drift.get("summary") or "Civilization drift observed")[:200],
+            "civilization_drift": dict(drift),
+        },
+    )
+
+
+def append_civilization_adoption_event(
+    session_id: str,
+    *,
+    civilization: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "civilization_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Civilization charter adopted ({str(civilization.get('civilization_id', ''))[:12]})",
+            "civilization_charter": dict(civilization),
         },
     )
 

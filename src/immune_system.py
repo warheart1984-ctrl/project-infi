@@ -39,6 +39,10 @@ def _clip_text(value: Any, limit: int = 220) -> str:
     return normalized[: limit - 3].rstrip() + "..."
 
 
+CLEAN_STREAK_HEAL_THRESHOLD = 3
+HEAL_EVENT_LOOKBACK = 12
+
+
 @dataclass
 class ImmuneState:
     system_mode: str = "normal"
@@ -51,6 +55,12 @@ class ImmuneState:
     disabled_tools: dict[str, dict[str, Any]] = field(default_factory=dict)
     caller_overrides: dict[str, dict[str, Any]] = field(default_factory=dict)
     active_incident_id: str | None = None
+    auto_heal_enabled: bool = True
+    clean_streak: int = 0
+    last_threat_at: str | None = None
+    last_heal_at: str | None = None
+    defense_generation: int = 0
+    defensive_only: bool = True
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -64,7 +74,23 @@ class ImmuneState:
             "disabled_tools": list(self.disabled_tools.values()),
             "caller_overrides": dict(self.caller_overrides),
             "active_incident_id": self.active_incident_id,
+            "auto_heal_enabled": self.auto_heal_enabled,
+            "clean_streak": self.clean_streak,
+            "last_threat_at": self.last_threat_at,
+            "last_heal_at": self.last_heal_at,
+            "defense_generation": self.defense_generation,
+            "defensive_only": self.defensive_only,
         }
+
+
+PACKET_THREAT_SEVERITY = {
+    "invalid_packet_structure": "high",
+    "invalid_packet_shape": "high",
+    "packet_bloat": "low",
+    "tool_bleed_into_core_lane": "medium",
+    "authority_bypass_attempt": "critical",
+    "memory_context_leak": "high",
+}
 
 
 class ImmuneSystemController:
@@ -77,6 +103,9 @@ class ImmuneSystemController:
         self._events: list[dict[str, Any]] = []
         self._incidents: list[dict[str, Any]] = []
         self._load()
+        from src.immune_hardening import ImmuneHardeningStore
+
+        self._hardening = ImmuneHardeningStore(self.runtime_dir)
 
     @property
     def _state_path(self) -> Path:
@@ -100,6 +129,7 @@ class ImmuneSystemController:
             self._events = []
             self._incidents = []
             self._load()
+            self._hardening.configure_runtime_dir(self.runtime_dir)
 
     def reset(self) -> dict[str, Any]:
         with self._lock:
@@ -107,6 +137,7 @@ class ImmuneSystemController:
             self._events = []
             self._incidents = []
             self._persist_locked()
+        self._hardening.reset()
         return self.snapshot(limit_events=0, limit_incidents=0)
 
     def snapshot(self, limit_events: int = 10, limit_incidents: int = 4) -> dict[str, Any]:
@@ -123,6 +154,8 @@ class ImmuneSystemController:
                     None,
                 )
             state["active_incident"] = dict(active_incident) if active_incident else None
+            state["hardening"] = self._hardening.snapshot()
+            state["heal_eligible"] = self._evaluate_heal_eligibility_locked()
             from src.aais_ul_substrate import wrap_runtime_snapshot
 
             return wrap_runtime_snapshot(state)
@@ -371,6 +404,232 @@ class ImmuneSystemController:
                 "state": self._state.to_dict(),
             }
 
+    def hardening_profile(self):
+        return self._hardening.profile_for_protocol()
+
+    def observe_packet_threats(self, immune_protocol: dict[str, Any]) -> dict[str, Any]:
+        """Bridge packet-gate threats into posture updates and hardening memory."""
+        response = str(immune_protocol.get("response") or "ALLOW").strip().upper()
+        threats = list(immune_protocol.get("threats") or [])
+        if response == "ALLOW" and not threats:
+            return self.record_clean_turn()
+
+        applied_actions: list[dict[str, Any]] = []
+        max_severity = "low"
+        severity_rank = {"low": 0, "medium": 1, "high": 2, "critical": 3}
+
+        with self._lock:
+            self._state.clean_streak = 0
+            self._state.last_threat_at = _utc_now_iso()
+            quarantined_nodes = list(
+                (immune_protocol.get("mutations") or {}).get("quarantined_nodes") or []
+            )
+            for threat in threats:
+                code = str(threat.get("code") or "unknown_threat").strip()
+                severity = PACKET_THREAT_SEVERITY.get(code, "medium")
+                if severity_rank.get(severity, 0) > severity_rank.get(max_severity, 0):
+                    max_severity = severity
+                hardening_update = self._hardening.record_threat(
+                    threat_code=code,
+                    severity=severity,
+                    hardened_nodes=quarantined_nodes,
+                )
+                applied_actions.append({"action": "record_threat_memory", **hardening_update})
+
+            if max_severity in {"medium", "high", "critical"}:
+                next_mode = self._recommended_mode_locked(max_severity)
+                if next_mode != self._state.system_mode:
+                    applied_actions.append(
+                        self._set_mode_locked(next_mode, reason=f"{max_severity} packet threat")
+                    )
+                    if next_mode in {"restricted", "crisis"}:
+                        applied_actions.append(
+                            self._open_incident_locked(
+                                trigger=immune_protocol.get("reasons", ["packet threat"])[0]
+                                if immune_protocol.get("reasons")
+                                else "packet threat",
+                                mode=next_mode,
+                                event={"caller_id": "packet_gate", "resource_id": "governed_packet_boundary"},
+                            )
+                        )
+
+            if response == "QUARANTINE":
+                for node in quarantined_nodes:
+                    applied_actions.append(
+                        self._quarantine_resource_locked(node, severity=max_severity, reason="packet quarantine")
+                    )
+
+            immune_event = {
+                "id": f"imm_{uuid.uuid4().hex[:12]}",
+                "timestamp": _utc_now_iso(),
+                "caller_id": "packet_gate",
+                "resource_id": "governed_packet_boundary",
+                "action": "observe_packet_threats",
+                "severity": max_severity,
+                "triggered_by_alert": response,
+                "alert_severity": max_severity,
+                "details": {
+                    "immune_response": response,
+                    "threat_count": len(threats),
+                    "applied_actions": [action.get("action") for action in applied_actions if action],
+                },
+            }
+            self._events.append(immune_event)
+            self._events = self._events[-250:]
+            self._state.defense_generation = int(
+                self._hardening.snapshot().get("defense_generation") or self._state.defense_generation
+            )
+            self._persist_locked()
+
+        return {
+            "severity": max_severity,
+            "applied_actions": applied_actions,
+            "event": dict(immune_event),
+            "state": self._state.to_dict(),
+        }
+
+    def record_clean_turn(self) -> dict[str, Any]:
+        with self._lock:
+            self._state.clean_streak += 1
+            self._persist_locked()
+        heal_result = self.attempt_heal(reason="clean_streak_threshold_met")
+        return {
+            "clean_streak": self._state.clean_streak,
+            "heal": heal_result,
+        }
+
+    def evaluate_heal_eligibility(self) -> dict[str, Any]:
+        with self._lock:
+            return self._evaluate_heal_eligibility_locked()
+
+    def close_incident(
+        self,
+        incident_id: str,
+        *,
+        reason: str,
+        healed_by: str = "immune_system",
+    ) -> dict[str, Any]:
+        incident_key = str(incident_id or "").strip()
+        with self._lock:
+            incident = next(
+                (item for item in reversed(self._incidents) if item.get("incident_id") == incident_key),
+                None,
+            )
+            if incident is None:
+                return {"closed": False, "reason": "incident_not_found"}
+            if str(incident.get("status") or "").lower() == "closed":
+                return {"closed": False, "reason": "incident_already_closed", "incident": dict(incident)}
+
+            incident["status"] = "closed"
+            incident["closed_at"] = _utc_now_iso()
+            incident["close_reason"] = reason
+            incident["healed_by"] = healed_by
+            if self._state.active_incident_id == incident_key:
+                self._state.active_incident_id = None
+
+            hardening_update = self._hardening.increment_generation(reason=reason)
+            self._state.defense_generation = int(hardening_update.get("defense_generation") or 0)
+            self._hardening.emit_pattern_event(
+                classification="recovered_failure",
+                summary=f"Immune incident {incident_key} closed after {reason}",
+                severity="S3",
+            )
+
+            event = {
+                "id": f"imm_{uuid.uuid4().hex[:12]}",
+                "timestamp": _utc_now_iso(),
+                "caller_id": healed_by,
+                "resource_id": incident_key,
+                "action": "close_incident",
+                "severity": "low",
+                "triggered_by_alert": "incident_closed",
+                "alert_severity": "low",
+                "details": {
+                    "incident_id": incident_key,
+                    "reason": reason,
+                    "hardening": hardening_update,
+                },
+            }
+            self._events.append(event)
+            self._events = self._events[-250:]
+            self._persist_locked()
+            return {
+                "closed": True,
+                "incident": dict(incident),
+                "hardening": hardening_update,
+                "event": dict(event),
+            }
+
+    def attempt_heal(self, *, reason: str, healed_by: str = "immune_system") -> dict[str, Any]:
+        with self._lock:
+            eligibility = self._evaluate_heal_eligibility_locked()
+            if not eligibility.get("eligible"):
+                return {"healed": False, "eligibility": eligibility}
+
+            applied_actions: list[dict[str, Any]] = []
+            mode = self._state.system_mode
+            if mode == "crisis":
+                applied_actions.append(self._set_mode_locked("restricted", reason=reason))
+            elif mode == "restricted":
+                applied_actions.append(self._set_mode_locked("normal", reason=reason))
+            else:
+                applied_actions.append(
+                    {
+                        "action": "maintain_normal_mode",
+                        "mode": "normal",
+                        "reason": reason,
+                    }
+                )
+
+            relaxed = self._relax_caller_overrides_locked()
+            if relaxed:
+                applied_actions.extend(relaxed)
+
+            close_result: dict[str, Any] = {"closed": False}
+            active_incident_id = self._state.active_incident_id
+            if active_incident_id:
+                self._lock.release()
+                try:
+                    close_result = self.close_incident(
+                        active_incident_id,
+                        reason=reason,
+                        healed_by=healed_by,
+                    )
+                finally:
+                    self._lock.acquire()
+            else:
+                hardening_update = self._hardening.increment_generation(reason=reason)
+                self._state.defense_generation = int(hardening_update.get("defense_generation") or 0)
+                applied_actions.append({"action": "increment_hardening", **hardening_update})
+
+            self._state.last_heal_at = _utc_now_iso()
+            event = {
+                "id": f"imm_{uuid.uuid4().hex[:12]}",
+                "timestamp": _utc_now_iso(),
+                "caller_id": healed_by,
+                "resource_id": active_incident_id,
+                "action": "immune_heal",
+                "severity": "low",
+                "triggered_by_alert": reason,
+                "alert_severity": "low",
+                "details": {
+                    "reason": reason,
+                    "applied_actions": [action.get("action") for action in applied_actions if action],
+                    "close_result": close_result,
+                },
+            }
+            self._events.append(event)
+            self._events = self._events[-250:]
+            self._persist_locked()
+            return {
+                "healed": True,
+                "eligibility": eligibility,
+                "applied_actions": applied_actions,
+                "close_result": close_result,
+                "event": dict(event),
+                "state": self._state.to_dict(),
+            }
+
     def release_module(self, module_id: str, *, reason: str) -> dict[str, Any]:
         """Release a previously isolated or quarantined module after correction."""
         module_key = str(module_id or "").strip()
@@ -402,11 +661,93 @@ class ImmuneSystemController:
             self._events.append(event)
             self._events = self._events[-250:]
             self._persist_locked()
+        heal_result = self.attempt_heal(reason=f"module_release:{module_key}")
+        return {
+            "released": True,
+            "event": dict(event),
+            "state": self._state.to_dict(),
+            "heal": heal_result,
+        }
+
+    def _evaluate_heal_eligibility_locked(self) -> dict[str, Any]:
+        if not self._state.auto_heal_enabled:
+            return {"eligible": False, "reason": "auto_heal_disabled"}
+        if self._state.clean_streak < CLEAN_STREAK_HEAL_THRESHOLD:
             return {
-                "released": True,
-                "event": dict(event),
-                "state": self._state.to_dict(),
+                "eligible": False,
+                "reason": "clean_streak_below_threshold",
+                "clean_streak": self._state.clean_streak,
+                "threshold": CLEAN_STREAK_HEAL_THRESHOLD,
             }
+        blocking_actions = {
+            "observe_packet_threats",
+            "observe_security_event",
+            "observe_module_signal",
+        }
+        recent = self._events[-HEAL_EVENT_LOOKBACK:]
+        for event in recent:
+            severity = str(event.get("severity") or "low").strip().lower()
+            action = str(event.get("action") or "").strip().lower()
+            if (
+                severity in {"medium", "high", "critical"}
+                and action in blocking_actions
+            ):
+                return {
+                    "eligible": False,
+                    "reason": "recent_medium_plus_threat",
+                    "blocking_event_id": event.get("id"),
+                }
+        if self._state.blacklisted_modules:
+            return {"eligible": False, "reason": "blacklisted_modules_present"}
+        if self._state.system_mode == "normal" and not self._state.active_incident_id:
+            return {
+                "eligible": False,
+                "reason": "already_normal",
+                "clean_streak": self._state.clean_streak,
+            }
+        return {
+            "eligible": True,
+            "clean_streak": self._state.clean_streak,
+            "system_mode": self._state.system_mode,
+            "active_incident_id": self._state.active_incident_id,
+        }
+
+    def _relax_caller_overrides_locked(self) -> list[dict[str, Any]]:
+        relaxed: list[dict[str, Any]] = []
+        for caller_id, override in list(self._state.caller_overrides.items()):
+            current = dict(override)
+            rate = float(current.get("rate_multiplier", 1.0))
+            max_sensitivity = int(current.get("max_sensitivity", 9))
+            summary_only = bool(current.get("summary_only", False))
+            next_rate = min(1.0, rate + 0.25)
+            next_sensitivity = min(9, max_sensitivity + 1)
+            next_summary_only = summary_only and next_rate < 1.0
+            if (
+                next_rate == rate
+                and next_sensitivity == max_sensitivity
+                and next_summary_only == summary_only
+            ):
+                self._state.caller_overrides.pop(caller_id, None)
+                relaxed.append({"action": "clear_caller_override", "caller_id": caller_id})
+                continue
+            current.update(
+                {
+                    "rate_multiplier": next_rate,
+                    "max_sensitivity": next_sensitivity,
+                    "summary_only": next_summary_only,
+                    "applied_at": _utc_now_iso(),
+                    "reason": "immune_heal_relaxation",
+                }
+            )
+            self._state.caller_overrides[caller_id] = current
+            relaxed.append(
+                {
+                    "action": "relax_caller_override",
+                    "caller_id": caller_id,
+                    "overrides": dict(current),
+                }
+            )
+        return relaxed
 
     def _severity_for_event(self, event: dict[str, Any]) -> str:
         decision = str(event.get("decision") or "allow").strip().lower()
@@ -633,6 +974,12 @@ class ImmuneSystemController:
                     },
                     caller_overrides=dict(payload.get("caller_overrides") or {}),
                     active_incident_id=payload.get("active_incident_id"),
+                    auto_heal_enabled=bool(payload.get("auto_heal_enabled", True)),
+                    clean_streak=int(payload.get("clean_streak") or 0),
+                    last_threat_at=payload.get("last_threat_at"),
+                    last_heal_at=payload.get("last_heal_at"),
+                    defense_generation=int(payload.get("defense_generation") or 0),
+                    defensive_only=bool(payload.get("defensive_only", True)),
                 )
             except Exception:
                 self._state = ImmuneState()

@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import AmplifyAuthGate from './components/AmplifyAuthGate';
 import './App.css';
 
 const routerBasename = (() => {
@@ -39,6 +40,7 @@ const OperatorLedger = lazy(() => import('./pages/OperatorLedger'));
 const OperatorLedgerGraph = lazy(() => import('./pages/OperatorLedgerGraph'));
 const TemporalReplay = lazy(() => import('./pages/TemporalReplay/TemporalReplay'));
 const Onboarding = lazy(() => import('./pages/Onboarding'));
+const AmplifySignIn = lazy(() => import('./pages/AmplifySignIn'));
 const PlatformConsole = lazy(() => import('./pages/PlatformConsole'));
 const PlatformJobDetail = lazy(() => import('./pages/PlatformJobDetail'));
 const PlatformArtifacts = lazy(() => import('./pages/PlatformArtifacts'));
@@ -89,20 +91,23 @@ function AppShell() {
             <Route path="/workflows/runs/:runId" element={<WorkflowRunDetail />} />
             <Route path="/workflows/approvals" element={<WorkflowApprovals />} />
             <Route path="/workflows/templates" element={<WorkflowTemplates />} />
-            <Route path="/operator" element={<OperatorConsole />} />
-            <Route path="/operator/plugins" element={<OperatorPlugins />} />
-            <Route path="/operator/brain" element={<OperatorBrainSessions />} />
-            <Route path="/operator/ledger" element={<OperatorLedger />} />
-            <Route path="/operator/ledger/graph" element={<OperatorLedgerGraph />} />
-            <Route path="/operator/replay/:subjectType/:subjectId" element={<TemporalReplay />} />
-            <Route path="/platform" element={<PlatformConsole />} />
-            <Route path="/platform/jobs/:jobId" element={<PlatformJobDetail />} />
-            <Route path="/platform/artifacts" element={<PlatformArtifacts />} />
-            <Route path="/platform/getting-started" element={<PlatformGettingStarted />} />
-            <Route path="/platform/assistant" element={<PlatformAssistant />} />
-            <Route path="/platform/workflows" element={<PlatformWorkflow />} />
-            <Route path="/platform/mesh" element={<PlatformMesh />} />
-            <Route path="/platform/marketplace" element={<PlatformMarketplace />} />
+            <Route path="/auth/sign-in" element={<AmplifySignIn />} />
+            <Route element={<AmplifyAuthGate />}>
+              <Route path="/operator" element={<OperatorConsole />} />
+              <Route path="/operator/plugins" element={<OperatorPlugins />} />
+              <Route path="/operator/brain" element={<OperatorBrainSessions />} />
+              <Route path="/operator/ledger" element={<OperatorLedger />} />
+              <Route path="/operator/ledger/graph" element={<OperatorLedgerGraph />} />
+              <Route path="/operator/replay/:subjectType/:subjectId" element={<TemporalReplay />} />
+              <Route path="/platform" element={<PlatformConsole />} />
+              <Route path="/platform/jobs/:jobId" element={<PlatformJobDetail />} />
+              <Route path="/platform/artifacts" element={<PlatformArtifacts />} />
+              <Route path="/platform/getting-started" element={<PlatformGettingStarted />} />
+              <Route path="/platform/assistant" element={<PlatformAssistant />} />
+              <Route path="/platform/workflows" element={<PlatformWorkflow />} />
+              <Route path="/platform/mesh" element={<PlatformMesh />} />
+              <Route path="/platform/marketplace" element={<PlatformMarketplace />} />
+            </Route>
             <Route path="/onboarding" element={<Onboarding />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

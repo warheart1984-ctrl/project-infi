@@ -39,29 +39,43 @@ class PlatformStore:
     def _init(self) -> None:
         with self._connect() as conn:
             if self.is_postgres:
-                conn.execute(
-                    "CREATE TABLE IF NOT EXISTS orgs (org_id TEXT PRIMARY KEY, payload JSONB NOT NULL)"
-                )
-                conn.execute(
-                    "CREATE TABLE IF NOT EXISTS principals (principal_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)"
-                )
-                conn.execute(
-                    "CREATE TABLE IF NOT EXISTS api_keys (api_key_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, principal_id TEXT NOT NULL, key_hash TEXT NOT NULL, payload JSONB NOT NULL)"
-                )
-                conn.execute(
-                    "CREATE TABLE IF NOT EXISTS platform_jobs (job_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)"
-                )
-                conn.execute(
-                    "CREATE TABLE IF NOT EXISTS artifact_refs (ref_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)"
-                )
-                conn.execute(
-                    "CREATE TABLE IF NOT EXISTS audit_rows (id SERIAL PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)"
-                )
                 for stmt in (
+                    "CREATE TABLE IF NOT EXISTS orgs (org_id TEXT PRIMARY KEY, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS principals (principal_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS api_keys (api_key_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, principal_id TEXT NOT NULL, key_hash TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS platform_jobs (job_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS artifact_refs (ref_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS audit_rows (id SERIAL PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
                     "CREATE TABLE IF NOT EXISTS role_bindings (binding_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, principal_id TEXT NOT NULL, payload JSONB NOT NULL)",
                     "CREATE TABLE IF NOT EXISTS invites (invite_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, token_hash TEXT NOT NULL, payload JSONB NOT NULL)",
                     "CREATE TABLE IF NOT EXISTS usage_daily (org_id TEXT NOT NULL, day TEXT NOT NULL, payload JSONB NOT NULL, PRIMARY KEY (org_id, day))",
                     "CREATE TABLE IF NOT EXISTS sessions (session_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS billing_periods (org_id TEXT NOT NULL, period TEXT NOT NULL, payload JSONB NOT NULL, PRIMARY KEY (org_id, period))",
+                    "CREATE TABLE IF NOT EXISTS org_policy_rules (rule_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS workflows (workflow_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS operator_presence (org_id TEXT NOT NULL, principal_id TEXT NOT NULL, payload JSONB NOT NULL, PRIMARY KEY (org_id, principal_id))",
+                    "CREATE TABLE IF NOT EXISTS job_assignments (job_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS mesh_events (event_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS on_call_schedules (rotation_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS handoff_bundles (bundle_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS workflow_listings (listing_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS proof_attestations (attestation_id TEXT PRIMARY KEY, job_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS proof_runners (runner_id TEXT PRIMARY KEY, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS webhook_subscriptions (subscription_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS webhook_deliveries (delivery_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS listing_reviews (review_id TEXT PRIMARY KEY, listing_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS platform_ledger (entry_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS proof_witnesses (witness_id TEXT PRIMARY KEY, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS platform_peers (peer_id TEXT PRIMARY KEY, payload JSONB NOT NULL)",
+                    "CREATE TABLE IF NOT EXISTS autopilot_runs (run_id TEXT PRIMARY KEY, org_id TEXT NOT NULL, payload JSONB NOT NULL)",
+                ):
+                    conn.execute(stmt)
+                for stmt in (
+                    "CREATE INDEX IF NOT EXISTS idx_jobs_org ON platform_jobs(org_id)",
+                    "CREATE INDEX IF NOT EXISTS idx_artifacts_org_job ON artifact_refs(org_id)",
+                    "CREATE INDEX IF NOT EXISTS idx_mesh_events_org ON mesh_events(org_id)",
+                    "CREATE INDEX IF NOT EXISTS idx_ledger_org ON platform_ledger(org_id)",
+                    "CREATE INDEX IF NOT EXISTS idx_audit_rows_org ON audit_rows (org_id, id DESC)",
                 ):
                     conn.execute(stmt)
                 conn.commit()

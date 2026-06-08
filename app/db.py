@@ -141,6 +141,20 @@ def init_db() -> None:
         _ensure_column(conn, "workflow_runs", "recovery_state", "TEXT")
         _ensure_column(conn, "workflow_runs", "recovery_attempts", "INTEGER NOT NULL DEFAULT 0")
         _ensure_column(conn, "workflow_runs", "stale_reason", "TEXT")
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS otem_substrate_workflows (
+                workflow_id TEXT PRIMARY KEY,
+                stage TEXT NOT NULL,
+                proposal_json TEXT NOT NULL,
+                operator_approved INTEGER NOT NULL DEFAULT 0,
+                preview_json TEXT,
+                apply_result_json TEXT,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            )
+            """
+        )
 
 @contextmanager
 def get_conn():
@@ -1027,3 +1041,136 @@ def complete_onboarding(goal: str, tools: list[str], cisiv_stage: str | None = N
             ),
         )
     return get_onboarding_state()
+
+
+def upsert_otem_substrate_workflow(workflow: dict) -> dict:
+    """Persist OTEM execution substrate workflow co-located with workflow DB."""
+    workflow_id = str(workflow.get("workflow_id") or "").strip()
+    if not workflow_id:
+        raise ValueError("workflow_id required")
+    ts = now_iso()
+    created_at = str(workflow.get("created_at") or ts)
+    with get_conn() as conn:
+        conn.execute(
+            """
+            INSERT INTO otem_substrate_workflows (
+                workflow_id, stage, proposal_json, operator_approved,
+                preview_json, apply_result_json, created_at, updated_at
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(workflow_id) DO UPDATE SET
+                stage = excluded.stage,
+                proposal_json = excluded.proposal_json,
+                operator_approved = excluded.operator_approved,
+                preview_json = excluded.preview_json,
+                apply_result_json = excluded.apply_result_json,
+                updated_at = excluded.updated_at
+            """,
+            (
+                workflow_id,
+                str(workflow.get("stage") or "proposal"),
+                json.dumps(dict(workflow.get("proposal") or {})),
+                1 if workflow.get("operator_approved") else 0,
+                json.dumps(workflow.get("preview")) if workflow.get("preview") is not None else None,
+                json.dumps(workflow.get("apply_result")) if workflow.get("apply_result") is not None else None,
+                created_at,
+                ts,
+            ),
+        )
+    row = get_otem_substrate_workflow(workflow_id)
+    if row is None:
+        raise RuntimeError(f"Failed to persist OTEM substrate workflow {workflow_id}")
+    return row
+
+
+def get_otem_substrate_workflow(workflow_id: str) -> dict | None:
+    normalized = str(workflow_id or "").strip()
+    if not normalized:
+        return None
+    with get_conn() as conn:
+        row = conn.execute(
+            """
+            SELECT workflow_id, stage, proposal_json, operator_approved,
+                   preview_json, apply_result_json, created_at, updated_at
+            FROM otem_substrate_workflows
+            WHERE workflow_id = ?
+            """,
+            (normalized,),
+        ).fetchone()
+    if not row:
+        return None
+    preview = _json_loads(row[4], None) if row[4] else None
+    apply_result = _json_loads(row[5], None) if row[5] else None
+    return {
+        "workflow_id": row[0],
+        "stage": row[1],
+        "proposal": _json_loads(row[2], {}),
+        "operator_approved": bool(row[3]),
+        "preview": preview,
+        "apply_result": apply_result,
+        "created_at": row[6],
+        "updated_at": row[7],
+    }
+
+
+def list_otem_substrate_workflows(limit: int = 500) -> list[dict]:
+    with get_conn() as conn:
+        rows = conn.execute(
+            """
+            SELECT workflow_id, stage, proposal_json, operator_approved,
+                   preview_json, apply_result_json, created_at, updated_at
+            FROM otem_substrate_workflows
+            ORDER BY updated_at DESC
+            LIMIT ?
+            """,
+            (limit,),
+        ).fetchall()
+    results: list[dict] = []
+    for row in rows:
+        preview = _json_loads(row[4], None) if row[4] else None
+        apply_result = _json_loads(row[5], None) if row[5] else None
+        results.append(
+            {
+                "workflow_id": row[0],
+                "stage": row[1],
+                "proposal": _json_loads(row[2], {}),
+                "operator_approved": bool(row[3]),
+                "preview": preview,
+                "apply_result": apply_result,
+                "created_at": row[6],
+                "updated_at": row[7],
+            }
+        )
+    return results
+
+
+def mark_workflow_approval_stale(approval_id: str, reason: str) -> dict | None:
+    approval = get_workflow_approval(approval_id)
+    if not approval or approval.get("status") != "pending":
+        return approval
+    payload = dict(approval.get("payload") or {})
+    payload["substrate_reconcile_status"] = "stale"
+    payload["substrate_reconcile_reason"] = reason[:500]
+    ts = now_iso()
+    with get_conn() as conn:
+        conn.execute(
+            """
+            UPDATE workflow_approvals
+            SET status = 'stale', payload_json = ?, updated_at = ?
+            WHERE id = ?
+            """,
+            (json.dumps(payload), ts, approval_id),
+        )
+    return get_workflow_approval(approval_id)
+
+
+def count_stale_otem_approvals() -> int:
+    with get_conn() as conn:
+        row = conn.execute(
+            """
+            SELECT COUNT(*)
+            FROM workflow_approvals
+            WHERE status = 'stale' AND step_type = 'otem_execution_substrate'
+            """
+        ).fetchone()
+    return int(row[0] if row else 0)

@@ -89,7 +89,7 @@ def finalize_contractor_runtime_action(
     result_status = str((result or {}).get("status") or "completed").strip().lower() or "completed"
     if (result or {}).get("ok") is False and result_status == "completed":
         result_status = "failed"
-    law_enforcement, ul_snapshot, law_event_log = project_infi_law.finalize_runtime_action(
+    law_enforcement, law_event_log = project_infi_law.finalize_runtime_action(
         contract,
         action_status=result_status,
         summary=summary,

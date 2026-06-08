@@ -12,6 +12,10 @@ It is not a general autonomous authority surface.
 
 It is a governed defensive layer.
 
+It is explicitly **defensive only**. The immune protocol may defend, heal, and
+harden AAIS posture, but it must never initiate offensive, retaliatory, or
+outbound attack actions.
+
 ## Runtime Role
 
 The active immune path currently spans two cooperating layers:
@@ -89,9 +93,42 @@ The controller persists and exposes:
 - caller overrides
 - recent immune events
 - incidents and active incident state
+- auto-heal posture (`auto_heal_enabled`, `clean_streak`, `last_heal_at`)
+- hardening generation (`defense_generation`, threat memory, summary clamp limits)
 
 This state is managed by
-[`src/immune_system.py`](</C:/Users/randj/Desktop/project infi/AAIS-main/src/immune_system.py>).
+[`src/immune_system.py`](</C:/Users/randj/Desktop/project infi/AAIS-main/src/immune_system.py>)
+with adaptive hardening in
+[`src/immune_hardening.py`](</C:/Users/randj/Desktop/project infi/AAIS-main/src/immune_hardening.py>).
+
+## Heal Cycle
+
+Bounded autonomous heal is active when `auto_heal_enabled` is true.
+
+Rules:
+
+1. `clean_streak` increments on each clean governed turn with `ALLOW` immune response
+2. medium+ threats reset `clean_streak`
+3. when `clean_streak >= 3` and no blacklisted modules remain, the system may:
+   - step down `crisis → restricted → normal`
+   - relax caller overrides incrementally
+   - close the active incident
+4. blacklisted modules are never auto-released
+5. every heal emits an auditable `immune_heal` event
+
+Manual operator heal is available at `POST /api/jarvis/immune/heal`.
+
+## Hardening Cycle
+
+After incidents close or threats repeat, runtime scar-tissue hardening applies:
+
+1. `defense_generation` increments
+2. per-threat `min_response_floor` rises on repeat encounters
+3. direct-lane summary clamp limits tighten
+4. hardening is runtime-only and does not mutate subsystem DNA without MP-X
+
+Resilience posture is exposed by
+[`src/immune_resilience_organ.py`](</C:/Users/randj/Desktop/project infi/AAIS-main/src/immune_resilience_organ.py>).
 
 ## Signal Families
 
@@ -135,9 +172,9 @@ AAIS may defend itself, but it may not hide the fact that it did so.
 
 ## Current Scope Limits
 
-The immune protocol is live, but not yet complete across every subsystem.
+The defend → heal → harden cycle is live in core AAIS Python.
 
-Current limits:
+Remaining limits:
 
 - broader predictor/invariant-driven immune automation remains incomplete
 - Super Nova coupling remains observe-only rather than full immune autonomy

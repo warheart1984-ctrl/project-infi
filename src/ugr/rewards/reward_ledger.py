@@ -22,7 +22,8 @@ def _default_runtime_dir() -> Path:
 
 
 def _operator_slug(operator_id: str) -> str:
-    safe = "".join(c if c.isalnum() or c in "-_:" else "_" for c in operator_id) or "default"
+    # Colons are invalid in Windows path segments (e.g. operator:jon-halstead).
+    safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in operator_id) or "default"
     return safe
 
 

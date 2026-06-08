@@ -934,8 +934,10 @@ class PromotionEngine:
         return decision
 
     def rollback(self, gene: str) -> bool:
+        from src.governance_organs._paths import list_gene_backups
+
         backup_dir = runtime_governance_dir() / "promotion_backups"
-        backups = sorted(backup_dir.glob(f"{gene}_*.genome.v1.json"))
+        backups = list_gene_backups(backup_dir, gene)
         if not backups:
             return False
         latest = backups[-1]

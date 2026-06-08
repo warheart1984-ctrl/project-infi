@@ -20,6 +20,7 @@ from uuid import uuid4
 
 from src.continuity_witness import build_continuity_witness_input
 from src.immune_protocol import apply_immune_protocol
+from src.immune_system import immune_system
 
 
 PIPELINE_ID = "aais.governed_direct_pipeline"
@@ -678,12 +679,12 @@ def _build_realtime_signal_feed(
     try:
         from src.realtime_feed_adapter import get_realtime_feed_adapter
 
-        for event in get_realtime_feed_adapter().collect(limit=4):
+        for index, event in enumerate(get_realtime_feed_adapter().collect(limit=4)):
             signals.append(
                 _signal(
                     signal_type="external_feed",
                     signal_class=str(event.get("event_type") or "feed")[:64],
-                    stable_key=f"external_feed:{event.get('source')}:{event.get('event_type')}",
+                    stable_key=f"external_feed:{event.get('source')}:{event.get('event_type')}:{index}",
                     severity="low",
                     status="observed",
                     data_sufficiency="sufficient",
@@ -1155,6 +1156,20 @@ def _refresh_governed_pipeline_turn_layer(
         realtime_signal_feed,
         runtime_context=normalized_runtime_context,
     )
+    predictor_confidence = float(
+        dict(realtime_event_cause_predictor or {}).get("confidence") or 0.0
+    )
+    predictor_severity = float(
+        dict(realtime_event_cause_predictor or {}).get("severity") or 0.0
+    )
+    from src.immune_protocol import apply_predictor_bounded_escalation
+
+    immune_protocol = apply_predictor_bounded_escalation(
+        immune_protocol,
+        confidence=predictor_confidence,
+        severity=predictor_severity,
+        session_id=str(surface_identity or "global"),
+    )
     governed_event_guard = governed_event(
         realtime_signal_feed,
         prediction=realtime_event_cause_predictor,
@@ -1419,15 +1434,28 @@ def build_governed_turn_pipeline(
         return_packets=return_packets,
         active_lane=active_lane,
         direct_route=direct_route,
+        hardening_profile=immune_system.hardening_profile(),
     )
     forward_packets = immune_evaluation["forward_packets"]
     service_packets = immune_evaluation["service_packets"]
     return_packets = immune_evaluation["return_packets"]
     immune_protocol = immune_evaluation["immune_protocol"]
+    if immune_protocol.get("response") == "ALLOW":
+        immune_system.record_clean_turn()
+    else:
+        immune_system.observe_packet_threats(immune_protocol)
     if coherence_protocol["response"] != "ALLOW":
         summary = f"{summary} Coherence response: {coherence_protocol['response']}."
     if immune_protocol["response"] != "ALLOW":
         summary = f"{summary} Immune response: {immune_protocol['response']}."
+    if not immune_protocol.get("traffic_allowed", True):
+        summary = f"{summary} Immune traffic blocked."
+        coherence_protocol = {
+            "response": "BLOCK",
+            "reason": immune_protocol.get("reasons", ["immune traffic blocked"])[0]
+            if immune_protocol.get("reasons")
+            else "immune traffic blocked",
+        }
 
     cache_key = _governed_pipeline_cache_key(
         response_mode=normalized_mode,

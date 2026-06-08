@@ -1,5 +1,7 @@
 """Infinity-1 operator dashboard snapshot — seam health, workflow stack, accountability."""
 
+# Mythic: Operator Infinity 1 Dashboard
+# Engineering: OperatorInfinity1DashboardEngine
 from __future__ import annotations
 
 import json
@@ -253,4 +255,11 @@ def build_seam_health_poll() -> dict[str, Any]:
 
 def build_monitoring_poll() -> dict[str, Any]:
     """Alerts-only poll for dashboard refresh."""
-    return _monitoring_summary()
+    summary = _monitoring_summary()
+    try:
+        from src.operator_pager import maybe_page_dashboard_alerts
+
+        maybe_page_dashboard_alerts(summary.get("alerts") or [])
+    except Exception:
+        pass
+    return summary

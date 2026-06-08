@@ -92,7 +92,21 @@ class ContributionDiscoveryService:
             if contribution_type == ContributionType.SUBSYSTEM.value:
                 response["subsystem_id"] = cid
                 response["subsystem_discovery_receipt"] = existing
-            response["operator_rewards"] = self._emit_rewards(existing, skip_if_idempotent=True)
+            response["operator_rewards"] = self._emit_rewards(
+                existing,
+                skip_if_idempotent=True,
+            )
+            response["discovery_pod_ledger"] = self._upgrade_pod_ledger(
+                operator_id=operator_id,
+                tenant_id=tenant_id,
+                contribution_id=cid,
+                contribution_type=contribution_type,
+                spec_payload=spec_payload,
+                receipt=existing,
+                idempotent_rediscovery=True,
+                operator_rewards=response.get("operator_rewards"),
+                receipt_verified=ok,
+            )
             return response
 
         receipt = build_contribution_discovery_receipt(
@@ -119,21 +133,66 @@ class ContributionDiscoveryService:
             response["subsystem_id"] = cid
             response["subsystem_discovery_receipt"] = receipt
         response["operator_rewards"] = self._emit_rewards(receipt)
+        response["discovery_pod_ledger"] = self._upgrade_pod_ledger(
+            operator_id=operator_id,
+            tenant_id=tenant_id,
+            contribution_id=cid,
+            contribution_type=contribution_type,
+            spec_payload=spec_payload,
+            receipt=receipt,
+            idempotent_rediscovery=False,
+            operator_rewards=response.get("operator_rewards"),
+        )
         return response
+
+    def _upgrade_pod_ledger(
+        self,
+        *,
+        operator_id: str,
+        tenant_id: str,
+        contribution_id: str,
+        contribution_type: str,
+        spec_payload: dict[str, Any],
+        receipt: dict[str, Any],
+        idempotent_rediscovery: bool,
+        operator_rewards: dict[str, Any] | None = None,
+        receipt_verified: bool | None = None,
+    ) -> dict[str, Any]:
+        try:
+            from src.ugr.discovery.discovery_pod_ledger import attach_discovery_pod_ledger
+
+            ledger_result = attach_discovery_pod_ledger(
+                operator_id=operator_id,
+                tenant_id=tenant_id,
+                contribution_id=contribution_id,
+                contribution_type=contribution_type,
+                spec_payload=spec_payload,
+                receipt=receipt,
+                idempotent_rediscovery=idempotent_rediscovery,
+                operator_rewards=operator_rewards,
+                receipt_verified=receipt_verified,
+            )
+            return ledger_result
+        except Exception as exc:
+            return {"ok": False, "errors": [str(exc)]}
 
     def _emit_rewards(self, receipt: dict[str, Any], *, skip_if_idempotent: bool = False) -> dict[str, Any]:
         try:
+            from src.ugr.discovery.proven_contribution import is_proven_contribution
             from src.ugr.rewards.operator_reward_engine import build_operator_reward_engine
             from src.ugr.rewards.operator_reward_spec import event_type_for_contribution
+
+            proven = is_proven_contribution(receipt)
+            if skip_if_idempotent and not proven:
+                return {"status": "skipped", "summary": "idempotent discovery"}
 
             engine = build_operator_reward_engine(self.runtime_dir)
             ctype = str(receipt.get("contribution_type") or ContributionType.SUBSYSTEM.value)
             event_type = event_type_for_contribution(ctype, stage="discovered")
-            if skip_if_idempotent:
-                return {"status": "skipped", "summary": "idempotent discovery"}
             return engine.issue_contribution(
                 receipt=receipt,
                 event_type=event_type,
+                force_persist=proven,
             )
         except Exception as exc:
             return {"status": "error", "summary": str(exc)}

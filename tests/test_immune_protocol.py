@@ -149,5 +149,44 @@ class TestImmuneProtocol(unittest.TestCase):
         immune = evaluation["immune_protocol"]
         self.assertEqual(immune["response"], "QUARANTINE")
         self.assertFalse(immune["traffic_allowed"])
+        self.assertEqual(len(evaluation["forward_packets"]), 0)
+        self.assertEqual(len(evaluation["return_packets"]), 0)
         self.assertIn("gb", immune["mutations"]["quarantined_nodes"])
         self.assertIn("jar", immune["mutations"]["quarantined_nodes"])
+
+    def test_reject_strips_offending_packets(self):
+        evaluation = apply_immune_protocol(
+            forward_packets=[
+                _packet(
+                    source="llm",
+                    target="gb",
+                    lane=DIRECT_COGNITIVE_LANE,
+                    intent="result",
+                    summary="Clean packet.",
+                ),
+                {
+                    "packet_id": "bad_packet",
+                    "timestamp": "now",
+                    "source": "llm",
+                    "target": "gb",
+                    "lane": DIRECT_COGNITIVE_LANE,
+                    "priority": "normal",
+                    "intent": "result",
+                    "state": {},
+                    "payload": {
+                        "summary": "Leak attempt.",
+                        "metadata": {"memory_write": True},
+                    },
+                    "trace": {},
+                    "compact": {},
+                },
+            ],
+            service_packets=[],
+            return_packets=[],
+            active_lane=DIRECT_COGNITIVE_LANE,
+            direct_route=["llm", "gb", "jar"],
+        )
+        immune = evaluation["immune_protocol"]
+        self.assertEqual(immune["response"], "REJECT")
+        self.assertEqual(len(evaluation["forward_packets"]), 1)
+        self.assertIn("bad_packet", immune["mutations"]["rejected_packet_ids"])

@@ -559,6 +559,146 @@ def enrich_otem_result(
         session_context.get("restated_task") or result.get("restated_task") or result.get("task"),
         workflow_templates,
     )
+    task_text = str(
+        session_context.get("restated_task") or result.get("restated_task") or result.get("task") or ""
+    )
+    suggested_family = None
+    try:
+        from src.workflow_family_readiness import suggest_workflow_family_for_text
+
+        suggested_family = suggest_workflow_family_for_text(task_text)
+    except Exception:
+        suggested_family = None
+    suggested_organ_mesh = None
+    try:
+        from src.organ_coordination_runtime import organ_coordination_runtime
+
+        mesh_plan = organ_coordination_runtime.plan_mesh_run(intent_text=task_text)
+        if mesh_plan.get("outcome") == "planned":
+            suggested_organ_mesh = {
+                "plan_id": mesh_plan.get("plan_id"),
+                "edge": mesh_plan.get("edge"),
+                "steps": mesh_plan.get("steps"),
+            }
+    except Exception:
+        suggested_organ_mesh = None
+    suggested_habits = None
+    try:
+        from src.culture_habit_runtime import culture_habit_runtime
+
+        habits = culture_habit_runtime.rank_habit_candidates(task_text)
+        if habits:
+            suggested_habits = habits[:4]
+    except Exception:
+        suggested_habits = None
+    suggested_identity_claims = None
+    try:
+        from src.identity_self_model_runtime import identity_self_model_runtime
+
+        claims = identity_self_model_runtime.rank_identity_candidates(task_text)
+        if claims:
+            suggested_identity_claims = claims[:4]
+    except Exception:
+        suggested_identity_claims = None
+    suggested_narrative_beats = None
+    try:
+        from src.narrative_continuity_runtime import narrative_continuity_runtime
+
+        beats = narrative_continuity_runtime.rank_narrative_candidates(task_text)
+        if beats:
+            suggested_narrative_beats = beats[:4]
+    except Exception:
+        suggested_narrative_beats = None
+    suggested_autobiographical_episodes = None
+    try:
+        from src.autobiographical_agency_runtime import autobiographical_agency_runtime
+
+        episodes = autobiographical_agency_runtime.rank_autobiographical_candidates(task_text)
+        if episodes:
+            suggested_autobiographical_episodes = episodes[:4]
+    except Exception:
+        suggested_autobiographical_episodes = None
+    suggested_social_bonds = None
+    try:
+        from src.social_continuity_runtime import social_continuity_runtime
+
+        bonds = social_continuity_runtime.rank_social_candidates(task_text)
+        if bonds:
+            suggested_social_bonds = bonds[:4]
+    except Exception:
+        suggested_social_bonds = None
+    suggested_multi_being_pacts = None
+    try:
+        from src.multi_being_continuity_runtime import multi_being_continuity_runtime
+
+        pacts = multi_being_continuity_runtime.rank_multi_being_candidates(task_text)
+        if pacts:
+            suggested_multi_being_pacts = pacts[:4]
+    except Exception:
+        suggested_multi_being_pacts = None
+    suggested_shared_norms = None
+    try:
+        from src.culture_of_beings_runtime import culture_of_beings_runtime
+
+        norms = culture_of_beings_runtime.rank_shared_norm_candidates(task_text)
+        if norms:
+            suggested_shared_norms = norms[:4]
+    except Exception:
+        suggested_shared_norms = None
+    suggested_ecosystem_charters = None
+    try:
+        from src.constitutional_ecosystem_runtime import constitutional_ecosystem_runtime
+
+        charters = constitutional_ecosystem_runtime.rank_ecosystem_candidates(task_text)
+        if charters:
+            suggested_ecosystem_charters = charters[:4]
+    except Exception:
+        suggested_ecosystem_charters = None
+    suggested_membrane_policies = None
+    try:
+        from src.multi_organism_governance_membrane_runtime import multi_organism_governance_membrane_runtime
+
+        policies = multi_organism_governance_membrane_runtime.rank_membrane_candidates(task_text)
+        if policies:
+            suggested_membrane_policies = policies[:4]
+    except Exception:
+        suggested_membrane_policies = None
+    suggested_diplomatic_accords = None
+    suggested_norm_federation_treaties = None
+    suggested_charter_amendments = None
+    suggested_civilization_charters = None
+    try:
+        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+
+        accords = inter_substrate_diplomacy_runtime.rank_diplomacy_candidates(task_text)
+        if accords:
+            suggested_diplomatic_accords = accords[:4]
+    except Exception:
+        suggested_diplomatic_accords = None
+    try:
+        from src.norm_federation_runtime import norm_federation_runtime
+
+        treaties = norm_federation_runtime.list_candidates(limit=8)
+        if treaties:
+            suggested_norm_federation_treaties = treaties[:4]
+    except Exception:
+        suggested_norm_federation_treaties = None
+    try:
+        from src.constitutional_evolution_runtime import constitutional_evolution_runtime
+
+        amendments = constitutional_evolution_runtime.list_candidates(limit=8)
+        if amendments:
+            suggested_charter_amendments = amendments[:4]
+    except Exception:
+        suggested_charter_amendments = None
+    try:
+        from src.governed_civilization_runtime import governed_civilization_runtime
+
+        civilizations = governed_civilization_runtime.list_candidates(limit=8)
+        if civilizations:
+            suggested_civilization_charters = civilizations[:4]
+    except Exception:
+        suggested_civilization_charters = None
     execution_awareness = build_execution_awareness(
         session_context.get("restated_task") or result.get("restated_task") or result.get("task"),
         workflow_templates=workflow_templates,
@@ -587,6 +727,21 @@ def enrich_otem_result(
             "session_context": session_context,
             "execution_awareness": execution_awareness,
             "workflow_handoff": workflow_handoff,
+            "suggested_workflow_family": suggested_family,
+            "suggested_organ_mesh": suggested_organ_mesh,
+            "suggested_habits": suggested_habits,
+            "suggested_identity_claims": suggested_identity_claims,
+            "suggested_narrative_beats": suggested_narrative_beats,
+            "suggested_autobiographical_episodes": suggested_autobiographical_episodes,
+            "suggested_social_bonds": suggested_social_bonds,
+            "suggested_multi_being_pacts": suggested_multi_being_pacts,
+            "suggested_shared_norms": suggested_shared_norms,
+            "suggested_ecosystem_charters": suggested_ecosystem_charters,
+            "suggested_membrane_policies": suggested_membrane_policies,
+            "suggested_diplomatic_accords": suggested_diplomatic_accords,
+            "suggested_norm_federation_treaties": suggested_norm_federation_treaties,
+            "suggested_charter_amendments": suggested_charter_amendments,
+            "suggested_civilization_charters": suggested_civilization_charters,
             "tool_awareness": tool_awareness,
         }
     )

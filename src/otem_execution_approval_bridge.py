@@ -22,6 +22,10 @@ from app.workflow_validation import build_workflow_config_from_graph
 from src.cisiv import normalize_cisiv_stage
 from src.otem_execution_substrate import get_otem_execution_substrate
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 OTEM_EXECUTION_SHELL_WORKFLOW_ID = "otem-execution-substrate"
 OTEM_EXECUTION_STEP_ID = "otem-exec-approval"
 OTEM_EXECUTION_STEP_TYPE = "otem_execution_substrate"
@@ -188,6 +192,7 @@ def maybe_enqueue_otem_execution_approval(
     }
     substrate_record = substrate.create_proposal(proposal, runtime_context="operator_runtime")
     otem_execution_workflow_id = str(substrate_record["workflow_id"])
+    temporal_orchestrated = _maybe_start_temporal_workflow(otem_execution_workflow_id, proposal)
 
     run_output = _build_paused_run_output(
         session_id=normalized_session,
@@ -216,6 +221,8 @@ def maybe_enqueue_otem_execution_approval(
             "workflow_template_id": template_id,
             "handoff": handoff,
             "proposal_summary": proposal.get("summary"),
+            "proposal_snapshot": proposal,
+            "temporal_orchestrated": temporal_orchestrated,
             "cisiv_stage": "implementation",
         },
         cisiv_stage="implementation",
@@ -251,6 +258,57 @@ def _substrate_workflow_exists(otem_execution_workflow_id: str) -> bool:
         substrate.get_workflow(otem_execution_workflow_id)
         return True
     except KeyError:
+        pass
+    try:
+        from src.otem_substrate_store import load_substrate_workflow, rehydrate_substrate_workflow_from_proposal
+
+        row = load_substrate_workflow(otem_execution_workflow_id)
+        if row:
+            rehydrate_substrate_workflow_from_proposal(
+                otem_execution_workflow_id,
+                dict(row.get("proposal") or {}),
+                stage=str(row.get("stage") or "proposal"),
+            )
+            return True
+    except Exception:
+        pass
+    return False
+
+
+def _maybe_start_temporal_workflow(workflow_id: str, proposal: dict[str, Any]) -> bool:
+    """Start optional Temporal workflow; returns True when orchestration is active."""
+    try:
+        from src.otem_temporal.config import otem_temporal_enabled
+
+        if not otem_temporal_enabled():
+            return False
+        from src.otem_temporal.client import start_otem_workflow
+
+        start_otem_workflow(workflow_id, proposal)
+        return True
+    except Exception as exc:
+        logger.warning("OTEM Temporal workflow start skipped: %s", exc)
+        return False
+
+
+def _resolve_via_temporal(workflow_id: str, action: str) -> dict[str, Any]:
+    from src.otem_temporal.client import resolve_otem_workflow
+
+    return resolve_otem_workflow(workflow_id, action)
+
+
+def _try_rehydrate_substrate_from_approval(approval: dict[str, Any]) -> bool:
+    payload = dict(approval.get("payload") or {})
+    workflow_id = str(payload.get("otem_execution_workflow_id") or "").strip()
+    proposal_snapshot = dict(payload.get("proposal_snapshot") or {})
+    if not workflow_id or not proposal_snapshot:
+        return False
+    try:
+        from src.otem_substrate_store import rehydrate_substrate_workflow_from_proposal
+
+        rehydrate_substrate_workflow_from_proposal(workflow_id, proposal_snapshot)
+        return True
+    except Exception:
         return False
 
 
@@ -265,6 +323,11 @@ def resolve_otem_execution_approval(approval: dict[str, Any], action: str) -> di
     otem_execution_workflow_id = str(payload.get("otem_execution_workflow_id") or "")
 
     if action == "reject":
+        if payload.get("temporal_orchestrated"):
+            try:
+                _resolve_via_temporal(otem_execution_workflow_id, "reject")
+            except Exception as exc:
+                logger.warning("OTEM Temporal reject signal failed: %s", exc)
         update_workflow_approval(approval["id"], "rejected")
         output = dict(run_record.get("output") or {})
         output.update(
@@ -295,10 +358,13 @@ def resolve_otem_execution_approval(approval: dict[str, Any], action: str) -> di
         raise ValueError("Missing otem_execution_workflow_id in approval payload")
 
     if not _substrate_workflow_exists(otem_execution_workflow_id):
-        raise KeyError(
-            "OTEM execution workflow not found in this process (stale after restart). "
-            "Reject this approval and re-run the OTEM handoff in the same session."
-        )
+        if _try_rehydrate_substrate_from_approval(approval):
+            pass
+        elif not _substrate_workflow_exists(otem_execution_workflow_id):
+            raise KeyError(
+                "OTEM execution workflow not found in this process (stale after restart). "
+                "Reject this approval and re-run the OTEM handoff in the same session."
+            )
 
     session_id = str(payload.get("otem_session_id") or "")
     handoff = dict(payload.get("handoff") or {})
@@ -339,15 +405,20 @@ def resolve_otem_execution_approval(approval: dict[str, Any], action: str) -> di
     except Exception:
         pass
 
-    substrate = get_otem_execution_substrate()
-    approved = substrate.approve(
-        otem_execution_workflow_id,
-        runtime_context="operator_runtime",
-    )
-    applied = substrate.apply(
-        otem_execution_workflow_id,
-        runtime_context="operator_runtime",
-    )
+    if payload.get("temporal_orchestrated"):
+        temporal_result = _resolve_via_temporal(otem_execution_workflow_id, "approve")
+        approved = dict(temporal_result.get("substrate_approved") or {})
+        applied = dict(temporal_result.get("substrate") or {})
+    else:
+        substrate = get_otem_execution_substrate()
+        approved = substrate.approve(
+            otem_execution_workflow_id,
+            runtime_context="operator_runtime",
+        )
+        applied = substrate.apply(
+            otem_execution_workflow_id,
+            runtime_context="operator_runtime",
+        )
 
     update_workflow_approval(approval["id"], "approved")
     output = dict(run_record.get("output") or {})

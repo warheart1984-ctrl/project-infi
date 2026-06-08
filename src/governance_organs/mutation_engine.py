@@ -450,8 +450,10 @@ class MutationEngine:
             )
 
             return rollback_linguistic_mutation(mp_id, gene, self.root)
+        from src.governance_organs._paths import list_gene_backups
+
         backup_dir = runtime_governance_dir() / "mutation_backups"
-        backups = sorted(backup_dir.glob(f"{gene}_*.genome.v1.json"))
+        backups = list_gene_backups(backup_dir, gene)
         if not backups:
             return False
         shutil.copy2(backups[-1], self._genome_path(gene))
