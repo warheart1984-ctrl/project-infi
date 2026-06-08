@@ -38,7 +38,10 @@ def validate_proof_contribution(
             result.errors.append(f"proof packet not found: {proof_path}")
             return result
     claim_label = str(payload.get("claim_label") or "asserted").strip().lower()
-    if claim_label not in {"asserted", "proven", "rejected"}:
+    if claim_label == "denied":
+        result.errors.append("denied contributions are not library-admitted")
+        return result
+    if claim_label not in {"asserted", "proven", "hypothetical", "rejected"}:
         result.errors.append(f"invalid claim_label: {claim_label}")
         return result
     result.invariants.append({"family": "repo_proof_law", "status": "pass", "details": claim_label})

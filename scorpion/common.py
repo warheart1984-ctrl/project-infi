@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from typing import Any, Literal
 
-ClaimLabel = Literal["asserted", "proven", "rejected"]
+ClaimLabel = Literal["denied", "hypothetical", "asserted", "proven", "rejected"]
 
 
 def hash_text(text: str) -> str:
@@ -33,8 +33,14 @@ def derive_claim_status(labels: list[ClaimLabel]) -> ClaimLabel:
         return "asserted"
     if "rejected" in labels:
         return "rejected"
+    if "denied" in labels:
+        return "denied"
     if all(item == "proven" for item in labels):
         return "proven"
+    if all(item == "hypothetical" for item in labels):
+        return "hypothetical"
     if "proven" in labels:
         return "asserted"
+    if "hypothetical" in labels:
+        return "hypothetical"
     return "asserted"

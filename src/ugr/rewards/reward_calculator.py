@@ -9,6 +9,7 @@ from src.ugr.rewards.operator_reward_spec import (
     EVENT_CAPABILITY_BRIDGE_EXECUTED,
     EVENT_CAPABILITY_MODULE_ADMITTED,
     EVENT_CLOUD_INVARIANT_SET_PASSED,
+    EVENT_LIBRARY_PATTERN_MATCHED,
     EVENT_PATTERN_CLAIM_ACCEPTED,
     EVENT_PROOF_PACKET_PUBLISHED,
     EVENT_PROVIDER_ORGAN_ADMITTED,
@@ -26,6 +27,32 @@ from src.ugr.discovery.pod_arc_multiplier import (
     resolve_pod_arc_context,
 )
 from src.ugr.rewards.reward_policy import cap_rail_credit_earn, load_reward_policy
+
+
+def _apply_standing_tier(
+    deltas: dict[str, float],
+    discovery_receipt: dict[str, Any],
+    policy: dict[str, Any],
+) -> dict[str, float] | None:
+    """Scale base deltas by Library Standing tier; return None when denied."""
+    from src.ugr.discovery.standing import reward_tier, standing_from_receipt
+
+    tier = reward_tier(standing_from_receipt(discovery_receipt))
+    cfg = dict((policy.get("standing") or {}).get(tier) or {})
+    if tier == "denied":
+        return None
+    scaled = dict(deltas)
+    rep_mult = float(cfg.get("reputation_multiplier", 1.0))
+    rail_mult = float(cfg.get("rail_credits_multiplier", 1.0))
+    scaled["reputation"] = float(scaled.get("reputation") or 0) * rep_mult
+    scaled["rail_credits"] = float(scaled.get("rail_credits") or 0) * rail_mult
+    if tier == "proven":
+        bonus = dict(cfg.get("promotion_bonus") or policy.get("promotion") or {})
+        scaled["reputation"] += float(bonus.get("reputation") or 0)
+        scaled["rail_credits"] += float(bonus.get("rail_credits") or 0)
+    scaled["earned_rail_credits"] = scaled["rail_credits"]
+    return scaled
+
 
 def _finalize_deltas(
     deltas: dict[str, float],
@@ -72,6 +99,7 @@ POLICY_SECTION_BY_EVENT = {
     EVENT_CAPABILITY_BRIDGE_EXECUTED: "capability",
     EVENT_CAPABILITY_MODULE_ADMITTED: "capability_module",
     EVENT_PATTERN_CLAIM_ACCEPTED: "substrate",
+    EVENT_LIBRARY_PATTERN_MATCHED: "library_pattern_match",
     EVENT_SUBSTRATE_ENVELOPE_ATTACHED: "substrate_envelope",
 }
 
@@ -120,7 +148,7 @@ def compute_deltas(
             profile_reputation=profile.reputation_score,
             policy=pol,
         )
-        return _finalize_deltas(
+        tiered = _apply_standing_tier(
             {
                 "reputation": reputation,
                 "rail_credits": rail_credits,
@@ -128,9 +156,11 @@ def compute_deltas(
                 "adoption_multiplier": adoption_delta,
             },
             discovery_receipt,
-            profile,
-            policy=pol,
+            pol,
         )
+        if tiered is None:
+            return None
+        return _finalize_deltas(tiered, discovery_receipt, profile, policy=pol)
     else:
         section = POLICY_SECTION_BY_EVENT.get(event)
         if not section:
@@ -145,7 +175,7 @@ def compute_deltas(
         profile_reputation=profile.reputation_score,
         policy=pol,
     )
-    return _finalize_deltas(
+    tiered = _apply_standing_tier(
         {
             "reputation": reputation,
             "rail_credits": rail_credits,
@@ -153,6 +183,8 @@ def compute_deltas(
             "adoption_multiplier": 0.0,
         },
         discovery_receipt,
-        profile,
-        policy=pol,
+        pol,
     )
+    if tiered is None:
+        return None
+    return _finalize_deltas(tiered, discovery_receipt, profile, policy=pol)

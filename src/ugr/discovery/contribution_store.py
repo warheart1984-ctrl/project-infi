@@ -30,6 +30,7 @@ class ContributionDiscoveryStore:
         self.discoveries_path = base / "contributions.jsonl"
         self.catalog_path = base / "catalog.jsonl"
         self.legacy_discoveries_path = base / "discoveries.jsonl"
+        self.withdrawals_path = base / "withdrawals.jsonl"
         base.mkdir(parents=True, exist_ok=True)
 
     def _read_lines(self, path: Path) -> list[dict[str, Any]]:
@@ -49,8 +50,35 @@ class ContributionDiscoveryStore:
     def _all_discovery_paths(self) -> list[Path]:
         return [self.discoveries_path, self.legacy_discoveries_path]
 
+    def _withdrawn_ids(self) -> set[str]:
+        return {
+            str(row.get("contribution_id") or row.get("subsystem_id") or "").strip()
+            for row in self._read_lines(self.withdrawals_path)
+            if str(row.get("contribution_id") or row.get("subsystem_id") or "").strip()
+        }
+
+    def _is_withdrawn(self, contribution_id: str) -> bool:
+        cid = str(contribution_id or "").strip()
+        return bool(cid) and cid in self._withdrawn_ids()
+
+    def withdraw_contribution(
+        self,
+        contribution_id: str,
+        *,
+        reason: str | None = None,
+    ) -> bool:
+        cid = str(contribution_id or "").strip()
+        if not cid or self._is_withdrawn(cid):
+            return False
+        record = {"contribution_id": cid, "reason": reason or "library_standing_denied"}
+        with self.withdrawals_path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(record, sort_keys=True, default=str) + "\n")
+        return True
+
     def has_discovery(self, contribution_id: str) -> bool:
         cid = str(contribution_id or "").strip()
+        if self._is_withdrawn(cid):
+            return False
         for path in self._all_discovery_paths():
             for row in self._read_lines(path):
                 if str(row.get("contribution_id") or row.get("subsystem_id") or "") == cid:
@@ -112,6 +140,8 @@ class ContributionDiscoveryStore:
 
     def get_by_contribution_id(self, contribution_id: str) -> dict[str, Any] | None:
         cid = str(contribution_id or "").strip()
+        if self._is_withdrawn(cid):
+            return None
         for path in self._all_discovery_paths():
             for row in reversed(self._read_lines(path)):
                 row_cid = str(row.get("contribution_id") or row.get("subsystem_id") or "")
@@ -126,7 +156,13 @@ class ContributionDiscoveryStore:
         since: float | None = None,
         limit: int = 50,
     ) -> list[dict[str, Any]]:
+        withdrawn = self._withdrawn_ids()
         rows = self._read_lines(self.catalog_path)
+        rows = [
+            r
+            for r in rows
+            if str(r.get("contribution_id") or r.get("subsystem_id") or "") not in withdrawn
+        ]
         if since is not None:
             rows = [r for r in rows if float(r.get("first_discovered_at") or 0) >= since]
         if contribution_type:

@@ -70,9 +70,30 @@ Env overrides: `UGR_POD_ARC_MULTIPLIER_HIGH`, `UGR_POD_ARC_MULTIPLIER_CIVILIZATI
 
 Reward deltas include `governance_arc_tier` and `pod_reward_multiplier`. Pod ledger events and registry entries expose the highest arc tier and multiplier observed per pod.
 
+## Library Standing (v3)
+
+Every contribution and discovery document carries a **Standing** tier that governs library admission, authority, and rewards.
+
+| Standing | `claim_label` | In library | Authority | Rewards |
+|----------|---------------|------------|-----------|---------|
+| 0 | `denied` | No (manifest audit only) | None | None |
+| 1 | `hypothetical` | Yes | Ideas/theory | Minimal (0.25× reputation, 0 credits) |
+| 2 | `asserted` | Yes | Structured, unverified | Base policy amounts |
+| 3 | `proven` | Yes | Verified | Base + promotion bonus; `force_persist` enabled |
+
+Resolution order (first match wins): **denied** → **proven** (requires verification signals) → **hypothetical** → **asserted**.
+
+**Proven (3)** requires `receipt_verified` plus at least one of: `ci_structural_test`, `subsystem_genome_gate`, `workflow_otem_gate`, or non-empty `verification.artifacts[]`. Pattern/regex promotion alone caps at **asserted (2)**.
+
+Manifest fields: `standing`, `claim_label`, `library_admitted`, `promotion_rule`, `verification`. Standing 0 skips `discover()` and withdraws from the discovery store on reconcile.
+
+Policy: `deploy/ugr/discovery-proof-promotion.json` (v3). Rewards: `deploy/ugr/reward-policy.json` `standing` block.
+
+Subsystem, workflow, and organ registrations default to **standing 2** at ingest.
+
 ## Proven contributions and operator rewards
 
-When a discovery receipt carries `claim_label: proven` (or equivalent proof invariant pass), the discovery pipeline:
+When a discovery receipt has **Standing 3** / `claim_label: proven` (with verification signals for documents), the discovery pipeline:
 
 1. **Issues operator rewards** using the inline signed receipt (no store re-resolution).
 2. **Persists balances** even when `UGR_REWARDS_SHADOW_ONLY=1`, unless `UGR_REWARDS_PROVEN_PERSIST=0`.

@@ -54,6 +54,10 @@ class ContributionDiscoveryService:
             return {"status": "rejected", "summary": "operator_id and aais_instance_id required"}
 
         spec_payload = dict(payload.get("payload") or payload.get("spec") or {})
+        if contribution_type in {"subsystem", "workflow", "organ"} and "standing" not in spec_payload:
+            from src.ugr.discovery.standing import Standing, enrich_payload_with_standing
+
+            spec_payload = enrich_payload_with_standing(spec_payload, standing=Standing.ASSERTED)
         spec = ContributionSpec(contribution_type=contribution_type, payload=spec_payload)
         constraints = dict(payload.get("constraints") or {})
 
@@ -96,6 +100,9 @@ class ContributionDiscoveryService:
                 existing,
                 skip_if_idempotent=True,
             )
+            response["library_pattern_rewards"] = self._emit_library_pattern_match_rewards(
+                existing
+            )
             response["discovery_pod_ledger"] = self._upgrade_pod_ledger(
                 operator_id=operator_id,
                 tenant_id=tenant_id,
@@ -133,6 +140,7 @@ class ContributionDiscoveryService:
             response["subsystem_id"] = cid
             response["subsystem_discovery_receipt"] = receipt
         response["operator_rewards"] = self._emit_rewards(receipt)
+        response["library_pattern_rewards"] = self._emit_library_pattern_match_rewards(receipt)
         response["discovery_pod_ledger"] = self._upgrade_pod_ledger(
             operator_id=operator_id,
             tenant_id=tenant_id,
@@ -178,9 +186,17 @@ class ContributionDiscoveryService:
 
     def _emit_rewards(self, receipt: dict[str, Any], *, skip_if_idempotent: bool = False) -> dict[str, Any]:
         try:
+            from src.ugr.discovery.library_patterns import rewards_suppressed_for_receipt
             from src.ugr.discovery.proven_contribution import is_proven_contribution
             from src.ugr.rewards.operator_reward_engine import build_operator_reward_engine
             from src.ugr.rewards.operator_reward_spec import event_type_for_contribution
+
+            if rewards_suppressed_for_receipt(receipt):
+                return {
+                    "status": "suppressed",
+                    "summary": "library reference; registration rewards suppressed",
+                    "deltas": {},
+                }
 
             proven = is_proven_contribution(receipt)
             if skip_if_idempotent and not proven:
@@ -194,6 +210,53 @@ class ContributionDiscoveryService:
                 event_type=event_type,
                 force_persist=proven,
             )
+        except Exception as exc:
+            return {"status": "error", "summary": str(exc)}
+
+    def _emit_library_pattern_match_rewards(self, receipt: dict[str, Any]) -> dict[str, Any]:
+        """Issue matcher rewards per qualifying contribution (any operator, repeatable).
+
+        Idempotency is keyed by operator_id + contribution_id + pattern_id — not capped
+        to a single beneficiary across the library lifetime.
+        """
+        try:
+            from src.ugr.discovery.library_patterns import (
+                is_library_reference_contribution,
+                match_library_patterns_from_receipt,
+            )
+            from src.ugr.rewards.operator_reward_spec import EVENT_LIBRARY_PATTERN_MATCHED
+            from src.ugr.rewards.reward_issuer import issue_reward
+
+            if is_library_reference_contribution(receipt):
+                return {"status": "skipped", "summary": "library reference contribution"}
+
+            matches = match_library_patterns_from_receipt(receipt)
+            if not matches:
+                return {"status": "skipped", "summary": "no library pattern match"}
+
+            tenant_id = str(receipt.get("tenant_id") or "global")
+            operator_id = str(receipt.get("operator_id") or "").strip()
+            contribution_id = str(receipt.get("contribution_id") or "")
+            if not operator_id or not contribution_id:
+                return {"status": "skipped", "summary": "missing operator or contribution id"}
+
+            outcomes: list[dict[str, Any]] = []
+            for match in matches:
+                pattern_id = str(match.get("pattern_id") or "").strip()
+                if not pattern_id:
+                    continue
+                outcome = issue_reward(
+                    tenant_id=tenant_id,
+                    operator_id=operator_id,
+                    contribution_id=contribution_id,
+                    event_type=EVENT_LIBRARY_PATTERN_MATCHED,
+                    discovery_receipt=receipt,
+                    discovery_receipt_id=str(receipt.get("receipt_id") or ""),
+                    primary_anchor=pattern_id,
+                    secondary_anchor=contribution_id,
+                )
+                outcomes.append({"pattern_id": pattern_id, **outcome})
+            return {"status": "matched", "matches": outcomes}
         except Exception as exc:
             return {"status": "error", "summary": str(exc)}
 

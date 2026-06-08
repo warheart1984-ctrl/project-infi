@@ -10,7 +10,7 @@ import time
 from pathlib import Path
 from typing import Any, Literal
 
-ClaimLabel = Literal["asserted", "proven", "rejected"]
+ClaimLabel = Literal["denied", "hypothetical", "asserted", "proven", "rejected"]
 
 FRAME_VERSION = "slingshot.frame.v1"
 PACKET_VERSION = "slingshot.packet.v1"

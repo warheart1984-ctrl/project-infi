@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from typing import Any, Literal
 
-ClaimLabel = Literal["asserted", "proven", "rejected"]
+ClaimLabel = Literal["denied", "hypothetical", "asserted", "proven", "rejected"]
 
 GENOME_SCHEMA_VERSION = "process_genome.v1"
 SCAN_REPORT_VERSION = "mechanic_scan.v1"
@@ -36,8 +36,14 @@ def derive_claim_status(labels: list[ClaimLabel]) -> ClaimLabel:
         return "asserted"
     if "rejected" in labels:
         return "rejected"
+    if "denied" in labels:
+        return "denied"
     if all(item == "proven" for item in labels):
         return "proven"
+    if all(item == "hypothetical" for item in labels):
+        return "hypothetical"
     if "proven" in labels:
         return "asserted"
+    if "hypothetical" in labels:
+        return "hypothetical"
     return "asserted"

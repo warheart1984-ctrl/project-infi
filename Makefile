@@ -137,7 +137,8 @@ ugr-cloud-gate:
 	pytest tests/test_ugr_cloud.py -q
 
 ugr-rewards-gate:
-	pytest tests/test_ugr_contribution_discovery.py tests/test_ugr_operator_rewards.py tests/test_ugr_rail_credit_purchase.py tests/test_ugr_cloud_forge_bridge.py -q
+	pytest tests/test_ugr_contribution_discovery.py tests/test_ugr_operator_rewards.py tests/test_ugr_rail_credit_purchase.py tests/test_ugr_cloud_forge_bridge.py tests/test_ugr_library_patterns.py tests/test_ugr_ledger_chaos.py -q
+	python3 tools/governance/inspect_ugr_ledger.py
 
 ugr-ingestion-gate:
 	python3 wolf-cog-os/scripts/validate-ugr-ingestion-manifest.py --mode fail

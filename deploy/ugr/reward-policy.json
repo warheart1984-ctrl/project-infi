@@ -1,5 +1,27 @@
 {
-  "version": "1.2",
+  "version": "1.4",
+  "standing": {
+    "denied": {
+      "reputation_multiplier": 0,
+      "rail_credits_multiplier": 0
+    },
+    "hypothetical": {
+      "reputation_multiplier": 0.25,
+      "rail_credits_multiplier": 0
+    },
+    "asserted": {
+      "reputation_multiplier": 1.0,
+      "rail_credits_multiplier": 1.0
+    },
+    "proven": {
+      "reputation_multiplier": 1.0,
+      "rail_credits_multiplier": 1.0,
+      "promotion_bonus": {
+        "reputation": 40,
+        "rail_credits": 8
+      }
+    }
+  },
   "economy": {
     "reputation_primary": true,
     "reputation_to_credit_ratio_min": 2.0,
@@ -64,6 +86,10 @@
     "rail_credits": 3
   },
   "substrate": {
+    "reputation": 10,
+    "rail_credits": 2
+  },
+  "library_pattern_match": {
     "reputation": 10,
     "rail_credits": 2
   },

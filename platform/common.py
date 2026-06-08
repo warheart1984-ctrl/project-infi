@@ -8,7 +8,7 @@ import uuid
 from pathlib import Path
 from typing import Any, Literal
 
-ClaimLabel = Literal["asserted", "proven", "rejected"]
+ClaimLabel = Literal["denied", "hypothetical", "asserted", "proven", "rejected"]
 ProofStatus = Literal["asserted", "proven", "disputed"]
 Subsystem = Literal[
     "mechanic",
