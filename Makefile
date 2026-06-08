@@ -422,10 +422,21 @@ governed-civilization-body-gate:
 	python3 tools/governance/run_governed_civilization_body_verification.py
 	python3 -m pytest tests/test_governed_civilization_observe.py tests/test_governed_civilization_adopt.py -q
 
-civilizational-arc-smoke:
-	python3 -m pytest tests/test_inter_substrate_diplomacy_observe.py tests/test_norm_federation_observe.py tests/test_constitutional_evolution_observe.py -q
+federated-civilizational-epoch-body-gate:
+	python3 tools/governance/run_federated_civilizational_epoch_body_verification.py
+	python3 -m pytest tests/test_federated_civilizational_epoch_observe.py tests/test_federated_civilizational_epoch_adopt.py tests/test_epoch_amendment_window.py -q
 
-civilizational-arc-gate: inter-substrate-diplomacy-body-gate norm-federation-body-gate constitutional-evolution-body-gate governed-civilization-body-gate
+stage19-federation-gate: federated-civilizational-epoch-body-gate
+	@if [ "$$STAGE19_REQUIRE_LIVE" = "1" ]; then \
+		python3 tools/stress/federation_chaos_hammer.py --phase-d; \
+		python3 tools/stress/body_promotion_load_hammer.py; \
+		python3 tools/governance/run_inter_org_proof_cycle.py --witness-bundle out/; \
+	fi
+
+civilizational-arc-smoke:
+	python3 -m pytest tests/test_inter_substrate_diplomacy_observe.py tests/test_norm_federation_observe.py tests/test_constitutional_evolution_observe.py tests/test_federated_civilizational_epoch_observe.py -q
+
+civilizational-arc-gate: inter-substrate-diplomacy-body-gate norm-federation-body-gate constitutional-evolution-body-gate governed-civilization-body-gate federated-civilizational-epoch-body-gate
 
 beyond-body-arc-gate: culture-of-beings-body-gate constitutional-ecosystem-body-gate governance-membrane-body-gate
 

@@ -1801,6 +1801,58 @@ def append_civilization_adoption_event(
     )
 
 
+def append_federated_epoch_drift_event(
+    session_id: str,
+    *,
+    drift: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "federated_epoch_drift",
+            "decision": "completed",
+            "reversibility": "not_applicable",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": str(drift.get("summary") or "Federated epoch drift observed")[:200],
+            "federated_epoch_drift": dict(drift),
+        },
+    )
+
+
+def append_federated_epoch_adoption_event(
+    session_id: str,
+    *,
+    charter: dict[str, Any],
+) -> dict[str, Any] | None:
+    if not session_id:
+        return None
+    scope = _normalize_scope_id(session_id)
+    parents: list[str] = []
+    last_id = operator_decision_ledger_store.last_decision_id(scope)
+    if last_id:
+        parents = [last_id]
+    return operator_decision_ledger_store.append(
+        scope,
+        {
+            "decision_kind": "federated_epoch_adoption",
+            "decision": "completed",
+            "reversibility": "undo_available",
+            "session_id": session_id,
+            "causal_parents": parents,
+            "summary": f"Federated epoch charter adopted ({str(charter.get('charter_id', ''))[:12]})",
+            "federated_epoch_charter": dict(charter),
+        },
+    )
+
+
 def append_otem_approval_event(
     session_id: str,
     *,

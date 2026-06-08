@@ -29,6 +29,7 @@ def build_somatic_health_snapshot() -> dict[str, Any]:
     norm_federation = _safe_norm_federation_posture()
     constitutional_evolution = _safe_constitutional_evolution_posture()
     governed_civilization = _safe_governed_civilization_posture()
+    federated_epoch = _safe_federated_epoch_posture()
     overall = _overall_posture(seam, monitoring, doctor, substrate)
     return {
         "somatic_health_version": "operator_somatic_health.v1",
@@ -53,6 +54,7 @@ def build_somatic_health_snapshot() -> dict[str, Any]:
         "norm_federation_posture": norm_federation,
         "constitutional_evolution_posture": constitutional_evolution,
         "governed_civilization_posture": governed_civilization,
+        "federated_epoch_posture": federated_epoch,
         "active_mesh_runs": organ_mesh.get("active_mesh_runs", 0),
         "blocked_handoffs": organ_mesh.get("blocked_handoffs", 0),
         "adopted_habits": culture.get("adopted_habits", 0),
@@ -80,6 +82,7 @@ def build_somatic_health_snapshot() -> dict[str, Any]:
         "adopted_treaties": norm_federation.get("adopted_treaties", 0),
         "adopted_amendments": constitutional_evolution.get("adopted_amendments", 0),
         "adopted_civilizations": governed_civilization.get("adopted_civilizations", 0),
+        "adopted_federated_epoch_charters": federated_epoch.get("adopted_charters", 0),
         "read_only": True,
         "claim_label": "asserted",
     }
@@ -283,6 +286,15 @@ def _safe_governed_civilization_posture() -> dict[str, Any]:
         from src.governed_civilization_runtime import governed_civilization_runtime
 
         return governed_civilization_runtime.civilization_posture()
+    except Exception as exc:
+        return {"error": str(exc)[:200], "degraded": True}
+
+
+def _safe_federated_epoch_posture() -> dict[str, Any]:
+    try:
+        from src.federated_civilizational_epoch_runtime import federated_civilizational_epoch_runtime
+
+        return federated_civilizational_epoch_runtime.epoch_posture()
     except Exception as exc:
         return {"error": str(exc)[:200], "degraded": True}
 

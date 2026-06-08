@@ -34,6 +34,10 @@ CIVILIZATIONAL_GET_ROUTES = [
     "/api/operator/constitutional-evolution/amendments",
     "/api/operator/civilizations",
     "/api/operator/civilizations/charters",
+    "/api/operator/federated-epochs",
+    "/api/operator/federated-epochs/charters",
+    "/api/operator/federated-epochs/epochs",
+    "/api/operator/federated-epochs/witnesses",
 ]
 
 CIVILIZATIONAL_SUBSYSTEMS = [
@@ -56,6 +60,11 @@ CIVILIZATIONAL_SUBSYSTEMS = [
         "label": "governed_civilization",
         "observe": "/api/operator/civilizations/observe",
         "adopt": "/api/operator/civilizations/charters/adopt",
+    },
+    {
+        "label": "federated_epoch",
+        "observe": "/api/operator/federated-epochs/observe",
+        "adopt": "/api/operator/federated-epochs/charters/adopt",
     },
 ]
 
@@ -266,7 +275,7 @@ def hammer_ugr_federation(report: ChaosReport) -> None:
         )
 
 
-def run_federation_chaos(*, skip_ugr: bool = False) -> dict:
+def run_federation_chaos(*, skip_ugr: bool = False, phase_d_only: bool = False) -> dict:
     report = ChaosReport()
     print("=== FEDERATION CHAOS HAMMER — Project Infinity ===")
     print(f"Target: {BASE}")
@@ -277,17 +286,23 @@ def run_federation_chaos(*, skip_ugr: bool = False) -> dict:
         print(f"FATAL: server not healthy ({status})")
         return {"fatal": True, "health": status}
 
-    print("[A] Civilizational surface farm...")
-    hammer_civilizational_surface(report)
-    print("[B] Civilizational governance abuse...")
-    hammer_civilizational_governance(report)
-    print("[B2] Concurrent observe burst...")
-    hammer_concurrent_observe_burst(report)
-    if skip_ugr:
-        print("[C] UGR federation abuse... SKIPPED")
+    if phase_d_only:
+        print("[D] Stage 19 federated-epoch live probes...")
+        hammer_civilizational_surface(report)
+        hammer_civilizational_governance(report)
+        hammer_concurrent_observe_burst(report, workers=8, per_endpoint=4)
     else:
-        print("[C] UGR federation abuse...")
-        hammer_ugr_federation(report)
+        print("[A] Civilizational surface farm...")
+        hammer_civilizational_surface(report)
+        print("[B] Civilizational governance abuse...")
+        hammer_civilizational_governance(report)
+        print("[B2] Concurrent observe burst...")
+        hammer_concurrent_observe_burst(report)
+        if skip_ugr:
+            print("[C] UGR federation abuse... SKIPPED")
+        else:
+            print("[C] UGR federation abuse...")
+            hammer_ugr_federation(report)
 
     status2, _ = _req("GET", "/health")
     report.add(ChaosResult("health_postflight", status2, status2 == 200))
@@ -303,6 +318,12 @@ def run_federation_chaos(*, skip_ugr: bool = False) -> dict:
         "ugr_federation": sum(
             1 for r in report.results if r.name.startswith(("ugr_federation_mission:", "odl_federation_graph:"))
         ),
+        "fce_phase_d": sum(
+            1
+            for r in report.results
+            if "federated_epoch" in r.name or "federated-epochs" in r.name
+        ),
+        "phase_d_only": phase_d_only,
     }
 
     summary = {
@@ -327,7 +348,12 @@ def run_federation_chaos(*, skip_ugr: bool = False) -> dict:
         for r in report.unexpected_failures[:20]:
             print(f"  {r.name} -> {r.status} {r.note}")
 
-    out = write_chaos_report(report, summary, filename="federation_chaos_report.json")
+    out_name = "stage19_live_federation_report.json" if phase_d_only else "federation_chaos_report.json"
+    out = write_chaos_report(report, summary, filename=out_name)
+    if phase_d_only:
+        txt = ROOT / "ci-artifacts" / f"stage19_live_federation_{summary.get('health_postflight', 'unknown')}.txt"
+        txt.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
+        print(f"Live artifact: {txt}")
     print(f"\nReport: {out}")
     return summary
 
@@ -344,11 +370,16 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Run civilizational phases only (skip UGR federation abuse)",
     )
+    parser.add_argument(
+        "--phase-d",
+        action="store_true",
+        help="Run Stage 19 FCE live probes only (health + federated-epoch routes)",
+    )
     args = parser.parse_args(argv)
     if args.base:
         configure_base(args.base)
 
-    summary = run_federation_chaos(skip_ugr=args.skip_ugr)
+    summary = run_federation_chaos(skip_ugr=args.skip_ugr, phase_d_only=args.phase_d)
     if summary.get("fatal"):
         return 1
     if summary.get("server_errors_5xx", 0) > 0:

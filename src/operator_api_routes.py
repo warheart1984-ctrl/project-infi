@@ -899,6 +899,87 @@ def register_operator_api_routes(app: Flask) -> None:
         status = 200 if result.get("outcome") == "adopted" else 400
         return jsonify({"adoption": result, **result}), status
 
+    @app.route("/api/operator/federated-epochs", methods=["GET"])
+    def operator_federated_epochs_snapshot():
+        from src.federated_civilizational_epoch_runtime import federated_civilizational_epoch_runtime
+
+        return jsonify(federated_civilizational_epoch_runtime.epoch_snapshot()), 200
+
+    @app.route("/api/operator/federated-epochs/observe", methods=["POST"])
+    def operator_federated_epochs_observe():
+        from src.federated_civilizational_epoch_runtime import federated_civilizational_epoch_runtime
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        result = federated_civilizational_epoch_runtime.observe_epoch_drift(
+            session_id=str(body.get("session_id") or "") or None,
+            window_days=int(body.get("window_days") or 30),
+        )
+        return jsonify({"observation": result, **result}), 200
+
+    @app.route("/api/operator/federated-epochs/charters", methods=["GET"])
+    def operator_federated_epochs_charters_list():
+        from src.federated_civilizational_epoch_registry import load_adopted_charters
+        from src.federated_civilizational_epoch_runtime import (
+            _default_runtime_dir,
+            federated_civilizational_epoch_runtime,
+        )
+
+        runtime_dir = _default_runtime_dir()
+        return jsonify(
+            {
+                "adopted_charters": load_adopted_charters(runtime_dir=runtime_dir),
+                "recent_candidates": federated_civilizational_epoch_runtime.list_candidates(limit=50),
+                "posture": federated_civilizational_epoch_runtime.epoch_posture(),
+            }
+        ), 200
+
+    @app.route("/api/operator/federated-epochs/charters/adopt", methods=["POST"])
+    def operator_federated_epochs_charters_adopt():
+        from src.federated_civilizational_epoch_runtime import federated_civilizational_epoch_runtime
+        from src.jarvis_federated_epoch_authority import authorize_federated_epoch_overlay_admission
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        candidate = dict(body.get("candidate") or body.get("epoch_candidate") or {})
+        if not candidate and body.get("candidate_id"):
+            for row in federated_civilizational_epoch_runtime.list_candidates(limit=200):
+                if str(row.get("candidate_id")) == str(body.get("candidate_id")):
+                    candidate = row
+                    break
+        session_id = str(body.get("session_id") or "global")
+        if not bool(body.get("operator_approved")):
+            return jsonify({"error": "operator_approved required"}), 403
+        from pathlib import Path
+
+        repo_root = Path(__file__).resolve().parents[1]
+        auth = authorize_federated_epoch_overlay_admission(
+            candidate, session_id=session_id, repo_root=repo_root
+        )
+        if not auth.get("authorized"):
+            return jsonify({"error": auth.get("reason"), "authorized": False, **auth}), 403
+        witnesses = list(body.get("external_witnesses") or candidate.get("external_witnesses") or [])
+        result = federated_civilizational_epoch_runtime.adopt_federated_epoch_charter(
+            candidate,
+            operator_approved=True,
+            jarvis_authorization=auth,
+            external_witnesses=witnesses,
+            operator_org_domain=str(body.get("operator_org_domain") or "") or None,
+            session_id=session_id,
+        )
+        status = 200 if result.get("outcome") == "adopted" else 400
+        return jsonify({"adoption": result, **result}), status
+
+    @app.route("/api/operator/federated-epochs/epochs", methods=["GET"])
+    def operator_federated_epochs_epochs_list():
+        from src.federated_civilizational_epoch_runtime import federated_civilizational_epoch_runtime
+
+        return jsonify({"epochs": federated_civilizational_epoch_runtime.list_epochs()}), 200
+
+    @app.route("/api/operator/federated-epochs/witnesses", methods=["GET"])
+    def operator_federated_epochs_witnesses_list():
+        from src.federated_civilizational_epoch_runtime import federated_civilizational_epoch_runtime
+
+        return jsonify({"witnesses": federated_civilizational_epoch_runtime.list_witnesses()}), 200
+
     @app.route("/api/operator/governance-membrane", methods=["GET"])
     def operator_governance_membrane_snapshot():
         from src.multi_organism_governance_membrane_runtime import multi_organism_governance_membrane_runtime

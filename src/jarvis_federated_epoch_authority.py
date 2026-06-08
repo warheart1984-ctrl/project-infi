@@ -1,4 +1,4 @@
-"""Jarvis authority for charter amendment overlay admission (Stage 17)."""
+"""Jarvis authority for federated epoch overlay admission (Stage 19)."""
 
 from __future__ import annotations
 
@@ -6,18 +6,18 @@ from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
-from src.constitutional_evolution_runtime import validate_amendment_against_charter_and_tier5
+from src.federated_civilizational_epoch_runtime import validate_federated_epoch_against_upstream
 
-MODULE_ID = "AAIS-JCEA-01"
+MODULE_ID = "AAIS-JFCE-01"
 
 
-def authorize_amendment_overlay_admission(
-    amendment: dict[str, Any],
+def authorize_federated_epoch_overlay_admission(
+    charter: dict[str, Any],
     *,
     session_id: str = "global",
     repo_root: Path | None = None,
 ) -> dict[str, Any]:
-    validation = validate_amendment_against_charter_and_tier5(amendment, repo_root=repo_root)
+    validation = validate_federated_epoch_against_upstream(charter, repo_root=repo_root)
     if not validation.get("aligned"):
         return {
             "authorized": False,
@@ -28,8 +28,8 @@ def authorize_amendment_overlay_admission(
         }
     return {
         "authorized": True,
-        "reason": "jarvis_amendment_overlay_admission_allow",
-        "jarvis_receipt_id": f"jarvis-cev-{uuid4().hex[:12]}",
+        "reason": "jarvis_federated_epoch_overlay_admission_allow",
+        "jarvis_receipt_id": f"jarvis-fce-{uuid4().hex[:12]}",
         "session_id": session_id,
         "module_id": MODULE_ID,
         "claim_label": "asserted",

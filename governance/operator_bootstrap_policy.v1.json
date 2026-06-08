@@ -1,0 +1,15 @@
+{
+  "operator_bootstrap_policy_version": "operator_bootstrap_policy.v1",
+  "auto_enable": {
+    "plug_classes": ["native_capability"],
+    "exclude_plug_id_prefixes": []
+  },
+  "never_auto_enable": {
+    "plug_classes": ["cursor_skill", "hf_agent_skill"],
+    "authority_levels": ["admin"]
+  },
+  "mcp": {
+    "enable_when_manifest_configured": true,
+    "max_authority_level": "assist"
+  }
+}

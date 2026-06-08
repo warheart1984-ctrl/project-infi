@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
+from src.federated_civilizational_epoch_registry import default_epoch_id, is_epoch_amendable
 from src.constitutional_ecosystem_runtime import validate_charter_against_upstream_layers
 from src.constitutional_evolution_registry import AMENDMENT_VERSION, adopted_amendments, save_adopted_amendment
 
@@ -26,6 +27,25 @@ def _default_runtime_dir() -> Path:
     if configured:
         return Path(configured).expanduser()
     return Path(__file__).resolve().parents[1] / ".runtime"
+
+
+def validate_amendment_epoch_window(
+    amendment: dict[str, Any],
+    *,
+    repo_root: Path | None = None,
+) -> dict[str, Any]:
+    epoch_id = str(amendment.get("epoch_id") or "").strip()
+    if not epoch_id:
+        return {"aligned": True, "violations": [], "claim_label": "asserted"}
+    check = is_epoch_amendable(epoch_id, repo_root=repo_root)
+    if not check.get("amendable"):
+        return {
+            "aligned": False,
+            "violations": list(check.get("violations") or [check.get("reason") or "epoch_not_amendable"]),
+            "claim_label": "rejected",
+            "epoch_id": epoch_id,
+        }
+    return {"aligned": True, "violations": [], "claim_label": "asserted", "epoch_id": epoch_id}
 
 
 def validate_amendment_against_charter_and_tier5(
@@ -50,6 +70,9 @@ def validate_amendment_against_charter_and_tier5(
     tags = {str(t) for t in (amendment.get("tier5_tags") or [])}
     if not tags.intersection(TIER5_TAGS):
         violations.append("tier5_contextual_gate_tag_required")
+    epoch_check = validate_amendment_epoch_window(amendment, repo_root=repo_root)
+    if not epoch_check.get("aligned"):
+        violations.extend([f"epoch:{v}" for v in epoch_check.get("violations") or []])
     aligned = charter_check.get("aligned") and len(violations) == 0
     return {"aligned": aligned, "violations": violations, "claim_label": "asserted" if aligned else "rejected"}
 
@@ -173,11 +196,13 @@ class ConstitutionalEvolutionRuntime:
         validation = validate_amendment_against_charter_and_tier5(candidate, repo_root=self._repo_root)
         if not validation.get("aligned"):
             return {"outcome": "blocked", "reason": "alignment_validation_failed", "violations": validation.get("violations")}
+        epoch_id = str(candidate.get("epoch_id") or default_epoch_id(repo_root=self._repo_root))
         amendment_id = f"amend_{uuid4().hex[:12]}"
         amendment = {
             "amendment_version": AMENDMENT_VERSION,
             "amendment_id": amendment_id,
             "charter_id": str(candidate.get("charter_id") or ""),
+            "epoch_id": epoch_id,
             "amendment_kind": str(candidate.get("amendment_kind") or "composite"),
             "tier5_tags": list(candidate.get("tier5_tags") or []),
             "summary": str(candidate.get("summary") or "")[:500],
