@@ -258,18 +258,35 @@ def finalize_chat_turn_admission(
 ) -> tuple[str, dict[str, Any] | None]:
     """Pass one ordinary chat reply through Project Infi admission with CISIV verification."""
     try:
-        from src.invariant_engine import validate_bridge_packet
-
         bridge_packet = dict(session.metadata.get("cognitive_bridge") or {})
         if bridge_packet:
-            validate_bridge_packet(
-                {
-                    "source": bridge_packet.get("source") or "jarvis_chat",
-                    "type": bridge_packet.get("packet_type") or "chat_finalize",
-                    "payload": bridge_packet,
-                    "runtime_context": "live_runtime",
-                }
-            )
+            normalized = {
+                "source": bridge_packet.get("source") or "jarvis_chat",
+                "type": bridge_packet.get("packet_type") or "chat_finalize",
+                "payload": bridge_packet,
+                "runtime_context": "live_runtime",
+            }
+            bundle = bridge_packet.get("decode_governance_bundle")
+            if bundle:
+                from src.invariant_compiler import run_admission_checks
+
+                run_admission_checks(normalized, bridge_packet, decode_bundle=bundle)
+            else:
+                try:
+                    from src.governance_ir import build_governance_ir
+                    from src.invariant_compiler import compile_from_ir, run_admission_checks
+
+                    partial_bridge = {
+                        "normalized_input": normalized,
+                        "governance_packet": bridge_packet,
+                    }
+                    ir = build_governance_ir(bridge_result=partial_bridge)
+                    bundle = compile_from_ir(ir)
+                    run_admission_checks(normalized, bridge_packet, decode_bundle=bundle)
+                except Exception:
+                    from src.invariant_engine import InvariantEngine
+
+                    InvariantEngine.validate_bridge_packet(normalized, bridge_packet)
     except Exception:
         pass
     project_infi_law = _chat_turn_law()

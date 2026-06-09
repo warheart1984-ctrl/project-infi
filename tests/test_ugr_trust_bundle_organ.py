@@ -1,8 +1,6 @@
 """Tests for UGR trust bundle organ."""
 
 import json
-import subprocess
-import sys
 import unittest
 from pathlib import Path
 
@@ -61,21 +59,12 @@ class TestTrustBundleOrgan(unittest.TestCase):
 
 
 class TestTrustBundleManifestGate(unittest.TestCase):
-    def test_manifest_validator_passes(self):
-        completed = subprocess.run(
-            [
-                sys.executable,
-                str(REPO_ROOT / "wolf-cog-os" / "scripts" / "validate-ugr-trust-bundle-manifest.py"),
-                "--repo-root",
-                str(REPO_ROOT),
-                "--mode",
-                "fail",
-            ],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        self.assertEqual(completed.returncode, 0, msg=completed.stdout + completed.stderr)
+    def test_manifest_validator_retired_with_wolf_forge(self):
+        from src.ugr.trust_bundle.scenarios import scenario_gate_manifest
+
+        evidence = scenario_gate_manifest(machine_id="machine-a")
+        self.assertEqual(evidence.status, "pass")
+        self.assertTrue(evidence.details.get("retired"))
 
 
 if __name__ == "__main__":

@@ -18,7 +18,7 @@ def build_cogos_runtime_bridge_status(*, root: Path | None = None) -> dict[str, 
     spec = family_spec()
     validation = validate_family_config(spec)
     default_family_path = Path("/opt/cogos/config/cognitive_runtime_family.json")
-    payload_family = root / "wolf-cog-os" / "payload" / "opt" / "cogos" / "config" / "cognitive_runtime_family.json"
+    payload_family = root / "docs" / "runtime" / "cognitive_runtime_family.v1.json"
     summary = (
         f"family={spec.get('family_id')};valid={int(validation.get('valid'))};"
         f"payload={int(payload_family.is_file())}"

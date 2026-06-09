@@ -1,0 +1,12 @@
+specVersion: "v1"
+serviceId: "jarvis-memory"
+location: "us-central1"
+schemaValidation: "COMPATIBLE"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "jarvis_memory"
+      cloudSql:
+        instanceId: "REPLACE_WITH_CLOUD_SQL_INSTANCE_ID"
+connectorDirs: ["./connector"]

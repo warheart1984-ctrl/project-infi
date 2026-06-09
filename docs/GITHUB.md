@@ -13,8 +13,8 @@ This document describes how Project Infinity is prepared for GitHub and what sta
 
 | Bucket | Examples | Git treatment |
 |---|---|---|
-| **Active core** | `src/`, `app/`, `aais/`, `frontend/`, `wolf-cog-os/scripts/`, `deploy/`, `docs/`, `.github/` | Tracked |
-| **Local-only** | `.runtime/`, `*.iso`, `wolf-cog-os/output/`, worktrees (`.cogos-*`) | `.gitignore` |
+| **Active core** | `src/`, `app/`, `aais/`, `frontend/`, `cog-os/`, `deploy/`, `docs/`, `.github/` | Tracked |
+| **Local-only** | `.runtime/`, `*.iso`, `artifacts/cog-os/`, worktrees (`.cogos-*`) | `.gitignore` |
 | **Duplicate imports** | `AAIS-main/`, `Project-Infinity-main/`, `Aris--main/` | `.gitignore` |
 
 Inventory authority: [`docs/audit/ROOT_STRUCTURE_AUDIT.md`](audit/ROOT_STRUCTURE_AUDIT.md)
@@ -31,7 +31,7 @@ Single source of truth for what belongs in a public clone.
 |---|---|
 | AAIS runtime | `src/`, `app/`, `aais/`, `frontend/`, `app/static/` |
 | Packaging | `pyproject.toml`, `requirements*.txt`, `Dockerfile`, `deploy/` |
-| Subsystems | `forge/`, `platform/`, `scorpion/`, `mechanic/`, `wolf-cog-os/scripts/` |
+| Subsystems | `forge/`, `platform/`, `scorpion/`, `mechanic/`, `cog-os/` |
 | Governance + docs | `docs/` (active tree), `document/`, root law MD files, `.github/` |
 | Tests/tools | `tests/`, `tools/` |
 | Legal/setup | `LICENSE`, `SECURITY.md`, `.env.example`, `CHANGELOG.md` |
@@ -40,8 +40,8 @@ Single source of truth for what belongs in a public clone.
 
 | Item | Action |
 |---|---|
-| `wolf-cog-os/payload/opt/cogos/memory/backups/*` | Gitignored — may contain signing keys; never commit |
-| `wolf-cog-os/output/`, `wolf-cog-os/artifacts/`, `*.iso` | Gitignored — build outputs |
+| `cog-os/payload/opt/cogos/memory/backups/*` | Gitignored — may contain signing keys; never commit |
+| `artifacts/cog-os/`, `*.iso` | Gitignored — build outputs |
 | `.runtime/`, `.env`, API keys | Gitignored — runtime state and secrets |
 | `training/data/private_messages*.jsonl` | Gitignored — private training data |
 | Duplicate imports (`*-main/`) | Gitignored |
@@ -93,7 +93,7 @@ Workflows live in `.github/workflows/`. Path-filtered gates run on PRs when rele
 
 ## Clone size
 
-A fresh clone excludes multi-GB ISO and forge output directories by design. Build ISOs locally with Wolf-CoG-OS scripts; outputs land under `wolf-cog-os/output/` (ignored).
+A fresh clone excludes multi-GB ISO and forge output directories by design. Build rootfs and ISOs locally with `cog-os/forge/scripts/`; outputs land under `artifacts/cog-os/` (ignored).
 
 ## Related docs
 

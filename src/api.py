@@ -149,6 +149,11 @@ from src.knowledge_authority import (
     normalize_knowledge_conflict_decisions,
 )
 from src.live_research import looks_like_live_research_request, web_researcher
+from src.urg_operator_knowledge_bridge import (
+    build_urg_library_context,
+    load_urg_library_snapshot,
+    promote_from_receipt,
+)
 from src.logger import get_logger
 from src.memory_board_enforcer import MemoryBoardEnforcerError
 from src.model_routing import resolve_model_route
@@ -240,6 +245,13 @@ try:
     register_ugr_rewards_routes(app)
 except Exception as _ugr_rewards_route_exc:
     logger.warning("UGR rewards routes not registered: %s", _ugr_rewards_route_exc)
+
+try:
+    from src.mesh.api_routes import register_mesh_routes
+
+    register_mesh_routes(app)
+except Exception as _mesh_route_exc:
+    logger.warning("Mesh routes not registered: %s", _mesh_route_exc)
 
 try:
     from src.governance_organs import Alt4Runtime, Tier5Governance
@@ -1442,6 +1454,7 @@ def _build_knowledge_snapshot(
     session = conversation_memory.get_session(session_id) if session_id else None
     authority_preferences, conflict_decisions = _ensure_authority_state(session)
     live_research = dict((session.metadata.get("live_research") or {})) if session else None
+    urg_library = load_urg_library_snapshot(query=query, limit=limit)
     document_module = _load_module("src.document_rag")
     workspace_profile = jarvis_operator.detect_workspace_profile(path_prefix=path_prefix)
     projects = jarvis_operator.workspace_tools.list_projects(limit=max(int(limit or 6), 8))
@@ -1451,6 +1464,7 @@ def _build_knowledge_snapshot(
         workspace_projects=projects,
         document_store=document_module.document_store,
         live_research=live_research,
+        urg_library=urg_library,
         authority_preferences=authority_preferences,
         conflict_decisions=conflict_decisions,
         query=query,
@@ -3138,6 +3152,7 @@ def _clear_turn_context(session):
     session.metadata["loaded_session_archive"] = None
     session.metadata["workspace_context"] = None
     session.metadata["live_research"] = None
+    session.metadata["urg_library_context"] = None
     session.metadata["response_trace"] = None
     session.metadata["canonical_trace_contract"] = None
     session.metadata["model_route"] = None
@@ -4074,6 +4089,7 @@ def _execute_approved_local_action(session, action_id: str, action=None, approva
                 "persistent_memories": [],
                 "workspace_context": None,
                 "live_research": None,
+                "urg_library_context": None,
                 "response_trace": session.metadata.get("response_trace"),
                 "tool_result": blocked_result["tool_result"],
             },
@@ -4208,6 +4224,7 @@ def _execute_approved_local_action(session, action_id: str, action=None, approva
             "persistent_memories": [],
             "workspace_context": None,
             "live_research": None,
+            "urg_library_context": None,
             "response_trace": session.metadata.get("response_trace"),
             "tool_result": action_result["tool_result"],
         },
@@ -4728,10 +4745,22 @@ def _route_action_execution_to_bridge(
     return bridge_result
 
 
+def _cognitive_bridge_reject_reason(bridge_result: dict) -> str:
+    """Map bridge block reason_codes to explicit Wonder/RLS reject reasons."""
+    codes = set(bridge_result.get("reason_codes") or [])
+    if "wonder_forbidden" in codes:
+        return "wonder_forbidden"
+    rls_verdict = bridge_result.get("rls_verdict") or {}
+    if "rls_rejected" in codes or str(rls_verdict.get("verdict") or "") == "reject":
+        return "rls_rejected"
+    return "cognitive_bridge_blocked"
+
+
 def _route_reasoning_ingress_to_bridge(raw_packet: dict | None, *, runtime_context: str) -> dict:
     """Route a reasoning ingress envelope through the shared bridge before protocol evaluation."""
     packet = dict(raw_packet or {})
     meta = dict(packet.get("meta") or {})
+    exchange_payload = dict(packet.get("payload") or {})
     return cognitive_bridge_service.route_to_bridge(
         {
             "source": str(meta.get("source") or "reasoning_exchange"),
@@ -4743,6 +4772,10 @@ def _route_reasoning_ingress_to_bridge(raw_packet: dict | None, *, runtime_conte
                 "domain": meta.get("domain"),
                 "tags": list(meta.get("tags") or []),
                 "payload_present": bool(packet.get("payload")),
+                "claim": str(exchange_payload.get("claim") or "").strip(),
+                "reasoning": str(exchange_payload.get("reasoning") or "").strip(),
+                "evidence": list(exchange_payload.get("evidence") or []),
+                "confidence": exchange_payload.get("confidence"),
                 "execution_intent": "evaluate",
                 "bridge_attestation": build_bridge_attestation(
                     ingress="reasoning_exchange",
@@ -4831,6 +4864,7 @@ def _hydrate_jarvis_context(
         }
         session.metadata["workspace_context"] = None
         session.metadata["live_research"] = None
+        session.metadata["urg_library_context"] = None
         session.metadata["corrigibility_prompt_block"] = None
         session.metadata["continuity_profile"] = dict(companion_profile["continuity_profile"])
         session.metadata["continuity_prompt_block"] = None
@@ -4982,6 +5016,7 @@ def _hydrate_jarvis_context(
         session.metadata["memory_cue_trace"] = {"retrieved": 0, "unique": 0, "rendered": 0}
         session.metadata["workspace_context"] = None
         session.metadata["live_research"] = None
+        session.metadata["urg_library_context"] = None
         if direct_challenge_turn:
             steps.append(
                 "Direct challenge detected. Jarvis stayed in a relational lane and suspended writing-domain routing for this turn."
@@ -5201,6 +5236,16 @@ def _hydrate_jarvis_context(
         steps.append("Operator mode stayed local-first unless live research was explicitly requested.")
     elif research_reason == "research_default_on":
         steps.append("Research mode pulled fresh sources by default for this turn.")
+
+    try:
+        session.metadata["urg_library_context"] = build_urg_library_context(query=user_message)
+    except Exception as exc:
+        logger.warning(f"URG library context failed for '{user_message[:80]}': {exc}")
+        session.metadata["urg_library_context"] = None
+
+    urg_entries = int((session.metadata.get("urg_library_context") or {}).get("entry_count") or 0)
+    if urg_entries:
+        steps.append(f"Attached {urg_entries} URG library entries.")
 
     summary = contract["summary"]
     if specialist_profile:
@@ -6838,6 +6883,7 @@ def _build_chat_runtime_payload(session, session_id, tool_result=None):
         ),
         "workspace_context": session.metadata.get("workspace_context"),
         "live_research": session.metadata.get("live_research"),
+        "urg_library_context": session.metadata.get("urg_library_context"),
         "browser_verification": session.metadata.get("browser_verification"),
         "mission_board": mission_snapshot,
         "mission_critic": session.metadata.get("mission_critic"),
@@ -7562,6 +7608,7 @@ def _hard_reset_session_state(session) -> dict:
             "persistent_memories": [],
             "workspace_context": None,
             "live_research": None,
+            "urg_library_context": None,
             "browser_verification": None,
             "provider_mind": None,
             "response_trace": None,
@@ -10404,7 +10451,7 @@ def evaluate_reasoning_exchange_packet():
             return jsonify(
                 {
                     "status": "REJECT",
-                    "reason": "cognitive_bridge_blocked",
+                    "reason": _cognitive_bridge_reject_reason(bridge_result),
                     "cognitive_bridge": bridge_result,
                     "immune_system": protocol.immune_controller.snapshot(limit_events=6, limit_incidents=3),
                 }
@@ -10445,12 +10492,42 @@ def evaluate_reasoning_exchange_packet():
             payload["immune_system"] = protocol.immune_controller.snapshot(limit_events=6, limit_incidents=3)
             return jsonify(payload)
 
+        from src.mesh.evaluate_hooks import (
+            apply_mesh_trust_penalty,
+            check_mesh_peer_allowed,
+            get_mesh_peer_id,
+            record_mesh_evaluate_outcome,
+        )
+
+        mesh_peer_id = get_mesh_peer_id(request)
+        mesh_allowed, mesh_deny_reason = check_mesh_peer_allowed(mesh_peer_id)
+        if not mesh_allowed:
+            return jsonify(
+                {
+                    "status": "REJECT",
+                    "reason": mesh_deny_reason,
+                    "source": "mesh",
+                    "cognitive_bridge": bridge_result,
+                }
+            ), 403
+
+        normalized_packet = apply_mesh_trust_penalty(normalized_packet, mesh_peer_id)
+
         payload = protocol.evaluate_normalized_packet(
             normalized_packet,
             runtime_context=runtime_context,
         )
+        record_mesh_evaluate_outcome(mesh_peer_id, payload, normalized_packet)
         payload["cognitive_bridge"] = bridge_result
-        status_code = 403 if payload.get("phase_gate", {}).get("decision") == "BLOCK" or payload.get("module_governance", {}).get("decision") == "BLOCK" else 200
+        status_code = 200
+        if payload.get("phase_gate", {}).get("decision") == "BLOCK":
+            status_code = 403
+        elif payload.get("module_governance", {}).get("decision") == "BLOCK":
+            status_code = 403
+        elif payload.get("status") == "REJECT" and payload.get("reason") == "rls_rejected":
+            status_code = 403
+        elif "rls_epistemic_reject" in list(bridge_result.get("reason_codes") or []):
+            status_code = 403
         return jsonify(payload), status_code
     except ReasoningExchangeValidationError as e:
         payload = {
@@ -11081,6 +11158,43 @@ def get_knowledge_authority_snapshot():
         return _build_memory_enforcer_block_response(e)
     except Exception as e:
         logger.error(f"Error building knowledge authority snapshot: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/operator/knowledge/promote-from-urg", methods=["POST"])
+def promote_operator_knowledge_from_urg():
+    """Promote a proven URG discovery receipt into governed operator knowledge."""
+    try:
+        data = request.get_json(silent=True) or {}
+        contribution_id = str(data.get("contribution_id") or "").strip()
+        operator_id = str(data.get("operator_id") or "").strip()
+        tenant_id = str(data.get("tenant_id") or "global").strip() or "global"
+        if not contribution_id:
+            return jsonify({"error": "contribution_id is required"}), 400
+        if not operator_id:
+            return jsonify({"error": "operator_id is required"}), 400
+
+        from src.ugr.discovery.contribution_store import ContributionDiscoveryStore
+
+        store = ContributionDiscoveryStore(tenant_id=tenant_id)
+        receipt = store.get_by_contribution_id(contribution_id)
+        if not receipt:
+            return jsonify(
+                {
+                    "error": "contribution not found",
+                    "contribution_id": contribution_id,
+                    "tenant_id": tenant_id,
+                }
+            ), 404
+
+        result = promote_from_receipt(
+            receipt,
+            operator_id=operator_id,
+            tenant_id=tenant_id,
+        )
+        return jsonify({"promotion": result})
+    except Exception as e:
+        logger.error(f"Error promoting URG knowledge: {e}")
         return jsonify({"error": str(e)}), 500
 
 
@@ -13072,6 +13186,30 @@ def get_reasoning_contract_organ_status():
         )
     except Exception as e:
         logger.error(f"Error reading reasoning contract organ status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/rls/status", methods=["GET"])
+def get_rls_status():
+    """Read-only Reasoning & Logic Substrate posture snapshot."""
+    try:
+        from src.rls.status import rls_status
+
+        return jsonify(attach_ul_substrate({"rls": rls_status()}))
+    except Exception as e:
+        logger.error(f"Error reading RLS status: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/wonder/status", methods=["GET"])
+def get_wonder_status():
+    """Read-only Gate of Wonder posture snapshot."""
+    try:
+        from src.wonder.status import wonder_status
+
+        return jsonify(attach_ul_substrate({"wonder": wonder_status()}))
+    except Exception as e:
+        logger.error(f"Error reading Wonder status: {e}")
         return jsonify({"error": str(e)}), 500
 
 

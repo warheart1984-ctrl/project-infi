@@ -222,6 +222,12 @@ class TestCognitiveBridge(unittest.TestCase):
         self.assertEqual(result["governed_llm"]["provider_request"]["provider"], "local")
         self.assertTrue(result["governed_llm"]["proposal_only"])
         self.assertIn("governed_llm_proposal_ready", result["notes"])
+        self.assertIn("governance_ir", result)
+        self.assertIn("decode_governance_bundle", result)
+        self.assertEqual(
+            result["decode_governance_bundle"]["ir_fingerprint"],
+            result["governance_ir"]["ir_fingerprint"],
+        )
 
     def test_generation_request_blocks_when_governed_llm_module_is_quarantined(self):
         self.service.route_to_bridge(

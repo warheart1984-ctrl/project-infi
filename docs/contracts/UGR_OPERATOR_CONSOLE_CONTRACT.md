@@ -13,9 +13,10 @@ Jarvis-style **advisory** operator console for UGR + Cloud Forge:
 
 ## Version
 
-- Console snapshot version: **1.2**
+- Console snapshot version: **1.3**
 - v1.1: live mesh health polling, deliberation trace viewer, Forge platform dashboard JSON
 - v1.2: adds `infinity1` dashboard aggregate (see [INFINITY1_OPERATOR_DASHBOARD_CONTRACT.md](./INFINITY1_OPERATOR_DASHBOARD_CONTRACT.md))
+- v1.3: adds `otem_ceiling` readout (OTEM Level 20 constitutional recovery ceiling status)
 
 ## Invariants
 
@@ -36,19 +37,33 @@ Jarvis-style **advisory** operator console for UGR + Cloud Forge:
 | Trace viewer | `GET /api/operator/console/traces?limit=20&trace_id=<optional>` |
 | Forge platform | `GET /api/operator/console/forge-platform?live=0` |
 
-## Snapshot keys (v1.2)
+## Snapshot keys (v1.3)
 
 | Key | Source |
 |---|---|
+| `otem_ceiling` | `otem_ceiling.status_for_console()` |
 | `infinity1` | `build_infinity1_dashboard_snapshot()` |
 | `mesh_health` | `poll_mesh_health()` |
 | `deliberation_traces` | `load_deliberation_traces()` from `{runtime}/ugr/traces.jsonl` |
 | `forge_platform` | `load_forge_platform_dashboard()` via `forge-platform-dashboard.py --json` |
 
+## OTEM ceiling operator surface
+
+| Surface | Path |
+|---|---|
+| Recovery UI | `/operator/ceiling` |
+| Status API | `GET /api/operator/ceiling` |
+| Invoke | `POST /api/operator/ceiling/invoke` |
+| Preview | `POST /api/operator/ceiling/preview` |
+| Apply | `POST /api/operator/ceiling/apply` |
+
+See [OTEM_CEILING_OPERATOR_HANDBOOK.md](../operations/OTEM_CEILING_OPERATOR_HANDBOOK.md).
+
 ## Verification
 
 ```bash
 make ugr-operator-console-gate
+make otem-ceiling-gate
 ```
 
 Evidence: `docs/proof/ugr/UGR_OPERATOR_CONSOLE_PROOF.md`

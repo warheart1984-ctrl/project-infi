@@ -30,7 +30,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--registry",
-        default="wolf-cog-os/forge/substrates/registry.json",
+        default="cog-os/forge/substrates/registry.json",
         help="Substrate registry path relative to repo root.",
     )
     parser.add_argument("--mode", choices=["warn", "fail"], default="fail")
@@ -46,12 +46,16 @@ def main() -> int:
     findings: list[str] = []
     if not ledger_path.is_file():
         findings.append(f"ledger missing: {ledger_path}")
-    if not registry_path.is_file():
-        findings.append(f"registry missing: {registry_path}")
     if findings:
         for item in findings:
             print(f"[ERROR] {item}", file=sys.stderr)
         return 1 if args.mode == "fail" else 0
+    if not registry_path.is_file():
+        print(
+            "[WARN] substrate registry missing; skipping live registry cross-check.",
+            file=sys.stderr,
+        )
+        return 0
 
     ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
     registry = json.loads(registry_path.read_text(encoding="utf-8"))

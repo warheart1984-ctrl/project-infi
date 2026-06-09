@@ -1,6 +1,7 @@
 """Tests for the bounded reasoning exchange protocol."""
 
 from pathlib import Path
+import os
 import shutil
 import tempfile
 import unittest
@@ -44,6 +45,8 @@ class TestReasoningExchangeProtocol(unittest.TestCase):
 
     def setUp(self):
         self.temp_dir = Path(tempfile.mkdtemp(prefix="reasoning-exchange-"))
+        self._prior_runtime = os.environ.get("AAIS_RUNTIME_DIR")
+        os.environ["AAIS_RUNTIME_DIR"] = str(self.temp_dir)
         self.immune = ImmuneSystemController(runtime_dir=self.temp_dir)
         self.governance = GovernanceLayer(runtime_dir=self.temp_dir)
         self.module_governance = ModuleGovernanceController(
@@ -62,6 +65,10 @@ class TestReasoningExchangeProtocol(unittest.TestCase):
 
     def tearDown(self):
         reset_registry()
+        if self._prior_runtime is None:
+            os.environ.pop("AAIS_RUNTIME_DIR", None)
+        else:
+            os.environ["AAIS_RUNTIME_DIR"] = self._prior_runtime
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def test_normalize_packet_rejects_unexpected_top_level_fields(self):

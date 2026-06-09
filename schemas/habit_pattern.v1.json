@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "habit_pattern.v1.json",
+  "title": "HabitPattern",
+  "type": "object",
+  "required": ["pattern_version", "pattern_key", "pattern_kind", "occurrence_count"],
+  "properties": {
+    "pattern_version": {"const": "habit_pattern.v1"},
+    "pattern_key": {"type": "string"},
+    "pattern_kind": {"enum": ["chain", "mesh_path", "routine"]},
+    "occurrence_count": {"type": "integer", "minimum": 0},
+    "last_seen_at": {"type": "string"},
+    "source_family_id": {"type": "string"},
+    "target_family_id": {"type": "string"},
+    "chain_ids": {"type": "array", "items": {"type": "string"}},
+    "hcc_class": {"enum": ["HCC-0", "HCC-1", "HCC-2", "HCC-3"]}
+  },
+  "additionalProperties": true
+}

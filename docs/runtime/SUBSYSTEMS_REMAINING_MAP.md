@@ -7,7 +7,7 @@ Updated for **Release 29** (`alt29-summon-wave-2026-06`, `v1.25.0`).
 
 | Item | State |
 |------|--------|
-| Summon gene backlog | **Empty** — 170 governed genomes (169 post–Release 28 + `media_processor_bridge_organ`) |
+| Summon gene backlog | **Empty** — 179 governed genomes (post–Release 29–30 growth; floor ≥170 for Alt29 gates) |
 | Release 28 six-pack | **Governed** — promoted at Alt28; execution layer at Alt29 |
 
 ## Partial → live (§6 families — Release 29)
@@ -29,9 +29,13 @@ Proof bundle: [INTEGRATION_UNIVERSAL_BUNDLE_V1_PROOF.md](../proof/platform/INTEG
 | Execution (Alt29–34) | Bridge actions + execution layer; movie/video/world-pack lanes execute with `operator_ack` |
 | text_to_3d_world_lane | Live deterministic pipeline (Release 34) |
 
+Phase 4 kickoff proof: [STORY_FORGE_PHASE4_KICKOFF_V1_PROOF.md](../proof/platform/STORY_FORGE_PHASE4_KICKOFF_V1_PROOF.md)
+
 ## Blocked / dormant (unchanged)
 
-Per [AAIS_SUBSYSTEM_SPEC.md](./AAIS_SUBSYSTEM_SPEC.md) §4: OTEM execution expansion, standalone ARIS service, Dreamspace — not in Alt29 scope.
+Per [AAIS_SUBSYSTEM_SPEC.md](./AAIS_SUBSYSTEM_SPEC.md) §4: OTEM execution expansion, Dreamspace — not in Alt29 scope.
+
+**Standalone ARIS** — implementation blocked until [ARIS_STANDALONE_ADMISSION_SPEC.md](../contracts/ARIS_STANDALONE_ADMISSION_SPEC.md) criteria are proven (embedded ARIS remains live). Admission spec filed 2026-06-08; service build may proceed under spec checklist.
 
 ## Coherence
 

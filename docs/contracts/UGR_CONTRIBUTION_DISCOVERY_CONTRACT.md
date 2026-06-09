@@ -102,3 +102,36 @@ When a discovery receipt has **Standing 3** / `claim_label: proven` (with verifi
 Idempotent rediscovery of a proven contribution still attempts reward issuance once (subsequent calls return `idempotent` if already issued).
 
 Discovery responses include `operator_rewards` and `discovery_pod_ledger.pod_proven` when applicable.
+
+## Epistemic state layer (v1)
+
+URG adds a canonical **3-state epistemic layer** on top of 4-band Standing. Standing remains authoritative for rewards and library admission; epistemic state governs operator promotion and chat/workbench injection.
+
+| `epistemic_state` | Maps from Standing / signals |
+|-------------------|------------------------------|
+| `rejected` | `denied`, `claim_label: rejected`, `rejection_source`, falsified fingerprint |
+| `pending` | `hypothetical`, `asserted` |
+| `proven` | `proven` with verification signals |
+
+Schema: `schemas/epistemic_state.v1.json`. Implementation: `src/ugr/discovery/standing.py`, contract: `docs/contracts/URG_EPISTEMIC_STATE_CONTRACT.md`.
+
+Rejected claims are recorded in `src/rls/falsity_registry.py` with `epistemic_state: rejected` and cannot silently re-enter via promotion (`is_resurrection_blocked`).
+
+## Operator knowledge bridge
+
+Proven URG receipts may be promoted into governed operator knowledge:
+
+- Module: `src/urg_operator_knowledge_bridge.py`
+- Idempotency ledger: `.runtime/urg_operator_promotions.jsonl`
+- Memory writes: `category: urg_proven`, `source: urg_library`, `truth_status: canonical`
+- ODL events: `urg_knowledge_promotion` via `src/operator_decision_ledger.py`
+- Knowledge authority source: `urg_library` in `src/knowledge_authority.py`
+- Chat/workbench injection: `urg_library_context` prompt block (parity with `live_research`)
+
+Automatic promotion runs when `discovery_pod_ledger.record_proven()` fires (`pod_proven` path). Manual promotion:
+
+| Method | Path |
+|--------|------|
+| POST | `/api/operator/knowledge/promote-from-urg` |
+
+Body: `{ "contribution_id", "operator_id", "tenant_id?" }`. Loads receipt from `ContributionDiscoveryStore` and calls `promote_from_receipt()`.

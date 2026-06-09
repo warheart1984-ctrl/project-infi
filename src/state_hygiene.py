@@ -53,6 +53,8 @@ _SOURCE_PRECEDENCE = {
     ("document", "reference"): 76,
     ("document", "derived"): 72,
     ("live_research", "derived"): 68,
+    ("urg_library", "canonical"): 70,
+    ("urg_library", "derived"): 66,
     ("doctrine", "reference"): 62,
     ("review", "derived"): 56,
     ("run", "derived"): 48,

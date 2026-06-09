@@ -58,8 +58,6 @@ downloads/
 eggs/
 .eggs/
 lib/
-!wolf-cog-os/scripts/lib/
-!wolf-cog-os/scripts/lib/profile-loader.sh
 lib64/
 parts/
 sdist/
@@ -99,13 +97,9 @@ data/chroma/*
 *.iso.sha256
 *.img
 
-# Wolf-CoG-OS forge outputs (scripts + contracts stay tracked)
-wolf-cog-os/output/
-wolf-cog-os/artifacts/
-wolf-cog-os/payload-iso/
-# Operator backup snapshots (local-only; may contain signing keys)
-wolf-cog-os/payload/opt/cogos/memory/backups/*
-!wolf-cog-os/payload/opt/cogos/memory/backups/.gitkeep
+# Synthetic mind bundle outputs (generated locally)
+artifacts/synthetic-mind-bundle/
+artifacts/synthetic-mind-bundle-test/
 
 # ISO extract / CI scratch / release drops
 _tmp_iso_check/

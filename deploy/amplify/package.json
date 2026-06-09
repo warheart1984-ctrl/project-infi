@@ -1,0 +1,20 @@
+{
+  "name": "aais-amplify-projection",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "sandbox": "ampx sandbox",
+    "generate-outputs": "ampx generate outputs --out-dir ../../frontend/src"
+  },
+  "dependencies": {
+    "@aws-amplify/backend": "^1.16.0",
+    "@aws-amplify/backend-cli": "^1.8.0",
+    "aws-cdk-lib": "^2.200.0",
+    "constructs": "^10.4.2",
+    "typescript": "^5.8.0"
+  }
+}

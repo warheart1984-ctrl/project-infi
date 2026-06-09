@@ -24,6 +24,7 @@ from src.invariant_engine import InvariantEngine
 from src.jarvis_detachment_guard import build_bridge_attestation
 from src.ugr.lane_manager import LaneResult, LaneSpec
 from src.ugr.governed_llm_executor import execute_governed_llm_proposal, llm_execution_enabled
+from src.decode_governance_executor import execute_with_decode_governance
 
 
 UGR_LLM_LANE_VERSION = "1.0"
@@ -302,13 +303,42 @@ def run_governed_llm_lane(
     tokens_used = 0
     claims: list[dict[str, Any]] = []
     if not blocked:
-        execution = execute_governed_llm_proposal(
-            envelope,
-            bridge_result=bridge_result,
-            question=str(shared_context.get("question") or ""),
-            provider_registry_instance=provider_registry_instance,
-            force_execute=force_execute,
+        ir = bridge_result.get("governance_ir")
+        bundle = bridge_result.get("decode_governance_bundle")
+        if not ir or not bundle:
+            try:
+                from src.governance_ir import build_governance_ir
+                from src.invariant_compiler import compile_from_ir
+
+                ir = build_governance_ir(bridge_result=bridge_result)
+                bundle = compile_from_ir(ir)
+            except Exception:
+                ir = None
+                bundle = None
+        session_id = str(
+            shared_context.get("session_id")
+            or (shared_context.get("context") or {}).get("session_id")
+            or ""
         )
+        if ir and bundle:
+            execution = execute_with_decode_governance(
+                envelope,
+                bridge_result=bridge_result,
+                question=str(shared_context.get("question") or ""),
+                provider_registry_instance=provider_registry_instance,
+                force_execute=force_execute,
+                governance_ir=ir,
+                decode_bundle=bundle,
+                session_id=session_id or None,
+            )
+        else:
+            execution = execute_governed_llm_proposal(
+                envelope,
+                bridge_result=bridge_result,
+                question=str(shared_context.get("question") or ""),
+                provider_registry_instance=provider_registry_instance,
+                force_execute=force_execute,
+            )
         if execution.get("status") == "EXECUTED":
             tokens_used = int(execution.get("tokens_used") or 0)
         claims = build_llm_lane_claims(

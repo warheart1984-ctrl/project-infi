@@ -1,0 +1,20 @@
+schema_version: cog-os-forge-profile.v1
+name: metal
+display_name: Nova NorthStar CoG OS Metal
+product_name: nova-northstar-cog-os
+init_mode: custom
+systemd: none
+boot_profile: metal
+packages:
+  - base.txt
+exclude_systemd: true
+services:
+  - platform
+  - login
+  - firstboot
+  - aais
+gates:
+  - init_log_present
+  - platform_heartbeat
+  - cogos_manifest_valid
+  - aais_health_200

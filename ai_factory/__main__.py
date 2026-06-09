@@ -88,9 +88,6 @@ def cmd_deploy(args: argparse.Namespace) -> int:
             build_id=args.build_id,
             runtime_root=Path(args.runtime_root) if args.runtime_root else None,
             repo_root=Path(args.repo_root).resolve(),
-            wolf_payload_root=Path(args.wolf_payload_root).resolve() if args.wolf_payload_root else None,
-            wolf_deploy=bool(args.wolf),
-            dry_run=bool(args.dry_run),
         )
     except FactoryBuildError as exc:
         print(f"[ai-factory] deploy FAILED: {exc}", file=sys.stderr)
@@ -99,8 +96,6 @@ def cmd_deploy(args: argparse.Namespace) -> int:
         "mode": "deploy",
         "build_id": args.build_id,
         "active_pointer": str(pointer.resolve()),
-        "wolf_deploy": bool(args.wolf),
-        "dry_run": bool(args.dry_run),
     }
     _print(payload, output=args.output)
     return 0
@@ -175,9 +170,6 @@ def build_parser() -> argparse.ArgumentParser:
 
     deploy = sub.add_parser("deploy", help="point active build pointer at a completed build")
     deploy.add_argument("--build-id", required=True)
-    deploy.add_argument("--wolf", action="store_true", help="promote build into wolf-cog-os payload (v1.1)")
-    deploy.add_argument("--wolf-payload-root", default="", help="override wolf payload config root")
-    deploy.add_argument("--dry-run", action="store_true", help="validate wolf deploy without writing")
     deploy.set_defaults(func=cmd_deploy)
 
     revoke = sub.add_parser("revoke", help="revoke a build receipt")

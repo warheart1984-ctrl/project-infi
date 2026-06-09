@@ -1187,6 +1187,13 @@
       "grandfathered": true
     },
     {
+      "gene": "federated_civilizational_epoch_organ",
+      "legacy_path": "src/federated_civilizational_epoch_organ.py",
+      "engineering_class": "FederatedCivilizationalEpochEngine",
+      "mythic_label": "Federated Civilizational Epoch Organ",
+      "grandfathered": true
+    },
+    {
       "gene": "governed_civilization_organ",
       "legacy_path": "src/governed_civilization_organ.py",
       "engineering_class": "GovernedCivilizationEngine",

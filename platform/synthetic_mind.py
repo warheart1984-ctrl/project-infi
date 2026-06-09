@@ -108,7 +108,7 @@ def ref_from_ai_factory_result(
 
     manifest_path = (
         (repo_root or Path(".")).resolve()
-        / "wolf-cog-os/artifacts/synthetic-mind-bundle/synthetic_mind_manifest.json"
+        / "artifacts/synthetic-mind-bundle/synthetic_mind_manifest.json"
     )
     bundle_hash = _bundle_hash_from_manifest(manifest_path)
     if bundle_hash == "0" * 64:

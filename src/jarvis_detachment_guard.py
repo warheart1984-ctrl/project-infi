@@ -332,6 +332,26 @@ class JarvisDetachmentGuard:
     ) -> dict[str, Any]:
         self._ensure_phase_component_registered()
         normalized_context = _normalize_runtime_context(runtime_context)
+        try:
+            from src.otem_ceiling import otem_ceiling
+
+            if otem_ceiling.containment_active():
+                return _wrap_ul_payload({
+                    "decision": "BLOCK",
+                    "status": "blocked",
+                    "component_id": DETACHMENT_GUARD_COMPONENT_ID,
+                    "reason_codes": ["otem_ceiling_containment"],
+                    "summary": (
+                        "Jarvis detachment blocked while OTEM Level 20 containment is active."
+                    ),
+                    "runtime_context": normalized_context,
+                    "packet_type": _normalize_name(packet.get("type"), default="unknown_packet"),
+                    "source": _normalize_name(packet.get("source"), default="unknown_source"),
+                    "temporary_deny_active": True,
+                    "review_required": True,
+                })
+        except Exception:
+            pass
         payload = dict(packet.get("payload") or {})
         source = _normalize_name(packet.get("source"), default="unknown_source")
         packet_type = _normalize_name(packet.get("type"), default="unknown_packet")

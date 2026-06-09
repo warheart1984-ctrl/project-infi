@@ -17,7 +17,7 @@ from src.ugr.operator_console.readout import build_operator_readout
 from src.ugr.operator_console.trace_viewer import load_deliberation_traces
 
 
-CONSOLE_VERSION = "1.2"
+CONSOLE_VERSION = "1.3"
 CONSOLE_ID = "aais.operator.ugr_cloud_console"
 
 GATE_COMMANDS = [
@@ -26,6 +26,7 @@ GATE_COMMANDS = [
     "make ugr-embryo-gate",
     "make ugr-causal-graph-gate",
     "make forge-platform-gate",
+    "make otem-ceiling-gate",
 ]
 
 
@@ -193,12 +194,20 @@ def build_operator_console_snapshot(*, runtime: Any | None = None) -> dict[str, 
     except Exception as exc:
         infinity1 = {"status": "error", "summary": str(exc), "runtime_effect": "readout_only"}
 
+    try:
+        from src.otem_ceiling import otem_ceiling
+
+        otem_ceiling_status = otem_ceiling.status_for_console()
+    except Exception as exc:
+        otem_ceiling_status = {"status": "error", "summary": str(exc)}
+
     snapshot = {
         "console_id": CONSOLE_ID,
         "console_version": CONSOLE_VERSION,
         "status": "ok",
         "claim_status": overall_claim,
         "runtime_effect": "readout_only",
+        "otem_ceiling": otem_ceiling_status,
         "infinity1": infinity1,
         "ugr": ugr,
         "cloud_forge": forge,

@@ -31,3 +31,4 @@
 | The Voss Binding - Unified Runtime Calculus | 2 `asserted` | asserted | `docs/proof/discovery/packets/THE_VOSS_BINDING_UNIFIED_RUNTIME_CALCULUS_DISCOVERY_PROOF.md` |
 | URG Architecture_ A Governed Cognitive Infrastructure for Multi‑Tenan... | 2 `asserted` | asserted | `docs/proof/discovery/packets/URG_ARCHITECTURE_A_GOVERNED_COGNITIVE_INFRASTRUCTURE_FOR_MULTI_TENANT_CONSTITUTIONAL_AI_SYSTEMS_DISCOVERY_PROOF.md` |
 | WOLF‑1_ A Radiation‑Hardened Cognitive Spacecraft Node for Autonomous... | 0 `denied` (excluded) | denied | `docs/proof/discovery/packets/WOLF_1_A_RADIATION_HARDENED_COGNITIVE_SPACECRAFT_NODE_FOR_AUTONOMOUS_ON_ORBIT_REASONING_A_DARPA_STYLE_CONCEPT_WHITE_PAPE_DISCOVERY_PROOF.md` |
+| Multi-Model Orchestration Pattern | 2 `asserted` | asserted | `docs/proof/discovery/packets/MULTI_MODEL_ORCHESTRATION_PATTERN_DISCOVERY_PROOF.md` |

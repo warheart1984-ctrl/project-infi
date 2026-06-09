@@ -16,9 +16,12 @@ detail.
   - technical project spine
 - [STABILIZE_AND_FREE.md](./STABILIZE_AND_FREE.md)
   - governing doctrine for stability and operator freedom
+- [STRATEGY.md](./STRATEGY.md)
+  - vision, phased execution, gates, and non-goals
 
 ## Which Docs Matter Most
 
+- Strategy entry: [STRATEGY.md](./STRATEGY.md)
 - Human entry: [AAIS_HUMAN_GUIDE.md](./AAIS_HUMAN_GUIDE.md)
 - Builder entry: [AAIS_AI_OPERATING_CONTRACT.md](./AAIS_AI_OPERATING_CONTRACT.md)
 - Technical detail: [AAIS_MASTER_SPEC.md](./AAIS_MASTER_SPEC.md)

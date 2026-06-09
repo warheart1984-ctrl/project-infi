@@ -1,0 +1,45 @@
+%% project-infi: Human-AI Governance Stack
+%% Sources: docs/contracts/AAIS_ADAPTIVE_GOVERNANCE.md, HUMAN_AI_CO_COLLABORATION_CHARTER.md
+%% Generate in FigJam: Figma plugin -> generate_diagram with useArchitectureLayoutCode "FIGMA_DIAGRAM_2026"
+
+flowchart LR
+  subgraph client ["Human Authority"]
+    humanOperator["Human Operator"]
+    coCollabCharter["Co-Collaboration Charter"]
+  end
+  subgraph gateway ["Tier 5 Adaptive Governance"]
+    tier5Engine["AdaptiveEngine"]
+    contextualGates["Contextual Gates"]
+    tier5Health["tier5_health.json"]
+  end
+  subgraph service ["Alt-6 Governed Lane Fabric"]
+    laneOrgan["adaptive_lane_organ"]
+    profileOrgan["operator_profile_organ"]
+    capBridge["capability_service_bridge"]
+    recipeModule["recipe_module"]
+    governedPipeline["governed_direct_pipeline"]
+    adaptiveLanes["adaptive_lanes.json"]
+  end
+  subgraph datastore ["Coherence Snapshot"]
+    coherenceFabric["operator_cognition_coherence_fabric"]
+    envelopePosture["Envelope Posture"]
+  end
+  subgraph external ["Runtime Surfaces"]
+    coherenceApi["GET /api/jarvis/coherence-fabric/status"]
+    governanceGates["make tier5-gate / alt6 / alt7"]
+  end
+  humanOperator -->|"final authority"| coCollabCharter
+  coCollabCharter -->|"trust bundles"| tier5Engine
+  tier5Engine -->|"maturity invariants"| contextualGates
+  tier5Engine -->|"health_check"| tier5Health
+  tier5Engine -->|"wake_lanes"| laneOrgan
+  profileOrgan -->|"authority_lane"| laneOrgan
+  laneOrgan -->|"merge"| adaptiveLanes
+  capBridge -->|"policy-cap execute"| recipeModule
+  governedPipeline -->|"lane fabric"| capBridge
+  laneOrgan -->|"project"| coherenceFabric
+  profileOrgan -->|"profile plane"| coherenceFabric
+  capBridge -->|"envelope plane"| envelopePosture
+  coherenceFabric -->|"read-only status"| coherenceApi
+  tier5Health -.->|"audit"| governanceGates
+  coherenceApi -.->|"governed proof"| governanceGates

@@ -439,6 +439,60 @@ def propose_governed_llm_envelope(
             verification_gate=verification_gate,
         )
 
+    wonder_verdict = payload.get("wonder_verdict")
+    if wonder_verdict is None and packet_type in {
+        "generation_request",
+        "deliberation_request",
+        "reasoning_packet_ingress",
+    }:
+        try:
+            from src.otem_capability import get_otem_capability_level
+            from src.wonder.validation import evaluate_bridge_ingress_wonder
+
+            wonder_verdict = evaluate_bridge_ingress_wonder(
+                normalized_input,
+                governance_packet,
+                otem_level=get_otem_capability_level(),
+            )
+        except Exception:
+            wonder_verdict = {"verdict": "forbid", "violations": [{"code": "wonder_evaluator_fault"}]}
+
+    try:
+        from src.otem_capability import get_otem_capability_level
+        from src.wonder.gate import wonder_allows_escalation
+
+        if wonder_verdict and not wonder_allows_escalation(
+            wonder_verdict,
+            otem_level=get_otem_capability_level(),
+        ):
+            return _blocked_envelope(
+                bridge_result=payload,
+                runtime_context=runtime_context,
+                bridge_decision=bridge_decision,
+                packet_type=packet_type,
+                requested_provider=normalized_requested_provider,
+                requested_provider_mode=normalized_requested_provider_mode,
+                reason="wonder_gate_blocked",
+                notes=["wonder_gate_blocked_downstream"],
+                phase_gate=phase_gate,
+                module_governance_gate=module_governance_gate,
+                verification_gate=verification_gate,
+            )
+    except Exception:
+        return _blocked_envelope(
+            bridge_result=payload,
+            runtime_context=runtime_context,
+            bridge_decision=bridge_decision,
+            packet_type=packet_type,
+            requested_provider=normalized_requested_provider,
+            requested_provider_mode=normalized_requested_provider_mode,
+            reason="wonder_gate_blocked",
+            notes=["wonder_gate_evaluator_fault"],
+            phase_gate=phase_gate,
+            module_governance_gate=module_governance_gate,
+            verification_gate=verification_gate,
+        )
+
     registry = provider_registry_instance or provider_registry
     preferred_provider = normalized_requested_provider or _provider_from_mode(normalized_requested_provider_mode)
     route = resolve_model_route(

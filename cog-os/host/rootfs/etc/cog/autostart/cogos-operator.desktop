@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=CogOS Operator
+Comment=NorthStar operator shell (Jarvis)
+Exec=chromium --app=http://127.0.0.1:8000/app/jarvis --start-fullscreen --no-first-run --disable-session-crashed-bubble
+X-GNOME-Autostart-enabled=true
+OnlyShowIn=Cinnamon;

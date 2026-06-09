@@ -13,7 +13,6 @@ from pathlib import Path
 DEFAULT_SURFACES = [
     ".github/workflows",
     ".github/scripts",
-    "wolf-cog-os/scripts",
     "Makefile",
 ]
 

@@ -3,14 +3,16 @@
 Status: active canonical backlog for Forge implementation.
 Priority model: P0 (must do now), P1 (next), P2 (post-milestone hardening)
 
+> **NorthStar migration note:** Runtime forge paths moved from `wolf-cog-os/` to `cog-os/`. Boot proof: [cog-os/docs/METAL_PROOF_CHECKLIST.md](../cog-os/docs/METAL_PROOF_CHECKLIST.md). Installer v1: `cog-os/scripts/cogos-installer.sh`. `make installer-integration` runs `test-forge-profile-loader.py` plus `cogos-installer.sh --smoke`; promotion fixture scenario `2` is `installer-smoke`. Historical sections below may still cite `wolf-cog-os/` for completed milestones — use `cog-os/` equivalents at the repo root.
+
 ## Program Tracker - Installer Scenario Gates
 
 | Scenario | Gate status | Evidence pointer | Verification command |
 |---|---|---|---|
-| 1 (CleanDiskInstall_Core) | YELLOW | `wolf-cog-os/scripts/test/installer-matrix.py` (`scenario1`) | `INSTALLER_TEST_SCENARIOS="1" make installer-integration` |
-| 3 (ResumeAfterInjectedFailure) | GREEN | `wolf-cog-os/scripts/test/installer-matrix.py` (`scenario3`) + `wolf-cog-os/INSTALLER_STATE_MACHINE.md` canonical proof/runbook notes | `INSTALLER_TEST_SCENARIOS="3" make installer-integration` |
-| 6 (QemuIsoBootSmoke) | YELLOW | `wolf-cog-os/scripts/test/installer-matrix.py` (`scenario6`) | `INSTALLER_TEST_SCENARIOS="6" make installer-integration` |
-| 4 (RollbackPathFailure) | YELLOW (promotion-required for Forge) | `wolf-cog-os/scripts/test/installer-matrix.py` (`scenario4`) | `INSTALLER_TEST_SCENARIOS="4" make installer-integration` |
+| 1 (CleanDiskInstall_Core) | YELLOW | `cog-os/scripts/cogos-installer.sh` (plan/apply) | `bash cog-os/scripts/cogos-installer.sh --smoke` then plan on loop/dev disk |
+| 3 (ResumeAfterInjectedFailure) | YELLOW | `cog-os/scripts/lib/installer/common.sh` checkpoints | `COGOS_INSTALLER_FAIL_STEP=copy bash cog-os/scripts/cogos-installer.sh --apply --resume` (manual) |
+| 6 (QemuIsoBootSmoke) | YELLOW | `cog-os/scripts/test/qemu-smoke.sh` | `make cog-qemu-smoke-contract-boot COG_PROFILE=metal` |
+| 4 (RollbackPathFailure) | YELLOW (promotion-required for Forge) | `cog-os/scripts/lib/installer/common.sh` rollback | Manual rollback test on injected failure |
 
 ## Execution Status
 
@@ -59,14 +61,14 @@ Priority model: P0 (must do now), P1 (next), P2 (post-milestone hardening)
 ### P3-3 Promotion readiness dry-run
 
 - **Owner role:** Operator + Inspector
-- **Paths:** `.github/workflows/cogos-release.yml`, `.github/workflows/cogos-rc.yml`, `.github/scripts/validate-promotion-source.py`, `.github/scripts/emit-promotion-dry-run-report.py`, `wolf-cog-os/scripts/test/promotion-dry-run.sh`, `wolf-cog-os/scripts/test/fixtures/promotion-forge-rc/`
+- **Paths:** `.github/workflows/cogos-release.yml`, `.github/workflows/cogos-rc.yml`, `.github/scripts/validate-promotion-source.py`, `.github/scripts/emit-promotion-dry-run-report.py`, `cog-os/scripts/test/promotion-dry-run.sh`, `cog-os/scripts/test/fixtures/promotion-forge-rc/`
 - **Definition of Done status:** Completed
   - Forge promotion validation requires `forge-build-state.json` when profile is expected.
   - Local fixture dry-run passes promotion source validation for scenarios `1,3,4,6`.
   - Release workflow emits/uploads promotion dry-run report in `dry_run=true` mode.
   - RC artifacts include `channel=forge-rc` metadata when Forge profile is active.
 - **Verification command(s)**
-  - `bash wolf-cog-os/scripts/test/promotion-dry-run.sh --skip-verify`
+  - `bash cog-os/scripts/test/promotion-dry-run.sh --skip-verify`
   - `python3 -m unittest tests.test_validate_promotion_source`
   - `python3 .github/scripts/validate-governance-ledger.py --mode fail`
 

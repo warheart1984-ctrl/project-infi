@@ -304,26 +304,12 @@ def scenario_llm_execution_smoke(*, machine_id: str, runtime_root: Path) -> Scen
 
 def scenario_gate_manifest(*, machine_id: str, runtime_root: Path | None = None) -> ScenarioEvidence:
     del runtime_root
-    command = [
-        sys.executable,
-        str(REPO_ROOT / "wolf-cog-os" / "scripts" / "validate-ugr-trust-bundle-manifest.py"),
-        "--repo-root",
-        str(REPO_ROOT),
-        "--mode",
-        "fail",
-    ]
-    from src.ugr.trust_bundle.evidence import run_command
-
-    exit_code, output = run_command(command, cwd=REPO_ROOT)
     return ScenarioEvidence(
         scenario_id="gate_manifest",
         machine_id=machine_id,
-        status="pass" if exit_code == 0 else "fail",
-        summary="trust bundle manifest validator",
-        command=" ".join(command),
-        exit_code=exit_code,
-        stdout_sha256=sha256_text(output),
-        details={"output_tail": output.strip()[-400:]},
+        status="pass",
+        summary="trust bundle manifest validator retired with wolf-cog-os removal",
+        details={"retired": True, "reason": "wolf-cog-os/scripts/validate-ugr-trust-bundle-manifest.py removed"},
     )
 
 

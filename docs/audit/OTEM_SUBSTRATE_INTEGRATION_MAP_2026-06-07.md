@@ -91,6 +91,7 @@ Sources: `wolf-cog-os/forge/substrates/registry.json`, `.github/governance/subst
 | OTEM bridge | `test_otem_execution_approval_bridge.py` | otem-execution-substrate-gate | conftest substrate reset + genome boot warn |
 | OTEM MVP | `test_subsystem_mvp_integration.py::test_otem_execution_substrate_workflow` | check-subsystem-mvp-integration-governance.py | contractor preview imports |
 | OTEM bounded | `test_otem_bounded_organ.py` | otem-bounded-organ-gate | — |
+| OTEM ceiling L20 | `test_otem_ceiling.py`, `test_otem_capability.py` | `otem-ceiling-gate`, `make otem-ceiling-invoke` | sovereign band 20; containment 16–19; `/operator/ceiling` |
 | Operator ledger | `test_operator_decision_ledger.py` | — | — |
 
 ---

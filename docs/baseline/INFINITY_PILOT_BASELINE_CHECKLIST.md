@@ -36,7 +36,7 @@ Review cadence: monthly
 | Debt ID | Description | Owner | Severity | Due Date | Status |
 |---------|-------------|-------|----------|----------|--------|
 | PLAT-PILOT-D1 | Multi-tenant K8s hardening + isolation proof | ops | high | 2026-06-06 | closed |
-| PLAT-D8 | Full OIDC IdP integration per org | platform | medium | TBD | partial |
+| PLAT-D8 | Full OIDC IdP integration per org | platform | medium | TBD | partial — [scope proof](../proof/platform/PLAT_D8_OIDC_SCOPE_V1_PROOF.md); stub org E2E proven; closure = one **live** org IdP E2E |
 | UGR-D5 | Cross-physical-machine trust matrix | ops | medium | TBD | open |
 | UGR-D7 | Neo4j v2 graph backend | architect | low | TBD | open |
 

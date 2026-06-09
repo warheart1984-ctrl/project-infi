@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aais_library.v1.json",
+  "title": "AAISLibrarySnapshot",
+  "description": "Operator-visible URG library snapshot for chat and knowledge authority surfaces.",
+  "type": "object",
+  "required": ["tenant_id", "entry_count", "entries"],
+  "properties": {
+    "tenant_id": {
+      "type": "string"
+    },
+    "entry_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "query": {
+      "type": ["string", "null"]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "prompt_block": {
+      "type": "string"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["contribution_id", "epistemic_state"],
+        "properties": {
+          "contribution_id": { "type": "string" },
+          "contribution_type": { "type": "string" },
+          "title": { "type": "string" },
+          "summary": { "type": "string" },
+          "epistemic_state": {
+            "type": "string",
+            "enum": ["rejected", "pending", "proven"]
+          },
+          "claim_label": { "type": "string" },
+          "standing": { "type": "integer" },
+          "operator_id": { "type": "string" },
+          "promoted_to_operator": { "type": "boolean" }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

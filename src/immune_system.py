@@ -397,12 +397,32 @@ class ImmuneSystemController:
             self._events.append(immune_event)
             self._events = self._events[-250:]
             self._persist_locked()
-            return {
+            result = {
                 "severity": normalized_severity,
                 "applied_actions": [action for action in applied_actions if action],
                 "event": dict(immune_event),
                 "state": self._state.to_dict(),
             }
+
+        if normalized_severity == "critical":
+            try:
+                from src.otem_ceiling import otem_ceiling
+
+                if not otem_ceiling.containment_active():
+                    otem_ceiling.evaluate_trigger(
+                        trigger_type="immune_critical",
+                        severity=normalized_severity,
+                        summary=reason or f"critical protocol signal on {component_key}",
+                        details={
+                            "component_id": component_key,
+                            "signal_type": signal_key,
+                            "caller_id": caller_id,
+                        },
+                        scope_id=caller_id or component_key,
+                    )
+            except Exception:
+                pass
+        return result
 
     def hardening_profile(self):
         return self._hardening.profile_for_protocol()

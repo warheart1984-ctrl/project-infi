@@ -1,0 +1,24 @@
+schema_version: cog-os-forge-profile.v1
+name: daily-driver
+display_name: Nova NorthStar CoG OS Daily Driver
+product_name: nova-northstar-cog-os
+init_mode: hybrid
+systemd: user_session
+boot_profile: daily-driver
+packages:
+  - base.txt
+  - daily-driver.txt
+exclude_systemd: false
+services:
+  - platform
+  - firstboot
+  - aais
+  - desktop
+gates:
+  - init_log_present
+  - platform_heartbeat
+  - cogos_manifest_valid
+  - aais_health_200
+  - operator_ui_http_200
+  - display_manager_active
+  - no_stale_firstboot_markers

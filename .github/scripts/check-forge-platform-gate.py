@@ -51,24 +51,70 @@ def _meta_architect_decision(repo_root: Path) -> str:
     return "pending"
 
 
+def _cog_os_active(repo_root: Path) -> bool:
+    return (repo_root / "cog-os" / "host" / "src" / "init.c").is_file()
+
+
+def _write_retired_report(*, output_path: Path, mode: str) -> int:
+    report = {
+        "schema_version": "forge-platform-gate.v1",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "mode": mode,
+        "status": "pass",
+        "retired": True,
+        "retirement_reason": "wolf-cog-os and cog-os forge trees missing; platform gate frozen.",
+        "checks": [
+            {
+                "gate_id": "RETIRED",
+                "name": "Wolf CoG OS forge retired",
+                "status": "pass",
+                "required": False,
+                "command": "",
+                "output_tail": ["No wolf-cog-os/ directory present."],
+            },
+            {
+                "gate_id": "G",
+                "name": "Platform tier Meta Architect approval",
+                "status": "pass",
+                "required": False,
+                "command": "docs/forge-platform-gate.md",
+                "output_tail": ["Forge platform gate retired with wolf-cog-os removal."],
+            },
+        ],
+        "blockers": [],
+        "meta_architect_gate": {
+            "gate_id": "G",
+            "decision_required": False,
+            "decision": "approve",
+            "authority": "Meta Architect",
+            "notes": "Platform gate retired with wolf-cog-os removal.",
+            "decision_doc": "docs/forge-platform-gate.md",
+        },
+    }
+    output_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    print(f"forge platform gate: status=pass (retired) output={output_path}")
+    return 0
+
+
 def main() -> int:
     args = parse_args()
     repo_root = Path.cwd()
     output_path = repo_root / args.output
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    checks: list[GateCheck] = []
-    if not args.skip_shippable:
-        checks.append(
-            GateCheck(
-                "P",
-                "Shippable gate baseline",
-                [sys.executable, ".github/scripts/check-forge-shippable-gate.py", "--mode", args.mode],
+    if (repo_root / "wolf-cog-os").is_dir():
+        checks: list[GateCheck] = []
+        if not args.skip_shippable:
+            checks.append(
+                GateCheck(
+                    "P",
+                    "Shippable gate baseline",
+                    [sys.executable, ".github/scripts/check-forge-shippable-gate.py", "--mode", args.mode],
+                )
             )
-        )
-    checks.extend(
-        [
-            GateCheck("P7", "Pipeline specs v2", [sys.executable, "wolf-cog-os/scripts/validate-pipeline.py", "--all", "--mode", "fail"]),
+        checks.extend(
+            [
+                GateCheck("P7", "Pipeline specs v2", [sys.executable, "wolf-cog-os/scripts/validate-pipeline.py", "--all", "--mode", "fail"]),
             GateCheck(
                 "P7",
                 "Lineage contract tests",
@@ -203,8 +249,82 @@ def main() -> int:
                 "Universal substrate tests",
                 [sys.executable, "-m", "unittest", "tests.test_universal_substrate"],
             ),
-        ]
-    )
+            ]
+        )
+    elif _cog_os_active(repo_root):
+        checks = []
+        if not args.skip_shippable:
+            checks.append(
+                GateCheck(
+                    "P",
+                    "Shippable gate baseline",
+                    [sys.executable, ".github/scripts/check-forge-shippable-gate.py", "--mode", args.mode],
+                )
+            )
+        checks.extend(
+            [
+                GateCheck(
+                    "P7",
+                    "Forge profile validation",
+                    [sys.executable, "cog-os/forge/scripts/validate-profile.py", "--mode", "fail"],
+                ),
+                GateCheck(
+                    "E",
+                    "Forge profile loader tests",
+                    [sys.executable, "cog-os/scripts/test/test-forge-profile-loader.py"],
+                ),
+                GateCheck(
+                    "P9",
+                    "Substrate evolution ledger",
+                    [
+                        sys.executable,
+                        ".github/scripts/validate-substrate-evolution-ledger.py",
+                        "--mode",
+                        "fail",
+                        "--registry",
+                        "cog-os/forge/substrates/registry.json",
+                    ],
+                ),
+                GateCheck(
+                    "P9",
+                    "Backend evolution ledger",
+                    [
+                        sys.executable,
+                        ".github/scripts/validate-backend-evolution-ledger.py",
+                        "--mode",
+                        "fail",
+                        "--registry",
+                        "cog-os/forge/backends/registry.json",
+                    ],
+                ),
+                GateCheck("D", "Promotion dry-run fixture", ["bash", "cog-os/scripts/test/promotion-dry-run.sh", "--skip-verify"]),
+                GateCheck("C", "QEMU smoke contract", ["bash", "cog-os/scripts/test/qemu-smoke.sh", "--contract"]),
+                GateCheck(
+                    "C",
+                    "QEMU contract artifact",
+                    [
+                        sys.executable,
+                        "-c",
+                        "import json, pathlib, sys; p=pathlib.Path('ci-artifacts/qemu-contract.json'); "
+                        "assert p.is_file(), 'missing ci-artifacts/qemu-contract.json'; "
+                        "d=json.loads(p.read_text(encoding='utf-8')); "
+                        "sys.exit(0 if d.get('status') == 'pass' else 1)",
+                    ],
+                ),
+                GateCheck(
+                    "P9",
+                    "Nightly evolution ledger",
+                    [sys.executable, ".github/scripts/validate-nightly-evolution-ledger.py", "--mode", "fail"],
+                ),
+                GateCheck(
+                    "P9",
+                    "Nightly evolution dry-run",
+                    ["bash", "cog-os/scripts/test/forge-nightly-evolution.sh", "--dry-run"],
+                ),
+            ]
+        )
+    else:
+        return _write_retired_report(output_path=output_path, mode=args.mode)
 
     rows: list[dict[str, object]] = []
     overall = "pass"

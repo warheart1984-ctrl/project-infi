@@ -243,4 +243,59 @@ def apply_response_floor(current: ImmuneResponse, floor: ImmuneResponse) -> Immu
     return current
 
 
+def project_hardening_recommendations(context: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Project scar-tissue recommendations for OTEM ceiling diagnostic bundles."""
+    ctx = dict(context or {})
+    snap = immune_hardening.snapshot()
+    recommendations: list[dict[str, str]] = []
+    if int(snap.get("defense_generation") or 0) > 0:
+        recommendations.append(
+            {
+                "action": "maintain_summary_cap",
+                "rationale": "defense generation elevated after prior incidents",
+            }
+        )
+    if int(snap.get("threat_memory_count") or 0) > 0:
+        recommendations.append(
+            {
+                "action": "enforce_threat_floor",
+                "rationale": "repeat threat codes retain elevated response floors",
+            }
+        )
+    if not recommendations:
+        recommendations.append(
+            {
+                "action": "baseline_hardening",
+                "rationale": "no scar tissue yet; apply standard post-ceiling enrollment",
+            }
+        )
+    return {
+        "status": "ok",
+        "defense_generation": snap.get("defense_generation", 0),
+        "summary_char_limit": snap.get("summary_char_limit"),
+        "hardened_nodes": list(snap.get("hardened_nodes") or []),
+        "threat_memory_count": int(snap.get("threat_memory_count") or 0),
+        "recommendations": recommendations,
+        "context": ctx,
+    }
+
+
+def enroll_post_ceiling_hardening(decision: str, *, scope_id: str | None = None) -> dict[str, Any]:
+    """Increment defense generation and emit pattern ledger event after ceiling decision."""
+    normalized = str(decision or "").strip().lower() or "unknown"
+    reason = f"otem_ceiling:{normalized}"
+    generation = immune_hardening.increment_generation(reason=reason)
+    pattern_event = immune_hardening.emit_pattern_event(
+        classification="otem_ceiling_hardening",
+        summary=f"Post-ceiling hardening after {normalized} (scope={scope_id or 'global'})",
+        severity="S2",
+    )
+    return {
+        "decision": normalized,
+        "scope_id": scope_id,
+        "generation": generation,
+        "pattern_event": pattern_event,
+    }
+
+
 immune_hardening = ImmuneHardeningStore()

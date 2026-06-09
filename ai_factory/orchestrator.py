@@ -142,10 +142,8 @@ def deploy_active_build(
     build_id: str,
     runtime_root: Path | None = None,
     repo_root: Path | None = None,
-    wolf_payload_root: Path | None = None,
-    wolf_deploy: bool = False,
-    dry_run: bool = False,
 ) -> Path:
+    del repo_root
     root = (runtime_root or DEFAULT_RUNTIME_ROOT).expanduser().resolve()
     source = root / build_id
     if not source.is_dir():
@@ -176,17 +174,6 @@ def deploy_active_build(
             "receipt_path": str((source / "AI_BUILD_RECEIPT.json").resolve()),
         },
     )
-
-    if wolf_deploy:
-        from ai_factory.wolf_deploy import deploy_build_to_wolf_payload
-
-        deploy_build_to_wolf_payload(
-            build_id=build_id,
-            runtime_root=root,
-            repo_root=(repo_root or Path(".")).resolve(),
-            wolf_payload_root=wolf_payload_root,
-            dry_run=dry_run,
-        )
 
     return pointer
 

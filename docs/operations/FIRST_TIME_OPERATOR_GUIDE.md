@@ -2,6 +2,8 @@
 
 This is the consolidated onboarding path for Project Infinity / AAIS. It stitches together the README quick start, Infinity Pilot Docker bootstrap, and pointers to advanced subsystems.
 
+**Daily operator path:** [OPERATOR_GOLDEN_PATH.md](./OPERATOR_GOLDEN_PATH.md) — bootstrap, 3 screens / 3 actions, verification ladder.
+
 **Running like production?** Read [EARLY_ADOPTER_CHARTER.md](./EARLY_ADOPTER_CHARTER.md) and follow [AAIS_PRODUCTION_OPERATOR_RUNBOOK.md](./AAIS_PRODUCTION_OPERATOR_RUNBOOK.md) after Tier 1 — knowledge is freely given; trust is earned through gates and sign-off.
 
 For constitutional law and proof requirements, see the root README governance section. For subsystem depth, follow links at the end.
@@ -165,7 +167,7 @@ Use these after Tier 1 or Tier 2. Each subsystem has its own runbook; this secti
 
 | Subsystem | Entry | Notes |
 |---|---|---|
-| **Wolf-CoG-OS ISO forge** | [wolf-cog-os/forge/README.md](../../wolf-cog-os/forge/README.md), root `Makefile` (`make rootfs`, `make iso-tree`) | Outputs under `wolf-cog-os/output/` (local-only, gitignored) |
+| **CoG OS ISO forge** | [cog-os/forge/scripts/build-rootfs.sh](../../cog-os/forge/scripts/build-rootfs.sh), [cog-os/docs/BOOT_PROOF_CHECKLIST.md](../../cog-os/docs/BOOT_PROOF_CHECKLIST.md), root `Makefile` (`make rootfs`, `make cog-qemu-smoke-contract-boot`) | Outputs under `artifacts/cog-os/` (local-only, gitignored) |
 | **Platform membrane** | [docs/subsystems/platform/ONBOARDING.md](../subsystems/platform/ONBOARDING.md) | Multi-tenant ops, ledger, artifacts on `:8090` |
 | **Forge contractors** | `forge/`, `forge_eval/`, `evolve_engine/` | HTTP lanes on ports 6060–6062 |
 | **UGR** | `src/ugr/`, UGR trust bundle gates in CI | Cognition/proof overlay; pairs with Platform |

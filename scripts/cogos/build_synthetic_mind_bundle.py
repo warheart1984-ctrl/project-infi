@@ -14,7 +14,7 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_BUNDLE_DIR = REPO_ROOT / "wolf-cog-os" / "artifacts" / "synthetic-mind-bundle"
+DEFAULT_BUNDLE_DIR = REPO_ROOT / "artifacts" / "synthetic-mind-bundle"
 
 BRIDGE_MODULES = (
     "cogos_runtime_bridge.py",

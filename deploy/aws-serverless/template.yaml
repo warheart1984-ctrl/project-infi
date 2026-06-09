@@ -1,0 +1,142 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Governed OTEM execution — Lambda durable function + HTTP API operator callback.
+  Maps src/otem_temporal/workflows.py to AWS Serverless (see README.md).
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Default: dev
+    AllowedValues: [dev, staging, prod]
+  OtemCallbackTimeoutHours:
+    Type: Number
+    Default: 72
+    MinValue: 1
+    MaxValue: 168
+  OtemExecutionRetentionDays:
+    Type: Number
+    Default: 14
+    MinValue: 1
+    MaxValue: 90
+
+Globals:
+  Function:
+    Runtime: python3.13
+    Timeout: 900
+    MemorySize: 512
+    Tracing: Active
+    Environment:
+      Variables:
+        ENVIRONMENT: !Ref EnvironmentName
+        LOG_LEVEL: INFO
+        POWERTOOLS_SERVICE_NAME: otem-governance
+        AAIS_RUNTIME_CONTEXT: operator_runtime
+
+Resources:
+  OtemDurableFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub otem-governance-durable-${EnvironmentName}
+      Handler: otem_durable_handler.handler
+      CodeUri: src/
+      DurableConfig:
+        ExecutionTimeout: 86400
+        RetentionPeriodInDays: !Ref OtemExecutionRetentionDays
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicDurableExecutionRolePolicy
+        - arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess
+      AutoPublishAlias: live
+      Environment:
+        Variables:
+          OTEM_CALLBACK_TIMEOUT_HOURS: !Ref OtemCallbackTimeoutHours
+
+  OperatorDecisionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub otem-operator-decision-${EnvironmentName}
+      Handler: operator_decision_api.handler
+      CodeUri: src/
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Statement:
+            - Effect: Allow
+              Action:
+                - lambda:SendDurableExecutionCallbackSuccess
+                - lambda:SendDurableExecutionCallbackFailure
+              Resource: !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:otem-governance-durable-${EnvironmentName}:*
+      Environment:
+        Variables:
+          OTEM_DURABLE_FUNCTION_NAME: !Sub otem-governance-durable-${EnvironmentName}:live
+
+  OtemWorkflowHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: !Ref EnvironmentName
+      CorsConfiguration:
+        AllowOrigins:
+          - http://localhost:5173
+        AllowMethods:
+          - POST
+          - OPTIONS
+        AllowHeaders:
+          - Authorization
+          - Content-Type
+      Auth:
+        DefaultAuthorizer: AWS_IAM
+      DefinitionBody:
+        openapi: '3.0.1'
+        info:
+          title: OTEM Operator Decision API
+          version: '1.0'
+        paths:
+          /workflows/{workflowId}/decision:
+            post:
+              operationId: submitOperatorDecision
+              parameters:
+                - name: workflowId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      required: [callback_id, action]
+                      properties:
+                        callback_id:
+                          type: string
+                        action:
+                          type: string
+                          enum: [approve, reject]
+              responses:
+                '200':
+                  description: Callback accepted
+              x-amazon-apigateway-integration:
+                type: aws_proxy
+                httpMethod: POST
+                payloadFormatVersion: '2.0'
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${OperatorDecisionFunction.Arn}/invocations
+
+  OperatorDecisionFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref OperatorDecisionFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${OtemWorkflowHttpApi}/*/*/*
+
+Outputs:
+  OtemWorkflowApiUrl:
+    Description: Base URL for operator decision callbacks
+    Value: !Sub https://${OtemWorkflowHttpApi}.execute-api.${AWS::Region}.amazonaws.com/${EnvironmentName}
+  OtemDurableFunctionAliasArn:
+    Description: Qualified ARN — required for durable invocations
+    Value: !Ref OtemDurableFunction.Alias
+  OperatorDecisionFunctionArn:
+    Description: API handler that completes durable callbacks
+    Value: !GetAtt OperatorDecisionFunction.Arn

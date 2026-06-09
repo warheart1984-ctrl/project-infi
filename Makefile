@@ -7,7 +7,15 @@ ifeq ($(OS),Windows_NT)
 export PATH := $(CURDIR)/tools/bin;$(PATH)
 endif
 
+PYTHON ?= python3
+export PYTHON
+
+COG_OS_DIR := cog-os
+COG_PROFILE ?= metal
 FORGE_PROFILE ?= $(COGOS_FORGE_PROFILE)
+ifneq ($(strip $(COG_PROFILE)),)
+FORGE_PROFILE := $(COG_PROFILE)
+endif
 FORGE_PROFILE_ARG := $(if $(strip $(FORGE_PROFILE)),--profile $(FORGE_PROFILE),)
 
 run:
@@ -20,7 +28,7 @@ test:
 	pytest -q
 
 governance-check:
-	python3 .github/scripts/validate-governance-ledger.py
+	$(PYTHON) .github/scripts/validate-governance-ledger.py
 
 library-gate:
 	python3 .github/scripts/check-library-governance.py
@@ -75,65 +83,120 @@ operator-workflow-stack-gate: library-gate workflow-family-gate brain-proposal-g
 infinity1-flagship-verification:
 	python3 tools/governance/run_infinity1_flagship_verification.py
 
+# Nova CoG OS forge (cog-os/) — custom PID 1 + profile-driven rootfs/ISO.
+define WOLF_FORGE_DEPRECATED
+	@echo Nova NorthStar CoG OS: wolf-cog-os removed. Use make cog-rootfs COG_PROFILE=$(COG_PROFILE) (see cog-os/README.md). & exit /b 1
+endef
+
 rootfs:
-	sudo -E bash wolf-cog-os/scripts/build-rootfs.sh $(FORGE_PROFILE_ARG)
+	bash $(COG_OS_DIR)/forge/scripts/build-rootfs.sh --profile $(COG_PROFILE)
 
 iso-tree:
-	COGOS_BUILD_FROM_TREE=1 bash wolf-cog-os/scripts/build.sh $(FORGE_PROFILE_ARG) "$${ISO:-}"
+	bash $(COG_OS_DIR)/forge/scripts/build-iso.sh --profile $(COG_PROFILE)
 
-rootfs-forge:
-	sudo -E bash wolf-cog-os/scripts/build-rootfs.sh --profile "$${COGOS_FORGE_PROFILE:-forge-selfhosted}"
+rootfs-forge: rootfs
 
-iso-tree-forge:
-	COGOS_BUILD_FROM_TREE=1 bash wolf-cog-os/scripts/build.sh --profile "$${COGOS_FORGE_PROFILE:-forge-selfhosted}" "$${ISO:-}"
+iso-tree-forge: iso-tree
+
+cog-qemu-smoke:
+	bash $(COG_OS_DIR)/scripts/test/qemu-smoke.sh --profile $(COG_PROFILE)
+
+cog-qemu-smoke-contract:
+	bash $(COG_OS_DIR)/scripts/test/qemu-smoke.sh --contract --profile $(COG_PROFILE)
+
+cog-qemu-smoke-contract-boot:
+	bash $(COG_OS_DIR)/scripts/test/qemu-smoke.sh --contract --contract-boot --profile $(COG_PROFILE)
+
+cog-rootfs: rootfs
+
+wolf-%:
+	@echo "wolf-cog-os targets are deprecated. Use cog-os equivalents (see cog-os/README.md)."
+	@exit 1
+
+wolf-rootfs:
+	@echo wolf-rootfs is deprecated; use: make rootfs COG_PROFILE=$(COG_PROFILE)
+	$(MAKE) rootfs COG_PROFILE=$(COG_PROFILE)
 
 forge-installer:
-	bash wolf-cog-os/scripts/build-forge-installer.sh "$${ISO:-}"
+	bash $(COG_OS_DIR)/scripts/cogos-installer.sh
 
 forge-shippable-gate:
-	python3 .github/scripts/check-forge-shippable-gate.py --mode fail
+	$(PYTHON) .github/scripts/check-forge-shippable-gate.py --mode fail
 
 forge-platform-gate:
-	python3 .github/scripts/check-forge-platform-gate.py --mode fail
+	$(PYTHON) .github/scripts/check-forge-platform-gate.py --mode fail
 
 forge-dashboard:
-	python3 wolf-cog-os/scripts/forge-platform-dashboard.py $(FORGE_DASHBOARD_ARGS)
+	$(WOLF_FORGE_DEPRECATED)
 
 forge-nightly-evolution:
-	bash wolf-cog-os/scripts/test/forge-nightly-evolution.sh --dry-run
+	$(WOLF_FORGE_DEPRECATED)
 
 forge-nightly-build:
-	bash wolf-cog-os/scripts/test/forge-nightly-evolution.sh --build
+	$(WOLF_FORGE_DEPRECATED)
 
 forge-run-pipeline:
-	bash wolf-cog-os/scripts/run-forge-pipeline.sh $(PIPELINE)
+	$(WOLF_FORGE_DEPRECATED)
 
 forge-rocky-fallback:
-	bash wolf-cog-os/scripts/test/forge-build-with-rocky-fallback.sh
+	$(WOLF_FORGE_DEPRECATED)
 
 forge-clean:
-	bash wolf-cog-os/scripts/test/forge-clean-work.sh
+	rm -rf artifacts/cog-os
 
 forge-rocky:
-	bash wolf-cog-os/scripts/test/forge-build-rocky.sh
+	$(WOLF_FORGE_DEPRECATED)
 
 fetch-rocky-substrate:
-	bash wolf-cog-os/scripts/test/fetch-rocky-substrate.sh $(ROCKY_ISO)
+	$(WOLF_FORGE_DEPRECATED)
 
 installer-smoke:
-	bash wolf-cog-os/scripts/cogos-installer.sh --smoke $(INSTALLER_ARGS)
+	bash $(COG_OS_DIR)/scripts/test/qemu-smoke.sh --profile $(COG_PROFILE) --build
 
 installer-integration:
-	python3 wolf-cog-os/scripts/test/installer-matrix.py
+	$(PYTHON) $(COG_OS_DIR)/scripts/test/test-forge-profile-loader.py
+	bash $(COG_OS_DIR)/scripts/cogos-installer.sh --smoke
 
 sign-artifacts:
 	bash .github/scripts/sign-artifacts.sh "$(ARTIFACT_DIR)"
 
 verify-artifacts:
-	bash .github/scripts/verify-artifacts.sh "$(ARTIFACT_DIR)"
+	PYTHON="$(PYTHON)" bash .github/scripts/verify-artifacts.sh "$(ARTIFACT_DIR)"
+
+.PHONY: forge-gates
+
+forge-gates:
+	@echo "=== A Profile loader ==="
+	bash $(COG_OS_DIR)/forge/scripts/lib/profile-loader.sh --profile $(COG_PROFILE) --print
+	@echo "=== B Rootfs (optional; set FORGE_SKIP_ROOTFS=1 to skip) ==="
+	@if [ "$(FORGE_SKIP_ROOTFS)" = "1" ]; then echo "SKIP rootfs build"; else $(MAKE) cog-rootfs COG_PROFILE=$(COG_PROFILE); fi
+	@if [ "$(COG_CONTRACT_BOOT)" = "1" ] && [ "$(FORGE_SKIP_ROOTFS)" != "1" ]; then \
+	  echo "=== B2 QEMU contract (boot) ==="; \
+	  $(MAKE) cog-qemu-smoke-contract-boot COG_PROFILE=$(COG_PROFILE); \
+	else echo "SKIP contract-boot (set COG_CONTRACT_BOOT=1 and build rootfs in WSL/Linux)"; fi
+	@echo "=== C QEMU contract (static) ==="
+	$(MAKE) cog-qemu-smoke-contract COG_PROFILE=$(COG_PROFILE)
+	@echo "=== D Promotion dry-run ==="
+	bash $(COG_OS_DIR)/scripts/test/promotion-dry-run.sh --skip-verify
+	@echo "=== E Profile validation ==="
+	$(PYTHON) $(COG_OS_DIR)/forge/scripts/validate-profile.py --mode fail
+	@echo "=== F Profile attestation ==="
+	bash -n $(COG_OS_DIR)/forge/scripts/lib/emit-profile-attestation.sh
+	@if [ -d artifacts/cog-os/rootfs-$(COG_PROFILE)/usr ]; then bash $(COG_OS_DIR)/forge/scripts/lib/emit-profile-attestation.sh --profile $(COG_PROFILE); else echo "SKIP full attestation (no built rootfs)"; fi
+	@echo "=== G Promotion source validation ==="
+	$(PYTHON) .github/scripts/validate-promotion-source.py --artifacts-dir $(COG_OS_DIR)/scripts/test/fixtures/promotion-forge-rc --source-run-id 424242 --expected-profile-id forge-selfhosted --required-scenarios 1,3,4,6 --output ci-artifacts/promotion-source-validation.json
+	@echo "=== H Evolution ledger ==="
+	$(PYTHON) .github/scripts/validate-governance-ledger.py --mode fail
+	$(PYTHON) .github/scripts/check-forge-shippable-gate.py --mode fail
+	@echo "=== I Release notes dry-run ==="
+	$(PYTHON) .github/scripts/generate-release-notes.py --dry-run --target-tag v0.0.0-dry-run --metadata-dir ci-artifacts --output ci-artifacts/release-notes-dry-run.md
+	@echo "=== J Build index dry-run ==="
+	$(PYTHON) .github/scripts/update-build-index.py --dry-run --index ci-artifacts/build-index.json --stable ci-artifacts/stable-index.json --latest ci-artifacts/latest-build.json --entry-json $(COG_OS_DIR)/scripts/test/fixtures/promotion-forge-rc/build-metadata.json --channel rc
+	@echo "=== K Artifacts verify (optional; set ARTIFACT_DIR) ==="
+	@if [ -n "$(ARTIFACT_DIR)" ]; then $(MAKE) verify-artifacts ARTIFACT_DIR="$(ARTIFACT_DIR)"; else echo "SKIP verify-artifacts (ARTIFACT_DIR unset)"; fi
+	@echo "forge-gates PASS profile=$(COG_PROFILE)"
 
 ugr-cloud-gate:
-	python3 wolf-cog-os/scripts/validate-ugr-cloud-manifest.py --mode fail
 	pytest tests/test_ugr_cloud.py -q
 
 ugr-rewards-gate:
@@ -141,48 +204,37 @@ ugr-rewards-gate:
 	python3 tools/governance/inspect_ugr_ledger.py
 
 ugr-ingestion-gate:
-	python3 wolf-cog-os/scripts/validate-ugr-ingestion-manifest.py --mode fail
 	pytest tests/test_ugr_ingestion.py -q
 
 ugr-platform-gate:
-	python3 wolf-cog-os/scripts/validate-ugr-platform-manifest.py --mode fail
 	pytest tests/test_ugr_platform.py -q
 
 ugr-graph-index-gate:
-	python3 wolf-cog-os/scripts/validate-ugr-graph-index-manifest.py --mode fail
 	pytest tests/test_ugr_graph_index.py -q
 
 ugr-mission-gate:
-	python3 wolf-cog-os/scripts/validate-ugr-mission-manifest.py --mode fail
 	pytest tests/test_ugr_mission_demo.py tests/test_ugr_tenant_isolation.py tests/test_ugr_cost_routing.py tests/test_ugr_marketplace.py tests/test_ugr_cloud_invariants.py tests/test_ugr_execution_policy.py tests/test_ugr_federation_v17_acceptance.py tests/test_ugr_federation_v18_acceptance.py tests/test_ugr_federation_v19_acceptance.py -q
 
 ugr-embryo-gate:
-	python3 wolf-cog-os/scripts/validate-ugr-embryo-manifest.py --mode fail
 	pytest tests/test_ugr_embryo.py -q
 
 ugr-causal-graph-gate:
-	python3 wolf-cog-os/scripts/validate-ugr-causal-graph-manifest.py --mode fail
 	pytest tests/test_ugr_causal_graph.py -q
 
 ugr-llm-provider-gate:
-	python3 wolf-cog-os/scripts/validate-ugr-llm-provider-manifest.py --mode fail
 	pytest tests/test_ugr_governed_llm_executor.py tests/test_ugr_llm_lane.py -q
 
 ugr-cogos-write-path-gate:
-	python3 wolf-cog-os/scripts/validate-ugr-cogos-write-path-manifest.py --mode fail
 	pytest tests/test_ugr_cogos_pattern_bridge.py tests/test_unified_pattern_ledger.py -q
 
 ugr-graph-backend-gate:
-	python3 wolf-cog-os/scripts/validate-ugr-graph-backend-manifest.py --mode fail
 	pytest tests/test_ugr_graph_backend.py tests/test_ugr_graph_index.py -q
 
 ugr-trust-bundle-gate:
-	python3 wolf-cog-os/scripts/validate-ugr-trust-bundle-manifest.py --mode fail
 	pytest tests/test_ugr_trust_bundle_organ.py -q
 	python3 tools/proof/run_ugr_trust_bundle.py --mode fail
 
 ugr-operator-console-gate:
-	python3 wolf-cog-os/scripts/validate-ugr-operator-console-manifest.py --mode fail
 	pytest tests/test_ugr_operator_console.py -q
 
 SPEC ?= factory/specs/nova-default.yaml
@@ -199,7 +251,6 @@ repo-hygiene-gate:
 synthetic-mind-gate:
 	python3 scripts/cogos/build_synthetic_mind_bundle.py
 	python3 .github/scripts/check-canonical-lane-sync.py --mode $(REPO_HYGIENE_MODE)
-	python3 wolf-cog-os/scripts/validate-substrate-invariants.py --mode fail
 	python3 -m pytest tests/test_synthetic_mind_bundle.py tests/test_synthetic_mind_platform.py tests/test_spark_pipeline.py tests/test_coherence_projection.py -q
 
 LAB_SPEC ?= lab/specs/default.yaml
@@ -865,7 +916,7 @@ operator-workbench-organ-gate:
 workflow-shell-organ-gate:
 	python3 .github/scripts/check-workflow-shell-organ-governance.py
 
-alt16-gate: ai-factory-organ-gate cogos-runtime-bridge-organ-gate wolf-rehydration-organ-gate forge-contractor-organ-gate forge-eval-organ-gate evolve-engine-organ-gate slingshot-organ-gate operator-workbench-organ-gate workflow-shell-organ-gate genome-gate
+alt16-gate: ai-factory-organ-gate cogos-runtime-bridge-organ-gate forge-contractor-organ-gate forge-eval-organ-gate evolve-engine-organ-gate slingshot-organ-gate operator-workbench-organ-gate workflow-shell-organ-gate genome-gate
 
 alt16-1-gate: alt16-gate alt15-1-gate
 	python3 -m pytest tests/test_ai_factory_organ.py tests/test_cogos_runtime_bridge_organ.py tests/test_wolf_rehydration_organ.py tests/test_forge_contractor_organ.py tests/test_forge_eval_organ.py tests/test_evolve_engine_organ.py tests/test_slingshot_organ.py tests/test_operator_workbench_organ.py tests/test_workflow_shell_organ.py tests/test_operator_cognition_coherence_fabric.py -q
@@ -1034,6 +1085,12 @@ alt20-2-gate: alt20-1-gate alt20-closure-gate
 
 alt20-governed-gate:
 	python3 tools/governance/check_alt20_governed_eligibility.py
+
+otem-ceiling-gate:
+	python3 tools/governance/check_otem_ceiling_gate.py
+
+otem-ceiling-invoke:
+	python3 -c "import os; os.environ['AAIS_OTEM_CEILING_INVOKE']='1'; from src.otem_ceiling import otem_ceiling; otem_ceiling.evaluate_trigger(trigger_type='operator_invoke', summary='make otem-ceiling-invoke'); print('otem-ceiling-invoke: containment entered')"
 
 creative-core-runtime-organ-gate:
 	python3 .github/scripts/check-creative-core-runtime-organ-governance.py
@@ -1476,16 +1533,16 @@ platform-up:
 	cd deploy/platform && docker compose up --build
 
 wolf-rehydration-gate:
-	python3 .github/scripts/check-wolf-rehydration.py
+	@echo Wolf CoG OS rehydration gate retired with wolf-cog-os removal. & exit /b 0
 
 stage2-fidelity-gate:
 	python3 .github/scripts/check-stage2-fidelity.py
 
 ai-factory-deploy-wolf:
-	python3 -m ai_factory deploy --build-id $(or $(BUILD_ID),nova-default) --wolf --repo-root .
+	@echo Wolf CoG OS payload deploy removed. Use: python3 -m ai_factory deploy --build-id BUILD_ID & exit /b 1
 
-stack-closure-gate: wolf-rehydration-gate stage2-fidelity-gate ai-factory-gate lab-gate
-	python3 -m pytest tests/test_wolf_rehydration_harness.py tests/test_stage2_fidelity_metrics.py tests/test_memory_governance_membrane.py tests/test_ai_factory_wolf_deploy.py tests/test_lab_forge_bridge.py tests/test_nova_formal_spec.py tests/test_narrative_continuity_proof.py tests/test_intent_agency_evidence.py tests/test_ai_factory.py tests/test_lab.py -q
+stack-closure-gate: stage2-fidelity-gate ai-factory-gate lab-gate
+	python3 -m pytest tests/test_stage2_fidelity_metrics.py tests/test_memory_governance_membrane.py tests/test_lab_forge_bridge.py tests/test_nova_formal_spec.py tests/test_narrative_continuity_proof.py tests/test_intent_agency_evidence.py tests/test_ai_factory.py tests/test_lab.py -q
 	python3 .github/scripts/check-nova-cortex-governance.py
 	python3 .github/scripts/check-nova-narrative-continuity.py
 	python3 .github/scripts/check-nova-intent-agency.py

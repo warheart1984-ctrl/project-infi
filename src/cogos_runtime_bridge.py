@@ -193,6 +193,25 @@ def rehydrate_boot_combined(
     }
 
 
+def build_ceiling_safe_mode_status(*, scope_id: str | None = None) -> dict[str, Any]:
+    """Advisory safe-mode reanchor status for OTEM Level 20 recovery."""
+    scope = str(scope_id or "global").strip() or "global"
+    family = load_family_config()
+    return {
+        "status": "safe_mode",
+        "scope_id": scope,
+        "family_id": family.get("family_id"),
+        "active_runtimes": ["nova_cortex"],
+        "reanchor": {
+            "narrative_store": str(resolve_narrative_store_root()),
+            "intent_store": str(resolve_intent_store_root()),
+            "frame_kind": "governance_recovery",
+        },
+        "runtime_effect": "advisory_only",
+        "summary": "CoG OS safe-mode reanchor projection — operator must confirm before apply.",
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="CoG OS cognitive runtime bridge")
     parser.add_argument("--spec", action="store_true", help="Print family spec JSON")

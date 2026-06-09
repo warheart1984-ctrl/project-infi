@@ -201,17 +201,21 @@ class TestShadowRuntimeAndCICD(unittest.TestCase):
 
 
 class TestPlatformManifestValidator(unittest.TestCase):
-    def test_validator_passes(self):
-        import subprocess
-        import sys
+    def test_validator_retired_without_wolf_forge(self):
+        script = Path(__file__).resolve().parents[1] / "wolf-cog-os" / "scripts" / "validate-ugr-platform-manifest.py"
+        if script.is_file():
+            import subprocess
+            import sys
 
-        completed = subprocess.run(
-            [sys.executable, "wolf-cog-os/scripts/validate-ugr-platform-manifest.py", "--mode", "fail"],
-            cwd=Path(__file__).resolve().parents[1],
-            capture_output=True,
-            text=True,
-        )
-        self.assertEqual(completed.returncode, 0, msg=completed.stdout + completed.stderr)
+            completed = subprocess.run(
+                [sys.executable, str(script), "--mode", "fail"],
+                cwd=Path(__file__).resolve().parents[1],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(completed.returncode, 0, msg=completed.stdout + completed.stderr)
+        else:
+            self.skipTest("wolf-cog-os UGR platform manifest validator removed")
 
 
 if __name__ == "__main__":

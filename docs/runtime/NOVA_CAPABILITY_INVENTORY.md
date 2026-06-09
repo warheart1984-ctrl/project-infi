@@ -254,7 +254,7 @@ Workflows: `.github/workflows/nova-cortex-governance-gate.yml`, `nova-narrative-
 - [x] Store dir placeholders (`nova_narrative/`, `nova_intent/`) — `asserted`
 - [x] `cognitive_runtime_family.json` in payload — `asserted`
 - [x] `cogos_runtime_bridge.py` spec / validate / rehydrate — `asserted`
-- [ ] Metal install proof checklist complete — `debt` · see [METAL_PROOF_CHECKLIST.md](../../wolf-cog-os/docs/METAL_PROOF_CHECKLIST.md)
+- [ ] Metal install proof checklist complete — `debt` · see [METAL_PROOF_CHECKLIST.md](../../cog-os/docs/METAL_PROOF_CHECKLIST.md)
 
 ---
 

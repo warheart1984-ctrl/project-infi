@@ -1,5 +1,7 @@
 """Append-only Discovery Pod ledger — durable record of every registered pod name."""
 
+# Engineering: DiscoveryPodLedgerEngine
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -13,6 +15,11 @@ from typing import Any
 from uuid import uuid4
 
 from src.ugr.discovery.proven_contribution import is_proven_contribution
+from src.ugr.discovery.standing import (
+    build_epistemic_envelope,
+    epistemic_from_receipt,
+    standing_from_receipt,
+)
 
 LEDGER_ID = "ugr.discovery.pods"
 LEDGER_VERSION = "1.0"
@@ -554,6 +561,7 @@ class DiscoveryPodLedger:
         spec_payload: dict[str, Any] | None = None,
         receipt_id: str = "",
         operator_rewards: dict[str, Any] | None = None,
+        receipt: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         ctx = resolve_pod_context(
             operator_id=operator_id,
@@ -601,6 +609,22 @@ class DiscoveryPodLedger:
                     return {"ok": True, "skipped": True, "idempotent": True, "pod_id": pod_id}
 
         event_id = f"pprov-{uuid4().hex[:12]}"
+        receipt_obj = dict(receipt or {})
+        if receipt_obj:
+            payload = dict(receipt_obj.get("payload") or {})
+            proof = dict(receipt_obj.get("proof") or {})
+            epistemic = build_epistemic_envelope(
+                standing_from_receipt(receipt_obj),
+                claim_label=str(payload.get("claim_label") or proof.get("claim_label") or ""),
+                rejection_source=str(
+                    payload.get("rejection_source") or proof.get("rejection_source") or ""
+                )
+                or None,
+                falsity_fingerprint=str(payload.get("falsity_fingerprint") or "") or None,
+                contribution_id=str(receipt_obj.get("contribution_id") or "").strip() or None,
+            )
+        else:
+            epistemic = {}
         record = {
             "event_id": event_id,
             "event_type": EVENT_POD_PROVEN,
@@ -620,6 +644,9 @@ class DiscoveryPodLedger:
                 deltas.get("earned_rail_credits") or deltas.get("rail_credits") or 0
             ),
             "reward_event_id": str(rewards.get("event_id") or ""),
+            "epistemic_state": epistemic.get("epistemic_state")
+            or (epistemic_from_receipt(receipt_obj).value if receipt_obj else ""),
+            "rejection_source": epistemic.get("rejection_source"),
             **arc.to_dict(),
         }
 
@@ -757,8 +784,24 @@ def upgrade_pod_on_discovery(
             spec_payload=spec_payload,
             receipt_id=receipt_id,
             operator_rewards=operator_rewards,
+            receipt=receipt_obj,
         )
         discovery_result["pod_proven"] = proven_result
+        try:
+            from src.urg_operator_knowledge_bridge import promote_from_receipt
+
+            promotion = promote_from_receipt(
+                receipt_obj,
+                operator_id=operator_id,
+                tenant_id=tenant_id,
+            )
+            discovery_result["operator_knowledge_promotion"] = promotion
+        except Exception as exc:
+            discovery_result["operator_knowledge_promotion"] = {
+                "ok": False,
+                "skipped": True,
+                "reason": str(exc),
+            }
 
     return discovery_result
 

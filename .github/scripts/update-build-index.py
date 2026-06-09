@@ -22,6 +22,11 @@ def main():
     parser.add_argument("--entry-json", required=True)
     parser.add_argument("--channel", required=True, choices=["nightly", "rc", "stable"])
     parser.add_argument("--max-entries", type=int, default=200)
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Validate entry JSON and print planned update without writing index files.",
+    )
     args = parser.parse_args()
 
     index_path = Path(args.index)
@@ -32,6 +37,13 @@ def main():
     entry = load(entry_path, {})
     if not entry:
         raise SystemExit(f"Entry JSON is empty or invalid: {entry_path}")
+
+    if args.dry_run:
+        print(
+            f"build-index dry-run: channel={args.channel} index={index_path} "
+            f"stable={stable_path} latest={latest_path} entry={entry_path.name}"
+        )
+        return 0
 
     run = entry.get("run", {})
     run["channel"] = args.channel

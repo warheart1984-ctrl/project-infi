@@ -160,3 +160,31 @@ def test_policy_compile_require_proof():
     )
     ok, _ = evaluate_compiled_rules(predicates, ctx=ctx)
     assert not ok
+
+
+def test_oidc_stub_org_e2e(client: TestClient, monkeypatch: pytest.MonkeyPatch):
+    """One org authorize → callback → session token (stub IdP, PLAT-D8 proof path)."""
+    monkeypatch.setenv("PLATFORM_OIDC_STUB", "1")
+    org_id = "oidc-e2e-org"
+    h = _h(client)
+    client.post("/v1/orgs", headers=h, json={"org_id": org_id, "label": "OIDC E2E"})
+    org = client.get(f"/v1/orgs/{org_id}", headers=h).json()
+    org["oidc_provider"] = "github"
+    org["oidc_config"] = {"client_id": "test-client-id"}
+    client.app.state.platform_service.store.upsert_org(org)
+
+    login = client.get(f"/v1/auth/oidc/{org_id}/login")
+    assert login.status_code == 200
+    body = login.json()
+    assert body.get("provider") == "github"
+    assert "login_url" in body
+
+    callback = client.get(
+        f"/v1/auth/oidc/callback",
+        params={"org_id": org_id, "code": "stub-auth-code", "state": body.get("state", "")},
+    )
+    assert callback.status_code == 200
+    session = callback.json()
+    assert session.get("org_id") == org_id
+    assert session.get("principal_id", "").startswith(f"oidc-{org_id}-")
+    assert session.get("access_token")

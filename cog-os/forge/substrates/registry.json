@@ -1,0 +1,58 @@
+{
+  "registry_version": "substrate-registry.v2",
+  "schema_version": "forge-substrate.v2",
+  "substrates": {
+    "generic-live-squashfs": {
+      "class": "live-squashfs",
+      "notes": "Generic LiveOS squashfs classification baseline."
+    },
+    "debian-live": {
+      "class": "debian-liveos-layout",
+      "notes": "Debian LiveOS replay adapter (production)."
+    },
+    "ubuntu-live": {
+      "class": "ubuntu-liveos-layout",
+      "notes": "Ubuntu LiveOS replay adapter (production)."
+    },
+    "arch-live": {
+      "class": "arch-liveos-layout",
+      "notes": "Classification-only until replay adapter is production."
+    },
+    "fedora-live": {
+      "class": "fedora-liveos-layout",
+      "notes": "Classification-only until replay adapter is production."
+    },
+    "alpine-live": {
+      "class": "alpine-liveos-layout",
+      "notes": "Classification-only until replay adapter is production."
+    },
+    "opensuse-live": {
+      "class": "opensuse-liveos-layout",
+      "notes": "Classification-only until replay adapter is production."
+    },
+    "cogos-replay": {
+      "class": "cogos-replay",
+      "notes": "Nova NorthStar CoG OS replay substrate contract."
+    },
+    "trixie-live": {
+      "class": "debian-liveos-layout",
+      "notes": "Debian trixie LiveOS classification."
+    },
+    "windows-installer": {
+      "class": "windows-installer-layout",
+      "notes": "Windows installer substrate classification."
+    },
+    "macos-installer": {
+      "class": "macos-installer-layout",
+      "notes": "macOS installer substrate classification."
+    },
+    "android-bootable": {
+      "class": "android-bootable-layout",
+      "notes": "Android bootable substrate classification."
+    },
+    "rocky-live": {
+      "class": "rocky-liveos-layout",
+      "notes": "Rocky Linux LiveOS classification."
+    }
+  }
+}

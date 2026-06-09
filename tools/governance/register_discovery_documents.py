@@ -13,9 +13,11 @@ from src.ugr.discovery.contribution_discovery import ContributionDiscoveryServic
 from src.ugr.discovery.contribution_spec import contribution_id_from_spec, ContributionSpec
 from src.ugr.discovery.proof_promotion import (
     load_promotion_policy,
+    rejection_source_for_rule,
     resolve_standing,
     should_transition_standing,
 )
+from src.rls.falsity_registry import FalsityRegistry
 from src.ugr.discovery.standing import (
     Standing,
     enrich_payload_with_standing,
@@ -223,6 +225,7 @@ def register_document(
     claim_label: str,
     verification: dict | None,
     dry_run: bool,
+    promotion_rule: str = "",
 ) -> dict:
     packet = write_proof_packet(
         slug=slug,
@@ -234,15 +237,19 @@ def register_document(
         standing=standing,
     )
     rel_packet = relative_repo_path(packet)
+    claim_text = f"{title} ({slug})"
+    rejection_source = rejection_source_for_rule(promotion_rule) if int(standing) == int(Standing.DENIED) else None
     payload = enrich_payload_with_standing(
         {
             "proof_path": rel_packet,
             "discovery_pod_id": DEFAULT_POD_ID,
             "source_document_path": relative_repo_path(source_path),
             "source_sha256": digest,
+            "promotion_rule": promotion_rule or None,
         },
         standing=standing,
         claim_label=claim_label,
+        rejection_source=rejection_source,
     )
     spec = ContributionSpec(contribution_type="proof", payload=payload)
     contribution_id = contribution_id_from_spec(spec)
@@ -265,8 +272,17 @@ def register_document(
         return entry
 
     if standing == int(Standing.DENIED):
+        try:
+            FalsityRegistry().record_falsified(
+                text=claim_text,
+                reason=f"discovery_denial:{promotion_rule or 'unspecified'}",
+                rejection_source=rejection_source or "discovery_denial",
+            )
+        except Exception:
+            pass
         entry["status"] = "excluded"
         entry["summary"] = "library standing denied — discovery store skipped"
+        entry["promotion_rule"] = promotion_rule or None
         return entry
 
     result = service.discover(
@@ -380,6 +396,7 @@ def main() -> int:
                         claim_label=target_label,
                         verification=probe_document_verification(doc_meta),
                         dry_run=args.dry_run,
+                        promotion_rule=rule_id,
                     )
                     entry["promotion_rule"] = rule_id
                     entry["promoted_from"] = existing.get("claim_label")
@@ -413,6 +430,7 @@ def main() -> int:
             claim_label=claim_label,
             verification=verification,
             dry_run=args.dry_run,
+            promotion_rule=promotion_rule,
         )
         if promotion_rule:
             entry["promotion_rule"] = promotion_rule

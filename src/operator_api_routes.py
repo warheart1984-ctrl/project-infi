@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import logging
+import os
 from typing import Any
 
 from flask import Flask, jsonify, request
@@ -1191,6 +1192,69 @@ def register_operator_api_routes(app: Flask) -> None:
         except Exception as exc:
             logger.warning("brain decision ledger emit failed: %s", exc)
         return jsonify({"session": session}), 200
+
+    @app.route("/api/operator/ceiling", methods=["GET"])
+    def operator_ceiling_status():
+        from src.otem_ceiling import otem_ceiling
+
+        status = otem_ceiling.status_for_console()
+        return jsonify({"ceiling": status, **status}), 200
+
+    @app.route("/api/operator/ceiling/invoke", methods=["POST"])
+    def operator_ceiling_invoke():
+        from dataclasses import asdict
+
+        from src.otem_ceiling import otem_ceiling
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        os.environ["AAIS_OTEM_CEILING_INVOKE"] = "1"
+        event = otem_ceiling.evaluate_trigger(
+            trigger_type="operator_invoke",
+            severity=str(body.get("severity") or "high"),
+            summary=str(body.get("summary") or "operator ceiling invoke"),
+            details=dict(body.get("details") or {}),
+            scope_id=str(body.get("scope_id") or "").strip() or None,
+        )
+        payload = {"status": "invoked", "event": asdict(event) if event else None}
+        payload.update(otem_ceiling.status_for_console())
+        return jsonify(payload), 200
+
+    @app.route("/api/operator/ceiling/preview", methods=["POST"])
+    def operator_ceiling_preview():
+        from src.otem_ceiling import OtemCeilingError, otem_ceiling
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        decision = str(body.get("decision") or "").strip().lower()
+        if not decision:
+            return jsonify({"error": "decision required"}), 400
+        try:
+            result = otem_ceiling.preview_decision(
+                decision,
+                scope_id=str(body.get("scope_id") or "").strip() or None,
+                ir_snapshot=dict(body.get("ir_snapshot") or {}),
+            )
+        except OtemCeilingError as exc:
+            return jsonify({"error": str(exc)}), 400
+        return jsonify(result), 200
+
+    @app.route("/api/operator/ceiling/apply", methods=["POST"])
+    def operator_ceiling_apply():
+        from src.otem_ceiling import OtemCeilingError, otem_ceiling
+
+        body: dict[str, Any] = request.get_json(silent=True) or {}
+        decision = str(body.get("decision") or "").strip().lower()
+        if not decision:
+            return jsonify({"error": "decision required"}), 400
+        try:
+            result = otem_ceiling.apply_decision(
+                decision,
+                scope_id=str(body.get("scope_id") or "").strip() or None,
+                operator_id=str(body.get("operator_id") or "").strip() or None,
+                ir_before=dict(body.get("ir_before") or {}),
+            )
+        except OtemCeilingError as exc:
+            return jsonify({"error": str(exc)}), 400
+        return jsonify(result), 200
 
     @app.route("/api/jarvis/operator-decision-ledger/status", methods=["GET"])
     def jarvis_operator_decision_ledger_status():

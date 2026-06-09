@@ -40,7 +40,20 @@ def main():
     parser.add_argument("--previous-tag", default="")
     parser.add_argument("--metadata-dir", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Validate inputs and print summary without writing release notes.",
+    )
     args = parser.parse_args()
+
+    if args.dry_run:
+        meta_dir = Path(args.metadata_dir)
+        print(
+            f"release-notes dry-run: target={args.target_tag} "
+            f"previous={args.previous_tag or 'n/a'} metadata={meta_dir} output={args.output}"
+        )
+        return 0
 
     meta_dir = Path(args.metadata_dir)
     rc_index = load_json(meta_dir / "rc-index.json")

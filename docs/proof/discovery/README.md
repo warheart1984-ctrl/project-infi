@@ -6,9 +6,12 @@ Governed evidence packets registered for UGR contribution discovery (`contributi
 
 | Metric | Count |
 |---|---|
-| Documents in manifest | 31 |
-| **Proven** | 26 (pattern-promoted + canonical Six Invariants) |
-| **Asserted** | 5 (grant, case study, industrial, DARPA white paper, duplicate) |
+| Documents in manifest | 32 |
+| **Library admitted** | 13 (5 hypothetical + 8 asserted) |
+| **Asserted (library)** | 8 — each has explicit `standing_reason` in manifest |
+| **Denied** | 19 (promotion policy excludes) |
+
+Reconciliation (2026-06-08): [DISCOVERY_ASSERTED_RECONCILIATION_2026-06-08.md](./DISCOVERY_ASSERTED_RECONCILIATION_2026-06-08.md) — **0 ambiguous asserted rows** (each asserted entry is proven-path or documented deny reason).
 
 Authoritative inventory: **`DISCOVERY_DOCUMENT_MANIFEST.json`**
 

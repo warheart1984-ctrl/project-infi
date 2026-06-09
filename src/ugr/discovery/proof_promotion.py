@@ -310,3 +310,11 @@ def should_exclude_from_library(
         auto_promote=auto_promote,
     )
     return standing == int(Standing.DENIED), rule_id
+
+
+def rejection_source_for_rule(rule_id: str | None) -> str | None:
+    """Map proof-promotion deny rules to canonical rejection_source values."""
+    rid = str(rule_id or "").strip()
+    if rid.startswith("deny:"):
+        return "discovery_denial"
+    return None

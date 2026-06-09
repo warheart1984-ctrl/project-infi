@@ -40,9 +40,22 @@ Substrate workflow objects are **not** required to survive process restart for a
 
 ## Capability level (default 10)
 
-- `AAIS_OTEM_CAPABILITY_LEVEL` (1–10, default **10**) sets OTEM ceiling and plan depth.
+- `AAIS_OTEM_CAPABILITY_LEVEL` (1–20, default **10**) sets OTEM capability posture and plan depth.
 - Level **10** (`v10_governed`): chat lane stays **proposal-only**; execution ingress is **only** via workflow approvals (auto-enqueue when `workflow_handoff` is present).
 - Levels below 10 disable auto-enqueue of execution approvals; level 5 maps to legacy `v5_frozen` ceiling.
+- Levels **16–19** are the **containment** authority band: autonomous execution is paused; operator diagnostic bundle and explicit ceiling decisions are required before recovery.
+- Level **20** is the **sovereign** constitutional recovery ceiling: non-delegable operator decisions only (`rollback_to_checkpoint`, `quarantine_archive`, `safe_mode_reanchor`, `accept_containment`, `constitutional_amendment`).
+
+### Authority bands
+
+| Band | Levels | Posture |
+|------|--------|---------|
+| autonomous | 1–9 | Normal immune defend/heal/harden |
+| governed | 10–15 | High immune; L10 execution-approval path |
+| containment | 16–19 | Pause + diagnostic bundle |
+| sovereign | 20 | Constitutional recovery ceiling |
+
+Emergency ceiling invocation: `AAIS_OTEM_CEILING_INVOKE=1` or `make otem-ceiling-invoke` (operator tooling).
 
 ## Hard Rules
 

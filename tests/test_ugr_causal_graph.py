@@ -198,9 +198,11 @@ class TestEmbryoGatewayV1(unittest.TestCase):
 
 
 class TestCausalGraphManifestGate(unittest.TestCase):
-    def test_manifest_validator_passes(self):
+    def test_manifest_validator_retired_without_wolf_forge(self):
         repo_root = Path(__file__).resolve().parents[1]
         script = repo_root / "wolf-cog-os" / "scripts" / "validate-ugr-causal-graph-manifest.py"
+        if not script.is_file():
+            self.skipTest("wolf-cog-os UGR causal graph manifest validator removed")
         completed = subprocess.run(
             [sys.executable, str(script), "--repo-root", str(repo_root), "--mode", "fail"],
             capture_output=True,

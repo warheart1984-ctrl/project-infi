@@ -1,0 +1,5 @@
+connectorId: "jarvis-memory-connector"
+generate:
+  javascriptSdk:
+    outputDir: "../../../frontend/src/lib/dataconnect-generated"
+    package: "@aais/jarvis-memory-dataconnect"

@@ -38,7 +38,9 @@ if [[ ! -f "$ARTIFACT_DIR/artifact-manifest.json" ]]; then
   exit 4
 fi
 
-python3 - <<'PY' "$ARTIFACT_DIR"
+PYTHON="${PYTHON:-python3}"
+
+"${PYTHON}" - <<'PY' "$ARTIFACT_DIR"
 import hashlib
 import json
 import sys
@@ -54,6 +56,10 @@ for item in manifest.get("artifacts", []):
     if h != item.get("sha256"):
         raise SystemExit(f"SHA mismatch for {item['name']}: {h} != {item.get('sha256')}")
 print("Manifest checksums verified.")
+
+iso_candidates = sorted(base.glob("nova-northstar-cog-os-*.iso"))
+if iso_candidates:
+    print(f"Found NorthStar ISO artifact(s): {', '.join(p.name for p in iso_candidates)}")
 PY
 
 while IFS= read -r sig; do

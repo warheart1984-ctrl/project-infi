@@ -1570,4 +1570,25 @@ def build_reasoning_packet(
         ),
         summary=" ".join(summary_parts).strip() or "Reasoning state is aligned with the current turn.",
     )
-    return _wrap_ul_payload(packet.to_dict())
+    packet_dict = packet.to_dict()
+    try:
+        from src.otem_capability import get_otem_capability_level
+        from src.rls.adapters import from_jarvis_reasoning_packet
+        from src.rls.substrate import evaluate_reasoning_graph
+
+        otem_level = get_otem_capability_level()
+        reasoning_graph = from_jarvis_reasoning_packet(packet_dict)
+        rls_verdict = evaluate_reasoning_graph(
+            reasoning_graph,
+            otem_level=otem_level,
+            record_quarantine=True,
+        )
+        packet_dict["reasoning_graph"] = reasoning_graph
+        packet_dict["rls_verdict"] = rls_verdict
+        if rls_verdict.get("cannot_justify_escalation") or str(
+            rls_verdict.get("verdict")
+        ) in ("downgrade", "reject"):
+            packet_dict["cannot_justify_escalation"] = True
+    except Exception:
+        pass
+    return _wrap_ul_payload(packet_dict)

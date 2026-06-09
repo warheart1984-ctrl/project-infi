@@ -25,7 +25,11 @@
         "urg_receipt",
         "checkpoint_block",
         "plug_execution",
-        "brain_decision"
+        "brain_decision",
+        "otem_ceiling_invocation",
+        "otem_ceiling_preview",
+        "otem_ceiling_decision",
+        "constitutional_amendment"
       ]
     },
     "decision": {

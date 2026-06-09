@@ -1,0 +1,7 @@
+{
+  "profile": {"id": "forge-selfhosted"},
+  "resolution": {"profile_id": "forge-selfhosted"},
+  "attestation_version": 1,
+  "checks": ["init_log_present", "platform_heartbeat"],
+  "status": "ok"
+}

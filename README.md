@@ -60,7 +60,7 @@ Manual start (venv already installed): `.venv\Scripts\python.exe -m aais start -
 
 **Fast arc smoke (optional, ~1–2 min):** `make civilizational-arc-smoke` (or `python -m pytest tests/test_inter_substrate_diplomacy_observe.py tests/test_norm_federation_observe.py tests/test_constitutional_evolution_observe.py -q`)
 
-**Next:** [`docs/community/HELP_WANTED_HUB.md`](docs/community/HELP_WANTED_HUB.md) · [`docs/operations/FIRST_TIME_OPERATOR_GUIDE.md`](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
+**Next:** [`docs/community/HELP_WANTED_HUB.md`](docs/community/HELP_WANTED_HUB.md) · [`docs/operations/OPERATOR_GOLDEN_PATH.md`](docs/operations/OPERATOR_GOLDEN_PATH.md) · [`docs/operations/FIRST_TIME_OPERATOR_GUIDE.md`](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md)
 
 ---
 
@@ -77,7 +77,7 @@ Manual start (venv already installed): `.venv\Scripts\python.exe -m aais start -
 
 **Verify locally (optional):** `python tools/governance/run_infinity1_flagship_verification.py` · `make flagship-chaos-stack`
 
-**Deeper docs:** [Operator Guide](docs/operators/AAIS_OPERATOR_GUIDE.md) · [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md) · [Workflow Skills](docs/operators/OPERATOR_WORKFLOW_SKILLS.md) · [Infinity Pilot (Docker)](docs/operations/INFINITY_PILOT_EARLY_ADOPTER.md) · [GitHub Packages / GHCR](docs/operations/GITHUB_PACKAGES_AND_GHCR.md)
+**Deeper docs:** [Operator Golden Path](docs/operations/OPERATOR_GOLDEN_PATH.md) · [Operator Guide](docs/operators/AAIS_OPERATOR_GUIDE.md) · [First-Time Operator Guide](docs/operations/FIRST_TIME_OPERATOR_GUIDE.md) · [Workflow Skills](docs/operators/OPERATOR_WORKFLOW_SKILLS.md) · [Infinity Pilot (Docker)](docs/operations/INFINITY_PILOT_EARLY_ADOPTER.md) · [GitHub Packages / GHCR](docs/operations/GITHUB_PACKAGES_AND_GHCR.md) · [Governance Dashboard Guide](docs/operators/GOVERNANCE_DASHBOARD_OPERATOR_GUIDE.md)
 
 ### Operator surfaces (reference)
 
@@ -113,6 +113,7 @@ Think of it in three cooperating layers:
 
 Authoritative references:
 
+- Strategy (vision → execution): [`docs/spine/STRATEGY.md`](docs/spine/STRATEGY.md)
 - Subsystem map: [`docs/runtime/AAIS_SUBSYSTEM_SPEC.md`](docs/runtime/AAIS_SUBSYSTEM_SPEC.md) · Remaining work: [`docs/runtime/SUBSYSTEMS_REMAINING_MAP.md`](docs/runtime/SUBSYSTEMS_REMAINING_MAP.md)
 - UL doctrine: [`docs/contracts/AAIS_UL_DOCTRINE.md`](docs/contracts/AAIS_UL_DOCTRINE.md)
 - Latest UL/CISIV proof: [`docs/proof/aais-ul/UL_CISIV_PHASES_1_5_PROOF.md`](docs/proof/aais-ul/UL_CISIV_PHASES_1_5_PROOF.md)

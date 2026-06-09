@@ -37,6 +37,7 @@ const OperatorConsole = lazy(() => import('./pages/OperatorConsole'));
 const OperatorPlugins = lazy(() => import('./pages/OperatorPlugins'));
 const OperatorBrainSessions = lazy(() => import('./pages/OperatorBrainSessions'));
 const OperatorLedger = lazy(() => import('./pages/OperatorLedger'));
+const OperatorCeilingRecovery = lazy(() => import('./pages/OperatorCeilingRecovery'));
 const OperatorLedgerGraph = lazy(() => import('./pages/OperatorLedgerGraph'));
 const TemporalReplay = lazy(() => import('./pages/TemporalReplay/TemporalReplay'));
 const Onboarding = lazy(() => import('./pages/Onboarding'));
@@ -96,6 +97,7 @@ function AppShell() {
               <Route path="/operator" element={<OperatorConsole />} />
               <Route path="/operator/plugins" element={<OperatorPlugins />} />
               <Route path="/operator/brain" element={<OperatorBrainSessions />} />
+              <Route path="/operator/ceiling" element={<OperatorCeilingRecovery />} />
               <Route path="/operator/ledger" element={<OperatorLedger />} />
               <Route path="/operator/ledger/graph" element={<OperatorLedgerGraph />} />
               <Route path="/operator/replay/:subjectType/:subjectId" element={<TemporalReplay />} />

@@ -14,7 +14,7 @@
       "status": "active",
       "verification": {
         "tests": ["tests/test_rootfs_backend.py"],
-        "scripts": ["wolf-cog-os/scripts/validate-rootfs-backend.py"]
+        "scripts": ["cog-os/scripts/validate-rootfs-backend.py"]
       },
       "notes": "P6 backend abstraction baseline; only debootstrap is production."
     },
@@ -29,7 +29,7 @@
       "status": "active",
       "verification": {
         "tests": ["tests/test_rootfs_backend.py"],
-        "scripts": ["wolf-cog-os/scripts/validate-rootfs-backend.py"]
+        "scripts": ["cog-os/scripts/validate-rootfs-backend.py"]
       },
       "notes": "P11: pacstrap backend production with arch-base.txt and chroot dispatcher."
     },
@@ -44,9 +44,24 @@
       "status": "experimental",
       "verification": {
         "tests": ["tests/test_universal_substrate.py"],
-        "scripts": ["wolf-cog-os/scripts/validate-rootfs-backend.py"]
+        "scripts": ["cog-os/scripts/validate-rootfs-backend.py"]
       },
       "notes": "P15 inject-only backends for Windows/macOS/Android overlay model."
+    },
+    {
+      "id": "backend.v1.cog-os-path-migration",
+      "date": "2026-06-08",
+      "author": "nova-northstar-cog-os",
+      "change_type": "migrate",
+      "registry_version": "rootfs-backend-registry.v1",
+      "contract_version": "forge-rootfs-backend.v1",
+      "backend_ids": [],
+      "status": "active",
+      "verification": {
+        "tests": ["tests/test_rootfs_backend.py"],
+        "scripts": ["cog-os/scripts/validate-rootfs-backend.py"]
+      },
+      "notes": "Verification script paths migrated from wolf-cog-os/scripts/* to cog-os/scripts/*."
     }
   ]
 }

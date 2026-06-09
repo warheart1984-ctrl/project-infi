@@ -43,6 +43,7 @@ IDENTITY_ALIASES = {
     "runtime": "runtime_directive",
     "archive": "loaded_session_archive",
     "workspace": "workspace_context",
+    "urg_library": "urg_library_context",
     "research": "live_research",
     "orchestration": "mission_board",
     "corrigibility": "corrigibility_guidance",
@@ -55,6 +56,7 @@ SINGLETON_BLOCKS = {
     "runtime_directive",
     "loaded_session_archive",
     "workspace_context",
+    "urg_library_context",
     "live_research",
     "mission_board",
     "corrigibility_guidance",
@@ -74,6 +76,7 @@ DEFAULT_PRIORITIES = {
     "mission_board": 40,
     "loaded_session_archive": 45,
     "live_research": 50,
+    "urg_library_context": 52,
     "workspace_context": 55,
 }
 REQUIRED_IDENTITIES = {
@@ -355,6 +358,8 @@ def _canonical_identity(identity: str, content: str, *, channel: str = "", sourc
         return "workspace_context"
     if channel == "research" or source == "live_research":
         return "live_research"
+    if channel == "urg_library" or source == "urg_library_context":
+        return "urg_library_context"
     if channel == "orchestration" or source == "mission_board":
         return "mission_board"
     if channel == "archive" or source == "loaded_session_archive":

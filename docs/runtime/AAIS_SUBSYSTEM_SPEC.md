@@ -240,6 +240,44 @@ AAIS subsystems currently cluster into these architectural layers:
 - integration risk: `high`
 - recommended priority: `special_review_only` for execution path changes
 
+### OTEM Constitutional Recovery Ceiling (Level 20)
+
+- status: `live` (ruleset + runtime; sovereign band non-delegable)
+- primary purpose: constitutional recovery ceiling when immune containment is
+  insufficient — diagnostic bundle, preview, explicit operator decision, ODL
+  closure, post-decision hardening
+- architectural layer: governance and immune escalation
+- authority bands: autonomous 1–9, governed 10–15, containment 16–19,
+  sovereign 20 (`is_ceiling_level()`)
+- dependencies:
+  - `src/otem_ceiling.py`
+  - `src/otem_capability.py`
+  - `src/operator_decision_ledger.py`
+  - `src/invariant_compiler.py`
+  - `src/immune_system.py`
+  - `src/immune_hardening.py`
+  - `src/jarvis_detachment_guard.py`
+  - `src/decode_governance_executor.py`
+- governed inputs and outputs:
+  - input: immune-critical trigger or operator invoke (`AAIS_OTEM_CEILING_INVOKE=1`)
+  - output: containment pause, diagnostic bundle, preview artifact, one of five
+    operator decisions (`rollback_to_checkpoint`, `quarantine_archive`,
+    `safe_mode_reanchor`, `accept_containment`, `constitutional_amendment`)
+- related files/modules:
+  - `docs/contracts/OTEM_CEILING_RULES.md`
+  - `schemas/otem_ceiling_rules.v1.json`
+  - `docs/operations/OTEM_CEILING_OPERATOR_HANDBOOK.md`
+  - `frontend/src/pages/OperatorCeilingRecovery.jsx`
+  - `src/ugr/operator_console/snapshot.py` (console v1.3 `otem_ceiling` key)
+- verification:
+  - `make otem-ceiling-gate`
+  - `tests/test_otem_ceiling.py`
+- current implementation gaps:
+  - Voss re-anchor v1 = IR genesis reset + ODL event (full Voss calculus deferred)
+  - cryptographic signature binding on ODL events is placeholder-only
+- integration risk: `critical`
+- recommended priority: `P0 operator-only`; never auto-delegate sovereign decisions
+
 ### Nova Companion Line
 
 - status: `live`
@@ -1062,6 +1100,8 @@ AAIS subsystems currently cluster into these architectural layers:
 - OTEM Level 10 (`v10_governed`, default `AAIS_OTEM_CAPABILITY_LEVEL=10`) —
   proposal-only chat; execution ingress via `/workflows/approvals` and
   `src/otem_execution_substrate.py` (v1.26.0 bridge + v1.26.1 capability ceiling)
+- OTEM Level 20 constitutional recovery ceiling — operator invoke or
+  immune-critical trigger; `/operator/ceiling` + `make otem-ceiling-gate`
 - OTEM execution substrate durable store (phase 2) — only when cross-restart
   enqueue→approve or build-persistence-memory integration is required
 

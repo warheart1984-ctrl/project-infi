@@ -1,0 +1,15 @@
+# Jarvis Memory Board vector projection — mirrors deploy/scylladb/schema.cql fields.
+# Embeddings: all-MiniLM-L6-v2 (384 dims), supplied by AAIS Python runtime (not Vertex _embed).
+
+type MemoryChunk @table(name: "memory_chunks") @index(fields: ["tenantId", "memorySlot", "sessionId"]) {
+  id: UUID! @default(expr: "uuidV4()")
+  tenantId: String! @col(name: "tenant_id")
+  memorySlot: String! @col(name: "memory_slot")
+  sessionId: String! @col(name: "session_id")
+  trustClass: String! @col(name: "trust_class")
+  source: String!
+  textBody: String! @col(name: "text_body")
+  embedding: Vector! @col(name: "embedding", size: 384)
+  recordedAt: Timestamp! @default(expr: "request.time") @col(name: "recorded_at")
+  cisivStage: String! @col(name: "cisiv_stage")
+}

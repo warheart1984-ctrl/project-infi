@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-infi.local/schemas/wonder_gate.v1.json",
+  "title": "Gate of Wonder v1",
+  "description": "ConceptualPossibility and WonderVerdict schemas for the pre-logical imagination filter.",
+  "type": "object",
+  "oneOf": [
+    { "$ref": "#/$defs/ConceptualPossibility" },
+    { "$ref": "#/$defs/WonderVerdict" }
+  ],
+  "$defs": {
+    "ConceptualSpan": {
+      "type": "object",
+      "required": ["text"],
+      "additionalProperties": true,
+      "properties": {
+        "text": { "type": "string" },
+        "field": { "type": "string" }
+      }
+    },
+    "ConceptualPossibility": {
+      "type": "object",
+      "required": ["packet_type", "spans"],
+      "additionalProperties": true,
+      "properties": {
+        "packet_id": { "type": "string" },
+        "packet_type": { "type": "string", "minLength": 1 },
+        "spans": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ConceptualSpan" }
+        },
+        "source_fields": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "WonderViolation": {
+      "type": "object",
+      "required": ["code", "severity", "category_id"],
+      "additionalProperties": true,
+      "properties": {
+        "code": { "type": "string", "minLength": 1 },
+        "severity": {
+          "type": "string",
+          "enum": ["info", "warning", "error"]
+        },
+        "category_id": { "type": "string", "minLength": 1 },
+        "matched_span": { "type": "string" },
+        "detail": { "type": "string" },
+        "invariant_id": { "type": "string" }
+      }
+    },
+    "WonderVerdict": {
+      "type": "object",
+      "required": ["verdict", "mode"],
+      "additionalProperties": true,
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": ["permit", "sandbox", "forbid"]
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["lightweight", "governed", "paranoid", "hyper_strict"]
+        },
+        "violations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/WonderViolation" }
+        },
+        "summary": { "type": "string" },
+        "evaluated_at": { "type": "string", "format": "date-time" },
+        "module_id": { "type": "string" }
+      }
+    }
+  }
+}

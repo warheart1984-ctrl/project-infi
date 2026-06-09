@@ -57,9 +57,12 @@ class TestUGRCloudMesh(unittest.TestCase):
         self.assertIn("orchestrator", mesh.services)
         self.assertEqual(mesh.base_url("policy").startswith("http://"), True)
 
-    def test_manifest_validator_passes(self):
+    def test_manifest_validator_retired_without_wolf_forge(self):
+        script = REPO_ROOT / "wolf-cog-os" / "scripts" / "validate-ugr-cloud-manifest.py"
+        if not script.is_file():
+            self.skipTest("wolf-cog-os UGR cloud manifest validator removed")
         result = subprocess.run(
-            [sys.executable, "wolf-cog-os/scripts/validate-ugr-cloud-manifest.py", "--mode", "fail"],
+            [sys.executable, str(script), "--mode", "fail"],
             cwd=REPO_ROOT,
             capture_output=True,
             text=True,

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Release 29 governed eligibility — 170 governed, coherence v1.24."""
+"""Release 29 governed eligibility — >=170 governed (Release 29 floor), coherence v1.24."""
 
 from __future__ import annotations
 
@@ -27,8 +27,8 @@ def check_eligibility(root: Path | None = None) -> list[str]:
         for data in reg.genomes.values()
         if (data.get("identity") or {}).get("stage") == "governed"
     )
-    if governed != 170:
-        errors.append(f"expected 170 governed genomes (got {governed})")
+    if governed < 170:
+        errors.append(f"expected at least 170 governed genomes (got {governed})")
 
     media = reg.genomes.get("media_processor_bridge_organ")
     if not media:

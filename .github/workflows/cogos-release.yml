@@ -64,7 +64,7 @@ jobs:
       - name: Install tooling
         run: |
           sudo apt-get update
-          sudo apt-get install -y minisign python3
+          sudo apt-get install -y minisign python3 make
 
       - name: Download source artifacts from RC run
         uses: actions/download-artifact@v4

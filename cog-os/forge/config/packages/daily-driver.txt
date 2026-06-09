@@ -1,0 +1,10 @@
+# daily-driver profile additions (systemd as session helper, not PID 1)
+accountsservice
+chromium
+cinnamon
+cinnamon-core
+dbus
+lightdm
+policykit-1
+systemd
+systemd-sysv

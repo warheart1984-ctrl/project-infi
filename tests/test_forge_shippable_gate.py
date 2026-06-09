@@ -26,10 +26,19 @@ class ForgeShippableGateTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
         payload = json.loads(output.read_text(encoding="utf-8"))
         self.assertEqual(payload["status"], "pass")
-        self.assertTrue(any(row.get("gate_id") == "F" and row.get("status") == "pending" for row in payload["checks"]))
+        cog_os_active = (REPO_ROOT / "cog-os" / "host" / "src" / "init.c").is_file()
+        if cog_os_active:
+            self.assertFalse(payload.get("retired"))
+        else:
+            self.assertTrue(payload.get("retired"))
+        meta = payload.get("meta_architect_gate") or {}
+        self.assertEqual(meta.get("gate_id"), "F")
 
     def test_fixture_artifacts_gate_passes(self) -> None:
-        fixture = REPO_ROOT / "wolf-cog-os" / "scripts" / "test" / "fixtures" / "promotion-forge-rc"
+        fixture = REPO_ROOT / "cog-os" / "scripts" / "test" / "fixtures" / "promotion-forge-rc"
+        legacy = REPO_ROOT / "wolf-cog-os" / "scripts" / "test" / "fixtures" / "promotion-forge-rc"
+        if not fixture.is_dir() and legacy.is_dir():
+            fixture = legacy
         if not fixture.is_dir():
             self.skipTest("promotion fixture missing")
         output = REPO_ROOT / "ci-artifacts" / "test-forge-shippable-gate-artifacts.json"

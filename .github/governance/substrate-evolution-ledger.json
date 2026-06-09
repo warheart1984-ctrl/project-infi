@@ -24,7 +24,7 @@
       "status": "active",
       "verification": {
         "tests": ["tests/test_validate_substrate.py", "tests/test_substrate_evolution_ledger.py"],
-        "scripts": ["wolf-cog-os/scripts/validate-substrate.py"]
+        "scripts": ["cog-os/scripts/validate-substrate.py"]
       },
       "notes": "P5 substrate platform v2 baseline: multi-distro classes + automatic classification."
     },
@@ -39,7 +39,7 @@
       "status": "experimental",
       "verification": {
         "tests": ["tests/test_validate_substrate.py"],
-        "scripts": ["wolf-cog-os/scripts/validate-substrate.py"]
+        "scripts": ["cog-os/scripts/validate-substrate.py"]
       },
       "notes": "Classification-only until replay adapters are implemented in build.sh."
     },
@@ -54,7 +54,7 @@
       "status": "active",
       "verification": {
         "tests": ["tests/test_replay_adapter.py"],
-        "scripts": ["wolf-cog-os/scripts/validate-replay-adapter.py"]
+        "scripts": ["cog-os/scripts/validate-replay-adapter.py"]
       },
       "notes": "P10: debian-live-layout + ubuntu-live-layout production in build.sh dispatcher."
     },
@@ -70,8 +70,8 @@
       "verification": {
         "tests": ["tests/test_universal_substrate.py"],
         "scripts": [
-          "wolf-cog-os/scripts/validate-substrate-invariants.py",
-          "wolf-cog-os/scripts/validate-replay-adapter.py"
+          "cog-os/scripts/validate-substrate-invariants.py",
+          "cog-os/scripts/validate-replay-adapter.py"
         ]
       },
       "notes": "P15 universal foundry: WIM/APFS/super.img classification + replay adapter contracts."
@@ -87,9 +87,24 @@
       "status": "experimental",
       "verification": {
         "tests": ["tests/test_validate_substrate.py"],
-        "scripts": ["wolf-cog-os/scripts/validate-substrate.py"]
+        "scripts": ["cog-os/scripts/validate-substrate.py"]
       },
       "notes": "Rocky Linux LiveOS classification via fedora-liveos-layout replay adapter (classification-only)."
+    },
+    {
+      "id": "substrate.v2.cog-os-path-migration",
+      "date": "2026-06-08",
+      "author": "nova-northstar-cog-os",
+      "change_type": "migrate",
+      "registry_version": "substrate-registry.v2",
+      "contract_version": "forge-substrate.v2",
+      "substrate_ids": [],
+      "status": "active",
+      "verification": {
+        "tests": ["tests/test_substrate_evolution_ledger.py"],
+        "scripts": ["cog-os/scripts/validate-substrate.py"]
+      },
+      "notes": "Verification script paths migrated from wolf-cog-os/scripts/* to cog-os/scripts/*; historical entries retain legacy context."
     }
   ]
 }

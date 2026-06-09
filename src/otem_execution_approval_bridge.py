@@ -190,6 +190,66 @@ def maybe_enqueue_otem_execution_approval(
         "handoff": handoff,
         "plan": [dict(step or {}) for step in list(result.get("plan") or [])],
     }
+
+    rls_verdict = None
+    try:
+        from src.otem_capability import get_otem_capability_level
+        from src.rls.adapters import from_otem_justification
+        from src.rls.substrate import evaluate_reasoning_graph, rls_allows_escalation
+        from src.wonder.gate import evaluate_conceptual_possibility, wonder_allows_escalation
+
+        otem_level = get_otem_capability_level()
+        wonder_text = " ".join(
+            part
+            for part in (
+                str(proposal.get("summary") or ""),
+                str(proposal.get("objective") or ""),
+                str(handoff.get("rationale") or result.get("rationale") or ""),
+            )
+            if str(part or "").strip()
+        )
+        wonder_verdict = evaluate_conceptual_possibility(
+            {
+                "packet_type": "otem_execution_proposal",
+                "spans": [{"text": wonder_text, "field": "proposal_text"}],
+            },
+            otem_level=otem_level,
+        )
+        if not wonder_allows_escalation(wonder_verdict, otem_level=otem_level):
+            return {
+                "status": "rejected",
+                "reason": "wonder_escalation_blocked",
+                "wonder_verdict": wonder_verdict,
+                "session_id": normalized_session,
+                "workflow_template_id": template_id,
+            }
+        justification = {
+            "claim": proposal.get("summary") or proposal.get("objective"),
+            "reasoning": str(handoff.get("rationale") or result.get("rationale") or ""),
+            "evidence": list(handoff.get("evidence") or result.get("evidence") or []),
+            "reasoning_graph": result.get("reasoning_graph") or handoff.get("reasoning_graph"),
+            "proposed_action": {
+                "workflow_template_id": template_id,
+                "session_id": normalized_session,
+            },
+        }
+        graph = from_otem_justification(justification)
+        rls_verdict = evaluate_reasoning_graph(
+            graph,
+            otem_level=otem_level,
+            record_quarantine=True,
+        )
+        if not rls_allows_escalation(rls_verdict, otem_level=otem_level):
+            return {
+                "status": "rejected",
+                "reason": "rls_escalation_blocked",
+                "rls_verdict": rls_verdict,
+                "session_id": normalized_session,
+                "workflow_template_id": template_id,
+            }
+    except Exception:
+        pass
+
     substrate_record = substrate.create_proposal(proposal, runtime_context="operator_runtime")
     otem_execution_workflow_id = str(substrate_record["workflow_id"])
     temporal_orchestrated = _maybe_start_temporal_workflow(otem_execution_workflow_id, proposal)
@@ -224,6 +284,7 @@ def maybe_enqueue_otem_execution_approval(
             "proposal_snapshot": proposal,
             "temporal_orchestrated": temporal_orchestrated,
             "cisiv_stage": "implementation",
+            **({"rls_verdict": rls_verdict} if rls_verdict else {}),
         },
         cisiv_stage="implementation",
     )

@@ -1,0 +1,29 @@
+# Minimal packages for all Nova NorthStar CoG OS profiles (debootstrap --include via apt after minbase)
+ca-certificates
+curl
+dosfstools
+efibootmgr
+grub-efi-amd64
+grub-pc-bin
+iproute2
+iputils-ping
+linux-image-amd64
+netbase
+openssh-client
+parted
+python3
+python3-minimal
+rsync
+sudo
+util-linux
+squashfs-tools
+agetty
+# daily-driver profile additions (systemd as session helper, not PID 1)
+accountsservice
+cinnamon
+cinnamon-core
+dbus
+lightdm
+policykit-1
+systemd
+systemd-sysv

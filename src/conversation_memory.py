@@ -1863,6 +1863,19 @@ class ConversationSession:
                 }
             )
 
+        urg_library_context = self.metadata.get("urg_library_context") or {}
+        if not companion_active and not relational_active and urg_library_context.get("prompt_block"):
+            system_blocks.append(
+                {
+                    "identity": "urg_library_context",
+                    "role": "system",
+                    "content": urg_library_context["prompt_block"],
+                    "channel": "urg_library",
+                    "source": "urg_library_context",
+                    "priority": 52,
+                }
+            )
+
         mission_board = self.metadata.get("mission_board") or {}
         if (
             not companion_active
@@ -2074,6 +2087,19 @@ class ConversationSession:
                 }
             )
 
+        urg_library_context = self.metadata.get("urg_library_context") or {}
+        if not companion_active and not relational_active and urg_library_context.get("prompt_block"):
+            system_blocks.append(
+                {
+                    "identity": "urg_library_context",
+                    "role": "system",
+                    "content": urg_library_context["prompt_block"],
+                    "channel": "urg_library",
+                    "source": "urg_library_context",
+                    "priority": 52,
+                }
+            )
+
         mission_board = self.metadata.get("mission_board") or {}
         if (
             not companion_active
@@ -2214,6 +2240,7 @@ class ConversationSession:
             ),
             "workspace_context": self.metadata.get("workspace_context"),
             "live_research": self.metadata.get("live_research"),
+            "urg_library_context": self.metadata.get("urg_library_context"),
             "browser_verification": self.metadata.get("browser_verification"),
             "mission_board": self.metadata.get("mission_board"),
             "mission_critic": self.metadata.get("mission_critic"),

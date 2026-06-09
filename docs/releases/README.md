@@ -87,7 +87,7 @@ AAIS vX.Y.Z — [one sentence on what changed for operators]
 
 CoGOS release notes are **CI-generated** at promotion time. They include commit range, build metadata, and installer validation status — not AAIS app semver.
 
-Operators building ISOs locally: see [wolf-cog-os/forge/README.md](../../wolf-cog-os/forge/README.md). Outputs land under `wolf-cog-os/output/` (gitignored).
+Operators building ISOs locally: see [cog-os/forge/README.md](../../cog-os/forge/README.md) (if present) and [cog-os/docs/METAL_PROOF_CHECKLIST.md](../../cog-os/docs/METAL_PROOF_CHECKLIST.md). Build outputs land under `artifacts/cog-os/` (local-only, gitignored).
 
 ### Secrets
 
@@ -105,5 +105,5 @@ These are never stored in the repository. See [SECURITY.md](../../SECURITY.md).
 | You are… | Follow |
 |---|---|
 | Running AAIS locally or Infinity Pilot Docker | Track A — CHANGELOG + First-Time Operator Guide |
-| Building or installing a CoGOS ISO | Track B — wolf-cog-os docs + CoGOS GitHub Release |
+| Building or installing a CoGOS ISO | Track B — [cog-os/docs/BOOT_PROOF_CHECKLIST.md](../../cog-os/docs/BOOT_PROOF_CHECKLIST.md) + CoGOS GitHub Release |
 | Contributing code | Both changelogs matter; your PR gate depends on touched paths |

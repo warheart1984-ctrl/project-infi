@@ -37,9 +37,14 @@ _DECISION_KINDS = frozenset(
         "pipeline_turn",
         "otem_approval",
         "urg_receipt",
+        "urg_knowledge_promotion",
         "checkpoint_block",
         "plug_execution",
         "brain_decision",
+        "otem_ceiling_invocation",
+        "otem_ceiling_preview",
+        "otem_ceiling_decision",
+        "constitutional_amendment",
     }
 )
 _DECISIONS = frozenset({"allow", "pending", "approve", "reject", "completed", "failed", "block", "defer"})
@@ -448,6 +453,114 @@ class OperatorDecisionLedgerStore:
 
 
 operator_decision_ledger_store = OperatorDecisionLedgerStore()
+
+
+class OperatorDecisionLedger:
+    """Thin facade for ceiling pipeline ODL writes and action graphs."""
+
+    def __init__(self, store: OperatorDecisionLedgerStore | None = None) -> None:
+        self._store = store or operator_decision_ledger_store
+
+    def build_action_graph(self, scope_id: str, root_id: str) -> dict[str, Any]:
+        return self._store.build_action_graph(scope_id, root_id)
+
+    def append_otem_ceiling_invocation(
+        self,
+        scope_id: str,
+        *,
+        trigger_type: str,
+        summary: str,
+        details: dict[str, Any] | None = None,
+    ) -> dict[str, Any] | None:
+        scope = _normalize_scope_id(scope_id)
+        parents: list[str] = []
+        last_id = self._store.last_decision_id(scope)
+        if last_id:
+            parents = [last_id]
+        return self._store.append(
+            scope,
+            {
+                "decision_kind": "otem_ceiling_invocation",
+                "decision": "blocked",
+                "reversibility": "cannot_undo",
+                "session_id": scope,
+                "causal_parents": parents,
+                "summary": str(summary or "")[:500],
+                "otem_ceiling": {
+                    "trigger_type": trigger_type,
+                    "details": dict(details or {}),
+                },
+            },
+        )
+
+    def append_otem_ceiling_preview(
+        self,
+        scope_id: str,
+        *,
+        decision: str,
+        preview_fingerprint: str,
+    ) -> dict[str, Any] | None:
+        scope = _normalize_scope_id(scope_id)
+        parents: list[str] = []
+        last_id = self._store.last_decision_id(scope)
+        if last_id:
+            parents = [last_id]
+        return self._store.append(
+            scope,
+            {
+                "decision_kind": "otem_ceiling_preview",
+                "decision": "pending",
+                "reversibility": "undoable",
+                "session_id": scope,
+                "causal_parents": parents,
+                "summary": f"ceiling preview: {decision}",
+                "otem_ceiling": {
+                    "decision": decision,
+                    "preview_fingerprint": preview_fingerprint,
+                },
+            },
+        )
+
+    def append_otem_ceiling_decision(
+        self,
+        scope_id: str,
+        *,
+        decision: str,
+        operator_id: str | None = None,
+        ir_fingerprint_before: str | None = None,
+        ir_fingerprint_after: str | None = None,
+    ) -> dict[str, Any] | None:
+        scope = _normalize_scope_id(scope_id)
+        parents: list[str] = []
+        last_id = self._store.last_decision_id(scope)
+        if last_id:
+            parents = [last_id]
+        normalized = str(decision or "").strip().lower()
+        kind = (
+            "constitutional_amendment"
+            if normalized == "constitutional_amendment"
+            else "otem_ceiling_decision"
+        )
+        return self._store.append(
+            scope,
+            {
+                "decision_kind": kind,
+                "decision": "completed",
+                "reversibility": "cannot_undo",
+                "session_id": scope,
+                "causal_parents": parents,
+                "summary": f"ceiling decision applied: {decision}",
+                "operator_id": operator_id,
+                "otem_ceiling": {
+                    "decision": decision,
+                    "ir_fingerprint_before": ir_fingerprint_before,
+                    "ir_fingerprint_after": ir_fingerprint_after,
+                },
+            },
+        )
+
+
+operator_decision_ledger = OperatorDecisionLedger()
 
 
 def _drift_context_from_pipeline(governed_pipeline: dict[str, Any] | None) -> dict[str, Any]:
@@ -1932,6 +2045,49 @@ def append_urg_receipt_event(
     }
     if federation:
         row["federation"] = federation
+    return operator_decision_ledger_store.append(scope, row)
+
+
+def append_urg_knowledge_promotion_event(
+    *,
+    contribution_id: str,
+    operator_id: str,
+    tenant_id: str | None = None,
+    session_id: str | None = None,
+    memory_id: str | None = None,
+    promotion_event_id: str | None = None,
+    epistemic_state: str = "proven",
+) -> dict[str, Any] | None:
+    if not contribution_id:
+        return None
+    scope = _normalize_scope_id(session_id or tenant_id or operator_id or "global")
+    parents: list[str] = []
+    if session_id:
+        last_id = operator_decision_ledger_store.last_decision_id(scope)
+        if last_id:
+            parents = [last_id]
+    existing = operator_decision_ledger_store.find_by_mission(scope, contribution_id)
+    if existing:
+        return operator_decision_ledger_store.get_event(scope, existing)
+    row: dict[str, Any] = {
+        "decision_kind": "urg_knowledge_promotion",
+        "decision": "completed",
+        "reversibility": "cannot_undo",
+        "session_id": session_id,
+        "mission_id": contribution_id,
+        "tenant_id": tenant_id,
+        "operator_id": operator_id,
+        "causal_parents": parents,
+        "blast_radius": {"risk_level": "low", "affected_files": []},
+        "drift_context": {"drift_band": "nominal"},
+        "summary": f"URG knowledge promoted ({contribution_id[:12]})",
+        "promotion": {
+            "contribution_id": contribution_id,
+            "memory_id": memory_id,
+            "promotion_event_id": promotion_event_id,
+            "epistemic_state": epistemic_state,
+        },
+    }
     return operator_decision_ledger_store.append(scope, row)
 
 

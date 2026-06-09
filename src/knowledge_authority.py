@@ -53,6 +53,7 @@ OPERATOR_AUTHORITY_SOURCES = (
     "doctrine",
     "document",
     "live_research",
+    "urg_library",
 )
 
 AUTHORITY_SOURCE_METADATA = {
@@ -81,6 +82,11 @@ AUTHORITY_SOURCE_METADATA = {
         "type": "external",
         "scope": "session",
     },
+    "urg_library": {
+        "label": "URG library",
+        "type": "governed",
+        "scope": "global",
+    },
 }
 
 AUTHORITY_PRESETS = {
@@ -104,6 +110,13 @@ AUTHORITY_PRESETS = {
         "primary_source": "live_research",
         "shadow_sources": [],
         "disabled_sources": [],
+    },
+    "urg_anchored": {
+        "label": "URG-Anchored",
+        "description": "Prefer governed URG proven catalog entries over supporting sources.",
+        "primary_source": "urg_library",
+        "shadow_sources": ["memory", "document"],
+        "disabled_sources": ["live_research"],
     },
 }
 
@@ -248,6 +261,7 @@ class KnowledgeAuthority:
             ("workspace", "derived", "Workspace intel and repo evidence"),
             ("document", "reference", "Ingested document knowledge"),
             ("live_research", "derived", "Fresh live research"),
+            ("urg_library", "canonical", "Governed URG library entries"),
             ("doctrine", "reference", "Doctrine and canonical docs"),
             ("review", "derived", "Review proposals and run history"),
             ("run", "derived", "Execution history"),
@@ -304,6 +318,7 @@ class KnowledgeAuthority:
         workspace_projects: list[dict[str, Any]],
         document_entries: list[dict[str, Any]],
         research_entries: list[dict[str, Any]],
+        urg_library_entries: list[dict[str, Any]],
         doctrine_entries: list[dict[str, Any]],
         preferences: dict[str, Any],
     ) -> list[dict[str, Any]]:
@@ -315,6 +330,7 @@ class KnowledgeAuthority:
             "doctrine": f"{len(doctrine_entries)} doc(s)",
             "document": f"{len(document_entries)} source(s)",
             "live_research": f"{len(research_entries)} source(s)",
+            "urg_library": f"{len(urg_library_entries)} entry(ies)",
         }
 
         for source_type in OPERATOR_AUTHORITY_SOURCES:
@@ -323,6 +339,8 @@ class KnowledgeAuthority:
             if source_type == "document" and not document_entries and base_status == "active":
                 base_status = "shadow"
             if source_type == "live_research" and not research_entries and base_status == "active":
+                base_status = "shadow"
+            if source_type == "urg_library" and not urg_library_entries and base_status == "active":
                 base_status = "shadow"
             rows.append(
                 {
@@ -409,6 +427,7 @@ class KnowledgeAuthority:
         workspace_projects: list[dict[str, Any]],
         document_store,
         live_research: dict[str, Any] | None,
+        urg_library: dict[str, Any] | None = None,
         authority_preferences: dict[str, Any] | None = None,
         conflict_decisions: dict[str, Any] | None = None,
         query: str | None = None,
@@ -462,6 +481,23 @@ class KnowledgeAuthority:
 
         research_entries = []
         research_payload = dict(live_research or {})
+        urg_library_payload = dict(urg_library or {})
+        urg_library_entries = []
+        for entry in list(urg_library_payload.get("entries") or [])[:memory_limit]:
+            urg_library_entries.append(
+                {
+                    "contribution_id": entry.get("contribution_id"),
+                    "title": entry.get("title"),
+                    "summary": entry.get("summary"),
+                    "epistemic_state": entry.get("epistemic_state"),
+                    "source_type": "urg_library",
+                    "truth_status": "canonical" if entry.get("epistemic_state") == "proven" else "derived",
+                    "precedence_rank": precedence_rank(
+                        "urg_library",
+                        "canonical" if entry.get("epistemic_state") == "proven" else "derived",
+                    ),
+                }
+            )
         for source in list(research_payload.get("sources") or [])[:memory_limit]:
             research_entries.append(
                 {
@@ -493,6 +529,7 @@ class KnowledgeAuthority:
             "memory_count": len(memory_entries),
             "document_count": len(document_entries),
             "live_research_count": len(research_entries),
+            "urg_library_count": len(urg_library_entries),
             "workspace_project_count": len(project_entries),
             "doctrine_count": len(doctrine_entries),
         }
@@ -502,6 +539,7 @@ class KnowledgeAuthority:
             workspace_projects=workspace_projects,
             document_entries=document_entries,
             research_entries=research_entries,
+            urg_library_entries=urg_library_entries,
             doctrine_entries=doctrine_entries,
             preferences=normalized_preferences,
         )
@@ -582,6 +620,11 @@ class KnowledgeAuthority:
                 "query": research_payload.get("query"),
                 "summary": research_payload.get("summary"),
                 "sources": research_entries,
+            },
+            "urg_library": {
+                "query": urg_library_payload.get("query"),
+                "summary": urg_library_payload.get("summary"),
+                "entries": urg_library_entries,
             },
             "workspace": {
                 "profile": dict(workspace_profile or {}),

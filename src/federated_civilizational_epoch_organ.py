@@ -1,5 +1,7 @@
 """Federated civilizational epoch organ — live runtime posture (Stage 19)."""
 
+# Engineering: FederatedCivilizationalEpochEngine
+
 from __future__ import annotations
 
 from typing import Any

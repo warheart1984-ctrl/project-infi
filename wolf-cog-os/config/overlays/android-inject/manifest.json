@@ -1,6 +1,0 @@
-{
-  "schema_version": "forge-inject-manifest.v1",
-  "platform": "android",
-  "description": "Android system/vendor overlay manifest",
-  "copy": []
-}

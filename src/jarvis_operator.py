@@ -3242,6 +3242,43 @@ class JarvisOperator:
                         "OTEM execution approval enqueue failed for session %s",
                         session_id,
                     )
+        try:
+            from src.otem_capability import get_otem_capability_level
+            from src.rls.adapters import from_otem_justification
+            from src.rls.substrate import evaluate_reasoning_graph, rls_allows_escalation
+            from src.wonder.gate import evaluate_conceptual_possibility, wonder_allows_escalation
+
+            otem_level = get_otem_capability_level()
+            wonder_verdict = evaluate_conceptual_possibility(
+                {
+                    "packet_type": "otem_turn",
+                    "spans": [{"text": str(text or ""), "field": "operator_text"}],
+                },
+                otem_level=otem_level,
+            )
+            result["wonder_gate"] = wonder_verdict
+            wonder_ok = wonder_allows_escalation(wonder_verdict, otem_level=otem_level)
+
+            rls_verdict = None
+            rls_ok = True
+            justification = {
+                "claim": result.get("restated_task") or result.get("task"),
+                "reasoning": str(result.get("reasoning_summary") or ""),
+                "evidence": [],
+                "reasoning_graph": result.get("reasoning_graph"),
+            }
+            if any(str(justification.get(k) or "").strip() for k in ("claim", "reasoning")) or justification.get(
+                "reasoning_graph"
+            ):
+                graph = from_otem_justification(justification)
+                rls_verdict = evaluate_reasoning_graph(graph, otem_level=otem_level, record_quarantine=False)
+                result["rls_gate"] = rls_verdict
+                rls_ok = rls_allows_escalation(rls_verdict, otem_level=otem_level)
+
+            if not wonder_ok or not rls_ok:
+                result["cannot_justify_escalation"] = True
+        except Exception:
+            result["cannot_justify_escalation"] = True
         return result
 
     def _sync_evolving_workspace(self):

@@ -22,10 +22,10 @@ Track work on the **[Stage 18 Co-Builders](https://github.com/users/warheart1984
 | 2 | [Async diplomacy workflow family](https://github.com/warheart1984-ctrl/Project-Infinity1/issues/2) | `good first issue`, `help wanted`, `python`, `governance`, `civilizational-arc` |
 | 3 | [Harden constitutional evolution proofs](https://github.com/warheart1984-ctrl/Project-Infinity1/issues/3) | `help wanted`, `python`, `governance` |
 | 4 | [Infinity Pilot Docker multi-tenant](https://github.com/warheart1984-ctrl/Project-Infinity1/issues/4) | `help wanted`, `docker`, `documentation` |
-| 5 | [Governance dashboard operator guide](https://github.com/warheart1984-ctrl/Project-Infinity1/issues/5) | `good first issue`, `help wanted`, `documentation`, `governance` |
+| 5 | [Governance dashboard operator guide](https://github.com/warheart1984-ctrl/Project-Infinity1/issues/5) | `good first issue`, `help wanted`, `documentation`, `governance` — **delivered in-repo:** [GOVERNANCE_DASHBOARD_OPERATOR_GUIDE.md](../operators/GOVERNANCE_DASHBOARD_OPERATOR_GUIDE.md) + [proof](../proof/platform/CO_BUILDER_CIVILIZATIONAL_ARC_SMOKE_V1_PROOF.md) |
 | 6 | [Norm federation chaos tests](https://github.com/warheart1984-ctrl/Project-Infinity1/issues/6) | `help wanted`, `python`, `chaos-testing`, `governance` |
 | 7 | [Observe/adopt API doc for integrators](https://github.com/warheart1984-ctrl/Project-Infinity1/issues/7) | `good first issue`, `help wanted`, `documentation`, `civilizational-arc` |
-| 8 | [Civilizational arc smoke target](https://github.com/warheart1984-ctrl/Project-Infinity1/issues/8) | `good first issue`, `help wanted`, `python`, `governance` |
+| 8 | [Civilizational arc smoke target](https://github.com/warheart1984-ctrl/Project-Infinity1/issues/8) | `good first issue`, `help wanted`, `python`, `governance` — **smoke proven:** [CO_BUILDER_CIVILIZATIONAL_ARC_SMOKE_V1_PROOF.md](../proof/platform/CO_BUILDER_CIVILIZATIONAL_ARC_SMOKE_V1_PROOF.md) |
 
 Issue bodies and acceptance criteria live in [`.github/community/issues/`](../../.github/community/issues/).
 

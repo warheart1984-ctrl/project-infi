@@ -1,0 +1,47 @@
+# AAIS mesh + rex-node federation smoke stack (Phase 4)
+version: "3.9"
+
+services:
+  aais-mesh:
+    build:
+      context: ../..
+      dockerfile: deploy/mesh/Dockerfile.aais-mesh
+    ports:
+      - "5000:5000"
+    environment:
+      MESH_DATA_DIR: /data/mesh
+      MESH_NODE_NAME: aais-mesh
+      MESH_PEERS_JSON: '[{"url":"http://rex-node:5001"}]'
+      PORT: "5000"
+    volumes:
+      - aais_mesh_data:/data/mesh
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/api/mesh/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  rex-node:
+    build:
+      context: ../../../reasoning-exchange-node
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      REX_MESH_DIR: /data/rex
+      PORT: "5001"
+      MESH_PEERS_JSON: '[{"url":"http://aais-mesh:5000"}]'
+    volumes:
+      - rex_mesh_data:/data/rex
+    depends_on:
+      aais-mesh:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5001/api/mesh/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  aais_mesh_data:
+  rex_mesh_data:

@@ -4,12 +4,15 @@
 
 Project Infinity 1 is a governed cognition runtime — not a black box. Early adopters receive the same contracts, gates, proof bundles, and operator runbooks we use internally. We do not ask you to trust marketing copy. We ask you to **verify**, **operate**, and **tell us what breaks**.
 
+**Daily operator golden path:** [OPERATOR_GOLDEN_PATH.md](./OPERATOR_GOLDEN_PATH.md) (bootstrap → health → three daily actions).
+
 ---
 
 ## What we give freely
 
 | Category | Where to find it |
 |----------|------------------|
+| Daily golden path | [OPERATOR_GOLDEN_PATH.md](./OPERATOR_GOLDEN_PATH.md) |
 | Install and first run | [AAIS Operator Guide](../operators/AAIS_OPERATOR_GUIDE.md) |
 | Full production runbook | [AAIS Production Operator Runbook](./AAIS_PRODUCTION_OPERATOR_RUNBOOK.md) |
 | Pilot stack (Platform + UGR + AAIS) | [INFINITY_PILOT_EARLY_ADOPTER.md](./INFINITY_PILOT_EARLY_ADOPTER.md) |

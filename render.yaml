@@ -1,0 +1,166 @@
+# Project Infinity (AAIS) — Render Blueprint
+# Maps deploy/pilot/docker-compose.yml to managed Render services.
+# Apply: Dashboard → New → Blueprint, or `render blueprints validate` then sync.
+#
+# Gaps vs local pilot (document before production):
+# - MinIO → use external S3-compatible storage (set PLATFORM_S3_* manually)
+# - Shared pilot_runtime volume → per-service disks below (not shared across replicas)
+# - ParadeDB/pg_search → standard Render Postgres (search features may differ)
+
+databases:
+  - name: platform-db
+    plan: basic-256mb
+    region: oregon
+    databaseName: platform
+    user: platform
+
+services:
+  # Internal platform API (was platform-api in compose)
+  - type: pserv
+    name: platform-api
+    runtime: docker
+    region: oregon
+    plan: starter
+    dockerfilePath: ./deploy/platform/Dockerfile
+    dockerContext: .
+    dockerCommand: python -m platform serve --host 0.0.0.0 --port $PORT
+    healthCheckPath: /v1/health
+    disk:
+      name: platform-runtime
+      mountPath: /app/.runtime
+      sizeGB: 5
+    envVars:
+      - key: PORT
+        value: "8090"
+      - key: PLATFORM_DATABASE_URL
+        fromDatabase:
+          name: platform-db
+          property: connectionString
+      - key: PLATFORM_REDIS_URL
+        fromService:
+          name: platform-redis
+          type: keyvalue
+          property: connectionString
+      - key: PLATFORM_MASTER_API_KEY
+        generateValue: true
+      - key: PLATFORM_REQUIRE_API_KEY
+        value: "1"
+      - key: PLATFORM_WITNESS_REQUIRED
+        value: "0"
+      - key: PLATFORM_WITNESS_QUORUM
+        value: "0"
+      - key: PLATFORM_EXPORT_PACK_SECRET
+        generateValue: true
+      - key: PLATFORM_EXCHANGE_SECRET
+        generateValue: true
+      # Replace with your S3-compatible bucket (MinIO is not on Render)
+      - key: PLATFORM_S3_ENDPOINT
+        sync: false
+      - key: PLATFORM_S3_BUCKET
+        sync: false
+      - key: PLATFORM_S3_ACCESS_KEY
+        sync: false
+      - key: PLATFORM_S3_SECRET_KEY
+        sync: false
+
+  # Background worker (was platform-worker in compose)
+  - type: worker
+    name: platform-worker
+    runtime: docker
+    region: oregon
+    plan: starter
+    dockerfilePath: ./deploy/platform/Dockerfile
+    dockerContext: .
+    dockerCommand: python -m platform worker
+    envVars:
+      - key: PLATFORM_WORKER_REGION
+        value: us
+      - key: PLATFORM_DATABASE_URL
+        fromDatabase:
+          name: platform-db
+          property: connectionString
+      - key: PLATFORM_REDIS_URL
+        fromService:
+          name: platform-redis
+          type: keyvalue
+          property: connectionString
+      - key: PLATFORM_API_BASE_URL
+        fromService:
+          name: platform-api
+          type: pserv
+          property: hostport
+      - key: PLATFORM_MASTER_API_KEY
+        fromService:
+          name: platform-api
+          type: pserv
+          envVarKey: PLATFORM_MASTER_API_KEY
+      - key: PLATFORM_S3_ENDPOINT
+        fromService:
+          name: platform-api
+          type: pserv
+          envVarKey: PLATFORM_S3_ENDPOINT
+      - key: PLATFORM_S3_BUCKET
+        fromService:
+          name: platform-api
+          type: pserv
+          envVarKey: PLATFORM_S3_BUCKET
+      - key: PLATFORM_S3_ACCESS_KEY
+        fromService:
+          name: platform-api
+          type: pserv
+          envVarKey: PLATFORM_S3_ACCESS_KEY
+      - key: PLATFORM_S3_SECRET_KEY
+        fromService:
+          name: platform-api
+          type: pserv
+          envVarKey: PLATFORM_S3_SECRET_KEY
+
+  # Public operator API (was aais-api in compose)
+  - type: web
+    name: aais-api
+    runtime: docker
+    region: oregon
+    plan: starter
+    dockerfilePath: ./deploy/pilot/Dockerfile.aais
+    dockerContext: .
+    dockerCommand: python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    disk:
+      name: aais-runtime
+      mountPath: /app/.runtime
+      sizeGB: 5
+    envVars:
+      - key: PORT
+        value: "8000"
+      - key: AAIS_RUNTIME_DIR
+        value: /app/.runtime/aais-data
+      - key: PLATFORM_API_BASE_URL
+        fromService:
+          name: platform-api
+          type: pserv
+          property: hostport
+
+  # React/Vite operator UI
+  - type: web
+    name: aais-frontend
+    runtime: static
+    region: oregon
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: ./frontend/build
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          name: aais-api
+          type: web
+          property: host
+
+  - type: keyvalue
+    name: platform-redis
+    region: oregon
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList: []

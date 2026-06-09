@@ -1,0 +1,20 @@
+{
+  "linguistic_remediation_playbook_version": "linguistic_remediation_playbook.v1",
+  "gene": "coding_organs_stack",
+  "drift_band": "low",
+  "drift_risk": 30,
+  "signals": {
+    "alignment_gap": 60.0,
+    "snapshot_velocity": 0.0,
+    "layer_skew": 0.0,
+    "gene_mythic_tokens": 0.0,
+    "lineage_fanout": 60.0
+  },
+  "generated_at": "2026-06-07T20:34:04Z",
+  "actions": [
+    {
+      "kind": "recommendation",
+      "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+    }
+  ]
+}

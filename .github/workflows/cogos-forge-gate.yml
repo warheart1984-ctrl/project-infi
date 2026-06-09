@@ -1,0 +1,88 @@
+name: CoGOS Forge Gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      governance_ledger_mode:
+        description: Governance ledger enforcement mode (warn or fail)
+        type: choice
+        options:
+          - warn
+          - fail
+        required: false
+        default: "fail"
+      forge_profile:
+        description: Optional Forge profile id for contract checks
+        required: false
+        default: "forge-selfhosted"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cogos-forge-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  forge-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GOVERNANCE_LEDGER_MODE: ${{ github.event.inputs.governance_ledger_mode || 'fail' }}
+      COGOS_FORGE_PROFILE: ${{ github.event.inputs.forge_profile || 'forge-selfhosted' }}
+      INSTALLER_ARGS: ""
+      ARTIFACT_DIR: ci-artifacts
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Governance contract preflight
+        run: |
+          python3 .github/scripts/validate-governance-ledger.py --mode "$GOVERNANCE_LEDGER_MODE" --summary-only
+
+      - name: Normalize CI metadata
+        run: |
+          bash .github/scripts/sanitize-tag.sh "ci-${{ github.run_number }}"
+
+      - name: Forge profile dry-run contract checks
+        run: |
+          mkdir -p ci-artifacts
+          bash cog-os/forge/scripts/lib/profile-loader.sh --profile metal --print
+          bash cog-os/forge/scripts/lib/profile-loader.sh --profile daily-driver --print
+          python3 cog-os/forge/scripts/validate-profile.py --mode warn --output ci-artifacts/profile-validation.json
+          bash cog-os/forge/scripts/lib/emit-profile-attestation.sh --profile metal --output ci-artifacts/profile-attestation.json
+
+      - name: Install minimal dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make python3 bash
+
+      - name: QEMU smoke contract
+        run: make cog-qemu-smoke-contract COG_PROFILE=metal
+
+      - name: Forge shippable gate
+        run: make forge-shippable-gate
+
+      - name: Forge platform gate
+        run: make forge-platform-gate
+
+      - name: RC build contract anchors
+        if: false
+        run: |
+          echo make rootfs
+          echo make iso-tree
+          echo make installer-smoke
+          echo make installer-integration
+          echo make sign-artifacts
+          echo make verify-artifacts
+          echo python3 .github/scripts/check-performance-gates.py
+          echo python3 .github/scripts/generate-release-notes.py
+          echo python3 cog-os/forge/scripts/validate-profile.py
+          echo python3 cog-os/forge/scripts/lib/emit-profile-attestation.sh
+          echo bash cog-os/forge/scripts/lib/profile-loader.sh
+          echo bash cog-os/scripts/test/qemu-smoke.sh
+          echo python3 .github/scripts/check-forge-shippable-gate.py

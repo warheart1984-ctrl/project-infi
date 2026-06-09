@@ -12,7 +12,14 @@ VALIDATOR = REPO_ROOT / ".github" / "scripts" / "validate-substrate-evolution-le
 
 class SubstrateEvolutionLedgerTests(unittest.TestCase):
     def test_evolution_ledger_passes(self) -> None:
-        cmd = [sys.executable, str(VALIDATOR), "--mode", "fail"]
+        cmd = [
+            sys.executable,
+            str(VALIDATOR),
+            "--mode",
+            "fail",
+            "--registry",
+            "cog-os/forge/substrates/registry.json",
+        ]
         result = subprocess.run(cmd, cwd=str(REPO_ROOT), text=True, capture_output=True, check=False)
         self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
 

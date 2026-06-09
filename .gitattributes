@@ -1,3 +1,7 @@
+* text=auto
+cog-os/** text eol=lf
+cog-os/**/*.sh text eol=lf
+cog-os/**/*.py text eol=lf
 wolf-cog-os/payload/etc/systemd/system/** text eol=lf
 wolf-cog-os/payload/usr/lib/cogos/** text eol=lf
 wolf-cog-os/payload/usr/local/bin/cogos-* text eol=lf
@@ -5,4 +9,7 @@ wolf-cog-os/scripts/**/*.sh text eol=lf
 wolf-cog-os/payload-iso/**/*.sh text eol=lf
 wolf-cog-os/installer-hooks/**/*.sh text eol=lf
 wolf-cog-os/payload/usr/local/bin/cogos-install-finish text eol=lf
-wolf-cog-os/scripts/**/*.py text eol=lf
+.github/scripts/**/*.py text eol=lf
+.github/scripts/**/*.sh text eol=lf
+.github/workflows/** text eol=lf
+Makefile text eol=lf

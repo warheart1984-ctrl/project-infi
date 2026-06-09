@@ -1,0 +1,7 @@
+{
+  "profile_id": "forge-selfhosted",
+  "forge_layout_ok": true,
+  "lineage_id": "lineage-forge-rc-424242",
+  "build_id": "build-forge-rc-424242",
+  "substrate_id": "debian-bookworm"
+}

@@ -1,0 +1,25 @@
+{
+  "linguistic_preemptive_playbook_version": "linguistic_preemptive_playbook.v1",
+  "gene": "coding_organs_stack",
+  "current_band": "low",
+  "predicted_band": "medium",
+  "predicted_risk_30d": 54,
+  "lead_time_days": 25,
+  "drivers": [
+    "latent alignment gap (header/doc vs genome ssp)",
+    "ecosystem mean drift trending upward"
+  ],
+  "generated_at": "2026-06-07T20:37:33Z",
+  "actions": [
+    {
+      "kind": "watch_wave2_header",
+      "path": "src/patchforge_organ.py",
+      "note": "Add # Engineering header before band escalates"
+    },
+    {
+      "kind": "schedule_remediation",
+      "command": "python tools/governance/generate_linguistic_remediations.py --gene coding_organs_stack",
+      "note": "Pre-generate remediation when predicted band materializes"
+    }
+  ]
+}

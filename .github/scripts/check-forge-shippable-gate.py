@@ -105,13 +105,95 @@ def _artifact_gate(repo_root: Path, artifacts_dir: Path, source_run_id: str, pro
     return "pass", output or "promotion source validation passed"
 
 
+def _cog_os_active(repo_root: Path) -> bool:
+    return (repo_root / "cog-os" / "host" / "src" / "init.c").is_file()
+
+
+def _nova_cog_os_checks() -> list[GateCheck]:
+    return [
+        GateCheck("B", "Governance ledger fail mode", [sys.executable, ".github/scripts/validate-governance-ledger.py", "--mode", "fail", "--summary-only"]),
+        GateCheck(
+            "B",
+            "Substrate evolution ledger",
+            [
+                sys.executable,
+                ".github/scripts/validate-substrate-evolution-ledger.py",
+                "--mode",
+                "fail",
+                "--registry",
+                "cog-os/forge/substrates/registry.json",
+            ],
+        ),
+        GateCheck("B", "Repo safety", [sys.executable, ".github/scripts/check-repo-safety.py", "--summary-only"]),
+        GateCheck("B", "Repo hygiene", [sys.executable, ".github/scripts/check-repo-hygiene.py", "--mode", "warn", "--summary-only", "--skip-bundle-compare"], required=False),
+        GateCheck("C", "Nova NorthStar CoG OS host init present", [sys.executable, "-c", "import pathlib; assert pathlib.Path('cog-os/host/src/init.c').is_file()"]),
+        GateCheck("D", "Promotion source unit tests", [sys.executable, "-m", "unittest", "tests.test_validate_promotion_source"]),
+        GateCheck("E", "Forge profile loader tests", [sys.executable, "cog-os/scripts/test/test-forge-profile-loader.py"]),
+        GateCheck("E", "Forge profile validation", [sys.executable, "cog-os/forge/scripts/validate-profile.py", "--mode", "fail"]),
+        GateCheck(
+            "E",
+            "Substrate evolution ledger tests",
+            [sys.executable, "-m", "unittest", "tests.test_substrate_evolution_ledger"],
+        ),
+        GateCheck("D", "Promotion dry-run fixture", ["bash", "cog-os/scripts/test/promotion-dry-run.sh", "--skip-verify"]),
+        GateCheck("C", "QEMU smoke contract", ["bash", "cog-os/scripts/test/qemu-smoke.sh", "--contract"]),
+        GateCheck(
+            "C",
+            "QEMU contract artifact",
+            [
+                sys.executable,
+                "-c",
+                "import json, pathlib, sys; p=pathlib.Path('ci-artifacts/qemu-contract.json'); "
+                "assert p.is_file(), 'missing ci-artifacts/qemu-contract.json'; "
+                "d=json.loads(p.read_text(encoding='utf-8')); "
+                "sys.exit(0 if d.get('status') == 'pass' else 1)",
+            ],
+        ),
+    ]
+
+
+def _write_retired_report(*, output_path: Path, mode: str) -> int:
+    report = {
+        "schema_version": "forge-shippable-gate.v1",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "mode": mode,
+        "status": "pass",
+        "retired": True,
+        "retirement_reason": "wolf-cog-os and cog-os forge trees missing; shippable gate frozen.",
+        "checks": [
+            {
+                "gate_id": "RETIRED",
+                "name": "Wolf CoG OS forge retired",
+                "status": "pass",
+                "required": False,
+                "command": "",
+                "output_tail": ["No wolf-cog-os/ directory present."],
+            }
+        ],
+        "blockers": [],
+        "meta_architect_gate": {
+            "gate_id": "F",
+            "decision_required": False,
+            "decision": "approve",
+            "authority": "Meta Architect",
+            "notes": "Forge gate retired with wolf-cog-os removal.",
+            "decision_doc": "docs/forge-shippable-gate.md",
+        },
+        "live_ci_evidence": {"status": "retired"},
+    }
+    output_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    print(f"forge shippable gate: status=pass (retired) output={output_path}")
+    return 0
+
+
 def main() -> int:
     args = parse_args()
     repo_root = Path.cwd()
     output_path = repo_root / args.output
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    checks: list[GateCheck] = [
+    if (repo_root / "wolf-cog-os").is_dir():
+        checks: list[GateCheck] = [
         GateCheck("B", "Governance ledger fail mode", [sys.executable, ".github/scripts/validate-governance-ledger.py", "--mode", "fail", "--summary-only"]),
         GateCheck("B", "Substrate evolution ledger", [sys.executable, ".github/scripts/validate-substrate-evolution-ledger.py", "--mode", "fail"]),
         GateCheck("B", "Rootfs backend registry", [sys.executable, "wolf-cog-os/scripts/validate-rootfs-backend.py", "--backend", "debootstrap", "--registry-only", "--mode", "fail"]),
@@ -125,7 +207,11 @@ def main() -> int:
         GateCheck("E", "Substrate platform tests", [sys.executable, "-m", "unittest", "tests.test_validate_substrate", "tests.test_substrate_evolution_ledger"]),
         GateCheck("E", "Rootfs backend tests", [sys.executable, "-m", "unittest", "tests.test_rootfs_backend"]),
         GateCheck("E", "Forge platform dashboard", [sys.executable, "-m", "unittest", "tests.test_forge_platform_dashboard"]),
-    ]
+        ]
+    elif _cog_os_active(repo_root):
+        checks = _nova_cog_os_checks()
+    else:
+        return _write_retired_report(output_path=output_path, mode=args.mode)
 
     gate_rows: list[dict[str, object]] = []
     overall = "pass"

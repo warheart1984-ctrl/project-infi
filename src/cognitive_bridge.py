@@ -35,6 +35,9 @@ EFFECTFUL_PACKET_TYPES = {
 }
 MODEL_ONLY_SOURCES = {"llm", "predictor", "swarm"}
 BRIDGE_INVARIANT_PACKET_TYPES = frozenset({"deliberation_request", "generation_request"})
+WONDER_PACKET_TYPES = frozenset(
+    {"generation_request", "deliberation_request", "reasoning_packet_ingress"}
+)
 RISK_LEVELS = {"low", "medium", "high", "critical"}
 DECISION_ALLOW = "ALLOW"
 DECISION_DEGRADE = "DEGRADE"
@@ -192,6 +195,8 @@ def _derive_doctrine_path(
         path.append("verification_before_finalize")
     if requires_approval:
         path.append("approval_before_effectful_execution")
+    if packet_type in WONDER_PACKET_TYPES:
+        path.append("wonder_before_reasoning")
     if packet_type == "reasoning_packet_ingress":
         path.append("ingress_validation_before_admission")
     if packet_type in {"generation_request", "deliberation_request"}:
@@ -439,10 +444,163 @@ def _build_governed_event_feed(packet: dict[str, Any], governance: GovernancePac
     }
 
 
+def _attach_governance_ir_artifacts(result: dict[str, Any]) -> dict[str, Any]:
+    """Attach Governance IR and compiled decode bundle when bridge packet is present."""
+    enriched = dict(result)
+    normalized = enriched.get("normalized_input")
+    governance = enriched.get("governance_packet")
+    if not normalized or not governance:
+        return enriched
+    if enriched.get("governance_ir") and enriched.get("decode_governance_bundle"):
+        return enriched
+    try:
+        from src.governance_ir import build_governance_ir
+        from src.invariant_compiler import InvariantCompilerError, compile_from_ir
+
+        partial_bridge = {
+            "bridge_id": enriched.get("bridge_id"),
+            "decision": enriched.get("decision"),
+            "normalized_input": normalized,
+            "governance_packet": governance,
+            "bridge_invariant": enriched.get("bridge_invariant"),
+        }
+        ir = build_governance_ir(bridge_result=partial_bridge)
+        bundle = compile_from_ir(ir)
+        enriched["governance_ir"] = ir
+        enriched["decode_governance_bundle"] = bundle
+    except InvariantCompilerError as exc:
+        if enriched.get("decision") == DECISION_ALLOW:
+            enriched["decision"] = DECISION_BLOCK
+            enriched["status"] = "blocked"
+            enriched["execution_allowed"] = False
+            enriched["summary"] = (
+                "Cognitive Bridge blocked execution because governance IR compilation failed."
+            )
+            enriched.setdefault("reason_codes", []).append("governance_compiler_failed")
+            enriched.setdefault("notes", []).append(str(exc))
+    except Exception:
+        pass
+    return enriched
+
+
 def _finalize_bridge_result(result: dict[str, Any]) -> dict[str, Any]:
     from src.aais_ul_substrate import wrap_bridge_result
 
-    return wrap_bridge_result(result)
+    return wrap_bridge_result(_attach_governance_ir_artifacts(result))
+
+
+def _packet_has_rls_fields(normalized: dict[str, Any]) -> bool:
+    payload = dict(normalized.get("payload") or {})
+    return bool(
+        str(payload.get("claim") or "").strip()
+        or str(payload.get("reasoning") or "").strip()
+    )
+
+
+def _build_wonder_block_result(
+    normalized: dict[str, Any],
+    governance: GovernancePacket,
+    detachment: dict[str, Any],
+    wonder_outcome: dict[str, Any],
+) -> dict[str, Any]:
+    verdict = dict(wonder_outcome.get("wonder_verdict") or wonder_outcome)
+    summary = str(
+        wonder_outcome.get("summary")
+        or "Cognitive Bridge blocked execution because Wonder forbids conceptual exploration."
+    )
+    violation_codes = [
+        str(v.get("code"))
+        for v in list(verdict.get("violations") or [])
+        if v.get("code")
+    ]
+    return _finalize_bridge_result(
+        {
+            "bridge_id": BRIDGE_ID,
+            "version": BRIDGE_VERSION,
+            "decision": DECISION_BLOCK,
+            "status": "blocked",
+            "summary": summary,
+            "execution_allowed": False,
+            "runtime_context": governance.runtime_context,
+            "requires_approval": governance.requires_approval,
+            "approval_granted": governance.approval_granted,
+            "risk": governance.risk,
+            "normalized_input": normalized,
+            "governance_packet": asdict(governance),
+            "doctrine_path": list(governance.doctrine_path),
+            "invariants": list(governance.invariants),
+            "detachment_guard": detachment,
+            "wonder_verdict": verdict,
+            "aris_enforcement": {
+                "status": "skipped",
+                "reason": "wonder_forbidden",
+            },
+            "event_feed": None,
+            "governed_event": None,
+            "reason_codes": ["wonder_forbidden", *violation_codes],
+            "notes": ["wonder_gate"],
+            "trace": [
+                {"stage": "intent", "value": governance.intent},
+                {"stage": "doctrine", "value": list(governance.doctrine_path)},
+                {"stage": "invariants", "value": list(governance.invariants)},
+                {"stage": "detachment_guard", "value": detachment},
+                {"stage": "wonder_gate", "value": verdict},
+                {"stage": "decision", "value": DECISION_BLOCK},
+            ],
+        }
+    )
+
+
+def _build_rls_block_result(
+    normalized: dict[str, Any],
+    governance: GovernancePacket,
+    detachment: dict[str, Any],
+    rls_outcome: dict[str, Any],
+) -> dict[str, Any]:
+    verdict = dict(rls_outcome.get("rls_verdict") or {})
+    summary = str(
+        rls_outcome.get("summary")
+        or "Cognitive Bridge blocked execution because RLS rejected the reasoning graph."
+    )
+    return _finalize_bridge_result(
+        {
+            "bridge_id": BRIDGE_ID,
+            "version": BRIDGE_VERSION,
+            "decision": DECISION_BLOCK,
+            "status": "blocked",
+            "summary": summary,
+            "execution_allowed": False,
+            "runtime_context": governance.runtime_context,
+            "requires_approval": governance.requires_approval,
+            "approval_granted": governance.approval_granted,
+            "risk": governance.risk,
+            "normalized_input": normalized,
+            "governance_packet": asdict(governance),
+            "doctrine_path": list(governance.doctrine_path),
+            "invariants": list(governance.invariants),
+            "detachment_guard": detachment,
+            "rls_verdict": verdict,
+            "aris_enforcement": {
+                "status": "skipped",
+                "reason": "rls_epistemic_reject",
+            },
+            "event_feed": None,
+            "governed_event": None,
+            "reason_codes": [
+                "rls_epistemic_reject",
+                *list(rls_outcome.get("reason_codes") or []),
+            ],
+            "notes": ["rls_epistemic_firewall"],
+            "trace": [
+                {"stage": "intent", "value": governance.intent},
+                {"stage": "doctrine", "value": list(governance.doctrine_path)},
+                {"stage": "invariants", "value": list(governance.invariants)},
+                {"stage": "detachment_guard", "value": detachment},
+                {"stage": "rls_verdict", "value": verdict},
+                {"stage": "decision", "value": DECISION_BLOCK},
+            ],
+        }
+    )
 
 
 def _build_bridge_invariant_block_result(
@@ -621,16 +779,183 @@ class CognitiveBridgeService:
                     ],
                 }
             )
-        bridge_invariant = None
-        if governance.packet_type in BRIDGE_INVARIANT_PACKET_TYPES:
-            bridge_invariant = InvariantEngine.validate_bridge_packet(normalized, asdict(governance))
-            if not bridge_invariant["allows"]:
-                return _build_bridge_invariant_block_result(
+        wonder_verdict = None
+        wonder_sandbox = False
+        rls_verdict = None
+        rls_downgrade = False
+        cannot_justify_escalation = False
+
+        if governance.packet_type in WONDER_PACKET_TYPES:
+            try:
+                from src.wonder.gate import sandbox_blocks_at_mode
+                from src.wonder.validation import evaluate_bridge_ingress_wonder
+
+                wonder_verdict = evaluate_bridge_ingress_wonder(
+                    normalized,
+                    asdict(governance),
+                )
+                wonder_v = str(wonder_verdict.get("verdict") or "permit")
+                wonder_mode = str(wonder_verdict.get("mode") or "")
+                if wonder_v == "forbid" or (
+                    wonder_v == "sandbox" and sandbox_blocks_at_mode(wonder_mode)
+                ):
+                    return _build_wonder_block_result(
+                        normalized,
+                        governance,
+                        detachment,
+                        {
+                            "wonder_verdict": wonder_verdict,
+                            "summary": str(wonder_verdict.get("summary") or ""),
+                        },
+                    )
+                if wonder_v == "sandbox":
+                    wonder_sandbox = True
+            except Exception:
+                wonder_verdict = {
+                    "verdict": "forbid",
+                    "summary": "Wonder evaluator fault; fail-closed.",
+                    "violations": [{"code": "wonder_evaluator_fault"}],
+                }
+                return _build_wonder_block_result(
                     normalized,
                     governance,
                     detachment,
-                    bridge_invariant,
+                    {"wonder_verdict": wonder_verdict},
                 )
+
+        should_run_rls = governance.packet_type == "reasoning_packet_ingress" or (
+            governance.packet_type in {"generation_request", "deliberation_request"}
+            and _packet_has_rls_fields(normalized)
+        )
+        if should_run_rls:
+            try:
+                from src.rls.validation import evaluate_bridge_ingress_rls
+
+                rls_verdict = evaluate_bridge_ingress_rls(
+                    normalized,
+                    asdict(governance),
+                    record_quarantine=True,
+                )
+                if str(rls_verdict.get("verdict")) == "reject":
+                    block = _build_rls_block_result(
+                        normalized,
+                        governance,
+                        detachment,
+                        {
+                            "rls_verdict": rls_verdict,
+                            "summary": (
+                                "Cognitive Bridge blocked execution because RLS rejected "
+                                "the reasoning graph."
+                            ),
+                            "reason_codes": [
+                                str(v.get("code"))
+                                for v in list(rls_verdict.get("violations") or [])
+                                if v.get("code")
+                            ],
+                        },
+                    )
+                    if wonder_verdict is not None:
+                        block["wonder_verdict"] = wonder_verdict
+                    return block
+                if str(rls_verdict.get("verdict")) == "downgrade":
+                    rls_downgrade = True
+                    cannot_justify_escalation = True
+            except Exception:
+                pass
+        bridge_invariant = None
+        if governance.packet_type in BRIDGE_INVARIANT_PACKET_TYPES:
+            partial_bridge = {
+                "normalized_input": normalized,
+                "governance_packet": asdict(governance),
+            }
+            try:
+                from src.governance_ir import GovernanceIRValidationError, build_governance_ir
+                from src.invariant_compiler import (
+                    InvariantCompilerError,
+                    apply_ingress_plan,
+                    compile_from_ir,
+                )
+
+                ir = build_governance_ir(bridge_result=partial_bridge)
+                bundle = compile_from_ir(ir)
+                ingress = apply_ingress_plan(
+                    normalized,
+                    asdict(governance),
+                    decode_bundle=bundle,
+                )
+                bridge_invariant = next(
+                    (
+                        dict(item)
+                        for item in ingress.get("results") or []
+                        if item.get("validator") == "bridge_invariant"
+                    ),
+                    {
+                        "allows": bool(ingress.get("allows")),
+                        "status": ingress.get("status"),
+                        "summary": "Ingress plan completed.",
+                    },
+                )
+                if not bridge_invariant.get("allows"):
+                    block = _build_bridge_invariant_block_result(
+                        normalized,
+                        governance,
+                        detachment,
+                        bridge_invariant,
+                    )
+                    block["governance_ir"] = ir
+                    block["decode_governance_bundle"] = bundle
+                    block["ingress_plan"] = ingress
+                    return _finalize_bridge_result(block)
+            except (InvariantCompilerError, GovernanceIRValidationError) as exc:
+                return _finalize_bridge_result(
+                    {
+                        "bridge_id": BRIDGE_ID,
+                        "version": BRIDGE_VERSION,
+                        "decision": DECISION_BLOCK,
+                        "status": "blocked",
+                        "summary": (
+                            "Cognitive Bridge blocked execution because governance IR "
+                            "compilation failed."
+                        ),
+                        "execution_allowed": False,
+                        "runtime_context": governance.runtime_context,
+                        "requires_approval": governance.requires_approval,
+                        "approval_granted": governance.approval_granted,
+                        "risk": governance.risk,
+                        "normalized_input": normalized,
+                        "governance_packet": asdict(governance),
+                        "doctrine_path": list(governance.doctrine_path),
+                        "invariants": list(governance.invariants),
+                        "detachment_guard": detachment,
+                        "aris_enforcement": {
+                            "status": "skipped",
+                            "reason": "governance_compiler_failed",
+                        },
+                        "event_feed": None,
+                        "governed_event": None,
+                        "reason_codes": ["governance_compiler_failed"],
+                        "notes": [str(exc)],
+                        "trace": [
+                            {"stage": "intent", "value": governance.intent},
+                            {"stage": "doctrine", "value": list(governance.doctrine_path)},
+                            {"stage": "invariants", "value": list(governance.invariants)},
+                            {"stage": "detachment_guard", "value": detachment},
+                            {"stage": "decision", "value": DECISION_BLOCK},
+                        ],
+                    }
+                )
+            except Exception:
+                bridge_invariant = InvariantEngine.validate_bridge_packet(
+                    normalized,
+                    asdict(governance),
+                )
+                if not bridge_invariant["allows"]:
+                    return _build_bridge_invariant_block_result(
+                        normalized,
+                        governance,
+                        detachment,
+                        bridge_invariant,
+                    )
         aris_enforcement = evaluate_aris_admission(
             details=normalized["payload"],
             runtime_context=governance.runtime_context,
@@ -649,6 +974,16 @@ class CognitiveBridgeService:
         notes: list[str] = []
         decision = DECISION_ALLOW
         execution_allowed = True
+
+        if wonder_sandbox:
+            decision = DECISION_DEGRADE
+            reasons.append("wonder_sandbox")
+            notes.append("wonder_sandboxed_imagination")
+
+        if rls_downgrade and decision != DECISION_BLOCK:
+            decision = DECISION_DEGRADE
+            reasons.append("rls_downgrade")
+            notes.append("rls_downgraded_reasoning")
 
         if governed.get("decision") == DECISION_BLOCK:
             decision = DECISION_BLOCK
@@ -730,8 +1065,18 @@ class CognitiveBridgeService:
                 {"stage": "invariants", "value": list(governance.invariants)},
                 {"stage": "detachment_guard", "value": detachment},
                 *(
+                    [{"stage": "wonder_gate", "value": wonder_verdict}]
+                    if wonder_verdict is not None
+                    else []
+                ),
+                *(
                     [{"stage": "bridge_invariant", "value": bridge_invariant}]
                     if bridge_invariant is not None
+                    else []
+                ),
+                *(
+                    [{"stage": "rls_admissibility", "value": rls_verdict}]
+                    if rls_verdict is not None
                     else []
                 ),
                 {"stage": "aris", "value": aris_enforcement},
@@ -739,6 +1084,12 @@ class CognitiveBridgeService:
                 {"stage": "decision", "value": decision},
             ],
         }
+        if wonder_verdict is not None:
+            result["wonder_verdict"] = wonder_verdict
+        if rls_verdict is not None:
+            result["rls_verdict"] = rls_verdict
+        if cannot_justify_escalation:
+            result["cannot_justify_escalation"] = True
         if governance.packet_type in {"generation_request", "deliberation_request"}:
             from src.aais_governed_llm_module import propose_governed_llm_envelope
 

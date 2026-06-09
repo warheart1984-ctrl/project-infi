@@ -126,9 +126,12 @@ class TestEmbryoGateway(unittest.TestCase):
 
 
 class TestEmbryoManifestValidator(unittest.TestCase):
-    def test_validator_passes(self):
+    def test_validator_retired_without_wolf_forge(self):
+        script = Path(__file__).resolve().parents[1] / "wolf-cog-os" / "scripts" / "validate-ugr-embryo-manifest.py"
+        if not script.is_file():
+            self.skipTest("wolf-cog-os UGR embryo manifest validator removed")
         completed = subprocess.run(
-            [sys.executable, "wolf-cog-os/scripts/validate-ugr-embryo-manifest.py", "--mode", "fail"],
+            [sys.executable, str(script), "--mode", "fail"],
             cwd=Path(__file__).resolve().parents[1],
             capture_output=True,
             text=True,

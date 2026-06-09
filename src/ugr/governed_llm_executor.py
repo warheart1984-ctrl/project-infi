@@ -104,6 +104,26 @@ def execute_governed_llm_proposal(
 
     capped_request = apply_ugr_temperature_cap(dict(envelope.get("provider_request") or {}))
     provider_id = str(capped_request.get("provider") or "local").strip().lower()
+
+    provider_mask = None
+    decode_bundle = dict(bridge_result.get("decode_governance_bundle") or {})
+    authority_mask_spec = decode_bundle.get("authority_mask_spec")
+    if authority_mask_spec:
+        from src.providers.governance_adapters import (
+            ProviderContext,
+            apply_authority_mask,
+            merge_mask_into_messages,
+            merge_mask_into_provider_request,
+        )
+
+        provider_ctx = ProviderContext(
+            provider_id=provider_id,
+            site_id=str(authority_mask_spec.get("active_site_id") or "tool_call_schema"),
+            provider_request=capped_request,
+        )
+        provider_mask = apply_authority_mask(provider_ctx, authority_mask_spec)
+        capped_request = merge_mask_into_provider_request(capped_request, provider_mask)
+
     registry = provider_registry_instance or provider_registry
     adapter = registry.get(provider_id)
     if adapter is None or not registry.can_invoke(provider_id):
@@ -117,6 +137,10 @@ def execute_governed_llm_proposal(
         })
 
     messages = build_messages_for_proposal(question=question, envelope=envelope)
+    if provider_mask is not None:
+        from src.providers.governance_adapters import merge_mask_into_messages
+
+        messages = merge_mask_into_messages(messages, provider_mask)
     overrides = dict(capped_request.get("generation_overrides") or {})
     temperature = float(overrides.get("temperature", UGR_LLM_TEMPERATURE))
     max_tokens = int(overrides.get("max_tokens") or 512)
@@ -157,7 +181,7 @@ def execute_governed_llm_proposal(
     output_tokens = getattr(response, "output_tokens", None)
     tokens_used = int(output_tokens or 0) + int(input_tokens or 0)
 
-    return _wrap_ul_payload({
+    payload: dict[str, Any] = {
         "status": "EXECUTED",
         "reason": "governed_provider_execution_complete",
         "executor_version": UGR_LLM_EXECUTOR_VERSION,
@@ -171,4 +195,7 @@ def execute_governed_llm_proposal(
         "proposal_only": False,
         "execution_authority": "governed_commit",
         "provider_request": capped_request,
-    })
+    }
+    if provider_mask is not None:
+        payload["provider_mask"] = provider_mask.to_dict()
+    return _wrap_ul_payload(payload)

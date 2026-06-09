@@ -22,6 +22,7 @@ govern AAIS behavior.
 - memory doctrine
 - tracing protocol and proof-layer contract
 - ARIS runtime contract and non-copy clause
+- ARIS standalone service admission spec (Phase 4 unblock path)
 - seam law and seam checklist
 - seam closure records
 - evolve, forge, and capability contracts

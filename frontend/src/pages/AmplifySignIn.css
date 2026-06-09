@@ -1,0 +1,55 @@
+.amplify-sign-in {
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 5rem);
+  padding: 2rem 1rem 3rem;
+}
+
+.amplify-sign-in__panel {
+  width: min(100%, 32rem);
+  padding: 1.75rem;
+}
+
+.amplify-sign-in__eyebrow {
+  color: var(--accent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.amplify-sign-in h1 {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.amplify-sign-in__copy {
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.amplify-sign-in__link {
+  color: var(--accent);
+  display: inline-block;
+  margin-top: 0.5rem;
+  text-decoration: none;
+}
+
+.amplify-sign-in__link:hover {
+  text-decoration: underline;
+}
+
+.amplify-sign-in [data-amplify-authenticator] {
+  --amplify-colors-background-primary: rgba(8, 18, 36, 0.95);
+  --amplify-colors-background-secondary: rgba(12, 24, 44, 0.95);
+  --amplify-colors-font-primary: #eefaff;
+  --amplify-colors-font-secondary: #8da6bc;
+  --amplify-colors-brand-primary-80: #36c8e7;
+  --amplify-colors-brand-primary-90: #5ce7ff;
+  --amplify-colors-brand-primary-100: #5ce7ff;
+  --amplify-radii-small: 0.5rem;
+  --amplify-radii-medium: 0.75rem;
+  margin-top: 1rem;
+}

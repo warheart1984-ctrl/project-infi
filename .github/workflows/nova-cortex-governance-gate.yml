@@ -9,7 +9,6 @@ on:
       - "src/cogos_runtime_bridge.py"
       - "docs/runtime/NOVA_CORTEX.md"
       - "docs/runtime/cognitive_runtime_family.v1.json"
-      - "wolf-cog-os/payload/opt/cogos/config/cognitive_runtime_family.json"
       - ".github/scripts/check-nova-cortex-governance.py"
       - ".github/workflows/nova-cortex-governance-gate.yml"
   push:
@@ -21,7 +20,6 @@ on:
       - "src/cogos_runtime_bridge.py"
       - "docs/runtime/NOVA_CORTEX.md"
       - "docs/runtime/cognitive_runtime_family.v1.json"
-      - "wolf-cog-os/payload/opt/cogos/config/cognitive_runtime_family.json"
       - ".github/scripts/check-nova-cortex-governance.py"
       - ".github/workflows/nova-cortex-governance-gate.yml"
 

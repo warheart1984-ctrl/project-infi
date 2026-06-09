@@ -49,20 +49,19 @@ def main() -> int:
     )
 
     manifest = repo_root / "docs/runtime/cognitive_runtime_family.v1.json"
-    wolf_manifest = repo_root / "wolf-cog-os/payload/opt/cogos/config/cognitive_runtime_family.json"
-
-    for path in (manifest, wolf_manifest):
-        if not path.is_file():
-            print(f"[nova-cortex-gate] FAIL: missing manifest {path}")
-            return 1
-        payload = json.loads(path.read_text(encoding="utf-8"))
-        exported = validate_nova_cortex_capability_governance(payload)
-        if not exported["valid"]:
-            print(f"[nova-cortex-gate] FAIL: manifest capability drift at {path}")
-            print(json.dumps(exported, indent=2))
-            print("[nova-cortex-gate] hint: run python -c \"from src.cog_runtime import export_family_json; export_family_json(); export_family_json('wolf-cog-os/payload/opt/cogos/config/cognitive_runtime_family.json')\"")
-            return 1
-        print(f"[nova-cortex-gate] OK: {path} matches capability contract")
+    if not manifest.is_file():
+        print(f"[nova-cortex-gate] FAIL: missing manifest {manifest}")
+        return 1
+    payload = json.loads(manifest.read_text(encoding="utf-8"))
+    exported = validate_nova_cortex_capability_governance(payload)
+    if not exported["valid"]:
+        print(f"[nova-cortex-gate] FAIL: manifest capability drift at {manifest}")
+        print(json.dumps(exported, indent=2))
+        print(
+            '[nova-cortex-gate] hint: run python -c "from src.cog_runtime import export_family_json; export_family_json()"'
+        )
+        return 1
+    print(f"[nova-cortex-gate] OK: {manifest} matches capability contract")
 
     for module_id in sorted(CORTEX_MODULE_CAPABILITY_MATRIX):
         entry = CORTEX_MODULE_CAPABILITY_MATRIX[module_id]

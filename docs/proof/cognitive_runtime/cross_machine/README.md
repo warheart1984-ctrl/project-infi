@@ -38,4 +38,4 @@ python3 /opt/cogos/runtime/src/cogos_runtime_bridge.py --rehydrate-boot operator
 
 **Pass criteria:** `rehydrated: true` for both narrative and intent; `active_story` and `active_commitments` match pre-reboot snapshot hashes.
 
-See also: [`wolf-cog-os/docs/METAL_PROOF_CHECKLIST.md`](../../../wolf-cog-os/docs/METAL_PROOF_CHECKLIST.md) § Nova store rehydration.
+See also: [`cog-os/docs/METAL_PROOF_CHECKLIST.md`](../../../cog-os/docs/METAL_PROOF_CHECKLIST.md) — Nova store rehydration and metal boot proof.

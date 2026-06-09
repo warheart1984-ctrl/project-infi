@@ -49,7 +49,7 @@ AAIS currently includes these major areas:
 | Embedded ARIS | `src/aris_integration.py`, `src/cognitive_bridge.py`, `src/project_infi_law.py` | repo-intelligence boundary, non-copy clause, signature-only pattern sharing law | Live |
 | Forge | `src/jarvis_operator.py`, `forge/service.py` | governed repo review/apply lanes | Live but bounded |
 | Evolve | evolve-related clients and runtime state | evaluation/mutation/search lane | Live but bounded |
-| OTEM | `src/jarvis_reasoning_protocol.py`, `src/otem_runtime.py` | reasoning/proposal lane | Partial |
+| OTEM | `src/jarvis_reasoning_protocol.py`, `src/otem_runtime.py`, `src/otem_ceiling.py` | reasoning/proposal lane; L20 sovereign recovery ceiling | Live (L10 default; L20 operator-only) |
 | V9/V10 | `src/v9_runtime.py`, `src/v10_runtime.py` | bounded creative/runtime cores | Live |
 | Governance and record | `src/module_governance.py`, `src/run_ledger.py`, `src/governance_layer.py` | module law, CISIV, logs, governance | Live |
 
@@ -161,13 +161,22 @@ Current limitation:
 
 ## OTEM Spec
 
-OTEM currently remains bounded.
+OTEM operates on a four-band authority lattice (levels 1–20):
+
+- **autonomous** (1–9): normal immune defend/heal/harden
+- **governed** (10–15): default `AAIS_OTEM_CAPABILITY_LEVEL=10`; execution via approvals
+- **containment** (16–19): pause + diagnostic bundle
+- **sovereign** (20): non-delegable constitutional recovery ceiling
+
+Level 20 is implemented (`src/otem_ceiling.py`): diagnostic bundle → preview →
+explicit operator decision → ODL closure → post-decision hardening. Operator
+surface: `/operator/ceiling`, console snapshot `otem_ceiling` (v1.3).
 
 Current limitation set:
 
-- capped execution scope
-- proposal/reasoning emphasis
-- not yet a fully realized execution layer
+- capped execution scope below sovereign band
+- proposal/reasoning emphasis at governed band
+- L20 Voss re-anchor is IR genesis reset stub; full calculus deferred
 
 ## CISIV Spec
 
@@ -203,7 +212,7 @@ Current project record expectations:
 
 The biggest still-incomplete areas are:
 
-- OTEM beyond its current bounded ceiling
+- OTEM execution substrate durability and autonomous workflow creation (below L20)
 - PatchForge/Forge as a fuller autonomous authoring lane
 - broader predictor/invariant-driven immune automation beyond the current
   observe-only Super Nova coupling

@@ -1,0 +1,20 @@
+{
+  "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+  "gene": "movie_renderer_lane_organ",
+  "status": "pending",
+  "urgency_score": 46.8,
+  "queue_generated_at": "2026-06-07T20:33:13Z",
+  "recommended_actions": [
+    {
+      "kind": "recommendation",
+      "text": "Wave 2: add source # Engineering: header aligned with genome ssp"
+    },
+    {
+      "kind": "cascade_report",
+      "command": "python tools/linguistic_cascade_report.py --gene movie_renderer_lane_organ",
+      "note": "Review lineage cascade impact"
+    }
+  ],
+  "operator_notes": "",
+  "updated_at": "2026-06-07T20:33:13Z"
+}

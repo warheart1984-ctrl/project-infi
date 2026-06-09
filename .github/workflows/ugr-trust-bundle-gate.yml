@@ -6,7 +6,6 @@ on:
       - "src/ugr/trust_bundle/**"
       - "tools/proof/run_ugr_trust_bundle.py"
       - "tests/test_ugr_trust_bundle_organ.py"
-      - "wolf-cog-os/scripts/validate-ugr-trust-bundle-manifest.py"
       - "docs/trust_bundles/**"
       - "docs/contracts/UGR_TRUST_BUNDLE_ORGAN_CONTRACT.md"
       - "docs/proof/ugr/UGR_TRUST_BUNDLE_ORGAN_PROOF.md"
@@ -17,7 +16,6 @@ on:
       - "src/ugr/trust_bundle/**"
       - "tools/proof/run_ugr_trust_bundle.py"
       - "tests/test_ugr_trust_bundle_organ.py"
-      - "wolf-cog-os/scripts/validate-ugr-trust-bundle-manifest.py"
       - "docs/trust_bundles/**"
       - "docs/contracts/UGR_TRUST_BUNDLE_ORGAN_CONTRACT.md"
       - "docs/proof/ugr/UGR_TRUST_BUNDLE_ORGAN_PROOF.md"
@@ -52,7 +50,6 @@ jobs:
       - name: UGR trust bundle gate
         shell: bash
         run: |
-          python wolf-cog-os/scripts/validate-ugr-trust-bundle-manifest.py --mode fail
           python -m pytest tests/test_ugr_trust_bundle_organ.py -q
           python tools/proof/run_ugr_trust_bundle.py --mode fail
 

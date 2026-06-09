@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "epistemic_state.v1.json",
+  "title": "EpistemicStateEnvelope",
+  "description": "Canonical 3-state epistemic layer mapped from 4-band Standing.",
+  "type": "object",
+  "required": ["epistemic_state", "standing", "claim_label"],
+  "properties": {
+    "epistemic_state": {
+      "type": "string",
+      "enum": ["rejected", "pending", "proven"]
+    },
+    "standing": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3
+    },
+    "claim_label": {
+      "type": "string",
+      "enum": ["hypothetical", "asserted", "proven", "rejected"]
+    },
+    "rejection_source": {
+      "type": "string",
+      "description": "Origin of rejection when epistemic_state is rejected.",
+      "enum": [
+        "discovery_denial",
+        "falsity_registry",
+        "mesh_falsity",
+        "operator_override",
+        "manual"
+      ]
+    },
+    "falsity_fingerprint": {
+      "type": "string",
+      "description": "Stable fingerprint for resurrection blocking."
+    },
+    "pod_id": {
+      "type": "string"
+    },
+    "contribution_id": {
+      "type": "string"
+    },
+    "promoted_to_operator": {
+      "type": "boolean",
+      "description": "True when proven URG object was admitted to operator knowledge."
+    },
+    "promotion_event_id": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

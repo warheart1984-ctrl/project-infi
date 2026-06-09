@@ -1,38 +1,26 @@
-"""Stage Synthetic Mind bundle into Wolf payload after AI Factory promote."""
+"""Build Synthetic Mind bundle after AI Factory promote (host payload staging retired with Wolf CoG OS)."""
 
 from __future__ import annotations
 
-import os
-import shutil
+import json
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
 from ai_factory.orchestrator import FactoryBuildError
 
 
-def _bash_path(path: Path) -> str:
-    resolved = path.expanduser().resolve()
-    if os.name != "nt":
-        return resolved.as_posix()
-    drive = resolved.drive.rstrip(":").lower()
-    rest = resolved.as_posix()[len(resolved.drive):].lstrip("/")
-    if drive:
-        return f"/mnt/{drive}/{rest}"
-    return resolved.as_posix()
-
-
-def stage_synthetic_mind_after_wolf_deploy(
+def stage_synthetic_mind_bundle(
     *,
     repo_root: Path,
     build_id: str,
     dry_run: bool = False,
 ) -> dict[str, Any]:
-    """Invoke build-synthetic-mind-bundle.sh and stage into wolf payload cache."""
+    """Build the portable Synthetic Mind bundle under artifacts/."""
     repo = repo_root.expanduser().resolve()
     script = repo / "scripts" / "cogos" / "build_synthetic_mind_bundle.py"
-    bundle_dir = repo / "wolf-cog-os" / "artifacts" / "synthetic-mind-bundle"
-    stage_script = repo / "wolf-cog-os" / "scripts" / "stage-nova-cortex-into-payload.sh"
+    bundle_dir = repo / "artifacts" / "synthetic-mind-bundle"
 
     receipt: dict[str, Any] = {
         "stage": "synthetic_mind_bundle",
@@ -50,7 +38,7 @@ def stage_synthetic_mind_after_wolf_deploy(
 
     env = {**__import__("os").environ, "COGOS_AI_FACTORY_BUILD_ID": build_id}
     proc = subprocess.run(
-        [__import__("sys").executable, str(script), str(bundle_dir)],
+        [sys.executable, str(script), str(bundle_dir)],
         cwd=str(repo),
         env=env,
         text=True,
@@ -62,40 +50,16 @@ def stage_synthetic_mind_after_wolf_deploy(
             f"synthetic mind bundle build failed: {proc.stderr or proc.stdout}"
         )
 
-    wolf_payload = repo / "wolf-cog-os" / "payload"
-    cache_env = os.environ.get("COGOS_PAYLOAD_CACHE")
-    payload_cache = Path(cache_env) if cache_env else Path.home() / ".cogos-payload-cache"
-    if not (payload_cache / "opt" / "cogos").is_dir() and (wolf_payload / "opt" / "cogos").is_dir():
-        payload_cache = wolf_payload
-    if payload_cache.resolve() == wolf_payload.resolve():
-        manifest = bundle_dir / "synthetic_mind_manifest.json"
-        if manifest.is_file():
-            target = wolf_payload / "opt" / "cogos" / "config" / "synthetic_mind_manifest.json"
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(manifest, target)
-        receipt["payload_cache"] = str(payload_cache)
-        receipt["payload_stage_mode"] = "repo_payload_only"
-    elif stage_script.is_file():
-        proc2 = subprocess.run(
-            ["bash", _bash_path(stage_script), _bash_path(payload_cache), _bash_path(wolf_payload)],
-            cwd=str(repo),
-            text=True,
-            capture_output=True,
-            check=False,
-        )
-        if proc2.returncode != 0:
-            raise FactoryBuildError(
-                f"synthetic mind payload stage failed: {proc2.stderr or proc2.stdout}"
-            )
-        receipt["payload_cache"] = str(payload_cache)
-
     manifest = bundle_dir / "synthetic_mind_manifest.json"
     if manifest.is_file():
-        import json
-
         data = json.loads(manifest.read_text(encoding="utf-8-sig"))
         receipt["bundle_sha256"] = data.get("bundle_sha256")
         receipt["family_id"] = data.get("family_id")
 
-    receipt["status"] = "staged"
+    receipt["status"] = "built"
+    receipt["payload_stage_mode"] = "bundle_only"
     return receipt
+
+
+# Back-compat alias for callers that still use the old name.
+stage_synthetic_mind_after_wolf_deploy = stage_synthetic_mind_bundle

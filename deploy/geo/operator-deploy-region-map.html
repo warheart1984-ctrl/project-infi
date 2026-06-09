@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Project Infinity — Deploy Region Topology</title>
+    <link
+      href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5"></script>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: system-ui, sans-serif;
+      }
+      body {
+        margin: 0;
+        background: #0f1419;
+        color: #e7ecf3;
+      }
+      header {
+        padding: 12px 16px;
+        border-bottom: 1px solid #2a3441;
+      }
+      header h1 {
+        margin: 0 0 4px;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      header p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: #9aa7b8;
+      }
+      #map {
+        height: calc(100vh - 72px);
+        width: 100%;
+      }
+      .legend {
+        position: absolute;
+        bottom: 24px;
+        left: 16px;
+        z-index: 2;
+        background: rgba(15, 20, 25, 0.92);
+        border: 1px solid #2a3441;
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 0.8rem;
+        line-height: 1.5;
+      }
+      .legend span {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 6px;
+      }
+      .azure { background: #0078d4; }
+      .firebase { background: #ffca28; }
+      .ugr { background: #7c4dff; }
+      #setup {
+        display: none;
+        padding: 24px;
+        max-width: 640px;
+      }
+      #setup code {
+        background: #1a2330;
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Deploy region topology — Project Infinity</h1>
+      <p>
+        Azure pilot candidates, Firebase Data Connect, and UGR
+        <code>allowed_regions</code> on one map (Amazon Location Service tiles).
+      </p>
+    </header>
+    <div id="setup">
+      <h2>API key required</h2>
+      <p>
+        Open with query param <code>?key=YOUR_AMAZON_LOCATION_API_KEY</code> or set
+        <code>localStorage.amazonLocationApiKey</code>.
+      </p>
+      <p>
+        Create a resourceless API key with <code>geo-maps:GetTile</code> on
+        <code>arn:aws:geo-maps:REGION::provider/default</code>. See
+        <code>docs/operations/DEPLOY_REGION_GEO_TOPOLOGY.md</code>.
+      </p>
+    </div>
+    <div id="map"></div>
+    <div class="legend">
+      <div><span class="azure"></span>Azure (candidate)</div>
+      <div><span class="firebase"></span>Firebase Data Connect</div>
+      <div><span class="ugr"></span>UGR policy region</div>
+    </div>
+    <script>
+      const REGION = "us-east-1";
+      const params = new URLSearchParams(window.location.search);
+      const API_KEY =
+        params.get("key") || localStorage.getItem("amazonLocationApiKey") || "";
+
+      const REGIONS = [
+        {
+          id: "azure-eastus2",
+          label: "Azure East US 2",
+          provider: "azure",
+          coords: [-78.3889, 36.6676],
+          detail: "Container Apps + Postgres + Redis (candidate)",
+        },
+        {
+          id: "azure-westus2",
+          label: "Azure West US 2",
+          provider: "azure",
+          coords: [-120.7401, 47.7511],
+          detail: "Container Apps + Postgres + Redis (candidate)",
+        },
+        {
+          id: "firebase-us-central1",
+          label: "Firebase us-central1",
+          provider: "firebase",
+          coords: [-93.6091, 41.5868],
+          detail: "Jarvis Memory Board vector projection (optional)",
+        },
+        {
+          id: "tenant-us",
+          label: "tenant-us",
+          provider: "ugr",
+          coords: [-98.5795, 39.8283],
+          detail: "organ allowed_regions (tenant-acme)",
+        },
+        {
+          id: "tenant-eu",
+          label: "tenant-eu",
+          provider: "ugr",
+          coords: [10.4515, 51.1657],
+          detail: "organ allowed_regions (federation)",
+        },
+      ];
+
+      const COLORS = {
+        azure: "#0078d4",
+        firebase: "#ffca28",
+        ugr: "#7c4dff",
+      };
+
+      if (!API_KEY) {
+        document.getElementById("setup").style.display = "block";
+        document.getElementById("map").style.display = "none";
+      } else {
+        const styleUrl = `https://maps.geo.${REGION}.amazonaws.com/v2/styles/Standard/descriptor?key=${API_KEY}`;
+        const map = new maplibregl.Map({
+          container: "map",
+          style: styleUrl,
+          center: [-96, 42],
+          zoom: 3.2,
+          validateStyle: false,
+        });
+
+        map.on("load", () => {
+          const features = REGIONS.map((r) => ({
+            type: "Feature",
+            properties: {
+              id: r.id,
+              label: r.label,
+              provider: r.provider,
+              detail: r.detail,
+              color: COLORS[r.provider] || "#ffffff",
+            },
+            geometry: {
+              type: "Point",
+              coordinates: r.coords,
+            },
+          }));
+
+          map.addSource("deploy-regions", {
+            type: "geojson",
+            data: { type: "FeatureCollection", features },
+          });
+
+          map.addLayer({
+            id: "deploy-regions-circles",
+            type: "circle",
+            source: "deploy-regions",
+            paint: {
+              "circle-radius": 8,
+              "circle-color": ["get", "color"],
+              "circle-stroke-width": 2,
+              "circle-stroke-color": "#ffffff",
+            },
+          });
+
+          map.on("click", "deploy-regions-circles", (e) => {
+            const p = e.features[0].properties;
+            new maplibregl.Popup()
+              .setLngLat(e.lngLat)
+              .setHTML(
+                `<strong>${p.label}</strong><br/><span style="color:#9aa7b8">${p.detail}</span>`,
+              )
+              .addTo(map);
+          });
+
+          map.on("mouseenter", "deploy-regions-circles", () => {
+            map.getCanvas().style.cursor = "pointer";
+          });
+          map.on("mouseleave", "deploy-regions-circles", () => {
+            map.getCanvas().style.cursor = "";
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "run": {
+    "run_id": "424242",
+    "attempt": "1"
+  },
+  "workflow": "cogos-forge-gate",
+  "repository": "project-infi"
+}

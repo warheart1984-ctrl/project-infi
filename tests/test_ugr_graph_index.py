@@ -186,9 +186,12 @@ class TestPatternLedgerGraphSwitch(unittest.TestCase):
 
 
 class TestGraphIndexManifestValidator(unittest.TestCase):
-    def test_validator_passes(self):
+    def test_validator_retired_without_wolf_forge(self):
+        script = Path(__file__).resolve().parents[1] / "wolf-cog-os" / "scripts" / "validate-ugr-graph-index-manifest.py"
+        if not script.is_file():
+            self.skipTest("wolf-cog-os UGR graph index manifest validator removed")
         completed = subprocess.run(
-            [sys.executable, "wolf-cog-os/scripts/validate-ugr-graph-index-manifest.py", "--mode", "fail"],
+            [sys.executable, str(script), "--mode", "fail"],
             cwd=Path(__file__).resolve().parents[1],
             capture_output=True,
             text=True,

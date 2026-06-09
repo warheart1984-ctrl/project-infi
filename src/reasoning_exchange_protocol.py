@@ -327,9 +327,10 @@ def build_reasoning_exchange_reject_response(
     *,
     reason: str,
     notes: list[str] | None = None,
+    rls_verdict: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Return a bounded reject handshake without touching local governance."""
-    return _wrap_ul_payload({
+    payload = {
         "protocol_id": REASONING_EXCHANGE_PROTOCOL_ID,
         "protocol_version": REASONING_EXCHANGE_PROTOCOL_VERSION,
         "status": "REJECT",
@@ -350,7 +351,44 @@ def build_reasoning_exchange_reject_response(
             "status": "not_evaluated",
             "reason": "Packet was rejected before governed execution.",
         },
-    })
+    }
+    if rls_verdict:
+        payload["rls_verdict"] = rls_verdict
+    return _wrap_ul_payload(payload)
+
+
+def _load_mesh_governance() -> tuple[dict[str, Any] | None, Any]:
+    try:
+        from src.mesh.falsity_adapter import get_falsity_mesh_adapter
+        from src.mesh.invariants import InvariantStore
+        from src.mesh.runtime import mesh_base
+
+        base = mesh_base()
+        governance = InvariantStore(base).apply_to_governance()
+        registry = get_falsity_mesh_adapter(base).registry
+        return governance, registry
+    except Exception:
+        return None, None
+
+
+def _mesh_pre_rls_reject(
+    packet: dict[str, Any],
+    mesh_governance: dict[str, Any] | None,
+    falsity_registry: Any,
+) -> dict[str, Any] | None:
+    if not mesh_governance:
+        return None
+    claim = str((packet.get("payload") or {}).get("claim") or "").strip()
+    min_len = int(mesh_governance.get("min_claim_length") or 0)
+    if min_len and len(claim) < min_len:
+        return {"reason": "mesh_min_claim_length", "notes": [f"min_claim_length={min_len}"]}
+    if mesh_governance.get("reject_known_false") and claim:
+        from src.mesh.falsity_adapter import get_falsity_mesh_adapter
+        from src.mesh.runtime import mesh_base
+
+        if get_falsity_mesh_adapter(mesh_base()).is_falsified(claim):
+            return {"reason": "mesh_known_false", "notes": ["reject_known_false"]}
+    return None
 
 
 class ReasoningExchangeProtocol:
@@ -442,7 +480,74 @@ class ReasoningExchangeProtocol:
                 "immune_system": self.immune_controller.snapshot(limit_events=6, limit_incidents=3),
             })
 
-        handshake = self._admission_handshake(packet)
+        mesh_governance, falsity_registry = _load_mesh_governance()
+        pre_rls_reject = _mesh_pre_rls_reject(packet, mesh_governance, falsity_registry)
+        if pre_rls_reject:
+            immune_update = self.observe_boundary_signal(
+                signal_type="mesh_governance_reject",
+                severity="medium",
+                reason=pre_rls_reject["reason"],
+                runtime_context=context,
+                packet=packet,
+                decision="REJECT",
+            )
+            return _wrap_ul_payload({
+                "protocol_id": REASONING_EXCHANGE_PROTOCOL_ID,
+                "protocol_version": REASONING_EXCHANGE_PROTOCOL_VERSION,
+                "status": "REJECT",
+                "reason": pre_rls_reject["reason"],
+                "confidence_adjustment": 0.0,
+                "notes": pre_rls_reject.get("notes") or [],
+                "packet": packet,
+                "verification_gate": verification,
+                "phase_gate": phase_gate_payload,
+                "module_governance": module_payload,
+                "mesh_governance": mesh_governance,
+                "immune_update": immune_update,
+                "immune_system": self.immune_controller.snapshot(limit_events=6, limit_incidents=3),
+            })
+
+        from src.rls.validation import evaluate_exchange_packet_rls
+
+        rls_verdict = evaluate_exchange_packet_rls(
+            packet, record_quarantine=True, registry=falsity_registry
+        )
+        if rls_verdict.get("verdict") == "reject":
+            violation_codes = [
+                str(v.get("code"))
+                for v in (rls_verdict.get("violations") or [])
+                if v.get("code")
+            ]
+            immune_update = self.observe_boundary_signal(
+                signal_type="rls_epistemic_reject",
+                severity="medium",
+                reason="Reasoning packet failed RLS epistemic admissibility checks.",
+                runtime_context=context,
+                packet=packet,
+                decision="REJECT",
+            )
+            return _wrap_ul_payload({
+                "protocol_id": REASONING_EXCHANGE_PROTOCOL_ID,
+                "protocol_version": REASONING_EXCHANGE_PROTOCOL_VERSION,
+                "status": "REJECT",
+                "reason": "rls_rejected",
+                "confidence_adjustment": 0.0,
+                "notes": violation_codes or ["rls_rejected"],
+                "packet": packet,
+                "verification_gate": verification,
+                "phase_gate": phase_gate_payload,
+                "module_governance": module_payload,
+                "rls_verdict": rls_verdict,
+                "immune_update": immune_update,
+                "immune_system": self.immune_controller.snapshot(limit_events=6, limit_incidents=3),
+            })
+
+        handshake = self._admission_handshake(packet, mesh_governance=mesh_governance)
+        if rls_verdict.get("verdict") == "downgrade" and handshake.get("status") == "ADMIT":
+            handshake = dict(handshake)
+            handshake["status"] = "PARTIAL"
+            handshake["reason"] = "rls_downgrade_caps_admission"
+            handshake.setdefault("notes", []).append("rls_downgraded")
         immune_update = None
         if handshake["status"] == "PARTIAL":
             immune_update = self.observe_boundary_signal(
@@ -471,11 +576,18 @@ class ReasoningExchangeProtocol:
             "verification_gate": verification,
             "phase_gate": phase_gate_payload,
             "module_governance": module_payload,
+            "rls_verdict": rls_verdict,
+            "mesh_governance": mesh_governance,
             "immune_update": immune_update,
             "immune_system": self.immune_controller.snapshot(limit_events=6, limit_incidents=3),
         })
 
-    def _admission_handshake(self, packet: dict[str, Any]) -> dict[str, Any]:
+    def _admission_handshake(
+        self,
+        packet: dict[str, Any],
+        *,
+        mesh_governance: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
         confidence = float((packet.get("payload") or {}).get("confidence") or 0.0)
         evidence = list((packet.get("payload") or {}).get("evidence") or [])
         domain = ((packet.get("meta") or {}).get("domain") or "").strip()
@@ -496,7 +608,14 @@ class ReasoningExchangeProtocol:
         adjusted_confidence = max(0.0, min(1.0, confidence + adjustment))
         rounded_adjustment = round(adjusted_confidence - confidence, 2)
 
-        if adjusted_confidence >= ADMIT_CONFIDENCE_THRESHOLD:
+        admit_threshold = ADMIT_CONFIDENCE_THRESHOLD
+        if mesh_governance and mesh_governance.get("min_confidence") is not None:
+            admit_threshold = max(
+                ADMIT_CONFIDENCE_THRESHOLD,
+                float(mesh_governance["min_confidence"]),
+            )
+
+        if adjusted_confidence >= admit_threshold:
             status = "ADMIT"
             reason = "packet_meets_ingress_threshold"
         elif adjusted_confidence >= PARTIAL_CONFIDENCE_THRESHOLD:

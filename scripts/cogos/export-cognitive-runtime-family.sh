@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Export cognitive runtime family JSON from repo authority into wolf payload.
+# Export cognitive runtime family JSON from repo authority into Nova NorthStar CoG OS payload.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-TARGET="${1:-$REPO_ROOT/wolf-cog-os/payload/opt/cogos/config/cognitive_runtime_family.json}"
+TARGET="${1:-$REPO_ROOT/cog-os/payload/opt/cogos/config/cognitive_runtime_family.json}"
 
 PYTHONPATH="$REPO_ROOT" python3 <<PY
 from pathlib import Path

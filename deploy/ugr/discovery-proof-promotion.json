@@ -9,6 +9,11 @@
     "2": "asserted",
     "3": "proven"
   },
+  "epistemic_state_labels": {
+    "rejected": "denied",
+    "pending": "hypothetical_or_asserted",
+    "proven": "proven"
+  },
   "deny_if_flags": ["duplicate_of"],
   "deny_patterns": [
     {

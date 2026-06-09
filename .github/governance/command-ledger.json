@@ -21,12 +21,12 @@
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "make rootfs"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-rc.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "make rootfs"
         }
       ]
@@ -52,12 +52,12 @@
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "make iso-tree"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-rc.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "make iso-tree"
         }
       ]
@@ -85,17 +85,17 @@
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-public.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "make installer-smoke"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "make installer-smoke"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-rc.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "make installer-smoke"
         }
       ]
@@ -125,12 +125,12 @@
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "make installer-integration"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-rc.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "make installer-integration"
         }
       ]
@@ -159,12 +159,12 @@
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "make sign-artifacts"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-rc.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "make sign-artifacts"
         }
       ]
@@ -193,7 +193,7 @@
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-rc.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "make verify-artifacts"
         },
         {
@@ -223,17 +223,17 @@
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-public.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": ".github/scripts/sanitize-tag.sh"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": ".github/scripts/sanitize-tag.sh"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-rc.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": ".github/scripts/sanitize-tag.sh"
         }
       ]
@@ -270,12 +270,12 @@
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-selfhosted.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": ".github/scripts/check-performance-gates.py"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-rc.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": ".github/scripts/check-performance-gates.py"
         }
       ]
@@ -303,7 +303,7 @@
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-rc.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": ".github/scripts/generate-release-notes.py"
         }
       ]
@@ -356,11 +356,11 @@
     },
     {
       "id": "script.wolf-cog-os.build-rootfs",
-      "owner": "wolf-cog-os/scripts/build-rootfs.sh",
+      "owner": "cog-os/forge/scripts/build-rootfs.sh",
       "component": "cogos-build",
       "invocation": {
         "type": "script_path",
-        "path": "wolf-cog-os/scripts/build-rootfs.sh"
+        "path": "cog-os/forge/scripts/build-rootfs.sh"
       },
       "required_env": [],
       "optional_env": [
@@ -368,18 +368,18 @@
       ],
       "deprecation": {
         "status": "active",
-        "replacement": ""
+        "replacement": "cog-os/"
       },
       "verification_policy": "warn",
       "consumers": []
     },
     {
       "id": "script.wolf-cog-os.installer",
-      "owner": "wolf-cog-os/scripts/cogos-installer.sh",
+      "owner": "cog-os/scripts/cogos-installer.sh",
       "component": "cogos-installer",
       "invocation": {
         "type": "script_path",
-        "path": "wolf-cog-os/scripts/cogos-installer.sh"
+        "path": "cog-os/scripts/cogos-installer.sh"
       },
       "required_env": [],
       "optional_env": [
@@ -388,18 +388,18 @@
       ],
       "deprecation": {
         "status": "active",
-        "replacement": ""
+        "replacement": "cog-os/"
       },
       "verification_policy": "warn",
       "consumers": []
     },
     {
       "id": "script.wolf-cog-os.profile-loader",
-      "owner": "wolf-cog-os/scripts/lib/profile-loader.sh",
+      "owner": "cog-os/forge/scripts/lib/profile-loader.sh",
       "component": "forge-contract",
       "invocation": {
         "type": "script_path",
-        "path": "wolf-cog-os/scripts/lib/profile-loader.sh"
+        "path": "cog-os/forge/scripts/lib/profile-loader.sh"
       },
       "required_env": [],
       "optional_env": [
@@ -408,34 +408,34 @@
       ],
       "deprecation": {
         "status": "active",
-        "replacement": ""
+        "replacement": "cog-os/"
       },
       "verification_policy": "warn",
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-public.yml",
-          "contains": "bash wolf-cog-os/scripts/lib/profile-loader.sh"
+          "path": ".github/workflows/cogos-forge-gate.yml",
+          "contains": "bash cog-os/forge/scripts/lib/profile-loader.sh"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-selfhosted.yml",
-          "contains": "bash wolf-cog-os/scripts/lib/profile-loader.sh"
+          "path": ".github/workflows/cogos-forge-gate.yml",
+          "contains": "bash cog-os/forge/scripts/lib/profile-loader.sh"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-rc.yml",
-          "contains": "bash wolf-cog-os/scripts/lib/profile-loader.sh"
+          "path": ".github/workflows/cogos-forge-gate.yml",
+          "contains": "bash cog-os/forge/scripts/lib/profile-loader.sh"
         }
       ]
     },
     {
       "id": "script.wolf-cog-os.validate-profile",
-      "owner": "wolf-cog-os/scripts/validate-profile.py",
+      "owner": "cog-os/forge/scripts/validate-profile.py",
       "component": "forge-contract",
       "invocation": {
         "type": "script_path",
-        "path": "wolf-cog-os/scripts/validate-profile.py"
+        "path": "cog-os/forge/scripts/validate-profile.py"
       },
       "required_env": [
         "COGOS_FORGE_PROFILE"
@@ -445,29 +445,29 @@
       ],
       "deprecation": {
         "status": "active",
-        "replacement": ""
+        "replacement": "cog-os/"
       },
       "verification_policy": "warn",
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-public.yml",
-          "contains": "python3 wolf-cog-os/scripts/validate-profile.py"
+          "path": ".github/workflows/cogos-forge-gate.yml",
+          "contains": "python3 cog-os/forge/scripts/validate-profile.py"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-selfhosted.yml",
-          "contains": "python3 wolf-cog-os/scripts/validate-profile.py"
+          "path": ".github/workflows/cogos-forge-gate.yml",
+          "contains": "python3 cog-os/forge/scripts/validate-profile.py"
         }
       ]
     },
     {
       "id": "script.wolf-cog-os.emit-profile-attestation",
-      "owner": "wolf-cog-os/scripts/emit-profile-attestation.py",
+      "owner": "cog-os/forge/scripts/lib/emit-profile-attestation.sh",
       "component": "forge-contract",
       "invocation": {
         "type": "script_path",
-        "path": "wolf-cog-os/scripts/emit-profile-attestation.py"
+        "path": "cog-os/forge/scripts/lib/emit-profile-attestation.sh"
       },
       "required_env": [
         "COGOS_FORGE_PROFILE"
@@ -477,19 +477,19 @@
       ],
       "deprecation": {
         "status": "active",
-        "replacement": ""
+        "replacement": "cog-os/"
       },
       "verification_policy": "warn",
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-public.yml",
-          "contains": "python3 wolf-cog-os/scripts/emit-profile-attestation.py"
+          "path": ".github/workflows/cogos-forge-gate.yml",
+          "contains": "python3 cog-os/forge/scripts/lib/emit-profile-attestation.sh"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-selfhosted.yml",
-          "contains": "python3 wolf-cog-os/scripts/emit-profile-attestation.py"
+          "path": ".github/workflows/cogos-forge-gate.yml",
+          "contains": "python3 cog-os/forge/scripts/lib/emit-profile-attestation.sh"
         }
       ]
     },
@@ -516,11 +516,11 @@
     },
     {
       "id": "script.wolf-cog-os.build-forge-installer",
-      "owner": "wolf-cog-os/scripts/build-forge-installer.sh",
+      "owner": "cog-os/forge/scripts/build-iso.sh",
       "component": "cogos-build",
       "invocation": {
         "type": "script_path",
-        "path": "wolf-cog-os/scripts/build-forge-installer.sh"
+        "path": "cog-os/forge/scripts/build-iso.sh"
       },
       "required_env": [],
       "optional_env": [
@@ -529,105 +529,77 @@
         "COGOS_DEBIAN_ISO"
       ],
       "deprecation": {
-        "status": "active",
-        "replacement": ""
+        "status": "removed",
+        "replacement": "cog-os/forge/scripts/build-iso.sh"
       },
       "verification_policy": "warn",
-      "consumers": [
-        {
-          "type": "make_target",
-          "path": "Makefile",
-          "contains": "forge-installer"
-        }
-      ]
+      "consumers": []
     },
     {
       "id": "script.wolf-cog-os.stage-forge-layout",
-      "owner": "wolf-cog-os/scripts/lib/stage-forge-layout.sh",
+      "owner": "cog-os/forge/scripts/build-rootfs.sh",
       "component": "forge-contract",
       "invocation": {
         "type": "script_path",
-        "path": "wolf-cog-os/scripts/lib/stage-forge-layout.sh"
+        "path": "cog-os/forge/scripts/build-rootfs.sh"
       },
       "required_env": [],
       "optional_env": [
         "COGOS_FORGE_STAGING"
       ],
       "deprecation": {
-        "status": "active",
-        "replacement": ""
+        "status": "removed",
+        "replacement": "cog-os/forge/scripts/build-rootfs.sh"
       },
       "verification_policy": "warn",
-      "consumers": [
-        {
-          "type": "script_path",
-          "path": "wolf-cog-os/scripts/build.sh",
-          "contains": "stage_forge_layout"
-        },
-        {
-          "type": "script_path",
-          "path": "wolf-cog-os/scripts/build-rootfs.sh",
-          "contains": "stage_forge_layout"
-        }
-      ]
+      "consumers": []
     },
     {
       "id": "script.wolf-cog-os.forge-iso-smoke",
-      "owner": "wolf-cog-os/scripts/test/forge-iso-smoke.sh",
+      "owner": "cog-os/scripts/test/qemu-smoke.sh",
       "component": "forge-contract",
       "invocation": {
         "type": "script_path",
-        "path": "wolf-cog-os/scripts/test/forge-iso-smoke.sh"
+        "path": "cog-os/scripts/test/qemu-smoke.sh"
       },
       "required_env": [],
       "optional_env": [],
       "deprecation": {
         "status": "active",
-        "replacement": ""
+        "replacement": "cog-os/"
       },
       "verification_policy": "warn",
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-public.yml",
-          "contains": "forge-iso-smoke.sh"
+          "path": ".github/workflows/cogos-forge-gate.yml",
+          "contains": "qemu-smoke.sh"
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-selfhosted.yml",
-          "contains": "forge-iso-smoke.sh"
+          "path": ".github/workflows/cogos-forge-gate.yml",
+          "contains": "qemu-smoke.sh"
         }
       ]
     },
     {
       "id": "script.wolf-cog-os.emit-forge-build-state",
-      "owner": "wolf-cog-os/scripts/emit-forge-build-state.py",
+      "owner": "cog-os/forge/scripts/lib/emit-profile-attestation.sh",
       "component": "forge-contract",
       "invocation": {
         "type": "script_path",
-        "path": "wolf-cog-os/scripts/emit-forge-build-state.py"
+        "path": "cog-os/forge/scripts/lib/emit-profile-attestation.sh"
       },
       "required_env": [],
       "optional_env": [
         "COGOS_FORGE_PROFILE"
       ],
       "deprecation": {
-        "status": "active",
-        "replacement": ""
+        "status": "removed",
+        "replacement": "cog-os/forge/scripts/lib/emit-profile-attestation.sh"
       },
       "verification_policy": "warn",
-      "consumers": [
-        {
-          "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-selfhosted.yml",
-          "contains": "emit-forge-build-state.py"
-        },
-        {
-          "type": "workflow_run",
-          "path": ".github/workflows/cogos-rc.yml",
-          "contains": "emit-forge-build-state.py"
-        }
-      ]
+      "consumers": []
     },
     {
       "id": "script.github.emit-promotion-dry-run-report",
@@ -652,33 +624,27 @@
         },
         {
           "type": "script_path",
-          "path": "wolf-cog-os/scripts/test/promotion-dry-run.sh",
+          "path": "cog-os/scripts/test/promotion-dry-run.sh",
           "contains": "emit-promotion-dry-run-report.py"
         }
       ]
     },
     {
       "id": "script.wolf-cog-os.promotion-dry-run",
-      "owner": "wolf-cog-os/scripts/test/promotion-dry-run.sh",
+      "owner": "cog-os/scripts/test/test-forge-profile-loader.py",
       "component": "forge-contract",
       "invocation": {
         "type": "script_path",
-        "path": "wolf-cog-os/scripts/test/promotion-dry-run.sh"
+        "path": "cog-os/scripts/test/test-forge-profile-loader.py"
       },
       "required_env": [],
       "optional_env": [],
       "deprecation": {
-        "status": "active",
-        "replacement": ""
+        "status": "removed",
+        "replacement": "cog-os/scripts/test/test-forge-profile-loader.py"
       },
       "verification_policy": "warn",
-      "consumers": [
-        {
-          "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-public.yml",
-          "contains": "promotion-dry-run.sh"
-        }
-      ]
+      "consumers": []
     },
     {
       "id": "make.forge-shippable-gate",
@@ -699,7 +665,7 @@
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-public.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "forge-platform-gate"
         },
         {
@@ -734,18 +700,18 @@
         },
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-rc.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "check-forge-shippable-gate.py"
         }
       ]
     },
     {
       "id": "script.wolf-cog-os.validate-substrate",
-      "owner": "wolf-cog-os/scripts/validate-substrate.py",
+      "owner": ".github/scripts/validate-substrate-evolution-ledger.py",
       "component": "forge-contract",
       "invocation": {
         "type": "script_path",
-        "path": "wolf-cog-os/scripts/validate-substrate.py"
+        "path": ".github/scripts/validate-substrate-evolution-ledger.py"
       },
       "required_env": [],
       "optional_env": [
@@ -753,27 +719,11 @@
         "COGOS_SUBSTRATE_VALIDATION_MODE"
       ],
       "deprecation": {
-        "status": "active",
-        "replacement": ""
+        "status": "removed",
+        "replacement": ".github/scripts/validate-substrate-evolution-ledger.py"
       },
       "verification_policy": "warn",
-      "consumers": [
-        {
-          "type": "script_path",
-          "path": "wolf-cog-os/scripts/build-forge-installer.sh",
-          "contains": "validate-substrate.py"
-        },
-        {
-          "type": "script_path",
-          "path": "wolf-cog-os/forge/scripts/forge-run-pipeline.sh",
-          "contains": "validate-substrate.py"
-        },
-        {
-          "type": "script_path",
-          "path": "wolf-cog-os/scripts/test/forge-iso-smoke.sh",
-          "contains": "validate-substrate.py"
-        }
-      ]
+      "consumers": []
     },
     {
       "id": "script.github.validate-substrate-evolution-ledger",
@@ -800,33 +750,22 @@
     },
     {
       "id": "script.wolf-cog-os.validate-rootfs-backend",
-      "owner": "wolf-cog-os/scripts/validate-rootfs-backend.py",
+      "owner": "cog-os/host/scripts/build_rootfs.sh",
       "component": "forge-contract",
       "invocation": {
         "type": "script_path",
-        "path": "wolf-cog-os/scripts/validate-rootfs-backend.py"
+        "path": "cog-os/host/scripts/build_rootfs.sh"
       },
       "required_env": [],
       "optional_env": [
         "COGOS_ROOTFS_BACKEND"
       ],
       "deprecation": {
-        "status": "active",
-        "replacement": ""
+        "status": "removed",
+        "replacement": "cog-os/host/scripts/build_rootfs.sh"
       },
       "verification_policy": "warn",
-      "consumers": [
-        {
-          "type": "script_path",
-          "path": ".github/scripts/check-forge-shippable-gate.py",
-          "contains": "validate-rootfs-backend.py"
-        },
-        {
-          "type": "script_path",
-          "path": "wolf-cog-os/scripts/build-rootfs.sh",
-          "contains": "rootfs-bootstrap.sh"
-        }
-      ]
+      "consumers": []
     },
     {
       "id": "make.forge-dashboard",
@@ -848,26 +787,20 @@
     },
     {
       "id": "script.wolf-cog-os.forge-platform-dashboard",
-      "owner": "wolf-cog-os/scripts/forge-platform-dashboard.py",
+      "owner": "cog-os/forge/scripts/validate-profile.py",
       "component": "forge-contract",
       "invocation": {
         "type": "script_path",
-        "path": "wolf-cog-os/scripts/forge-platform-dashboard.py"
+        "path": "cog-os/forge/scripts/validate-profile.py"
       },
       "required_env": [],
       "optional_env": [],
       "deprecation": {
-        "status": "active",
-        "replacement": ""
+        "status": "removed",
+        "replacement": "cog-os/forge/scripts/validate-profile.py"
       },
       "verification_policy": "warn",
-      "consumers": [
-        {
-          "type": "make_target",
-          "path": "Makefile",
-          "contains": "forge-dashboard"
-        }
-      ]
+      "consumers": []
     },
     {
       "id": "make.forge-platform-gate",
@@ -888,7 +821,7 @@
       "consumers": [
         {
           "type": "workflow_run",
-          "path": ".github/workflows/cogos-ci-public.yml",
+          "path": ".github/workflows/cogos-forge-gate.yml",
           "contains": "forge-platform-gate"
         }
       ]

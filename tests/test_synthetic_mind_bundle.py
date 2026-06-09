@@ -9,7 +9,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 BUILD_PY = REPO_ROOT / "scripts" / "cogos" / "build_synthetic_mind_bundle.py"
-BUNDLE_DIR = REPO_ROOT / "wolf-cog-os" / "artifacts" / "synthetic-mind-bundle-test"
+BUNDLE_DIR = REPO_ROOT / "artifacts" / "synthetic-mind-bundle-test"
 
 
 class SyntheticMindBundleTests(unittest.TestCase):

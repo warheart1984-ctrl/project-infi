@@ -1,0 +1,5 @@
+{
+  "profile_id": "forge-selfhosted",
+  "resolved_packages": ["base.txt", "daily-driver.txt"],
+  "init_mode": "hybrid"
+}

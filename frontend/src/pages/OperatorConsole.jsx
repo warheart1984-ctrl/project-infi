@@ -189,6 +189,7 @@ export default function OperatorConsolePage() {
             </Link>
             <Link to="/operator/plugins" className="workbench-button ghost">Plugins</Link>
             <Link to="/operator/brain" className="workbench-button ghost">Brain</Link>
+            <Link to="/operator/ceiling" className="workbench-button ghost">Ceiling</Link>
             <Link to="/operator/ledger" className="workbench-button ghost">Ledger</Link>
             <Link to="/operator/replay/operator_session/global" className="workbench-button ghost">Replay</Link>
             <button type="button" className="workbench-button primary" onClick={loadSnapshot} disabled={loading}>

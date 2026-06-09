@@ -1,0 +1,6 @@
+{
+  "artifacts": [
+    {"name": "nova-northstar-cog-os-forge-rc.iso", "path": "nova-northstar-cog-os-forge-rc.iso", "sha256": "deadbeef"}
+  ],
+  "run_id": "424242"
+}

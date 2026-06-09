@@ -146,7 +146,10 @@ class ValidatePromotionSourceTests(unittest.TestCase):
             self.assertIn("forge-build-state.json is missing", result.stdout)
 
     def test_forge_fixture_passes_full_promotion_validation(self) -> None:
-        fixture_dir = REPO_ROOT / "wolf-cog-os" / "scripts" / "test" / "fixtures" / "promotion-forge-rc"
+        fixture_dir = REPO_ROOT / "cog-os" / "scripts" / "test" / "fixtures" / "promotion-forge-rc"
+        legacy = REPO_ROOT / "wolf-cog-os" / "scripts" / "test" / "fixtures" / "promotion-forge-rc"
+        if not fixture_dir.is_dir() and legacy.is_dir():
+            fixture_dir = legacy
         if not fixture_dir.is_dir():
             self.skipTest("promotion fixture directory missing")
         result = self._run(

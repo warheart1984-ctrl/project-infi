@@ -5,7 +5,12 @@ from __future__ import annotations
 import os
 from typing import Any
 
-from src.ugr.discovery.standing import Standing, standing_from_receipt
+from src.ugr.discovery.standing import (
+    EpistemicState,
+    Standing,
+    epistemic_from_receipt,
+    standing_from_receipt,
+)
 
 UGR_REWARDS_PROVEN_PERSIST_ENV = "UGR_REWARDS_PROVEN_PERSIST"
 
@@ -17,6 +22,8 @@ def is_standing_proven(receipt: dict[str, Any]) -> bool:
 
 def is_proven_contribution(receipt: dict[str, Any]) -> bool:
     """True when a discovery receipt qualifies for proven-tier rewards and force_persist."""
+    if epistemic_from_receipt(receipt) == EpistemicState.REJECTED:
+        return False
     return is_standing_proven(receipt)
 
 
