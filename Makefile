@@ -11,6 +11,7 @@ PYTHON ?= python3
 export PYTHON
 
 COG_OS_DIR := cog-os
+COG_QEMU_SMOKE_SCRIPT ?= $(COG_OS_DIR)/scripts/test/qemu-smoke.sh
 COG_PROFILE ?= metal
 FORGE_PROFILE ?= $(COGOS_FORGE_PROFILE)
 ifneq ($(strip $(COG_PROFILE)),)
@@ -73,10 +74,14 @@ seam-stress-gate:
 federation-chaos-gate:
 	python3 tools/stress/federation_chaos_hammer.py
 
+usl-megaton-chaos:
+	python3 tools/stress/usl_megaton_chaos_hammer.py --phase all --rounds 10
+
 flagship-chaos-stack:
 	python3 tools/stress/chaos_hammer.py
 	python3 tools/stress/federation_chaos_hammer.py
 	python3 tools/stress/seam_discovery_stress.py
+	python3 tools/stress/usl_megaton_chaos_hammer.py --phase all --rounds 5
 
 operator-workflow-stack-gate: library-gate workflow-family-gate brain-proposal-gate operator-workflow-runtime-gate operator-decision-ledger-gate operator-decision-ledger-v2-graph-gate jarvis-lora-training-gate seam-stress-gate
 
@@ -99,13 +104,36 @@ rootfs-forge: rootfs
 iso-tree-forge: iso-tree
 
 cog-qemu-smoke:
-	bash $(COG_OS_DIR)/scripts/test/qemu-smoke.sh --profile $(COG_PROFILE)
+	bash $(COG_QEMU_SMOKE_SCRIPT) --profile $(COG_PROFILE)
 
 cog-qemu-smoke-contract:
-	bash $(COG_OS_DIR)/scripts/test/qemu-smoke.sh --contract --profile $(COG_PROFILE)
+	bash $(COG_QEMU_SMOKE_SCRIPT) --contract --profile $(COG_PROFILE)
 
 cog-qemu-smoke-contract-boot:
-	bash $(COG_OS_DIR)/scripts/test/qemu-smoke.sh --contract --contract-boot --profile $(COG_PROFILE)
+	bash $(COG_QEMU_SMOKE_SCRIPT) --contract --contract-boot --profile $(COG_PROFILE)
+
+.PHONY: usl-slice1-admit
+usl-slice1-admit:
+	bash $(COG_OS_DIR)/scripts/test/usl-slice1-admit.sh --profile metal $(USL_SLICE1_ADMIT_ARGS)
+
+.PHONY: usl-slice2-admit
+usl-slice2-admit:
+	COG_PAYLOAD_USL_LIFTED=$(or $(COG_PAYLOAD_USL_LIFTED),1) \
+	COG_ATTEST_GOVERNANCE_BUNDLE=$(or $(COG_ATTEST_GOVERNANCE_BUNDLE),1) \
+	bash $(COG_OS_DIR)/scripts/test/usl-slice2-admit.sh --profile $(COG_PROFILE) $(USL_SLICE2_ADMIT_ARGS)
+
+.PHONY: usl-lift-at-boot-smoke mesh-federation-ci daily-driver-metal-preflight cog-rootfs-finish
+usl-lift-at-boot-smoke:
+	bash $(COG_OS_DIR)/scripts/test/usl-lift-at-boot-smoke.sh
+
+mesh-federation-ci:
+	bash $(COG_OS_DIR)/scripts/test/mesh-federation-ci.sh
+
+daily-driver-metal-preflight:
+	bash $(COG_OS_DIR)/scripts/test/daily-driver-metal-preflight.sh --profile $(COG_PROFILE)
+
+cog-rootfs-finish:
+	bash $(COG_OS_DIR)/forge/scripts/finish-rootfs-forge.sh
 
 cog-rootfs: rootfs
 
@@ -151,7 +179,7 @@ fetch-rocky-substrate:
 	$(WOLF_FORGE_DEPRECATED)
 
 installer-smoke:
-	bash $(COG_OS_DIR)/scripts/test/qemu-smoke.sh --profile $(COG_PROFILE) --build
+	bash $(COG_QEMU_SMOKE_SCRIPT) --profile $(COG_PROFILE) --build
 
 installer-integration:
 	$(PYTHON) $(COG_OS_DIR)/scripts/test/test-forge-profile-loader.py
@@ -170,10 +198,16 @@ forge-gates:
 	bash $(COG_OS_DIR)/forge/scripts/lib/profile-loader.sh --profile $(COG_PROFILE) --print
 	@echo "=== B Rootfs (optional; set FORGE_SKIP_ROOTFS=1 to skip) ==="
 	@if [ "$(FORGE_SKIP_ROOTFS)" = "1" ]; then echo "SKIP rootfs build"; else $(MAKE) cog-rootfs COG_PROFILE=$(COG_PROFILE); fi
-	@if [ "$(COG_CONTRACT_BOOT)" = "1" ] && [ "$(FORGE_SKIP_ROOTFS)" != "1" ]; then \
+	@if [ "$(COG_SLICE2_ADMIT)" = "1" ] && [ "$(FORGE_SKIP_ROOTFS)" != "1" ]; then \
+	  echo "=== B2 Slice 2 admission (broker + governance; profile=$(COG_PROFILE)) ==="; \
+	  $(MAKE) usl-slice2-admit COG_PROFILE=$(COG_PROFILE) USL_SLICE2_ADMIT_ARGS="--skip-rootfs"; \
+	elif [ "$(COG_SLICE1_ADMIT)" = "1" ] && [ "$(FORGE_SKIP_ROOTFS)" != "1" ]; then \
+	  echo "=== B2 Slice 1 admission (metal rootfs + QEMU + Megaton live) ==="; \
+	  $(MAKE) usl-slice1-admit COG_PROFILE=metal USL_SLICE1_ADMIT_ARGS="--skip-rootfs"; \
+	elif [ "$(COG_CONTRACT_BOOT)" = "1" ] && [ "$(FORGE_SKIP_ROOTFS)" != "1" ]; then \
 	  echo "=== B2 QEMU contract (boot) ==="; \
 	  $(MAKE) cog-qemu-smoke-contract-boot COG_PROFILE=$(COG_PROFILE); \
-	else echo "SKIP contract-boot (set COG_CONTRACT_BOOT=1 and build rootfs in WSL/Linux)"; fi
+	else echo "SKIP contract-boot (set COG_CONTRACT_BOOT=1 or COG_SLICE1_ADMIT=1 and build rootfs in WSL/Linux)"; fi
 	@echo "=== C QEMU contract (static) ==="
 	$(MAKE) cog-qemu-smoke-contract COG_PROFILE=$(COG_PROFILE)
 	@echo "=== D Promotion dry-run ==="
@@ -182,7 +216,8 @@ forge-gates:
 	$(PYTHON) $(COG_OS_DIR)/forge/scripts/validate-profile.py --mode fail
 	@echo "=== F Profile attestation ==="
 	bash -n $(COG_OS_DIR)/forge/scripts/lib/emit-profile-attestation.sh
-	@if [ -d artifacts/cog-os/rootfs-$(COG_PROFILE)/usr ]; then bash $(COG_OS_DIR)/forge/scripts/lib/emit-profile-attestation.sh --profile $(COG_PROFILE); else echo "SKIP full attestation (no built rootfs)"; fi
+	@ROOTFS=$$(bash -c 'source $(COG_OS_DIR)/forge/scripts/lib/resolve-rootfs.sh; resolve_cog_rootfs artifacts/cog-os/rootfs-$(COG_PROFILE)'); \
+	if [ -d "$$ROOTFS/usr" ]; then bash $(COG_OS_DIR)/forge/scripts/lib/emit-profile-attestation.sh --profile $(COG_PROFILE) --rootfs "$$ROOTFS"; else echo "SKIP full attestation (no built rootfs at $$ROOTFS)"; fi
 	@echo "=== G Promotion source validation ==="
 	$(PYTHON) .github/scripts/validate-promotion-source.py --artifacts-dir $(COG_OS_DIR)/scripts/test/fixtures/promotion-forge-rc --source-run-id 424242 --expected-profile-id forge-selfhosted --required-scenarios 1,3,4,6 --output ci-artifacts/promotion-source-validation.json
 	@echo "=== H Evolution ledger ==="
@@ -408,6 +443,23 @@ coding-organs-gate:
 otem-execution-substrate-gate:
 	python3 .github/scripts/check-subsystem-mvp-integration-governance.py
 
+otem-execution-product-gate:
+	python3 .github/scripts/check-otem-execution-product-governance.py
+
+external-suggestion-admission-product-gate:
+	python3 .github/scripts/check-external-suggestion-admission-product-governance.py
+
+governed-intake-product-gate:
+	python3 .github/scripts/check-governed-intake-product-governance.py
+
+training-eval-product-gate:
+	python3 .github/scripts/check-training-eval-product-governance.py
+
+voss-standalone-runtime-product-gate:
+	python3 .github/scripts/check-voss-standalone-runtime-product-governance.py
+
+standalone-governed-products-gate: otem-execution-product-gate external-suggestion-admission-product-gate governed-intake-product-gate training-eval-product-gate voss-standalone-runtime-product-gate
+
 otem-autonomic-gate:
 	python3 -m pytest tests/test_otem_autonomic_routines.py -q
 
@@ -507,7 +559,7 @@ subsystem-mvp-gate:
 governed-pipeline-gate:
 	python3 .github/scripts/check-governed-pipeline-governance.py
 
-barebones-gate: genome-gate capability-bridge-gate memory-board-gate governed-pipeline-gate
+barebones-gate: genome-gate capability-bridge-gate memory-board-gate governed-pipeline-gate standalone-governed-products-gate
 
 barebones-promote-governed:
 	python3 tools/governance/barebones_promote_governed.py

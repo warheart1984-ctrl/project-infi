@@ -13,7 +13,12 @@ class UniversalSubstrateTests(unittest.TestCase):
         if not registry.is_file():
             self.skipTest("cog-os substrate registry missing")
         text = registry.read_text(encoding="utf-8")
-        for substrate_id in ("windows-installer", "macos-installer", "android-bootable"):
+        for substrate_id in (
+            "windows-installer",
+            "macos-installer",
+            "android-bootable",
+            "usl-guest",
+        ):
             self.assertIn(substrate_id, text)
 
 

@@ -21,3 +21,4 @@ celery[redis]>=5.4.0
 redis>=5.0.0
 pytest>=8.0.0
 cryptography>=42.0.0
+# Optional: richer aarch64/x86 disasm when USL_DISASM_BACKEND=capstone — pip install capstone

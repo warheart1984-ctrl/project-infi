@@ -1,0 +1,21 @@
+{
+  "schema_version": "cog-os-policy-bundle.v1",
+  "profile_defaults": {
+    "usl-lifted-guest": {
+      "USL_GOVERNANCE_ADMISSION": "compiler",
+      "USL_DISASM_BACKEND": "linear"
+    },
+    "daily-driver": {
+      "USL_GOVERNANCE_ADMISSION": "compiler",
+      "USL_DISASM_BACKEND": "linear"
+    },
+    "metal": {
+      "USL_GOVERNANCE_ADMISSION": "severity",
+      "USL_DISASM_BACKEND": "linear"
+    }
+  },
+  "secure_defaults": {
+    "require_governance_bundle_for_compiler": true,
+    "registry_dir": "/opt/cogos/registry/aais"
+  }
+}

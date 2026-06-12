@@ -53,6 +53,14 @@
     "rocky-live": {
       "class": "rocky-liveos-layout",
       "notes": "Rocky Linux LiveOS classification."
+    },
+    "usl-guest": {
+      "class": "usl-guest-runtime",
+      "notes": "USL governed guest execution"
+    },
+    "usl-lifted-guest": {
+      "class": "usl-lifted-guest-runtime",
+      "notes": "USL lift static forge artifacts under /opt/cogos/usl-lifted"
     }
   }
 }

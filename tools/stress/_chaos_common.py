@@ -54,6 +54,7 @@ def _req(
     headers: dict | None = None,
     legacy: bool = False,
     fastapi: bool = False,
+    max_body: int = 500,
 ) -> tuple[int | None, str]:
     if fastapi or path.startswith("/api/ugr/"):
         base = BASE
@@ -68,9 +69,11 @@ def _req(
     req = urllib.request.Request(url, data=body, headers=hdrs, method=method)
     try:
         with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
-            return resp.status, (resp.read() or b"").decode("utf-8", errors="replace")[:500]
+            raw = (resp.read() or b"").decode("utf-8", errors="replace")
+            return resp.status, raw[:max_body] if max_body > 0 else raw
     except urllib.error.HTTPError as e:
-        body_text = (e.read() or b"").decode("utf-8", errors="replace")[:500]
+        body_text = (e.read() or b"").decode("utf-8", errors="replace")
+        body_text = body_text[:max_body] if max_body > 0 else body_text
         return e.code, body_text
     except Exception as e:
         return None, str(e)[:300]
@@ -93,6 +96,58 @@ def check_health() -> tuple[int | None, str]:
 def server_reachable() -> bool:
     status, _ = check_health()
     return status == 200
+
+
+def load_configured_mesh_peers(root: Path | None = None) -> list[str]:
+    """Peer URLs from deploy/mesh/peers.json or peers.example.json."""
+    root = root or ROOT
+    peers_file = root / "deploy" / "mesh" / "peers.json"
+    if not peers_file.exists():
+        peers_file = root / "deploy" / "mesh" / "peers.example.json"
+    if not peers_file.exists():
+        return []
+    data = json.loads(peers_file.read_text(encoding="utf-8"))
+    urls: list[str] = []
+    for raw in list(data.get("peers") or []):
+        if isinstance(raw, str):
+            urls.append(raw.rstrip("/"))
+        elif isinstance(raw, dict) and raw.get("url"):
+            urls.append(str(raw["url"]).rstrip("/"))
+    return urls
+
+
+def probe_mesh_peers(
+    urls: list[str] | None = None,
+    *,
+    timeout: float = 2.0,
+    root: Path | None = None,
+) -> dict:
+    """Check mesh peer /api/mesh/health before federation-heavy probes."""
+    urls = urls if urls is not None else load_configured_mesh_peers(root=root)
+    peers: list[dict] = []
+    unreachable: list[str] = []
+    for url in urls:
+        req_url = f"{url}/api/mesh/health"
+        req = urllib.request.Request(req_url, method="GET")
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                ok = resp.status == 200
+                status = resp.status
+        except urllib.error.HTTPError as e:
+            ok = False
+            status = e.code
+        except Exception:
+            ok = False
+            status = None
+        peers.append({"url": url, "ok": ok, "status": status})
+        if not ok:
+            unreachable.append(url)
+    return {
+        "ready": len(urls) > 0 and not unreachable,
+        "configured": len(urls),
+        "peers": peers,
+        "unreachable": unreachable,
+    }
 
 
 def write_chaos_report(

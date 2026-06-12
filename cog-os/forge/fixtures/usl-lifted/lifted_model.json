@@ -1,0 +1,98 @@
+{
+  "capabilities": {
+    "authorities": [],
+    "ceiling_id": "containment",
+    "resources": []
+  },
+  "control": {
+    "blocks": [
+      {
+        "block_id": "bb-00400078",
+        "size": 2,
+        "start_vaddr": 4194424,
+        "terminator": "return"
+      }
+    ],
+    "edges": [],
+    "functions": [
+      {
+        "blocks": [
+          "bb-00400078"
+        ],
+        "entry_vaddr": 4194424,
+        "function_id": "fn-entry"
+      }
+    ]
+  },
+  "data": {
+    "regions": []
+  },
+  "effects": {
+    "imports": [
+      {
+        "module": "libc",
+        "slot_id": "libc.open",
+        "symbol": "open"
+      },
+      {
+        "module": "libc",
+        "slot_id": "libc.read",
+        "symbol": "read"
+      },
+      {
+        "module": "libc",
+        "slot_id": "libc.write",
+        "symbol": "write"
+      },
+      {
+        "module": "libc",
+        "slot_id": "libc.exit",
+        "symbol": "exit"
+      }
+    ],
+    "syscalls": []
+  },
+  "invariants": {
+    "rules": [
+      {
+        "description": "No direct syscall sites detected in .text (static scan).",
+        "invariant_id": "inv-no-syscall",
+        "kind": "safety",
+        "severity": "info"
+      }
+    ]
+  },
+  "meta": {
+    "architecture": "x86_64",
+    "entry_point": 4194424,
+    "format": "elf",
+    "image_base": 0,
+    "os_family": "linux",
+    "program_id": "sha256:bc55631c5e5799239ff2e330945168f2bb52ca565ee3fd9693869c92b88873fe",
+    "provenance": {
+      "artifact_hash": "sha256:a240b97c6aadf6d497f048d201232cc184e604b9b6ed72475db28c6aa1f47f7c",
+      "build_id": null,
+      "lifted_at": "2026-06-10T01:56:14+00:00",
+      "source_path": "/mnt/e/project-infi/tests/fixtures/usl/minimal.elf"
+    },
+    "segments": [
+      {
+        "flags": "flags=0x5",
+        "kind": "code",
+        "name": "LOAD_00400078",
+        "raw_size": 2,
+        "virtual_address": 4194424,
+        "virtual_size": 2
+      }
+    ]
+  },
+  "runtime_shape": {
+    "admission": "single",
+    "health": {
+      "interval_seconds": 30,
+      "probe": "lift-default"
+    },
+    "process_model": "oneshot"
+  },
+  "version": "v1"
+}

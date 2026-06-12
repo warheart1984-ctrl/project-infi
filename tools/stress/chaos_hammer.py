@@ -248,6 +248,126 @@ def hammer_cloud_forge_offline() -> list[str]:
     return notes
 
 
+def hammer_cloud_forge_acceleration_offline(*, runtime_dir: str | None = None) -> list[str]:
+    """Acceleration entitlement overlay checks without a live server."""
+    import shutil
+    import tempfile
+
+    from src.cloud_forge.acceleration import resolve_effective_acceleration
+    from src.cloud_forge.rails import choose_rail
+    from src.cloud_forge.types import GovernanceWeight, LawEnvelope, PerformanceProfile, TaskSignature
+    from src.ugr.rewards.acceleration_entitlement import (
+        grant_forge_500x_entitlement,
+        grant_pod_acceleration,
+    )
+    from src.ugr.rewards.acceleration_policy import acceleration_tokens_enabled
+    from src.ugr.rewards.acceleration_store import AccelerationStore
+
+    notes: list[str] = []
+    if not acceleration_tokens_enabled():
+        notes.append("acceleration_tokens_disabled: preflight skipped")
+        return notes
+
+    owned_temp = False
+    if runtime_dir is None:
+        runtime_dir = tempfile.mkdtemp(prefix="cf_accel_hammer_")
+        owned_temp = True
+
+    tenant_id = "tenant:chaos-hammer"
+    try:
+        high_task = TaskSignature(
+            task_id="chaos-accel-1",
+            pattern_class="deploy",
+            mutation_scope="constitutional",
+        )
+        law = LawEnvelope(law_id="test", law_version="1", required_proof=True)
+        dec = choose_rail(high_task, GovernanceWeight(wL=999), PerformanceProfile(), law_envelope=law)
+        if dec.rail.value != "SAFE":
+            raise AssertionError(f"HIGH risk must force SAFE rail, got {dec.rail.value}")
+        notes.append("HIGH constitutional rail -> SAFE (acceleration preflight)")
+
+        high_no_ent = resolve_effective_acceleration(
+            "EXPRESS",
+            operator_id="operator:chaos-no-ent",
+            tenant_id=tenant_id,
+            risk="HIGH",
+            runtime_dir=runtime_dir,
+        )
+        high_mult = int(high_no_ent.get("acceleration_multiplier") or 0)
+        if high_mult != 1:
+            raise AssertionError(
+                f"HIGH risk without entitlement must clamp to 1x, got {high_mult}"
+            )
+        notes.append("HIGH risk without entitlement -> 1x clamp")
+
+        op_ent = "operator:chaos-hammer-accel"
+        first = grant_forge_500x_entitlement(
+            op_ent,
+            tenant_id=tenant_id,
+            contribution_id="contrib-hammer-1",
+            runtime_dir=runtime_dir,
+        )
+        if first.get("status") not in ("granted", "duplicate"):
+            raise AssertionError(f"unexpected forge_500x grant status: {first.get('status')}")
+
+        second = grant_forge_500x_entitlement(
+            op_ent,
+            tenant_id=tenant_id,
+            contribution_id="contrib-hammer-2",
+            runtime_dir=runtime_dir,
+        )
+        if second.get("status") != "duplicate" or not second.get("skipped"):
+            raise AssertionError("second forge_500x grant must be idempotent (duplicate)")
+        notes.append("forge_500x grant idempotent")
+
+        entitled = resolve_effective_acceleration(
+            "SAFE",
+            operator_id=op_ent,
+            tenant_id=tenant_id,
+            risk="LOW",
+            runtime_dir=runtime_dir,
+        )
+        ent_mult = int(entitled.get("acceleration_multiplier") or 0)
+        if ent_mult != 500:
+            raise AssertionError(f"forge_500x entitlement + LOW risk expected 500x, got {ent_mult}")
+        notes.append("forge_500x entitlement + LOW -> 500x")
+
+        op_pod = "operator:chaos-pod-accel"
+        pod_first = grant_pod_acceleration(
+            op_pod,
+            tenant_id,
+            "contrib-pod-hammer-1",
+            runtime_dir=runtime_dir,
+        )
+        if pod_first.get("status") not in ("ok", "disabled"):
+            raise AssertionError(f"unexpected pod acceleration status: {pod_first.get('status')}")
+
+        pod_rediscovery = grant_pod_acceleration(
+            op_pod,
+            tenant_id,
+            "contrib-pod-hammer-2",
+            discovery_result={"idempotent_rediscovery": True},
+            runtime_dir=runtime_dir,
+        )
+        if pod_rediscovery.get("status") != "skipped":
+            raise AssertionError(
+                "grant_pod_acceleration must skip on idempotent_rediscovery"
+            )
+        notes.append("grant_pod_acceleration idempotent_rediscovery skipped")
+
+        store = AccelerationStore(runtime_dir=runtime_dir, tenant_id=tenant_id)
+        ent_path = store.entitlements_path(op_ent)
+        if not ent_path.is_file():
+            raise AssertionError(f"missing entitlement state: {ent_path}")
+        notes.append(f"acceleration state isolated under {store.base_dir}")
+
+        notes.append("cloud_forge acceleration OFFLINE invariants hold")
+        return notes
+    finally:
+        if owned_temp and runtime_dir:
+            shutil.rmtree(runtime_dir, ignore_errors=True)
+
+
 def run_chaos() -> dict:
     report = ChaosReport()
     print("=== CHAOS HAMMER — Project Infinity ===")

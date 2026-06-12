@@ -1,0 +1,7 @@
+{
+  "admission_invariants": [],
+  "all_invariants": [
+    "inv-no-syscall"
+  ],
+  "program_id": "sha256:bc55631c5e5799239ff2e330945168f2bb52ca565ee3fd9693869c92b88873fe"
+}

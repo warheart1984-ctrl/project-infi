@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "usl_capability_lattice.v1",
+  "title": "USL Capability Lattice v1",
+  "description": "Invariant OS capability primitives (usl_capability_id). Distinct from OTEM governance bands.",
+  "type": "object",
+  "required": ["version", "primitives", "ceilings"],
+  "properties": {
+    "version": { "type": "string", "const": "v1" },
+    "primitives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["usl_capability_id", "class", "description"],
+        "properties": {
+          "usl_capability_id": { "type": "string", "pattern": "^[a-z]+\\.[a-z_]+$" },
+          "class": {
+            "enum": ["fs", "net", "proc", "mem", "ui", "ipc", "time", "crypto"]
+          },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "ceilings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ceiling_id", "allowed_capabilities"],
+        "properties": {
+          "ceiling_id": { "type": "string" },
+          "allowed_capabilities": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

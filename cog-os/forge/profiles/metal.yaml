@@ -13,8 +13,11 @@ services:
   - login
   - firstboot
   - aais
+  - usl
 gates:
   - init_log_present
   - platform_heartbeat
   - cogos_manifest_valid
   - aais_health_200
+  - usl_health_200
+  - usl_broker_ready

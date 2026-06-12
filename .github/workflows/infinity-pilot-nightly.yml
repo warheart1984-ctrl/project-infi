@@ -17,3 +17,75 @@ jobs:
         run: |
           pip install cryptography -q
           make stack-pilot-gate
+
+  disharmony-chaos-nightly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Start mock AAIS
+        run: |
+          mkdir -p .runtime/aais-data
+          python3 -m aais start --data-dir ./.runtime/aais-data --preset mock --no-browser --port 8000 &
+          for i in $(seq 1 60); do
+            if curl -sf http://127.0.0.1:8000/health >/dev/null; then
+              echo "AAIS healthy"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "AAIS health check timed out" >&2
+          exit 1
+
+      - name: Dishamory chaos hammer (100x, require mesh)
+        run: |
+          mkdir -p ci-artifacts
+          python3 tools/stress/dishamory_chaos_hammer.py --rounds 100 --require-mesh
+
+      - name: Upload chaos report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: disharmony-chaos-nightly
+          path: ci-artifacts/dishamory_chaos_report.json
+
+  usl-lifted-guest-nightly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Stage lifted guest payload
+        env:
+          COG_PAYLOAD_USL_LIFTED: "1"
+        run: |
+          make cog-rootfs COG_PROFILE=usl-lifted-guest
+
+      - name: Guest profile Slice 2 admission (Tier A)
+        env:
+          USL_SLICE2_REQUIRE_FORGE_INTEGRATION: "1"
+          COG_PAYLOAD_USL_LIFTED: "1"
+        run: |
+          bash cog-os/scripts/test/usl-slice2-admit.sh --profile usl-lifted-guest --skip-rootfs
+
+      - name: Upload guest admission artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: usl-lifted-guest-nightly
+          path: |
+            ci-artifacts/usl-slice2-admit.json
+            artifacts/cog-os/profile-attestation-usl-lifted-guest.json

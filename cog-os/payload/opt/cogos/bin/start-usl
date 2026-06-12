@@ -1,0 +1,93 @@
+#!/bin/sh
+# USL runtime launcher (Slice 2: guest broker over Unix socket + HTTP health).
+set -eu
+
+RUN=/run/cog
+LIB=/opt/cogos/lib
+LOG=/var/log/cog/usl.log
+PORT="${COG_USL_PORT:-8766}"
+USL_BROKER_SOCKET="${USL_BROKER_SOCKET:-$RUN/usl-broker.sock}"
+
+mkdir -p "$RUN" "$(dirname "$LOG")"
+
+usl_smoke() {
+  PYTHONPATH="$LIB" python3 -m src.usl.cli simulate-win-write \
+    --path "$LIB/fixtures/usl/minimal.pe" >/dev/null 2>&1
+}
+
+broker_start() {
+  export USL_BROKER_SOCKET
+  export USL_BROKER_PID="$RUN/usl-broker.pid"
+  export COG_RUN_DIR="$RUN"
+  LIFT_ELF="/opt/cogos/lib/fixtures/usl/minimal.elf"
+  if [ -f /opt/cogos/usl-lifted/governance_decode_bundle.json ]; then
+    export USL_GOVERNANCE_ADMISSION="${USL_GOVERNANCE_ADMISSION:-compiler}"
+    export USL_FORGE_DIR="${USL_FORGE_DIR:-/opt/cogos/usl-lifted}"
+    # Static lifted forge: use forge_dir bootstrap (no cloud_forge on guest).
+    unset USL_LIFT_ELF
+  else
+    export USL_GOVERNANCE_ADMISSION="${USL_GOVERNANCE_ADMISSION:-severity}"
+    if [ -f "$LIFT_ELF" ]; then
+      export USL_LIFT_ELF="${USL_LIFT_ELF:-$LIFT_ELF}"
+    fi
+  fi
+  if [ -f /opt/cogos/usl-lifted/gate_policy.json ] && [ -z "${USL_FORGE_DIR:-}" ]; then
+    export USL_FORGE_DIR="/opt/cogos/usl-lifted"
+  fi
+  export USL_BROKER_ELF="${USL_BROKER_ELF:-/opt/cogos/lib/fixtures/usl/minimal.elf}"
+  export USL_SUPERVISION_MODE="${USL_SUPERVISION_MODE:-ipc}"
+  if [ -z "${USL_REGISTRY_DB:-}" ] && [ -f /opt/cogos/usl-lifted/registry.db ]; then
+    export USL_REGISTRY_DB="/opt/cogos/usl-lifted/registry.db"
+  fi
+  if [ "$USL_SUPERVISION_MODE" = "ptrace" ] && [ -z "${USL_SUPERVISION_GUEST_ELF:-}" ]; then
+    export USL_SUPERVISION_GUEST_ELF="$USL_BROKER_ELF"
+  fi
+  PYTHONPATH="$LIB" python3 -m src.usl.cli broker-serve >>"$LOG" 2>&1 &
+  echo $! >"$USL_BROKER_PID"
+}
+
+broker_wait() {
+  i=0
+  while [ "$i" -lt 30 ]; do
+    if [ -S "$USL_BROKER_SOCKET" ]; then
+      return 0
+    fi
+    i=$((i + 1))
+    sleep 1
+  done
+  return 1
+}
+
+broker_smoke() {
+  export USL_BROKER_SOCKET
+  PYTHONPATH="$LIB" python3 -m src.usl.cli broker-smoke \
+    --process-id usl-broker-guest >>"$LOG" 2>&1
+}
+
+printf '%s\n' \
+  '{"status":"starting","service":"usl","runtime":"staged","phase":1}' \
+  >"$RUN/usl.health"
+
+export PYTHONPATH="$LIB"
+python3 -m src.usl.cli serve-health --port "$PORT" --health-file "$RUN/usl.health" &
+HEALTH_PID=$!
+
+if [ ! -f "$LIB/src/usl/gate.py" ]; then
+  echo '{"status":"degraded","service":"usl","runtime":"missing"}' >"$RUN/usl.health"
+else
+  if broker_start && broker_wait && broker_smoke; then
+    printf '%s\n' \
+      "{\"status\":\"ok\",\"service\":\"usl\",\"runtime\":\"staged\",\"phase\":2,\"broker\":\"ok\",\"socket\":\"$USL_BROKER_SOCKET\"}" \
+      >"$RUN/usl.health"
+  elif usl_smoke; then
+    printf '%s\n' \
+      '{"status":"ok","service":"usl","runtime":"staged","phase":1}' \
+      >"$RUN/usl.health"
+  else
+    printf '%s\n' \
+      "{\"status\":\"degraded\",\"service\":\"usl\",\"runtime\":\"staged\",\"phase\":1,\"broker\":\"fail\",\"socket\":\"$USL_BROKER_SOCKET\"}" \
+      >"$RUN/usl.health"
+  fi
+fi
+
+wait "$HEALTH_PID"

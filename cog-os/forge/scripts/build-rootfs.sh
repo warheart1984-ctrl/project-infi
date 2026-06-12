@@ -1,7 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=lib/run-bash-script.sh
+source <(sed 's/\r$//' "$SCRIPT_DIR/lib/run-bash-script.sh")
 FORGE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 REPO_ROOT="$(cd "$FORGE_DIR/../.." && pwd)"
 
@@ -11,7 +13,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --profile) PROFILE="$2"; shift 2 ;;
     -h|--help)
-      echo "usage: $0 [--profile metal|daily-driver]"
+      echo "usage: $0 [--profile metal|daily-driver|usl-lifted-guest]"
       exit 0
       ;;
     *) echo "unknown: $1" >&2; exit 1 ;;
@@ -36,7 +38,9 @@ EFFECTIVE_ROOTFS="$(resolve_cog_rootfs "$ROOTFS")"
 bash "$SCRIPT_DIR/lib/render-init-conf.sh" --profile "$PROFILE" --output "$EFFECTIVE_ROOTFS/etc/init.conf"
 chmod 0644 "$EFFECTIVE_ROOTFS/etc/init.conf"
 
-COG_PAYLOAD_UL="${COG_PAYLOAD_UL:-0}" bash "$SCRIPT_DIR/lib/payload-stage.sh" "$EFFECTIVE_ROOTFS"
+COG_REPO_ROOT="$REPO_ROOT" COG_PAYLOAD_UL="${COG_PAYLOAD_UL:-0}" \
+  COG_PAYLOAD_USL_LIFTED="${COG_PAYLOAD_USL_LIFTED:-0}" \
+  run_bash_script "$SCRIPT_DIR/lib/payload-stage.sh" "$EFFECTIVE_ROOTFS"
 
 if [[ "$PROFILE" == "daily-driver" ]]; then
   bash "$SCRIPT_DIR/lib/install-daily-driver-session.sh" "$EFFECTIVE_ROOTFS"
