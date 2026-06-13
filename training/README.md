@@ -80,6 +80,25 @@ Good examples are:
 - how it should handle uncertainty
 - how it should treat privacy, approvals, and local-only work
 
+### Export Lawful Nova Turns
+
+Nova can also produce governed examples for this same private dataset path. A
+lawful turn keeps RSL, UL, LSG, API Kernel, and Voss receipt metadata beside the
+conversation so examples remain auditable before they are used for LoRA.
+
+```python
+from nova.lawful_llm import LawfulLLM
+from training.nova_training_export import append_lawful_turn_example
+
+prompt = "Explain why Voss receipts matter."
+llm = LawfulLLM(operator_session_id="operator-session", signing_secret="local-secret")
+turn = llm.ask(prompt, tenant_id="operator", capability="reason")
+append_lawful_turn_example("training/data/private_messages.jsonl", prompt=prompt, turn=turn)
+```
+
+Use the NVIDIA NIM provider as the teacher when you want stronger answers, then
+export only the turns you actually want the local adapter to learn.
+
 ## 3. Build the Training Dataset
 
 ```powershell

@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-# Infinity 1 — install dependencies and start AAIS (mock mode, no API keys).
+# Infinity 1 — install dependencies and start AAIS (default preset: real AI + Nova companion).
 # Usage: ./scripts/start-infinity1.sh
 #        ./scripts/start-infinity1.sh --replace-existing
+#        ./scripts/start-infinity1.sh --preset laptop
+#        ./scripts/start-infinity1.sh --preset mock
 
 set -euo pipefail
 
@@ -10,6 +12,7 @@ cd "$ROOT"
 
 PORT="${AAIS_PORT:-8000}"
 DATA_DIR="${AAIS_DATA_DIR:-./.runtime/aais-data}"
+PRESET="${AAIS_PRESET:-default}"
 REPLACE_EXISTING=0
 SKIP_INSTALL=0
 
@@ -17,12 +20,21 @@ for arg in "$@"; do
   case "$arg" in
     --replace-existing) REPLACE_EXISTING=1 ;;
     --skip-install) SKIP_INSTALL=1 ;;
+    --preset=*) PRESET="${arg#*=}" ;;
     --help|-h)
-      echo "Usage: $0 [--replace-existing] [--skip-install]"
+      echo "Usage: $0 [--replace-existing] [--skip-install] [--preset=default|laptop|mock]"
       exit 0
       ;;
   esac
 done
+
+case "$PRESET" in
+  default|laptop|mock) ;;
+  *)
+    echo "Invalid preset: $PRESET (use default, laptop, or mock)" >&2
+    exit 1
+    ;;
+esac
 
 find_python() {
   if command -v python3 >/dev/null 2>&1; then
@@ -60,7 +72,7 @@ fi
 
 if [[ ! -f "$ROOT/.env" ]]; then
   cp "$ROOT/.env.example" "$ROOT/.env"
-  echo "Created .env from .env.example (mock mode needs no keys)"
+  echo "Created .env from .env.example (set provider keys in .env for frontier models)"
 fi
 
 echo "Preparing runtime data..."
@@ -84,7 +96,7 @@ if command -v lsof >/dev/null 2>&1; then
 fi
 
 echo ""
-echo "Starting AAIS (mock preset, no browser)..."
+echo "Starting AAIS (preset=$PRESET, no browser)..."
 echo "  Health:   http://127.0.0.1:$PORT/health"
 echo "  App:      http://127.0.0.1:$PORT/app"
 echo "  Jarvis:   http://127.0.0.1:$PORT/app/jarvis"
@@ -93,4 +105,4 @@ echo ""
 echo "Press Ctrl+C to stop."
 echo ""
 
-exec "$RUN_PY" -m aais start --data-dir "$DATA_DIR" --preset mock --no-browser --port "$PORT"
+exec "$RUN_PY" -m aais start --data-dir "$DATA_DIR" --preset "$PRESET" --no-browser --port "$PORT"

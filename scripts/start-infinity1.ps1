@@ -1,11 +1,15 @@
 #!/usr/bin/env pwsh
-# Infinity 1 - install dependencies and start AAIS (mock mode, no API keys).
+# Infinity 1 - install dependencies and start AAIS (default preset: real AI + Nova companion).
 # Usage: .\scripts\start-infinity1.ps1
 #        .\scripts\start-infinity1.ps1 -ReplaceExisting   # free port 8000 first
+#        .\scripts\start-infinity1.ps1 -Preset laptop
+#        .\scripts\start-infinity1.ps1 -Preset mock
 
 param(
     [switch]$SkipInstall,
     [switch]$ReplaceExisting,
+    [ValidateSet("default", "laptop", "mock")]
+    [string]$Preset = "default",
     [int]$Port = 8000,
     [string]$DataDir = "./.runtime/aais-data"
 )
@@ -65,7 +69,7 @@ $runPy = if (Test-Path $venvPython) { $venvPython } else { throw "Missing .venv 
 
 if (-not (Test-Path (Join-Path $Root ".env"))) {
     Copy-Item (Join-Path $Root ".env.example") (Join-Path $Root ".env")
-    Write-Host "Created .env from .env.example (mock mode needs no keys)"
+    Write-Host "Created .env from .env.example (set provider keys in .env for frontier models)"
 }
 
 Write-Host "Preparing runtime data..."
@@ -90,7 +94,7 @@ if ($conn) {
 }
 
 Write-Host ""
-Write-Host "Starting AAIS (mock preset, no browser)..." -ForegroundColor Green
+Write-Host "Starting AAIS (preset=$Preset, no browser)..." -ForegroundColor Green
 Write-Host "  Health:   http://127.0.0.1:$Port/health"
 Write-Host "  App:      http://127.0.0.1:$Port/app"
 Write-Host "  Jarvis:   http://127.0.0.1:$Port/app/jarvis"
@@ -99,4 +103,4 @@ Write-Host ""
 Write-Host "Press Ctrl+C to stop."
 Write-Host ""
 
-& $runPy -m aais start --data-dir $DataDir --preset mock --no-browser --port $Port
+& $runPy -m aais start --data-dir $DataDir --preset $Preset --no-browser --port $Port
