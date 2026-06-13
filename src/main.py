@@ -11,7 +11,10 @@ config = get_config()
 
 
 RUNTIME_PRESETS = {
-    "default": {},
+    "default": {
+        "AAIS_MODEL_MODE": "real",
+        "AAIS_BOOTSTRAP_REAL_AT_STARTUP": "1",
+    },
     "laptop": {
         "AAIS_MODEL_MODE": "real",
         "AAIS_MODEL_PROFILE": "lite",

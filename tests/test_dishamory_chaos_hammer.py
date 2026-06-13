@@ -46,6 +46,89 @@ def test_disharmony_metrics_defaults():
     assert d["invariant_violations"] == 0
 
 
+def test_ci_gate_contract_clean_pass_shape():
+    mod = _mod()
+    summary = {
+        "rounds": 100,
+        "total_probes": 12200,
+        "server_errors_5xx": 0,
+        "unexpected_failures": 0,
+        "server_still_healthy": True,
+        "health_preflight": 200,
+        "health_postflight": 200,
+        "disharmony": mod.DisharmonyMetrics().to_dict(),
+    }
+
+    report = mod.build_ci_gate_report(
+        summary,
+        mesh_preflight={"ready": False, "configured": 0, "unreachable": []},
+        strict_mesh=False,
+    )
+
+    assert report["protocol"] == "DISHAMORY_HRM_AAIS_CI_GATE"
+    assert report["version"] == "1.0"
+    assert report["status"] == "PASS"
+    assert report["exit_code"] == 0
+    assert report["summary"] == {
+        "governance_drift": 0,
+        "ledger_divergence": 0,
+        "dishamory_events": 0,
+        "runtime_instability_events": 0,
+        "hrm_violations": 0,
+        "federation_mismatches": 0,
+    }
+    assert report["health"] == {"preflight": True, "postflight": True}
+
+
+def test_ci_gate_contract_maps_failure_codes_by_highest_severity():
+    mod = _mod()
+    summary = {
+        "rounds": 10,
+        "total_probes": 1220,
+        "server_errors_5xx": 2,
+        "unexpected_failures": 0,
+        "server_still_healthy": False,
+        "health_preflight": 200,
+        "health_postflight": 503,
+        "disharmony": {
+            **mod.DisharmonyMetrics().to_dict(),
+            "governance_drift": 1,
+            "memory_ledger_divergence": 1,
+            "split_brain_events": 1,
+        },
+        "hrm_violations": 1,
+    }
+
+    report = mod.build_ci_gate_report(
+        summary,
+        mesh_preflight={"ready": False, "configured": 2, "unreachable": ["http://peer"]},
+        strict_mesh=True,
+    )
+
+    assert report["status"] == "FAIL"
+    assert report["exit_code"] == 60
+    assert {cluster["type"] for cluster in report["failure_clusters"]} >= {
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+    }
+
+
+def test_ci_gate_contract_preflight_failure_is_invalid_environment():
+    mod = _mod()
+    report = mod.build_ci_gate_report(
+        {"fatal": True, "health": None, "rounds": 100, "total_probes": 0},
+        mesh_preflight={"ready": False, "configured": 0, "unreachable": []},
+        strict_mesh=False,
+    )
+
+    assert report["status"] == "FAIL"
+    assert report["exit_code"] == 99
+
+
 def test_cloud_forge_acceleration_offline_skipped_when_disabled(monkeypatch):
     monkeypatch.delenv("UGR_ACCELERATION_TOKENS_ENABLED", raising=False)
     hammer = importlib.import_module("tools.stress.chaos_hammer")
@@ -139,4 +222,5 @@ def test_live_dishamory_smoke_when_server_up(tmp_path, monkeypatch):
     report_path = artifact_dir / "dishamory_chaos_report.json"
     assert report_path.exists()
     payload = json.loads(report_path.read_text(encoding="utf-8"))
-    assert payload["summary"]["protocol"] == "DISHAMORY_100x"
+    assert payload["protocol"] == "DISHAMORY_HRM_AAIS_CI_GATE"
+    assert payload["version"] == "1.0"

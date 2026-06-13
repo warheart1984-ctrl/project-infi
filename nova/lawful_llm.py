@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from hashlib import sha256
 import hmac
 import json
+from pathlib import Path
 import re
 from typing import Any, Iterable
 
@@ -17,6 +19,23 @@ from nova.identity import NovaIdentity, declare_identity
 
 
 MemoryFact = tuple[str, str, str]
+TOOL_BY_CAPABILITY = {
+    "search": "search",
+    "files": "files",
+    "code": "code",
+    "memory_write": "memory_write",
+    "graph_query": "graph_query",
+    "summarize": "summarization",
+    "planning": "planning",
+}
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def _sha256_text(value: str) -> str:
+    return sha256(value.encode("utf-8")).hexdigest()
 
 
 @dataclass(frozen=True)
@@ -47,16 +66,52 @@ class RuntimeSystemLaw:
 class UnifiedLanguage:
     """Small deterministic UL parser for lawful cognition packets."""
 
-    def parse(self, prompt: str) -> dict[str, str | list[str]]:
+    def parse(self, prompt: str) -> dict[str, object]:
         words = re.findall(r"[A-Za-z0-9_'-]+", prompt.lower())
         intent = words[0] if words else "observe"
         subject = " ".join(words[1:]) if len(words) > 1 else prompt.strip().lower()
+        constraints = self._extract_constraints(prompt)
+        risk_level = self._risk_level(words)
         return {
             "grammar": "UL",
+            "frame_version": "ul.intent_frame.v1",
             "intent": intent,
             "subject": subject,
+            "constraints": constraints,
+            "evidence_needed": "lsg_grounding" if intent in {"explain", "summarize", "compare"} else "none",
+            "risk_level": risk_level,
+            "output_contract": {
+                "format": self._output_format(intent),
+                "must_cite_lsg": intent in {"explain", "summarize", "compare"},
+                "max_style": "concise",
+            },
             "tokens": words,
         }
+
+    def _extract_constraints(self, prompt: str) -> list[str]:
+        lowered = prompt.lower()
+        constraints: list[str] = []
+        for marker in ("without", "only", "must", "do not", "don't"):
+            if marker in lowered:
+                constraints.append(marker)
+        return constraints
+
+    def _risk_level(self, words: list[str]) -> str:
+        high_risk = {"delete", "execute", "write", "spend", "deploy", "secret", "key"}
+        medium_risk = {"code", "search", "file", "plan", "route"}
+        token_set = set(words)
+        if token_set & high_risk:
+            return "high"
+        if token_set & medium_risk:
+            return "medium"
+        return "low"
+
+    def _output_format(self, intent: str) -> str:
+        if intent in {"explain", "summarize", "compare"}:
+            return "explanation"
+        if intent in {"plan", "route"}:
+            return "plan"
+        return "answer"
 
 
 @dataclass(frozen=True)
@@ -65,27 +120,119 @@ class LongScaleGraph:
 
     facts: tuple[MemoryFact, ...] = ()
 
-    def traverse(self, ul_packet: dict[str, str | list[str]]) -> dict[str, list[str]]:
+    def traverse(self, ul_packet: dict[str, object]) -> dict[str, object]:
         tokens = set(ul_packet.get("tokens", []))
-        facts_used = [
-            f"{source} {relation} {target}"
-            for source, relation, target in self.facts
-            if source.lower() in tokens or target.lower() in tokens
-        ]
-        return {"substrate": "LSG", "facts_used": facts_used}
+        matches = []
+        for source, relation, target in self.facts:
+            if source.lower() in tokens or target.lower() in tokens:
+                fact = f"{source} {relation} {target}"
+                matches.append({"fact": fact, "score": 1.0, "source": "inline"})
+        return {
+            "substrate": "LSG",
+            "facts_used": [match["fact"] for match in matches],
+            "matches": matches,
+        }
+
+
+class LongScaleGraphStore:
+    """Persistent tenant-scoped JSONL graph store for Nova memory."""
+
+    def __init__(self, path: Path | str) -> None:
+        self.path = Path(path)
+
+    def add_fact(
+        self,
+        *,
+        tenant_id: str,
+        source: str,
+        relation: str,
+        target: str,
+        confidence: float = 1.0,
+        source_ref: str = "operator",
+    ) -> dict[str, Any]:
+        record = {
+            "tenant_id": tenant_id,
+            "source": source,
+            "relation": relation,
+            "target": target,
+            "confidence": max(0.0, min(1.0, float(confidence))),
+            "source_ref": source_ref,
+            "created_at": _now_iso(),
+        }
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        with self.path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(record, sort_keys=True, ensure_ascii=True) + "\n")
+        return record
+
+    def query(self, *, tenant_id: str, ul_packet: dict[str, object], limit: int = 5) -> dict[str, object]:
+        tokens = set(ul_packet.get("tokens", []))
+        matches: list[dict[str, Any]] = []
+        for record in self._iter_records():
+            if record.get("tenant_id") != tenant_id:
+                continue
+            source = str(record.get("source") or "")
+            relation = str(record.get("relation") or "")
+            target = str(record.get("target") or "")
+            haystack = set(re.findall(r"[A-Za-z0-9_'-]+", f"{source} {relation} {target}".lower()))
+            overlap = tokens & haystack
+            if not overlap:
+                continue
+            confidence = float(record.get("confidence") or 0.0)
+            score = round(confidence * len(overlap), 6)
+            matches.append(
+                {
+                    **record,
+                    "fact": f"{source} {relation} {target}",
+                    "score": score,
+                }
+            )
+        matches.sort(key=lambda item: item["score"], reverse=True)
+        selected = matches[:limit]
+        return {
+            "substrate": "LSG",
+            "facts_used": [item["fact"] for item in selected],
+            "matches": selected,
+        }
+
+    def _iter_records(self) -> Iterable[dict[str, Any]]:
+        if not self.path.exists():
+            return
+        with self.path.open("r", encoding="utf-8") as handle:
+            for line in handle:
+                cleaned = line.strip()
+                if not cleaned:
+                    continue
+                yield json.loads(cleaned)
 
 
 class NovaCortex:
     """Deterministic cognitive core: UL grammar over LSG memory."""
 
-    def __init__(self, *, provider: Any | None = None) -> None:
+    def __init__(self, *, provider: Any | None = None, lsg_store: LongScaleGraphStore | None = None) -> None:
         self.cognition_count = 0
         self.provider = provider
+        self.lsg_store = lsg_store
 
-    def think(self, *, prompt: str, memory_facts: Iterable[MemoryFact]) -> dict[str, object]:
+    def think(
+        self,
+        *,
+        prompt: str,
+        tenant_id: str,
+        memory_facts: Iterable[MemoryFact],
+    ) -> dict[str, object]:
         self.cognition_count += 1
         ul = UnifiedLanguage().parse(prompt)
-        lsg = LongScaleGraph(tuple(memory_facts)).traverse(ul)
+        if self.lsg_store is not None:
+            lsg = self.lsg_store.query(tenant_id=tenant_id, ul_packet=ul)
+            inline_lsg = LongScaleGraph(tuple(memory_facts)).traverse(ul)
+            if inline_lsg["facts_used"]:
+                lsg = {
+                    "substrate": "LSG",
+                    "facts_used": list(lsg["facts_used"]) + list(inline_lsg["facts_used"]),
+                    "matches": list(lsg["matches"]) + list(inline_lsg["matches"]),
+                }
+        else:
+            lsg = LongScaleGraph(tuple(memory_facts)).traverse(ul)
         if self.provider is not None:
             return self._think_with_provider(prompt=prompt, ul=ul, lsg=lsg)
         return {
@@ -95,7 +242,7 @@ class NovaCortex:
             "text": self._compose_text(ul=ul, lsg=lsg),
         }
 
-    def _compose_text(self, *, ul: dict[str, object], lsg: dict[str, list[str]]) -> str:
+    def _compose_text(self, *, ul: dict[str, object], lsg: dict[str, object]) -> str:
         subject = ul.get("subject") or "the request"
         facts = lsg["facts_used"]
         if facts:
@@ -106,8 +253,8 @@ class NovaCortex:
         self,
         *,
         prompt: str,
-        ul: dict[str, str | list[str]],
-        lsg: dict[str, list[str]],
+        ul: dict[str, object],
+        lsg: dict[str, object],
     ) -> dict[str, object]:
         facts = "\n".join(f"- {fact}" for fact in lsg["facts_used"]) or "- no matching LSG facts"
         messages = [
@@ -150,12 +297,25 @@ class APIKernel:
     tenant_id: str
     capability: str
 
-    def route(self) -> dict[str, str]:
+    tools: dict[str, Any] | None = None
+
+    def route(self, *, prompt: str) -> dict[str, object]:
+        tool_calls: list[dict[str, Any]] = []
+        tool_name = TOOL_BY_CAPABILITY.get(self.capability)
+        if tool_name and self.tools and tool_name in self.tools:
+            payload = {
+                "tenant_id": self.tenant_id,
+                "capability": self.capability,
+                "prompt": prompt,
+            }
+            result = self.tools[tool_name](payload)
+            tool_calls.append({"tool": tool_name, "result": result})
         return {
             "kernel": "API Kernel",
             "tenant_id": self.tenant_id,
             "capability": self.capability,
             "channel": f"{self.tenant_id}:{self.capability}",
+            "tool_calls": tool_calls,
         }
 
 
@@ -172,14 +332,23 @@ class VossRuntime:
         api_kernel: dict[str, str],
         nova_cortex: dict[str, object],
         rsl: dict[str, str],
+        prompt: str,
     ) -> dict[str, object]:
+        memory_facts_used = list((nova_cortex.get("lsg") or {}).get("facts_used") or [])
+        tool_calls = list(api_kernel.get("tool_calls") or [])
+        output_sha256 = _sha256_text(str(nova_cortex["text"]))
         payload = {
             "instance_id": identity.instance_id,
             "tenant_id": api_kernel["tenant_id"],
             "capability": api_kernel["capability"],
             "decision": "EXECUTED",
             "rsl": rsl["status"],
-            "text_sha256": sha256(str(nova_cortex["text"]).encode("utf-8")).hexdigest(),
+            "policy_decision": rsl["status"],
+            "prompt_sha256": _sha256_text(prompt),
+            "output_sha256": output_sha256,
+            "text_sha256": output_sha256,
+            "memory_facts_used": memory_facts_used,
+            "tool_calls": tool_calls,
         }
         if nova_cortex.get("provider"):
             payload["provider"] = str(nova_cortex["provider"])
@@ -200,16 +369,18 @@ class VossRuntime:
             "receipt": receipt,
         }
 
-    def sign_receipt(self, payload: dict[str, str]) -> dict[str, str]:
+    def sign_receipt(self, payload: dict[str, Any]) -> dict[str, Any]:
         serialized = json.dumps(payload, sort_keys=True, separators=(",", ":"))
         signature = hmac.new(
             self._signing_secret,
             serialized.encode("utf-8"),
             sha256,
         ).hexdigest()
-        return {"payload": serialized, "signature": signature, "algorithm": "HMAC-SHA256"}
+        receipt = {"payload": serialized, "signature": signature, "algorithm": "HMAC-SHA256"}
+        receipt["verified"] = self.verify_receipt(receipt)
+        return receipt
 
-    def verify_receipt(self, receipt: dict[str, str]) -> bool:
+    def verify_receipt(self, receipt: dict[str, Any]) -> bool:
         expected = hmac.new(
             self._signing_secret,
             receipt["payload"].encode("utf-8"),
@@ -226,7 +397,7 @@ class LawfulTurn:
     api_kernel: dict[str, str]
     voss_runtime: dict[str, object]
     rsl: dict[str, str]
-    receipt: dict[str, str]
+    receipt: dict[str, Any]
 
 
 class LawfulLLM:
@@ -240,6 +411,8 @@ class LawfulLLM:
         law: RuntimeSystemLaw | None = None,
         identity: NovaIdentity | None = None,
         provider: Any | None = None,
+        lsg_store: LongScaleGraphStore | None = None,
+        tools: dict[str, Any] | None = None,
     ) -> None:
         self.identity = identity or declare_identity(
             tier="nova",
@@ -247,8 +420,9 @@ class LawfulLLM:
         )
         require_admitted(run_proof_gate(self.identity, operator_session_active=True))
         self.law = law or RuntimeSystemLaw()
-        self.cortex = NovaCortex(provider=provider)
+        self.cortex = NovaCortex(provider=provider, lsg_store=lsg_store)
         self.voss = VossRuntime(signing_secret=signing_secret)
+        self.tools = tools or {}
 
     @property
     def cognition_count(self) -> int:
@@ -263,13 +437,22 @@ class LawfulLLM:
         memory_facts: Iterable[MemoryFact] = (),
     ) -> LawfulTurn:
         rsl = self.law.validate(tenant_id=tenant_id, capability=capability, prompt=prompt)
-        api_kernel = APIKernel(tenant_id=tenant_id, capability=capability).route()
-        nova_cortex = self.cortex.think(prompt=prompt, memory_facts=memory_facts)
+        api_kernel = APIKernel(
+            tenant_id=tenant_id,
+            capability=capability,
+            tools=self.tools,
+        ).route(prompt=prompt)
+        nova_cortex = self.cortex.think(
+            prompt=prompt,
+            tenant_id=tenant_id,
+            memory_facts=memory_facts,
+        )
         voss_runtime = self.voss.execute(
             identity=self.identity,
             api_kernel=api_kernel,
             nova_cortex=nova_cortex,
             rsl=rsl,
+            prompt=prompt,
         )
         gates = {
             "interface": "Gates of Wonder",
@@ -285,5 +468,5 @@ class LawfulLLM:
             receipt=voss_runtime["receipt"],
         )
 
-    def verify_receipt(self, receipt: dict[str, str]) -> bool:
+    def verify_receipt(self, receipt: dict[str, Any]) -> bool:
         return self.voss.verify_receipt(receipt)

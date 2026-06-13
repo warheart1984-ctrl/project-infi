@@ -8,7 +8,7 @@ import pytest
 
 from nova.exceptions import GovernanceViolationError
 from nova.governance import seams
-from nova.lawful_llm import LawfulLLM, RuntimeSystemLaw
+from nova.lawful_llm import LawfulLLM, LongScaleGraphStore, RuntimeSystemLaw
 from src.jarvis_protocol import ProviderResponse
 
 
@@ -36,6 +36,9 @@ def test_lawful_llm_executes_prompt_through_all_declared_parts(tmp_path, monkeyp
 
     assert turn.gates_of_wonder["presentation"] == "human_readable_insight"
     assert turn.nova_cortex["ul"]["intent"] == "explain"
+    assert turn.nova_cortex["ul"]["subject"] == "gravity"
+    assert turn.nova_cortex["ul"]["evidence_needed"] == "lsg_grounding"
+    assert turn.nova_cortex["ul"]["output_contract"]["format"] == "explanation"
     assert turn.nova_cortex["lsg"]["facts_used"] == [
         "gravity is an attractive interaction between masses",
         "gravity shapes planetary orbits",
@@ -46,11 +49,20 @@ def test_lawful_llm_executes_prompt_through_all_declared_parts(tmp_path, monkeyp
     assert turn.rsl["status"] == "SATISFIED"
     assert turn.text.startswith("Under RSL, Nova Cortex reads")
     assert llm.verify_receipt(turn.receipt) is True
+    assert turn.receipt["verified"] is True
 
     receipt_payload = json.loads(turn.receipt["payload"])
     assert receipt_payload["tenant_id"] == "tenant-alpha"
     assert receipt_payload["capability"] == "reason"
     assert receipt_payload["decision"] == "EXECUTED"
+    assert receipt_payload["policy_decision"] == "SATISFIED"
+    assert receipt_payload["prompt_sha256"]
+    assert receipt_payload["output_sha256"]
+    assert receipt_payload["memory_facts_used"] == [
+        "gravity is an attractive interaction between masses",
+        "gravity shapes planetary orbits",
+    ]
+    assert receipt_payload["tool_calls"] == []
 
 
 def test_lawful_llm_rejects_disallowed_capability_before_cognition(tmp_path, monkeypatch):
@@ -109,3 +121,59 @@ def test_lawful_llm_can_use_nvidia_provider_backend(tmp_path, monkeypatch):
     assert provider.calls[0][0][0]["role"] == "system"
     assert "gravity is curved spacetime" in provider.calls[0][0][0]["content"]
     assert provider.calls[0][1]["model"] == "nvidia/nemotron-3-ultra-550b-a55b"
+
+
+def test_persistent_lsg_memory_is_tenant_scoped_and_scored(tmp_path, monkeypatch):
+    monkeypatch.setenv("NOVA_GOVERNANCE_LEDGER_PATH", str(tmp_path / "events.jsonl"))
+    store_path = tmp_path / "lsg.jsonl"
+    store = LongScaleGraphStore(store_path)
+    store.add_fact(
+        tenant_id="tenant-alpha",
+        source="gravity",
+        relation="is",
+        target="curved spacetime",
+        confidence=0.95,
+        source_ref="physics-note",
+    )
+    store.add_fact(
+        tenant_id="tenant-beta",
+        source="gravity",
+        relation="is",
+        target="tenant beta secret",
+        confidence=1.0,
+        source_ref="private-note",
+    )
+
+    llm = LawfulLLM(
+        operator_session_id="session-4",
+        signing_secret="test-secret",
+        lsg_store=LongScaleGraphStore(store_path),
+    )
+    turn = llm.ask("explain gravity", tenant_id="tenant-alpha", capability="reason")
+
+    assert turn.nova_cortex["lsg"]["facts_used"] == ["gravity is curved spacetime"]
+    assert turn.nova_cortex["lsg"]["matches"][0]["tenant_id"] == "tenant-alpha"
+    assert turn.nova_cortex["lsg"]["matches"][0]["score"] > 0
+    assert "tenant beta secret" not in turn.text
+
+
+def test_api_kernel_routes_approved_tool_calls(tmp_path, monkeypatch):
+    monkeypatch.setenv("NOVA_GOVERNANCE_LEDGER_PATH", str(tmp_path / "events.jsonl"))
+    tool_calls = []
+
+    def summarize_tool(payload):
+        tool_calls.append(payload)
+        return {"summary": "tool summary"}
+
+    llm = LawfulLLM(
+        operator_session_id="session-5",
+        signing_secret="test-secret",
+        tools={"summarization": summarize_tool},
+    )
+    turn = llm.ask("summarize invariants", tenant_id="tenant-alpha", capability="summarize")
+    receipt_payload = json.loads(turn.receipt["payload"])
+
+    assert tool_calls[0]["tenant_id"] == "tenant-alpha"
+    assert turn.api_kernel["tool_calls"][0]["tool"] == "summarization"
+    assert turn.api_kernel["tool_calls"][0]["result"] == {"summary": "tool summary"}
+    assert receipt_payload["tool_calls"][0]["tool"] == "summarization"

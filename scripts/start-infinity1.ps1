@@ -59,6 +59,19 @@ if (-not $SkipInstall) {
         Write-Host "Creating virtual environment..."
         Invoke-Python $py @("-m", "venv", $venv)
     }
+    # Some Windows Python installs create .venv without pip (ensurepip disabled).
+    & $venvPython -m pip --version 2>$null | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Bootstrapping pip in .venv (ensurepip)..."
+        & $venvPython -m ensurepip --upgrade
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "Recreating broken virtual environment..."
+            Remove-Item -Recurse -Force $venv
+            Invoke-Python $py @("-m", "venv", $venv)
+            & $venvPython -m ensurepip --upgrade
+            if ($LASTEXITCODE -ne 0) { throw "Could not bootstrap pip in .venv" }
+        }
+    }
     Write-Host "Installing AAIS package and dependencies (editable)..."
     & $venvPython -m pip install --upgrade pip wheel setuptools 2>&1 | Out-Null
     & $venvPython -m pip install -e ".[dev]"

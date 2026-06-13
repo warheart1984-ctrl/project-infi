@@ -130,6 +130,34 @@ class TestApiInitialization(unittest.TestCase):
         self.assertEqual(api.ai_mode, "real")
         mock_get_model_mode.assert_called_once_with()
 
+    @patch("src.api._get_model_mode", return_value="real")
+    @patch("src.api._configured_remote_providers", return_value=["openrouter"])
+    @patch("src.api._load_module")
+    def test_init_ai_real_mode_without_torch_when_remote_configured(
+        self,
+        mock_load_module,
+        mock_remote_providers,
+        mock_get_model_mode,
+    ):
+        """Real preset should use remote providers without importing torch."""
+        fake_ai_model = MagicMock()
+        fake_streamer = MagicMock()
+        mock_module = SimpleNamespace(
+            MockMultiModalAI=MagicMock(return_value=fake_ai_model),
+            MockStreamingTextGenerator=MagicMock(return_value=fake_streamer),
+        )
+        mock_load_module.return_value = mock_module
+
+        model, streamer = api.init_ai()
+
+        mock_load_module.assert_called_once_with("src.mock_ai")
+        self.assertEqual(fake_ai_model.device, "remote")
+        self.assertEqual(api.ai_mode, "real")
+        self.assertIs(model, fake_ai_model)
+        self.assertIs(streamer, fake_streamer)
+        mock_remote_providers.assert_called_once_with()
+        mock_get_model_mode.assert_called_once_with()
+
     def test_coerce_max_length_uses_env_defaults_and_cap(self):
         """Generation length should respect configured defaults and caps."""
         with patch.dict(

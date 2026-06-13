@@ -50,6 +50,22 @@ class TestMain(unittest.TestCase):
             self.assertEqual(os.environ["MODEL_PRECISION"], "fp16")
             self.assertIn("AAIS_MODEL_MODE", applied)
 
+    def test_apply_runtime_preset_sets_default_real_bootstrap(self):
+        """Default Infinity preset should opt into real AI bootstrap (not auto-mock)."""
+        preset_keys = set()
+        for values in apply_runtime_preset.__globals__["RUNTIME_PRESETS"].values():
+            preset_keys.update(values.keys())
+
+        with patch.dict(os.environ, {}, clear=False):
+            for key in preset_keys:
+                os.environ.pop(key, None)
+
+            applied = apply_runtime_preset("default")
+
+            self.assertEqual(os.environ["AAIS_MODEL_MODE"], "real")
+            self.assertEqual(os.environ["AAIS_BOOTSTRAP_REAL_AT_STARTUP"], "1")
+            self.assertIn("AAIS_MODEL_MODE", applied)
+
     def test_apply_runtime_preset_preserves_explicit_env(self):
         """Preset defaults should not override explicit env vars."""
         with patch.dict(

@@ -59,6 +59,15 @@ if [[ "$SKIP_INSTALL" -eq 0 ]]; then
     echo "Creating virtual environment..."
     "$PY" -m venv "$VENV"
   fi
+  if ! "$VENV/bin/python" -m pip --version >/dev/null 2>&1; then
+    echo "Bootstrapping pip in .venv (ensurepip)..."
+    "$VENV/bin/python" -m ensurepip --upgrade || {
+      echo "Recreating broken virtual environment..."
+      rm -rf "$VENV"
+      "$PY" -m venv "$VENV"
+      "$VENV/bin/python" -m ensurepip --upgrade
+    }
+  fi
   echo "Installing AAIS package and dependencies (editable)..."
   "$VENV/bin/python" -m pip install --upgrade pip wheel setuptools
   "$VENV/bin/python" -m pip install -e ".[dev]"

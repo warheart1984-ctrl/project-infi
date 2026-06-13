@@ -1501,6 +1501,45 @@ def _startup_should_use_mock_fallback():
     return explicit_real_boot not in {"1", "true", "yes", "on"}
 
 
+def _configured_remote_providers():
+    """Return enabled remote provider ids (excluding local HF stack)."""
+    provider_registry.refresh()
+    remote_ids = []
+    for provider_id, cfg in provider_registry.list_providers().items():
+        if provider_id == "local":
+            continue
+        meta = cfg.meta or {}
+        if meta.get("kind") != "remote":
+            continue
+        if not provider_registry.can_invoke(provider_id):
+            continue
+        remote_ids.append(provider_id)
+    return remote_ids
+
+
+def _init_ai_api_backed(remote_ids):
+    """Initialize real mode via remote providers without loading local torch weights."""
+    global ai_model, streaming_generator, ai_mode, ai_init_error
+
+    if not remote_ids:
+        raise ImportError(
+            "No remote AI provider is configured. Set OPENROUTER_API_KEY or ANTHROPIC_API_KEY "
+            "in .env, or install torch for local model loading."
+        )
+
+    mock_module = _load_module("src.mock_ai")
+    ai_model = mock_module.MockMultiModalAI()
+    ai_model.device = "remote"
+    streaming_generator = mock_module.MockStreamingTextGenerator()
+    ai_mode = "real"
+    ai_init_error = None
+    logger.info(
+        "AI services initialized in API-backed real mode (providers: %s)",
+        ", ".join(remote_ids),
+    )
+    return ai_model, streaming_generator
+
+
 def bootstrap_ai_runtime(reason="startup", prefer_real=False):
     """Explicitly initialize the AI runtime for a startup path."""
     global ai_model, streaming_generator, ai_mode, ai_init_error
@@ -7151,6 +7190,18 @@ def init_ai():
         try:
             if requested_mode == "mock":
                 raise ImportError("Mock mode requested")
+
+            remote_ids = []
+            if requested_mode == "real":
+                force_local = os.getenv("AAIS_FORCE_LOCAL_MODEL", "").strip().lower()
+                if force_local not in {"1", "true", "yes", "on"}:
+                    remote_ids = _configured_remote_providers()
+
+            if remote_ids:
+                loaded_model, loaded_streamer = _init_ai_api_backed(remote_ids)
+                ai_model = loaded_model
+                streaming_generator = loaded_streamer
+                return ai_model, streaming_generator
 
             models_module = _load_module("src.models")
             streaming_module = _load_module("src.streaming")

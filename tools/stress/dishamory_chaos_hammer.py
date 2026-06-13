@@ -28,6 +28,7 @@ import time
 import urllib.parse
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
@@ -42,7 +43,6 @@ from tools.stress._chaos_common import (  # noqa: E402
     _req,
     configure_base,
     probe_mesh_peers,
-    write_chaos_report,
 )
 from tools.stress.chaos_hammer import (  # noqa: E402
     hammer_cloud_forge_acceleration_offline,
@@ -112,6 +112,19 @@ LEDGER_PATHS = [
     "/api/operator/ledger/query?q=chaos",
     "/api/operator/ledger/query?q=" + urllib.parse.quote("'; DROP TABLE ledger;--"),
 ]
+
+CI_PROTOCOL = "DISHAMORY_HRM_AAIS_CI_GATE"
+CI_VERSION = "1.0"
+CI_EXIT_CODES = {
+    "D0": 0,
+    "D1": 10,
+    "D2": 20,
+    "D3": 30,
+    "D4": 40,
+    "D5": 50,
+    "D6": 60,
+    "PRE": 99,
+}
 
 
 @dataclass
@@ -193,6 +206,120 @@ def _gossip_fingerprint(text: str) -> str:
 def _stable_fingerprint(text: str) -> str:
     """JSON structural fingerprint with volatile timestamp fields stripped."""
     return _gossip_fingerprint(text)
+
+
+def _fingerprint_payload(payload: Any) -> str:
+    canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"), default=str)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
+
+
+def _cluster(kind: str, *, probe_id: str, payload: Any, round_id: int | None = None) -> dict[str, Any]:
+    cluster: dict[str, Any] = {
+        "type": kind,
+        "probe_id": probe_id,
+        "signature": _fingerprint_payload(payload),
+    }
+    if round_id is not None:
+        cluster["round"] = round_id
+    return cluster
+
+
+def build_ci_gate_report(
+    summary: dict[str, Any],
+    *,
+    mesh_preflight: dict[str, Any] | None,
+    strict_mesh: bool,
+) -> dict[str, Any]:
+    """Collapse Dishamory hammer output into the formal HRM+AAIS CI contract."""
+    disharmony = dict(summary.get("disharmony") or {})
+    mesh = dict(mesh_preflight or {})
+    rounds = int(summary.get("rounds") or 0)
+    probes_total = int(summary.get("total_probes") or summary.get("probes_total") or 0)
+    preflight_ok = not summary.get("fatal") and summary.get("health_preflight", 200) == 200
+    postflight_ok = bool(summary.get("server_still_healthy", False)) and summary.get("health_postflight", 200) == 200
+
+    governance_drift = int(disharmony.get("governance_drift") or 0)
+    ledger_divergence = int(disharmony.get("memory_ledger_divergence") or 0)
+    disharmony_events = sum(
+        int(disharmony.get(key) or 0)
+        for key in ("gossip_drift", "split_brain_events", "invariant_violations")
+    )
+    runtime_instability = int(summary.get("server_errors_5xx") or 0)
+    if int(summary.get("unexpected_failures") or 0) > 0:
+        runtime_instability += int(summary.get("unexpected_failures") or 0)
+    if not postflight_ok and not summary.get("fatal"):
+        runtime_instability += 1
+    hrm_violations = int(summary.get("hrm_violations") or disharmony.get("hrm_violations") or 0)
+    federation_mismatches = 0
+    if strict_mesh and not mesh.get("ready", False):
+        federation_mismatches += max(1, len(list(mesh.get("unreachable") or [])))
+    federation_mismatches += int(disharmony.get("federation_mismatches") or 0)
+
+    failure_clusters: list[dict[str, Any]] = []
+    if summary.get("fatal") or not preflight_ok:
+        failure_clusters.append(_cluster("PRE", probe_id="preflight", payload=summary))
+    if governance_drift:
+        failure_clusters.append(_cluster("D1", probe_id="governance:r0", payload=disharmony, round_id=0))
+    if ledger_divergence:
+        failure_clusters.append(_cluster("D2", probe_id="ledger:r0", payload=disharmony, round_id=0))
+    if disharmony_events:
+        failure_clusters.append(_cluster("D3", probe_id="dishamory:r0", payload=disharmony, round_id=0))
+    if runtime_instability:
+        failure_clusters.append(_cluster("D4", probe_id="runtime:r0", payload=summary, round_id=0))
+    if hrm_violations:
+        failure_clusters.append(_cluster("D5", probe_id="hrm_policy:r0", payload=summary, round_id=0))
+    if federation_mismatches:
+        failure_clusters.append(_cluster("D6", probe_id="federation:r0", payload=mesh, round_id=0))
+
+    if any(cluster["type"] == "PRE" for cluster in failure_clusters):
+        exit_code = CI_EXIT_CODES["PRE"]
+    else:
+        exit_code = max(
+            [CI_EXIT_CODES.get(cluster["type"], 0) for cluster in failure_clusters] or [0]
+        )
+
+    return {
+        "protocol": CI_PROTOCOL,
+        "version": CI_VERSION,
+        "rounds": rounds,
+        "probes_total": probes_total,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "status": "PASS" if exit_code == 0 else "FAIL",
+        "exit_code": exit_code,
+        "summary": {
+            "governance_drift": governance_drift,
+            "ledger_divergence": ledger_divergence,
+            "dishamory_events": disharmony_events,
+            "runtime_instability_events": runtime_instability,
+            "hrm_violations": hrm_violations,
+            "federation_mismatches": federation_mismatches,
+        },
+        "drift_axes": {
+            "governance": disharmony.get("notes", []) if governance_drift else [],
+            "memory": disharmony.get("notes", []) if ledger_divergence else [],
+            "runtime": disharmony.get("notes", []) if runtime_instability else [],
+            "federation": list(mesh.get("unreachable") or []) if federation_mismatches else [],
+        },
+        "failure_clusters": failure_clusters,
+        "health": {
+            "preflight": bool(preflight_ok),
+            "postflight": bool(postflight_ok),
+        },
+        "mesh": {
+            "strict": bool(strict_mesh),
+            "ready": bool(mesh.get("ready", False)),
+            "configured": int(mesh.get("configured") or 0),
+            "unreachable": list(mesh.get("unreachable") or []),
+        },
+        "legacy_summary": summary,
+    }
+
+
+def write_ci_gate_report(report: dict[str, Any], *, filename: str = "dishamory_chaos_report.json") -> Path:
+    out = ROOT / "ci-artifacts" / filename
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    return out
 
 
 def _back_to_back_drift(
@@ -923,7 +1050,15 @@ def run_dishamory_chaos(
         print("\n!!! DISHARMONY METRICS NON-ZERO !!!")
         print(json.dumps(disharmony, indent=2))
 
-    out = write_chaos_report(report, summary, filename="dishamory_chaos_report.json")
+    ci_report = build_ci_gate_report(
+        summary,
+        mesh_preflight=None,
+        strict_mesh=False,
+    )
+    ci_report["server_errors"] = [r.__dict__ for r in report.server_errors]
+    ci_report["unexpected_failures"] = [r.__dict__ for r in report.unexpected_failures]
+    ci_report["all_results_count"] = len(report.results)
+    out = write_ci_gate_report(ci_report)
     print(f"\nReport: {out}")
     return summary
 
@@ -954,7 +1089,23 @@ def main(argv: list[str] | None = None) -> int:
     if args.require_mesh and not mesh["ready"]:
         print("FATAL: --require-mesh but mesh peers unreachable:")
         print(json.dumps(mesh, indent=2))
-        return 1
+        ci_report = build_ci_gate_report(
+            {
+                "rounds": 500 if args.remediation else args.rounds,
+                "total_probes": 0,
+                "server_errors_5xx": 0,
+                "unexpected_failures": 0,
+                "server_still_healthy": True,
+                "health_preflight": 200,
+                "health_postflight": 200,
+                "disharmony": DisharmonyMetrics().to_dict(),
+            },
+            mesh_preflight=mesh,
+            strict_mesh=True,
+        )
+        out = write_ci_gate_report(ci_report)
+        print(f"Report: {out}")
+        return ci_report["exit_code"]
     if not skip_ugr and not mesh["ready"]:
         skip_ugr = True
         print(
@@ -968,19 +1119,15 @@ def main(argv: list[str] | None = None) -> int:
     rounds = 500 if args.remediation else args.rounds
     summary = run_dishamory_chaos(rounds=rounds, skip_ugr=skip_ugr, phase=args.phase)
     summary["mesh_preflight"] = mesh
-
-    if summary.get("fatal"):
-        return 1
-    if summary.get("server_errors_5xx", 0) > 0:
-        return 1
-    if not summary.get("server_still_healthy"):
-        return 1
-    if summary.get("unexpected_failures", 0) > 0:
-        return 1
-    d = summary.get("disharmony", {})
-    if any(d.get(k, 0) > 0 for k in ("governance_drift", "memory_ledger_divergence", "gossip_drift", "split_brain_events", "invariant_violations")):
-        return 1
-    return 0
+    ci_report = build_ci_gate_report(
+        summary,
+        mesh_preflight=mesh,
+        strict_mesh=args.require_mesh,
+    )
+    out = write_ci_gate_report(ci_report)
+    print(f"CI gate status: {ci_report['status']} exit_code={ci_report['exit_code']}")
+    print(f"Report: {out}")
+    return ci_report["exit_code"]
 
 
 if __name__ == "__main__":

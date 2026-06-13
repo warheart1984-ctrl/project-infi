@@ -1,0 +1,12 @@
+[package]
+name = "darz-kernel"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "DAR-Z sovereign deterministic execution kernel."
+
+[lib]
+name = "darz_kernel"
+path = "src/lib.rs"
+
+[dependencies]
