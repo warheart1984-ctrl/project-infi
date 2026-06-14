@@ -5,7 +5,7 @@ from __future__ import annotations
 import unittest
 from unittest.mock import patch
 
-import start_jarvis
+from src.entrypoints import start_jarvis
 
 
 class TestStartJarvis(unittest.TestCase):
@@ -19,7 +19,7 @@ class TestStartJarvis(unittest.TestCase):
         self.assertEqual(env["VITE_API_URL"], "http://127.0.0.1:5000")
         self.assertEqual(env["REACT_APP_API_URL"], "http://127.0.0.1:5000")
 
-    @patch("start_jarvis.http_ready")
+    @patch("src.entrypoints.start_jarvis.http_ready")
     def test_resolve_existing_backend_prefers_canonical_runtime(self, mock_http_ready):
         mock_http_ready.side_effect = lambda url: url == start_jarvis.CANONICAL_BACKEND_HEALTH_URL
 
@@ -29,7 +29,7 @@ class TestStartJarvis(unittest.TestCase):
         self.assertEqual(result["backend_kind"], "canonical")
         self.assertEqual(result["backend_url"], start_jarvis.CANONICAL_BACKEND_URL)
 
-    @patch("start_jarvis.http_ready")
+    @patch("src.entrypoints.start_jarvis.http_ready")
     def test_resolve_existing_backend_falls_back_to_legacy_runtime(self, mock_http_ready):
         mock_http_ready.side_effect = lambda url: url == start_jarvis.LEGACY_BACKEND_HEALTH_URL
 
@@ -39,9 +39,9 @@ class TestStartJarvis(unittest.TestCase):
         self.assertEqual(result["backend_kind"], "legacy")
         self.assertEqual(result["backend_url"], start_jarvis.LEGACY_BACKEND_URL)
 
-    @patch("start_jarvis.build_backend_candidates")
-    @patch("start_jarvis.start_backend_candidate")
-    @patch("start_jarvis.resolve_existing_backend")
+    @patch("src.entrypoints.start_jarvis.build_backend_candidates")
+    @patch("src.entrypoints.start_jarvis.start_backend_candidate")
+    @patch("src.entrypoints.start_jarvis.resolve_existing_backend")
     def test_ensure_backend_promotes_canonical_when_legacy_is_already_running(
         self,
         mock_resolve_existing_backend,
@@ -78,9 +78,9 @@ class TestStartJarvis(unittest.TestCase):
         self.assertEqual(result, canonical_backend)
         mock_start_backend_candidate.assert_called_once_with(canonical_candidate)
 
-    @patch("start_jarvis.build_backend_candidates")
-    @patch("start_jarvis.start_backend_candidate")
-    @patch("start_jarvis.resolve_existing_backend")
+    @patch("src.entrypoints.start_jarvis.build_backend_candidates")
+    @patch("src.entrypoints.start_jarvis.start_backend_candidate")
+    @patch("src.entrypoints.start_jarvis.resolve_existing_backend")
     def test_ensure_backend_keeps_legacy_when_canonical_promotion_fails(
         self,
         mock_resolve_existing_backend,

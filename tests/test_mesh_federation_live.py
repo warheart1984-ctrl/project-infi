@@ -17,6 +17,14 @@ ROOT = Path(__file__).resolve().parents[1]
 REX_ROOT = ROOT.parent / "reasoning-exchange-node"
 sys.path.insert(0, str(ROOT))
 
+import pytest  # noqa: E402
+
+if not (REX_ROOT / "app").is_dir():
+    pytest.skip(
+        f"reasoning-exchange-node sidecar not present at {REX_ROOT}",
+        allow_module_level=True,
+    )
+
 from flask import Flask
 
 from src.mesh.api_routes import register_mesh_routes
