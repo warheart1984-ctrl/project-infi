@@ -4716,6 +4716,7 @@ def _route_session_turn_to_bridge(
                     intent="respond",
                     runtime_context="live_runtime",
                     packet_type="operator_turn",
+                    runtime_dir=cognitive_bridge_service.detachment_guard.runtime_dir,
                 ),
                 **{
                     key: payload.get(key)
@@ -4772,6 +4773,7 @@ def _route_action_execution_to_bridge(
                     intent="execute",
                     runtime_context="operator_runtime",
                     packet_type="repo_change_execute" if repo_change else "runtime_action_execute",
+                    runtime_dir=cognitive_bridge_service.detachment_guard.runtime_dir,
                 ),
                 **external_details,
             },
@@ -4824,6 +4826,7 @@ def _route_reasoning_ingress_to_bridge(raw_packet: dict | None, *, runtime_conte
                     intent="evaluate",
                     runtime_context=runtime_context,
                     packet_type="reasoning_packet_ingress",
+                    runtime_dir=cognitive_bridge_service.detachment_guard.runtime_dir,
                 ),
             },
             "requires_approval": False,
