@@ -14,6 +14,20 @@ info() { echo "[INFO] $*"; }
 warn() { echo "[WARN] $*"; WARN=$((WARN + 1)); }
 fail() { echo "[FAIL] $*"; FAIL=$((FAIL + 1)); }
 
+get_candidate_repo_roots() {
+  lawful_nova_candidate_repo_roots
+}
+
+get_repo_python() {
+  lawful_nova_python
+}
+
+get_repo_nova_cli() {
+  local repo="$1"
+  local cli="${repo}/bin/nova"
+  [[ -f "${cli}" ]] && echo "${cli}"
+}
+
 REPO_ROOT="$(lawful_nova_repo_root)"
 lawful_nova_export_paths
 lawful_nova_load_stack
@@ -21,11 +35,20 @@ lawful_nova_load_stack
 echo "=== Lawful Nova verify (unix) ==="
 echo "Repo: ${REPO_ROOT}"
 
-PY="$(lawful_nova_python)" || fail "Python 3.10+"
+PY="$(get_repo_python)" || fail "Python 3.10+"
 if [[ "${PY}" == "${REPO_ROOT}/.venv/bin/python" && -x "${PY}" ]]; then
   ok "Python .venv ${PY}"
 else
   warn "Python not from repo .venv: ${PY}"
+fi
+
+NOVA_SHIM="$(get_repo_nova_cli "${REPO_ROOT}")"
+if [[ -n "${NOVA_SHIM}" && -x "${NOVA_SHIM}" ]]; then
+  ok "Nova CLI repo shim reachable ${NOVA_SHIM}"
+elif [[ -n "${NOVA_SHIM}" ]]; then
+  warn "Nova CLI repo shim present but not executable: ${NOVA_SHIM} (run: chmod +x bin/nova setup/*.sh)"
+else
+  fail "Nova CLI repo shim missing at ${REPO_ROOT}/bin/nova"
 fi
 
 if [[ -d "${NOVA_CORTEX_PATH}" ]]; then

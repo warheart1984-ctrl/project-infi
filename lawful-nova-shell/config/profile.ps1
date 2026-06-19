@@ -26,7 +26,7 @@ if (Test-Path (Join-Path $NvmHome "nvm.exe")) {
 function global:nova-chat {
     $cmd = $env:NOVA_CLI
     if (-not $cmd) { $cmd = "nova" }
-    & $cmd chat
+    & $cmd chat @args
 }
 
 function global:novr {

@@ -9,18 +9,38 @@ lawful_nova_shell_root() {
   cd "$here/../.." && pwd
 }
 
-lawful_nova_repo_root() {
-  if [[ -n "${LAWFUL_NOVA_REPO_ROOT:-}" && -d "${LAWFUL_NOVA_REPO_ROOT}" ]]; then
-    echo "${LAWFUL_NOVA_REPO_ROOT}"
-    return 0
-  fi
-  local shell_root repo
+lawful_nova_is_repo_root() {
+  local candidate="$1"
+  [[ -f "${candidate}/pyproject.toml" && -d "${candidate}/nova" ]]
+}
+
+lawful_nova_candidate_repo_roots() {
+  local shell_root cwd parent
   shell_root="$(lawful_nova_shell_root)"
-  repo="$(cd "${shell_root}/.." && pwd)"
-  if [[ -f "${repo}/pyproject.toml" && -d "${repo}/nova" ]]; then
-    echo "${repo}"
-    return 0
-  fi
+  parent="$(cd "${shell_root}/.." && pwd)"
+  cwd="$(pwd)"
+
+  [[ -n "${LAWFUL_NOVA_REPO_ROOT:-}" ]] && printf '%s\n' "${LAWFUL_NOVA_REPO_ROOT}"
+  printf '%s\n' "${shell_root}"
+  printf '%s\n' "${parent}"
+  printf '%s\n' "${cwd}"
+}
+
+lawful_nova_repo_root() {
+  local candidate resolved seen=""
+  while IFS= read -r candidate; do
+    [[ -n "${candidate}" && -d "${candidate}" ]] || continue
+    resolved="$(cd "${candidate}" && pwd)"
+    case ":${seen}:" in
+      *":${resolved}:"*) continue ;;
+    esac
+    seen="${seen}:${resolved}"
+    if lawful_nova_is_repo_root "${resolved}"; then
+      echo "${resolved}"
+      return 0
+    fi
+  done < <(lawful_nova_candidate_repo_roots)
+
   echo "Lawful Nova repo root not found (set LAWFUL_NOVA_REPO_ROOT)" >&2
   return 1
 }
