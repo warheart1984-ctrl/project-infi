@@ -1,0 +1,66 @@
+{
+  "profile": "Theta-BIP39-Encoding",
+  "version": "0.1",
+  "vectors": [
+    {
+      "kind": "glyph",
+      "glyphs": "⊙|κ⊕|⊕.⊕",
+      "decoded_digits": [0, 2, 3, 3, 3],
+      "entropy_hex": "1f45fa85f969dd63fcd2b367b7185de7",
+      "bits_sha256": "b1875636fdd5682aa95c7466b484f92d8497f9d8580891ecc7577da70372b556",
+      "indices": [250, 382, 1291, 1942, 1262, 1423, 1946, 691, 829, 1478, 187, 1659]
+    },
+    {
+      "kind": "glyph",
+      "glyphs": "⊙",
+      "decoded_digits": [0],
+      "entropy_hex": "6e340b9cffb37a989ca544e6bb780a2c",
+      "bits_sha256": "0213970ab8b51dd0c5b5d2c7f62f6a88feb215ccba299aa8e0d6434e4244a055",
+      "indices": [881, 1282, 1849, 2043, 445, 610, 916, 1348, 1845, 1758, 20, 716]
+    },
+    {
+      "kind": "glyph",
+      "glyphs": "κ⊕",
+      "decoded_digits": [2, 3],
+      "entropy_hex": "ffe679bb831c95b67dc17819c63c5090",
+      "bits_sha256": "da5ab100f7921d9c3e3a07448b3e1c07ef28bb29f282506e55340c12c36bbc7b",
+      "indices": [2047, 414, 887, 49, 1610, 1753, 1976, 376, 206, 399, 161, 264]
+    },
+    {
+      "kind": "glyph",
+      "glyphs": "⊕|⊕|⊕",
+      "decoded_digits": [3, 3, 3],
+      "entropy_hex": "e682653fb7a4bdd1273da568562634a1",
+      "bits_sha256": "3b0f17e702d249abe944430284bdfe63595d2648ce1ba7ba8cefc2d83d616bc4",
+      "indices": [1844, 153, 639, 890, 606, 1860, 1255, 1445, 834, 1417, 1129, 537]
+    },
+    {
+      "kind": "digits",
+      "digits": [0, 2, 3, 0, 2, 3, 3, 3],
+      "entropy_hex": "3247b88425a8edbb5911a3e906dd7c0f",
+      "bits_sha256": "95fa79a9485e8d4634744658395b110880b90ccc1725760bb9c7dcc3418daa30",
+      "indices": [402, 494, 264, 602, 1142, 1773, 802, 419, 1864, 439, 760, 253]
+    },
+    {
+      "kind": "digits",
+      "digits": [1, 1, 1, 1],
+      "entropy_hex": "5a24132ad7a5dbb7577e3d1f8c38a969",
+      "bits_sha256": "844c63ebd322f5ac3fe74a1427c4f8439acaaa1da896e38dd235f968603a32bd",
+      "indices": [721, 260, 1621, 1402, 749, 1757, 751, 1597, 252, 782, 338, 1682]
+    },
+    {
+      "kind": "digits",
+      "digits": [13, 13, 13, 13],
+      "entropy_hex": "6efdb1735f3468151bea56560fcfaa75",
+      "bits_sha256": "84741ebcf87282665877bba6564a27946c554ed75b1ebbd1a557b66b34182612",
+      "indices": [887, 1900, 742, 1523, 564, 84, 893, 598, 688, 1011, 1876, 1887]
+    },
+    {
+      "kind": "digits",
+      "digits": [0, 0, 0, 0],
+      "entropy_hex": "6e340b9cffb37a989ca544e6bb780a2c",
+      "bits_sha256": "0213970ab8b51dd0c5b5d2c7f62f6a88feb215ccba299aa8e0d6434e4244a055",
+      "indices": [881, 1282, 1849, 2043, 445, 610, 916, 1348, 1845, 1758, 20, 716]
+    }
+  ]
+}

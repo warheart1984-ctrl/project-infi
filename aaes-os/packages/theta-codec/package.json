@@ -1,0 +1,26 @@
+{
+  "name": "@aaes-os/theta-codec",
+  "version": "0.2.0",
+  "description": "Theta glyph codec and entropy bridge for AAES-OS",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "profile:diff": "tsx scripts/profile-diff.ts",
+    "profile:repro": "tsx scripts/reproducibility-harness.ts --verify",
+    "test": "vitest run --config vitest.config.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

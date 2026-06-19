@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="60">
+  <rect width="420" height="60" fill="#1b1b1b" rx="6"/>
+  <text x="210" y="22" fill="#ffffff" font-size="14" font-family="monospace" text-anchor="middle">THETA-BIP39 ENCODING</text>
+  <text x="210" y="40" fill="#00e0a8" font-size="14" font-family="monospace" text-anchor="middle">PROFILE v0.1 - CONFORMANT</text>
+</svg>

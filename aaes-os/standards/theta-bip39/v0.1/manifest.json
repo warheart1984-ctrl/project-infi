@@ -1,0 +1,38 @@
+{
+  "profile": "Theta-BIP39-Encoding",
+  "version": "0.1",
+  "status": "stable",
+  "description": "Deterministic Theta->digit->entropy->BIP39 encoding pipeline.",
+  "invariants": {
+    "R1": "Theta-reverse correctness: reverse(d) selects only Theta indices whose forward expansion contains d.",
+    "D1": "BIP-39 determinism: digits->entropy->bits->indices->seed is a pure function."
+  },
+  "mappings": {
+    "digit_map": "Defined in implementation; must be total over all glyphs used in forward decoding.",
+    "theta_map": "Defined in implementation; Theta indices 0..T map to glyphs."
+  },
+  "entropy": {
+    "function": "SHA256(digits_to_bytes(digits))[:16]",
+    "size_bits": 128
+  },
+  "bip39": {
+    "checksum_bits": 4,
+    "index_count": 12,
+    "wordlist": "External BIP-39 2048-word list"
+  },
+  "tests_required": [
+    "Theta reverse correctness (R1)",
+    "Digit-space invariants",
+    "Theta round-trip entropy fuzzer",
+    "BIP-39 determinism (D1)"
+  ],
+  "change_control": {
+    "breaking_changes_require_new_profile": true,
+    "sensitive_fields": [
+      "theta_map",
+      "digit_map",
+      "digit_to_theta_indices",
+      "digits_to_entropy_128"
+    ]
+  }
+}

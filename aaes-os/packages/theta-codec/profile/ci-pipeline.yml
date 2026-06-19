@@ -1,0 +1,29 @@
+name: theta-bip39-profile-v0.1
+
+on:
+  pull_request:
+    paths:
+      - "packages/theta-codec/**"
+  push:
+    paths:
+      - "packages/theta-codec/**"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: aaes-os/pnpm-lock.yaml
+      - run: corepack pnpm install --frozen-lockfile
+        working-directory: aaes-os
+      - run: corepack pnpm --filter @aaes-os/theta-codec test
+        working-directory: aaes-os
+      - run: corepack pnpm --filter @aaes-os/theta-codec run build
+        working-directory: aaes-os
+      - run: corepack pnpm --filter @aaes-os/theta-codec run profile:repro
+        working-directory: aaes-os
