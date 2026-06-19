@@ -1,0 +1,6 @@
+program ConstitutionalProgram1 {
+  invariant INV-007 = "require continuity >= 50";
+  invariant INV-003 = "require governance >= 70";
+  transition law_mutation must pass TVP and CEN;
+  on violation then DENY and write_receipt;
+}

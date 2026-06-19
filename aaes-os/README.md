@@ -1,71 +1,101 @@
-# AAES-OS v1 (TypeScript)
+# AAES-OS Monorepo
 
-Governed cognitive runtime package for AAIS — perception → deliberation → planning → policy-gated action execution with append-only trace auditing.
+pnpm workspace for the AAES-OS **UCR spine** TypeScript packages. The legacy v1 cognitive runtime (`src/`, HTTP orchestrator) remains at the repo root for backward compatibility.
 
-## Quick start
+## Layout
+
+```
+aaes-os/
+  packages/
+    runledger/          # RunLedgerStore — runs, spans, invariant links
+    trace-bus/          # TraceBusClient — pub/sub trace events
+    aaes-governance/    # InvariantEngine + FaultJournalStore (Phase 3 stub)
+    ucr-runtime/        # UCRRuntime shell (Phase 3 stub)
+    tri-core-protocol/  # Governance triad types (Phase 3 stub)
+  services/
+    ops-console/        # React UI + Express telemetry + Prometheus /metrics
+  infra/
+    grafana/            # aaes-os-dashboard.json
+    prometheus/         # scrape config snippet
+  tools/                # placeholder — CLI/dev tools
+  docs/                 # workspace-local docs pointer
+  tests/integration/    # cross-package spine tests
+  src/                  # legacy AAES-OS v1 orchestrator (unchanged)
+```
+
+## Prerequisites
+
+- Node.js ≥ 20
+- [pnpm](https://pnpm.io/) ≥ 9
+
+## Install
 
 ```bash
-npm install
-npm run build
-npm test
-npm start   # HTTP server on port 8080
+cd aaes-os
+pnpm install
 ```
 
-## HTTP API
+## Build
 
-### `POST /aaes/execute`
-
-```json
-{
-  "traceId": "trace_optional",
-  "actorId": "operator-1",
-  "scope": { "name": "code" },
-  "prompt": "implement the fix for auth timeout"
-}
+```bash
+pnpm build          # all workspace packages
+pnpm build:legacy   # legacy src/ orchestrator (npm/tsc root tsconfig)
 ```
 
-Response includes `ok`, `traceId`, `steps`, `results`, and optional `decision` / `error`.
+## Test
 
-### `GET /aaes/trace/{traceId}`
-
-Returns append-only steps recorded for the trace.
-
-## Pipeline
-
-| Stage | Module | Responsibility |
-|-------|--------|----------------|
-| Invariants | `DefaultInvariantEngine` | Block missing `traceId`, `actorId`, `scope.name` |
-| Perception | `DefaultPerceptionEngine` | `normalizeInput` → `ctx.session.normalized` |
-| Deliberation | `DefaultDeliberationEngine` | Candidate plans from `normalized.intent` |
-| Planning | `DefaultPlanningEngine` | Score and select plan (targets `daniel.code` for code changes) |
-| Action | `DefaultActionEngine` | Policy check → `DanielModule` execution |
-| Audit | `TraceStoreAuditLogger` | `InMemoryTraceStore.appendStep` per pipeline step |
-
-## Policy
-
-- Rate limit: 30 requests / minute / actor
-- Resource scope: `filesystem` / `network` require `scope.resources`
-- **daniel.code**: denied unless `scope.name === "code"`
-
-## Engineering layout
-
-```
-src/
-  orchestrator.ts          # AAESOrchestrator.handle()
-  server.ts                # HTTP :8080
-  pipeline/                # perception, deliberation, planning, action_engine
-  engines/                 # invariant + policy engines
-  modules/daniel/          # DanielModule (daniel.* targets)
-  governance/              # trace store + audit loggers
-  uls/normalize.ts         # ingress normalization
-tests/
-  pipeline.test.ts
-  omega.test.ts            # adversarial invariant/policy cases
+```bash
+pnpm test           # build packages + vitest (unit + integration)
+pnpm test:packages  # per-package vitest where configured
+pnpm test:legacy    # legacy node:test suite
 ```
 
-Mythic labels (Coherence Fabric, Daniel cinematic executor, etc.) belong in comments and docs only.
+## Ops Console
 
-## Contracts
+Telemetry UI and Prometheus metrics for drift, fault patterns, and patch effectiveness.
 
-- [AAES_OS_INTERFACE_V1.md](../docs/contracts/AAES_OS_INTERFACE_V1.md)
-- [AAES_OS_V1_FORMAL_SPEC.md](../docs/contracts/AAES_OS_V1_FORMAL_SPEC.md)
+```bash
+cd aaes-os
+pnpm install
+pnpm --filter @aaes-os/ops-console dev
+```
+
+- Vite UI: http://localhost:5173 (proxies `/telemetry` and `/metrics` to port 4000)
+- API: http://localhost:4000
+- `GET /telemetry` — JSON `{ drift, topPatterns, lastFaults, patchTimeline }`
+- `GET /metrics` — Prometheus exposition (`aaes_drift_score`, `aaes_fault_events_total`, `aaes_fault_pattern_recurrence`)
+
+Production:
+
+```bash
+pnpm --filter @aaes-os/ops-console build
+pnpm --filter @aaes-os/ops-console start
+```
+
+Import Grafana dashboard from `infra/grafana/aaes-os-dashboard.json`. Prometheus scrape target: `localhost:4000` (see `infra/prometheus/prometheus.yml`).
+
+Demo seed data (20 faults for `INV_FAIL_INV_OUTPUT_SHAPE` / `INV_FAIL_INV_DETERMINISM`, plus 2 patch samples) loads on server startup.
+
+## Package dependency graph (Phase 2)
+
+```
+runledger  ←  trace-bus
+    ↑            ↑
+    └──── ucr-runtime (stub)
+aaes-governance → runledger (types)
+tri-core-protocol (standalone types)
+```
+
+## Mapping to Python spine
+
+See [docs/architecture/AAES_OS_UCR_MAPPING.md](../docs/architecture/AAES_OS_UCR_MAPPING.md) at the repo root.
+
+## Phase status
+
+| Phase | Scope | Status |
+|-------|--------|--------|
+| 1 | Workspace shell, branded types, package.json/tsconfig | Done |
+| 2 | In-memory RunStore, TraceBusClient, integration test | Done |
+| 3 | Governance + UCR + tri-core stubs | Types/stubs only |
+| 4 | Ops Console service | Done (`services/ops-console`) |
+| 5 | Infra / persistence | Grafana + Prometheus snippets |

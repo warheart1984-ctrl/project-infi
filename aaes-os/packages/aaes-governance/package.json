@@ -1,0 +1,27 @@
+{
+  "name": "@aaes-os/aaes-governance",
+  "version": "0.2.0",
+  "description": "InvariantEngine, FaultJournal, PatternLedger, DriftMetrics — governance spine v0.1",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run --config vitest.config.ts"
+  },
+  "dependencies": {
+    "@aaes-os/runledger": "workspace:*"
+  },
+  "devDependencies": {
+    "@aaes-os/tri-core-protocol": "workspace:*",
+    "@types/node": "^22.19.21",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

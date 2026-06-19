@@ -1,0 +1,26 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"],
+  "references": [
+    { "path": "../../packages/aaes-governance" },
+    { "path": "../../packages/constitutional-enforcement-node" },
+    { "path": "../../packages/constitutional-evolution" },
+    { "path": "../../packages/evidence-receipts" },
+    { "path": "../../packages/invariant-registry" },
+    { "path": "../../packages/meta-constitutional-calculus" },
+    { "path": "../../packages/mri-instrument" },
+    { "path": "../../packages/nimf" },
+    { "path": "../../packages/omega-stress-harness" },
+    { "path": "../../packages/runtime-law-spine" },
+    { "path": "../../packages/sovereignty-ledger" },
+    { "path": "../../packages/transition-validation-pipeline" },
+    { "path": "../../packages/tri-core-protocol" }
+  ]
+}
