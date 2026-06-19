@@ -8,6 +8,25 @@ License: [Apache 2.0](LICENSE) · Repo: [Project-Infinity1](https://github.com/w
 
 ---
 
+## Lawful Nova local productization
+
+The Lawful Nova local slice is wired through:
+
+- CLI (Windows): `lawful-nova-shell/bin/nova.ps1`
+- CLI (Linux/macOS): `lawful-nova-shell/bin/nova`
+- Shell helpers (Linux/macOS): `source lawful-nova-shell/setup/novrc.sh`
+- Stack start (Linux/macOS): `./scripts/start-nova-stack.sh`
+- Stack start (Windows): `.\scripts\start-nova-stack.ps1`
+- API: `python -m nova.api` on `http://localhost:8080`
+- Gate: `python scripts/nova_productization_gate.py`
+- Status doc: `docs/runtime/NOVA_LAWFUL_PRODUCTIZATION.md`
+
+This proves the local governed runtime path. Docker is optional for the native
+Windows coding-agent path; GPU acceleration and cross-machine Wolf reboot
+evidence remain external proof-closure items.
+
+---
+
 ## Quick start (after clone)
 
 **Windows (PowerShell):**
@@ -372,7 +391,9 @@ python -m tools.ul.smoke --lineage-graph tools/ul/fixtures/lineage_multi_hop.jso
 - Optional: **Node.js 18+** — only to rebuild the frontend (`frontend/`)
 - Optional: API keys in `.env` for frontier models (mock preset needs none)
 
-### Install and start (automated)
+### Initialization Steps
+
+#### Install and start (automated)
 
 Use the bootstrap script (recommended):
 
@@ -386,7 +407,7 @@ Use the bootstrap script (recommended):
 ./scripts/start-infinity1.sh
 ```
 
-### Manual install (alternative)
+#### Manual install (alternative)
 
 ```bash
 git clone https://github.com/warheart1984-ctrl/Project-Infinity1.git
