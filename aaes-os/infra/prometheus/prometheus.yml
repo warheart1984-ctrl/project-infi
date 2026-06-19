@@ -1,0 +1,13 @@
+# Prometheus scrape config snippet for AAES-OS Ops Console metrics.
+#
+# Add under `scrape_configs:` in prometheus.yml:
+#
+#   - job_name: 'aaes-os'
+#     static_configs:
+#       - targets: ['localhost:4000']
+
+scrape_configs:
+  - job_name: 'aaes-os'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['localhost:4000']

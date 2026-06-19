@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aaes-os.local/schemas/enforcement-receipt.schema.json",
+  "title": "AAES OS Enforcement Receipt",
+  "type": "object",
+  "required": [
+    "receiptId",
+    "transitionId",
+    "transitionType",
+    "actor",
+    "verdict",
+    "reasonCode",
+    "reasonDetail",
+    "evaluations",
+    "mriSnapshotHash",
+    "payloadHash",
+    "previousReceiptHash",
+    "receiptHash",
+    "issuedAt"
+  ],
+  "properties": {
+    "receiptId": { "type": "string", "pattern": "^cen:" },
+    "transitionId": { "type": "string" },
+    "transitionType": {
+      "type": "string",
+      "enum": ["state_update", "law_mutation", "runtime_action", "evidence_commit"]
+    },
+    "actor": { "type": "string" },
+    "verdict": { "type": "string", "enum": ["ALLOW", "DENY"] },
+    "reasonCode": {
+      "type": "string",
+      "enum": ["ALLOWED", "CAPABILITY_DENIED", "INVARIANT_VIOLATION", "INVALID_TRANSITION"]
+    },
+    "reasonDetail": { "type": "string" },
+    "evaluations": { "type": "array" },
+    "mriSnapshotHash": { "type": "string", "pattern": "^sha3-256:" },
+    "payloadHash": { "type": "string", "pattern": "^sha3-256:" },
+    "previousReceiptHash": {
+      "anyOf": [{ "type": "string", "pattern": "^sha3-256:" }, { "type": "null" }]
+    },
+    "receiptHash": { "type": "string", "pattern": "^sha3-256:" },
+    "issuedAt": { "type": "string" }
+  }
+}

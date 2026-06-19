@@ -1,0 +1,78 @@
+{
+  "profile": "Theta-BIP39-Encoding",
+  "version": "0.1",
+  "cases": {
+    "glyphs": [
+      {
+        "glyphs": "⊙|κ⊕|⊕.⊕",
+        "glyphsSha256": "d2cbcaef0e36d160a3e21662c320154e7e26fe5363065cbc386688b6cf7267d8",
+        "decodedDigits": [0, 2, 3, 3, 3],
+        "digits": [0, 2, 3, 3, 3],
+        "entropyHex": "1f45fa85f969dd63fcd2b367b7185de7",
+        "bitsSha256": "b1875636fdd5682aa95c7466b484f92d8497f9d8580891ecc7577da70372b556",
+        "indices": [250, 382, 1291, 1942, 1262, 1423, 1946, 691, 829, 1478, 187, 1659],
+        "indicesSha256": "4ea8e92cf1b3d38a82c96aa7291304a9a6b68a539a017c74e2cd7392be966b7c"
+      },
+      {
+        "glyphs": "⊙",
+        "glyphsSha256": "be0a5fa8aeb4727fa288cd3238f6e6193265d0ec6939f32f798471c51d36c05e",
+        "decodedDigits": [0],
+        "digits": [0],
+        "entropyHex": "6e340b9cffb37a989ca544e6bb780a2c",
+        "bitsSha256": "0213970ab8b51dd0c5b5d2c7f62f6a88feb215ccba299aa8e0d6434e4244a055",
+        "indices": [881, 1282, 1849, 2043, 445, 610, 916, 1348, 1845, 1758, 20, 716],
+        "indicesSha256": "88d3a18b16f24bddc65a74dee6b98b1aefa004f5bb0e57912660e9fee901ebce"
+      },
+      {
+        "glyphs": "κ⊕",
+        "glyphsSha256": "62db768aadf318de07566c858e6527cdf6ad34e37bfd4815471d3af09f56f697",
+        "decodedDigits": [2, 3],
+        "digits": [2, 3],
+        "entropyHex": "ffe679bb831c95b67dc17819c63c5090",
+        "bitsSha256": "da5ab100f7921d9c3e3a07448b3e1c07ef28bb29f282506e55340c12c36bbc7b",
+        "indices": [2047, 414, 887, 49, 1610, 1753, 1976, 376, 206, 399, 161, 264],
+        "indicesSha256": "4f80e374914ffd6966491d38195f33cc08367e1bf79fbe7bd77f8963b056e2a9"
+      },
+      {
+        "glyphs": "⊕|⊕|⊕",
+        "glyphsSha256": "2848fd06026f9bd0ec6bb1cb063295e0ebc428efba73e16207202cf54d5f4d48",
+        "decodedDigits": [3, 3, 3],
+        "digits": [3, 3, 3],
+        "entropyHex": "e682653fb7a4bdd1273da568562634a1",
+        "bitsSha256": "3b0f17e702d249abe944430284bdfe63595d2648ce1ba7ba8cefc2d83d616bc4",
+        "indices": [1844, 153, 639, 890, 606, 1860, 1255, 1445, 834, 1417, 1129, 537],
+        "indicesSha256": "656a24a3ecc3390530997c5944f73f53ff957ed71d54025e6bd936eba8b89381"
+      }
+    ],
+    "digits": [
+      {
+        "digits": [0, 2, 3, 0, 2, 3, 3, 3],
+        "entropyHex": "3247b88425a8edbb5911a3e906dd7c0f",
+        "bitsSha256": "95fa79a9485e8d4634744658395b110880b90ccc1725760bb9c7dcc3418daa30",
+        "indices": [402, 494, 264, 602, 1142, 1773, 802, 419, 1864, 439, 760, 253],
+        "indicesSha256": "824df9ef7d2436545781e75ae325f73dd4c6f38bd2668b1e3fee9dfa5b24a46c"
+      },
+      {
+        "digits": [1, 1, 1, 1],
+        "entropyHex": "5a24132ad7a5dbb7577e3d1f8c38a969",
+        "bitsSha256": "844c63ebd322f5ac3fe74a1427c4f8439acaaa1da896e38dd235f968603a32bd",
+        "indices": [721, 260, 1621, 1402, 749, 1757, 751, 1597, 252, 782, 338, 1682],
+        "indicesSha256": "73b9450673c04791c73d2734e9c3ab539015ca870e230a103a1ee9057fa89787"
+      },
+      {
+        "digits": [13, 13, 13, 13],
+        "entropyHex": "6efdb1735f3468151bea56560fcfaa75",
+        "bitsSha256": "84741ebcf87282665877bba6564a27946c554ed75b1ebbd1a557b66b34182612",
+        "indices": [887, 1900, 742, 1523, 564, 84, 893, 598, 688, 1011, 1876, 1887],
+        "indicesSha256": "780ed01149f2dd6e6084216bcacb530cfe16648741d7d5c09f9477ccf1ea00f7"
+      },
+      {
+        "digits": [0, 0, 0, 0],
+        "entropyHex": "6e340b9cffb37a989ca544e6bb780a2c",
+        "bitsSha256": "0213970ab8b51dd0c5b5d2c7f62f6a88feb215ccba299aa8e0d6434e4244a055",
+        "indices": [881, 1282, 1849, 2043, 445, 610, 916, 1348, 1845, 1758, 20, 716],
+        "indicesSha256": "88d3a18b16f24bddc65a74dee6b98b1aefa004f5bb0e57912660e9fee901ebce"
+      }
+    ]
+  }
+}

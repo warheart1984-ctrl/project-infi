@@ -33,3 +33,17 @@ export class InMemoryTraceStore implements TraceStore {
     return { traceId, steps: [...steps] };
   }
 }
+
+/**
+ * Optional SQLite-backed store stub — not wired in v1.
+ * Swap InMemoryTraceStore for this when persistence is required.
+ */
+export class SqliteTraceStoreStub implements TraceStore {
+  appendStep(_ctx: AAESContext, _step: AAESStep): void {
+    throw new Error("SqliteTraceStoreStub: not implemented in v1");
+  }
+
+  getTrace(_traceId: string): TraceRecord | undefined {
+    throw new Error("SqliteTraceStoreStub: not implemented in v1");
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "artifact_id": "theta-bip39-profile-v0.1",
+  "artifact_type": "governed_encoding_profile",
+  "profile": "Theta-BIP39-Encoding",
+  "version": "0.1",
+  "status": "verified",
+  "steward": "jon",
+  "canonical_path": "standards/theta-bip39/v0.1",
+  "governance": {
+    "change_control": "Profile Change Proposal required for theta_map, digit_map, reverse choreography, entropy function, test vectors, or reproducibility lock changes.",
+    "breaking_changes_require_new_profile": true,
+    "required_reviewers": 2
+  },
+  "invariants": [
+    {
+      "id": "EncodingProfile_v0.1_Integrity",
+      "description": "R1 and D1 must hold, test vectors must match, reproducibility lock must match, and profile-critical hashes must not drift.",
+      "required": true
+    },
+    {
+      "id": "R1_Theta_Reverse_Correctness",
+      "description": "For every digit d and every reverse-selected Theta index t, d is in forward_digits(theta_map[t]).",
+      "required": true
+    },
+    {
+      "id": "D1_BIP39_Determinism",
+      "description": "digits -> entropy_128 -> bip39_bits -> indices -> seed is pure and deterministic.",
+      "required": true
+    }
+  ],
+  "state_vector": {
+    "profile_version": "0.1",
+    "profile_hash_field": "theta_bip39_profile_hash",
+    "test_vector_hash_field": "theta_bip39_test_vector_hash",
+    "lockfile_hash_field": "theta_bip39_repro_lock_hash"
+  },
+  "nexus_module": "nexus/governance/modules/theta-bip39-v0.1.md",
+  "developer_onboarding": "developers/onboarding/theta-bip39-v0.1.md",
+  "confidence_layer": {
+    "verified": true,
+    "drift_response": "halt_encoding_module",
+    "open_profile_change_proposals": []
+  },
+  "hashes": {
+    "manifest_json_sha256": "9b07c2189c7a52642ff48f06ca127709302a914939aef251243e01d5830e6a01",
+    "spec_markdown_sha256": "479aa83834b5445a9902b993256176b6015e54c76f4b9b0e18377269aa0e924e",
+    "test_vectors_json_sha256": "a825c670f6f94c57074cc3dcce23c794488bf180063a6906f7928ae89cba9352",
+    "reproducibility_lock_sha256": "fcead34a717489f06629454fd9735759495c1e9f09968a372351a8ba0e3e658a",
+    "reference_implementation_sha256": "016487c9f02635d5227a03c1898e90dd7993b0ae2f5323eefbd6df8529ccae5b",
+    "test_runner_sha256": "5b7a8bb77cab051a9758066c5015c8eb5b6851fbb4b418198c5213f90f989e4b",
+    "reproducibility_harness_sha256": "2354e3412046258537842305cd9b54d422baca49b48accd753ddac21e3e644ae",
+    "profile_diff_sha256": "379b68610e74ad8f83bc862a92cc49d14cd46c9aa244144c926622584aed97a4",
+    "nexus_governance_module_sha256": "4c0da671769c34c0e352f011ade4a9f5ebd1d724ad96b6cb7666d0982056a02c",
+    "developer_onboarding_sha256": "b747e5dccc739b35dd31b9142477149edd22f3075f5455437e6b8df688d8b281"
+  }
+}

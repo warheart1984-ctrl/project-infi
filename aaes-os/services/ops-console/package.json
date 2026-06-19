@@ -1,0 +1,41 @@
+{
+  "name": "@aaes-os/ops-console",
+  "version": "0.2.0",
+  "private": true,
+  "description": "AAES-OS ops console — telemetry HTTP surface",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "test": "vitest run --config vitest.config.ts",
+    "build": "tsc -p tsconfig.json --noEmit && vite build"
+  },
+  "dependencies": {
+    "@aaes-os/aaes-governance": "workspace:*",
+    "@aaes-os/constitutional-enforcement-node": "workspace:*",
+    "@aaes-os/constitutional-evolution": "workspace:*",
+    "@aaes-os/evidence-receipts": "workspace:*",
+    "@aaes-os/invariant-registry": "workspace:*",
+    "@aaes-os/meta-constitutional-calculus": "workspace:*",
+    "@aaes-os/mri-instrument": "workspace:*",
+    "@aaes-os/nimf": "workspace:*",
+    "@aaes-os/omega-stress-harness": "workspace:*",
+    "@aaes-os/runtime-law-spine": "workspace:*",
+    "@aaes-os/sovereignty-ledger": "workspace:*",
+    "@aaes-os/transition-validation-pipeline": "workspace:*",
+    "@aaes-os/tri-core-protocol": "workspace:*",
+    "express": "^5.1.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@types/express": "^5.0.3",
+    "@types/node": "^22.19.21",
+    "@vitejs/plugin-react": "^5.0.3",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.5",
+    "vitest": "^3.2.4"
+  }
+}

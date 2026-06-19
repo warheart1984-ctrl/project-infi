@@ -1,0 +1,20 @@
+{
+  "schema": "lawful_nova_stack.v1",
+  "api_port": 8080,
+  "operator_kernel_port": 8790,
+  "lawful_brain_port": 8791,
+  "aais_port": 8000,
+  "cortex_path": "${LAWFUL_NOVA_REPO_ROOT}/nova",
+  "voss_path": "${LAWFUL_NOVA_REPO_ROOT}/nova",
+  "rsl_path": "${LAWFUL_NOVA_REPO_ROOT}/governance",
+  "python": {
+    "unix": "${LAWFUL_NOVA_REPO_ROOT}/.venv/bin/python",
+    "windows": "${LAWFUL_NOVA_REPO_ROOT}/.venv/Scripts/python.exe"
+  },
+  "health_urls": {
+    "nova_api": "http://127.0.0.1:8080/health",
+    "lawful_brain": "http://127.0.0.1:8791/health",
+    "operator_kernel": "http://127.0.0.1:8790/health",
+    "aais": "http://127.0.0.1:8000/health"
+  }
+}

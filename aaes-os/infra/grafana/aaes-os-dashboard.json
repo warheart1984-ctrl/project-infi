@@ -1,0 +1,41 @@
+{
+  "title": "AAES‑OS Drift & Faults",
+  "timezone": "browser",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Drift Score Over Time",
+      "targets": [
+        {
+          "expr": "aaes_drift_score",
+          "legendFormat": "drift"
+        }
+      ],
+      "id": 1
+    },
+    {
+      "type": "graph",
+      "title": "Faults per Pattern",
+      "targets": [
+        {
+          "expr": "sum by (pattern_id) (aaes_fault_pattern_recurrence)",
+          "legendFormat": "{{pattern_id}}"
+        }
+      ],
+      "id": 2
+    },
+    {
+      "type": "table",
+      "title": "Recent Faults",
+      "targets": [
+        {
+          "expr": "topk(10, aaes_fault_events_total)",
+          "legendFormat": "{{fault_code}}"
+        }
+      ],
+      "id": 3
+    }
+  ],
+  "schemaVersion": 36,
+  "version": 1
+}

@@ -58,6 +58,10 @@ downloads/
 eggs/
 .eggs/
 lib/
+!frontend/src/lib/
+!frontend/src/lib/**
+!lawful-nova-shell/setup/lib/
+!lawful-nova-shell/setup/lib/**
 lib64/
 parts/
 sdist/
