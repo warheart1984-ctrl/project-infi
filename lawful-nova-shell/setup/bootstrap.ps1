@@ -193,6 +193,17 @@ Set-NovaVar -Name "NOVA_RSL_PATH" -Prompt "Path to RSL" -Default (Join-Path $Rep
 Set-NovaVar -Name "NOVA_GPU_DEVICE" -Prompt "NVIDIA GPU device index" -Default "0"
 Set-NovaVar -Name "GITHUB_TOKEN" -Prompt "GitHub PAT (optional, leave blank)" -Default ""
 
+Write-Banner "Optional - LSG bootstrap"
+$bootstrapLsg = Join-Path $RepoRoot "scripts\nova-bootstrap-lsg.ps1"
+if (Test-Path $bootstrapLsg) {
+    try {
+        & $bootstrapLsg -RepoRoot $RepoRoot
+        Write-Ok "LSG store bootstrapped."
+    } catch {
+        Write-Warn "LSG bootstrap skipped: $_"
+    }
+}
+
 Write-Banner "Step 6/6 - Verification"
 & "$ScriptDir\verify.ps1"
 

@@ -127,6 +127,29 @@ After `source lawful-nova-shell/setup/novrc.sh`:
 | `NOVA_API_URL` | `http://127.0.0.1:8080` | API base URL |
 | `NOVA_CORTEX_PATH` | `$REPO/nova` | Cortex runtime path |
 | `NOVA_VOSS_RUNTIME_PATH` | `$REPO/nova` | Voss runtime path |
+| `NOVA_LSG_PATH` | `$REPO/lsg/LSG-CORE.v1.yaml` | LSG YAML bundle |
+| `NOVA_LSG_STORE` | `~/.nova/lsg/local.jsonl` | LSG JSONL store |
+| `NOVA_UGR_STRICT` | unset | Fail closed on UGR invariant violations |
+
+### LSG bootstrap and PowerShell arg forwarding
+
+Seed the local LSG store before conversational chat:
+
+```bash
+./scripts/nova-bootstrap-lsg.sh          # Linux / macOS
+```
+
+```powershell
+.\scripts\nova-bootstrap-lsg.ps1       # Windows
+```
+
+PowerShell `nova-chat` forwards arguments to `nova chat` (same as bash `novrc.sh`):
+
+```powershell
+nova-chat "how are you"
+```
+
+See [`../docs/contracts/NOVA_LSG_BOOTSTRAP.md`](../docs/contracts/NOVA_LSG_BOOTSTRAP.md) for the full contract.
 | `NOVA_RSL_PATH` | `$REPO/governance` | RSL / governance path |
 | `NOVA_CLI` | `lawful-nova-shell/bin/nova` | CLI entrypoint |
 
@@ -137,6 +160,17 @@ After `source lawful-nova-shell/setup/novrc.sh`:
 ```
 
 Expect `local_lawful_slice_ready: true` when Python runtime and in-process LawfulLLM pass. `local_services_ready: true` additionally requires operator services on 8790/8791 (and Nova API if you start the full stack).
+
+## Reasoning Profile
+
+Lawful Nova inherits the workspace canonical AAIS reasoning profile for
+governed conclusions, traceable evidence, bounded uncertainty, invariant
+checks, and continuity impact:
+[`../docs/contracts/AAIS_REASONING_PROFILE.md`](../docs/contracts/AAIS_REASONING_PROFILE.md).
+CCS object schemas and fixtures are in
+[`../docs/contracts/CCS_CORE_SCHEMA.md`](../docs/contracts/CCS_CORE_SCHEMA.md),
+[`../schemas/ccs_core_objects.v1.json`](../schemas/ccs_core_objects.v1.json),
+and [`../fixtures/ccs/`](../fixtures/ccs/).
 
 ## Stack config
 
