@@ -1,0 +1,30 @@
+apiVersion: ccs/v1
+kind: Identity
+metadata:
+  id: "id:person:alice-001"
+  created_at: "2026-06-19T08:30:00"
+  updated_at: "2026-06-19T08:30:00"
+spec:
+  kind: person
+  display_name: "Alice Grey"
+  lineage:
+    parent_ids: []
+    clan_or_family: "Grey"
+    org_or_body: "River Council"
+    jurisdiction: "Territory-7"
+  authority_surface:
+    roles:
+      - "council_member"
+    scopes:
+      - "local_governance"
+      - "land_use_decisions"
+    constraints:
+      - "must_follow_csleis_land_protocols"
+  cultural_surface:
+    community_id: "community:river-valley"
+    land_relation: "steward"
+    sovereignty_context: "river-valley-sovereign-body"
+  technical_surface:
+    aais_id: null
+    provider_id: null
+    runtime_class: null

@@ -1,0 +1,30 @@
+{
+  "apiVersion": "ccs/v1",
+  "kind": "Evidence",
+  "metadata": {
+    "id": "evidence:dzi1:trace-001",
+    "created_at": "2026-06-19T09:01:00"
+  },
+  "spec": {
+    "type": "continuity_trace_fragment",
+    "source": "DZI-1",
+    "integrity": {
+      "hash": "sha256:ef567890...",
+      "signature": "sig:csleis-council-001",
+      "algorithm": "sha256",
+      "chain_of_custody": "council-recorder -> dzi1 -> ccs-ingest"
+    },
+    "linked_identity_ids": [
+      "id:person:alice-001",
+      "id:institution:river-council",
+      "id:land_body:river-bend-12"
+    ],
+    "linked_event_ids": ["event:gov:land-use-2026-001"],
+    "law_surface": {
+      "aais_laws": [],
+      "csleis_laws": ["csleis.law.river-valley.land-use"],
+      "other_laws": []
+    },
+    "payload_ref": "s3://ccs-bucket/dzi1/rv-2026-06-19-01.trace.json"
+  }
+}

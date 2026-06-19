@@ -1,4 +1,7 @@
 import { createServer, type Server } from 'node:http';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
 
 import { describe, expect, it, afterAll, beforeAll } from 'vitest';
 
@@ -54,6 +57,157 @@ describe('GET /telemetry', () => {
     expect(Array.isArray(body.topPatterns)).toBe(true);
     expect(Array.isArray(body.lastFaults)).toBe(true);
     expect(Array.isArray(body.patchTimeline)).toBe(true);
+  });
+
+  it('surfaces CAB ledger summary and invariant status for operators', async () => {
+    const previousStore = process.env.CAB_STORE;
+    const tempDir = mkdtempSync(path.join(tmpdir(), 'cab-ledger-'));
+    const storePath = path.join(tempDir, 'ledger.jsonl');
+    const records = [
+      {
+        sequence: 1,
+        object_type: 'IntentRecord',
+        object_id: 'cab.intent.ops',
+        created_at: '2026-06-19T12:00:00Z',
+        superseded: false,
+        payload: { intent_id: 'cab.intent.ops', created_at: '2026-06-19T12:00:00Z' },
+      },
+      {
+        sequence: 2,
+        object_type: 'DecisionRecord',
+        object_id: 'cab.decision.ops',
+        created_at: '2026-06-19T12:01:00Z',
+        superseded: false,
+        payload: {
+          decision_id: 'cab.decision.ops',
+          intent_refs: ['cab.intent.ops'],
+          evidence_chain_refs: ['cab.evidence.ops'],
+          continuity_receipt_refs: ['cab.receipt.ops'],
+          govern_policy_refs: ['policy:ops'],
+          created_at: '2026-06-19T12:01:00Z',
+        },
+      },
+      {
+        sequence: 3,
+        object_type: 'EvidenceChain',
+        object_id: 'cab.evidence.ops',
+        created_at: '2026-06-19T12:02:00Z',
+        superseded: false,
+        payload: { chain_id: 'cab.evidence.ops', created_at: '2026-06-19T12:02:00Z' },
+      },
+      {
+        sequence: 4,
+        object_type: 'ContinuityReceipt',
+        object_id: 'cab.receipt.ops',
+        created_at: '2026-06-19T12:03:00Z',
+        superseded: false,
+        payload: { receipt_id: 'cab.receipt.ops', trace_id: 'ct.ops', created_at: '2026-06-19T12:03:00Z' },
+      },
+    ];
+    writeFileSync(storePath, `${records.map((record) => JSON.stringify(record)).join('\n')}\n`, 'utf8');
+    process.env.CAB_STORE = storePath;
+
+    try {
+      const response = await fetch(`${baseUrl}/telemetry`);
+      expect(response.status).toBe(200);
+      const body = (await response.json()) as {
+        cab: {
+          available: boolean;
+          entryCount: number;
+          activeCount: number;
+          invariants: { passed: boolean; results: { invariantId: string; status: string }[] };
+          latest: { intents: string[]; decisions: string[]; evidenceChains: string[]; continuityReceipts: string[] };
+        };
+      };
+      expect(body.cab.available).toBe(true);
+      expect(body.cab.entryCount).toBe(4);
+      expect(body.cab.activeCount).toBe(4);
+      expect(body.cab.invariants.passed).toBe(true);
+      expect(body.cab.invariants.results.map((result) => result.invariantId)).toEqual(['CL', 'RC', 'TI', 'SU', 'NE']);
+      expect(body.cab.latest).toEqual({
+        intents: ['cab.intent.ops'],
+        decisions: ['cab.decision.ops'],
+        evidenceChains: ['cab.evidence.ops'],
+        continuityReceipts: ['cab.receipt.ops'],
+        reconstructionPlans: [],
+      });
+    } finally {
+      if (previousStore === undefined) {
+        delete process.env.CAB_STORE;
+      } else {
+        process.env.CAB_STORE = previousStore;
+      }
+      rmSync(tempDir, { recursive: true, force: true });
+    }
+  });
+
+  it('connects AAIS health into telemetry', async () => {
+    const previousBaseUrl = process.env.AAIS_BASE_URL;
+    let aaisServer: Server;
+    let aaisBaseUrl = '';
+    await new Promise<void>((resolve) => {
+      aaisServer = createServer((_req, res) => {
+        res.setHeader('content-type', 'application/json');
+        res.end(JSON.stringify({
+          status: 'healthy',
+          service: 'AAIS',
+          legacy_api_loaded: true,
+          active_model_mode: 'mock',
+          ai_status: 'initialized',
+          ai_bootstrap_status: 'initialized',
+          mock_mode_active: true,
+        }));
+      });
+      aaisServer.listen(0, '127.0.0.1', () => {
+        const address = aaisServer.address();
+        const port = typeof address === 'object' && address ? address.port : 8000;
+        aaisBaseUrl = `http://127.0.0.1:${port}`;
+        process.env.AAIS_BASE_URL = aaisBaseUrl;
+        resolve();
+      });
+    });
+
+    try {
+      const response = await fetch(`${baseUrl}/telemetry`);
+      expect(response.status).toBe(200);
+      const body = (await response.json()) as {
+        aais: {
+          connected: boolean;
+          baseUrl: string;
+          service: string;
+          activeModelMode: string;
+          aiStatus: string;
+          aiBootstrapStatus: string;
+          mockModeActive: boolean;
+          legacyApiLoaded: boolean;
+        };
+      };
+      expect(body.aais).toEqual(expect.objectContaining({
+        connected: true,
+        baseUrl: aaisBaseUrl,
+        service: 'AAIS',
+        activeModelMode: 'mock',
+        aiStatus: 'initialized',
+        aiBootstrapStatus: 'initialized',
+        mockModeActive: true,
+        legacyApiLoaded: true,
+      }));
+    } finally {
+      if (previousBaseUrl === undefined) {
+        delete process.env.AAIS_BASE_URL;
+      } else {
+        process.env.AAIS_BASE_URL = previousBaseUrl;
+      }
+      await new Promise<void>((resolve, reject) => {
+        aaisServer.close((error) => {
+          if (error) {
+            reject(error);
+            return;
+          }
+          resolve();
+        });
+      });
+    }
   });
 
   it('exposes production health, readiness, request id, and security headers', async () => {

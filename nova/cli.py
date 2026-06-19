@@ -11,7 +11,7 @@ from typing import Any
 from urllib.error import URLError
 from urllib.request import Request, urlopen
 
-from nova.lawful_llm import LawfulLLM
+from nova.runtime_factory import build_lawful_llm, collect_runtime_health
 
 
 @dataclass(frozen=True)
@@ -33,8 +33,10 @@ def _http_health(url: str) -> Check:
 def collect_health() -> dict[str, Any]:
     direct_status = "ok"
     direct_detail = ""
+    runtime_health: dict[str, Any] = {}
     try:
-        llm = LawfulLLM(operator_session_id="nova-local-cli", signing_secret="local-dev-secret")
+        runtime_health = collect_runtime_health()
+        llm = build_lawful_llm(operator_session_id="nova-local-cli", signing_secret="local-dev-secret")
         turn = llm.ask("observe lawful nova health", tenant_id="local", capability="observe")
         direct_detail = turn.voss_runtime["decision"]
     except Exception as exc:  # pragma: no cover - defensive diagnostic
@@ -44,6 +46,7 @@ def collect_health() -> dict[str, Any]:
     return {
         "service": "nova_local_cli",
         "repo_root": str(Path.cwd()),
+        **runtime_health,
         "direct_lawful_llm": asdict(Check(status=direct_status, detail=direct_detail)),
         "lawful_brain_api": asdict(_http_health("http://127.0.0.1:8791")),
         "operator_kernel_api": asdict(_http_health("http://127.0.0.1:8790")),
@@ -68,7 +71,7 @@ def health_command(args: argparse.Namespace) -> int:
 
 
 def ask_command(args: argparse.Namespace) -> int:
-    llm = LawfulLLM(operator_session_id="nova-local-cli", signing_secret="local-dev-secret")
+    llm = build_lawful_llm(operator_session_id="nova-local-cli", signing_secret="local-dev-secret")
     turn = llm.ask(
         args.prompt,
         tenant_id=args.tenant,

@@ -1,0 +1,48 @@
+lsg_version: "1.0"
+description: UGR continuity invariants bound to lawful Nova RSL path.
+
+facts:
+  - id: ugr.identity_continuity
+    kind: invariant
+    value: Identity must remain stable, non-recycled, and traceable.
+
+  - id: ugr.authority_continuity
+    kind: invariant
+    value: Authority must remain consistent and non-escalating.
+
+  - id: ugr.duality.bidirectional_coherence
+    kind: invariant
+    value: Governed transforms must be reversible without drift.
+
+  - id: ugr.duality.symmetric_constraints
+    kind: invariant
+    value: Both directions of a dual transform share the same law surface.
+
+  - id: ugr.evidence_integrity
+    kind: invariant
+    value: Continuity-relevant actions must produce verifiable evidence.
+
+  - id: ugr.law_surface_binding
+    kind: invariant
+    value: Every action must declare and satisfy governing law surfaces.
+
+  - id: ugr.continuity_unifier
+    kind: invariant
+    value: All invariants must be satisfied simultaneously for continuity.
+
+  - id: ugr.binding
+    kind: binding
+    value:
+      applies_to:
+        - NovaCortex
+        - RSL
+        - UL
+        - Theta
+      enforces:
+        - ugr.identity_continuity
+        - ugr.authority_continuity
+        - ugr.duality.bidirectional_coherence
+        - ugr.duality.symmetric_constraints
+        - ugr.evidence_integrity
+        - ugr.law_surface_binding
+        - ugr.continuity_unifier

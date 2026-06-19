@@ -1,0 +1,33 @@
+{
+  "apiVersion": "ccs/v1",
+  "kind": "Evaluation",
+  "metadata": {
+    "id": "eval:cult:csleis-001",
+    "created_at": "2026-06-19T09:05:00"
+  },
+  "spec": {
+    "kind": "cultural",
+    "evaluator_id": "id:institution:river-council",
+    "evaluated_event_ids": ["event:gov:land-use-2026-001"],
+    "law_surface": {
+      "aais_laws": [],
+      "csleis_laws": ["csleis.law.river-valley.land-use"],
+      "other_laws": []
+    },
+    "finding": "conditional",
+    "reasoning": "Proposed land use is acceptable if riparian buffer and ceremonial access are preserved.",
+    "uncertainty": 20,
+    "risks": [
+      "Erosion risk if buffer is not enforced.",
+      "Cultural access degradation over time."
+    ],
+    "recommended_actions": [
+      "Register binding buffer requirement.",
+      "Record ceremonial access easement."
+    ],
+    "linked_evidence_ids": [
+      "evidence:dzi1:trace-001",
+      "evidence:human:attestation-001"
+    ]
+  }
+}

@@ -11,6 +11,8 @@
     "src/telemetryState.ts",
     "src/seedTelemetry.ts",
     "src/mriState.ts",
-    "src/patchLedgerState.ts"
+    "src/patchLedgerState.ts",
+    "src/cabTelemetry.ts",
+    "src/aaisBridge.ts"
   ]
 }

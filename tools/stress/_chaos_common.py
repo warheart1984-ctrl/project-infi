@@ -51,11 +51,19 @@ def _req(
     path: str,
     *,
     body: bytes | None = None,
+    json_body: dict | list | None = None,
     headers: dict | None = None,
     legacy: bool = False,
     fastapi: bool = False,
     max_body: int = 500,
-) -> tuple[int | None, str]:
+    timeout: float | None = None,
+    parse_json: bool = False,
+) -> tuple[int | None, str | object]:
+    if json_body is not None:
+        body = json.dumps(json_body).encode("utf-8")
+        hdrs = dict(headers or {})
+        hdrs.setdefault("Content-Type", "application/json")
+        headers = hdrs
     if fastapi or path.startswith("/api/ugr/"):
         base = BASE
     elif legacy or path.startswith("/api/"):
@@ -67,16 +75,36 @@ def _req(
     if body is not None and "Content-Type" not in hdrs:
         hdrs["Content-Type"] = "application/json"
     req = urllib.request.Request(url, data=body, headers=hdrs, method=method)
+    use_timeout = TIMEOUT if timeout is None else timeout
     try:
-        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+        with urllib.request.urlopen(req, timeout=use_timeout) as resp:
             raw = (resp.read() or b"").decode("utf-8", errors="replace")
-            return resp.status, raw[:max_body] if max_body > 0 else raw
+            if max_body > 0:
+                raw = raw[:max_body]
+            if parse_json and raw.strip():
+                try:
+                    return resp.status, json.loads(raw)
+                except json.JSONDecodeError:
+                    pass
+            return resp.status, raw
     except urllib.error.HTTPError as e:
         body_text = (e.read() or b"").decode("utf-8", errors="replace")
-        body_text = body_text[:max_body] if max_body > 0 else body_text
+        if max_body > 0:
+            body_text = body_text[:max_body]
+        if parse_json and body_text.strip():
+            try:
+                return e.code, json.loads(body_text)
+            except json.JSONDecodeError:
+                pass
         return e.code, body_text
     except Exception as e:
         return None, str(e)[:300]
+
+
+def check_health(base_url: str | None = None) -> tuple[int | None, str | object]:
+    if base_url:
+        configure_base(base_url)
+    return _req("GET", "/health", max_body=2000, parse_json=True)
 
 
 def _json_post(path: str, payload: dict | list | str, *, legacy: bool = True) -> ChaosResult:
@@ -86,11 +114,8 @@ def _json_post(path: str, payload: dict | list | str, *, legacy: bool = True) ->
         body = json.dumps(payload).encode("utf-8")
     status, text = _req("POST", path, body=body, legacy=legacy)
     ok = status is not None and status < 500
-    return ChaosResult(name=f"POST {path}", status=status, ok=ok, note=text[:120])
-
-
-def check_health() -> tuple[int | None, str]:
-    return _req("GET", "/health")
+    note = text if isinstance(text, str) else json.dumps(text)[:120]
+    return ChaosResult(name=f"POST {path}", status=status, ok=ok, note=note[:120])
 
 
 def server_reachable() -> bool:

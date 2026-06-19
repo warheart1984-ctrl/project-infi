@@ -1,0 +1,20 @@
+mapping_version: "1.0"
+description: UL token and frame fields mapped to LSG fact identifiers.
+
+ul_to_lsg:
+  agent.self: identity.agent
+  agent.operator: identity.operator
+  cap.convo: convo.allowed
+  domain.convo: domain.conversation
+  law.rsl: system.rsl
+  law.convo.safe: convo.law_surface
+  ul.v1: transform.unified_language
+  theta.v1: transform.theta
+
+token_hints:
+  hello: convo.pattern.greeting
+  hi: convo.pattern.greeting
+  hey: convo.pattern.greeting
+  how: convo.pattern.how_are_you
+  lawful: observe.lawful_nova
+  nova: system.nova

@@ -39,6 +39,32 @@ type TelemetryResponse = {
   topPatterns: PatternRecord[];
   lastFaults: FaultEvent[];
   patchTimeline?: PatchPoint[];
+  aais?: {
+    connected: boolean;
+    baseUrl: string;
+    status: string;
+    service: string;
+    activeModelMode: string;
+    aiStatus: string;
+    aiBootstrapStatus: string;
+    mockModeActive: boolean;
+    legacyApiLoaded: boolean;
+    contractors: unknown[];
+    error?: string;
+  };
+  cab?: {
+    available: boolean;
+    entryCount: number;
+    activeCount: number;
+    invariants: { passed: boolean; results: { invariantId: string; status: string; detail: string }[] };
+    latest: {
+      intents: string[];
+      decisions: string[];
+      evidenceChains: string[];
+      continuityReceipts: string[];
+      reconstructionPlans: string[];
+    };
+  };
 };
 
 type ScoreVector = {
@@ -145,6 +171,8 @@ export const OpsConsoleView: React.FC<LoadedState> = ({ telemetry, mriV2, enforc
       <a href="#mri">MRI Cockpit</a>
       <a href="#enforcement">Enforcement Dashboard</a>
       <a href="#meta">Meta-Constitutional Console</a>
+      <a href="#aais">AAIS Runtime</a>
+      <a href="#cab">CAB Continuity</a>
     </nav>
 
     <section id="mri" style={sectionStyle}>
@@ -205,6 +233,51 @@ export const OpsConsoleView: React.FC<LoadedState> = ({ telemetry, mriV2, enforc
         <Metric label="Core" value={meta.generativeCoreId} />
         <Metric label="Meta-Invariants" value={String(meta.metaInvariantCount)} />
         <Metric label="Drift" value={telemetry.drift.score.toFixed(3)} />
+      </div>
+    </section>
+
+    <section id="aais" style={sectionStyle}>
+      <h2>AAIS Runtime</h2>
+      <div style={gridStyle}>
+        <Metric label="Link" value={telemetry.aais?.connected ? 'connected' : 'offline'} />
+        <Metric label="Mode" value={telemetry.aais?.activeModelMode || 'unknown'} />
+        <Metric label="AI" value={telemetry.aais?.aiStatus || telemetry.aais?.status || 'unknown'} />
+        <Metric label="Legacy API" value={telemetry.aais?.legacyApiLoaded ? 'loaded' : 'pending'} />
+      </div>
+      <div style={gridStyle}>
+        <Panel title="Bridge">
+          <p>{telemetry.aais?.baseUrl ?? 'AAIS_BASE_URL unset'}</p>
+          <p>{telemetry.aais?.mockModeActive ? 'mock mode active' : 'real/provider mode or offline'}</p>
+          {telemetry.aais?.error ? <p>{telemetry.aais.error}</p> : null}
+        </Panel>
+        <Panel title="Contractors">
+          <p>{String(telemetry.aais?.contractors?.length ?? 0)} contractor checks reported</p>
+        </Panel>
+      </div>
+    </section>
+
+    <section id="cab" style={sectionStyle}>
+      <h2>CAB Continuity</h2>
+      <div style={gridStyle}>
+        <Metric label="Ledger" value={telemetry.cab?.available ? 'available' : 'empty'} />
+        <Metric label="Entries" value={String(telemetry.cab?.entryCount ?? 0)} />
+        <Metric label="Active" value={String(telemetry.cab?.activeCount ?? 0)} />
+        <Metric label="Invariants" value={telemetry.cab?.invariants.passed ? 'pass' : 'review'} />
+      </div>
+      <div style={gridStyle}>
+        <Panel title="Latest CAB Links">
+          <p>Intent {telemetry.cab?.latest.intents[0] ?? 'none'}</p>
+          <p>Decision {telemetry.cab?.latest.decisions[0] ?? 'none'}</p>
+          <p>Evidence {telemetry.cab?.latest.evidenceChains[0] ?? 'none'}</p>
+          <p>Receipt {telemetry.cab?.latest.continuityReceipts[0] ?? 'none'}</p>
+        </Panel>
+        <Panel title="Invariant Surface">
+          <ul>
+            {(telemetry.cab?.invariants.results ?? []).map((result) => (
+              <li key={result.invariantId}>{result.invariantId}: {result.status}</li>
+            ))}
+          </ul>
+        </Panel>
       </div>
     </section>
 

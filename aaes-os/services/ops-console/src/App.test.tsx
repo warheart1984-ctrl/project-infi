@@ -12,6 +12,16 @@ describe('OpsConsoleView', () => {
           topPatterns: [],
           lastFaults: [],
           patchTimeline: [],
+          aais: {
+            connected: true,
+            baseUrl: 'http://127.0.0.1:8000',
+            service: 'AAIS',
+            activeModelMode: 'mock',
+            aiStatus: 'initialized',
+            aiBootstrapStatus: 'initialized',
+            mockModeActive: true,
+            legacyApiLoaded: true,
+          },
         }}
         mriV2={{
           state_vector: { continuity: 72, governance: 68, memory: 75, coordination: 63, confidence: 81 },
@@ -50,6 +60,8 @@ describe('OpsConsoleView', () => {
     expect(html).toContain('MRI Cockpit');
     expect(html).toContain('Enforcement Dashboard');
     expect(html).toContain('Meta-Constitutional Console');
+    expect(html).toContain('AAIS Runtime');
+    expect(html).toContain('connected');
     expect(html).toContain('CML-15');
   });
 });

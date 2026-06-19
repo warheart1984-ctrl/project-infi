@@ -1,0 +1,397 @@
+{
+  "scenario_id": "disc.chiwere.lexeme.0001",
+  "subject_ref": "LEX-0001",
+  "identities": [
+    {
+      "apiVersion": "ccs/v1",
+      "kind": "Identity",
+      "metadata": {
+        "id": "identity.speaker.sarah_roubadeaux",
+        "created_at": "2026-06-19T14:00:00",
+        "updated_at": "2026-06-19T14:00:00"
+      },
+      "spec": {
+        "kind": "person",
+        "display_name": "Sarah Roubadeaux",
+        "lineage": {
+          "parent_ids": [],
+          "clan_or_family": "Roubadeaux",
+          "org_or_body": "Chiwere community",
+          "jurisdiction": "chiwere.community.001"
+        },
+        "authority_surface": {
+          "roles": ["speaker", "knowledge_holder"],
+          "scopes": ["lexeme_attestation"],
+          "constraints": ["cultural_protocols_apply"]
+        },
+        "cultural_surface": {
+          "community_id": "chiwere.community.001",
+          "land_relation": "community_member",
+          "sovereignty_context": "chiwere.cultural.council"
+        },
+        "technical_surface": {
+          "aais_id": null,
+          "provider_id": null,
+          "runtime_class": null
+        }
+      }
+    },
+    {
+      "apiVersion": "ccs/v1",
+      "kind": "Identity",
+      "metadata": {
+        "id": "identity.collector.dorsey",
+        "created_at": "2026-06-19T14:00:00",
+        "updated_at": "2026-06-19T14:00:00"
+      },
+      "spec": {
+        "kind": "person",
+        "display_name": "Dorsey",
+        "lineage": {
+          "parent_ids": [],
+          "clan_or_family": null,
+          "org_or_body": "Field collector",
+          "jurisdiction": "chiwere.community.001"
+        },
+        "authority_surface": {
+          "roles": ["collector"],
+          "scopes": ["field_recording"],
+          "constraints": []
+        },
+        "cultural_surface": {
+          "community_id": "chiwere.community.001",
+          "land_relation": "documenter",
+          "sovereignty_context": "chiwere.cultural.council"
+        },
+        "technical_surface": {
+          "aais_id": null,
+          "provider_id": null,
+          "runtime_class": null
+        }
+      }
+    },
+    {
+      "apiVersion": "ccs/v1",
+      "kind": "Identity",
+      "metadata": {
+        "id": "identity.institution.chiwere_cultural_council",
+        "created_at": "2026-06-19T14:00:00",
+        "updated_at": "2026-06-19T14:00:00"
+      },
+      "spec": {
+        "kind": "institution",
+        "display_name": "Chiwere Cultural Council",
+        "lineage": {
+          "parent_ids": [],
+          "clan_or_family": null,
+          "org_or_body": "Chiwere Cultural Council",
+          "jurisdiction": "chiwere.community.001"
+        },
+        "authority_surface": {
+          "roles": ["cultural_authority"],
+          "scopes": ["shareability_review"],
+          "constraints": []
+        },
+        "cultural_surface": {
+          "community_id": "chiwere.community.001",
+          "land_relation": "governance_body",
+          "sovereignty_context": "chiwere.cultural.council"
+        },
+        "technical_surface": {
+          "aais_id": null,
+          "provider_id": null,
+          "runtime_class": "governance_body"
+        }
+      }
+    },
+    {
+      "apiVersion": "ccs/v1",
+      "kind": "Identity",
+      "metadata": {
+        "id": "id:system:aais-law-engine",
+        "created_at": "2026-06-19T14:00:00",
+        "updated_at": "2026-06-19T14:00:00"
+      },
+      "spec": {
+        "kind": "system",
+        "display_name": "AAIS Law Engine",
+        "lineage": {
+          "parent_ids": [],
+          "clan_or_family": null,
+          "org_or_body": "AAIS Runtime",
+          "jurisdiction": "global-technical"
+        },
+        "authority_surface": {
+          "roles": ["technical_evaluator"],
+          "scopes": ["format_and_hash_review"],
+          "constraints": ["advisory_only"]
+        },
+        "cultural_surface": {
+          "community_id": null,
+          "land_relation": null,
+          "sovereignty_context": null
+        },
+        "technical_surface": {
+          "aais_id": "aais:system:law-engine",
+          "provider_id": null,
+          "runtime_class": "governed_rule_engine"
+        }
+      }
+    },
+    {
+      "apiVersion": "ccs/v1",
+      "kind": "Identity",
+      "metadata": {
+        "id": "person.researcher.A",
+        "created_at": "2026-06-19T14:00:00",
+        "updated_at": "2026-06-19T14:00:00"
+      },
+      "spec": {
+        "kind": "person",
+        "display_name": "Researcher A",
+        "lineage": {
+          "parent_ids": [],
+          "clan_or_family": null,
+          "org_or_body": "Continuity Methods Lab",
+          "jurisdiction": "research"
+        },
+        "authority_surface": {
+          "roles": ["researcher"],
+          "scopes": ["lexeme_documentation"],
+          "constraints": []
+        },
+        "cultural_surface": {
+          "community_id": "chiwere.community.001",
+          "land_relation": "collaborator",
+          "sovereignty_context": "chiwere.cultural.council"
+        },
+        "technical_surface": {
+          "aais_id": null,
+          "provider_id": null,
+          "runtime_class": null
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "apiVersion": "ccs/v1",
+      "kind": "Event",
+      "metadata": {
+        "id": "event.lexeme.chiwere.0001",
+        "created_at": "2026-06-19T14:30:00"
+      },
+      "spec": {
+        "kind": "cognitive",
+        "actors": [
+          "identity.speaker.sarah_roubadeaux",
+          "identity.collector.dorsey",
+          "person.researcher.A"
+        ],
+        "targets": ["LEX-0001"],
+        "time": {
+          "start": "2026-06-19T14:25:00",
+          "end": "2026-06-19T14:30:00",
+          "timezone": "America/Chicago"
+        },
+        "context": {
+          "aais_context_id": null,
+          "csleis_context_id": "csleis:chiwere:lexeme:0001",
+          "external_context": "Sarah Roubadeaux field recording"
+        },
+        "law_surface": {
+          "aais_laws": ["aais.law.logging.integrity"],
+          "csleis_laws": ["csleis.cultural"],
+          "other_laws": ["ugr.continuity"]
+        },
+        "description": "Newly documented Chiwere lexeme LEX-0001 from Sarah Roubadeaux recording.",
+        "linked_evaluations": [
+          "eval.cultural.chiwere.0001",
+          "eval.technical.chiwere.0001"
+        ],
+        "linked_evidence": [
+          "evidence.recording.chiwere.0001",
+          "evidence.transcription.chiwere.0001"
+        ]
+      }
+    }
+  ],
+  "evaluations": [
+    {
+      "apiVersion": "ccs/v1",
+      "kind": "Evaluation",
+      "metadata": {
+        "id": "eval.cultural.chiwere.0001",
+        "created_at": "2026-06-19T14:35:00"
+      },
+      "spec": {
+        "kind": "cultural",
+        "evaluator_id": "identity.institution.chiwere_cultural_council",
+        "evaluated_event_ids": ["event.lexeme.chiwere.0001"],
+        "law_surface": {
+          "aais_laws": [],
+          "csleis_laws": ["csleis.cultural"],
+          "other_laws": ["ugr.continuity"]
+        },
+        "finding": "shareable",
+        "reasoning": "Approved for preservation and teaching.",
+        "uncertainty": 10,
+        "risks": ["Misuse outside community teaching context."],
+        "recommended_actions": ["Publish under CSLEIS cultural protocol."],
+        "linked_evidence_ids": [
+          "evidence.recording.chiwere.0001",
+          "evidence.transcription.chiwere.0001"
+        ]
+      }
+    },
+    {
+      "apiVersion": "ccs/v1",
+      "kind": "Evaluation",
+      "metadata": {
+        "id": "eval.technical.chiwere.0001",
+        "created_at": "2026-06-19T14:36:00"
+      },
+      "spec": {
+        "kind": "technical",
+        "evaluator_id": "id:system:aais-law-engine",
+        "evaluated_event_ids": ["event.lexeme.chiwere.0001"],
+        "law_surface": {
+          "aais_laws": ["aais.law.logging.integrity"],
+          "csleis_laws": [],
+          "other_laws": ["aais.technical"]
+        },
+        "finding": "compliant",
+        "reasoning": "Recording hash valid; transcription present; format supported.",
+        "uncertainty": 5,
+        "risks": [],
+        "recommended_actions": [],
+        "linked_evidence_ids": [
+          "evidence.recording.chiwere.0001",
+          "evidence.transcription.chiwere.0001"
+        ]
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "apiVersion": "ccs/v1",
+      "kind": "Evidence",
+      "metadata": {
+        "id": "evidence.recording.chiwere.0001",
+        "created_at": "2026-06-19T14:28:00"
+      },
+      "spec": {
+        "type": "recording",
+        "source": "field-collector",
+        "integrity": {
+          "hash": "HASH_AUDIO_0001",
+          "algorithm": "sha256",
+          "signature": null,
+          "chain_of_custody": "dorsey -> csleis-ingest"
+        },
+        "linked_identity_ids": [
+          "identity.speaker.sarah_roubadeaux",
+          "identity.collector.dorsey"
+        ],
+        "linked_event_ids": ["event.lexeme.chiwere.0001"],
+        "law_surface": {
+          "aais_laws": ["aais.law.logging.integrity"],
+          "csleis_laws": ["csleis.cultural"],
+          "other_laws": []
+        },
+        "payload_ref": "s3://csleis/chiwere/0001.wav"
+      }
+    },
+    {
+      "apiVersion": "ccs/v1",
+      "kind": "Evidence",
+      "metadata": {
+        "id": "evidence.transcription.chiwere.0001",
+        "created_at": "2026-06-19T14:29:00"
+      },
+      "spec": {
+        "type": "transcription",
+        "source": "human-transcriber",
+        "integrity": {
+          "hash": "HASH_TEXT_0001",
+          "algorithm": "sha256",
+          "signature": null,
+          "chain_of_custody": "transcriber -> csleis-ingest"
+        },
+        "linked_identity_ids": ["identity.speaker.sarah_roubadeaux"],
+        "linked_event_ids": ["event.lexeme.chiwere.0001"],
+        "law_surface": {
+          "aais_laws": [],
+          "csleis_laws": ["csleis.cultural"],
+          "other_laws": []
+        },
+        "payload_ref": "s3://csleis/chiwere/0001.txt"
+      }
+    }
+  ],
+  "trace": {
+    "apiVersion": "ccs/v1",
+    "kind": "ContinuityTrace",
+    "metadata": {
+      "id": "ct.lexeme.chiwere.0001",
+      "created_at": "2026-06-19T15:00:00"
+    },
+    "spec": {
+      "scope": {
+        "identity_ids": [
+          "identity.speaker.sarah_roubadeaux",
+          "identity.collector.dorsey",
+          "identity.institution.chiwere_cultural_council",
+          "id:system:aais-law-engine",
+          "person.researcher.A"
+        ],
+        "event_ids": ["event.lexeme.chiwere.0001"],
+        "time_window": {
+          "start": "2026-06-19T14:25:00",
+          "end": "2026-06-19T15:00:00"
+        }
+      },
+      "timeline": [
+        {
+          "event_id": "event.lexeme.chiwere.0001",
+          "evaluations": [
+            "eval.cultural.chiwere.0001",
+            "eval.technical.chiwere.0001"
+          ],
+          "evidence": [
+            "evidence.recording.chiwere.0001",
+            "evidence.transcription.chiwere.0001"
+          ]
+        }
+      ],
+      "law_surfaces": {
+        "aais_laws": ["aais.law.logging.integrity", "aais.technical"],
+        "csleis_laws": ["csleis.cultural"],
+        "other_laws": ["ugr.continuity"]
+      },
+      "continuity_summary": {
+        "identity_impacts": "Speaker and collector identities bound to lexeme LEX-0001.",
+        "governance_impacts": "Cultural council approved shareability for teaching.",
+        "cultural_impacts": "Lexeme preserved under CSLEIS cultural protocol.",
+        "ecological_impacts": "N/A",
+        "long_term_risks": "Drift in pronunciation over generations.",
+        "recommended_path": "Periodic replay verification and community review."
+      },
+      "reproducibility_metadata": {
+        "input_signature": "inputs:chiwere-lexeme-0001",
+        "law_signature": "csleis:cultural|aais:technical|ugr:v1",
+        "evidence_signature": "evidence-set:chiwere-0001",
+        "last_verified_at": "2026-06-19T15:00:00"
+      }
+    }
+  },
+  "metrics": {
+    "metrics_id": "metrics.lexeme.chiwere.0001",
+    "continuity_score": 0.93,
+    "lineage_strength": 0.9,
+    "authority_chain_strength": 0.88,
+    "evidence_integrity_score": 0.97,
+    "drift_risk": 0.08,
+    "preservation_risk": 0.12
+  }
+}

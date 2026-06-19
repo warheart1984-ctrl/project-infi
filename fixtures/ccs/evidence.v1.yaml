@@ -1,0 +1,23 @@
+apiVersion: ccs/v1
+kind: Evidence
+metadata:
+  id: "evidence:aais:theta-log-001"
+  created_at: "2026-06-19T08:40:02"
+spec:
+  type: trace
+  source: "AAIS.Theta"
+  integrity:
+    hash: "sha256:abcd1234..."
+    signature: null
+    algorithm: "sha256"
+    chain_of_custody: "aais-runtime -> ccs-ingest"
+  linked_identity_ids:
+    - "id:agent:aais-helper-001"
+  linked_event_ids:
+    - "event:cog:aais-turn-0001"
+  law_surface:
+    aais_laws:
+      - "aais.law.logging.integrity"
+    csleis_laws: []
+    other_laws: []
+  payload_ref: "s3://ccs-bucket/theta/aais-turn-0001.json"

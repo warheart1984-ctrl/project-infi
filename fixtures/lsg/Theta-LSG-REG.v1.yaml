@@ -1,0 +1,23 @@
+lsg_version: "1.0"
+registration:
+  id: transform.theta
+  name: Theta
+  version: "1.0"
+  deterministic: true
+  reversible: true
+  governed: true
+  law_surface:
+    - aais.law.logging.integrity
+
+facts:
+  - id: transform.theta
+    kind: triple
+    source: theta
+    relation: is
+    target: governed_transform_v1
+
+  - id: transform.theta.law
+    kind: triple
+    source: theta
+    relation: law_surface
+    target: aais.law.logging.integrity

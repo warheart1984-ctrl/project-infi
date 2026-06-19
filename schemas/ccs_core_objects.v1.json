@@ -1,0 +1,391 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ccs_core_objects.v1",
+  "title": "CCS Core Objects v1",
+  "description": "Core Continuity Substrate Identity, Event, Evaluation, Evidence, ContinuityTrace, and Theta transform registration objects.",
+  "oneOf": [
+    { "$ref": "#/$defs/Identity" },
+    { "$ref": "#/$defs/Event" },
+    { "$ref": "#/$defs/Evaluation" },
+    { "$ref": "#/$defs/Evidence" },
+    { "$ref": "#/$defs/ContinuityTrace" },
+    { "$ref": "#/$defs/ThetaTransform" }
+  ],
+  "$defs": {
+    "Metadata": {
+      "type": "object",
+      "required": ["id", "created_at"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "created_at": { "type": "string", "minLength": 1 },
+        "updated_at": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "StringArray": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "NullableString": {
+      "type": ["string", "null"]
+    },
+    "LawSurface": {
+      "type": "object",
+      "properties": {
+        "aais_laws": { "$ref": "#/$defs/StringArray" },
+        "csleis_laws": { "$ref": "#/$defs/StringArray" },
+        "other_laws": { "$ref": "#/$defs/StringArray" }
+      },
+      "additionalProperties": false
+    },
+    "Identity": {
+      "type": "object",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": { "const": "ccs/v1" },
+        "kind": { "const": "Identity" },
+        "metadata": {
+          "allOf": [
+            { "$ref": "#/$defs/Metadata" },
+            { "required": ["updated_at"] }
+          ]
+        },
+        "spec": {
+          "type": "object",
+          "required": [
+            "kind",
+            "display_name",
+            "lineage",
+            "authority_surface",
+            "cultural_surface",
+            "technical_surface"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "person",
+                "group",
+                "institution",
+                "agent",
+                "system",
+                "land_body",
+                "resource",
+                "jurisdiction"
+              ]
+            },
+            "display_name": { "type": "string", "minLength": 1 },
+            "lineage": {
+              "type": "object",
+              "required": ["parent_ids"],
+              "properties": {
+                "parent_ids": { "$ref": "#/$defs/StringArray" },
+                "clan_or_family": { "$ref": "#/$defs/NullableString" },
+                "org_or_body": { "$ref": "#/$defs/NullableString" },
+                "jurisdiction": { "$ref": "#/$defs/NullableString" }
+              },
+              "additionalProperties": false
+            },
+            "authority_surface": {
+              "type": "object",
+              "required": ["roles", "scopes", "constraints"],
+              "properties": {
+                "roles": { "$ref": "#/$defs/StringArray" },
+                "scopes": { "$ref": "#/$defs/StringArray" },
+                "constraints": { "$ref": "#/$defs/StringArray" }
+              },
+              "additionalProperties": false
+            },
+            "cultural_surface": {
+              "type": "object",
+              "required": ["community_id", "land_relation", "sovereignty_context"],
+              "properties": {
+                "community_id": { "$ref": "#/$defs/NullableString" },
+                "land_relation": { "$ref": "#/$defs/NullableString" },
+                "sovereignty_context": { "$ref": "#/$defs/NullableString" }
+              },
+              "additionalProperties": false
+            },
+            "technical_surface": {
+              "type": "object",
+              "required": ["aais_id", "provider_id", "runtime_class"],
+              "properties": {
+                "aais_id": { "$ref": "#/$defs/NullableString" },
+                "provider_id": { "$ref": "#/$defs/NullableString" },
+                "runtime_class": { "$ref": "#/$defs/NullableString" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Event": {
+      "type": "object",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": { "const": "ccs/v1" },
+        "kind": { "const": "Event" },
+        "metadata": { "$ref": "#/$defs/Metadata" },
+        "spec": {
+          "type": "object",
+          "required": [
+            "kind",
+            "actors",
+            "targets",
+            "time",
+            "context",
+            "law_surface",
+            "description",
+            "linked_evaluations",
+            "linked_evidence"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "cognitive",
+                "governance",
+                "operational",
+                "ceremonial",
+                "ecological",
+                "institutional"
+              ]
+            },
+            "actors": { "$ref": "#/$defs/StringArray" },
+            "targets": { "$ref": "#/$defs/StringArray" },
+            "time": {
+              "type": "object",
+              "required": ["start"],
+              "properties": {
+                "start": { "type": "string", "minLength": 1 },
+                "end": { "$ref": "#/$defs/NullableString" },
+                "timezone": { "$ref": "#/$defs/NullableString" }
+              },
+              "additionalProperties": false
+            },
+            "context": {
+              "type": "object",
+              "properties": {
+                "aais_context_id": { "$ref": "#/$defs/NullableString" },
+                "csleis_context_id": { "$ref": "#/$defs/NullableString" },
+                "external_context": { "$ref": "#/$defs/NullableString" }
+              },
+              "additionalProperties": false
+            },
+            "law_surface": { "$ref": "#/$defs/LawSurface" },
+            "description": { "type": "string", "minLength": 1 },
+            "linked_evaluations": { "$ref": "#/$defs/StringArray" },
+            "linked_evidence": { "$ref": "#/$defs/StringArray" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Evaluation": {
+      "type": "object",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": { "const": "ccs/v1" },
+        "kind": { "const": "Evaluation" },
+        "metadata": { "$ref": "#/$defs/Metadata" },
+        "spec": {
+          "type": "object",
+          "required": [
+            "kind",
+            "evaluator_id",
+            "evaluated_event_ids",
+            "law_surface",
+            "finding",
+            "reasoning",
+            "uncertainty",
+            "risks",
+            "recommended_actions",
+            "linked_evidence_ids"
+          ],
+          "properties": {
+            "kind": { "enum": ["technical", "cultural", "legal", "ecological", "institutional", "mixed"] },
+            "evaluator_id": { "type": "string", "minLength": 1 },
+            "evaluated_event_ids": { "$ref": "#/$defs/StringArray" },
+            "law_surface": { "$ref": "#/$defs/LawSurface" },
+            "finding": { "enum": ["compliant", "non_compliant", "conditional", "indeterminate"] },
+            "reasoning": { "type": "string", "minLength": 1 },
+            "uncertainty": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "risks": { "$ref": "#/$defs/StringArray" },
+            "recommended_actions": { "$ref": "#/$defs/StringArray" },
+            "linked_evidence_ids": { "$ref": "#/$defs/StringArray" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Evidence": {
+      "type": "object",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": { "const": "ccs/v1" },
+        "kind": { "const": "Evidence" },
+        "metadata": { "$ref": "#/$defs/Metadata" },
+        "spec": {
+          "type": "object",
+          "required": [
+            "type",
+            "source",
+            "integrity",
+            "linked_identity_ids",
+            "linked_event_ids",
+            "law_surface",
+            "payload_ref"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "log",
+                "trace",
+                "transcript",
+                "recording",
+                "attestation",
+                "signature",
+                "hash_bundle",
+                "continuity_trace_fragment",
+                "governance_record",
+                "ecological_impact"
+              ]
+            },
+            "source": { "type": "string", "minLength": 1 },
+            "integrity": {
+              "type": "object",
+              "required": ["hash", "algorithm"],
+              "properties": {
+                "hash": { "type": "string", "minLength": 1 },
+                "signature": { "$ref": "#/$defs/NullableString" },
+                "algorithm": { "type": "string", "minLength": 1 },
+                "chain_of_custody": { "$ref": "#/$defs/NullableString" }
+              },
+              "additionalProperties": false
+            },
+            "linked_identity_ids": { "$ref": "#/$defs/StringArray" },
+            "linked_event_ids": { "$ref": "#/$defs/StringArray" },
+            "law_surface": { "$ref": "#/$defs/LawSurface" },
+            "payload_ref": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "ContinuityTrace": {
+      "type": "object",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": { "const": "ccs/v1" },
+        "kind": { "const": "ContinuityTrace" },
+        "metadata": { "$ref": "#/$defs/Metadata" },
+        "spec": {
+          "type": "object",
+          "required": ["scope", "timeline", "law_surfaces", "continuity_summary", "reproducibility_metadata"],
+          "properties": {
+            "scope": {
+              "type": "object",
+              "required": ["identity_ids", "event_ids", "time_window"],
+              "properties": {
+                "identity_ids": { "$ref": "#/$defs/StringArray" },
+                "event_ids": { "$ref": "#/$defs/StringArray" },
+                "time_window": {
+                  "type": "object",
+                  "required": ["start", "end"],
+                  "properties": {
+                    "start": { "type": "string", "minLength": 1 },
+                    "end": { "type": "string", "minLength": 1 }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "timeline": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": ["event_id", "evaluations", "evidence"],
+                "properties": {
+                  "event_id": { "type": "string", "minLength": 1 },
+                  "evaluations": { "$ref": "#/$defs/StringArray" },
+                  "evidence": { "$ref": "#/$defs/StringArray" }
+                },
+                "additionalProperties": false
+              }
+            },
+            "law_surfaces": { "$ref": "#/$defs/LawSurface" },
+            "continuity_summary": {
+              "type": "object",
+              "required": [
+                "identity_impacts",
+                "governance_impacts",
+                "cultural_impacts",
+                "ecological_impacts",
+                "long_term_risks",
+                "recommended_path"
+              ],
+              "properties": {
+                "identity_impacts": { "type": "string" },
+                "governance_impacts": { "type": "string" },
+                "cultural_impacts": { "type": "string" },
+                "ecological_impacts": { "type": "string" },
+                "long_term_risks": { "type": "string" },
+                "recommended_path": { "type": "string" }
+              },
+              "additionalProperties": false
+            },
+            "reproducibility_metadata": {
+              "type": "object",
+              "required": ["input_signature", "law_signature", "evidence_signature", "last_verified_at"],
+              "properties": {
+                "input_signature": { "type": "string", "minLength": 1 },
+                "law_signature": { "type": "string", "minLength": 1 },
+                "evidence_signature": { "type": "string", "minLength": 1 },
+                "last_verified_at": { "type": "string", "minLength": 1 }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "ThetaTransform": {
+      "type": "object",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": { "const": "ccs/v1" },
+        "kind": { "const": "ThetaTransform" },
+        "metadata": { "$ref": "#/$defs/Metadata" },
+        "spec": {
+          "type": "object",
+          "required": [
+            "kind",
+            "description",
+            "law_surface",
+            "threat_model_ref",
+            "test_coverage_ref",
+            "determinism_guarantee"
+          ],
+          "properties": {
+            "kind": { "const": "governed_transform" },
+            "description": { "type": "string", "minLength": 1 },
+            "law_surface": { "$ref": "#/$defs/LawSurface" },
+            "threat_model_ref": { "type": "string", "minLength": 1 },
+            "test_coverage_ref": { "type": "string", "minLength": 1 },
+            "determinism_guarantee": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

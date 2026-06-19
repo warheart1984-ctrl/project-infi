@@ -9,7 +9,7 @@ from typing import Any
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
-from nova.lawful_llm import LawfulLLM
+from nova.runtime_factory import build_lawful_llm, collect_runtime_health
 
 
 class ChatRequest(BaseModel):
@@ -22,13 +22,13 @@ app = FastAPI(title="Local Lawful Nova API", version="0.1.0")
 
 
 @app.get("/health")
-def health() -> dict[str, str]:
-    return {"status": "ok", "service": "nova_local_api"}
+def health() -> dict[str, Any]:
+    return {"status": "ok", "service": "nova_local_api", **collect_runtime_health()}
 
 
 @app.post("/v1/chat")
 def chat(request: ChatRequest) -> dict[str, Any]:
-    llm = LawfulLLM(operator_session_id="nova-local-api", signing_secret="local-api-secret")
+    llm = build_lawful_llm(operator_session_id="nova-local-api", signing_secret="local-api-secret")
     turn = llm.ask(
         request.prompt,
         tenant_id=request.tenant_id,

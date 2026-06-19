@@ -14,7 +14,14 @@ from typing import Any, Iterable
 
 from nova.exceptions import GovernanceViolationError
 from nova.governance import ledger
+from nova.governance.cvr_recompute import (
+    TurnCVRResult,
+    get_cvr_registry,
+    recompute_cvr_for_lawful_turn,
+    reset_cvr_registry_for_tests,
+)
 from nova.governance.proof_gate import require_admitted, run_proof_gate
+from nova.governance.ugr_invariants import enforce_ugr_invariants, evaluate_ugr_invariants
 from nova.identity import NovaIdentity, declare_identity
 
 
@@ -38,6 +45,11 @@ def _sha256_text(value: str) -> str:
     return sha256(value.encode("utf-8")).hexdigest()
 
 
+def _trace_id(*, instance_id: str, tenant_id: str, capability: str, prompt: str) -> str:
+    seed = f"{instance_id}|{tenant_id}|{capability}|{_sha256_text(prompt)}"
+    return "nova-turn-" + _sha256_text(seed)[:16]
+
+
 @dataclass(frozen=True)
 class RuntimeSystemLaw:
     """Constitutional checks shared by the composed runtime."""
@@ -59,7 +71,7 @@ class RuntimeSystemLaw:
             raise GovernanceViolationError("prompt is required", code="RSL-PROMPT-REQUIRED")
         if len(prompt) > self.max_prompt_chars:
             raise GovernanceViolationError("prompt exceeds RSL limit", code="RSL-PROMPT-LIMIT")
-        return {"status": "SATISFIED"}
+        return {"status": "SATISFIED", "law_surface": "aais.law.runtime.system"}
 
 
 @dataclass(frozen=True)
@@ -314,6 +326,7 @@ class APIKernel:
             "kernel": "API Kernel",
             "tenant_id": self.tenant_id,
             "capability": self.capability,
+            "law_surface": "aais.law.runtime.system",
             "channel": f"{self.tenant_id}:{self.capability}",
             "tool_calls": tool_calls,
         }
@@ -333,6 +346,8 @@ class VossRuntime:
         nova_cortex: dict[str, object],
         rsl: dict[str, str],
         prompt: str,
+        continuity_invariants: dict[str, dict[str, str]] | None = None,
+        continuity_governance: dict[str, Any] | None = None,
     ) -> dict[str, object]:
         memory_facts_used = list((nova_cortex.get("lsg") or {}).get("facts_used") or [])
         tool_calls = list(api_kernel.get("tool_calls") or [])
@@ -350,10 +365,49 @@ class VossRuntime:
             "memory_facts_used": memory_facts_used,
             "tool_calls": tool_calls,
         }
+        payload["identity"] = {
+            "instance_id": identity.instance_id,
+            "tier": identity.tier,
+            "operator_session_id": identity.operator_session_id,
+            "tenant_id": api_kernel["tenant_id"],
+        }
+        payload["trace"] = {
+            "trace_id": _trace_id(
+                instance_id=identity.instance_id,
+                tenant_id=api_kernel["tenant_id"],
+                capability=api_kernel["capability"],
+                prompt=prompt,
+            ),
+            "stages": [
+                "rsl.validate",
+                "api_kernel.route",
+                "nova_cortex.think",
+                "voss.execute",
+            ],
+            "ledger_event": "nova.lawful_llm.executed",
+        }
+        payload["authority_boundary"] = {
+            "operator_authority": "external",
+            "runtime_authority": "execute_after_rsl",
+            "rsl_decision": rsl["status"],
+            "tool_boundary": "api_kernel",
+        }
+        payload["reproducibility"] = {
+            "prompt_sha256": payload["prompt_sha256"],
+            "output_sha256": output_sha256,
+            "text_sha256": output_sha256,
+            "deterministic_core": self._is_deterministic_core(nova_cortex),
+            "memory_facts_sha256": _sha256_text(json.dumps(memory_facts_used, sort_keys=True)),
+            "tool_calls_sha256": _sha256_text(json.dumps(tool_calls, sort_keys=True)),
+        }
         if nova_cortex.get("provider"):
             payload["provider"] = str(nova_cortex["provider"])
         if nova_cortex.get("model"):
             payload["model"] = str(nova_cortex["model"])
+        if continuity_invariants:
+            payload["continuity_invariants"] = continuity_invariants
+        if continuity_governance:
+            payload["continuity_governance"] = continuity_governance
         receipt = self.sign_receipt(payload)
         ledger.append_jsonl(
             {
@@ -368,6 +422,9 @@ class VossRuntime:
             "decision": "EXECUTED",
             "receipt": receipt,
         }
+
+    def _is_deterministic_core(self, nova_cortex: dict[str, object]) -> bool:
+        return not bool(nova_cortex.get("provider"))
 
     def sign_receipt(self, payload: dict[str, Any]) -> dict[str, Any]:
         serialized = json.dumps(payload, sort_keys=True, separators=(",", ":"))
@@ -398,6 +455,7 @@ class LawfulTurn:
     voss_runtime: dict[str, object]
     rsl: dict[str, str]
     receipt: dict[str, Any]
+    continuity_governance: dict[str, Any] | None = None
 
 
 class LawfulLLM:
@@ -413,6 +471,7 @@ class LawfulLLM:
         provider: Any | None = None,
         lsg_store: LongScaleGraphStore | None = None,
         tools: dict[str, Any] | None = None,
+        cvr_registry: Any | None = None,
     ) -> None:
         self.identity = identity or declare_identity(
             tier="nova",
@@ -423,6 +482,7 @@ class LawfulLLM:
         self.cortex = NovaCortex(provider=provider, lsg_store=lsg_store)
         self.voss = VossRuntime(signing_secret=signing_secret)
         self.tools = tools or {}
+        self.cvr_registry = cvr_registry if cvr_registry is not None else get_cvr_registry()
 
     @property
     def cognition_count(self) -> int:
@@ -447,12 +507,54 @@ class LawfulLLM:
             tenant_id=tenant_id,
             memory_facts=memory_facts,
         )
+        memory_facts_used = list((nova_cortex.get("lsg") or {}).get("facts_used") or [])
+        memory_facts_sha256 = _sha256_text(json.dumps(memory_facts_used, sort_keys=True))
+        continuity_invariants = evaluate_ugr_invariants(
+            tenant_id=tenant_id,
+            capability=capability,
+            prompt=prompt,
+            rsl=rsl,
+            nova_cortex=nova_cortex,
+            api_kernel=api_kernel,
+            identity={
+                "instance_id": self.identity.instance_id,
+                "tier": self.identity.tier,
+                "operator_session_id": self.identity.operator_session_id,
+            },
+            lsg_store=self.cortex.lsg_store,
+            allowed_capabilities=set(self.law.allowed_capabilities),
+            memory_facts_sha256=memory_facts_sha256,
+            memory_facts_used=memory_facts_used,
+        )
+        enforce_ugr_invariants(continuity_invariants)
+        output_sha256 = _sha256_text(str(nova_cortex["text"]))
+        trace_id = _trace_id(
+            instance_id=self.identity.instance_id,
+            tenant_id=tenant_id,
+            capability=capability,
+            prompt=prompt,
+        )
+        cvr_result = recompute_cvr_for_lawful_turn(
+            identity=self.identity,
+            trace_id=trace_id,
+            tenant_id=tenant_id,
+            capability=capability,
+            prompt_sha256=_sha256_text(prompt),
+            output_sha256=output_sha256,
+            memory_facts_sha256=memory_facts_sha256,
+            timestamp=_now_iso(),
+            nova_ugr_report=continuity_invariants,
+            registry=self.cvr_registry,
+        )
+        continuity_governance = cvr_result.to_receipt_dict()
         voss_runtime = self.voss.execute(
             identity=self.identity,
             api_kernel=api_kernel,
             nova_cortex=nova_cortex,
             rsl=rsl,
             prompt=prompt,
+            continuity_invariants=continuity_invariants,
+            continuity_governance=continuity_governance,
         )
         gates = {
             "interface": "Gates of Wonder",
@@ -466,6 +568,7 @@ class LawfulLLM:
             voss_runtime=voss_runtime,
             rsl=rsl,
             receipt=voss_runtime["receipt"],
+            continuity_governance=continuity_governance,
         )
 
     def verify_receipt(self, receipt: dict[str, Any]) -> bool:
