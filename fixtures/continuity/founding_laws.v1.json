@@ -1,0 +1,93 @@
+{
+  "schema_ref": "ROOT/LAW-LEDGER.md#v1.0.0",
+  "genesis_entry_id": "LAW-LEDGER-0000",
+  "laws": [
+    {
+      "law_id": "SIT-1",
+      "version": "1.0.0",
+      "law_hash": "hash_sit1_v1",
+      "spec_ref": "UGR/SIT-1.md#v1.0.0",
+      "status": "admitted",
+      "created_at_epoch": 0,
+      "introduced_by": "ROOT",
+      "fitness": {
+        "current": 0.98,
+        "history": [
+          {
+            "epoch": 0,
+            "F": 0.95,
+            "sample_size": 12,
+            "notes": "Initial operator tests"
+          },
+          {
+            "epoch": 1,
+            "F": 0.98,
+            "sample_size": 24,
+            "notes": "Cross-operator invariance stable"
+          }
+        ],
+        "thresholds": { "admit": 0.9, "reject": 0.7 }
+      },
+      "domains": ["continuity", "operator-equivalence"],
+      "dependencies": [],
+      "conflicts": [],
+      "supersedes": []
+    },
+    {
+      "law_id": "GIT-1",
+      "version": "1.0.0",
+      "law_hash": "hash_git1_v1",
+      "spec_ref": "UGR/GIT-1.md#v1.0.0",
+      "status": "admitted",
+      "created_at_epoch": 1,
+      "introduced_by": "L1:DarZ",
+      "fitness": {
+        "current": 0.94,
+        "history": [
+          {
+            "epoch": 1,
+            "F": 0.92,
+            "sample_size": 18,
+            "notes": "Law recovery stable"
+          },
+          {
+            "epoch": 2,
+            "F": 0.94,
+            "sample_size": 36,
+            "notes": "Cross-structure invariance confirmed"
+          }
+        ],
+        "thresholds": { "admit": 0.9, "reject": 0.7 }
+      },
+      "domains": ["generative-law", "structure-family"],
+      "dependencies": ["SIT-1"],
+      "conflicts": [],
+      "supersedes": []
+    },
+    {
+      "law_id": "PIT-1",
+      "version": "1.0.0",
+      "law_hash": "hash_pit1_v1",
+      "spec_ref": "UGR/PIT-1.md#v1.0.0",
+      "status": "experimental",
+      "created_at_epoch": 2,
+      "introduced_by": "L2:Jon",
+      "fitness": {
+        "current": 0.87,
+        "history": [
+          {
+            "epoch": 2,
+            "F": 0.87,
+            "sample_size": 20,
+            "notes": "Initial generative fitness tests"
+          }
+        ],
+        "thresholds": { "admit": 0.9, "reject": 0.7 }
+      },
+      "domains": ["law-selection", "sovereign-kernel"],
+      "dependencies": ["SIT-1", "GIT-1"],
+      "conflicts": [],
+      "supersedes": []
+    }
+  ]
+}

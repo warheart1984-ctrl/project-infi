@@ -24,6 +24,7 @@ function Navbar() {
         { type: 'route', to: '/operator/plugins', label: 'Plugins' },
         { type: 'route', to: '/operator/brain', label: 'Brain' },
         { type: 'route', to: '/operator/ledger', label: 'Ledger' },
+        { type: 'route', to: '/operator/constitutional', label: 'Constitutional' },
         { type: 'route', to: '/platform', label: 'Platform Ops' },
         ...(isAmplifyAuthEnabled() ? [{ type: 'route', to: '/auth/sign-in', label: 'Sign in' }] : []),
         { type: 'route', to: '/jarvis/repo-manager', label: 'Repo Manager' },

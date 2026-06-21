@@ -227,6 +227,7 @@ from src.super_nova_runtime import build_default_super_nova_scaffold
 from forge.foundation_laws import CONTRACT_VERSION as FORGE_LAW_CONTRACT_VERSION, FOUNDATION_LAW_IDS as FORGE_FOUNDATION_LAW_IDS
 from src.jarvis_organ_status_routes import register_jarvis_organ_status_routes
 from src.operator_api_routes import register_operator_api_routes
+from src.constitutional_cockpit_routes import register_constitutional_cockpit_routes
 
 logger = get_logger(__name__)
 config = get_config()
@@ -237,6 +238,7 @@ app = Flask(__name__)
 CORS(app)
 
 register_operator_api_routes(app)
+register_constitutional_cockpit_routes(app)
 register_jarvis_organ_status_routes(app)
 
 try:
@@ -2965,8 +2967,9 @@ def _composed_turn_block_payload(session):
 
 
 def _god_brain_bridge_kwargs(session) -> dict:
-    """Pass Nova Face → Cortex → Jarvis binding into God Brain traces."""
-    binding = dict((session.metadata or {}).get("jarvis_core_binding") or {})
+    """Pass Nova Face → Cortex → Tri-Core binding into God Brain traces."""
+    metadata = session.metadata or {}
+    binding = dict(metadata.get("tri_core_binding") or metadata.get("jarvis_core_binding") or {})
     face = dict((session.metadata or {}).get("nova_face") or {})
     kwargs: dict = {}
     runtimes = binding.get("active_cognitive_runtimes")
@@ -2975,7 +2978,7 @@ def _god_brain_bridge_kwargs(session) -> dict:
     if face:
         kwargs["nova_face"] = face
     if binding:
-        kwargs["jarvis_core_binding"] = binding
+        kwargs["tri_core_binding"] = binding
     return kwargs
 
 

@@ -50,6 +50,7 @@ const PlatformAssistant = lazy(() => import('./pages/PlatformAssistant'));
 const PlatformWorkflow = lazy(() => import('./pages/PlatformWorkflow'));
 const PlatformMesh = lazy(() => import('./pages/PlatformMesh'));
 const PlatformMarketplace = lazy(() => import('./pages/PlatformMarketplace'));
+const ConstitutionalCockpit = lazy(() => import('./pages/ConstitutionalCockpit'));
 
 function RouteFallback() {
   return (
@@ -101,6 +102,7 @@ function AppShell() {
               <Route path="/operator/ledger" element={<OperatorLedger />} />
               <Route path="/operator/ledger/graph" element={<OperatorLedgerGraph />} />
               <Route path="/operator/replay/:subjectType/:subjectId" element={<TemporalReplay />} />
+              <Route path="/operator/constitutional/*" element={<ConstitutionalCockpit />} />
               <Route path="/platform" element={<PlatformConsole />} />
               <Route path="/platform/jobs/:jobId" element={<PlatformJobDetail />} />
               <Route path="/platform/artifacts" element={<PlatformArtifacts />} />

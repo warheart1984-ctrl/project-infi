@@ -1,0 +1,38 @@
+{
+  "fixture_id": "constitutional-chain-v1",
+  "chain_id": "ugr-continuity-spine-v7",
+  "phi_min": 0.65,
+  "s_min": 0.65,
+  "phi_min_ab": 0.65,
+  "phi_min_t": 0.65,
+  "principles": [
+    {"code": "UGR-C1", "capability_id": null},
+    {"code": "UGR-C2", "capability_id": "RECON-1001"},
+    {"code": "UGR-C3", "capability_id": "VERIFY-1001"},
+    {"code": "UGR-C4", "capability_id": null},
+    {"code": "UGR-C5", "capability_id": null},
+    {"code": "UGR-C6", "capability_id": null},
+    {"code": "UGR-C7", "capability_id": "CONVERGE-1001"},
+    {"code": "UGR-C8", "capability_id": null},
+    {"code": "UGR-C9", "capability_id": "C9-convergence-fitness"},
+    {"code": "UGR-C10", "capability_id": "C10-emergent-stewardship"},
+    {"code": "UGR-C11", "capability_id": "C11-non-destructive-interoperability"},
+    {"code": "UGR-C12", "capability_id": "C12-inter-temporal-governance"}
+  ],
+  "roots": {
+    "creation_convergence": ["ROOT-015", "ROOT-00X"],
+    "governed_evolution": "ROOT-00Y",
+    "inheritance": "ROOT-00Z"
+  },
+  "substrate_runtime": {
+    "continuity_math": "CM-0001",
+    "invariant_engine": "IE-0001",
+    "operator_kernel_interface": "OKI-0001",
+    "generative_law": "UGR-GIT-1",
+    "kernel_loop": "KERNEL-LOOP-0001"
+  },
+  "operators_oath_entry": "ML-UGR-OPERATORS-OATH-001",
+  "operators_manual_entry": "ML-UGR-OPERATORS-MANUAL-001",
+  "constitutional_kernel_entry": "ML-NK-CONSTITUTIONAL-KERNEL-001",
+  "constitution_entry": "ML-UGR-CONSTITUTION-001"
+}

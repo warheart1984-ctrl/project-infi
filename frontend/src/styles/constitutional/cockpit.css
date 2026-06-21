@@ -1,0 +1,212 @@
+.cit-strip {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--cit-border);
+  background: var(--cit-bg);
+}
+
+.cit-strip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.cit-score {
+  font-family: var(--cit-mono);
+  font-size: 0.9rem;
+}
+
+.cit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px 16px;
+}
+
+.cit-grid h4 {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  color: var(--cit-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cit-role-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cit-role-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--cit-border);
+  font-size: 0.75rem;
+}
+
+.cit-actions {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.meaning-strip {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--cit-border);
+  background: rgba(120, 90, 200, 0.08);
+}
+
+.meaning-strip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.meaning-score {
+  font-family: var(--cit-mono);
+  font-size: 0.9rem;
+  color: #c4b5fd;
+}
+
+.meaning-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px 16px;
+}
+
+.meaning-grid h4 {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  color: var(--cit-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.eit-strip {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--cit-border);
+  background: rgba(45, 140, 120, 0.08);
+}
+
+.eit-strip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.eit-score {
+  font-family: var(--cit-mono);
+  font-size: 0.9rem;
+  color: #6ee7b7;
+}
+
+.eit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px 16px;
+}
+
+.eit-grid h4 {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  color: var(--cit-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cross-ledger-trace {
+  margin-top: 24px;
+}
+
+.cross-ledger-trace-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.cross-ledger-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin-bottom: 12px;
+  font-size: 0.75rem;
+  color: var(--cit-muted);
+}
+
+.cross-ledger-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cross-ledger-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.constitutional-warning {
+  margin: 12px 0 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #f5a623;
+  color: #f5a623;
+  font-size: 0.85rem;
+}
+
+.evidence-graph {
+  width: 100%;
+  min-height: 280px;
+  border: 1px solid var(--cit-border);
+  border-radius: 12px;
+  background: #070b14;
+}
+
+.evidence-graph-node {
+  cursor: pointer;
+}
+
+.evidence-graph-tooltip {
+  font-size: 11px;
+  fill: var(--cit-text);
+}
+
+.law-card {
+  cursor: pointer;
+  transition: border-color 160ms ease;
+}
+
+.law-card:hover {
+  border-color: var(--cit-accent);
+}
+
+.law-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.law-card-metrics {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  font-family: var(--cit-mono);
+  font-size: 0.85rem;
+}
+
+.steward-banner {
+  border: 1px dashed var(--cit-accent);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  color: var(--cit-accent);
+}

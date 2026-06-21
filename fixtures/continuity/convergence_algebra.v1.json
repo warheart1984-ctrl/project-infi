@@ -1,0 +1,47 @@
+{
+  "fixture_id": "convergence-algebra-civ-1",
+  "epsilon": 0.35,
+  "universal_meaning_class": "uui.continuity-preserving-creation",
+  "lineages": [
+    {
+      "lineage_id": "L-alpha",
+      "event_ids": [
+        "evt-origin",
+        "evt-substrate-law",
+        "evt-recon-1001",
+        "evt-verify-1001"
+      ],
+      "meaning_class": "uui.continuity-preserving-creation",
+      "generativity": 3.0,
+      "metadata": {"operator": "alpha", "branch": "governance"}
+    },
+    {
+      "lineage_id": "L-beta",
+      "event_ids": [
+        "evt-origin",
+        "evt-substrate-law",
+        "evt-converge-seed",
+        "evt-nexus-handoff"
+      ],
+      "meaning_class": "uui.continuity-preserving-creation",
+      "generativity": 4.0,
+      "metadata": {"operator": "beta", "branch": "runtime"}
+    },
+    {
+      "lineage_id": "L-gamma",
+      "event_ids": ["evt-origin", "evt-substrate-law", "evt-implementation-phase"],
+      "meaning_class": "uui.continuity-preserving-creation",
+      "generativity": 2.5,
+      "metadata": {"operator": "gamma", "branch": "execution"}
+    }
+  ],
+  "creation_seed": {
+    "lineage_id": "L-substrate-0",
+    "event_ids": ["evt-substrate-boot"],
+    "meaning_class": "uui.continuity-preserving-creation",
+    "generativity": 1.0,
+    "metadata": {"phase": "implementation"}
+  },
+  "creation_events": ["evt-lci-encoded", "evt-convergence-algebra-wired"],
+  "creation_generativity_delta": 2.0
+}
