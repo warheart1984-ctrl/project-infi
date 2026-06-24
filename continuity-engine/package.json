@@ -1,0 +1,36 @@
+{
+  "name": "continuity-engine",
+  "version": "1.0.0",
+  "description": "Observer-centric continuity architecture runtime (CSS-2, CRK-1, JPSS-2, RA-COS-1)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "thresholdctl": "./dist/cli/thresholdctl.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "demo": "node --import tsx demo/app.ts",
+    "lint": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "continuity",
+    "governance",
+    "observer",
+    "threshold",
+    "architecture",
+    "runtime",
+    "css2",
+    "crk1",
+    "jpss2",
+    "ra-cos1"
+  ],
+  "author": "Jon Halstead & Dar-z Morris",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.0.0"
+  }
+}
