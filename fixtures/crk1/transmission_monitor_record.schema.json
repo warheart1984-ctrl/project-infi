@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://crk1.local/schemas/transmission-monitor-record.v1.json",
+  "type": "object",
+  "title": "TransmissionMonitorRecord",
+  "required": [
+    "generation",
+    "consequenceSummary",
+    "macroEvidence",
+    "transmissionIntegrity",
+    "band",
+    "thresholds",
+    "runtimeFlags"
+  ],
+  "properties": {
+    "generation": {
+      "type": "integer",
+      "description": "Generation index g."
+    },
+    "consequenceSummary": {
+      "type": "object",
+      "description": "Aggregated consequence vector k_g.",
+      "properties": {
+        "vector": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "Numeric representation of consequences."
+        },
+        "categories": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Semantic labels for consequence dimensions."
+        }
+      }
+    },
+    "macroEvidence": {
+      "type": "object",
+      "description": "Evidence E_{g+1} produced by T(k_g).",
+      "properties": {
+        "vector": {
+          "type": "array",
+          "items": { "type": "number" }
+        },
+        "sourceChannels": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Which consequence channels contributed to E_{g+1}."
+        }
+      }
+    },
+    "transmissionIntegrity": {
+      "type": "number",
+      "description": "T_int(g): mutual-information proxy between k_g and E_{g+1}."
+    },
+    "band": {
+      "type": "string",
+      "enum": ["healthy", "degraded", "critical"],
+      "description": "Continuity band classification for generation g."
+    },
+    "thresholds": {
+      "type": "object",
+      "properties": {
+        "ok": { "type": "number" },
+        "critical": { "type": "number" },
+        "consecutiveCriticalLimit": { "type": "integer" }
+      }
+    },
+    "runtimeFlags": {
+      "type": "object",
+      "description": "Flags that constrain stewardship actions.",
+      "properties": {
+        "allowArchitectureChange": { "type": "boolean" },
+        "requireChannelExpansion": { "type": "boolean" },
+        "externalReview": { "type": "boolean" },
+        "constitutionalFreeze": { "type": "boolean" }
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200">
+  <style>
+    .bg { fill:#111318; }
+    .frame { fill:none; stroke:#f5f5f5; stroke-width:3; }
+    .title { font-family:Georgia,serif; font-size:40px; fill:#f5f5f5; letter-spacing:3px; }
+    .subtitle { font-family:Georgia,serif; font-size:18px; fill:#d0d0d0; }
+    .small { font-family:Verdana; font-size:14px; fill:#c0c0c0; }
+    .line { stroke:#555; stroke-width:1.5; }
+  </style>
+
+  <rect x="0" y="0" width="900" height="1200" class="bg"/>
+  <rect x="60" y="60" width="780" height="1080" rx="40" ry="40" class="frame"/>
+
+  <text x="450" y="220" class="title" text-anchor="middle">
+    CRK-1 KERNEL CODEX
+  </text>
+  <text x="450" y="260" class="subtitle" text-anchor="middle">
+    Constitutional Runtime for Continuity and Consequence
+  </text>
+
+  <line x1="200" y1="300" x2="700" y2="300" class="line"/>
+
+  <text x="450" y="360" class="small" text-anchor="middle">
+    K0K2  "  Transmission
+  </text>
+  <text x="450" y="395" class="small" text-anchor="middle">
+    K3K6  "  Preservation
+  </text>
+  <text x="450" y="430" class="small" text-anchor="middle">
+    K7K12 "  Assimilation
+  </text>
+
+  <text x="450" y="520" class="subtitle" text-anchor="middle">
+    "No path to consequence-free change."
+  </text>
+
+  <text x="450" y="900" class="small" text-anchor="middle">
+    CRK-1 " Consequence Transmission Lattice " Founder-Independent Continuity
+  </text>
+</svg>

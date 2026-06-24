@@ -22,6 +22,8 @@ dependencies = [
   "numpy>=1.26.0",
   "openai>=1.40.0",
   "pydantic>=2.8.2",
+  "email-validator>=2.0.0",
+  "sqlalchemy>=2.0.0",
   "Pillow>=12.2.0",
   "python-dotenv>=1.0.1",
   "PyJWT>=2.8.0",
@@ -54,9 +56,19 @@ aais = "aais.launcher:main"
 lab = "lab.cli:main"
 nova = "nova.cli:main"
 nova-api = "nova.api:main"
+cori = "cli.cori:main"
+observer = "observer.cli:main"
+ra-cos-demo = "src.continuity.demo.ra_cos_demo:main"
+continuity = "continuity_sdk.cli:main"
+
+[tool.setuptools]
+py-modules = ["governance_gate"]
+
+[tool.setuptools.package-dir]
+continuity_sdk = "src/continuity_sdk"
 
 [tool.setuptools.packages.find]
-include = ["aais*", "app*", "src*", "scorpion*", "forge*", "ai_factory*", "lab*", "mechanic*", "slingshot*", "triangulation*", "tools*", "operator_kernel*", "nova*"]
+include = ["aais*", "app*", "cli*", "src*", "scorpion*", "forge*", "ai_factory*", "lab*", "mechanic*", "slingshot*", "triangulation*", "tools*", "operator_kernel*", "constitutional*", "constitutional_state*", "constitutional_substrate*", "receipts*", "observer*", "nova*", "continuity_sdk*"]
 
 [tool.setuptools.package-data]
 app = ["static/*", "static/**/*"]

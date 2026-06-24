@@ -1,0 +1,43 @@
+{
+  "id": "KCR-0001",
+  "type": "KernelChallengeReceipt",
+  "created_at": "2026-06-24T12:00:00Z",
+  "created_by": "G-ENGINE",
+  "epoch": 3,
+  "payload": {
+    "challenge_id": "KC-0001",
+    "kernel_version_before": "K0-K15@epoch-3",
+    "kernel_version_after": "K0-K15@epoch-4",
+    "status": "Pending",
+    "reason": "Continuity failure despite full compliance.",
+    "cf_events": [
+      {
+        "id": "CF-001",
+        "description": "Observed continuity break in domain X."
+      }
+    ],
+    "receipts_implicated": ["R-2001", "R-2002"],
+    "invariants_challenged": ["K7", "K11"],
+    "proposed_changes": [
+      {
+        "kind": "Amendment",
+        "target": "K7",
+        "diff": "Strengthen pluralism threshold under multi-domain stress."
+      }
+    ],
+    "validation_process": {
+      "steps": [
+        "Evidence review",
+        "Simulation / replay",
+        "Cross-domain check"
+      ],
+      "result": "Insufficient"
+    }
+  },
+  "links": {
+    "cf_event_ids": ["CF-001"],
+    "receipt_ids": ["R-2001", "R-2002"],
+    "old_kernel_id": "KERNEL-3",
+    "new_kernel_id": ""
+  }
+}

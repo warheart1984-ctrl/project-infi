@@ -1,0 +1,16 @@
+{
+  "generation": 12,
+  "k_g": {
+    "vector": [0.9, 0.1, 0.0],
+    "categories": ["harm", "benefit", "drift"]
+  },
+  "E_next": {
+    "vector": [0.05, 0.05, 0.05],
+    "sourceChannels": ["harm"]
+  },
+  "thresholds": {
+    "ok": 0.4,
+    "critical": 0.1,
+    "consecutiveCriticalLimit": 3
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "receipt_id": "grr-001-cycle-3",
+  "generation": 2,
+  "cycle": 3,
+  "timestamp": "2024-06-15T14:30:00Z",
+  "observation": {
+    "raw_signals": [
+      { "ref_id": "ev-77a2", "label": "late_intervention_spike" }
+    ],
+    "salient_features": [
+      { "ref_id": "feat-01", "description": "consequence latency exceeded envelope" }
+    ]
+  },
+  "interpretation": {
+    "hypotheses": [
+      {
+        "hypothesis_id": "H1",
+        "statement": "Drift envelope too permissive for high-variance domains",
+        "confidence": 0.7
+      },
+      {
+        "hypothesis_id": "H2",
+        "statement": "Reality surface shrinking via domestication",
+        "confidence": 0.55
+      }
+    ],
+    "selected_model": "H1"
+  },
+  "valuation": {
+    "values_in_play": [
+      { "value_id": "V_continuity", "label": "continuity preservation", "weight": 0.9 },
+      { "value_id": "V_agility", "label": "governance agility", "weight": 0.4 }
+    ],
+    "tradeoffs": [
+      {
+        "raised": "V_continuity",
+        "lowered": "V_agility",
+        "rationale": "tighten drift envelope before expanding mutation scope"
+      }
+    ]
+  },
+  "commitment": {
+    "chosen_action": "narrow_drift_envelope",
+    "rejected_actions": [
+      {
+        "action": "freeze_all_mutations",
+        "reason": "would violate K4 consequence preservation without GRR justification"
+      }
+    ]
+  },
+  "outcome": {
+    "observed_effects": {
+      "CE_after": 0.82,
+      "incidents": 0
+    },
+    "unexpected_effects": ["RDI dipped 0.03 before recovery"]
+  },
+  "reflection": {
+    "update_to_models": [
+      { "from_hypothesis": "H1", "to_hypothesis": "H1_prime: envelope must be domain-scoped" }
+    ],
+    "update_to_values": [],
+    "update_to_invariants": [
+      { "invariant_id": "K6", "change": "consider domain-scoped drift floors" }
+    ]
+  },
+  "binding": {
+    "governance_receipt_ids": ["gr-header-9f3c"],
+    "decisive_invariants": ["K6", "K13"],
+    "failure_class_ids": ["D2"]
+  }
+}

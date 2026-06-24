@@ -9,6 +9,7 @@ export type ObserverTraceEventType =
   | "proto_threshold"
   | "threshold_delta"
   | "observer_drift"
+  | "judgment_drift"
   | "observer_capture";
 
 export interface ObserverTraceEvent {

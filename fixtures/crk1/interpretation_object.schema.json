@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "InterpretationObject",
+  "title": "InterpretationObject",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "version",
+    "assumptions",
+    "prediction_binding",
+    "weight",
+    "adversarial",
+    "created_at"
+  ],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "prediction_binding": {
+      "type": "boolean",
+      "const": true
+    },
+    "weight": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "adversarial": {
+      "type": "boolean",
+      "description": "True if this frame is explicitly adversarial to the dominant frame."
+    },
+    "lineage": {
+      "type": "array",
+      "items": { "type": "string", "format": "uuid" },
+      "description": "Ancestor frame IDs (interpretive lineage chain)."
+    },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

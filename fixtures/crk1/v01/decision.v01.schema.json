@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://crk1.local/schemas/v01/decision.v01.json",
+  "title": "CRK1DecisionV01",
+  "allOf": [
+    { "$ref": "envelope.definitions.schema.json#/$defs/envelopeBase" },
+    {
+      "type": "object",
+      "properties": {
+        "type": { "const": "Decision" },
+        "payload": {
+          "type": "object",
+          "required": ["label", "status"],
+          "properties": {
+            "label": { "type": "string" },
+            "description": { "type": "string" },
+            "scope": { "type": "string" },
+            "status": {
+              "type": "string",
+              "enum": ["Proposed", "Committed", "RolledBack"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "links": {
+          "type": "object",
+          "required": ["identity_id"],
+          "properties": {
+            "identity_id": { "$ref": "envelope.definitions.schema.json#/$defs/objectId" },
+            "outcome_ids": {
+              "type": "array",
+              "items": { "$ref": "envelope.definitions.schema.json#/$defs/objectId" }
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": { "$ref": "envelope.definitions.schema.json#/$defs/objectId" }
+            },
+            "interpretation_ids": {
+              "type": "array",
+              "items": { "$ref": "envelope.definitions.schema.json#/$defs/objectId" }
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  ]
+}

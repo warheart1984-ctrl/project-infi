@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "PredictionObject",
+  "title": "PredictionObject",
+  "type": "object",
+  "required": [
+    "id",
+    "interpretation_id",
+    "evidence_id",
+    "claim",
+    "expected_outcome",
+    "created_at"
+  ],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "interpretation_id": { "type": "string", "format": "uuid" },
+    "evidence_id": { "type": "string", "format": "uuid" },
+    "claim": { "type": "string" },
+    "expected_outcome": {
+      "type": "object",
+      "required": ["summary"],
+      "properties": {
+        "summary": { "type": "string" },
+        "measurable": { "type": "boolean" },
+        "replay_required": { "type": "boolean" },
+        "metadata": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

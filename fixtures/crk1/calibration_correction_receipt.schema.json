@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://crk1.local/schemas/calibration-correction-receipt.v1.json",
+  "title": "CalibrationCorrectionReceipt",
+  "type": "object",
+  "required": ["id", "type", "created_at", "created_by", "epoch", "correction"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^CRR-1" },
+    "type": { "const": "CalibrationCorrectionReceipt" },
+    "created_at": { "type": "string" },
+    "created_by": { "type": "string" },
+    "epoch": { "type": "integer" },
+    "correction": { "type": "object" },
+    "reconstruction_digest": { "type": "string" }
+  }
+}

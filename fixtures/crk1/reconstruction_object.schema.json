@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ReconstructionObject",
+  "title": "ReconstructionObject",
+  "type": "object",
+  "required": [
+    "id",
+    "interpretation_id",
+    "evidence_id",
+    "reconstructed_view",
+    "divergence_from_dominant",
+    "created_at"
+  ],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "interpretation_id": { "type": "string", "format": "uuid" },
+    "evidence_id": { "type": "string", "format": "uuid" },
+    "reconstructed_view": { "type": "string" },
+    "divergence_from_dominant": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

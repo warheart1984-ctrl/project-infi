@@ -1,0 +1,60 @@
+{
+  "version": "1.0",
+  "name": "CRK-1 Constitutional State Machine",
+
+  "states": [
+    "ProposedDecision",
+    "ApprovedDecision",
+    "ExecutedDecision",
+    "OutcomeRecorded",
+    "OutcomeReplayed",
+    "EvidenceAdmitted"
+  ],
+
+  "transitions": [
+    {
+      "from": "ProposedDecision",
+      "to": "ApprovedDecision",
+      "conditions": ["identity_present", "evidence_present"]
+    },
+    {
+      "from": "ApprovedDecision",
+      "to": "ExecutedDecision",
+      "conditions": ["governance_approval"]
+    },
+    {
+      "from": "ExecutedDecision",
+      "to": "OutcomeRecorded",
+      "conditions": ["create_outcome"]
+    },
+    {
+      "from": "OutcomeRecorded",
+      "to": "OutcomeReplayed",
+      "conditions": ["outcome_replayable"]
+    },
+    {
+      "from": "OutcomeReplayed",
+      "to": "EvidenceAdmitted",
+      "conditions": ["evidence_admissible"]
+    }
+  ],
+
+  "forbidden_transitions": [
+    {
+      "description": "Outcome deletion",
+      "rule": "delete(Outcome)"
+    },
+    {
+      "description": "Evidence quarantine",
+      "rule": "Evidence.admissible_for_decision = false"
+    },
+    {
+      "description": "Lineage escape",
+      "rule": "child_identity_without_ancestor_evidence"
+    },
+    {
+      "description": "Decision without Evidence",
+      "rule": "Decision.input_evidence_ids.length == 0"
+    }
+  ]
+}

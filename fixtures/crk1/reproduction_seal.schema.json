@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://crk1.local/schemas/reproduction-seal.v1.json",
+  "title": "ReproductionSeal",
+  "description": "D-3 Seal — canonical receipt proving founder-independent reconstruction of CRK-1.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "type", "created_at", "created_by", "epoch", "payload", "links"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^D3-[A-Za-z0-9-]+$",
+      "description": "Seal identifier (e.g. D3-0001)"
+    },
+    "type": { "const": "ReproductionSeal" },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "ExternalSteward-ID"
+    },
+    "epoch": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Kernel epoch at time of certification"
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime_rebuilt",
+        "source_of_truth",
+        "oral_tradition_used",
+        "tests_executed",
+        "results"
+      ],
+      "properties": {
+        "runtime_rebuilt": { "type": "boolean" },
+        "source_of_truth": {
+          "type": "string",
+          "description": "ReproductionPacket-ID (e.g. RP-CRK1-v1.0)"
+        },
+        "oral_tradition_used": { "type": "boolean" },
+        "tests_executed": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "invariant_enforcement",
+            "governance_refusal",
+            "semantic_capture_resistance",
+            "governance_bypass_resistance",
+            "continuity_graph_reconstruction",
+            "kernel_challenge_path"
+          ],
+          "properties": {
+            "invariant_enforcement": { "$ref": "#/$defs/pass_fail" },
+            "governance_refusal": { "$ref": "#/$defs/pass_fail" },
+            "semantic_capture_resistance": { "$ref": "#/$defs/pass_fail" },
+            "governance_bypass_resistance": { "$ref": "#/$defs/pass_fail" },
+            "continuity_graph_reconstruction": { "$ref": "#/$defs/pass_fail" },
+            "kernel_challenge_path": { "$ref": "#/$defs/pass_fail" }
+          }
+        },
+        "results": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["all_passed"],
+          "properties": {
+            "all_passed": { "type": "boolean" },
+            "notes": { "type": "string" }
+          }
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reproduction_packet_id",
+        "test_harness_ids",
+        "external_steward_id"
+      ],
+      "properties": {
+        "reproduction_packet_id": { "type": "string" },
+        "test_harness_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "external_steward_id": { "type": "string" },
+        "governance_receipt_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "pass_fail": {
+      "type": "string",
+      "enum": ["PASS", "FAIL"]
+    }
+  }
+}

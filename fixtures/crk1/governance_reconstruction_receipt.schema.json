@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://crk1.local/schemas/governance-reconstruction-receipt.v1.json",
+  "title": "GovernanceReconstructionReceipt",
+  "type": "object",
+  "required": [
+    "receipt_id",
+    "generation",
+    "cycle",
+    "timestamp",
+    "observation",
+    "interpretation",
+    "valuation",
+    "commitment",
+    "outcome",
+    "reflection",
+    "binding"
+  ],
+  "properties": {
+    "receipt_id": { "type": "string" },
+    "generation": { "type": "integer" },
+    "cycle": { "type": "integer" },
+    "timestamp": { "type": "string" },
+    "observation": {
+      "type": "object",
+      "properties": {
+        "raw_signals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["ref_id"],
+            "properties": {
+              "ref_id": { "type": "string" },
+              "label": { "type": "string" }
+            }
+          }
+        },
+        "salient_features": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["ref_id"],
+            "properties": {
+              "ref_id": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "interpretation": {
+      "type": "object",
+      "properties": {
+        "hypotheses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["hypothesis_id", "statement"],
+            "properties": {
+              "hypothesis_id": { "type": "string" },
+              "statement": { "type": "string" },
+              "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          }
+        },
+        "selected_model": { "type": "string" }
+      }
+    },
+    "valuation": {
+      "type": "object",
+      "properties": {
+        "values_in_play": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["value_id", "label"],
+            "properties": {
+              "value_id": { "type": "string" },
+              "label": { "type": "string" },
+              "weight": { "type": "number" }
+            }
+          }
+        },
+        "tradeoffs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["raised", "lowered", "rationale"],
+            "properties": {
+              "raised": { "type": "string" },
+              "lowered": { "type": "string" },
+              "rationale": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "commitment": {
+      "type": "object",
+      "properties": {
+        "chosen_action": { "type": "string" },
+        "rejected_actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["action", "reason"],
+            "properties": {
+              "action": { "type": "string" },
+              "reason": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "properties": {
+        "observed_effects": { "type": "object" },
+        "unexpected_effects": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "reflection": {
+      "type": "object",
+      "properties": {
+        "update_to_models": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["from_hypothesis", "to_hypothesis"],
+            "properties": {
+              "from_hypothesis": { "type": "string" },
+              "to_hypothesis": { "type": "string" }
+            }
+          }
+        },
+        "update_to_values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["from_value", "to_value"],
+            "properties": {
+              "from_value": { "type": "string" },
+              "to_value": { "type": "string" },
+              "rationale": { "type": "string" }
+            }
+          }
+        },
+        "update_to_invariants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["invariant_id", "change"],
+            "properties": {
+              "invariant_id": { "type": "string" },
+              "change": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "properties": {
+        "governance_receipt_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "decisive_invariants": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "failure_class_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://crk1.local/schemas/calibration-reconstruction-receipt.v1.json",
+  "title": "CalibrationReconstructionReceipt",
+  "description": "CRR-1 — preserves where reality changed judgment, not just what was decided.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "crr_id",
+    "timestamp",
+    "steward_id",
+    "prior_judgment_state",
+    "reality_contact",
+    "contradiction",
+    "correction",
+    "calibration_gained",
+    "continuity_linkage",
+    "integrity"
+  ],
+  "properties": {
+    "crr_id": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "steward_id": { "type": "string" },
+    "context_id": {
+      "type": "string",
+      "description": "Link to GRR-1 or decision context"
+    },
+    "prior_judgment_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prior_assumptions", "prior_confidence", "prior_model"],
+      "properties": {
+        "prior_assumptions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "prior_confidence": {
+          "oneOf": [
+            { "type": "number", "minimum": 0, "maximum": 1 },
+            { "type": "string" }
+          ]
+        },
+        "prior_model": { "type": "object" }
+      }
+    },
+    "reality_contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_observed", "reality_channel", "evidence_strength"],
+      "properties": {
+        "evidence_observed": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "object" },
+            { "type": "array" }
+          ]
+        },
+        "reality_channel": { "type": "string" },
+        "evidence_strength": {
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "string" }
+          ]
+        }
+      }
+    },
+    "contradiction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_outcome",
+        "actual_outcome",
+        "contradiction_delta",
+        "surprise_intensity"
+      ],
+      "properties": {
+        "expected_outcome": {},
+        "actual_outcome": {},
+        "contradiction_delta": {},
+        "surprise_intensity": {
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "string" }
+          ]
+        }
+      }
+    },
+    "correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "update_rule_applied",
+        "assumptions_removed",
+        "assumptions_added",
+        "model_shift"
+      ],
+      "properties": {
+        "update_rule_applied": { "type": "string" },
+        "assumptions_removed": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "assumptions_added": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "model_shift": { "type": "object" }
+      }
+    },
+    "calibration_gained": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["calibration_delta", "new_confidence", "new_judgment_state"],
+      "properties": {
+        "calibration_delta": {
+          "oneOf": [
+            { "type": "number" },
+            { "type": "string" }
+          ]
+        },
+        "new_confidence": {
+          "oneOf": [
+            { "type": "number", "minimum": 0, "maximum": 1 },
+            { "type": "string" }
+          ]
+        },
+        "new_judgment_state": { "type": "object" }
+      }
+    },
+    "continuity_linkage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["invariant_implications", "future_risks", "lineage_reference"],
+      "properties": {
+        "invariant_implications": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "future_risks": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "lineage_reference": { "type": "string" }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_hash", "receipt_signature", "reality_verification"],
+      "properties": {
+        "evidence_hash": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "receipt_signature": { "type": "string" },
+        "reality_verification": {
+          "type": "object",
+          "description": "Proof contradiction originated from reality, not internal simulation"
+        }
+      }
+    }
+  }
+}

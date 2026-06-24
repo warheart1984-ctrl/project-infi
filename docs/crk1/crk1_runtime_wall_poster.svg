@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1400">
+
+  <style>
+    .bg { fill:#fafafa; }
+    .layer { fill:#eaeaea; stroke:#333; stroke-width:3; }
+    .obj { fill:#ffffff; stroke:#222; stroke-width:3; }
+    .contract { fill:#fdfdfd; stroke:#555; stroke-width:3; }
+    .label { font-family:Verdana; font-size:20px; fill:#000; }
+    .small { font-family:Verdana; font-size:16px; fill:#000; }
+    .title { font-family:Verdana; font-size:28px; fill:#000; font-weight:bold; }
+    .subtitle { font-family:Verdana; font-size:20px; fill:#444; }
+    .arrow { stroke:#333; stroke-width:3; marker-end:url(#arrowhead); }
+    .dashed { stroke-dasharray:8 8; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="14" markerHeight="10"
+            refX="12" refY="5" orient="auto">
+      <polygon points="0 0, 12 5, 0 10" fill="#333"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="2200" height="1400" class="bg"/>
+
+  <!-- Title -->
+  <text x="1100" y="70" class="title" text-anchor="middle">
+    CRK-1 Runtime  Constitutional Continuity Systems Map
+  </text>
+  <text x="1100" y="105" class="subtitle" text-anchor="middle">
+    Objects " Contracts " Transmission " Preservation " Assimilation " Drift
+  </text>
+
+  <!-- Transmission Layer -->
+  <rect x="80" y="140" width="2040" height="320" rx="30" ry="30" class="layer"/>
+  <text x="1100" y="180" class="title" text-anchor="middle">Layer I  Transmission (K0K2)</text>
+  <text x="1100" y="215" class="small" text-anchor="middle">
+    Consequence Transmission " Immutable Exposure " JudgmentConsequence Coupling
+  </text>
+
+  <!-- Objects row -->
+  <rect x="160" y="260" width="260" height="120" rx="18" ry="18" class="obj"/>
+  <text x="290" y="305" class="label" text-anchor="middle">Identity</text>
+  <text x="290" y="335" class="small" text-anchor="middle">Who acts</text>
+
+  <rect x="520" y="260" width="260" height="120" rx="18" ry="18" class="obj"/>
+  <text x="650" y="305" class="label" text-anchor="middle">Decision</text>
+  <text x="650" y="335" class="small" text-anchor="middle">What is chosen</text>
+
+  <rect x="880" y="260" width="260" height="120" rx="18" ry="18" class="obj"/>
+  <text x="1010" y="305" class="label" text-anchor="middle">Outcome</text>
+  <text x="1010" y="335" class="small" text-anchor="middle">What happens</text>
+
+  <rect x="1240" y="260" width="260" height="120" rx="18" ry="18" class="obj"/>
+  <text x="1370" y="305" class="label" text-anchor="middle">Evidence</text>
+  <text x="1370" y="335" class="small" text-anchor="middle">What is recorded</text>
+
+  <rect x="1600" y="260" width="260" height="120" rx="18" ry="18" class="obj"/>
+  <text x="1730" y="305" class="label" text-anchor="middle">Identity (Updated)</text>
+  <text x="1730" y="335" class="small" text-anchor="middle">Who learns</text>
+
+  <!-- Transmission arrows -->
+  <line x1="420" y1="320" x2="520" y2="320" class="arrow"/>
+  <line x1="780" y1="320" x2="880" y2="320" class="arrow"/>
+  <line x1="1140" y1="320" x2="1240" y2="320" class="arrow"/>
+  <line x1="1500" y1="320" x2="1600" y2="320" class="arrow"/>
+
+  <!-- Preservation Layer -->
+  <rect x="80" y="500" width="2040" height="320" rx="30" ry="30" class="layer"/>
+  <text x="1100" y="540" class="title" text-anchor="middle">Layer II  Preservation (K3K6)</text>
+  <text x="1100" y="575" class="small" text-anchor="middle">
+    Anti-Insulation " Consequence Preservation " Mutation Admissibility " Drift Envelope CE(S)
+  </text>
+
+  <!-- Contracts -->
+  <rect x="220" y="620" width="320" height="120" rx="16" ry="16" class="contract"/>
+  <text x="380" y="660" class="label" text-anchor="middle">Evidence Contract</text>
+  <text x="380" y="690" class="small" text-anchor="middle">Admissibility " Replayability</text>
+
+  <rect x="900" y="620" width="320" height="120" rx="16" ry="16" class="contract"/>
+  <text x="1060" y="660" class="label" text-anchor="middle">Governance Contract</text>
+  <text x="1060" y="690" class="small" text-anchor="middle">Propose " Deliberate " Ratify " Amend</text>
+
+  <rect x="1580" y="620" width="320" height="120" rx="16" ry="16" class="contract"/>
+  <text x="1740" y="660" class="label" text-anchor="middle">Runtime Contract</text>
+  <text x="1740" y="690" class="small" text-anchor="middle">State Machine " Invariants</text>
+
+  <!-- Assimilation Layer -->
+  <rect x="80" y="860" width="2040" height="440" rx="30" ry="30" class="layer"/>
+  <text x="1100" y="900" class="title" text-anchor="middle">Layer III  Assimilation (K7K12)</text>
+  <text x="1100" y="935" class="small" text-anchor="middle">
+    Interpretive Pluralism " Prediction Binding " Anti-Monoculture " Adversarial Reconstruction " Drift Envelope SE(S)
+  </text>
+
+  <!-- Semantic objects -->
+  <rect x="220" y="980" width="360" height="120" rx="18" ry="18" class="obj"/>
+  <text x="400" y="1020" class="label" text-anchor="middle">InterpretationObject</text>
+  <text x="400" y="1050" class="small" text-anchor="middle">Frames " Assumptions " Weights</text>
+
+  <rect x="920" y="980" width="360" height="120" rx="18" ry="18" class="obj"/>
+  <text x="1100" y="1020" class="label" text-anchor="middle">PredictionObject</text>
+  <text x="1100" y="1050" class="small" text-anchor="middle">Claims " Expected Outcomes</text>
+
+  <rect x="1620" y="980" width="360" height="120" rx="18" ry="18" class="obj"/>
+  <text x="1800" y="1020" class="label" text-anchor="middle">ReconstructionObject</text>
+  <text x="1800" y="1050" class="small" text-anchor="middle">Adversarial Views " Divergence</text>
+
+  <!-- Semantic arrows -->
+  <line x1="580" y1="1040" x2="920" y2="1040" class="arrow"/>
+  <line x1="1280" y1="1040" x2="1620" y2="1040" class="arrow"/>
+
+  <!-- Feedback to Decisions -->
+  <line x1="1100" y1="980" x2="1100" y2="380" class="arrow dashed"/>
+
+  <!-- Drift annotations -->
+  <text x="2000" y="580" class="small" text-anchor="end">CE(S)  Constitutional Exposure</text>
+  <text x="2000" y="940" class="small" text-anchor="end">SE(S)  Semantic Exposure</text>
+
+</svg>

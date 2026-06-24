@@ -1,0 +1,30 @@
+{
+  "id": "D3-0001",
+  "type": "ReproductionSeal",
+  "created_at": "2026-06-24T12:00:00Z",
+  "created_by": "ExternalSteward-001",
+  "epoch": 3,
+  "payload": {
+    "runtime_rebuilt": true,
+    "source_of_truth": "RP-CRK1-v1.0",
+    "oral_tradition_used": false,
+    "tests_executed": {
+      "invariant_enforcement": "PASS",
+      "governance_refusal": "PASS",
+      "semantic_capture_resistance": "PASS",
+      "governance_bypass_resistance": "PASS",
+      "continuity_graph_reconstruction": "PASS",
+      "kernel_challenge_path": "PASS"
+    },
+    "results": {
+      "all_passed": true,
+      "notes": "Founder-independent reconstruction from M3-A packet; no oral tradition required."
+    }
+  },
+  "links": {
+    "reproduction_packet_id": "RP-CRK1-v1.0",
+    "test_harness_ids": ["TH-0001", "TH-0002", "TH-0003"],
+    "external_steward_id": "ExternalSteward-001",
+    "governance_receipt_ids": ["R-0001", "R-0002"]
+  }
+}

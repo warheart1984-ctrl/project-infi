@@ -1,0 +1,82 @@
+{
+  "runtime": "CRK-1 ConstitutionalRuntime",
+  "updated_at": "2026-06-24T04:56:23Z",
+  "continuity_status": "PRESERVED",
+  "consequence_exposure": {
+    "score": 1.0,
+    "outcome_replayable_ratio": 1.0,
+    "evidence_admissible_ratio": 1.0,
+    "lineage_exposure_ratio": 1.0,
+    "judgment_coupling_ratio": 1.0,
+    "transmission_loop_ratio": 1.0
+  },
+  "invariants": {
+    "K0": "PASS",
+    "K1": "PASS",
+    "K2": "PASS",
+    "K3": "PASS",
+    "K4": "PASS",
+    "K5": "PASS",
+    "K6": "PASS"
+  },
+  "lattice": {
+    "K4": "Consequence Preservation Law",
+    "K5": "Mutation Admissibility Test",
+    "K6": "Constitutional Drift Envelope",
+    "ce_score": 1.0
+  },
+  "attacks": {
+    "drop_outcome": [
+      "drop_outcome",
+      "PASS"
+    ],
+    "non_replayable_outcome": [
+      "non_replayable_outcome",
+      "PASS"
+    ],
+    "quarantine_evidence": [
+      "quarantine_evidence",
+      "PASS"
+    ],
+    "fork_without_history": [
+      "fork_without_history",
+      "PASS"
+    ],
+    "decision_without_evidence": [
+      "decision_without_evidence",
+      "PASS"
+    ],
+    "replay_bypass": [
+      "replay_bypass",
+      "PASS"
+    ]
+  },
+  "receipts": [
+    {
+      "text": "CRK-1 Governance Receipt\n\nAction ID:        2ca846de\nAction Type:      ExecuteDecision\nSubmitted By:     CIV-CORE-01\nTimestamp:        2026-06-24T04:56:23Z\n\nState Transition:\nFrom:           OutcomeReplayed\nTo:             EvidenceAdmitted\nTransition OK:  PASS\n\nInvariant Checks:\nK0:             PASS\nK1:             PASS\nK2:             PASS\nK3:             PASS\n\nLineage:\nIdentity:       CIV-CORE-01\nAncestors:      ['CIV-CORE-01']\nEvidence Used:  ['EVD-CRK1-001']\n\nReplay:\nOutcome ID:     OUT-DEC-4f1e82b1f1-E17\nEvidence ID:    EV-REPLAY-OUT-DEC-4f1e82b1f1-E17\nReplay Hash:    fe62ac9ef988c251\n\nContinuity:\nStatus:         PRESERVED\n\nSignature:\n0xBE408EB9...3BE1",
+      "action_id": "2ca846de",
+      "action_type": "ExecuteDecision",
+      "identity": "CIV-CORE-01",
+      "timestamp": "2026-06-24T04:56:23Z",
+      "from_state": "OutcomeReplayed",
+      "to_state": "EvidenceAdmitted",
+      "transition_ok": true,
+      "k0_status": "PASS",
+      "k1_status": "PASS",
+      "k2_status": "PASS",
+      "k3_status": "PASS",
+      "ancestors": [
+        "CIV-CORE-01"
+      ],
+      "evidence_ids": [
+        "EVD-CRK1-001"
+      ],
+      "outcome_id": "OUT-DEC-4f1e82b1f1-E17",
+      "evidence_id": "EV-REPLAY-OUT-DEC-4f1e82b1f1-E17",
+      "replay_hash": "fe62ac9ef988c251",
+      "continuity_status": "PRESERVED",
+      "signature": "0xBE408EB9...3BE1",
+      "error": null
+    }
+  ]
+}

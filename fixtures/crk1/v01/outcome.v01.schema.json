@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://crk1.local/schemas/v01/outcome.v01.json",
+  "title": "CRK1OutcomeV01",
+  "allOf": [
+    { "$ref": "envelope.definitions.schema.json#/$defs/envelopeBase" },
+    {
+      "type": "object",
+      "properties": {
+        "type": { "const": "Outcome" },
+        "payload": {
+          "type": "object",
+          "required": ["label"],
+          "properties": {
+            "label": { "type": "string" },
+            "state_change": {
+              "type": "object",
+              "properties": {
+                "before": { "type": "object" },
+                "after": { "type": "object" }
+              }
+            },
+            "metrics": {
+              "type": "object",
+              "properties": {
+                "ce_delta": { "type": "number" },
+                "se_delta": { "type": "number" }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "links": {
+          "type": "object",
+          "required": ["decision_id"],
+          "properties": {
+            "decision_id": { "$ref": "envelope.definitions.schema.json#/$defs/objectId" },
+            "evidence_ids": {
+              "type": "array",
+              "items": { "$ref": "envelope.definitions.schema.json#/$defs/objectId" }
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  ]
+}

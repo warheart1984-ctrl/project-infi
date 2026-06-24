@@ -1,0 +1,50 @@
+{
+  "evidence": {
+    "raw": {
+      "signal": 0.72,
+      "source": "observer-trace",
+      "summary": "late_intervention pattern exceeded baseline"
+    }
+  },
+  "context": {
+    "stateSummary": {
+      "perception": 0.55,
+      "interpretation": 0.5,
+      "valuation": 0.4,
+      "deliberation": 0.45,
+      "commitment": 0.5,
+      "reflection": 0.35
+    }
+  },
+  "reasoning": {
+    "interpretation": "valuation exceeds evidenceThreshold; adjust valuation upward",
+    "justification": "if evidence exceeds valuationThreshold, adjust valuation by 0.1"
+  },
+  "uncertainty": {
+    "level": 0.1,
+    "dimensions": {
+      "valuation": 0.08
+    }
+  },
+  "thresholds": {
+    "values": {
+      "valuationThreshold": 0.6,
+      "evidenceThreshold": 0.5
+    }
+  },
+  "outcomes": {
+    "result": {
+      "valuationDelta": 0.09
+    }
+  },
+  "correction": {
+    "postCorrectionState": {
+      "perception": 0.55,
+      "interpretation": 0.5,
+      "valuation": 0.49,
+      "deliberation": 0.45,
+      "commitment": 0.5,
+      "reflection": 0.35
+    }
+  }
+}

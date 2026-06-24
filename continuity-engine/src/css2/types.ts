@@ -96,6 +96,17 @@ export interface RecalibrationEvent {
   legitimacyBasis: string;
   continuityEffect?: "improved" | "degraded" | "ambiguous";
   decidedBy: string;
+  /** CRK-1.J — legitimate judgment summary attached by governance engine. */
+  legitimateJudgment?: LegitimateJudgmentSummary;
+}
+
+/** Slim CRK-1.J result on recalibration events (avoids circular imports). */
+export interface LegitimateJudgmentSummary {
+  legitimate: boolean;
+  category: "CRK-1.J";
+  satisfiedRequirements: string[];
+  failedRequirements: string[];
+  gaps: string[];
 }
 
 export interface ObservationPattern {
