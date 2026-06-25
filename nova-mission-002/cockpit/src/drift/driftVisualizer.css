@@ -1,0 +1,59 @@
+.drift-visualizer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  height: 100%;
+}
+
+.drift-header {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.drift-grid {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  overflow-x: auto;
+}
+
+.drift-agent-column {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.agent-label {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.drift-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.state-ok {
+  background: #27ae60;
+}
+
+.state-drift {
+  background: #f2c94c;
+}
+
+.state-error {
+  background: #eb5757;
+}
+
+.drift-footer {
+  font-size: 12px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.drift-event {
+  padding: 4px 0;
+  border-bottom: 1px solid var(--nova-border);
+}

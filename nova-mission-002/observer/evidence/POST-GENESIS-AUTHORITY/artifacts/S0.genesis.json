@@ -1,0 +1,32 @@
+{
+  "registry_id": "S0",
+  "version": "genesis",
+  "created_at": "2026-06-22T00:00:00Z",
+  "stewards": [
+    {
+      "steward_id": "steward:01",
+      "display_name": "Founder Steward Alpha",
+      "key": "ed25519:a1f2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f80",
+      "status": "active"
+    },
+    {
+      "steward_id": "steward:02",
+      "display_name": "Founder Steward Beta",
+      "key": "ed25519:b2e3f4a5b6c7d8091b2c3d4e5f60718292b3c4d5e6f708192a3b4c5d6e7f81",
+      "status": "active"
+    },
+    {
+      "steward_id": "steward:03",
+      "display_name": "Founder Steward Gamma",
+      "key": "ed25519:c3f4a5b6c7d8e9012c3d4e5f60718293a3b4c5d6e7f8091a2b3c4d5e6f7082",
+      "status": "active"
+    },
+    {
+      "steward_id": "steward:04",
+      "display_name": "Founder Steward Delta",
+      "key": "ed25519:d4a5b6c7d8e9f0123d4e5f60718294b4c5d6e7f8091a2b3c4d5e6f708192",
+      "status": "active"
+    }
+  ],
+  "quorum_threshold": 2
+}

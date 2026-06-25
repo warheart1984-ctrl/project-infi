@@ -23,12 +23,19 @@ $env:PYTHONPATH = $Root
 $env:NOVA_API_URL = if ($env:NOVA_API_URL) { $env:NOVA_API_URL } else { "http://127.0.0.1:8080" }
 
 function Test-NovaHealth([string]$BaseUrl) {
-    try {
-        $null = Invoke-RestMethod -Uri "$($BaseUrl.TrimEnd('/'))/health" -TimeoutSec 2
-        return $true
-    } catch {
-        return $false
+    $candidates = @($BaseUrl)
+    if ($BaseUrl -match 'localhost') {
+        $candidates += ($BaseUrl -replace 'localhost', '127.0.0.1')
     }
+    foreach ($candidate in $candidates) {
+        try {
+            $null = Invoke-RestMethod -Uri "$($candidate.TrimEnd('/'))/health" -TimeoutSec 2
+            return $true
+        } catch {
+            continue
+        }
+    }
+    return $false
 }
 
 function Start-NovaApi {
@@ -48,7 +55,7 @@ function Start-NovaApi {
 function Start-OperatorStack {
     $env:OPERATOR_KERNEL_CONFIG = if ($env:OPERATOR_KERNEL_CONFIG) { $env:OPERATOR_KERNEL_CONFIG } else { Join-Path $Root "operator_kernel.config.yaml" }
     $env:AAIS_SIGNING_SECRET = if ($env:AAIS_SIGNING_SECRET) { $env:AAIS_SIGNING_SECRET } else { "operator-kernel-dev-secret" }
-    $env:AAIS_WORKSPACE_ROOT = if ($env:AAIS_WORKSPACE_ROOT) { $env:AAIS_WORKSPACE_ROOT } else { Join-Path $Root ".runtime\e2e-operator-workspace" }
+    $env:AAIS_WORKSPACE_ROOT = if ($env:AAIS_WORKSPACE_ROOT) { $env:AAIS_WORKSPACE_ROOT } else { $Root }
     New-Item -ItemType Directory -Force -Path $env:AAIS_WORKSPACE_ROOT | Out-Null
 
     if (-not (Test-NovaHealth "http://127.0.0.1:8791")) {
@@ -81,5 +88,9 @@ Write-Host ""
 Write-Host "CLI: $(Join-Path $Root 'lawful-nova-shell\bin\nova.ps1') health --json"
 
 if ($WithAais) {
-    & $PyExe -m aais start --data-dir (Join-Path $Root ".runtime/aais-data") --preset $Preset --no-browser --port 8000
+    if ($Preset -eq "laptop") {
+        & (Join-Path $Root "scripts\restart-aais.ps1") -Preset laptop -LocalReal
+    } else {
+        & (Join-Path $Root "scripts\restart-aais.ps1") -Preset $Preset
+    }
 }

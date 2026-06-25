@@ -6,6 +6,55 @@
 
 License: [Apache 2.0](LICENSE) · Repo: [Project-Infinity1](https://github.com/warheart1984-ctrl/Project-Infinity1) · Audit report: [Zenodo](https://zenodo.org/records/20587377)
 
+**Architecture map (start here for repo structure):** [ARCHITECTURE.md](ARCHITECTURE.md)
+
+### Agentic coding agent (template)
+
+This repo follows the **[agentic-coding-agent](https://github.com/warheart1984-ctrl/agentic-coding-agent)** layout. Cursor/Nova rules: [`AGENTS.md`](AGENTS.md). Mission #002 mirror: [`nova-mission-002/`](nova-mission-002/). Full guide: [`docs/agentic/README.md`](docs/agentic/README.md).
+
+```powershell
+.\scripts\start-agentic-coding-stack.ps1   # Nova + operator + AAIS real local
+cd nova-mission-002; npm install; npm run build
+```
+
+---
+
+## Nova Continuity Substrate (v0.0-v0.2)
+
+This repo now carries a quarantined substrate track for proving continuity before layering future Nova OS architecture.
+
+Scope:
+
+- v0.0 - Event -> Timeline -> Lineage
+- v0.1 - Receipts
+- v0.2 - File Continuity (open/save -> events)
+
+Everything beyond v0.2 belongs in [FUTURE.md](FUTURE.md).
+
+Substrate docs:
+
+- [Continuity Substrate Specification](CONTINUITY_SUBSTRATE_SPEC.md)
+- [Substrate Diagram](SUBSTRATE_DIAGRAM.md)
+- [Acceptance Tests](ACCEPTANCE.md)
+- [Milestones](MILESTONES.md)
+- [Developer Onboarding](ONBOARDING.md)
+
+Build the substrate first. Prove continuity. Only then layer governance, agents, wave signatures, and Nova Studio.
+
+### Continuity SDK
+
+**Governed. Corrigible. Lineage-Preserving.** — the steward interface for GRR-1, CE-1, and CRR-1 → CLG-1.
+
+- [Landing page](docs/continuity-sdk/index.html) · [Constitution scroll](docs/continuity-sdk/CONSTITUTION.md) · [SDK README](src/continuity_sdk/README.md)
+
+```bash
+pip install -e .
+continuity info
+continuity demo falling-object
+continuity mission 005
+continuity console
+```
+
 ---
 
 ## Lawful Nova local productization
@@ -20,6 +69,17 @@ The Lawful Nova local slice is wired through:
 - API: `python -m nova.api` on `http://localhost:8080`
 - Gate: `python scripts/nova_productization_gate.py`
 - Status doc: `docs/runtime/NOVA_LAWFUL_PRODUCTIZATION.md`
+
+Canonical reasoning handshake:
+[`docs/contracts/AAIS_REASONING_PROFILE.md`](docs/contracts/AAIS_REASONING_PROFILE.md)
+defines the AAIS technical governance mode, CCS reasoning contract, DZI-1
+continuity evidence contract, and first DAR-Z/CSLEIS end-to-end test scenario.
+CCS core schemas and examples live at
+[`docs/contracts/CCS_CORE_SCHEMA.md`](docs/contracts/CCS_CORE_SCHEMA.md),
+[`schemas/ccs_core_objects.v1.json`](schemas/ccs_core_objects.v1.json), and
+[`fixtures/ccs/`](fixtures/ccs/).
+The first executable continuity harness is
+[`tests/test_ccs_continuity_harness.py`](tests/test_ccs_continuity_harness.py).
 
 This proves the local governed runtime path. Docker is optional for the native
 Windows coding-agent path; GPU acceleration and cross-machine Wolf reboot
@@ -621,7 +681,7 @@ Without them, core chat and patch-review paths still work; explicit forge routes
 
 Pull requests to `main` run governance gates (CoGOS CI, documentation baseline, UGR trust bundle, operator console, Forgekeeper, Scorpion). Significant claims in PRs must include proof posture (`asserted` / `proven` / `rejected`) per [`REPO_PROOF_LAW.md`](REPO_PROOF_LAW.md).
 
-**Do not commit:** ISO images, `.runtime/`, `wolf-cog-os/output/`, or duplicate import folders (`*-main/`).
+**Do not commit:** ISO images, `.runtime/`, `cog-os/output/`, or duplicate import folders (`*-main/`).
 
 ---
 
@@ -634,7 +694,7 @@ src/               Jarvis runtime authority (api, operator, UL, law)
 frontend/          React operator UI source (build → app/static)
 forge/             Isolated Forge contractor service
 platform/          Multi-tenant Platform Membrane (ops ingress :8090)
-wolf-cog-os/       CoGOS ISO/rootfs forge (scripts tracked; outputs local-only)
+cog-os/            CoGOS ISO/rootfs forge (scripts tracked; outputs local-only)
 deploy/            Docker compose stacks (pilot | platform | ugr)
 tools/ul/          UL drift + smoke verification (+ lineage graph smoke)
 tools/narrative/   Narrative Trust Pack CLI (pack | verify | signoff)

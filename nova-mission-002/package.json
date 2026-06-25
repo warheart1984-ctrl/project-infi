@@ -1,0 +1,33 @@
+{
+  "name": "agentic-coding-agent",
+  "version": "0.2.0-mission-002",
+  "description": "Nova Mission #002 — CRK-2 constitutional agentic coding with governed SDK, Control Tower, and Cockpit",
+  "main": "dist/agent/index.js",
+  "types": "dist/agent/index.d.ts",
+  "bin": {
+    "nova": "dist/agent/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node agent/index.ts",
+    "cli": "ts-node agent/cli.ts",
+    "agent": "ts-node examples/basic-project/src/agent-loop.ts",
+    "cockpit": "npm run build && cd cockpit && npm run dev",
+    "run:local-governed": "ts-node bin/run_local_governed.ts",
+    "test:local-governed": "node --require ts-node/register/transpile-only --test tests/local_governed_smoke.test.ts",
+    "test": "npm run test:local-governed"
+  },
+  "keywords": ["nova", "crk-2", "governance", "agentic", "constitutional", "mission-002"],
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

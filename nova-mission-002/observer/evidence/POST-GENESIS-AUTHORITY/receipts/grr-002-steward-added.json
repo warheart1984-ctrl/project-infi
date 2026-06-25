@@ -1,0 +1,20 @@
+{
+  "receipt_type": "GRR-1",
+  "receipt_id": "grr-002-steward-added",
+  "event_type": "steward_added",
+  "steward_id": "steward:05",
+  "key": "ed25519:f1a9e7c3b0d4f2a1c9e7d3b0f4a2c1e7d4a9c1f0e3d7b2a4c9f1d8e0b7c3a9f4",
+  "admissibility": "R0.quorum_rules.steward_add",
+  "quorum_signatures": [
+    { "steward_id": "steward:01", "sig": "8c1e7d4a9f0b2c3d1e0a9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0" },
+    { "steward_id": "steward:03", "sig": "a7d9c1e8f0b3a2d4e5f6c7b8a9d0e1f2a3b4c5d6e7f8091a2b3c4d5e6f70" }
+  ],
+  "lineage_pointer": "CLG-1:node:00023",
+  "continuity": {
+    "k_continuity": "extended",
+    "a_continuity": "preserved",
+    "l_continuity": "advanced"
+  },
+  "governance_event_id": "gov:evt:00023",
+  "recorded_at": "2026-06-22T14:22:00Z"
+}

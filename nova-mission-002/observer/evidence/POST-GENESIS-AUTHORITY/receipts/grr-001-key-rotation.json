@@ -1,0 +1,21 @@
+{
+  "receipt_type": "GRR-1",
+  "receipt_id": "grr-001-key-rotation",
+  "event_type": "steward_key_rotation",
+  "steward_id": "steward:03",
+  "old_key": "ed25519:c3f4a5b6c7d8e9012c3d4e5f60718293a3b4c5d6e7f8091a2b3c4d5e6f7082",
+  "new_key": "ed25519:bb14a9f7e2c8d0b3f1a9e7d4c2b0f1a4e9c7d2b3f1c0a8d7e4b9c1f3a0d2e",
+  "rotation_record_hash": "4c9e7a1d8b2f0e3c1a7d4e9f0b2c3a1d7e4f9b0c2a8d1e3f7b4c9a0d2e6f1",
+  "quorum_signatures": [
+    { "steward_id": "steward:01", "sig": "9af1c7d2e4b0a3f1c8d7e6b5a4f3c2d1e0b9a8f7e6d5c4b3a2f1e0d9c8b7a6" },
+    { "steward_id": "steward:02", "sig": "c7d4a1f0e3b2c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6" }
+  ],
+  "lineage_pointer": "CLG-1:node:00017",
+  "continuity": {
+    "k_continuity": "preserved",
+    "a_continuity": "preserved",
+    "l_continuity": "advanced"
+  },
+  "governance_event_id": "gov:evt:00017",
+  "recorded_at": "2026-06-22T12:10:00Z"
+}

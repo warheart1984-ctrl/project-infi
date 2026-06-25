@@ -1,0 +1,76 @@
+.console {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-size-sm);
+}
+
+.header {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+}
+
+.goal {
+  margin-top: var(--space-xs);
+  color: var(--color-accent-continuity);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+}
+
+.btn {
+  padding: var(--space-sm);
+  border-radius: 6px;
+  border: 1px solid var(--color-border-soft);
+  background: rgba(58, 123, 255, 0.12);
+  color: var(--color-accent-nova);
+  font-size: var(--font-size-sm);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.log {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.logLine {
+  padding: 2px 0;
+  color: var(--color-text-secondary);
+}
+
+.logLineViolation {
+  color: var(--color-status-error);
+}
+
+.planSteps {
+  padding: 0 var(--space-md) var(--space-sm);
+  margin: 0;
+  list-style: none;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.planSteps li::before {
+  content: "• ";
+  color: var(--color-accent-governance);
+}
