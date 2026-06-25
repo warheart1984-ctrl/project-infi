@@ -24,7 +24,7 @@ let detOk = false;
 let govOk = false;
 
 try {
-  run('pnpm exec vitest run tests/integration benchmarks/cdp1');
+  run('pnpm exec vitest run tests/cts tests/integration benchmarks/cdp1');
   ctsOk = true;
 } catch {
   ctsOk = false;

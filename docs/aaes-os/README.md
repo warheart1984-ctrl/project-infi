@@ -30,6 +30,8 @@ This directory is the canonical documentation index for the AAES-OS v1.0 public 
 | Document | Description |
 |----------|-------------|
 | [Diagrams](architecture/DIAGRAMS.md) | Mermaid system, sequence, and state diagrams |
+| [CAS 1.0 Spec](architecture/CAS_1_0_SPEC.md) | Constitutional object model specification |
+| [CAS → SDK mapping](dev/CAS_SDK_MAPPING.md) | Developer API over CAS objects |
 
 ## Governance
 

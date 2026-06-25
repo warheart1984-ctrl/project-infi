@@ -14,6 +14,9 @@ pnpm workspace for the AAES-OS **UCR spine** TypeScript packages. The legacy v1 
 
 ```
 aaes-os/
+  runtime/crk1/           # CRK-1 reference runtime (CAS 1.0)
+  sdk/                    # Developer SDK over CAS objects
+  tests/cts/              # CAS 1.0 conformance test suite
   packages/
     runledger/          # RunLedgerStore — runs, spans, invariant links
     trace-bus/          # TraceBusClient — pub/sub trace events
