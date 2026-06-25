@@ -13,6 +13,7 @@
     "test": "corepack pnpm -r run build && corepack pnpm exec vitest run",
     "test:packages": "corepack pnpm -r run test",
     "test:cts": "corepack pnpm exec vitest run tests/cts",
+    "sdk:generate": "corepack pnpm exec tsx sdk/scripts/generate-sdk-types.ts",
     "test:determinism": "corepack pnpm -r run build && corepack pnpm exec tsx tools/validateDeterministicReplay.ts",
     "cdp1": "corepack pnpm -r run build && corepack pnpm exec tsx -e \"import { runMinimalCDP1 } from './benchmarks/cdp1/runMinimalCDP1.ts'; runMinimalCDP1().then(r => console.log(JSON.stringify(r, null, 2)));\"",
     "cep:minimal": "corepack pnpm -r run build && corepack pnpm exec tsx -e \"import { CEPOrchestrator } from './cep/experimentOrchestrator.ts'; new CEPOrchestrator().runMinimalExperiment().then(r => console.log(JSON.stringify(r, null, 2)));\"",
@@ -31,6 +32,10 @@
   },
   "devDependencies": {
     "@types/node": "^22.19.21",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "openapi-fetch": "^0.14.0",
+    "openapi-typescript": "^7.8.0",
     "tsx": "^4.20.5",
     "typescript": "^5.9.3",
     "vitest": "^3.2.4"

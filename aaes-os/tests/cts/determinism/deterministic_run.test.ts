@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { createCrk1Runtime } from '../../../helpers/crk1Runtime.js';
+import { createCrk1Runtime } from '../../helpers/crk1Runtime.js';
 
 describe('Deterministic run', () => {
   it('same payload yields same result shape', async () => {

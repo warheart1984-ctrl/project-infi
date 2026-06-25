@@ -11,7 +11,7 @@ export class GovernanceEngine {
   }
 
   checkPreRun(ctx: RunContext): InvariantResult {
-    return this.evaluate(ctx, ['INV.NO_EMPTY_PAYLOAD']);
+    return this.evaluate({ run: ctx }, ['INV.NO_EMPTY_PAYLOAD']);
   }
 
   checkPostRun(ctx: RunContext, result: unknown): InvariantResult {

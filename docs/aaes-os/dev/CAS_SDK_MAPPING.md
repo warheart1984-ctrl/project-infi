@@ -122,6 +122,23 @@ sdk.faults.explain(fault)
 
 ## High-Level SDK Examples
 
+### Remote (HTTP) via generated OpenAPI client
+
+```typescript
+import { createCasClient } from '../sdk/index.js';
+import type { components } from '../sdk/index.js';
+
+const client = createCasClient({ baseUrl: 'http://localhost:8787' });
+const { data } = await client.POST('/run', {
+  body: {
+    identity: { id: 'agent-1', type: 'agent' },
+    payload: { prompt: 'Hello' },
+  },
+});
+```
+
+Regenerate types after spec changes: `pnpm sdk:generate`
+
 ### Remote (HTTP) via RuntimeClient
 
 ```typescript
@@ -170,6 +187,9 @@ const drift = await sdk.cdp1.runMinimal();
 
 - OpenAPI: `aaes-os/api/cas-openapi.yaml`
 - JSON Schema: `aaes-os/schemas/cas-1.0.json`
+- Generated SDK types: `aaes-os/sdk/generated/types.ts` (`pnpm sdk:generate`)
+
+CTS validates runtime objects against JSON Schema; SDK types are generated from OpenAPI so spec, runtime, and client stay aligned.
 
 ---
 

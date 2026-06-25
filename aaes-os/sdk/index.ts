@@ -5,6 +5,7 @@ export * as util from './util/hash.js';
 export { equal, deepEqual } from './util/assert.js';
 export { hashReceipt } from './util/hash.js';
 export { RuntimeClient } from './client/RuntimeClient.js';
+export { createCasClient, client as generatedClient } from './generated/client.js';
 export type {
   RuntimeConfig,
   Identity,
@@ -13,6 +14,10 @@ export type {
   SpanWire,
   ReceiptWire,
   FaultWire,
+  InvariantInfo,
+  components,
+  paths,
+  operations,
 } from './client/types.js';
 export { createLocalSdk } from './local/createLocalSdk.js';
 export type { LocalSdk } from './local/createLocalSdk.js';

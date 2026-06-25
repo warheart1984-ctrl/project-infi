@@ -10,17 +10,23 @@ Validates three dimensions:
 
 ```
 tests/cts/
+  helpers/
+    schemaValidator.ts   # Ajv validator against schemas/cas-1.0.json
   cas/
     identity/
     run/
     span/
     receipt/
     fault/
+    schema/              # JSON Schema conformance tests
   governance/
     invariants/
     enforcement/
   determinism/
 ```
+
+Schema conformance: every CAS object type is validated against `schemas/cas-1.0.json`.
+Runtime output from CRK-1 is also checked in `cas/schema/validateRuntimeOutput.test.ts`.
 
 ## Run
 
