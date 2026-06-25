@@ -1,127 +1,163 @@
-# AAES-OS Monorepo
+# AAES-OS
 
-## Vision
+**A constitutional operating system for governed AI.**
 
-AAES-OS provides a **stable, auditable spine** for agentic systems. It enforces invariants, journals faults, and supports governed evolution of behavior — enabling AI systems that are **deterministic, inspectable, and accountable** by design.
+AAES-OS enforces invariants before and after every run, emits verifiable receipts, and keeps runtime behavior **deterministic, inspectable, and accountable**. It is built around **CAS 1.0** (Constitutional Agent Specification) and the **CRK-1** reference runtime.
 
-**v1.0 launch docs:** [docs/aaes-os/](../docs/aaes-os/) · **Roadmap:** [ROADMAP.md](ROADMAP.md) · **Contributing:** [CONTRIBUTING.md](CONTRIBUTING.md)
+> Full v1.0 launch docs (papers, governance handbook, tutorials):  
+> [Project-Infinity1 `docs/aaes-os/`](https://github.com/warheart1984-ctrl/Project-Infinity1/tree/codex/aaes-os-production-sweep/docs/aaes-os)
 
-**Release ops:** [RELEASE_DASHBOARD.md](RELEASE_DASHBOARD.md) · [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) · [Replication](replication/README.md)
+---
 
-pnpm workspace for the AAES-OS **UCR spine** TypeScript packages. The legacy v1 cognitive runtime (`src/`, HTTP orchestrator) remains at the repo root for backward compatibility.
+## What you get
 
-## Layout
+| Component | Path | Role |
+|-----------|------|------|
+| **CAS 1.0** | `schemas/cas-1.0.json`, `api/cas-openapi.yaml` | Canonical objects + HTTP API contract |
+| **CRK-1 runtime** | `runtime/crk1/` | Reference governed execution loop |
+| **CTS** | `tests/cts/` | Conformance tests (objects, lifecycle, governance, schema) |
+| **SDK** | `sdk/` | Local + HTTP client; types generated from OpenAPI |
+| **CDP-1** | `benchmarks/cdp1/` | Minimal continuity / drift experiment |
+| **CEP** | `cep/` | Experiment orchestration scaffold |
+| **Replication** | `replication/` | Independent replication package |
 
+---
+
+## Architecture (closed loop)
+
+```mermaid
+flowchart LR
+  JSON["JSON Schema\nschemas/cas-1.0.json"]
+  CTS["CTS\nAjv validation"]
+  OAS["OpenAPI\napi/cas-openapi.yaml"]
+  SDK["SDK types\nsdk/generated/"]
+  CRK["CRK-1\nruntime/crk1/"]
+
+  JSON --> CTS
+  CTS --> CRK
+  OAS --> SDK
+  SDK --> CRK
+  CRK --> CTS
 ```
-aaes-os/
-  runtime/crk1/           # CRK-1 reference runtime (CAS 1.0)
-  sdk/
-    generated/           # OpenAPI-derived types + client (pnpm sdk:generate)
-    scripts/
-      generate-sdk-types.ts
-  api/                    # CAS 1.0 OpenAPI spec
-  schemas/                # CAS 1.0 JSON Schema
-  tests/cts/              # CAS 1.0 conformance test suite
-  packages/
-    runledger/          # RunLedgerStore — runs, spans, invariant links
-    trace-bus/          # TraceBusClient — pub/sub trace events
-    aaes-governance/    # InvariantEngine + FaultJournalStore (Phase 3 stub)
-    ucr-runtime/        # UCRRuntime shell (Phase 3 stub)
-    tri-core-protocol/  # Governance triad types (Phase 3 stub)
-  services/
-    ops-console/        # React UI + Express telemetry + Prometheus /metrics
-  infra/
-    grafana/            # aaes-os-dashboard.json
-    prometheus/         # scrape config snippet
-  tools/                # placeholder — CLI/dev tools
-  docs/                 # workspace-local docs pointer
-  tests/integration/    # cross-package spine tests
-  src/                  # legacy AAES-OS v1 orchestrator (unchanged)
-```
 
-## Prerequisites
+- **CAS objects** are defined in JSON Schema and validated in CTS.
+- **HTTP API** is defined in OpenAPI; SDK types are generated (`pnpm sdk:generate`).
+- **CRK-1** implements the spec and is checked by CTS on every change.
 
-- Node.js ≥ 20
-- [pnpm](https://pnpm.io/) ≥ 9
+---
 
-## Install
+## Quick start
+
+**Prerequisites:** Node.js ≥ 20, [pnpm](https://pnpm.io/) ≥ 9
 
 ```bash
-cd aaes-os
+git clone https://github.com/warheart1984-ctrl/AAES-OS.git
+cd AAES-OS
 pnpm install
 ```
 
-## Build
+### Run conformance tests
 
 ```bash
-pnpm build          # all workspace packages
-pnpm build:legacy   # legacy src/ orchestrator (npm/tsc root tsconfig)
+pnpm test:cts
 ```
 
-## Test
+### Use the SDK (local, in-process)
 
-```bash
-pnpm test           # build packages + vitest (unit + integration)
-pnpm test:packages  # per-package vitest where configured
-pnpm test:legacy    # legacy node:test suite
+```typescript
+import { createLocalSdk } from './sdk/index.js';
+
+const sdk = createLocalSdk();
+const result = await sdk.run.execute({
+  identity: sdk.identity.fromEnv(),
+  payload: { prompt: 'Hello' },
+});
 ```
 
-## Ops Console
+### Use the SDK (remote HTTP)
 
-Telemetry UI and Prometheus metrics for drift, fault patterns, and patch effectiveness.
+```typescript
+import { createCasClient } from './sdk/index.js';
+
+const client = createCasClient({ baseUrl: 'http://localhost:8787' });
+const { data } = await client.POST('/run', {
+  body: {
+    identity: { id: 'agent-1', type: 'agent' },
+    payload: { prompt: 'Hello' },
+  },
+});
+```
+
+Regenerate OpenAPI types after spec changes:
 
 ```bash
-cd aaes-os
-pnpm install
+pnpm sdk:generate
+```
+
+### Run CDP-1 minimal benchmark
+
+```bash
+pnpm cdp1
+```
+
+---
+
+## Repository layout
+
+```
+runtime/crk1/          # CRK-1 reference runtime (CAS 1.0)
+sdk/                   # Developer SDK (local + HTTP)
+  generated/           # OpenAPI-derived types (do not edit by hand)
+  scripts/             # sdk:generate
+api/                   # CAS 1.0 OpenAPI spec
+schemas/               # CAS 1.0 JSON Schema
+tests/cts/             # Conformance test suite
+benchmarks/cdp1/       # CDP-1 harness
+cep/                   # Continuity experiment platform
+packages/              # UCR spine workspace packages
+services/ops-console/  # Telemetry UI + Prometheus metrics
+replication/           # Independent replication guide
+```
+
+---
+
+## Development
+
+```bash
+pnpm build            # workspace packages
+pnpm test             # build + vitest (unit + integration)
+pnpm test:cts         # CAS 1.0 conformance only
+pnpm test:determinism # deterministic replay validator
+```
+
+| Doc | Link |
+|-----|------|
+| Roadmap | [ROADMAP.md](ROADMAP.md) |
+| Contributing | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Changelog | [CHANGELOG.md](CHANGELOG.md) |
+| Release dashboard | [RELEASE_DASHBOARD.md](RELEASE_DASHBOARD.md) |
+| Evidence ledger | [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) |
+| CTS README | [tests/cts/README.md](tests/cts/README.md) |
+
+---
+
+## Ops console (optional)
+
+```bash
 pnpm --filter @aaes-os/ops-console dev
 ```
 
-- Vite UI: http://localhost:5173 (proxies `/telemetry` and `/metrics` to port 4000)
-- API: http://localhost:4000
-- `GET /telemetry` — JSON `{ drift, topPatterns, lastFaults, patchTimeline }`
-- `GET /metrics` — Prometheus exposition (`aaes_drift_score`, `aaes_fault_events_total`, `aaes_fault_pattern_recurrence`)
+- UI: http://localhost:5173  
+- API / metrics: http://localhost:4000 (`/telemetry`, `/metrics`)
 
-Production:
+---
 
-```bash
-pnpm --filter @aaes-os/ops-console build
-pnpm --filter @aaes-os/ops-console start
-```
+## License
 
-Import Grafana dashboard from `infra/grafana/aaes-os-dashboard.json`. Prometheus scrape target: `localhost:4000` (see `infra/prometheus/prometheus.yml`).
+Apache 2.0. See the [Project-Infinity1](https://github.com/warheart1984-ctrl/Project-Infinity1) repository for the canonical `LICENSE` when this tree is consumed as part of the monorepo.
 
-Demo seed data (20 faults for `INV_FAIL_INV_OUTPUT_SHAPE` / `INV_FAIL_INV_DETERMINISM`, plus 2 patch samples) loads on server startup.
+---
 
-## Package dependency graph (Phase 2)
+## Contribute
 
-```
-runledger  ←  trace-bus
-    ↑            ↑
-    └──── ucr-runtime (stub)
-aaes-governance → runledger (types)
-tri-core-protocol (standalone types)
-```
-
-## Mapping to Python spine
-
-See [docs/architecture/AAES_OS_UCR_MAPPING.md](../docs/architecture/AAES_OS_UCR_MAPPING.md) at the repo root.
-
-## Reasoning Contract
-
-AAES-OS follows the workspace canonical AAIS reasoning handshake for
-continuity-grade evaluations:
-[`docs/contracts/AAIS_REASONING_PROFILE.md`](../docs/contracts/AAIS_REASONING_PROFILE.md).
-CCS object schemas and examples are in
-[`docs/contracts/CCS_CORE_SCHEMA.md`](../docs/contracts/CCS_CORE_SCHEMA.md),
-[`schemas/ccs_core_objects.v1.json`](../schemas/ccs_core_objects.v1.json), and
-[`fixtures/ccs/`](../fixtures/ccs/).
-
-## Phase status
-
-| Phase | Scope | Status |
-|-------|--------|--------|
-| 1 | Workspace shell, branded types, package.json/tsconfig | Done |
-| 2 | In-memory RunStore, TraceBusClient, integration test | Done |
-| 3 | Governance + UCR + tri-core stubs | Types/stubs only |
-| 4 | Ops Console service | Done (`services/ops-console`) |
-| 5 | Infra / persistence | Grafana + Prometheus snippets |
+AAES-OS is designed to be **challenged**. Open an issue, run CTS, attach receipts. See [CONTRIBUTING.md](CONTRIBUTING.md).
