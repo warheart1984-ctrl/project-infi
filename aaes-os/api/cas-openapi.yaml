@@ -1,0 +1,202 @@
+openapi: 3.0.3
+info:
+  title: AAES-OS CAS 1.0 Runtime API
+  version: 1.0.0
+  description: HTTP API for governed runs, receipts, spans, and governance invariants.
+
+paths:
+  /run:
+    post:
+      summary: Execute a governed run
+      operationId: executeRun
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecuteRequest'
+      responses:
+        '200':
+          description: Run result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteResponse'
+
+  /receipts/{runId}:
+    get:
+      summary: Get a run receipt
+      operationId: getReceipt
+      parameters:
+        - in: path
+          name: runId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Receipt
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receipt'
+        '404':
+          description: Receipt not found
+
+  /runs/{runId}/spans:
+    get:
+      summary: Get spans for a run
+      operationId: getSpans
+      parameters:
+        - in: path
+          name: runId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Spans
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Span'
+
+  /faults/{runId}:
+    get:
+      summary: Get fault for a failed run
+      operationId: getFault
+      parameters:
+        - in: path
+          name: runId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Fault record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fault'
+        '404':
+          description: Fault not found
+
+  /governance/invariants:
+    get:
+      summary: List active invariants
+      operationId: listInvariants
+      responses:
+        '200':
+          description: Invariants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvariantInfo'
+
+components:
+  schemas:
+    Identity:
+      type: object
+      required: [id, type]
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [agent, model, operator]
+        metadata:
+          type: object
+          additionalProperties: true
+
+    ExecuteRequest:
+      type: object
+      required: [identity, payload]
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        payload:
+          type: object
+          additionalProperties: true
+
+    ExecuteResponse:
+      type: object
+      required: [ok, runId]
+      properties:
+        ok:
+          type: boolean
+        runId:
+          type: string
+        result:
+          nullable: true
+        fault:
+          nullable: true
+          type: object
+          properties:
+            invariantId:
+              type: string
+            message:
+              type: string
+
+    Span:
+      type: object
+      required: [id, runId, type, timestamp]
+      properties:
+        id:
+          type: string
+        runId:
+          type: string
+        type:
+          type: string
+        timestamp:
+          type: integer
+        data:
+          type: object
+          additionalProperties: true
+
+    Receipt:
+      type: object
+      required: [runId, hash, spans, result]
+      properties:
+        runId:
+          type: string
+        hash:
+          type: string
+        spans:
+          type: array
+          items:
+            $ref: '#/components/schemas/Span'
+        result:
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+
+    Fault:
+      type: object
+      required: [runId, invariantId, message]
+      properties:
+        runId:
+          type: string
+        invariantId:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    InvariantInfo:
+      type: object
+      required: [id, description, phase]
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        phase:
+          type: string
+          enum: [pre, post]

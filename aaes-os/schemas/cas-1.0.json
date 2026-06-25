@@ -1,0 +1,120 @@
+{
+  "$id": "https://aaes-os.org/schemas/cas-1.0.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CAS 1.0 Core Objects",
+  "type": "object",
+  "$defs": {
+    "Identity": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["agent", "model", "operator"]
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "Run": {
+      "type": "object",
+      "required": ["runId", "identity", "payload"],
+      "properties": {
+        "runId": { "type": "string" },
+        "identity": { "$ref": "#/$defs/Identity" },
+        "payload": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": true
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "Span": {
+      "type": "object",
+      "required": ["id", "runId", "type", "timestamp"],
+      "properties": {
+        "id": { "type": "string" },
+        "runId": { "type": "string" },
+        "type": { "type": "string" },
+        "timestamp": { "type": "integer" },
+        "data": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "Receipt": {
+      "type": "object",
+      "required": ["runId", "hash", "spans", "result"],
+      "properties": {
+        "runId": { "type": "string" },
+        "hash": { "type": "string" },
+        "spans": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Span" }
+        },
+        "result": {},
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "Fault": {
+      "type": "object",
+      "required": ["runId", "invariantId", "message"],
+      "properties": {
+        "runId": { "type": "string" },
+        "invariantId": { "type": "string" },
+        "message": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "ExecuteRequest": {
+      "type": "object",
+      "required": ["identity", "payload"],
+      "properties": {
+        "identity": { "$ref": "#/$defs/Identity" },
+        "payload": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "ExecuteResponse": {
+      "type": "object",
+      "required": ["ok", "runId"],
+      "properties": {
+        "ok": { "type": "boolean" },
+        "runId": { "type": "string" },
+        "result": {},
+        "fault": {
+          "type": "object",
+          "properties": {
+            "invariantId": { "type": "string" },
+            "message": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "InvariantInfo": {
+      "type": "object",
+      "required": ["id", "description", "phase"],
+      "properties": {
+        "id": { "type": "string" },
+        "description": { "type": "string" },
+        "phase": { "type": "string", "enum": ["pre", "post"] }
+      },
+      "additionalProperties": false
+    }
+  }
+}

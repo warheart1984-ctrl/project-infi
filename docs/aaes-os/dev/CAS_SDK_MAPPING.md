@@ -122,12 +122,23 @@ sdk.faults.explain(fault)
 
 ## High-Level SDK Examples
 
-### Execute a run
+### Remote (HTTP) via RuntimeClient
 
 ```typescript
-import { createSdk } from '../sdk/index.js';
+import { RuntimeClient, cas, cdp1 } from '../sdk/index.js';
 
-const sdk = createSdk();
+const client = new RuntimeClient({ baseUrl: 'http://localhost:8787' });
+const identity = cas.createIdentity({ type: 'agent' });
+const result = await cas.executeRun(client, identity, { prompt: 'Hello' });
+const drift = await cdp1.runMinimalCDP1(client);
+```
+
+### Local (in-process CRK-1)
+
+```typescript
+import { createLocalSdk } from '../sdk/index.js';
+
+const sdk = createLocalSdk();
 const result = await sdk.run.execute({
   identity: sdk.identity.fromEnv(),
   payload: { prompt: 'Hello' },
@@ -149,11 +160,16 @@ const faults = sdk.faults.list();
 const invariants = sdk.governance.invariants();
 ```
 
-### Run CDP-1
+### Run CDP-1 (local)
 
 ```typescript
 const drift = await sdk.cdp1.runMinimal();
 ```
+
+## API contracts
+
+- OpenAPI: `aaes-os/api/cas-openapi.yaml`
+- JSON Schema: `aaes-os/schemas/cas-1.0.json`
 
 ---
 

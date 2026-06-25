@@ -128,6 +128,8 @@ A CAS 1.0 implementation is conformant if:
 
 Run: `cd aaes-os && pnpm test:cts`
 
+OpenAPI: [`api/cas-openapi.yaml`](../../aaes-os/api/cas-openapi.yaml) · JSON Schema: [`schemas/cas-1.0.json`](../../aaes-os/schemas/cas-1.0.json)
+
 ---
 
 ## 5. Release Gate
