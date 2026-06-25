@@ -241,6 +241,70 @@ Time-bounded exceptions for evaluation or research MUST be debt-tracked under Do
 
 Human–machine systems require a constitutional integration layer between intent and consequence. Without Stage 2 role clarity, products collapse origination, integration, and actuation — producing usurpation, distortion, and leakage by design.
 
+## Doctrine XIV (MA-14): Agent Safety Doctrine
+
+**MA-14 — Agent Safety Doctrine** is binding constitutional law for coding agents, copilots, automated patch generators, and any tool-mediated implementation actor in this repository.
+
+### 14.1 — Authority Boundary
+
+Agents are execution instruments, not architectural authorities.
+
+An agent MUST preserve the governing hierarchy:
+
+**Law > Blueprint > Contract > Implementation > Pipeline > Tool**
+
+No generated change may reinterpret, weaken, or bypass a higher authority layer.
+
+### 14.2 — Prohibited Agent Actions
+
+A coding agent MUST NOT:
+
+- rewrite architecture without blueprint approval,
+- delete governance artifacts,
+- remove validation gates,
+- weaken tests to achieve green status,
+- replace deterministic behavior with convenience behavior,
+- introduce hidden dependencies,
+- claim completion without proof artifacts.
+
+### 14.3 — Permitted Agent Actions
+
+A coding agent MAY:
+
+- implement approved specifications,
+- generate bounded changes,
+- propose improvements,
+- create tests,
+- identify inconsistencies.
+
+The agent remains a builder, never the architect.
+
+### 14.4 — Required Change Boundary
+
+Every agent-authored meaningful change MUST state:
+
+- what changed,
+- why it changed,
+- what evidence supports it,
+- what assumptions exist,
+- how to reverse it.
+
+If a coding agent cannot explain the change boundary, the change is not admissible for merge.
+
+### 14.5 — Uncertainty Rule
+
+When uncertainty increases, agent authority decreases.
+
+Under medium or high uncertainty, an agent MUST hold, degrade safely, communicate state, or request resolution. It MUST NOT expand authority, silently infer permission, or continue with confident improvisation.
+
+### 14.6 — Enforcement
+
+Agent-authored changes SHOULD include an Agent Safety Doctrine manifest under `governance/agent_change_manifests/`.
+
+Validator implementation: `.github/scripts/validate-agent-safety-doctrine.py`.
+
+CI enforcement surface: `.github/workflows/agent-safety-doctrine-gate.yml`.
+
 ## Claim Taxonomy (Required)
 
 - `asserted`: insufficient evidence, not admissible for acceptance
@@ -253,6 +317,7 @@ All major fix, test, and release claims MUST carry one of these labels.
 
 - `HUMAN_AI_CO_COLLABORATION_CHARTER.md` is the constitutional companion governing human-AI collaboration semantics under this lawbook.
 - `docs/runtime/STAGE2_COPILOT_DOCTRINE.md` operationalizes **Doctrine XIII (MA-13): Stage 2 Copilot Integrator Mandate** — origination / integration / actuation authority model and Class I/II/III failure taxonomy.
+- `governance/agent_change_manifests/` contains structured Agent Safety Doctrine manifests for agent-authored changes under **Doctrine XIV (MA-14)**.
 - `REPO_PROOF_LAW.md` operationalizes proof and evidence requirements under this lawbook.
 - `docs/TRUST_BUNDLE_SPEC.md` is the normative Trust Bundle schema for Doctrine XI one-click verification.
 - `templates/TRUST_BUNDLE_TEMPLATE.md` is the default contributor/agent format for Doctrine XI-compliant Trust Bundles.

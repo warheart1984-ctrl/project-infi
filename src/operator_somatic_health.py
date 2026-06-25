@@ -256,7 +256,7 @@ def _safe_governance_membrane_posture() -> dict[str, Any]:
 
 def _safe_diplomacy_posture() -> dict[str, Any]:
     try:
-        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+        from src.diplomacy.runtime import inter_substrate_diplomacy_runtime
 
         return inter_substrate_diplomacy_runtime.diplomacy_posture()
     except Exception as exc:

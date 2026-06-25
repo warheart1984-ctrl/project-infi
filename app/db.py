@@ -18,6 +18,28 @@ def _ensure_column(conn: sqlite3.Connection, table_name: str, column_name: str, 
     conn.execute(f"ALTER TABLE {table_name} ADD COLUMN {column_name} {definition}")
 
 
+def _table_columns(conn: sqlite3.Connection, table_name: str) -> list[str]:
+    return [row[1] for row in conn.execute(f"PRAGMA table_info({table_name})").fetchall()]
+
+
+def _ensure_system_event_log_table(conn: sqlite3.Connection) -> None:
+    conn.execute("""
+    CREATE TABLE IF NOT EXISTS system_events (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        event_type TEXT NOT NULL,
+        payload_json TEXT NOT NULL,
+        created_at TEXT NOT NULL
+    )
+    """)
+    event_columns = _table_columns(conn, "events")
+    if event_columns and "event_type" in event_columns and "name" not in event_columns:
+        conn.execute("""
+        INSERT OR IGNORE INTO system_events (id, event_type, payload_json, created_at)
+        SELECT id, event_type, payload_json, created_at FROM events
+        """)
+        conn.execute("DROP TABLE events")
+
+
 _UNSET = object()
 ACTIVE_WORKFLOW_RUN_STATUSES = ("queued", "running", "awaiting_approval", "stale", "recovering")
 
@@ -45,20 +67,42 @@ def init_db() -> None:
         )
         """)
         conn.execute("""
-        CREATE TABLE IF NOT EXISTS events (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            event_type TEXT NOT NULL,
-            payload_json TEXT NOT NULL,
-            created_at TEXT NOT NULL
-        )
-        """)
-        conn.execute("""
         CREATE TABLE IF NOT EXISTS job_events (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             job_id TEXT NOT NULL,
             event_type TEXT NOT NULL,
             payload_json TEXT NOT NULL,
             created_at TEXT NOT NULL
+        )
+        """)
+        _ensure_system_event_log_table(conn)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS events (
+            id TEXT PRIMARY KEY,
+            timestamp INTEGER NOT NULL,
+            name TEXT NOT NULL,
+            parent_id TEXT,
+            payload TEXT,
+            FOREIGN KEY(parent_id) REFERENCES events(id)
+        )
+        """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS receipts (
+            id TEXT PRIMARY KEY,
+            event_id TEXT NOT NULL,
+            status TEXT NOT NULL,
+            details TEXT,
+            timestamp INTEGER NOT NULL,
+            FOREIGN KEY(event_id) REFERENCES events(id)
+        )
+        """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS file_events (
+            id TEXT PRIMARY KEY,
+            event_id TEXT NOT NULL,
+            path TEXT NOT NULL,
+            timestamp INTEGER NOT NULL,
+            FOREIGN KEY(event_id) REFERENCES events(id)
         )
         """)
         conn.execute("""
@@ -239,9 +283,213 @@ def get_job(job_id: str) -> dict | None:
 def log_event(event_type: str, payload: dict) -> None:
     with get_conn() as conn:
         conn.execute(
-            "INSERT INTO events (event_type, payload_json, created_at) VALUES (?, ?, ?)",
+            "INSERT INTO system_events (event_type, payload_json, created_at) VALUES (?, ?, ?)",
             (event_type, json.dumps(payload), now_iso())
         )
+
+def _now_millis() -> int:
+    return int(datetime.now(timezone.utc).timestamp() * 1000)
+
+
+def _serialize_continuity_event_row(row) -> dict | None:
+    if not row:
+        return None
+    payload = _json_loads(row[4], {})
+    return {
+        "id": row[0],
+        "timestamp": row[1],
+        "name": row[2],
+        "parentId": row[3],
+        "payload": payload,
+    }
+
+
+def create_continuity_event(
+    name: str,
+    parent_id: str | None = None,
+    payload: dict | None = None,
+    file_path: str | None = None,
+) -> dict:
+    normalized_name = str(name or "").strip()
+    if not normalized_name:
+        raise ValueError("name is required")
+    normalized_parent_id = str(parent_id or "").strip() or None
+    if normalized_parent_id and get_continuity_event(normalized_parent_id) is None:
+        raise KeyError(normalized_parent_id)
+
+    event_id = str(uuid.uuid4())
+    timestamp = _now_millis()
+    with get_conn() as conn:
+        conn.execute(
+            """
+            INSERT INTO events (id, timestamp, name, parent_id, payload)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                event_id,
+                timestamp,
+                normalized_name,
+                normalized_parent_id,
+                json.dumps(dict(payload or {})),
+            ),
+        )
+        normalized_file_path = str(file_path or "").strip()
+        if normalized_file_path:
+            conn.execute(
+                """
+                INSERT INTO file_events (id, event_id, path, timestamp)
+                VALUES (?, ?, ?, ?)
+                """,
+                (str(uuid.uuid4()), event_id, normalized_file_path, timestamp),
+            )
+    event = get_continuity_event(event_id)
+    if event is None:
+        raise RuntimeError(f"Failed to create continuity event {event_id}")
+    return event
+
+
+def get_continuity_event(event_id: str) -> dict | None:
+    normalized = str(event_id or "").strip()
+    if not normalized:
+        return None
+    with get_conn() as conn:
+        row = conn.execute(
+            """
+            SELECT id, timestamp, name, parent_id, payload
+            FROM events
+            WHERE id = ?
+            """,
+            (normalized,),
+        ).fetchone()
+    return _serialize_continuity_event_row(row)
+
+
+def list_continuity_events(limit: int = 100) -> list[dict]:
+    bounded_limit = max(1, min(int(limit or 100), 500))
+    with get_conn() as conn:
+        rows = conn.execute(
+            """
+            SELECT id, timestamp, name, parent_id, payload
+            FROM events
+            ORDER BY timestamp ASC
+            LIMIT ?
+            """,
+            (bounded_limit,),
+        ).fetchall()
+    return [_serialize_continuity_event_row(row) for row in rows]
+
+
+def get_continuity_lineage(event_id: str) -> list[dict]:
+    lineage: list[dict] = []
+    seen: set[str] = set()
+    current = get_continuity_event(event_id)
+    depth = 0
+    while current and current["id"] not in seen:
+        seen.add(current["id"])
+        lineage.append({**current, "depth": depth})
+        parent_id = current.get("parentId")
+        current = get_continuity_event(parent_id) if parent_id else None
+        depth += 1
+    return lineage
+
+
+def get_latest_file_continuity_event(file_path: str) -> dict | None:
+    normalized = str(file_path or "").strip()
+    if not normalized:
+        return None
+    with get_conn() as conn:
+        row = conn.execute(
+            """
+            SELECT e.id, e.timestamp, e.name, e.parent_id, e.payload
+            FROM file_events fe
+            JOIN events e ON e.id = fe.event_id
+            WHERE fe.path = ?
+            ORDER BY fe.timestamp DESC
+            LIMIT 1
+            """,
+            (normalized,),
+        ).fetchone()
+    return _serialize_continuity_event_row(row)
+
+
+def _serialize_continuity_receipt_row(row) -> dict | None:
+    if not row:
+        return None
+    return {
+        "id": row[0],
+        "eventId": row[1],
+        "status": row[2],
+        "details": row[3],
+        "timestamp": row[4],
+    }
+
+
+def create_continuity_receipt(event_id: str, status: str = "PASS", details: str = "") -> dict:
+    normalized_event_id = str(event_id or "").strip()
+    if not normalized_event_id or get_continuity_event(normalized_event_id) is None:
+        raise KeyError(normalized_event_id)
+    normalized_status = str(status or "PASS").strip().upper()
+    if normalized_status not in {"PASS", "FAIL"}:
+        raise ValueError("status must be PASS or FAIL")
+
+    receipt_id = str(uuid.uuid4())
+    timestamp = _now_millis()
+    with get_conn() as conn:
+        conn.execute(
+            """
+            INSERT INTO receipts (id, event_id, status, details, timestamp)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (receipt_id, normalized_event_id, normalized_status, str(details or ""), timestamp),
+        )
+    receipt = get_continuity_receipt(receipt_id)
+    if receipt is None:
+        raise RuntimeError(f"Failed to create continuity receipt {receipt_id}")
+    return receipt
+
+
+def get_continuity_receipt(receipt_id: str) -> dict | None:
+    normalized = str(receipt_id or "").strip()
+    if not normalized:
+        return None
+    with get_conn() as conn:
+        row = conn.execute(
+            """
+            SELECT id, event_id, status, details, timestamp
+            FROM receipts
+            WHERE id = ?
+            """,
+            (normalized,),
+        ).fetchone()
+    return _serialize_continuity_receipt_row(row)
+
+
+def list_continuity_receipts(event_id: str | None = None, limit: int = 100) -> list[dict]:
+    bounded_limit = max(1, min(int(limit or 100), 500))
+    normalized_event_id = str(event_id or "").strip() or None
+    with get_conn() as conn:
+        if normalized_event_id:
+            rows = conn.execute(
+                """
+                SELECT id, event_id, status, details, timestamp
+                FROM receipts
+                WHERE event_id = ?
+                ORDER BY timestamp ASC
+                LIMIT ?
+                """,
+                (normalized_event_id, bounded_limit),
+            ).fetchall()
+        else:
+            rows = conn.execute(
+                """
+                SELECT id, event_id, status, details, timestamp
+                FROM receipts
+                ORDER BY timestamp ASC
+                LIMIT ?
+                """,
+                (bounded_limit,),
+            ).fetchall()
+    return [_serialize_continuity_receipt_row(row) for row in rows]
 
 def add_job_event(job_id: str, event_type: str, payload: dict) -> None:
     with get_conn() as conn:

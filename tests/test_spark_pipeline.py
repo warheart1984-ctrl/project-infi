@@ -34,10 +34,12 @@ class TestSparkPipeline(unittest.TestCase):
         self.assertIn("Postgres", projection["memory_cues"][0])
 
     def test_spine_halt_receipt(self):
-        halted = evaluate_spine_pipeline({"substrate_ok": False, "halt_before_cortex": True})
+        halted = evaluate_spine_pipeline(
+            {"require_substrate": True, "substrate_ok": False, "halt_before_cortex": True}
+        )
         self.assertTrue(halted["halted"])
-        self.assertEqual(halted["halt_stage"], "wolf_check")
-        receipt = halt_receipt(halt_stage="wolf_check", trace=halted["trace"])
+        self.assertEqual(halted["halt_stage"], "rls_substrate")
+        receipt = halt_receipt(halt_stage="rls_substrate", trace=halted["trace"])
         self.assertEqual(receipt["status"], "blocked")
 
     def test_authoritative_generation_gate_refuses_invalid(self):

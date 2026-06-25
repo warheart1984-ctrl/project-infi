@@ -198,7 +198,7 @@ class AAISCapabilityModule:
         return self._ok(action, normalized_result)
 
     def _attach_ul_substrate(self, result: dict[str, object]) -> dict[str, object]:
-        from src.aais_ul_substrate import wrap_capability_result
+        from src.aais_ul.runtime import wrap_capability_result
 
         return wrap_capability_result(dict(result))
 

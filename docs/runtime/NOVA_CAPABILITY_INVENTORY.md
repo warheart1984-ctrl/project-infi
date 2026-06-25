@@ -6,8 +6,8 @@
 |-------|-------|
 | **Family** | Nova Cortex v3.0 — Persistent Narrative Continuity |
 | **Family ID** | `nova.cortex` |
-| **Authority** | Jarvis Core (Nova interprets; Jarvis authorizes) |
-| **Last reviewed** | 2026-05-30 |
+| **Authority** | Tri-Core (Nova interprets; Jarvis authorizes) |
+| **Last reviewed** | 2026-06-17 |
 
 Update this document whenever behavior changes (change-of-reality). Link proof in [docs/proof/cognitive_runtime/](../proof/cognitive_runtime/).
 
@@ -46,7 +46,7 @@ make slingshot-gate
 - [x] **AI Factory v1.1 Wolf deploy** — build → wolf payload promotion — `asserted` (single-machine) · `ai_factory deploy --wolf`
 - [x] **AI Slingshot v1** — Mechanic preload → Nova fast-path burst lane — `asserted` · see [AI_SLINGSHOT.md](./AI_SLINGSHOT.md)
 
-Docs: [NOVA_CORTEX.md](./NOVA_CORTEX.md) · [NOVA_CORTEX_FORMAL_SPEC.md](./NOVA_CORTEX_FORMAL_SPEC.md) · [NOVA_INTENT_CORE.md](./NOVA_INTENT_CORE.md) · [NOVA_NARRATIVE.md](./NOVA_NARRATIVE.md) · [NOVA_COHERENCE_PROJECTION.md](./NOVA_COHERENCE_PROJECTION.md) · [AI_FACTORY.md](./AI_FACTORY.md) · [AI_SLINGSHOT.md](./AI_SLINGSHOT.md)
+Docs: [NOVA_CORTEX.md](./NOVA_CORTEX.md) · [NOVA_CORTEX_FORMAL_SPEC.md](./NOVA_CORTEX_FORMAL_SPEC.md) · [NOVA_INTENT_CORE.md](./NOVA_INTENT_CORE.md) · [NOVA_NARRATIVE.md](./NOVA_NARRATIVE.md) · [NOVA_COHERENCE_PROJECTION.md](./NOVA_COHERENCE_PROJECTION.md) · [AI_FACTORY.md](./AI_FACTORY.md) · [AI_SLINGSHOT.md](./AI_SLINGSHOT.md) · [NOVA_LAWFUL_PRODUCTIZATION.md](./NOVA_LAWFUL_PRODUCTIZATION.md)
 
 ---
 
@@ -332,6 +332,7 @@ GOVERN         Capability matrix, identity guard, ARIS, Jarvis
 | PLAT-PILOT-D1 | Infinity Pilot K8s multi-tenant hardening | high | ops | **proven** — PLATFORM_K8S_ISOLATION_PROOF |
 | PLAT-PILOT-D2 | Infinity Pilot deploy compose smoke | medium | ops | **asserted** — `PLATFORM_PILOT_DEPLOY_PROOF_BUNDLE.md`, `scripts/pilot_compose_smoke.py` |
 | UGR-D9 | UGR Ledger Bridge v1 | medium | runtime | **asserted** — `UGR_LEDGER_BRIDGE_V1_PROOF_BUNDLE.md` |
+| NOVA-PROD-D1 | Local Lawful Nova CLI/API productization | medium | runtime | **proven local** — `nova-productization-gate`; see `NOVA_LAWFUL_PRODUCTIZATION.md` |
 
 ---
 

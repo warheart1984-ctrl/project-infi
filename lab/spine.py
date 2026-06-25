@@ -18,7 +18,7 @@ def build_lab_spine_profile(spec: LabProjectSpec) -> dict[str, Any]:
         "project_id": spec.project_id,
         "risk_level": spec.risk_level,
         "stages": {
-            "wolf_check": {
+            "rls_substrate": {
                 "enabled": True,
                 "network_allowed": spec.prohibitions.network_allowed,
                 "workspace_only_writes": True,

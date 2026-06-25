@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://crk1.local/schemas/canonical-trace-object.v0.1.json",
+  "title": "CanonicalTraceObject",
+  "description": "CRC v0.1 behavioral ledger entry — one runtime cycle",
+  "type": "object",
+  "required": [
+    "cycle_id",
+    "timestamp",
+    "reconstruction_source",
+    "contradictions_detected",
+    "invariants_checked",
+    "artifact_produced",
+    "memory_update",
+    "continuity_score",
+    "proof_receipt"
+  ],
+  "properties": {
+    "cycle_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reconstruction_source": {
+      "type": "string",
+      "minLength": 1,
+      "description": "hash(project_state) or equivalent reconstruction anchor"
+    },
+    "contradictions_detected": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "invariants_checked": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^CRC-[1-7]$"
+      },
+      "minItems": 7,
+      "uniqueItems": true
+    },
+    "artifact_produced": {
+      "type": "object",
+      "required": ["type", "hash"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["spec", "code", "proof", "trace"]
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "memory_update": {
+      "type": "object",
+      "required": ["append_only", "delta"],
+      "properties": {
+        "append_only": { "const": true },
+        "delta": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    "continuity_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "proof_receipt": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "proof_hooks": {
+      "type": "object",
+      "properties": {
+        "proof_recon": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "proof_invariant": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "proof_artifact": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "proof_continuity": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

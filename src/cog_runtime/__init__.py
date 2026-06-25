@@ -37,7 +37,7 @@ DEFAULT_NOVA_CORTEX_JSON = DEFAULT_FAMILY_JSON
 COMPOSITION_RULES: tuple[dict[str, str], ...] = (
     {
         "id": "single_authority",
-        "rule": "Jarvis Core routes; cognitive runtimes do not compete for control.",
+        "rule": "Tri-Core routes; cognitive runtimes do not compete for control.",
     },
     {
         "id": "speaking_required_for_user_output",
@@ -139,7 +139,7 @@ def nova_cortex_spec(*, edition: str = "wolf-cog-os-full") -> dict[str, Any]:
         "milestone": NOVA_CORTEX_MILESTONE,
         "doc": NOVA_CORTEX_DOC,
         "anatomy": {
-            "jarvis_core": "thalamus / router",
+            "tri_core": "thalamus / router",
             "wolf_cog_os": "constitutional brainstem",
             "nova.intent": "agency layer (commitments · tensions · consult only)",
             "nova.narrative": "continuity layer (observe · synthesize · record)",

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -93,6 +94,71 @@ def serve_command(args: argparse.Namespace) -> int:
     return 0
 
 
+def _kernel_base() -> str:
+    return os.environ.get("OPERATOR_KERNEL_URL", "http://127.0.0.1:8790").rstrip("/")
+
+
+def _kernel_json(method: str, path: str, body: dict[str, Any] | None = None) -> dict[str, Any]:
+    import json as _json
+    from urllib.error import HTTPError
+    from urllib.request import Request, urlopen
+
+    data = None
+    headers = {"Accept": "application/json"}
+    if body is not None:
+        data = _json.dumps(body).encode("utf-8")
+        headers["Content-Type"] = "application/json"
+    request = Request(f"{_kernel_base()}{path}", data=data, headers=headers, method=method)
+    try:
+        with urlopen(request, timeout=30) as response:
+            raw = response.read().decode("utf-8", errors="replace")
+            return _json.loads(raw) if raw.strip() else {}
+    except HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(detail or str(exc)) from exc
+
+
+def plan_command(args: argparse.Namespace) -> int:
+    payload = _kernel_json(
+        "POST",
+        "/agent/tasks",
+        {
+            "goal": args.prompt,
+            "constraints": {
+                "read_only": True,
+                "allow_shell": False,
+                "allow_git_commit": False,
+                "allow_network": False,
+                "max_steps": 1,
+            },
+        },
+    )
+    _print(payload, as_json=args.json)
+    return 0
+
+
+def task_list_command(args: argparse.Namespace) -> int:
+    payload = _kernel_json("GET", "/agent/tasks")
+    _print(payload, as_json=args.json)
+    return 0
+
+
+def task_resume_command(args: argparse.Namespace) -> int:
+    payload = _kernel_json(
+        "POST",
+        f"/agent/tasks/{args.task_id}/message",
+        {"text": args.message},
+    )
+    _print(payload, as_json=args.json)
+    return 0
+
+
+def open_command(args: argparse.Namespace) -> int:
+    path = Path(args.path)
+    _print({"path": str(path), "exists": path.is_file()}, as_json=args.json)
+    return 0 if path.is_file() else 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="nova", description="Lawful Nova local CLI")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -117,6 +183,28 @@ def build_parser() -> argparse.ArgumentParser:
 
     serve = sub.add_parser("serve", help="Start the local Lawful Nova /health API")
     serve.set_defaults(func=serve_command)
+
+    plan = sub.add_parser("plan", help="Create a read-only planning task on the operator kernel")
+    plan.add_argument("prompt")
+    plan.add_argument("--json", action="store_true")
+    plan.set_defaults(func=plan_command)
+
+    task = sub.add_parser("task", help="Operator task commands")
+    task_sub = task.add_subparsers(dest="task_command", required=True)
+    task_list = task_sub.add_parser("list", help="List tasks")
+    task_list.add_argument("--json", action="store_true")
+    task_list.set_defaults(func=task_list_command)
+    task_resume = task_sub.add_parser("resume", help="Send a follow-up message to a task")
+    task_resume.add_argument("task_id")
+    task_resume.add_argument("message")
+    task_resume.add_argument("--json", action="store_true")
+    task_resume.set_defaults(func=task_resume_command)
+
+    open_cmd = sub.add_parser("open", help="Verify a workspace file path exists")
+    open_cmd.add_argument("path")
+    open_cmd.add_argument("--json", action="store_true")
+    open_cmd.set_defaults(func=open_command)
+
     return parser
 
 

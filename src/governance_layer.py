@@ -175,7 +175,7 @@ class GovernanceLayer:
                 source_type="governance_state",
             )
             break_glass.pop("_state_hygiene_kind", None)
-            from src.aais_ul_substrate import wrap_runtime_snapshot
+            from src.aais_ul.runtime import wrap_runtime_snapshot
 
             return wrap_runtime_snapshot(
                 {

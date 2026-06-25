@@ -66,6 +66,31 @@ class TestMain(unittest.TestCase):
             self.assertEqual(os.environ["AAIS_BOOTSTRAP_REAL_AT_STARTUP"], "1")
             self.assertIn("AAIS_MODEL_MODE", applied)
 
+    def test_apply_runtime_preset_sets_production_strict(self):
+        """Production preset should disable mock fallback and mark environment production."""
+        preset_keys = set()
+        for values in apply_runtime_preset.__globals__["RUNTIME_PRESETS"].values():
+            preset_keys.update(values.keys())
+
+        with patch.dict(os.environ, {}, clear=False):
+            for key in preset_keys:
+                os.environ.pop(key, None)
+
+            applied = apply_runtime_preset("production")
+
+            self.assertEqual(os.environ["ENVIRONMENT"], "production")
+            self.assertEqual(os.environ["AAIS_MODEL_MODE"], "real")
+            self.assertEqual(os.environ["AAIS_ALLOW_STARTUP_FALLBACK"], "0")
+            self.assertEqual(os.environ["AAIS_BOOTSTRAP_REAL_AT_STARTUP"], "1")
+            self.assertEqual(os.environ["AAIS_HEALTH_SKIP_CONTRACTOR_PROBES"], "1")
+            self.assertEqual(os.environ["AAIS_MESH_ENABLED"], "0")
+            self.assertEqual(os.environ["AAIS_MODEL_PROFILE"], "lite")
+            self.assertEqual(
+                os.environ["AAIS_TEXT_MODEL_NAME"],
+                "Qwen/Qwen2.5-0.5B-Instruct",
+            )
+            self.assertIn("ENVIRONMENT", applied)
+
     def test_apply_runtime_preset_preserves_explicit_env(self):
         """Preset defaults should not override explicit env vars."""
         with patch.dict(

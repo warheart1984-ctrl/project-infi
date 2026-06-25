@@ -8,10 +8,24 @@ import sys
 from pathlib import Path
 
 
-def _resolve_project_root() -> Path:
+def _install_root() -> Path:
+    """Directory beside the exe (or script) — holds .env and runtime data."""
     if getattr(sys, "frozen", False):
         return Path(sys.executable).resolve().parent
     return Path(__file__).resolve().parent
+
+
+def _bundle_root() -> Path:
+    """PyInstaller extract dir when frozen; otherwise same as install root."""
+    if getattr(sys, "frozen", False):
+        meipass = getattr(sys, "_MEIPASS", None)
+        if meipass:
+            return Path(meipass).resolve()
+    return _install_root()
+
+
+def _resolve_project_root() -> Path:
+    return _install_root()
 
 
 def _load_dotenv(root: Path) -> None:
@@ -33,14 +47,17 @@ def _default_data_dir(root: Path) -> Path:
 
 
 def main() -> int:
-    root = _resolve_project_root()
-    os.chdir(root)
-    if str(root) not in sys.path:
-        sys.path.insert(0, str(root))
+    install = _install_root()
+    bundle = _bundle_root()
+    os.chdir(install)
+    for entry in (bundle, install):
+        entry_str = str(entry)
+        if entry_str not in sys.path:
+            sys.path.insert(0, entry_str)
 
-    _load_dotenv(root)
+    _load_dotenv(install)
 
-    data_dir = os.getenv("JARVIS_DATA_DIR") or str(_default_data_dir(root))
+    data_dir = os.getenv("JARVIS_DATA_DIR") or str(_default_data_dir(install))
     os.environ.setdefault("JARVIS_DATA_DIR", data_dir)
 
     argv = list(sys.argv[1:])
@@ -48,6 +65,8 @@ def main() -> int:
         argv = [
             "start",
             "--no-browser",
+            "--preset",
+            "production",
             "--data-dir",
             data_dir,
         ]
@@ -58,6 +77,8 @@ def main() -> int:
         argv.extend(["--data-dir", data_dir])
     if argv[0] == "start" and "--no-browser" not in argv:
         argv.append("--no-browser")
+    if argv[0] == "start" and "--preset" not in argv:
+        argv.extend(["--preset", "production"])
 
     from aais.launcher import main as launcher_main
 

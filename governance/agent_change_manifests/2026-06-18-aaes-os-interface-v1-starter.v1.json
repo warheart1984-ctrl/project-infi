@@ -1,0 +1,48 @@
+{
+  "agent_safety_doctrine_version": "agent_safety_doctrine.v1",
+  "change_id": "AAES-OS-interface-v1-starter-admission",
+  "claim_label": "asserted",
+  "authority_chain": [
+    "Law",
+    "Blueprint",
+    "Contract",
+    "Implementation",
+    "Pipeline",
+    "Tool"
+  ],
+  "blueprint_refs": [
+    "META_ARCHITECT_LAWBOOK.md",
+    "docs/contracts/AAES_OS_V1_FORMAL_SPEC.md",
+    "docs/contracts/AAES_OS_INTERFACE_V1.md",
+    "docs/contracts/AAES_OS_ARCHITECTURE_V1.md",
+    "docs/governance/EVIDENCE_RECEIPT_MODEL.md"
+  ],
+  "change_boundary": {
+    "what_changed": "Rewrote AAES_OS_INTERFACE_V1.md to user-provided cognitive pipeline TS/Rust signatures; added reference/aaes-os-starter TypeScript scaffold with tests; wired docs/contracts/README.md; added agent change manifest.",
+    "why_changed": "Admit language-agnostic interface spec and coding-agent starter layout faithful to operator paste.",
+    "evidence_refs": [
+      "docs/contracts/AAES_OS_INTERFACE_V1.md",
+      "reference/aaes-os-starter/",
+      "reference/aaes-os-starter/tests/pipeline.test.ts"
+    ],
+    "assumptions": [
+      "Python pipeline_types and api_types remain dual-layer until explicit bridge implementation.",
+      "RFC trace layer stays authoritative in AAES_OS_V1_FORMAL_SPEC.md."
+    ],
+    "reversal": "Restore prior INTERFACE_V1.md, remove reference/aaes-os-starter/, revert README link, delete this manifest."
+  },
+  "prohibited_actions": {
+    "rewrite_architecture_without_blueprint_approval": false,
+    "delete_governance_artifacts": false,
+    "remove_validation_gates": false,
+    "weaken_tests_to_pass": false,
+    "replace_determinism_with_convenience": false,
+    "introduce_hidden_dependencies": false,
+    "claim_completion_without_proof": false
+  },
+  "uncertainty": {
+    "level": "low",
+    "authority_delta": "unchanged",
+    "resolution_path": "Bridge cognitive AAESRequest to TraceEvent emission in orchestrator productization."
+  }
+}

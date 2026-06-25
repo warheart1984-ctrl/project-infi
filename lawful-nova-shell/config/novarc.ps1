@@ -15,7 +15,7 @@ if ($env:LAWFUL_NOVA_REPO_ROOT -and (Test-Path (Join-Path $env:LAWFUL_NOVA_REPO_
 if ($env:LAWFUL_NOVA_REPO_ROOT -and (Test-Path (Join-Path $env:LAWFUL_NOVA_REPO_ROOT "nova"))) {
     $env:NOVA_VOSS_RUNTIME_PATH = Join-Path $env:LAWFUL_NOVA_REPO_ROOT "nova"
     $env:NOVA_CORTEX_PATH = Join-Path $env:LAWFUL_NOVA_REPO_ROOT "nova"
-    $env:NOVA_RSL_PATH = Join-Path $env:LAWFUL_NOVA_REPO_ROOT "nova"
+    $env:NOVA_RSL_PATH = Join-Path $env:LAWFUL_NOVA_REPO_ROOT "governance"
     $env:NOVA_GOW_CONFIG = Join-Path $env:LAWFUL_NOVA_REPO_ROOT "config\nova\nova-stack.json"
 } else {
     $env:NOVA_VOSS_RUNTIME_PATH = ""

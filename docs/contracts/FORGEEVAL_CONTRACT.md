@@ -12,7 +12,7 @@ ForgeEval is the evaluator service that sits beside Forge.
 ## Start
 
 ```powershell
-.\.venv\Scripts\python.exe .\start_forge_eval.py
+.\.venv\Scripts\python.exe .\tools\services\start_forge_eval.py
 ```
 
 ## Request Contract

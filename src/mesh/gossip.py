@@ -12,12 +12,34 @@ from src.mesh.handshake import build_ack, build_hello, complete_handshake, handl
 from src.mesh.invariants import InvariantStore
 from src.mesh.known_peers import KnownPeersStore
 from src.mesh.runtime import mesh_base
-from src.mesh.topology import iter_all_peers, pinned_verify_key_for_url, verify_key_allowed
+from src.mesh.topology import (
+    iter_all_peers,
+    mesh_enabled,
+    pinned_verify_key_for_url,
+    verify_key_allowed,
+)
 from src.mesh.trust import TrustStore
 
 logger = logging.getLogger(__name__)
 
 MESH_PEER_HEADER = "X-Mesh-Peer-Id"
+
+
+def _peer_unreachable(exc: requests.RequestException) -> bool:
+    """True when the peer is simply down (expected on solo installs)."""
+    if isinstance(exc, (requests.ConnectionError, requests.ConnectTimeout)):
+        return True
+    resp = getattr(exc, "response", None)
+    if resp is not None and resp.status_code in {404, 405, 501}:
+        return True
+    return False
+
+
+def _log_handshake_failure(peer_url: str, phase: str, exc: requests.RequestException) -> None:
+    if _peer_unreachable(exc):
+        logger.debug("%s unavailable for %s: %s", phase, peer_url, exc)
+    else:
+        logger.warning("%s failed for %s: %s", phase, peer_url, exc)
 
 
 def _mesh_headers(identity: dict) -> dict[str, str]:
@@ -46,6 +68,9 @@ def _sync_gossip_payload(
         if payload.get("invariants"):
             invariants.merge(payload["invariants"])
     except requests.RequestException as exc:
+        if _peer_unreachable(exc):
+            logger.debug("gossip pull skipped (peer unreachable): %s", peer_url)
+            return
         logger.warning("gossip pull failed for %s: %s", peer_url, exc)
         raise
 
@@ -75,7 +100,10 @@ def _maybe_gossip_push(
             timeout=10,
         ).raise_for_status()
     except requests.RequestException as exc:
-        logger.warning("gossip push failed for %s: %s", peer_url, exc)
+        if _peer_unreachable(exc):
+            logger.debug("gossip push skipped for %s: %s", peer_url, exc)
+        else:
+            logger.warning("gossip push failed for %s: %s", peer_url, exc)
 
 
 def gossip_pull(base_dir: str, identity: dict, config: dict, peer_url: str) -> dict:
@@ -109,7 +137,7 @@ def gossip_pull(base_dir: str, identity: dict, config: dict, peer_url: str) -> d
         r.raise_for_status()
         challenge = r.json()
     except requests.RequestException as exc:
-        logger.warning("handshake HELLO failed for %s: %s", peer_url, exc)
+        _log_handshake_failure(peer_url, "handshake HELLO", exc)
         return {"peer": peer_url, "ok": False, "error": str(exc)}
 
     if challenge.get("phase") != "CHALLENGE":
@@ -135,7 +163,7 @@ def gossip_pull(base_dir: str, identity: dict, config: dict, peer_url: str) -> d
         peer_id = remote_node.get("node_id")
         if peer_id:
             trust.record(peer_id, "gossip_fail")
-        logger.warning("handshake ACK failed for %s: %s", peer_url, exc)
+        _log_handshake_failure(peer_url, "handshake ACK", exc)
         return {"peer": peer_url, "ok": False, "error": str(exc)}
 
     remote_node = challenge.get("node") or {}
@@ -182,8 +210,13 @@ def gossip_pull(base_dir: str, identity: dict, config: dict, peer_url: str) -> d
 
 
 def gossip_all(base_dir: str, identity: dict, config: dict) -> list[dict]:
+    if not mesh_enabled():
+        return []
+    peers = iter_all_peers(config, base_dir)
+    if not peers:
+        return []
     results = []
-    for peer in iter_all_peers(config, base_dir):
+    for peer in peers:
         url = peer.get("url")
         if url:
             results.append(gossip_pull(base_dir, identity, config, url))

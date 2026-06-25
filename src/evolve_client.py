@@ -96,7 +96,7 @@ class EvolveClient:
 
         if normalized is None:
             raise RuntimeError("EvolveEngine returned an invalid response contract.")
-        from src.aais_ul_substrate import wrap_runtime_snapshot
+        from src.aais_ul.runtime import wrap_runtime_snapshot
 
         return wrap_runtime_snapshot(normalized)
 

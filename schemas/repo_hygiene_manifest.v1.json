@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "repo_hygiene_manifest.v1",
+  "title": "Repo Hygiene Manifest",
+  "type": "object",
+  "required": [
+    "manifest_version",
+    "authority",
+    "rules",
+    "forbidden_root_names",
+    "forbidden_root_globs",
+    "forbidden_root_argv_globs",
+    "forbidden_tracked_prefixes",
+    "poison_dir_markers",
+    "allowed_bundle_roots",
+    "local_work_dirs"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "manifest_version": {
+      "const": "repo_hygiene_manifest.v1"
+    },
+    "authority": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "severity", "check", "remediation"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^hygiene\\."
+          },
+          "severity": {
+            "enum": ["error", "warn"]
+          },
+          "check": {
+            "type": "string",
+            "minLength": 1
+          },
+          "remediation": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "forbidden_root_names": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "forbidden_root_globs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "forbidden_root_argv_globs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "forbidden_tracked_prefixes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "poison_dir_markers": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "allowed_bundle_roots": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "local_work_dirs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "stale_payload_runtime": { "type": "string" },
+    "canonical_cog_runtime": { "type": "string" }
+  }
+}

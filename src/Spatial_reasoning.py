@@ -457,7 +457,7 @@ class SpatialReasoningPlug:
         }
 
     def _wrap_result(self, payload: dict[str, Any]) -> dict[str, Any]:
-        from src.aais_ul_substrate import wrap_runtime_snapshot
+        from src.aais_ul.runtime import wrap_runtime_snapshot
 
         return wrap_runtime_snapshot(dict(payload))
 

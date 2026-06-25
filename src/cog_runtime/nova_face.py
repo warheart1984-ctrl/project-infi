@@ -1,4 +1,4 @@
-"""Nova Face — companion surface bridge to Nova Cortex and Jarvis Core."""
+"""Nova Face — companion surface bridge to Nova Cortex and Tri-Core."""
 
 # Mythic: Nova Face Organ
 # Engineering: NovaFaceEngine
@@ -18,7 +18,7 @@ from src.cog_runtime.nova import (
 
 NOVA_FACE_BRIDGE_ID = "nova.face.bridge"
 NOVA_FACE_BRIDGE_VERSION = "1.0"
-JARVIS_CORE_AUTHORITY = "jarvis"
+TRI_CORE_AUTHORITY = "tri_core"
 
 
 @dataclass(slots=True)
@@ -31,7 +31,7 @@ class NovaFaceEnvelope:
     tone: str
     companion_turn: bool
     scope: str
-    authority_lane: str = JARVIS_CORE_AUTHORITY
+    authority_lane: str = TRI_CORE_AUTHORITY
     surface_priority: str = "delegated_surface"
     self_description: str = ""
 
@@ -51,11 +51,11 @@ class NovaFaceEnvelope:
 
 @dataclass
 class NovaFaceBridgeResult:
-    """End-to-end binding: Face → Cortex → Jarvis Core."""
+    """End-to-end binding: Face → Cortex → Tri-Core."""
 
     face: NovaFaceEnvelope
     cortex_session: NovaCognitiveSession | None
-    jarvis_binding: dict[str, Any] = field(default_factory=dict)
+    tri_core_binding: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -63,8 +63,8 @@ class NovaFaceBridgeResult:
             "bridge_version": NOVA_FACE_BRIDGE_VERSION,
             "face": self.face.to_dict(),
             "cortex": self.cortex_session.to_dict() if self.cortex_session else None,
-            "jarvis_core": dict(self.jarvis_binding),
-            "pipeline": ["nova_face", "nova_cortex", "jarvis_core"],
+            "tri_core": dict(self.tri_core_binding),
+            "pipeline": ["nova_face", "nova_cortex", "tri_core"],
         }
 
 
@@ -143,24 +143,24 @@ def build_face_to_cortex_context(
     }
 
 
-def build_jarvis_core_binding(
+def build_tri_core_binding(
     face: NovaFaceEnvelope,
     cortex_session: NovaCognitiveSession | None,
 ) -> dict[str, Any]:
-    """Upward binding from Nova Face/Cortex into Jarvis Core authority plane."""
+    """Upward binding from Nova Face/Cortex into Tri-Core authority plane."""
     binding = {
-        "authority_lane": JARVIS_CORE_AUTHORITY,
-        "routing_authority": JARVIS_CORE_AUTHORITY,
-        "state_authority": JARVIS_CORE_AUTHORITY,
+        "authority_lane": TRI_CORE_AUTHORITY,
+        "routing_authority": TRI_CORE_AUTHORITY,
+        "state_authority": TRI_CORE_AUTHORITY,
         "surface_identity": face.face_id,
         "surface_priority": face.surface_priority,
         "surface_replaces_authority": False,
         "nova_cortex_id": NOVA_CORTEX_ID,
         "companion_turn": face.companion_turn,
         "authority_summary": (
-            f"{face.label} leads the companion surface; Jarvis Core retains routing, state, and safety."
+            f"{face.label} leads the companion surface; Tri-Core retains routing, state, and safety."
             if face.companion_turn
-            else "Jarvis Core is both visible surface and authority for this turn."
+            else "Tri-Core is both visible surface and authority for this turn."
         ),
     }
     if cortex_session is not None:
@@ -175,7 +175,7 @@ def build_jarvis_core_binding(
     return binding
 
 
-def bridge_nova_face_to_cortex_and_jarvis(
+def bridge_nova_face_to_cortex_and_tri_core(
     session,
     request_payload: dict[str, Any] | None,
     user_message: str,
@@ -183,7 +183,7 @@ def bridge_nova_face_to_cortex_and_jarvis(
     companion_turn: bool = False,
     surface_profile: dict[str, Any] | None = None,
 ) -> NovaFaceBridgeResult | None:
-    """Run Face → Cortex → Jarvis Core bridge for the active turn."""
+    """Run Face → Cortex → Tri-Core bridge for the active turn."""
     metadata = getattr(session, "metadata", {}) or {}
     face = resolve_nova_face(
         persona_mode=metadata.get("persona_mode"),
@@ -196,8 +196,8 @@ def bridge_nova_face_to_cortex_and_jarvis(
     payload = dict(request_payload or {})
     if "cognitive_runtime" in payload and not payload.get("cognitive_runtime"):
         session.metadata["cognitive_runtime_enabled"] = False
-        binding = build_jarvis_core_binding(face, None)
-        session.metadata["jarvis_core_binding"] = binding
+        binding = build_tri_core_binding(face, None)
+        session.metadata["tri_core_binding"] = binding
         session.metadata["nova_face_bridge"] = NovaFaceBridgeResult(face, None, binding).to_dict()
         return NovaFaceBridgeResult(face, None, binding)
 
@@ -216,8 +216,8 @@ def bridge_nova_face_to_cortex_and_jarvis(
 
         session.metadata["deliberate_fn"] = build_session_deliberate_fn(session)
     if not session.metadata["cognitive_runtime_enabled"]:
-        binding = build_jarvis_core_binding(face, None)
-        session.metadata["jarvis_core_binding"] = binding
+        binding = build_tri_core_binding(face, None)
+        session.metadata["tri_core_binding"] = binding
         session.metadata["nova_face_bridge"] = NovaFaceBridgeResult(face, None, binding).to_dict()
         return NovaFaceBridgeResult(face, None, binding)
 
@@ -227,14 +227,14 @@ def bridge_nova_face_to_cortex_and_jarvis(
         user_message,
         companion_turn=companion_turn,
     )
-    binding = build_jarvis_core_binding(face, cortex_session)
-    session.metadata["jarvis_core_binding"] = binding
+    binding = build_tri_core_binding(face, cortex_session)
+    session.metadata["tri_core_binding"] = binding
     bridge_payload = NovaFaceBridgeResult(face, cortex_session, binding).to_dict()
     session.metadata["nova_face_bridge"] = bridge_payload
 
     turn_contract = dict(session.metadata.get("turn_contract") or {})
     turn_contract["nova_face_id"] = face.face_id
-    turn_contract["jarvis_core_binding"] = binding
+    turn_contract["tri_core_binding"] = binding
     session.metadata["turn_contract"] = turn_contract
 
     if cortex_session is not None:
@@ -249,10 +249,10 @@ def summarize_nova_face_bridge(session) -> dict[str, Any] | None:
         return {
             "face_id": (bridge.get("face") or {}).get("face_id"),
             "pipeline": bridge.get("pipeline"),
-            "active_cognitive_runtimes": (bridge.get("jarvis_core") or {}).get(
+            "active_cognitive_runtimes": (bridge.get("tri_core") or {}).get(
                 "active_cognitive_runtimes"
             ),
-            "nova_cortex_session_id": (bridge.get("jarvis_core") or {}).get(
+            "nova_cortex_session_id": (bridge.get("tri_core") or {}).get(
                 "nova_cortex_session_id"
             ),
         }
@@ -260,3 +260,9 @@ def summarize_nova_face_bridge(session) -> dict[str, Any] | None:
     if isinstance(face, dict):
         return {"face_id": face.get("face_id")}
     return None
+
+
+# Deprecated aliases (Jarvis Core → Tri-Core thalamus identity)
+JARVIS_CORE_AUTHORITY = TRI_CORE_AUTHORITY
+build_jarvis_core_binding = build_tri_core_binding
+bridge_nova_face_to_cortex_and_jarvis = bridge_nova_face_to_cortex_and_tri_core

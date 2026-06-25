@@ -47,5 +47,23 @@ novstack() {
   "${LAWFUL_NOVA_REPO_ROOT}/scripts/start-nova-stack.sh" "$@"
 }
 
+novcursor() {
+  if [[ -f "${LAWFUL_NOVA_REPO_ROOT}/scripts/start-nova-for-cursor.ps1" ]]; then
+  powershell.exe -NoProfile -ExecutionPolicy Bypass -File \
+    "${LAWFUL_NOVA_REPO_ROOT}/scripts/start-nova-for-cursor.ps1" "$@"
+  else
+    echo "[Nova] start-nova-for-cursor.ps1 not found. See lawful-nova-shell/CURSOR.md"
+  fi
+}
+
+novverify() {
+  if [[ -f "${LAWFUL_NOVA_REPO_ROOT}/scripts/verify-nova-local.ps1" ]]; then
+  powershell.exe -NoProfile -ExecutionPolicy Bypass -File \
+    "${LAWFUL_NOVA_REPO_ROOT}/scripts/verify-nova-local.ps1" "$@"
+  else
+    echo "[Nova] verify-nova-local.ps1 not found. See lawful-nova-shell/CURSOR.md"
+  fi
+}
+
 echo "[Nova] Lawful Nova shell ready (bash)."
-echo "   nova-chat | novr | novtest | novpr | novdoc | novsec | novstack"
+echo "   nova-chat | novr | novtest | novpr | novdoc | novsec | novstack | novcursor | novverify"

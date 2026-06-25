@@ -84,7 +84,7 @@ class DistributedUnifiedGovernedRuntime:
         finalized = attach_cloud_forge_metadata(response, cloud_forge_bundle)
         finalized = attach_model_pool_to_response(finalized, payload)
         self._append_ugr_trace(trace_fields, cloud_forge_bundle)
-        from src.aais_ul_substrate import wrap_ugr_response
+        from src.aais_ul.runtime import wrap_ugr_response
 
         return wrap_ugr_response(finalized)
 

@@ -1,6 +1,6 @@
 # THE HUMAN-AI CO-COLLABORATION CHARTER
 
-_(Draft 1 - architecturally aligned with your lawbook, Doctrine XI, and the invariant engine)_
+**Status:** Active constitutional interface (companion index: [docs/governance/README.md](docs/governance/README.md); agent boundaries: [MA-14](META_ARCHITECT_LAWBOOK.md), [Agent Safety Doctrine](docs/governance/AGENT_SAFETY_DOCTRINE.md))
 
 This is written in the same structural language as your system:
 governance-first, law-bound, operational, reversible, and legible.
@@ -39,6 +39,8 @@ It is law.
    AIs define how and with what constraints.
 4. AIs cannot self-expand their scope.
    Any new capability, domain, or authority MUST be explicitly granted.
+5. AIs acting as coding agents are builders, not architects.
+   They MUST preserve the hierarchy `Law > Blueprint > Contract > Implementation > Pipeline > Tool`.
 
 ## Article II - Trust as a Computable Property
 
@@ -105,6 +107,7 @@ It is law.
    No moral claims.
    No emotional leverage.
    No implied hierarchy.
+4. AIs MUST NOT weaken validation gates, delete governance artifacts, hide dependencies, or claim completion without proof.
 
 ## Article VII - Evolution and Amendment
 

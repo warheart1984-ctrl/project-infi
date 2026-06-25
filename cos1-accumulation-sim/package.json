@@ -1,0 +1,23 @@
+{
+  "name": "ra-cos1-runtime",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "node --import tsx --test src/engine.test.ts src/gos.test.ts src/judgment.test.ts src/ledger.test.ts",
+    "replay": "node dist/replay.js",
+    "replay:time": "node dist/replay.js events.jsonl time",
+    "dashboard": "node dist/server.js",
+    "gos": "node dist/gosServer.js",
+    "gos:full": "node dist/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

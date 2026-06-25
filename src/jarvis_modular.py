@@ -1080,7 +1080,7 @@ def build_modular_provider_preview(
             preview,
             dict(context.metadata.get("cloud_forge_context") or {}),
         )
-    from src.aais_ul_substrate import wrap_modular_preview
+    from src.aais_ul.runtime import wrap_modular_preview
 
     return wrap_modular_preview(preview)
 

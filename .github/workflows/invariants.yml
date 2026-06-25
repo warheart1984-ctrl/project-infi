@@ -1,0 +1,223 @@
+name: CORI Invariants CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  DATA_DIR: data
+  AAIS_URL: http://127.0.0.1:8000
+  DASHBOARD_URL: http://127.0.0.1:8100
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest requests
+          pip install -e .
+
+      - name: Ensure data dir
+        run: mkdir -p "${{ env.DATA_DIR }}"
+
+      - name: Start CI docker-compose stack
+        run: docker compose -f docker-compose.ci.yml up -d --build
+
+      - name: Wait for AAIS health
+        run: |
+          chmod +x scripts/wait-for-service.sh
+          ./scripts/wait-for-service.sh http://127.0.0.1:8000/health 120
+
+      - name: Wait for Dashboard health
+        run: ./scripts/wait-for-service.sh http://127.0.0.1:8100/health 90
+
+      - name: Seed a governed mission (CLI)
+        id: seed
+        run: |
+          set -o pipefail
+          cori mission "ci seeded mission" 2>&1 | tee seed.out
+          tail -n 20 seed.out > seed_tail.out
+        env:
+          PYTHONUNBUFFERED: "1"
+          AAIS_BASE_URL: http://127.0.0.1:8000
+
+      - name: Run full stack proof (in-process)
+        id: full_stack_proof
+        run: |
+          python scripts/full_system_proof.py --json --out full_stack_proof.json
+          cat full_stack_proof.json
+
+      - name: Run governed spine e2e tests
+        id: pytest_e2e
+        run: |
+          set -o pipefail
+          pytest tests/test_e2e_governed_mission.py tests/test_full_stack_proof.py -q --maxfail=1 2>&1 | tee pytest_e2e.out
+
+      - name: Run invariant tests (in-process)
+        id: pytest_inprocess
+        run: |
+          set -o pipefail
+          pytest tests/test_runtime_governance_invariants.py -q --maxfail=1 2>&1 | tee pytest_inprocess.out
+
+      - name: Run live invariant tests against seeded DBs
+        id: pytest_live
+        run: |
+          set -o pipefail
+          pytest tests/test_runtime_governance_invariants_live.py -q --maxfail=1 2>&1 | tee pytest_live.out
+        env:
+          CORI_LIVE_INVARIANTS: "1"
+          CONTINUITY_STORE_PATH: data/continuity.sqlite3
+          LAW_LEDGER_PATH: data/law-ledger.sqlite3
+          NOVA_PANEL_STORE_PATH: data/nova_panel_store.sqlite3
+
+      - name: Seed PEL sample and verify store
+        id: pel_verify
+        run: |
+          python scripts/pel_ingest.py --file README.md --type artifact --author ci
+          python scripts/pel_verify.py --json | tee pel_verify.out
+
+      - name: Run PEL verification tests
+        id: pytest_pel
+        run: |
+          set -o pipefail
+          pytest tests/test_pel_ingest.py tests/test_pel_verify.py -q --maxfail=1 2>&1 | tee pytest_pel.out
+
+      - name: Verify claim registry (empty store OK)
+        id: claims_verify
+        run: |
+          python scripts/claims_verify.py --json --create-if-missing | tee claims_verify.out
+
+      - name: Run claim registry tests
+        id: pytest_claims
+        run: |
+          set -o pipefail
+          pytest tests/test_claims_verify.py tests/test_dashboard_claims_api.py -q --maxfail=1 2>&1 | tee pytest_claims.out
+
+      - name: Run integration tests
+        id: pytest_integration
+        run: |
+          set -o pipefail
+          pytest tests_integration/ -q --maxfail=1 2>&1 | tee pytest_integration.out
+
+      - name: HTTP cross-container stack proof
+        id: http_stack_proof
+        run: |
+          chmod +x scripts/ci_http_stack_proof.sh
+          ./scripts/ci_http_stack_proof.sh
+        env:
+          PYTHONUNBUFFERED: "1"
+
+      - name: Upload DB artifacts for debugging
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cori-db-artifacts
+          path: |
+            data/nova_panel_store.sqlite3
+            data/law-ledger.sqlite3
+            data/continuity.sqlite3
+            data/runtime_core.db
+            data/pel.sqlite3
+            seed.out
+            seed_tail.out
+            full_stack_proof.json
+            http_stack_proof.json
+            http_mission.out
+            nexus_aais.json
+            nexus_ops.json
+            pytest_integration.out
+            pytest_inprocess.out
+            pytest_live.out
+            pytest_pel.out
+            pel_verify.out
+
+      - name: Post Slack notification
+        if: always()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          BRANCH="${GITHUB_REF##*/}"
+          COMMIT="${GITHUB_SHA::7}"
+          INPROCESS="${{ steps.pytest_inprocess.outcome }}"
+          LIVE="${{ steps.pytest_live.outcome }}"
+          PEL="${{ steps.pel_verify.outcome }}"
+          PYTEST_PEL="${{ steps.pytest_pel.outcome }}"
+          SEED="${{ steps.seed.outcome }}"
+
+          HTTP="${{ steps.http_stack_proof.outcome }}"
+          INTEGRATION="${{ steps.pytest_integration.outcome }}"
+
+          if [ "$INPROCESS" = "success" ] && [ "$LIVE" = "success" ] && [ "$PEL" = "success" ] && [ "$PYTEST_PEL" = "success" ] && [ "$HTTP" = "success" ] && [ "$INTEGRATION" = "success" ] && [ "$SEED" = "success" ]; then
+            STATUS="PASS"
+            EMOJI="✅"
+            COLOR="#36a64f"
+            TEXT="CORI Invariants CI: *PASS* ${EMOJI}
+          Branch: ${BRANCH}
+          Commit: ${COMMIT}
+          Workflow: ${GITHUB_WORKFLOW}
+          Seed: ${SEED}
+          Time: ${TIMESTAMP}
+
+          In-process, live, PEL, integration, and HTTP cross-container proof passed."
+          else
+            STATUS="FAIL"
+            EMOJI="❌"
+            COLOR="#ff0000"
+            PYTEST_TAIL=$(tail -n 30 pytest_inprocess.out 2>/dev/null || echo "no pytest output")
+            SEED_TAIL=$(cat seed_tail.out 2>/dev/null || echo "no seed output")
+            TEXT="CORI Invariants CI: *FAIL* ${EMOJI}
+          Branch: ${BRANCH}
+          Commit: ${COMMIT}
+          Workflow: ${GITHUB_WORKFLOW}
+          Seed: ${SEED}
+          HTTP: ${HTTP}
+          Integration: ${INTEGRATION}
+          In-process: ${INPROCESS}
+          Live DB: ${LIVE}
+          PEL verify: ${PEL}
+          PEL pytest: ${PYTEST_PEL}
+          Time: ${TIMESTAMP}
+
+          Pytest tail (in-process):
+          \`\`\`
+          ${PYTEST_TAIL}
+          \`\`\`
+
+          Seed tail:
+          \`\`\`
+          ${SEED_TAIL}
+          \`\`\`"
+          fi
+
+          if [ -z "${SLACK_WEBHOOK_URL:-}" ]; then
+            echo "SLACK_WEBHOOK_URL not set; skipping Slack notification"
+            exit 0
+          fi
+
+          payload=$(jq -n --arg text "$TEXT" --arg color "$COLOR" \
+            '{attachments: [{color: $color, title: "CORI Invariants CI", text: $text}]}')
+          curl -fsS -X POST -H 'Content-type: application/json' --data "$payload" "$SLACK_WEBHOOK_URL"
+
+      - name: Tear down CI stack
+        if: always()
+        run: docker compose -f docker-compose.ci.yml down -v

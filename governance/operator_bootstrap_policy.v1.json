@@ -5,11 +5,11 @@
     "exclude_plug_id_prefixes": []
   },
   "never_auto_enable": {
-    "plug_classes": ["cursor_skill", "hf_agent_skill"],
-    "authority_levels": ["admin"]
+    "plug_classes": ["cursor_skill", "hf_agent_skill", "mcp"],
+    "authority_levels": ["admin", "execute", "assist"]
   },
   "mcp": {
-    "enable_when_manifest_configured": true,
-    "max_authority_level": "assist"
+    "enable_when_manifest_configured": false,
+    "max_authority_level": "observe"
   }
 }

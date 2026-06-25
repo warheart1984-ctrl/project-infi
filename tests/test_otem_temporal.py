@@ -9,7 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import app.db as db
-from src.otem_execution_substrate import get_otem_execution_substrate, reset_otem_execution_substrate
+from src.otem.execution import get_otem_execution_substrate, reset_otem_execution_substrate
 from src.otem_temporal.activities import _substrate_apply, _substrate_approve
 
 

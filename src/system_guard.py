@@ -115,7 +115,7 @@ class SystemGuardController:
                 dict(event)
                 for event in reversed(self._events[-max(0, int(limit_events or 0)):])
             ]
-            from src.aais_ul_substrate import wrap_runtime_snapshot
+            from src.aais_ul.runtime import wrap_runtime_snapshot
 
             return wrap_runtime_snapshot(payload)
 

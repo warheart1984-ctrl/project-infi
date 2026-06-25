@@ -540,7 +540,7 @@ def propose_governed_llm_envelope(
         {"stage": "verification_gate", "value": dict(verification_gate)},
         {"stage": "proposal_commit", "value": "PROPOSED"},
     ]
-    from src.aais_ul_substrate import wrap_runtime_snapshot
+    from src.aais_ul.runtime import wrap_runtime_snapshot
 
     return wrap_runtime_snapshot(
         {

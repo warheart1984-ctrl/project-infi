@@ -1,0 +1,53 @@
+name: Nova Continuity Seal
+
+on:
+  push:
+    paths:
+      - "nova/**"
+      - "tests/test_crk_*.py"
+      - "tests/test_steward_governance_flow.py"
+      - "tests/test_cockpit_v2_summary.py"
+      - "tests/test_cortex_lawful_routing.py"
+      - "tests/test_drift_guard_and_ril.py"
+      - "tests/test_continuity_proofs.py"
+      - "tests/test_constitutional_runtime_v02.py"
+      - "tests/test_nova_law_kernel_v1.py"
+      - "tests/test_omega_pit_harness.py"
+  pull_request:
+    paths:
+      - "nova/**"
+      - "tests/**"
+
+jobs:
+  continuity-seal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Law kernel + Omega
+        run: |
+          python -m pytest tests/test_nova_law_kernel_v1.py tests/test_omega_pit_harness.py -q
+      - name: CRK T3/T4 panels
+        run: |
+          python -m pytest tests/test_crk_t3_reflexive_panel.py tests/test_crk_t4_perception_panel.py -q
+      - name: Governance + cockpit v2
+        run: |
+          python -m pytest tests/test_steward_governance_flow.py tests/test_cockpit_v2_summary.py -q
+      - name: Cortex routing + drift/RIL + proofs
+        run: |
+          python -m pytest tests/test_cortex_lawful_routing.py tests/test_drift_guard_and_ril.py tests/test_continuity_proofs.py -q
+      - name: Lawful LLM + LSG
+        run: |
+          python -m pytest nova/tests/test_lawful_llm_runtime.py tests/test_lawful_nova_lsg.py -q
+      - name: Nova bridges
+        run: |
+          python -m pytest tests/test_nova_bridges.py -q
+      - name: Constitutional runtime v0.2
+        run: |
+          python -m pytest tests/test_constitutional_runtime_v02.py -q

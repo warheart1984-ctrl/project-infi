@@ -32,9 +32,16 @@
   "generated_at_utc": "2026-05-27T19:15:25.397810+00:00",
   "goal": "attestation evaluated plan",
   "mode": "plan",
+  "rls_conformance_level": 1,
+  "rls_boot_receipt": {
+    "substrate_ok": true,
+    "trust_root_hash": "dev-fixture-trust-root",
+    "conformance_suite": "tests/test_rls_conformance_l1.py"
+  },
   "notes": [
     "non-destructive stage 2 scaffold",
-    "execution path intentionally gated off"
+    "execution path intentionally gated off",
+    "RLS L1 conformance: sealed dev boot + fail-closed spine pipeline"
   ],
   "plan_id": "bf-stage2-attest-001",
   "rollback_token": "rbk-18c35f551cbbdc0f",

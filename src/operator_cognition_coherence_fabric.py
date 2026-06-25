@@ -1436,7 +1436,7 @@ def _protocol_aligned(posture: list[dict[str, Any]]) -> bool:
 
 
 def _build_authority_shell_posture() -> list[dict[str, Any]]:
-    from src.continuity_substrate_organ import build_continuity_substrate_status
+    from src.continuity.organ import build_continuity_substrate_status
     from src.conversation_memory_organ import build_conversation_memory_status
     from src.jarvis_operator_organ import build_jarvis_operator_status
 
@@ -1585,7 +1585,7 @@ def _operator_decision_aligned(posture: list[dict[str, Any]]) -> bool:
 
 
 def _build_turn_admission_posture() -> list[dict[str, Any]]:
-    from src.aais_ul_substrate_organ import build_aais_ul_substrate_status
+    from src.aais_ul.organ import build_aais_ul_substrate_status
     from src.aris_integration_organ import build_aris_integration_status
     from src.chat_turn_governance_organ import build_chat_turn_governance_status
 
@@ -1787,7 +1787,7 @@ def _governance_membrane_aligned(posture: dict[str, Any]) -> bool:
 
 def _build_diplomacy_posture() -> dict[str, Any]:
     try:
-        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+        from src.diplomacy.runtime import inter_substrate_diplomacy_runtime
 
         return inter_substrate_diplomacy_runtime.diplomacy_posture()
     except Exception as exc:

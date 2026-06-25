@@ -290,7 +290,7 @@ class MissionBoardController:
 
     def snapshot(self, session_id: str | None = None, limit: int = 24) -> dict:
         with self._lock:
-            from src.aais_ul_substrate import wrap_runtime_snapshot
+            from src.aais_ul.runtime import wrap_runtime_snapshot
 
             return wrap_runtime_snapshot(self._snapshot_locked(session_id=session_id, limit=limit))
 

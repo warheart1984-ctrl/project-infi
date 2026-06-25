@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from src.aais_ul_substrate_organ import build_aais_ul_substrate_status
+from src.aais_ul.organ import build_aais_ul_substrate_status
 
 
 def test_build_status():

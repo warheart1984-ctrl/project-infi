@@ -1,0 +1,10 @@
+# WSL override: Postgres data on a Docker volume (bind-mount on /mnt/* breaks chmod/initdb).
+version: "3.8"
+
+services:
+  postgres:
+    volumes:
+      - cori_ci_postgres:/var/lib/postgresql/data
+
+volumes:
+  cori_ci_postgres:

@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { evaluateLaw, fetchTraceLaw, replayLawEvidence } from '../../lib/constitutionalApi';
 import { getApiErrorMessage } from '../../lib/api';
-import { CITStrip } from './CITStrip';
+import { ComprehensionFitness } from './ComprehensionFitness';
 import { CrossLedgerTracePanel } from './CrossLedgerTracePanel';
-import { EITStrip } from './EITStrip';
-import { MeaningStrip } from './MeaningStrip';
+import { EvidenceFitness } from './EvidenceFitness';
+import { GITStrip } from './GITStrip';
+import { MeaningFitness } from './MeaningFitness';
+import { PITStrip } from './PITStrip';
+import { SITStrip } from './SITStrip';
 import { EvidenceGraph } from './EvidenceGraph';
 import { LedgerTail } from './LedgerTail';
 import { StatusPill } from './StatusPill';
@@ -26,6 +29,9 @@ export function LawDetailPage({
   const strip = law?.cit_strip;
   const meaningStrip = law?.meaning_strip;
   const eitStrip = law?.eit_strip;
+  const sitStrip = law?.sit_strip;
+  const gitStrip = law?.git_strip;
+  const pitStrip = law?.pit_strip;
   const fitness = law?.fitness?.current ?? 0;
 
   const handleTrace = async () => {
@@ -98,6 +104,9 @@ export function LawDetailPage({
           {strip?.chi != null ? <span>Χ={Number(strip.chi).toFixed(3)}</span> : null}
           {meaningStrip?.mu != null ? <span>Μ={Number(meaningStrip.mu).toFixed(3)}</span> : null}
           {eitStrip?.omega != null ? <span>Ω={Number(eitStrip.omega).toFixed(3)}</span> : null}
+          {sitStrip?.sigma != null ? <span>Σ={Number(sitStrip.sigma).toFixed(3)}</span> : null}
+          {gitStrip?.lambda != null ? <span>Λ={Number(gitStrip.lambda).toFixed(3)}</span> : null}
+          {pitStrip?.phi != null ? <span>Φ={Number(pitStrip.phi).toFixed(3)}</span> : null}
         </div>
         <div className="constitutional-actions">
           <button
@@ -121,7 +130,7 @@ export function LawDetailPage({
       </div>
 
       {strip ? (
-        <CITStrip
+        <ComprehensionFitness
           explain={strip.explain}
           summarize={strip.summarize}
           whyExists={strip.why_exists}
@@ -136,7 +145,7 @@ export function LawDetailPage({
       ) : null}
 
       {eitStrip ? (
-        <EITStrip
+        <EvidenceFitness
           omega={eitStrip.omega}
           components={eitStrip.components}
           convergence={eitStrip.convergence}
@@ -148,12 +157,43 @@ export function LawDetailPage({
         />
       ) : null}
 
+      {sitStrip ? (
+        <SITStrip
+          sigma={sitStrip.sigma}
+          structureSummary={sitStrip.structure_summary}
+          recoveryHint={sitStrip.recovery_hint}
+          operatorIndependence={sitStrip.operator_independence}
+          stewardMode={stewardMode}
+        />
+      ) : null}
+
+      {gitStrip ? (
+        <GITStrip
+          lambdaValue={gitStrip.lambda}
+          generativeLaw={gitStrip.generative_law}
+          crossOperatorNote={gitStrip.cross_operator_note}
+          recoverySummary={gitStrip.recovery_summary}
+          stewardMode={stewardMode}
+        />
+      ) : null}
+
       {meaningStrip ? (
-        <MeaningStrip
+        <MeaningFitness
           mu={meaningStrip.mu}
           purpose={meaningStrip.purpose}
           canonicalMeaning={meaningStrip.canonical_meaning}
           intentNote={meaningStrip.intent_note}
+          stewardMode={stewardMode}
+        />
+      ) : null}
+
+      {pitStrip ? (
+        <PITStrip
+          phi={pitStrip.phi}
+          fitnessCurrent={pitStrip.fitness_current}
+          selectionNote={pitStrip.selection_note}
+          evidenceCoupling={pitStrip.evidence_coupling}
+          consensusNote={pitStrip.consensus_note}
           stewardMode={stewardMode}
         />
       ) : null}
@@ -190,7 +230,7 @@ export function EvidenceDetailPanel({ evidence, loading, stewardMode }) {
   return (
     <div>
       {eitStrip ? (
-        <EITStrip
+        <EvidenceFitness
           omega={eitStrip.omega}
           components={eitStrip.components}
           convergence={eitStrip.convergence}

@@ -43,10 +43,21 @@ def _resolve_api_key(spec: FrontierProviderSpec) -> str:
 
 
 def _nvidia_extra_body() -> dict[str, Any]:
-    """Nemotron 3 supports optional chain-of-thought via chat template kwargs."""
-    if env_flag("AAIS_NVIDIA_ENABLE_THINKING", default=False):
-        return {"chat_template_kwargs": {"enable_thinking": True}}
-    return {"chat_template_kwargs": {"enable_thinking": False}}
+    """Nemotron 3 chat-template kwargs and optional reasoning budget for coding agents."""
+    nova_mode = bool(os.getenv("NOVA_FRONTIER_PROVIDER", "").strip())
+    enable_thinking = env_flag("AAIS_NVIDIA_ENABLE_THINKING", default=nova_mode)
+    force_nonempty = env_flag("AAIS_NVIDIA_FORCE_NONEMPTY_CONTENT", default=nova_mode)
+    chat_template_kwargs: dict[str, Any] = {"enable_thinking": enable_thinking}
+    if force_nonempty:
+        chat_template_kwargs["force_nonempty_content"] = True
+    body: dict[str, Any] = {"chat_template_kwargs": chat_template_kwargs}
+    budget_raw = os.getenv("AAIS_NVIDIA_REASONING_BUDGET", "").strip()
+    if budget_raw:
+        try:
+            body["reasoning_budget"] = int(budget_raw)
+        except ValueError:
+            pass
+    return body
 
 
 def _azure_endpoint() -> str:
@@ -271,6 +282,7 @@ def build_http_adapter(spec: FrontierProviderSpec) -> HttpChatProvider:
     extra_body: dict[str, Any] = {}
     if spec.name == "nvidia":
         extra_body = _nvidia_extra_body()
+    timeout_sec = 300 if spec.name == "nvidia" else 90
     config = HttpChatProviderConfig(
         provider_id=spec.name,
         default_model=model,
@@ -280,6 +292,7 @@ def build_http_adapter(spec: FrontierProviderSpec) -> HttpChatProvider:
         site_url=site_url,
         extra_headers=dict(spec.extra_headers),
         default_extra_body=extra_body,
+        timeout_sec=timeout_sec,
     )
     return HttpChatProvider(config)
 

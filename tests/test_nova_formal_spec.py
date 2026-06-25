@@ -141,13 +141,13 @@ def test_intent_narrative_reconcile():
 
 
 def test_spine_pipeline_halt_on_false():
-    halted = evaluate_spine_pipeline({"substrate_ok": False})
+    halted = evaluate_spine_pipeline({"require_substrate": True, "substrate_ok": False})
     assert halted["halted"] is True
-    assert halted["halt_stage"] == "wolf_check"
+    assert halted["halt_stage"] == "rls_substrate"
 
     ok = evaluate_spine_pipeline({"substrate_ok": True, "cognitive_runtime_enabled": True})
     assert ok["halted"] is False
-    assert len(ok["trace"]) == 5
+    assert len(ok["trace"]) == 4
 
 
 def test_agency_preservation_detects_dropped_commitment():

@@ -2,6 +2,8 @@
 
 This folder is the active map of the AAIS documentation tree.
 
+**Continuity OS documentation site:** [index.md](./index.md) — governed, corrigible, lineage-preserving steward docs.
+
 Use it to answer four questions quickly:
 
 1. What is live now?
@@ -15,6 +17,8 @@ Use it to answer four questions quickly:
   - project-wide explanation, core operating docs, and main reading path
 - [runtime/](./runtime/)
   - live runtime maps, subsystem status, and system-facing reference docs
+  - includes the AAIS/D3 kernel current-state summary in
+    [runtime/AAIS_D3_SYSTEM_CURRENT_STATE.md](./runtime/AAIS_D3_SYSTEM_CURRENT_STATE.md)
 - [contracts/](./contracts/)
   - active laws, protocols, doctrine, and contracts
   - includes the active tracing contract in
@@ -31,6 +35,9 @@ Use it to answer four questions quickly:
     [contracts/AAIS_SSP_PROTOCOL.md](./contracts/AAIS_SSP_PROTOCOL.md),
     [contracts/AAIS_SSP_PROMOTION_PROTOCOL.md](./contracts/AAIS_SSP_PROMOTION_PROTOCOL.md),
     [contracts/AAIS_SUBSYSTEM_GENOME.md](./contracts/AAIS_SUBSYSTEM_GENOME.md)
+- [governance/](./governance/)
+  - operating governance companions (agent safety, evidence receipts, init contract, kernel boundaries)
+  - index: [governance/README.md](./governance/README.md)
 - [subsystems/](./subsystems/)
   - admitted or documented subsystem packs such as Nova
 - [audit/](./audit/)
@@ -57,6 +64,7 @@ Edit the repository root (`e:\project-infi`). The nested `Project-Infinity1/` di
 
 ## Fastest Reading Path
 
+0. [../ARCHITECTURE.md](../ARCHITECTURE.md) — one-page repo map (tracks, authority, where to put code)
 1. [../README.md](../README.md)
 2. [spine/STRATEGY.md](./spine/STRATEGY.md)
 3. [operations/OPERATOR_GOLDEN_PATH.md](./operations/OPERATOR_GOLDEN_PATH.md)
@@ -73,6 +81,7 @@ Edit the repository root (`e:\project-infi`). The nested `Project-Infinity1/` di
 - [spine/README.md](./spine/README.md)
 - [runtime/README.md](./runtime/README.md)
 - [contracts/README.md](./contracts/README.md)
+- [governance/README.md](./governance/README.md)
 - [subsystems/README.md](./subsystems/README.md)
 - [audit/README.md](./audit/README.md)
 - [_archive/README.md](./_archive/README.md)

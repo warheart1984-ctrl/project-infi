@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://crk1.local/schemas/crr1-wire-v1.json",
+  "title": "CRR1WireV1",
+  "description": "Flat CRR-1 wire receipt for CLG-1 ingestion and reconstruction.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "receipt_type",
+    "timestamp_utc",
+    "steward_id",
+    "expected_outcome",
+    "observed_outcome",
+    "contradiction_delta",
+    "surprise_magnitude",
+    "calibration_change",
+    "links"
+  ],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "receipt_type": { "const": "CRR-1" },
+    "timestamp_utc": { "type": "string" },
+    "steward_id": { "type": "string" },
+    "crr_id": { "type": "string" },
+    "expected_outcome": {},
+    "expected_confidence": { "type": "number" },
+    "observed_outcome": {},
+    "evidence_strength": { "type": "number" },
+    "contradiction_delta": { "type": "number" },
+    "surprise_magnitude": { "type": "number" },
+    "surprise_basis": { "type": "string" },
+    "correction_summary": { "type": "string" },
+    "calibration_change": { "type": "number" },
+    "calibration_delta": { "type": "number" },
+    "future_implications": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "reality_channel": { "type": "string" },
+    "links": {
+      "type": "object",
+      "properties": {
+        "expectation_id": { "type": ["string", "null"] },
+        "evidence_id": { "type": ["string", "null"] },
+        "decision_id": { "type": ["string", "null"] },
+        "crr_id": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

@@ -23,6 +23,17 @@ vi.mock('./pages/NovaPage', () => ({
   },
 }));
 
+vi.mock('./pages/NovaCodingAgent', () => ({
+  default: function MockNovaCodingAgent() {
+    return (
+      <main>
+        <h1>Nova Coding Agent</h1>
+        <p>Continuity cockpit sandbox</p>
+      </main>
+    );
+  },
+}));
+
 vi.mock('./pages/JarvisPage', () => ({
   default: function MockJarvisPage() {
     return (
@@ -47,6 +58,16 @@ describe('App routing', () => {
     expect(screen.getByRole('link', { name: /^Categories$/i })).toBeTruthy();
     expect(screen.getByRole('link', { name: /^Console$/i })).toBeTruthy();
     expect(screen.getByRole('link', { name: /^Memory Bank$/i })).toBeTruthy();
+  });
+
+  it('renders the coding-agent cockpit without replacing the Nova landing page', async () => {
+    window.history.pushState({}, '', '/nova/coding-agent');
+
+    render(<App />);
+
+    expect(await screen.findByRole('heading', { name: /Nova Coding Agent/i })).toBeTruthy();
+    expect(screen.getByText(/Continuity cockpit sandbox/i)).toBeTruthy();
+    expect(screen.queryByRole('heading', { name: /Small Nova/i })).toBeNull();
   });
 
   it('jarvis route remains accessible', async () => {

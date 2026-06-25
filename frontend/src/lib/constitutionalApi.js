@@ -39,24 +39,41 @@ export async function fetchStewardExplain(objectType, objectId) {
   return response.data;
 }
 
+export async function fetchComprehensionFitnessLaw(lawId) {
+  const response = await apiGet(
+    `/api/fitness/comprehension/law/${encodeURIComponent(lawId)}`,
+  );
+  return response.data;
+}
+
+export async function fetchMeaningFitnessLaw(lawId) {
+  const response = await apiGet(`/api/fitness/meaning/law/${encodeURIComponent(lawId)}`);
+  return response.data;
+}
+
+export async function fetchEvidenceFitnessLaw(lawId) {
+  const response = await apiGet(`/api/fitness/evidence/law/${encodeURIComponent(lawId)}`);
+  return response.data;
+}
+
+export async function fetchAttentionAllocationFitness() {
+  const response = await apiGet('/api/fitness/attention');
+  return response.data;
+}
+
+/** @deprecated Use fetchComprehensionFitnessLaw */
 export async function fetchCitLaw(lawId) {
-  const response = await apiGet(`/api/cit/law/${encodeURIComponent(lawId)}`);
-  return response.data;
+  return fetchComprehensionFitnessLaw(lawId);
 }
 
+/** @deprecated Use fetchMeaningFitnessLaw */
 export async function fetchMitLaw(lawId) {
-  const response = await apiGet(`/api/mit/law/${encodeURIComponent(lawId)}`);
-  return response.data;
+  return fetchMeaningFitnessLaw(lawId);
 }
 
-export async function fetchExplainLaw(lawId) {
-  const response = await apiGet(`/api/explain/law/${encodeURIComponent(lawId)}`);
-  return response.data;
-}
-
+/** @deprecated Use fetchEvidenceFitnessLaw */
 export async function fetchEitLaw(lawId) {
-  const response = await apiGet(`/api/eit/law/${encodeURIComponent(lawId)}`);
-  return response.data;
+  return fetchEvidenceFitnessLaw(lawId);
 }
 
 export async function fetchTraceLaw(lawId) {
@@ -76,6 +93,52 @@ export async function evaluateLaw(lawId, body = {}) {
 
 export async function runEpoch(body = {}) {
   const response = await apiPost('/api/epoch/run', body);
+  return response.data;
+}
+
+export async function fetchDecisions() {
+  const response = await apiGet('/api/decisions');
+  return response.data?.decisions || [];
+}
+
+export async function fetchDecision(decisionId) {
+  const response = await apiGet(`/api/decisions/${encodeURIComponent(decisionId)}`);
+  return response.data;
+}
+
+export async function fetchExplainLaw(lawId) {
+  const response = await apiGet(`/api/explain/law/${encodeURIComponent(lawId)}`);
+  return response.data;
+}
+
+export async function fetchOutcomeVariance(outcomeId) {
+  const response = await apiGet(`/api/fitness/outcome/${encodeURIComponent(outcomeId)}`);
+  return response.data;
+}
+
+export async function fetchOutcomeVarianceForDecision(decisionId) {
+  const response = await apiGet(
+    `/api/fitness/outcome/decision/${encodeURIComponent(decisionId)}`,
+  );
+  return response.data;
+}
+/** @deprecated Use fetchOutcomeVariance */
+export async function fetchOutcome(outcomeId) {
+  return fetchOutcomeVariance(outcomeId);
+}
+
+/** @deprecated Use fetchOutcomeVarianceForDecision */
+export async function fetchOutcomeForDecision(decisionId) {
+  return fetchOutcomeVarianceForDecision(decisionId);
+}
+
+export async function fetchPods() {
+  const response = await apiGet('/api/pods');
+  return response.data;
+}
+
+export async function fetchPod(podId) {
+  const response = await apiGet(`/api/pods/${encodeURIComponent(podId)}`);
   return response.data;
 }
 

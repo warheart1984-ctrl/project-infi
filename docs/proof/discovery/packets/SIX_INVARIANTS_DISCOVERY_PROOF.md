@@ -2,7 +2,7 @@
 
 Claim: Source PDF registered as governed Proof-of-Discovery evidence under UGR contribution type `proof`, attested by Discovery Pod **Jon Halstead**.
 
-Claim status: **hypothetical** (standing 1; artifact hash-anchored; validator pass).
+Claim status: **proven** (standing 3; artifact hash-anchored; validator pass; final seven-invariant canonical set recorded).
 
 ## Discovery Pod
 
@@ -27,16 +27,31 @@ Claim status: **hypothetical** (standing 1; artifact hash-anchored; validator pa
 |---|---|
 | `contribution_type` | `proof` |
 | `proof_path` | `docs/proof/discovery/packets/SIX_INVARIANTS_DISCOVERY_PROOF.md` |
-| `claim_label` | `hypothetical` |
-| `standing` | `1` |
+| `claim_label` | `proven` |
+| `standing` | `3` |
 | `law_id` | `REPO_PROOF_LAW` |
 | `discovery_pod_id` | `pod:jon-halstead` |
 | `source_document_path` | `The Six Invariants — A Formal Framework of Cosmological and Epistemological Law.pdf` |
+
+## Final canonical set
+
+The historical Six Invariants artifact is canonically resolved to the Seven Invariants final set:
+
+1. Identity Preservation
+2. Authority Continuity
+3. Bidirectional Coherence
+4. Symmetric Constraint Surface
+5. Evidence Integrity
+6. Law Surface Binding
+7. The Unifier
+
+Canonical contract: `docs/contracts/SEVEN_INVARIANTS_CANONICAL_SET.md`
 
 ## Linked contracts
 
 - `docs/contracts/UGR_CONTRIBUTION_DISCOVERY_CONTRACT.md`
 - `docs/contracts/UGR_OPERATOR_REWARDS_CONTRACT.md`
+- `docs/contracts/SEVEN_INVARIANTS_CANONICAL_SET.md`
 
 ## Verification
 

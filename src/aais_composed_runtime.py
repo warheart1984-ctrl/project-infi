@@ -16,7 +16,7 @@ from src.cog_runtime import nova_cortex_spec, summarize_cognitive_runtime_state
 from src.cog_runtime.nova import nova_speaking_adapter
 from src.cog_runtime.nova_face import (
     NOVA_FACE_BRIDGE_ID,
-    bridge_nova_face_to_cortex_and_jarvis,
+    bridge_nova_face_to_cortex_and_tri_core,
 )
 
 try:
@@ -50,7 +50,7 @@ COMPOSED_PIPELINE: tuple[str, ...] = (
     "aris_admission",
     "nova_face",
     "nova_cortex",
-    "jarvis_core",
+    "tri_core",
     "speaking_optional",
 )
 
@@ -79,7 +79,7 @@ COMPOSED_TURN_V2_2_INVARIANTS: tuple[dict[str, str], ...] = (
     },
     {
         "id": "jarvis_authority",
-        "rule": "Jarvis Core retains routing, state, and safety authority on every composed turn.",
+        "rule": "Tri-Core retains routing, state, and safety authority on every composed turn.",
     },
 )
 
@@ -258,7 +258,7 @@ def composed_runtime_spec() -> dict[str, Any]:
         "version": AAIS_COMPOSED_RUNTIME_VERSION,
         "summary": (
             "Governed turn composition: AAIS Spine doctrine envelope, ARIS admission, "
-            "Nova Face → Nova Cortex → Jarvis Core bridge."
+            "Nova Face → Nova Cortex → Tri-Core bridge."
         ),
         "pipeline": list(COMPOSED_PIPELINE),
         "spine": build_spine_doctrine_envelope(),
@@ -275,7 +275,7 @@ def composed_runtime_spec() -> dict[str, Any]:
             },
             {
                 "id": "jarvis_authority",
-                "rule": "Jarvis Core retains routing, state, and safety authority.",
+                "rule": "Tri-Core retains routing, state, and safety authority.",
             },
             {
                 "id": "speaking_on_companion",
@@ -345,6 +345,14 @@ def run_composed_turn(
         }
     )
     if aris.get("status") == "blocked":
+        from src.fault_journal import FAULT_CODE_INVARIANT_BREACH, record_fault_from_context
+
+        record_fault_from_context(
+            metadata=metadata,
+            invariant_id="aris_before_cortex",
+            fault_code=FAULT_CODE_INVARIANT_BREACH,
+            detail={"source": "aris_admission", "aris_status": aris.get("status")},
+        )
         compose_ms = round((time.perf_counter() - compose_started) * 1000)
         result = ComposedTurnResult(
             status="blocked",
@@ -391,7 +399,7 @@ def run_composed_turn(
         session.metadata["aais_composed_turn"] = result.to_dict()
         return result
 
-    bridge_result = bridge_nova_face_to_cortex_and_jarvis(
+    bridge_result = bridge_nova_face_to_cortex_and_tri_core(
         session,
         payload,
         user_message,
@@ -433,6 +441,14 @@ def run_composed_turn(
             )
             reason_codes.append("agency_violation_advisory")
         else:
+            from src.fault_journal import FAULT_CODE_AUTHORITY_MISMATCH, record_fault_from_context
+
+            record_fault_from_context(
+                metadata=metadata,
+                invariant_id="jarvis_authority",
+                fault_code=FAULT_CODE_AUTHORITY_MISMATCH,
+                detail={"source": "agency_preservation", "violation": violation},
+            )
             compose_ms = round((time.perf_counter() - compose_started) * 1000)
             result = ComposedTurnResult(
                 status="blocked",
@@ -462,6 +478,14 @@ def run_composed_turn(
         )
         session.metadata["slingshot_midflight_cortex"] = cortex_midflight
         if cortex_midflight.get("halt_turn"):
+            from src.fault_journal import FAULT_CODE_RUNTIME_TIMEOUT, record_fault_from_context
+
+            record_fault_from_context(
+                metadata=metadata,
+                invariant_id="operator_fast_compose",
+                fault_code=FAULT_CODE_RUNTIME_TIMEOUT,
+                detail={"source": "slingshot_midflight", "midflight": cortex_midflight},
+            )
             apply_midflight_to_session(session, cortex_midflight)
             compose_ms = round((time.perf_counter() - compose_started) * 1000)
             result = ComposedTurnResult(
@@ -588,7 +612,7 @@ def summarize_composed_turn(session) -> dict[str, Any] | None:
         "reason_codes": list(stored.get("reason_codes") or []),
         "nova_face_id": ((stored.get("nova_bridge") or {}).get("face") or {}).get("face_id"),
         "active_cognitive_runtimes": (
-            ((stored.get("nova_bridge") or {}).get("jarvis_core") or {}).get("active_cognitive_runtimes")
+            ((stored.get("nova_bridge") or {}).get("tri_core") or {}).get("active_cognitive_runtimes")
             or []
         ),
         "compose_ms": stored.get("compose_ms"),
@@ -675,7 +699,7 @@ def main(argv: list[str] | None = None) -> int:
         print(result.speaking_reply)
     elif result.nova_bridge:
         runtimes = (
-            (result.nova_bridge.get("jarvis_core") or {}).get("active_cognitive_runtimes") or []
+            (result.nova_bridge.get("tri_core") or {}).get("active_cognitive_runtimes") or []
         )
         print(f"active runtimes: {', '.join(runtimes) or 'none'}")
     if result.reason_codes:

@@ -20,7 +20,11 @@ from src.cog_runtime.formal.generation_gate import (
     verify_finalized_response,
 )
 from src.cog_runtime.formal.intent_narrative_reconcile import reconcile_intent_narrative
-from src.cog_runtime.formal.spine_pipeline import evaluate_spine_pipeline, halt_receipt
+from src.cog_runtime.formal.spine_pipeline import (
+    evaluate_spine_pipeline,
+    halt_receipt,
+    resolve_substrate_ok,
+)
 from src.cog_runtime.formal.turn_agency import (
     AgencyViolation,
     capture_turn_boundary,
@@ -77,10 +81,8 @@ def evaluate_pre_cortex_spine(
     aris: dict[str, Any],
     companion_turn: bool,
 ) -> dict[str, Any]:
-    """Stages 2–4 — Wolf → ARIS → Jarvis before cortex executes."""
-    return evaluate_spine_pipeline(
-        {
-            "substrate_ok": bool(metadata.get("substrate_ok", True)),
+    """Stages 2-4: ARIS -> Jarvis before cortex executes."""
+    turn = {
             "governance": metadata.get("policy_status") or {},
             "aris_admission": aris,
             "jarvis_blocked": bool(metadata.get("jarvis_blocked")),
@@ -88,8 +90,10 @@ def evaluate_pre_cortex_spine(
             "cognitive_runtime_enabled": metadata.get("cognitive_runtime_enabled", True),
             "companion_turn": companion_turn,
             "halt_before_cortex": True,
+            "execution_context": dict(metadata),
         }
-    )
+    turn["substrate_ok"] = resolve_substrate_ok(turn)
+    return evaluate_spine_pipeline(turn)
 
 
 def evaluate_post_cortex_spine(
@@ -99,9 +103,7 @@ def evaluate_post_cortex_spine(
     speaking_validation: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Cortex_execute + Speaking_emit gates after cognition and generation."""
-    return evaluate_spine_pipeline(
-        {
-            "substrate_ok": True,
+    turn = {
             "governance": metadata.get("policy_status") or {},
             "aris_admission": {"status": "enforced"},
             "jarvis_blocked": bool(metadata.get("jarvis_blocked")),
@@ -113,8 +115,13 @@ def evaluate_post_cortex_spine(
             "speaking_validation": speaking_validation or metadata.get("speaking_validation"),
             "speaking_wrap_on_fail": False,
             "halt_before_cortex": False,
+            "execution_context": dict(metadata),
         }
-    )
+    if "substrate_ok" in metadata:
+        turn["substrate_ok"] = bool(metadata["substrate_ok"])
+    else:
+        turn["substrate_ok"] = resolve_substrate_ok(turn)
+    return evaluate_spine_pipeline(turn)
 
 
 def run_agency_preservation(session, *, prior_boundary: dict[str, Any] | None = None) -> dict[str, Any]:

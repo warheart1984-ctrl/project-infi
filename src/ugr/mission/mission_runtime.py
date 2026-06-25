@@ -80,6 +80,10 @@ class UGRMissionRuntime:
         self._tenant_id: str | None = None
         self._federation_context: list[dict[str, Any]] = []
 
+        from governance_gate import require_constitutional_boot
+
+        require_constitutional_boot()
+
     def _bind_tenant(self, tenant_id: str) -> None:
         """Scope ledger, organs, and invariants to one tenant partition."""
         from src.ugr.platform.tenant_registry import normalize_tenant_id
@@ -301,6 +305,14 @@ class UGRMissionRuntime:
             cloud_manifold=manifold.to_dict(),
         )
 
+        from src.ugr.mission.csr_bridge import sync_mission_open_to_csr
+        from src.ugr.state_runtime import CSR as URG_CSR
+
+        try:
+            sync_mission_open_to_csr(URG_CSR, mission_id, ingress=ingress)
+        except Exception:
+            pass  # CSR is observability-only; never block mission execution
+
         updated_steps, auto_meta = apply_auto_assignments_to_steps(
             payload,
             decomposition,
@@ -319,6 +331,14 @@ class UGRMissionRuntime:
             organ_registry=self.organs,
             auto_assign_meta=auto_meta,
         )
+
+        from src.ugr.mission.csr_bridge import sync_mission_executing_to_csr
+        from src.ugr.state_runtime import CSR as URG_CSR
+
+        try:
+            sync_mission_executing_to_csr(URG_CSR, mission_id)
+        except Exception:
+            pass
 
         for ordinal, step in enumerate(updated_steps, start=1):
             step = dict(step)

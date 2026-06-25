@@ -4060,7 +4060,7 @@ function AAISBlueprintCard({
                         <strong>
                           {doctrinePosture?.summary
                             || (doctrine.preserve_core
-                              ? 'UL doctrine is preserving the Jarvis core.'
+                              ? 'UL doctrine is preserving the Tri-Core.'
                               : 'Doctrine detected a boundary or stability risk.')}
                         </strong>
                         <div className="jarvis-inline-meta">

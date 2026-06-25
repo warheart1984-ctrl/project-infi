@@ -420,7 +420,7 @@ def attach_cloud_forge_metadata(response: dict[str, Any], bundle: dict[str, Any]
     """Attach Cloud Forge bundle and slim rail_decision alias to a UGR response."""
     if not bundle:
         return response
-    from src.aais_ul_substrate import attach_ul_substrate, wrap_cloud_forge_bundle
+    from src.aais_ul.runtime import attach_ul_substrate, wrap_cloud_forge_bundle
 
     updated = dict(response)
     wrapped_bundle = wrap_cloud_forge_bundle(dict(bundle))

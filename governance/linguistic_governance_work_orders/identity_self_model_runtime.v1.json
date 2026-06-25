@@ -1,0 +1,31 @@
+{
+  "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+  "gene": "identity_self_model_runtime",
+  "status": "pending",
+  "urgency_score": 48.8,
+  "queue_generated_at": "2026-06-24T06:55:16Z",
+  "recommended_actions": [
+    {
+      "kind": "watch_wave2_header",
+      "path": "src/identity_self_model_runtime.py",
+      "note": "Add # Engineering header before band escalates"
+    },
+    {
+      "kind": "watch_cascade",
+      "command": "python tools/linguistic_cascade_report.py --gene culture_habit_runtime",
+      "note": "Parent at risk \u2014 monitor cascade"
+    },
+    {
+      "kind": "schedule_remediation",
+      "command": "python tools/governance/generate_linguistic_remediations.py --gene identity_self_model_runtime",
+      "note": "Pre-generate remediation when predicted band materializes"
+    },
+    {
+      "kind": "cascade_report",
+      "command": "python tools/linguistic_cascade_report.py --gene identity_self_model_runtime",
+      "note": "Review lineage cascade impact"
+    }
+  ],
+  "operator_notes": "",
+  "updated_at": "2026-06-24T06:55:16Z"
+}

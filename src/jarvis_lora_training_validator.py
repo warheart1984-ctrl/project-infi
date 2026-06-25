@@ -16,6 +16,7 @@ RUN_STATUSES = frozenset({"proposed", "running", "completed", "rejected"})
 PROMOTION_STATUSES = frozenset({"draft", "eval_passed", "promoted"})
 LOADABLE_PROMOTION_STATUSES = frozenset({"eval_passed", "promoted"})
 DATASET_SOURCES = frozenset({"seed", "private", "external"})
+NOVA_LAWFUL_EXPORT_ADMISSION_ID = "nova-lawful-turns-export-v1"
 HYPERPARAM_KEYS = frozenset(
     {
         "epochs",
@@ -104,6 +105,35 @@ def _validate_hyperparams(hyperparams: Any, label: str, errors: list[str]) -> No
 
     if not isinstance(hyperparams.get("use_4bit"), bool):
         errors.append(f"{label}:hyperparams.use_4bit must be boolean")
+
+
+def validate_dataset_manifest(doc: dict[str, Any], label: str = "dataset_manifest") -> list[str]:
+    """Return validation errors for a jarvis_lora_dataset_manifest.v1 sidecar."""
+    errors: list[str] = []
+
+    if doc.get("manifest_version") != "jarvis_lora_dataset_manifest.v1":
+        errors.append(f"{label}:invalid manifest_version")
+
+    admission_ids = list(doc.get("admission_ids") or [])
+    if NOVA_LAWFUL_EXPORT_ADMISSION_ID in admission_ids:
+        if not str(doc.get("export_manifest_sha256") or "").strip():
+            errors.append(
+                f"{label}:export_manifest_sha256 required when {NOVA_LAWFUL_EXPORT_ADMISSION_ID} is admitted"
+            )
+        if not str(doc.get("export_manifest_path") or "").strip():
+            errors.append(
+                f"{label}:export_manifest_path required when {NOVA_LAWFUL_EXPORT_ADMISSION_ID} is admitted"
+            )
+
+    for entry in doc.get("source_files") or []:
+        path = str(entry.get("path") or "").replace("\\", "/")
+        if "nova_lawful_turns.jsonl" in path and NOVA_LAWFUL_EXPORT_ADMISSION_ID not in admission_ids:
+            errors.append(
+                f"{label}:admission_ids must include {NOVA_LAWFUL_EXPORT_ADMISSION_ID} for nova lawful corpus"
+            )
+            break
+
+    return errors
 
 
 def validate_training_run(doc: dict[str, Any], label: str = "training_run") -> list[str]:

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import os
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from hashlib import sha256
@@ -12,6 +13,7 @@ from pathlib import Path
 import re
 from typing import Any, Iterable
 
+from nova.cortex.facade import NovaCortexFacade
 from nova.exceptions import GovernanceViolationError
 from nova.governance import ledger
 from nova.governance.cvr_recompute import (
@@ -23,6 +25,7 @@ from nova.governance.cvr_recompute import (
 from nova.governance.proof_gate import require_admitted, run_proof_gate
 from nova.governance.ugr_invariants import enforce_ugr_invariants, evaluate_ugr_invariants
 from nova.identity import NovaIdentity, declare_identity
+from nova.provider_factory import resolve_provider_model
 
 
 MemoryFact = tuple[str, str, str]
@@ -35,6 +38,21 @@ TOOL_BY_CAPABILITY = {
     "summarize": "summarization",
     "planning": "planning",
 }
+
+CAPABILITY_TO_DOMAIN = {
+    "observe": "cognition",
+    "reason": "cognition",
+    "summarize": "cognition",
+    "search": "substrate",
+    "files": "substrate",
+    "code": "substrate",
+    "memory_write": "substrate",
+    "graph_query": "substrate",
+    "planning": "planning",
+}
+
+DEFAULT_LAW_EPOCH = "EPOCH:0:T0"
+DEFAULT_LINEAGE_CONTRACT_ID = "lc-1"
 
 
 def _now_iso() -> str:
@@ -254,6 +272,124 @@ class NovaCortex:
             "text": self._compose_text(ul=ul, lsg=lsg),
         }
 
+    def think_with_messages(
+        self,
+        *,
+        messages: list[dict[str, Any]],
+        tenant_id: str,
+        memory_facts: Iterable[MemoryFact] = (),
+        tools: list[dict] | None = None,
+        model: str | None = None,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+        top_p: float | None = None,
+    ) -> dict[str, object]:
+        """Run Nova Cortex with a full OpenAI message list (Cursor / frontier path)."""
+        self.cognition_count += 1
+        prompt = ""
+        for message in reversed(messages):
+            if str(message.get("role", "")).lower() == "user":
+                content = message.get("content")
+                if isinstance(content, str) and content.strip():
+                    prompt = content.strip()
+                    break
+        if not prompt:
+            for message in reversed(messages):
+                content = message.get("content")
+                if isinstance(content, str) and content.strip():
+                    prompt = content.strip()
+                    break
+        if not prompt:
+            prompt = "Hello."
+
+        ul = UnifiedLanguage().parse(prompt)
+        if self.lsg_store is not None:
+            lsg = self.lsg_store.query(tenant_id=tenant_id, ul_packet=ul)
+            inline_lsg = LongScaleGraph(tuple(memory_facts)).traverse(ul)
+            if inline_lsg["facts_used"]:
+                lsg = {
+                    "substrate": "LSG",
+                    "facts_used": list(lsg["facts_used"]) + list(inline_lsg["facts_used"]),
+                    "matches": list(lsg["matches"]) + list(inline_lsg["matches"]),
+                }
+        else:
+            lsg = LongScaleGraph(tuple(memory_facts)).traverse(ul)
+
+        if self.provider is not None:
+            return self._think_with_provider_messages(
+                messages=messages,
+                ul=ul,
+                lsg=lsg,
+                tools=tools,
+                model=model,
+                max_tokens=max_tokens,
+                temperature=temperature,
+                top_p=top_p,
+            )
+        return {
+            "core": "Nova Cortex",
+            "ul": ul,
+            "lsg": lsg,
+            "text": self._compose_text(ul=ul, lsg=lsg),
+        }
+
+    def _default_frontier_max_tokens(self) -> int:
+        raw = os.environ.get("AAIS_NVIDIA_REASONING_BUDGET", "").strip()
+        if raw:
+            try:
+                budget = int(raw)
+                return max(512, budget + 4096)
+            except ValueError:
+                pass
+        return 16384
+
+    def _think_with_provider_messages(
+        self,
+        *,
+        messages: list[dict[str, Any]],
+        ul: dict[str, object],
+        lsg: dict[str, object],
+        tools: list[dict] | None,
+        model: str | None,
+        max_tokens: int | None,
+        temperature: float | None,
+        top_p: float | None,
+    ) -> dict[str, object]:
+        resolved_model = resolve_provider_model(model, self.provider)
+        resolved_max_tokens = max_tokens if max_tokens is not None else self._default_frontier_max_tokens()
+        invoke_kwargs: dict[str, object] = {
+            "model": resolved_model,
+            "max_tokens": resolved_max_tokens,
+        }
+        if temperature is not None:
+            invoke_kwargs["temperature"] = temperature
+        if top_p is not None:
+            invoke_kwargs["top_p"] = top_p
+        if tools:
+            invoke_kwargs["tools"] = tools
+
+        if hasattr(self.provider, "invoke_sync"):
+            response = self.provider.invoke_sync(messages, **invoke_kwargs)
+        else:
+            response = asyncio.run(
+                self.provider.invoke(
+                    messages,
+                    **invoke_kwargs,
+                )
+            )
+        return {
+            "core": "Nova Cortex",
+            "ul": ul,
+            "lsg": lsg,
+            "text": response.content,
+            "provider": response.provider or getattr(self.provider, "provider_id", None),
+            "model": response.model or resolved_model,
+            "input_tokens": response.input_tokens,
+            "output_tokens": response.output_tokens,
+            "tool_calls": response.tool_calls,
+            "raw_provider": response.raw,
+        }
+
     def _compose_text(self, *, ul: dict[str, object], lsg: dict[str, object]) -> str:
         subject = ul.get("subject") or "the request"
         facts = lsg["facts_used"]
@@ -282,14 +418,15 @@ class NovaCortex:
             {"role": "user", "content": prompt},
         ]
         model = getattr(self.provider, "model", None)
-        response = asyncio.run(
-            self.provider.invoke(
-                messages,
-                model=model,
-                max_tokens=2048,
-                temperature=0.7,
-            )
-        )
+        invoke_kwargs = {
+            "model": model,
+            "max_tokens": self._default_frontier_max_tokens(),
+            "temperature": 0.7,
+        }
+        if hasattr(self.provider, "invoke_sync"):
+            response = self.provider.invoke_sync(messages, **invoke_kwargs)
+        else:
+            response = asyncio.run(self.provider.invoke(messages, **invoke_kwargs))
         return {
             "core": "Nova Cortex",
             "ul": ul,
@@ -348,6 +485,7 @@ class VossRuntime:
         prompt: str,
         continuity_invariants: dict[str, dict[str, str]] | None = None,
         continuity_governance: dict[str, Any] | None = None,
+        law_kernel: dict[str, Any] | None = None,
     ) -> dict[str, object]:
         memory_facts_used = list((nova_cortex.get("lsg") or {}).get("facts_used") or [])
         tool_calls = list(api_kernel.get("tool_calls") or [])
@@ -380,6 +518,7 @@ class VossRuntime:
             ),
             "stages": [
                 "rsl.validate",
+                "law_kernel.route",
                 "api_kernel.route",
                 "nova_cortex.think",
                 "voss.execute",
@@ -408,6 +547,8 @@ class VossRuntime:
             payload["continuity_invariants"] = continuity_invariants
         if continuity_governance:
             payload["continuity_governance"] = continuity_governance
+        if law_kernel:
+            payload["law_kernel"] = law_kernel
         receipt = self.sign_receipt(payload)
         ledger.append_jsonl(
             {
@@ -456,6 +597,7 @@ class LawfulTurn:
     rsl: dict[str, str]
     receipt: dict[str, Any]
     continuity_governance: dict[str, Any] | None = None
+    law_kernel: dict[str, Any] | None = None
 
 
 class LawfulLLM:
@@ -472,6 +614,7 @@ class LawfulLLM:
         lsg_store: LongScaleGraphStore | None = None,
         tools: dict[str, Any] | None = None,
         cvr_registry: Any | None = None,
+        law_facade: NovaCortexFacade | None = None,
     ) -> None:
         self.identity = identity or declare_identity(
             tier="nova",
@@ -483,6 +626,50 @@ class LawfulLLM:
         self.voss = VossRuntime(signing_secret=signing_secret)
         self.tools = tools or {}
         self.cvr_registry = cvr_registry if cvr_registry is not None else get_cvr_registry()
+        self.law_facade = law_facade if law_facade is not None else NovaCortexFacade.from_kernel()
+
+    def _route_through_law_kernel(
+        self,
+        *,
+        prompt: str,
+        tenant_id: str,
+        capability: str,
+    ) -> dict[str, Any]:
+        domain = CAPABILITY_TO_DOMAIN.get(capability, "cognition")
+        try:
+            result = self.law_facade.handle(
+                kind="ASK",
+                payload={
+                    "message": prompt,
+                    "task": capability,
+                    "tenant_id": tenant_id,
+                    "runtime_capability": capability,
+                },
+                actor_id=self.identity.instance_id,
+                domain=domain,
+                epoch=DEFAULT_LAW_EPOCH,
+                lineage_contract_id=DEFAULT_LINEAGE_CONTRACT_ID,
+                lineage_event_id=_trace_id(
+                    instance_id=self.identity.instance_id,
+                    tenant_id=tenant_id,
+                    capability=capability,
+                    prompt=prompt,
+                ),
+            )
+        except Exception as exc:
+            raise GovernanceViolationError(
+                f"law kernel routing failed: {exc}",
+                code="LAW-KERNEL-ROUTE-FAILED",
+            ) from exc
+
+        if not result.get("admitted"):
+            action = str(result.get("action") or "DENY")
+            code = "LAW-KERNEL-PANIC" if action == "PANIC" else "LAW-KERNEL-DENY"
+            raise GovernanceViolationError(
+                f"law kernel {action.lower()} for capability={capability}",
+                code=code,
+            )
+        return result
 
     @property
     def cognition_count(self) -> int:
@@ -497,6 +684,11 @@ class LawfulLLM:
         memory_facts: Iterable[MemoryFact] = (),
     ) -> LawfulTurn:
         rsl = self.law.validate(tenant_id=tenant_id, capability=capability, prompt=prompt)
+        law_kernel = self._route_through_law_kernel(
+            prompt=prompt,
+            tenant_id=tenant_id,
+            capability=capability,
+        )
         api_kernel = APIKernel(
             tenant_id=tenant_id,
             capability=capability,
@@ -507,6 +699,7 @@ class LawfulLLM:
             tenant_id=tenant_id,
             memory_facts=memory_facts,
         )
+        nova_cortex = {**nova_cortex, "law_kernel": law_kernel}
         memory_facts_used = list((nova_cortex.get("lsg") or {}).get("facts_used") or [])
         memory_facts_sha256 = _sha256_text(json.dumps(memory_facts_used, sort_keys=True))
         continuity_invariants = evaluate_ugr_invariants(
@@ -555,6 +748,7 @@ class LawfulLLM:
             prompt=prompt,
             continuity_invariants=continuity_invariants,
             continuity_governance=continuity_governance,
+            law_kernel=law_kernel,
         )
         gates = {
             "interface": "Gates of Wonder",
@@ -569,6 +763,112 @@ class LawfulLLM:
             rsl=rsl,
             receipt=voss_runtime["receipt"],
             continuity_governance=continuity_governance,
+            law_kernel=law_kernel,
+        )
+
+    def complete_openai(
+        self,
+        messages: list[dict[str, Any]],
+        *,
+        tenant_id: str = "local",
+        capability: str = "observe",
+        tools: list[dict] | None = None,
+        model: str | None = None,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+        top_p: float | None = None,
+        memory_facts: Iterable[MemoryFact] = (),
+    ) -> LawfulTurn:
+        """OpenAI-compatible completion with full message history (Cursor / Agent path)."""
+        from nova.openai_cursor_compat import extract_user_prompt
+
+        prompt = extract_user_prompt(messages)
+        rsl = self.law.validate(tenant_id=tenant_id, capability=capability, prompt=prompt)
+        law_kernel = self._route_through_law_kernel(
+            prompt=prompt,
+            tenant_id=tenant_id,
+            capability=capability,
+        )
+        api_kernel = APIKernel(
+            tenant_id=tenant_id,
+            capability=capability,
+            tools=self.tools,
+        ).route(prompt=prompt)
+        nova_cortex = self.cortex.think_with_messages(
+            messages=messages,
+            tenant_id=tenant_id,
+            memory_facts=memory_facts,
+            tools=tools,
+            model=model,
+            max_tokens=max_tokens,
+            temperature=temperature,
+            top_p=top_p,
+        )
+        nova_cortex = {**nova_cortex, "law_kernel": law_kernel}
+        memory_facts_used = list((nova_cortex.get("lsg") or {}).get("facts_used") or [])
+        memory_facts_sha256 = _sha256_text(json.dumps(memory_facts_used, sort_keys=True))
+        continuity_invariants = evaluate_ugr_invariants(
+            tenant_id=tenant_id,
+            capability=capability,
+            prompt=prompt,
+            rsl=rsl,
+            nova_cortex=nova_cortex,
+            api_kernel=api_kernel,
+            identity={
+                "instance_id": self.identity.instance_id,
+                "tier": self.identity.tier,
+                "operator_session_id": self.identity.operator_session_id,
+            },
+            lsg_store=self.cortex.lsg_store,
+            allowed_capabilities=set(self.law.allowed_capabilities),
+            memory_facts_sha256=memory_facts_sha256,
+            memory_facts_used=memory_facts_used,
+        )
+        enforce_ugr_invariants(continuity_invariants)
+        output_sha256 = _sha256_text(str(nova_cortex["text"]))
+        trace_id = _trace_id(
+            instance_id=self.identity.instance_id,
+            tenant_id=tenant_id,
+            capability=capability,
+            prompt=prompt,
+        )
+        cvr_result = recompute_cvr_for_lawful_turn(
+            identity=self.identity,
+            trace_id=trace_id,
+            tenant_id=tenant_id,
+            capability=capability,
+            prompt_sha256=_sha256_text(prompt),
+            output_sha256=output_sha256,
+            memory_facts_sha256=memory_facts_sha256,
+            timestamp=_now_iso(),
+            nova_ugr_report=continuity_invariants,
+            registry=self.cvr_registry,
+        )
+        continuity_governance = cvr_result.to_receipt_dict()
+        voss_runtime = self.voss.execute(
+            identity=self.identity,
+            api_kernel=api_kernel,
+            nova_cortex=nova_cortex,
+            rsl=rsl,
+            prompt=prompt,
+            continuity_invariants=continuity_invariants,
+            continuity_governance=continuity_governance,
+            law_kernel=law_kernel,
+        )
+        gates = {
+            "interface": "Gates of Wonder",
+            "presentation": "human_readable_insight",
+        }
+        return LawfulTurn(
+            text=str(nova_cortex["text"]),
+            gates_of_wonder=gates,
+            nova_cortex=nova_cortex,
+            api_kernel=api_kernel,
+            voss_runtime=voss_runtime,
+            rsl=rsl,
+            receipt=voss_runtime["receipt"],
+            continuity_governance=continuity_governance,
+            law_kernel=law_kernel,
         )
 
     def verify_receipt(self, receipt: dict[str, Any]) -> bool:

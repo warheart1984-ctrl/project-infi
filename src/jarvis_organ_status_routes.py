@@ -9,7 +9,7 @@ from typing import Any, Callable
 
 from flask import Flask, jsonify, request
 
-from src.aais_ul_substrate import attach_ul_substrate
+from src.aais_ul.runtime import attach_ul_substrate
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +38,7 @@ _ORGAN_STATUS_ROUTES: tuple[tuple[str, str, StatusBuilder], ...] = (
         "/api/jarvis/otem-execution-substrate/status",
         "otem_execution_substrate",
         lambda: __import__(
-            "src.otem_execution_substrate",
+            "src.otem.execution",
             fromlist=["build_otem_execution_status"],
         ).build_otem_execution_status(),
     ),

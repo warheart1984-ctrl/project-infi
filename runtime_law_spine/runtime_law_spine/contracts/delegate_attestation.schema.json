@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DelegateAttestation",
+  "type": "object",
+  "required": ["parent_id", "child_id", "parent_capabilities", "child_capabilities"],
+  "properties": {
+    "parent_id": { "type": "string" },
+    "child_id": { "type": "string" },
+    "parent_capabilities": { "type": "array", "items": { "type": "string" } },
+    "child_capabilities": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

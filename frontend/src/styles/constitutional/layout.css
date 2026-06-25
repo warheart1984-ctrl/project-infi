@@ -104,3 +104,84 @@
   margin: 8px 0;
   background: #2a1212;
 }
+
+.kernel-boundary-monitor .kbm-current {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 12px 0 8px;
+}
+
+.kernel-boundary-monitor .kbm-label {
+  color: var(--cit-muted);
+  font-size: 0.85rem;
+}
+
+.kernel-boundary-monitor .kbm-value {
+  font-family: var(--cit-mono);
+  font-size: 1.4rem;
+  color: var(--cit-accent);
+}
+
+.kernel-boundary-monitor .kbm-signals {
+  margin: 0 0 12px;
+  font-family: var(--cit-mono);
+  font-size: 0.75rem;
+}
+
+.kernel-boundary-monitor .kbm-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 72px;
+  padding-top: 8px;
+  border-top: 1px solid var(--cit-border);
+}
+
+.kernel-boundary-monitor .kbm-bar {
+  flex: 1;
+  min-width: 3px;
+  background: linear-gradient(180deg, var(--cit-accent), #163628);
+  border-radius: 2px 2px 0 0;
+  opacity: 0.85;
+}
+
+.reference-panel .ref-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 8px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--cit-border);
+}
+
+.reference-panel .ref-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+}
+
+.reference-panel .ref-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid var(--cit-border);
+  border-radius: 8px;
+  background: #101826;
+}
+
+.reference-panel .ref-label {
+  color: var(--cit-muted);
+  font-size: 0.75rem;
+}
+
+.reference-panel .ref-value {
+  font-family: var(--cit-mono);
+  font-size: 1rem;
+}
+
+.reference-panel .ref-value-strong {
+  font-size: 1.25rem;
+  color: var(--cit-accent);
+}

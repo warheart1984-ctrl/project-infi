@@ -1,11 +1,11 @@
-"""Tests for Nova Face → Nova Cortex → Jarvis Core bridge."""
+"""Tests for Nova Face → Nova Cortex → Tri-Core bridge."""
 
 import unittest
 from types import SimpleNamespace
 
 from src.cog_runtime.nova_face import (
-    bridge_nova_face_to_cortex_and_jarvis,
-    build_jarvis_core_binding,
+    bridge_nova_face_to_cortex_and_tri_core,
+    build_tri_core_binding,
     resolve_nova_face,
 )
 
@@ -40,7 +40,7 @@ class TestNovaFaceBridge(unittest.TestCase):
 
     def test_bridge_companion_turn_runs_cortex(self):
         session = _session(persona_mode="tiny_nova", response_mode="tiny")
-        result = bridge_nova_face_to_cortex_and_jarvis(
+        result = bridge_nova_face_to_cortex_and_tri_core(
             session,
             {},
             "Should I rest or keep working?",
@@ -51,23 +51,26 @@ class TestNovaFaceBridge(unittest.TestCase):
         assert result is not None
         self.assertEqual(result.face.face_id, "tiny_nova")
         self.assertIsNotNone(result.cortex_session)
-        self.assertIn("jarvis.reasoning", result.jarvis_binding.get("active_cognitive_runtimes", []))
-        self.assertEqual(session.metadata["jarvis_core_binding"]["surface_identity"], "tiny_nova")
+        self.assertIn(
+            "jarvis.reasoning",
+            result.tri_core_binding.get("active_cognitive_runtimes", []),
+        )
+        self.assertEqual(session.metadata["tri_core_binding"]["surface_identity"], "tiny_nova")
         self.assertEqual(
             session.metadata["nova_face_bridge"]["pipeline"],
-            ["nova_face", "nova_cortex", "jarvis_core"],
+            ["nova_face", "nova_cortex", "tri_core"],
         )
 
-    def test_jarvis_retains_authority(self):
+    def test_tri_core_retains_authority(self):
         face = resolve_nova_face(
             persona_mode="tiny_nova",
             response_mode="tiny",
             companion_turn=True,
             surface_profile=TINY_PROFILE,
         )
-        binding = build_jarvis_core_binding(face, None)
-        self.assertEqual(binding["routing_authority"], "jarvis")
-        self.assertEqual(binding["state_authority"], "jarvis")
+        binding = build_tri_core_binding(face, None)
+        self.assertEqual(binding["routing_authority"], "tri_core")
+        self.assertEqual(binding["state_authority"], "tri_core")
         self.assertEqual(binding["surface_identity"], "tiny_nova")
 
 

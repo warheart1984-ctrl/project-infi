@@ -7,7 +7,7 @@ Governed evidence packets registered for UGR contribution discovery (`contributi
 | Metric | Count |
 |---|---|
 | Documents in manifest | 32 |
-| **Library admitted** | 13 (5 hypothetical + 8 asserted) |
+| **Library admitted** | 13 (3 proven + 2 hypothetical + 8 asserted) |
 | **Asserted (library)** | 8 — each has explicit `standing_reason` in manifest |
 | **Denied** | 19 (promotion policy excludes) |
 
@@ -46,7 +46,8 @@ py -3.12 -m src.ugr.discovery.discovery_pod_ledger list
 | `discovery-pods.jsonl` | Append-only ledger of every pod name registered |
 | `packets/` | Proof packets for bulk-registered PDFs (`*_DISCOVERY_PROOF.md`) |
 | `receipts/` | UGR contribution discovery receipts (`*_discovery_receipt.json`) |
-| `SIX_INVARIANTS_DISCOVERY_PROOF.md` | Canonical **proven** proof packet for Six Invariants |
+| `SIX_INVARIANTS_DISCOVERY_PROOF.md` | Canonical **proven** proof packet for the Six/Seven Invariants |
+| `../../contracts/SEVEN_INVARIANTS_CANONICAL_SET.md` | Final canonical seven-invariant set |
 | `The_Six_Invariants.pdf` | Canonical source PDF (also referenced by proven registration) |
 | `six_invariants_discovery_receipt.json` | Receipt for the proven Six Invariants registration |
 
@@ -61,7 +62,7 @@ Claim labels are resolved automatically from **`deploy/ugr/discovery-proof-promo
 1. **Architecture** — governed cognitive / constitutional runtime / AAIS / URG / Nova Cortex / Hyper-Systemizer / Voss / subsystem discovery, etc.
 2. **Science** — formal theory or specification, invariants, calculus, cryptographic anchoring, canonical state schema, etc.
 
-**Exceptions:** manifest entries flagged `canonical` (Six Invariants) are always **proven**.
+**Exceptions:** Six/Seven Invariants canonical entries are always **proven**.
 
 **Denied** (stay **asserted**): grant proposals, LinkedIn/case studies, DARPA/concept pitches, research concepts, industrial tangents, speculative physics, conlang, operator narratives (primers, taxonomia, profiles, accelerators), and manifests flagged `duplicate_of`.
 
@@ -130,12 +131,12 @@ Documents that remain **asserted** (deny rules, duplicate flag, or architecture/
 | Anchor_Connectome_Framework_Grant_Proposal_v2_1 | grant proposal deny |
 | SEA-FORGE (cultured meat / 3D food) | industrial tangent deny |
 | The LinkedIn Lockout — case study | LinkedIn / case study deny |
-| The Six Invariants (root duplicate PDF) | `duplicate_of: six_invariants` |
+| The Six Invariants (root duplicate PDF) | proven duplicate of canonical Seven Invariants set |
 | WOLF‑1 DARPA-style concept white paper | concept pitch deny |
 | Goblin primers, taxonomia, field editions | operator narrative deny |
 | AAIS / Nova Cortex / URG (conceptual only) | architecture without formal science |
-| Formal theory / Law of Duality (standalone) | science without governed architecture |
+| Formal theory documents without canonical invariant closure | science without governed architecture |
 
-The root copy of *The Six Invariants* (long filename) is byte-identical to `The_Six_Invariants.pdf` and is tagged `duplicate_of: six_invariants` in the manifest.
+The root copy of *The Six Invariants* (long filename) is byte-identical to `The_Six_Invariants.pdf` and is now tied to the final Seven Invariants canonical set.
 
 Contract: `docs/contracts/UGR_CONTRIBUTION_DISCOVERY_CONTRACT.md`

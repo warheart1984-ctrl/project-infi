@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from src.continuity_substrate_organ import build_continuity_substrate_status
+from src.continuity.organ import build_continuity_substrate_status
 
 
 def test_build_status():

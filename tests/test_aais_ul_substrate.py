@@ -7,7 +7,7 @@ from src.aais_ul import (
     build_default_registry,
     build_ul_snapshot,
 )
-from src.aais_ul_substrate import (
+from src.aais_ul.runtime import (
     SUBSTRATE_CONTRACT_VERSION,
     SUBSTRATE_ID,
     AAISULSubstrate,
@@ -249,7 +249,7 @@ class TestAAISULSubstratePhase2(unittest.TestCase):
         self.assertIn("runtime_context", snapshot["sections"])
 
     def test_wrap_operator_action(self):
-        from src.aais_ul_substrate import wrap_operator_action
+        from src.aais_ul.runtime import wrap_operator_action
 
         wrapped = wrap_operator_action(
             {
@@ -268,7 +268,7 @@ class TestAAISULSubstratePhase2(unittest.TestCase):
         self.assertIn("ul_trace", wrapped["tool_result"])
 
     def test_wrap_ugr_response(self):
-        from src.aais_ul_substrate import wrap_ugr_response
+        from src.aais_ul.runtime import wrap_ugr_response
 
         wrapped = wrap_ugr_response(
             {
@@ -340,7 +340,7 @@ class TestAAISULSubstratePhase3(unittest.TestCase):
         self.assertIn("tool_results", snapshot["sections"])
 
     def test_wrap_service_bridge_result(self):
-        from src.aais_ul_substrate import wrap_service_bridge_result
+        from src.aais_ul.runtime import wrap_service_bridge_result
 
         wrapped = wrap_service_bridge_result(
             {
@@ -451,7 +451,7 @@ class TestAAISULSubstratePhase4(unittest.TestCase):
         self.assertIn("tool_results", snapshot["sections"])
 
     def test_wrap_contractor_payload(self):
-        from src.aais_ul_substrate import wrap_contractor_payload
+        from src.aais_ul.runtime import wrap_contractor_payload
 
         wrapped = wrap_contractor_payload(
             {
@@ -477,7 +477,7 @@ class TestAAISULSubstratePhase4(unittest.TestCase):
         self.assertGreaterEqual(wrapped["ul_trace"]["count"], 1)
 
     def test_wrap_cloud_forge_bundle(self):
-        from src.aais_ul_substrate import wrap_cloud_forge_bundle
+        from src.aais_ul.runtime import wrap_cloud_forge_bundle
 
         wrapped = wrap_cloud_forge_bundle(
             {
@@ -496,7 +496,7 @@ class TestAAISULSubstratePhase4(unittest.TestCase):
         self.assertIn("ul_trace", wrapped["cloud_forge_readout"])
 
     def test_attach_ul_substrate_idempotent(self):
-        from src.aais_ul_substrate import attach_ul_substrate, wrap_runtime_snapshot
+        from src.aais_ul.runtime import attach_ul_substrate, wrap_runtime_snapshot
 
         wrapped = wrap_runtime_snapshot({"task_id": "forge-1", "kind": "analyze", "ok": True})
         again = attach_ul_substrate(wrapped)
@@ -782,7 +782,7 @@ class TestAAISULSubstratePhase7(unittest.TestCase):
 
     def test_knowledge_authority_wrap(self):
         from src.knowledge_authority import normalize_authority_preferences
-        from src.aais_ul_substrate import attach_ul_substrate
+        from src.aais_ul.runtime import attach_ul_substrate
 
         snapshot = attach_ul_substrate(
             {

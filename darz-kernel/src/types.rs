@@ -1,8 +1,46 @@
 use std::collections::BTreeMap;
 use std::fmt::Debug;
 
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
+use uuid::Uuid;
+
+use crate::payload::EventPayload;
+
 pub type Hash256 = [u8; 32];
 pub type MetaMap = BTreeMap<String, String>;
+pub type ThreadId = Uuid;
+pub type EventId = Uuid;
+
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq, Serialize, Deserialize)]
+pub enum EventType {
+    Concept,
+    Invariant,
+    Architecture,
+    Governance,
+    Decision,
+    Evidence,
+    Note,
+    Custom,
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct ContinuityThread {
+    pub id: ThreadId,
+    pub parent: Option<ThreadId>,
+    pub label: Option<String>,
+    pub created_at: DateTime<Utc>,
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct ContinuityEvent {
+    pub id: EventId,
+    pub thread_id: ThreadId,
+    pub event_type: EventType,
+    pub payload: EventPayload,
+    pub timestamp: DateTime<Utc>,
+    pub lineage: Vec<EventId>,
+}
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct TrajectoryMessage {

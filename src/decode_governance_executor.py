@@ -16,7 +16,7 @@ from src.ugr.governed_llm_executor import (
 
 
 def _wrap_ul_payload(payload: dict) -> dict:
-    from src.aais_ul_substrate import attach_ul_substrate
+    from src.aais_ul.runtime import attach_ul_substrate
 
     return attach_ul_substrate(dict(payload))
 

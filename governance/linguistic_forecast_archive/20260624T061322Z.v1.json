@@ -1,0 +1,3386 @@
+{
+  "linguistic_drift_forecast_version": "linguistic_drift_forecast.v1",
+  "generated_at": "2026-06-24T05:39:17Z",
+  "horizon_days": 30,
+  "ecosystem_trend": 0.0,
+  "forecasts": [
+    {
+      "gene": "linguistic_drift_forecast_organ",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 58,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 25.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_forecast_calibration_organ",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 58,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 25.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_governance_cycle_organ",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 58,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 25.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_predictive_governance_organ",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 58,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "meta_linguistic_governance_organ",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 58,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "cisiv_operator_lineage_console",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 56,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "coding_organs_stack",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 56,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "naming_genome_organ",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 56,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "plug_adapter_runtime",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 56,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "autobiographical_agency_runtime",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 54,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "culture_of_beings_runtime",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 54,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "identity_self_model_runtime",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 54,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_closed_loop_fabric_organ",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 54,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 25.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_drift_predictor_organ",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 54,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_full_governance_cycle_organ",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 54,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 30.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_governance_attestation_organ",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 54,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 25.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_governance_queue_organ",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 54,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_governed_lifecycle_fabric_organ",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 54,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_mutation_organ",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 54,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "multi_being_continuity_runtime",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 54,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "narrative_continuity_runtime",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 54,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 25.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "culture_habit_runtime",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 52,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "movie_renderer_lane_organ",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 52,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "naming_protocol_organ",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 52,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "story_forge_launcher_organ",
+      "current_risk": 26,
+      "current_band": "low",
+      "predicted_risk_30d": 52,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "linguistic_cycle_optimization_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_drift_report_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 25.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_forecast_archive_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 25.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_forecast_calibration_report_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_forecast_consumption_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 25.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_full_governance_cycle_history_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_governance_cadence_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_governance_cycle_history_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_lineage_viz_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 25.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_predictive_cycle_history_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_preemptive_remediation_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_remediation_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "linguistic_subsystem_promotion_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 25.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "meta_linguistic_registry_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "norm_federation_runtime",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 30,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "otem_execution_substrate",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 30,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "social_continuity_runtime",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 25.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "workflow_family_business",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 30,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "workflow_family_creative",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 30,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "workflow_family_data",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 30,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "workflow_family_ops",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 30,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "workflow_family_personal",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 49,
+      "predicted_band": "medium",
+      "lead_time_days": 30,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "aris_standalone_service",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 48,
+      "predicted_band": "medium",
+      "lead_time_days": 30,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "constitutional_evolution_runtime",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 48,
+      "predicted_band": "medium",
+      "lead_time_days": 30,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "governed_civilization_runtime",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 48,
+      "predicted_band": "medium",
+      "lead_time_days": 30,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "inter_substrate_diplomacy_runtime",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 48,
+      "predicted_band": "medium",
+      "lead_time_days": 30,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "jarvis_lora_training",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 48,
+      "predicted_band": "medium",
+      "lead_time_days": 30,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "multi_organism_governance_membrane_runtime",
+      "current_risk": 30,
+      "current_band": "low",
+      "predicted_risk_30d": 48,
+      "predicted_band": "medium",
+      "lead_time_days": 30,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "dreamspace_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 47,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "game_front_door_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 47,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "linguistic_attestation_history_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 47,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "linguistic_cascade_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 47,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "linguistic_governance_day_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 47,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "linguistic_governance_work_order_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 47,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "linguistic_work_order_history_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 47,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "media_processor_bridge_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 47,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "media_processor_family",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 47,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "mythic_engineering_translator_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 47,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "text_game_to_video_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 47,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "text_to_3d_world_lane_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 47,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "world_pack_lane_organ",
+      "current_risk": 21,
+      "current_band": "low",
+      "predicted_risk_30d": 47,
+      "predicted_band": "medium",
+      "lead_time_days": 23,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 45.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "constitutional_ecosystem_runtime",
+      "current_risk": 34,
+      "current_band": "medium",
+      "predicted_risk_30d": 45,
+      "predicted_band": "medium",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 16.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "workflow_family_knowledge",
+      "current_risk": 34,
+      "current_band": "medium",
+      "predicted_risk_30d": 45,
+      "predicted_band": "medium",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 16.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "aais_ul_substrate_organ",
+      "current_risk": 14,
+      "current_band": "low",
+      "predicted_risk_30d": 33,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)",
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "continuity_substrate_organ",
+      "current_risk": 14,
+      "current_band": "low",
+      "predicted_risk_30d": 32,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "temporal_replay_machine",
+      "current_risk": 14,
+      "current_band": "low",
+      "predicted_risk_30d": 32,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 30.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "latent alignment gap (header/doc vs genome ssp)"
+      ]
+    },
+    {
+      "gene": "operator_cognition_coherence_fabric",
+      "current_risk": 15,
+      "current_band": "low",
+      "predicted_risk_30d": 16,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 25.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "pending or draft MP-LING linguistic mutation"
+      ]
+    },
+    {
+      "gene": "capability_service_bridge",
+      "current_risk": 15,
+      "current_band": "low",
+      "predicted_risk_30d": 15,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "governance_layer_organ",
+      "current_risk": 15,
+      "current_band": "low",
+      "predicted_risk_30d": 15,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "governed_direct_pipeline",
+      "current_risk": 15,
+      "current_band": "low",
+      "predicted_risk_30d": 15,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "jarvis_memory_board",
+      "current_risk": 15,
+      "current_band": "low",
+      "predicted_risk_30d": 15,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "jarvis_operator_organ",
+      "current_risk": 15,
+      "current_band": "low",
+      "predicted_risk_30d": 15,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "operator_profile_organ",
+      "current_risk": 15,
+      "current_band": "low",
+      "predicted_risk_30d": 15,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "safety_envelope_organ",
+      "current_risk": 15,
+      "current_band": "low",
+      "predicted_risk_30d": 15,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "story_forge_lane_organ",
+      "current_risk": 15,
+      "current_band": "low",
+      "predicted_risk_30d": 15,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "patchforge_organ",
+      "current_risk": 9,
+      "current_band": "low",
+      "predicted_risk_30d": 10,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "cognitive_bridge_organ",
+      "current_risk": 9,
+      "current_band": "low",
+      "predicted_risk_30d": 9,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "continuity_witness_organ",
+      "current_risk": 9,
+      "current_band": "low",
+      "predicted_risk_30d": 9,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "creative_core_runtime_organ",
+      "current_risk": 9,
+      "current_band": "low",
+      "predicted_risk_30d": 9,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "jarvis_console_surface_organ",
+      "current_risk": 9,
+      "current_band": "low",
+      "predicted_risk_30d": 9,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "jarvis_protocol_organ",
+      "current_risk": 9,
+      "current_band": "low",
+      "predicted_risk_30d": 9,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "phase_gate_organ",
+      "current_risk": 9,
+      "current_band": "low",
+      "predicted_risk_30d": 9,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "project_infi_law_organ",
+      "current_risk": 9,
+      "current_band": "low",
+      "predicted_risk_30d": 9,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "realtime_event_cause_predictor_organ",
+      "current_risk": 9,
+      "current_band": "low",
+      "predicted_risk_30d": 9,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "reflection_runtime_organ",
+      "current_risk": 9,
+      "current_band": "low",
+      "predicted_risk_30d": 9,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "run_ledger_organ",
+      "current_risk": 9,
+      "current_band": "low",
+      "predicted_risk_30d": 9,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "workflow_shell_organ",
+      "current_risk": 9,
+      "current_band": "low",
+      "predicted_risk_30d": 9,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "change_scope_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 5,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "forensic_triangulation",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 5,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "ul_lineage_console_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 5,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "adaptive_lane_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "anti_drift_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "api_gateway_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "aris_boundary_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "capability_module_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "coherence_projection_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "conversation_memory_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "forge_contractor_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "imagine_generator",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "immune_observe_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "launcher_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "mechanic_handoff_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "memory_path_governance_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "memory_runtime_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "module_governance_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "narrative_continuity_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "narrative_trust_pack",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "nova_face_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "orchestration_spine_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "otem_bounded_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "planning_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "policy_gate_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "reasoning_executive_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "recipe_module",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "route_choice_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "spatial_reasoning_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "tracing_spine_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "v10_runtime_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "verification_gate_organ",
+      "current_risk": 4,
+      "current_band": "low",
+      "predicted_risk_30d": 4,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "patch_verification_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 1,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 20.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": [
+        "parent gene in forecast or cycle at-risk set"
+      ]
+    },
+    {
+      "gene": "aais_composed_runtime_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "aais_doctor_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "ai_factory_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "aris_integration_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "attention_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "beatbox_lane_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "blueprint_posture_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "chat_turn_governance_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "cognitive_execution_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "cogos_runtime_bridge_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "cortex_arcs_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "creative_capability_bridge_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "creative_console_interface_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "creative_operator_handoff_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "dashboard_surface_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "deliberation_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "direct_challenge_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "document_vision_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "evolve_engine_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "forensic_triangulation_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "forge_eval_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "governed_event_chain_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "governed_realtime_lane_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "human_voice_extraction",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "human_voice_extraction_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "imagine_generator_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "immune_resilience_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "intent_agency_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "invariant_engine_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "jarvis_reasoning_lane_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "jarvis_runs_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "knowledge_authority_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "memory_bank_surface_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "memory_smith_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "mission_board_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "mystic_engine_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "narrative_trust_pack_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "nova_landing_surface_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "nova_workspace_interface_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "operator_console_interface_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "operator_decision_ledger",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "operator_health_sentinel_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "operator_workbench_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "operator_workspace_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "output_integrity_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "patch_apply_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "patch_execution_preview_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "perception_gateway_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "perception_lane_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "platform_console_interfaces_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "predictor_immune_bridge_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "project_infi_state_machine_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "prompt_assembly_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "provider_route_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "reasoning_contract_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "recipe_module_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "run_ledger_binding_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "scorpion_bridge_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "security_protocol_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "slingshot_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "speakers_lane_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "speaking_runtime_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "specialist_route_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "state_hygiene_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "system_guard_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "ui_vision_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "v10_action_engine_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "v10_core_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "v8_runtime_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "v9_core_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "v9_runtime_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "wolf_rehydration_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "workflow_interfaces_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    },
+    {
+      "gene": "workflow_runtime_organ",
+      "current_risk": 0,
+      "current_band": "low",
+      "predicted_risk_30d": 0,
+      "predicted_band": "low",
+      "lead_time_days": 0,
+      "signals": {
+        "trajectory_delta": 0.0,
+        "latent_alignment": 0.0,
+        "mutation_pressure": 0.0,
+        "parent_forecast": 0.0,
+        "ecosystem_trend": 0.0
+      },
+      "drivers": []
+    }
+  ]
+}

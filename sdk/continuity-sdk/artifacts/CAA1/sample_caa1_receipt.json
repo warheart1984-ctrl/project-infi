@@ -1,0 +1,16 @@
+{
+  "cxd_id": "74cc5e25-0a6e-49e1-a869-d79b4b28ffbe",
+  "steward_id": "steward_s2_independent",
+  "isolation_proof": "ba5f95839aa093438b1fdbaf0342db9def0693ed84c6acef31e1e84ed0eed813",
+  "lineage_used": {
+    "crr_hash": "fbe1420f4aa997fdea5cc44b664c59aaece8ec4ba6165af54612e927c4ae7bf9",
+    "clg_hash": "d199d8a432685d9deab50c30cdc8996b1d0307a0de0e719f1f5048ef07d861bc"
+  },
+  "pre_assimilation_judgment": "73156ea6641350e3c8607f8cd62651584c67ae4163bc29a7227cae9ca7795b1c",
+  "post_assimilation_judgment": "f54bd6351c1d3738de66ff395b5faa6e7fd404e897d7a5309a779cae54b591a9",
+  "assimilation_delta": 0.7,
+  "assimilation_threshold": 0.15,
+  "continuity_passed": true,
+  "timestamp": "2026-06-24T23:46:18Z",
+  "proof_bundle": "e43ed32c255138aa17315fbd1566f086f56e8a1eec4d5d4d1a536ec0ad6ea5fe"
+}

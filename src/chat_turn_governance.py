@@ -7,7 +7,7 @@ from __future__ import annotations
 from typing import Any
 
 from src.cisiv import CISIV_STAGE_SEQUENCE, normalize_cisiv_stage
-from src.aais_ul_substrate import attach_ul_substrate
+from src.aais_ul.runtime import attach_ul_substrate
 
 CHAT_TURN_SURFACE = "chat_turn"
 CHAT_TURN_CONTRACT_VERSION = "aais.chat_turn_governance.v1"
@@ -397,7 +397,7 @@ def apply_chat_turn_admission_block(session, blocked_payload: dict[str, Any] | N
 
 def build_chat_runtime_ul_envelope(payload: dict[str, Any]) -> dict[str, Any]:
     """Build a chat-runtime UL envelope from bridge, pipeline, and optional snapshots."""
-    from src.aais_ul_substrate import aais_ul_substrate
+    from src.aais_ul.runtime import aais_ul_substrate
 
     response_trace = dict(payload.get("response_trace") or {})
     governed_pipeline = dict(response_trace.get("governed_pipeline") or {})

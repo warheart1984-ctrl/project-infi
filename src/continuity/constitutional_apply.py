@@ -757,6 +757,13 @@ def apply_constitutional_chain(*, ledger: MeaningLedger | None = None) -> dict[s
     cit_1 = run_cit_proof()
     mit_1 = run_mit_proof()
     eit_2 = run_eit2_proof()
+    from src.continuity.sit_ledger import run_sit_proof
+    from src.continuity.git_ledger import run_git_fitness_proof
+    from src.continuity.pit_fitness import run_pit_proof
+
+    sit_1 = run_sit_proof()
+    git_fitness = run_git_fitness_proof()
+    pit_meta = run_pit_proof()
     from src.continuity.nova_kernel_loop import run_genesis_kernel_loop_proof
 
     kernel_loop = run_genesis_kernel_loop_proof()
@@ -794,6 +801,9 @@ def apply_constitutional_chain(*, ledger: MeaningLedger | None = None) -> dict[s
         "comprehension_invariance_cit_1": cit_1,
         "meaning_invariance_mit_1": mit_1,
         "evidence_convergence_eit_2": eit_2,
+        "structure_invariance_sit_1": sit_1,
+        "generative_fitness_git": git_fitness,
+        "proof_invariance_pit": pit_meta,
         "genesis_kernel_loop": kernel_loop,
         "creation_convergence_root": ROOT_015,
         "creation_convergence_root_alias": ROOT_00X,
@@ -822,6 +832,9 @@ def apply_constitutional_chain(*, ledger: MeaningLedger | None = None) -> dict[s
             and cit_1.get("passed", False)
             and mit_1.get("passed", False)
             and eit_2.get("passed", False)
+            and sit_1.get("passed", False)
+            and git_fitness.get("passed", False)
+            and pit_meta.get("passed", False)
             and kernel_loop.get("passed", False)
         ),
     }

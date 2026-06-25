@@ -33,7 +33,7 @@ from src.anti_drift import (
     enforce_anti_drift,
 )
 from src.aais_blueprint import build_aais_blueprint
-from src.aais_ul_substrate import attach_ul_substrate, substrate_status
+from src.aais_ul.runtime import attach_ul_substrate, substrate_status
 from src.chat_turn_governance import (
     apply_chat_turn_admission_block,
     attach_modular_preview_to_response_trace,
@@ -239,6 +239,18 @@ CORS(app)
 
 register_operator_api_routes(app)
 register_constitutional_cockpit_routes(app)
+try:
+    from src.api.kernel_boundary import register_kernel_boundary_routes
+
+    register_kernel_boundary_routes(app)
+except Exception as _kernel_boundary_exc:
+    logger.warning("Kernel boundary routes not registered: %s", _kernel_boundary_exc)
+try:
+    from src.api.kernel_reference import register_kernel_reference_routes
+
+    register_kernel_reference_routes(app)
+except Exception as _kernel_reference_exc:
+    logger.warning("Kernel reference routes not registered: %s", _kernel_reference_exc)
 register_jarvis_organ_status_routes(app)
 
 try:
@@ -11505,6 +11517,37 @@ def ugr_mission_receipt_get(mission_id: str):
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/ugr/state/<mission_id>", methods=["GET"])
+def ugr_constitutional_state_get(mission_id: str):
+    """Current constitutional StateObject for a URG mission."""
+    try:
+        from src.ugr.state_runtime import CSR
+
+        state = CSR.get_state(mission_id)
+        return jsonify(json.loads(state.model_dump_json())), 200
+    except KeyError:
+        return jsonify({"error": "state_not_found", "mission_id": mission_id}), 404
+    except Exception as e:
+        logger.error(f"Error fetching URG constitutional state: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ugr/state/<mission_id>/replay", methods=["GET"])
+def ugr_constitutional_state_replay(mission_id: str):
+    """CSR replay result for a URG mission."""
+    try:
+        from src.ugr.state_runtime import CSR
+
+        CSR.get_state(mission_id)
+        replay = CSR.replay(mission_id)
+        return jsonify(json.loads(replay.model_dump_json())), 200
+    except KeyError:
+        return jsonify({"error": "state_not_found", "mission_id": mission_id}), 404
+    except Exception as e:
+        logger.error(f"Error replaying URG constitutional state: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/ugr/marketplace/organs", methods=["GET"])
 def ugr_marketplace_organs_query():
     """Public organ catalog for a tenant (no auth)."""
@@ -13306,7 +13349,7 @@ def get_conversation_memory_organ_status():
 def get_continuity_substrate_organ_status():
     """Read-only continuity substrate organ snapshot (Alt-17 wave)."""
     try:
-        from src.continuity_substrate_organ import build_continuity_substrate_status
+        from src.continuity.organ import build_continuity_substrate_status
 
         return jsonify(
             attach_ul_substrate(
@@ -13435,7 +13478,7 @@ def get_chat_turn_governance_organ_status():
 @app.route("/api/jarvis/aais-ul-substrate/status", methods=["GET"])
 def get_aais_ul_substrate_organ_status():
     try:
-        from src.aais_ul_substrate_organ import build_aais_ul_substrate_status
+        from src.aais_ul.organ import build_aais_ul_substrate_status
 
         return jsonify(
             attach_ul_substrate({"aais_ul_substrate": build_aais_ul_substrate_status()})

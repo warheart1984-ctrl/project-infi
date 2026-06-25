@@ -6,7 +6,7 @@ from typing import Any
 
 
 def _substrate_approve(workflow_id: str) -> dict[str, Any]:
-    from src.otem_execution_substrate import get_otem_execution_substrate
+    from src.otem.execution import get_otem_execution_substrate
 
     return get_otem_execution_substrate().approve(
         workflow_id,
@@ -15,7 +15,7 @@ def _substrate_approve(workflow_id: str) -> dict[str, Any]:
 
 
 def _substrate_apply(workflow_id: str) -> dict[str, Any]:
-    from src.otem_execution_substrate import get_otem_execution_substrate
+    from src.otem.execution import get_otem_execution_substrate
 
     return get_otem_execution_substrate().apply(
         workflow_id,

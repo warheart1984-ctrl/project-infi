@@ -37,6 +37,8 @@ _SCHEMA_FILES = {
     "calibration_reconstruction_receipt": "crr1_wire_v1.schema.json",
     "CRR1WireV1": "crr1_wire_v1.schema.json",
     "GovernanceReceiptHeaderV12": "governance_receipt_header.v12.schema.json",
+    "CanonicalTraceObject": "canonical_trace_object.schema.json",
+    "CAA1ContinuityAssimilationReceipt": "CAA1_continuity_assimilation_receipt.schema.json",
 }
 
 

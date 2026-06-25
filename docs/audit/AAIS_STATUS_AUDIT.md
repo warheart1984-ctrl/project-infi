@@ -102,8 +102,7 @@ These are not hidden bugs. They are explicit limits in the current design.
 - The major V10 Core contract break from the prior audit pass is now repaired.
   - `v10_runtime` now wraps the real V10 creative core instead of the placeholder action engine.
   - The V10-focused API tests pass again.
-- [src/jarvis_modular2.py](../../src/jarvis_modular2.py) is no longer syntactically broken.
-  - It now compiles cleanly and is marked as a legacy experimental copy rather than a canonical runtime file.
+- `jarvis_modular2.py` was removed (legacy experimental copy; use `src/jarvis_modular.py`).
 - The Project Infi runtime seam is now repaired and governed.
   - non-truthful final truth now ends lawfully as `rejected_no_admission`
   - admission no longer runs after untruthful L2 state

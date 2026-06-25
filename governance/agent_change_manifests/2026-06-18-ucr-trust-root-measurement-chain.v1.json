@@ -1,0 +1,49 @@
+{
+  "agent_safety_doctrine_version": "agent_safety_doctrine.v1",
+  "change_id": "ucr-trust-root-measurement-chain-v0.1",
+  "claim_label": "asserted",
+  "authority_chain": [
+    "Law",
+    "Blueprint",
+    "Contract",
+    "Implementation",
+    "Pipeline",
+    "Tool"
+  ],
+  "blueprint_refs": [
+    "META_ARCHITECT_LAWBOOK.md",
+    "docs/governance/AGENT_SAFETY_DOCTRINE.md",
+    "docs/governance/EVIDENCE_RECEIPT_MODEL.md"
+  ],
+  "change_boundary": {
+    "what_changed": "Implemented UCR trust root measurement chain (H_KERNEL_IMAGE, H_LAW_SPINE, H_CORRIDORS, H_BOOT_MANIFEST, H_TRUST_ROOT), boot manifest, kernel_boot seal, governed-mode invariants, cog_act_commit wiring, and contract docs.",
+    "why_changed": "User spec for full boot trust binding and UCR governed-mode refusal on measurement mismatch.",
+    "evidence_refs": [
+      "docs/contracts/TRUST_ROOT_MEASUREMENT_CHAIN.md",
+      "docs/contracts/H_CORRIDORS_BOOT_MANIFEST.md",
+      "docs/contracts/CORRIDOR_LOADER_SPEC_v0.1.md",
+      "src/ucr/trust_root.py",
+      "src/ucr/kernel_boot.py",
+      "tests/test_trust_root.py"
+    ],
+    "assumptions": [
+      "Law spine placeholder bytes used when contract markdown files are absent.",
+      "Kernel image stub path acceptable for v0.1 tests."
+    ],
+    "reversal": "Remove src/ucr trust-root modules, tests, contract docs, and this manifest."
+  },
+  "prohibited_actions": {
+    "rewrite_architecture_without_blueprint_approval": false,
+    "delete_governance_artifacts": false,
+    "remove_validation_gates": false,
+    "weaken_tests_to_pass": false,
+    "replace_determinism_with_convenience": false,
+    "introduce_hidden_dependencies": false,
+    "claim_completion_without_proof": false
+  },
+  "uncertainty": {
+    "level": "medium",
+    "authority_delta": "unchanged",
+    "resolution_path": "If law-spine placeholder bytes or kernel image stub are insufficient for target deployment, hold governed-mode claims until hardware-bound measurement evidence is attached."
+  }
+}

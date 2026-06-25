@@ -38,7 +38,7 @@ from src.v8_runtime import SessionLifecycle, default_policy_status
 
 
 def _wrap_ul_payload(payload: dict) -> dict:
-    from src.aais_ul_substrate import attach_ul_substrate
+    from src.aais_ul.runtime import attach_ul_substrate
 
     return attach_ul_substrate(dict(payload))
 

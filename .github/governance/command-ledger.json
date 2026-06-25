@@ -902,6 +902,57 @@
           "contains": "check-repo-hygiene.py"
         }
       ]
+    },
+    {
+      "id": "script.github.validate-repo-hygiene-manifest",
+      "owner": ".github/scripts/validate-repo-hygiene-manifest.py",
+      "component": "repo-steward",
+      "invocation": {
+        "type": "script_path",
+        "path": ".github/scripts/validate-repo-hygiene-manifest.py"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "make_target",
+          "path": "Makefile",
+          "contains": "repo-hygiene-gate"
+        },
+        {
+          "type": "workflow_run",
+          "path": ".github/workflows/repo-hygiene-gate.yml",
+          "contains": "validate-repo-hygiene-manifest.py"
+        }
+      ]
+    },
+    {
+      "id": "script.repo.remove-poison-dir",
+      "owner": "scripts/repo/remove-poison-dir.py",
+      "component": "repo-steward",
+      "invocation": {
+        "type": "script_path",
+        "path": "scripts/repo/remove-poison-dir.py"
+      },
+      "required_env": [],
+      "optional_env": [],
+      "deprecation": {
+        "status": "active",
+        "replacement": ""
+      },
+      "verification_policy": "warn",
+      "consumers": [
+        {
+          "type": "doc_path",
+          "path": "docs/subsystems/repo_steward/RULE_SET.md",
+          "contains": "remove-poison-dir.py"
+        }
+      ]
     }
   ]
 }

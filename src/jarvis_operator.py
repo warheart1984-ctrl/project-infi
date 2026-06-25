@@ -700,7 +700,7 @@ BROWSER_ROUTE_EXPECTATIONS = (
         "preferred_components": ("Dashboard",),
         "expected_headings": ("Jarvis Workbench",),
         "expected_buttons": ("Open Jarvis Console", "Review Local Settings"),
-        "expected_keywords": ("jarvis core", "private local stack", "operator deck"),
+        "expected_keywords": ("tri-core", "tri core", "private local stack", "operator deck"),
     },
     {
         "key": "prompt_lab",
@@ -2346,7 +2346,7 @@ class JarvisMemoryStore:
         snapshot["classified_record_count"] = sum(counts.values())
         snapshot["truth_scope"] = normalize_truth_scope(truth_scope)
         snapshot["governance"] = self._board_governance_summary(limit=12)
-        from src.aais_ul_substrate import wrap_runtime_snapshot
+        from src.aais_ul.runtime import wrap_runtime_snapshot
 
         return wrap_runtime_snapshot(snapshot)
 
@@ -2657,7 +2657,7 @@ class JarvisMemoryStore:
             truth_scope="live",
             _enforcer_authority=_enforcer_authority,
         )
-        from src.aais_ul_substrate import wrap_runtime_snapshot
+        from src.aais_ul.runtime import wrap_runtime_snapshot
 
         return wrap_runtime_snapshot(
             {
@@ -3660,7 +3660,7 @@ class JarvisOperator:
         if normalized_denylist:
             payload["explicit_denylist"] = normalized_denylist
         payload["no_execution_without_handoff"] = bool(no_execution_without_handoff)
-        from src.aais_ul_substrate import wrap_runtime_snapshot
+        from src.aais_ul.runtime import wrap_runtime_snapshot
 
         return wrap_runtime_snapshot(payload)
 
@@ -5131,7 +5131,7 @@ class JarvisOperator:
             f"Exit code: {result['exit_code']}"
         )
 
-        from src.aais_ul_substrate import wrap_operator_action
+        from src.aais_ul.runtime import wrap_operator_action
 
         return wrap_operator_action(
             {
@@ -5292,7 +5292,7 @@ class JarvisOperator:
             + (f" from {', '.join(projects)}." if projects else ".")
         )
 
-        from src.aais_ul_substrate import wrap_runtime_snapshot
+        from src.aais_ul.runtime import wrap_runtime_snapshot
 
         return wrap_runtime_snapshot(
             {

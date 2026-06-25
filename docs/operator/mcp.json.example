@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "operator-kernel": {
+      "command": "python",
+      "args": ["-m", "operator_mcp"],
+      "cwd": "E:/project-infi",
+      "env": {
+        "OPERATOR_KERNEL_URL": "http://127.0.0.1:8790"
+      }
+    }
+  }
+}

@@ -17,6 +17,7 @@ const routerBasename = (() => {
 const JarvisPage = lazy(() => import('./pages/JarvisPage'));
 const RepoManager = lazy(() => import('./pages/RepoManager'));
 const NovaPage = lazy(() => import('./pages/NovaPage'));
+const NovaCodingAgent = lazy(() => import('./pages/NovaCodingAgent'));
 const MemoryBank = lazy(() => import('./pages/MemoryBank'));
 const TextGenerator = lazy(() => import('./pages/TextGenerator'));
 const ImageAnalyzer = lazy(() => import('./pages/ImageAnalyzer'));
@@ -73,6 +74,7 @@ function AppShell() {
           <Routes>
             <Route path="/" element={<NovaPage />} />
             <Route path="/nova" element={<NovaPage />} />
+            <Route path="/nova/coding-agent" element={<NovaCodingAgent />} />
             <Route path="/nova-the-north-star" element={<NovaPage />} />
             <Route path="/jarvis" element={<JarvisPage />} />
             <Route path="/jarvis/repo-manager" element={<RepoManager />} />

@@ -39,6 +39,8 @@ Projects are **not ready** unless all five baseline artifact classes exist and t
 
 CI enforcement: `.github/workflows/documentation-baseline-gate.yml` runs `.github/scripts/validate-documentation-baseline.py` to validate checklist sections, documentation debt register fields, and MA-12 operational primer requirements.
 
+Agent Safety Doctrine enforcement: `.github/workflows/agent-safety-doctrine-gate.yml` runs `.github/scripts/validate-agent-safety-doctrine.py` to validate agent-authored change manifests for blueprint authority, bounded change explanation, evidence references, assumptions, reversal instructions, prohibited action denial, and the uncertainty rule.
+
 ## Required Evidence
 
 Doctrine XI operational requirement:
@@ -54,6 +56,7 @@ Doctrine XI operational requirement:
 - Root-cause statement with supporting reproduction context.
 - Fix narrative: what changed, why this change was selected, and how it addresses root cause.
 - Traceability to changed files, commands, and resulting artifacts.
+- Agent-authored changes additionally require an Agent Safety Doctrine manifest when the change touches governance, validation, architecture, CI, templates, or proof surfaces.
 
 ### Per Test
 

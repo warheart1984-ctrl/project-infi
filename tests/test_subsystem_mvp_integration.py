@@ -80,7 +80,7 @@ def test_realtime_feed_adapter_collects():
 
 
 def test_otem_execution_substrate_workflow():
-    from src.otem_execution_substrate import get_otem_execution_substrate
+    from src.otem.execution import get_otem_execution_substrate
 
     substrate = get_otem_execution_substrate()
     proposal = substrate.create_proposal({"summary": "test"}, runtime_context="test_harness")

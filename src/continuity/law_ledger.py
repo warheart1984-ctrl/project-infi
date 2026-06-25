@@ -64,6 +64,7 @@ class LawLedgerEntryType(str, Enum):
     LAW_GENESIS = "LAW_GENESIS"
     LAW_EVAL = "LAW_EVAL"
     LAW_STATUS_CHANGE = "LAW_STATUS_CHANGE"
+    GOVERNED_MISSION = "GOVERNED_MISSION"
 
 
 @dataclass

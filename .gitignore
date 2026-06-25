@@ -5,6 +5,8 @@ docs/proof/bumblebee-forge/cross_machine/replay_hashes.json
 
 # Runtime / temp
 .runtime/
+**/.runtime/
+E:*/
 .pytest_cache/
 .local/
 tmp/
@@ -72,6 +74,7 @@ wheels/
 *.egg
 
 # Local tooling / editor state
+.superpowers/
 .expo/
 .expo-shared/
 .vercel/
@@ -87,6 +90,10 @@ wheels/
 # Local data artifacts
 data/models/
 data/datasets/
+data/*.db
+data/*.sqlite3
+data/*.jsonl
+data/runtime/
 training/out/
 training/checkpoints/
 training/data/private_messages.jsonl

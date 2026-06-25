@@ -30,6 +30,8 @@ checks this as `chain_contract`.
 
 ## Commands
 
+**Proof checklist (Lawful LLM + coding agent):** [../operations/LAWFUL_NOVA_CODING_AGENT_PROOF.md](../operations/LAWFUL_NOVA_CODING_AGENT_PROOF.md)
+
 **Windows (PowerShell):**
 
 ```powershell

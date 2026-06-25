@@ -4,13 +4,20 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from training.nova_training_export import NOVA_LAWFUL_EXPORT_ADMISSION_ID
 
 ALLOWED_ROLES = {"system", "user", "assistant"}
 SEED_DEFAULT = Path("training/data/jarvis_seed_messages.jsonl")
 HF_SUPPLEMENT_DEFAULT = Path("training/data/hf_sft_supplement.jsonl")
 HF_SUPPLEMENT_ADMISSION_ID = "jarvis-lora-hf-ultrachat-200k-v1"
+NOVA_LAWFUL_CORPUS_NAME = "nova_lawful_turns.jsonl"
 
 
 def _read_jsonl(path: Path):
@@ -123,14 +130,38 @@ def build_dataset_manifest(output_path: Path, source_files: list[dict], example_
     if "external" in sources:
         admission_ids.append(HF_SUPPLEMENT_ADMISSION_ID)
 
+    has_nova_lawful = any(
+        NOVA_LAWFUL_CORPUS_NAME in str(entry.get("path") or "").replace("\\", "/")
+        for entry in source_files
+    )
+    if has_nova_lawful:
+        admission_ids.append(NOVA_LAWFUL_EXPORT_ADMISSION_ID)
+
+    export_manifest_path = None
+    export_manifest_sha256 = None
+    if has_nova_lawful:
+        for entry in source_files:
+            candidate = Path(str(entry.get("path") or ""))
+            manifest_candidate = candidate.with_name("export_manifest.json")
+            if manifest_candidate.is_file():
+                export_manifest_path = str(manifest_candidate)
+                export_manifest_sha256 = json.loads(manifest_candidate.read_text(encoding="utf-8")).get(
+                    "corpus_sha256"
+                )
+                break
+
     manifest = {
         "manifest_version": "jarvis_lora_dataset_manifest.v1",
         "output_path": str(output_path),
         "example_count": example_count,
         "sources": sources,
-        "admission_ids": admission_ids,
+        "admission_ids": sorted(set(admission_ids)),
         "source_files": source_files,
     }
+    if export_manifest_path:
+        manifest["export_manifest_path"] = export_manifest_path
+    if export_manifest_sha256:
+        manifest["export_manifest_sha256"] = export_manifest_sha256
     manifest_path = output_path.with_name("dataset_manifest.json")
     manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     return manifest_path

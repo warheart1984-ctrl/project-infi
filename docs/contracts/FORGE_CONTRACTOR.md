@@ -14,7 +14,7 @@ Forge is the bounded contractor service for AAIS.
 ## Start
 
 ```powershell
-.\.venv\Scripts\python.exe .\start_forge.py
+.\.venv\Scripts\python.exe .\tools\services\start_forge.py
 ```
 
 ## Health

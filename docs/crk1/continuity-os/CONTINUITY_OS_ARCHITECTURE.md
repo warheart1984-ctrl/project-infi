@@ -136,3 +136,48 @@ Metrics (M) → CFM → collapse alerts
 ```
 
 See: [CONTINUITY_OS_RUNTIME_SPEC.md](CONTINUITY_OS_RUNTIME_SPEC.md), [CRK1_GRAPH_DATA_CONTRACT.md](../roadmap/CRK1_GRAPH_DATA_CONTRACT.md)
+
+---
+
+## 5. Constitutional preservation stack (R0 → K-∞)
+
+Preservation layers stack from genesis upward; **CAA-1 / CXD-1** is the first layer whose success is measured empirically (Mission #006).
+
+```
+                   +------------------------------+
+                   |        K-INFINITY            |
+                   |  (Corrigibility as Invariant)|
+                   +---------------+--------------+
+                                   |
+                                   v
+                     CONTINUITY (Propagation)
+                     +------------------------+
+                     |   CAA-1 / CXD-1        |
+                     | Calibration Assimilation|
+                     +-----------+------------+
+                                 |
+                                 v
+                   +----------------------------+
+                   |   CLG-1 (Lineage Graph)    |
+                   | Calibration Reconstruction |
+                   +-------------+--------------+
+                                 |
+                                 v
+                   +----------------------------+
+                   |   CRR-1 (Calibration)      |
+                   | Calibration Preservation   |
+                   +-------------+--------------+
+                                 |
+                                 v
+                   +----------------------------+
+                   |   GRR-1 (Reasoning)        |
+                   | Provenance Preservation    |
+                   +-------------+--------------+
+                                 |
+                                 v
+                   +----------------------------+
+                   |        R0 (Genesis)        |
+                   +----------------------------+
+```
+
+See: [MISSION-006-CONTINUITY-ASSIMILATION.md](../mission-006/MISSION-006-CONTINUITY-ASSIMILATION.md), [GENESIS-PROTOCOL-v1.3.md](../GENESIS-PROTOCOL-v1.3.md)

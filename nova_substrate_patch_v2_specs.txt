@@ -1,0 +1,1646 @@
+#!/usr/bin/env bash
+# nova_substrate_patch_v2_specs.sh
+# Patch script — adds the three remaining spec artifacts to an existing
+# nova_substrate/ workspace (v2 or later).
+#
+# Usage (run from the directory that contains nova_substrate/):
+#   bash nova_substrate_patch_v2_specs.sh
+#
+# Files written:
+#   nova_substrate/handle_execution_diagram.md
+#   nova_substrate/failure_replay_spec.md
+#   nova_substrate/substrate_compiler_spec.md
+set -e
+echo "=== NovaSubstrate spec patch: 3 remaining artifacts ==="
+
+mkdir -p "nova_substrate"
+cat > "nova_substrate/handle_execution_diagram.md" << 'NOVAEOF_SPEC_PATCH'
+# handle() Execution Diagram — NovaSubstrate v1
+
+**Document type:** Normative state-transition diagram  
+**Spec ref:** `substrate_spec.md` §3  
+**Revision:** 2026-06-15  
+
+---
+
+## 1. Top-Level State Machine
+
+Every call to `NovaSubstrate.handle(event)` traverses exactly this state machine. States are sequential; no parallel paths exist across stage boundaries. Each state has exactly one normal exit and one or more error exits documented below.
+
+```
+                        ┌─────────────────────────────────────┐
+                        │         ENTRY: handle(event)        │
+                        └──────────────┬──────────────────────┘
+                                       │
+                                       ▼
+╔══════════════════════════════════════════════════════════════╗
+║  STAGE 1 — LawPlane Pre-Check                               ║
+║                                                              ║
+║  law.evaluate_event(event) → Verdict                        ║
+╚══════════════════════════════════════════════════════════════╝
+         │                              │
+    allowed=true                  allowed=false
+    (continue)                 (hard axiom fired)
+         │                              │
+         │                    ┌─────────▼──────────────────┐
+         │                    │  emit Receipt{Failed}       │
+         │                    │  identity.record_receipt()  │
+         │                    │  return [receipt]           │
+         │                    └─────────────────────────────┘
+         │
+         │  advisory check:
+         │  any advisory == "force_governed"?
+         │       │ yes → set force_governed = true
+         │       │ no  → force_governed = false
+         │
+         ▼
+╔══════════════════════════════════════════════════════════════╗
+║  STAGE 2 — Regime Selection                                 ║
+║                                                              ║
+║  ExecutionRegime::select(event, force_governed)             ║
+╚══════════════════════════════════════════════════════════════╝
+         │
+         │  Priority table (first match wins):
+         │  ┌─────────────────────────────────────────────┐
+         │  │ 1. force_governed == true   → GOVERNED      │
+         │  │ 2. topic ~ "cognition.generate.*" → GENERATIVE│
+         │  │ 3. topic ~ "cognition.converge.*" → CONVERGENT│
+         │  │ 4. hint == Generative       → GENERATIVE    │
+         │  │ 5. hint == Convergent       → CONVERGENT    │
+         │  │ 6. default                  → GOVERNED      │
+         │  └─────────────────────────────────────────────┘
+         │
+         ▼ regime ∈ {GOVERNED, CONVERGENT, GENERATIVE}
+╔══════════════════════════════════════════════════════════════╗
+║  STAGE 3 — MemoryPlane Context Fetch                        ║
+║                                                              ║
+║  memory.recall(MemoryQuery{namespace: topic, limit: 5})     ║
+╚══════════════════════════════════════════════════════════════╝
+         │                              │
+     Ok(context)                  Err(backend)
+     (continue)               (non-fatal: log,
+         │                    use empty context,
+         │                         continue)
+         │
+         ▼
+╔══════════════════════════════════════════════════════════════╗
+║  STAGE 4 — CognitionPlane Dispatch                          ║
+║                                                              ║
+║  cognition.dispatch(event, regime)                          ║
+╚══════════════════════════════════════════════════════════════╝
+         │
+         │  (see §2 for per-regime substates)
+         │
+         ├─ regime == GOVERNED  ──► see §2.1
+         ├─ regime == CONVERGENT ──► see §2.2
+         └─ regime == GENERATIVE ──► see §2.3
+         │
+         ▼ receipts: Vec<Receipt>
+╔══════════════════════════════════════════════════════════════╗
+║  STAGE 5 — IdentityPlane Ledgering                          ║
+║                                                              ║
+║  for r in receipts: identity.record_receipt(r)              ║
+║  identity.append_lineage(LineageNode{id: event.id, ...})    ║
+╚══════════════════════════════════════════════════════════════╝
+         │                              │
+     Ok(ledgered)                  Err(backend)
+     (continue)               (non-fatal: log,
+         │                         continue)
+         │
+         ▼
+╔══════════════════════════════════════════════════════════════╗
+║  STAGE 6 — LawPlane Post-Check                              ║
+║                                                              ║
+║  for r in receipts where r.payload != null:                 ║
+║    law.evaluate_output(topic, payload) → Verdict            ║
+╚══════════════════════════════════════════════════════════════╝
+         │                              │
+    allowed=true                  allowed=false
+    (pass through)           (quarantine: set
+         │                    receipt.outcome = Failed,
+         │                    replace payload with
+         │                    violation descriptor)
+         │
+         ▼
+┌─────────────────────────────────────────┐
+│  EXIT: return Vec<Receipt>              │
+│  (may be empty if no module subscribed) │
+└─────────────────────────────────────────┘
+```
+
+---
+
+## 2. Stage 4 — Per-Regime Dispatch Substates
+
+### 2.1 GOVERNED Regime
+
+```
+GOVERNED dispatch
+─────────────────
+for each module M in cognition.modules
+  where M.subscribes_to(event.topic):
+
+  ┌─────────────────────────────────────────┐
+  │  law.evaluate_event(event) → Verdict   │  ← per-module pre-check
+  └────────────────┬────────────────────────┘
+                   │                    │
+              allowed=true         allowed=false
+                   │            ┌──────▼───────────────────┐
+                   │            │ emit Receipt{Failed}       │
+                   │            │ append to receipts         │
+                   │            │ ABORT dispatch chain       │
+                   │            │ (no further modules called)│
+                   │            └────────────────────────────┘
+                   │
+         ┌─────────▼──────────┐
+         │  M.handle(e, GOVERNED) │
+         └─────────┬──────────┘
+                   │ Ok(receipt)     │ Err(panic/err)
+                   │            ┌────▼──────────────────┐
+                   │            │ catch; emit Failed     │
+                   │            │ receipt; continue chain│
+                   │            └───────────────────────┘
+                   │
+         append receipt to receipts
+         continue to next module
+```
+
+**Key invariant:** Hard law violation in GOVERNED mode aborts the entire chain. Receipts already collected before the violating module are still ledgered in Stage 5.
+
+---
+
+### 2.2 CONVERGENT Regime
+
+```
+CONVERGENT dispatch
+────────────────────
+for each module M in cognition.modules
+  where M.subscribes_to(event.topic):
+
+  ┌─────────────────────────────────┐
+  │  M.handle(event, CONVERGENT)   │  ← no per-module law check
+  └──────────────┬──────────────────┘
+                 │ Ok(receipt)     │ Err
+                 │            ┌────▼─────────────────┐
+                 │            │ emit Failed receipt   │
+                 │            │ continue (no abort)   │
+                 │            └──────────────────────┘
+                 │
+     append receipt to receipts
+     (collect all, do not abort on Partial)
+
+after all modules:
+  [TODO] synthesise Partial receipts into convergent summary
+  law post-check applies at Stage 6
+```
+
+**Key invariant:** No abort on failure. All subscribed modules execute. Synthesis of `Partial` outcomes is an extension point.
+
+---
+
+### 2.3 GENERATIVE Regime
+
+```
+GENERATIVE dispatch
+────────────────────
+for each module M in cognition.modules
+  where M.subscribes_to(event.topic):
+
+  ┌─────────────────────────────────┐
+  │  M.handle(event, GENERATIVE)   │  ← permissive; no pre-check
+  └──────────────┬──────────────────┘
+                 │ Ok(receipt)     │ Err
+                 │            ┌────▼─────────────────┐
+                 │            │ emit Failed receipt   │
+                 │            │ continue (no abort)   │
+                 │            └──────────────────────┘
+                 │
+     append receipt to receipts
+     [TODO] attach generative trace metadata
+
+after all modules:
+  ← output gated at Stage 6 (ONLY law check for GENERATIVE)
+```
+
+**Key invariant:** Stage 6 is the sole law gate for generative output. No pre-check inside dispatch. Any payload violation at Stage 6 quarantines the receipt before return.
+
+---
+
+## 3. Complete Edge-Condition Table
+
+| Stage | Condition | Effect | Fatal? |
+|---|---|---|---|
+| 1 | Hard axiom fires | Emit `Receipt{Failed}`, ledger it, return immediately | Yes — exits `handle()` |
+| 1 | Soft axiom with `"force_governed"` | Set `force_governed = true`; continue | No |
+| 1 | Soft axiom without `"force_governed"` | Append to `advisory`; continue | No |
+| 2 | No topic prefix, no hint | Select GOVERNED | No |
+| 2 | `force_governed = true` overrides topic prefix | GOVERNED regardless of topic | No |
+| 3 | MemoryPlane backend unavailable | Log error; continue with empty context | No |
+| 3 | Recall returns 0 results | Continue with empty context | No |
+| 4 (GOV) | Per-module hard law violation | Emit `Failed`, abort chain | Partial — exits dispatch loop |
+| 4 (GOV) | Module panics / returns `Err` | Catch; emit `Failed` receipt; continue | No |
+| 4 (CON) | Module returns `Err` | Emit `Failed` receipt; continue | No |
+| 4 (GEN) | Module returns `Err` | Emit `Failed` receipt; continue | No |
+| 4 | No module subscribed to topic | Return empty `Vec<Receipt>` | No |
+| 5 | IdentityPlane backend unavailable | Log error; continue | No |
+| 5 | `record_receipt` returns `Err` | Log; skip this receipt's ledgering | No |
+| 6 | Output hard axiom fires | Quarantine: `outcome=Failed`, replace payload | No — quarantine in-place |
+| 6 | Output soft axiom fires | Attach advisory metadata to receipt | No |
+| 6 | Receipt has `null` payload | Skip post-check for that receipt | No |
+
+---
+
+## 4. State Invariants (must hold after every `handle()` call)
+
+| ID | Invariant |
+|---|---|
+| SI-1 | `handle()` MUST always return, never panic. All panics inside modules MUST be caught at the dispatch boundary. |
+| SI-2 | If Stage 1 hard-blocks, exactly one `Receipt{Failed}` is returned and ledgered. No other stages execute. |
+| SI-3 | Every Receipt in the returned `Vec` has been ledgered in IdentityPlane (unless Stage 5 backend failed). |
+| SI-4 | `receipt.event_id == event.id` for every receipt in the returned `Vec`. |
+| SI-5 | `receipt.regime` matches the regime selected in Stage 2 for every receipt produced in Stage 4. |
+| SI-6 | The returned `Vec` may be empty; this is not an error condition. |
+| SI-7 | GOVERNED chain abort: all receipts collected before the violating module are still ledgered and returned. |
+| SI-8 | Stage 6 quarantine never removes a receipt from the returned `Vec`; it mutates `outcome` and `payload` in-place. |
+
+---
+
+## 5. Sequence Diagram (Linear Happy Path)
+
+```
+Caller          NovaSubstrate    LawPlane    MemoryPlane   CognitionPlane   IdentityPlane
+  │                   │              │              │               │               │
+  │──handle(event)──► │              │              │               │               │
+  │                   │──evaluate──► │              │               │               │
+  │                   │ ◄──Verdict── │              │               │               │
+  │                   │  (allowed)   │              │               │               │
+  │                   │──recall──────────────────► │               │               │
+  │                   │ ◄──records───────────────── │               │               │
+  │                   │──dispatch(event, regime)─────────────────► │               │
+  │                   │  │           │              │  handle(e,r)  │               │
+  │                   │  │           │              │ ◄─────────────│               │
+  │                   │  │           │              │  Receipt ────►│               │
+  │                   │ ◄──Vec<Receipt>──────────────────────────── │               │
+  │                   │──record_receipt────────────────────────────────────────── ► │
+  │                   │──append_lineage ─────────────────────────────────────────► │
+  │                   │──evaluate_output(payload)──► │              │               │
+  │                   │ ◄──Verdict───────────────── │              │               │
+  │                   │  (allowed)   │              │               │               │
+  │ ◄──Vec<Receipt>── │              │              │               │               │
+```
+
+---
+
+## 6. Re-Entrancy Prohibition
+
+```
+PROHIBITED:
+  Module.handle(event, regime) {
+      substrate.handle(other_event)   ← ILLEGAL
+  }
+
+REASON:
+  Substrate state (MemoryPlane, IdentityPlane) is mutably borrowed
+  for the duration of handle(). Re-entrant calls would violate
+  borrow semantics and produce undefined stage ordering.
+
+ENFORCEMENT:
+  Rust's borrow checker prevents this structurally when
+  NovaSubstrate is passed as &mut self.
+  ModuleHandle receives only &Event — no substrate reference.
+```
+
+---
+
+## 7. Execution Timeline (wall-clock stages)
+
+```
+t=0ms  ──────────────────────────────────────────────────────────────────►
+         │Stage 1│  S2 │      Stage 3      │     Stage 4      │S5│  S6  │
+         │ Law   │Reg. │    Memory fetch    │  Module dispatch │ID│ Law  │
+         │ check │ sel │   (async-capable)  │ (per regime)     │Pl│ post │
+         └───────┘─────┴────────────────────┴──────────────────┴──┴──────┘
+           ~0.1ms ~0ms       ~1–50ms              ~1–500ms    ~0ms ~0.1ms
+
+Typical latency budget:
+  Law checks   < 1ms   (pure function, in-memory axiom set)
+  Memory fetch 1–50ms  (depends on backend; ephemeral = ~0ms)
+  Dispatch     1–500ms (depends on number of modules + regime)
+  Ledgering    < 1ms   (ephemeral); up to 10ms (persistent backend)
+```
+
+NOVAEOF_SPEC_PATCH
+
+mkdir -p "nova_substrate"
+cat > "nova_substrate/failure_replay_spec.md" << 'NOVAEOF_SPEC_PATCH'
+# Failure Replay Specification — NovaSubstrate v1
+
+**Document type:** Normative specification  
+**Spec ref:** `substrate_spec.md` §4.4 (IdentityPlane), `handle_execution_diagram.md`  
+**Status:** Draft  
+**Revision:** 2026-06-15  
+
+---
+
+## Abstract
+
+The failure replay system allows any past `handle()` execution to be deterministically re-run from the IdentityPlane receipts ledger and lineage graph, with identical inputs and identical stage ordering, producing a byte-comparable output. This is the primary mechanism for:
+
+- Post-mortem debugging of failed or unexpected receipts
+- Regression testing: verify a fix eliminates a previously recorded failure
+- Audit: independently reproduce any execution for compliance verification
+- Chaos engineering: inject faults at specific stages and observe divergence
+
+> "Failure replay is very important." — Dar-z Morris
+
+---
+
+## 1. Core Principle
+
+```
+Every handle() call produces a deterministic execution record.
+That record is sufficient to replay the call exactly.
+The replay produces byte-comparable receipts given the same state snapshot.
+```
+
+A **replay** is not a re-dispatch of a new event. It is the reconstruction of a past execution from its recorded artefacts, with the substrate locked to the state that existed at the moment of the original call.
+
+---
+
+## 2. What IdentityPlane Records Per Dispatch Cycle
+
+The following data MUST be present in IdentityPlane for replay to be possible. These are written in Stage 5 of every `handle()` call.
+
+### 2.1 ExecutionRecord (new type — extends current ledger)
+
+```rust
+pub struct ExecutionRecord {
+    /// The original event — complete, verbatim.
+    pub event: Event,
+
+    /// Regime selected in Stage 2.
+    pub regime: ExecutionRegime,
+
+    /// All axiom advisories from Stage 1 (may be empty).
+    pub law_advisory: Vec<String>,
+
+    /// Whether force_governed was set.
+    pub force_governed: bool,
+
+    /// Memory context fetched in Stage 3 (record ids only; content
+    /// retrieved from MemoryPlane snapshot during replay).
+    pub memory_context_ids: Vec<NovaId>,
+
+    /// Receipts produced in Stage 4, in dispatch order.
+    pub receipts: Vec<Receipt>,
+
+    /// Wall-clock time handle() was entered.
+    pub dispatched_at: chrono::DateTime<chrono::Utc>,
+
+    /// Wall-clock time handle() returned.
+    pub completed_at: chrono::DateTime<chrono::Utc>,
+
+    /// Stage at which execution terminated (for partial/aborted runs).
+    pub terminal_stage: u8,
+
+    /// Error message if handle() returned Err (None for Ok returns).
+    pub error: Option<String>,
+}
+```
+
+### 2.2 MemorySnapshot (new type — point-in-time plane capture)
+
+```rust
+pub struct MemorySnapshot {
+    /// The ExecutionRecord this snapshot belongs to.
+    pub execution_id: NovaId,
+
+    /// Captured state of all MemoryRecords visible at dispatch time.
+    /// Key = record id.
+    pub records: HashMap<NovaId, MemoryRecord>,
+
+    /// Snapshot timestamp — must equal ExecutionRecord::dispatched_at.
+    pub captured_at: chrono::DateTime<chrono::Utc>,
+}
+```
+
+> **Storage note:** MemorySnapshot capture is opt-in per axiom / per topic. Full snapshots before every dispatch are expensive. See §6 for snapshot strategies.
+
+### 2.3 LineageNode (already in IdentityPlane)
+
+```rust
+pub struct LineageNode {
+    pub id:        NovaId,   // == event.id
+    pub parent_id: Option<NovaId>,
+    pub label:     String,
+    pub timestamp: chrono::DateTime<chrono::Utc>,
+}
+```
+
+---
+
+## 3. Replay Data Model
+
+A complete replay bundle consists of:
+
+```
+ReplayBundle {
+    execution_record:  ExecutionRecord       // from IdentityPlane ledger
+    memory_snapshot:   Option<MemorySnapshot> // from snapshot store; None = no memory state
+    axiom_set:         Vec<Axiom>            // LawPlane axiom set at time of dispatch
+    installed_modules: Vec<String>           // module ids installed at time of dispatch
+}
+```
+
+The bundle is self-contained. A replay engine MUST be able to reconstruct the execution from these four components with no other external dependencies.
+
+---
+
+## 4. ReplayEngine — Interface Contract
+
+```rust
+pub struct ReplayEngine {
+    // Internal — not exposed
+}
+
+impl ReplayEngine {
+    /// Load a replay bundle from IdentityPlane + snapshot store.
+    pub fn load(
+        identity:     &dyn IdentityPlane,
+        snapshot_store: &dyn SnapshotStore,
+        execution_id: &NovaId,
+    ) -> Result<ReplayBundle>;
+
+    /// Execute a replay. Returns the replay result.
+    pub fn replay(
+        &self,
+        bundle:   &ReplayBundle,
+        modules:  &mut Vec<Box<dyn ModuleHandle>>,
+        options:  ReplayOptions,
+    ) -> Result<ReplayResult>;
+
+    /// Compare original and replayed receipts.
+    /// Returns a diff report — empty if byte-comparable.
+    pub fn diff(
+        original: &[Receipt],
+        replayed: &[Receipt],
+    ) -> ReplayDiff;
+}
+```
+
+### 4.1 ReplayOptions
+
+```rust
+pub struct ReplayOptions {
+    /// If true, stop at the first receipt that differs from the original.
+    pub stop_on_divergence: bool,
+
+    /// Inject a fault at this stage (1–6). None = no injection.
+    pub fault_injection_stage: Option<u8>,
+
+    /// Replace the axiom set with this one (for law regression testing).
+    /// None = use the axiom set recorded in the bundle.
+    pub override_axiom_set: Option<Vec<Axiom>>,
+
+    /// If true, skip Stage 3 memory fetch and use snapshot records directly.
+    /// Required when MemoryPlane has mutated since the original dispatch.
+    pub use_memory_snapshot: bool,
+
+    /// Verbose stage-by-stage trace written to ReplayResult::trace.
+    pub trace: bool,
+}
+
+impl Default for ReplayOptions {
+    fn default() -> Self {
+        Self {
+            stop_on_divergence:     false,
+            fault_injection_stage:  None,
+            override_axiom_set:     None,
+            use_memory_snapshot:    true,
+            trace:                  false,
+        }
+    }
+}
+```
+
+### 4.2 ReplayResult
+
+```rust
+pub struct ReplayResult {
+    pub execution_id:   NovaId,
+    pub regime:         ExecutionRegime,
+    pub receipts:       Vec<Receipt>,
+    pub diverged:       bool,
+    pub diff:           ReplayDiff,
+
+    /// Stage-by-stage trace (populated when options.trace == true).
+    pub trace:          Vec<StageTrace>,
+
+    /// Error from replay execution itself (distinct from receipt failures).
+    pub error:          Option<String>,
+}
+
+pub struct StageTrace {
+    pub stage:          u8,
+    pub label:          String,
+    pub duration_us:    u64,
+    pub outcome:        StageOutcome,
+    pub notes:          Vec<String>,
+}
+
+pub enum StageOutcome {
+    Passed,
+    Skipped,
+    FaultInjected,
+    Failed(String),
+}
+```
+
+### 4.3 ReplayDiff
+
+```rust
+pub struct ReplayDiff {
+    pub identical: bool,
+
+    /// Receipts present in original but not in replay.
+    pub missing_receipts: Vec<NovaId>,
+
+    /// Receipts present in replay but not in original.
+    pub extra_receipts: Vec<NovaId>,
+
+    /// Receipts present in both but with differing fields.
+    pub changed_receipts: Vec<ReceiptDelta>,
+}
+
+pub struct ReceiptDelta {
+    pub receipt_id:       NovaId,
+    pub original_outcome: Outcome,
+    pub replayed_outcome: Outcome,
+    pub payload_changed:  bool,
+    pub message_changed:  bool,
+    pub regime_changed:   bool,
+}
+```
+
+---
+
+## 5. Replay Execution Algorithm
+
+The replay engine MUST execute all six pipeline stages in the same order as `handle()`, substituting recorded data where live data would cause non-determinism.
+
+```
+ReplayEngine.replay(bundle, modules, options):
+
+  ── STAGE 1: LawPlane Pre-Check ───────────────────────────────────────────
+  axioms = options.override_axiom_set ?? bundle.axiom_set
+  verdict = evaluate_event(axioms, bundle.execution_record.event)
+
+  ASSERT: verdict.allowed == (bundle.execution_record.terminal_stage > 1)
+    divergence if mismatch → record in diff; honour stop_on_divergence
+
+  ── STAGE 2: Regime Selection ──────────────────────────────────────────────
+  regime = ExecutionRegime::select(
+      bundle.execution_record.event,
+      bundle.execution_record.force_governed
+  )
+
+  ASSERT: regime == bundle.execution_record.regime
+    divergence if mismatch → record in diff
+
+  ── STAGE 3: Memory Context ────────────────────────────────────────────────
+  if options.use_memory_snapshot && bundle.memory_snapshot != None:
+      context = bundle.memory_snapshot.records
+          .filter(id in bundle.execution_record.memory_context_ids)
+  else:
+      context = memory_plane.recall(...)   // live — non-deterministic
+
+  ── STAGE 4: CognitionPlane Dispatch ───────────────────────────────────────
+  if options.fault_injection_stage == Some(4):
+      inject fault → record FaultInjected in trace; skip real dispatch
+  else:
+      replayed_receipts = cognition.dispatch(
+          bundle.execution_record.event,
+          regime
+      )
+
+  compare replayed_receipts with bundle.execution_record.receipts
+  → populate ReplayDiff
+
+  if options.stop_on_divergence && !diff.identical:
+      return ReplayResult { diverged: true, ... }
+
+  ── STAGE 5: IdentityPlane Ledgering ──────────────────────────────────────
+  // Replay does NOT write to the live IdentityPlane ledger.
+  // Replay receipts are recorded to a separate replay_ledger (in-memory).
+  replay_ledger.extend(replayed_receipts)
+
+  ── STAGE 6: LawPlane Post-Check ──────────────────────────────────────────
+  for receipt in replayed_receipts where payload != null:
+      post_verdict = evaluate_output(axioms, topic, payload)
+      // compare with original post-check outcome stored in receipt.outcome
+      if post_verdict.allowed != (receipt.outcome != Outcome::Failed):
+          record divergence
+
+  return ReplayResult {
+      receipts: replayed_receipts,
+      diverged: !diff.identical,
+      diff,
+      trace,  // if options.trace
+  }
+```
+
+---
+
+## 6. Snapshot Strategies
+
+Full pre-dispatch memory snapshots before every `handle()` call are expensive. The following strategies balance fidelity against cost:
+
+| Strategy | When to use | Cost | Replay fidelity |
+|---|---|---|---|
+| **Full snapshot** | Critical paths; axiom-gated topics | High | Perfect |
+| **Topic-scoped snapshot** | Topics touching specific domains | Medium | High — misses cross-domain reads |
+| **Record-id-only snapshot** | Most cases; memory is stable | Low | High — fails if records mutated |
+| **No snapshot** | Read-only modules; stateless replay | None | Partial — Stage 3 is non-deterministic |
+| **On-failure snapshot** | Triggered only when Stage 4 fails | Low | Perfect for failure cases only |
+
+**Recommended default:** topic-scoped snapshot + on-failure full snapshot. Register as a soft axiom so LawPlane can gate it per topic class.
+
+### Snapshot Axiom Example
+
+```rust
+// Register during substrate startup:
+substrate.law().register_axiom(Axiom {
+    id:          "snapshot.on_failure".into(),
+    description: "Capture full MemorySnapshot when Stage 4 produces any Failed receipt".into(),
+    hard:        false,   // advisory — does not block execution
+});
+```
+
+---
+
+## 7. SnapshotStore Trait
+
+```rust
+pub trait SnapshotStore: Send + Sync {
+    /// Persist a memory snapshot keyed by execution_id.
+    fn save(&mut self, snapshot: MemorySnapshot) -> Result<()>;
+
+    /// Load a snapshot by execution_id. Returns None if not captured.
+    fn load(&self, execution_id: &NovaId) -> Result<Option<MemorySnapshot>>;
+
+    /// Delete a snapshot (for storage reclamation).
+    fn delete(&mut self, execution_id: &NovaId) -> Result<bool>;
+
+    /// List all snapshot ids (for audit / replay discovery).
+    fn list(&self) -> Result<Vec<NovaId>>;
+}
+
+/// In-process reference implementation.
+pub struct EphemeralSnapshotStore {
+    store: HashMap<NovaId, MemorySnapshot>,
+}
+```
+
+---
+
+## 8. Fault Injection Modes
+
+Fault injection enables chaos-style testing of each pipeline stage independently.
+
+| Stage | Injection effect | Use case |
+|---|---|---|
+| 1 | Force `Verdict { allowed: false }` | Test Stage 1 abort path |
+| 2 | Override regime to a specific value | Test regime-specific module behaviour |
+| 3 | Return empty context regardless of snapshot | Test modules with no memory context |
+| 4 | Panic in a specific module | Test panic-catch at dispatch boundary |
+| 5 | Fail IdentityPlane `record_receipt` | Test non-fatal Stage 5 error path |
+| 6 | Force post-check violation on all payloads | Test quarantine path |
+
+Fault injection is declared in `ReplayOptions::fault_injection_stage`. The replay engine records the injection in the `StageTrace` and continues (or stops, per `stop_on_divergence`).
+
+---
+
+## 9. Integration with NovaSubstrate
+
+### 9.1 Enabling Replay Recording
+
+Replay recording is disabled by default. Enable at substrate construction:
+
+```rust
+// Future API (not yet in v1 lib.rs):
+let mut substrate = NovaSubstrate::builder()
+    .with_snapshot_store(Box::new(EphemeralSnapshotStore::new()))
+    .with_replay_recording(ReplayRecordingPolicy::OnFailure)
+    .build();
+```
+
+Until the builder API is implemented, recording can be layered above `handle()`:
+
+```rust
+let event_clone = event.clone();
+let receipts = substrate.handle(event)?;
+
+// Post-hoc: if any receipt failed, capture snapshot
+if receipts.iter().any(|r| r.outcome == Outcome::Failed) {
+    let snapshot = capture_memory_snapshot(&mut substrate, &event_clone);
+    snapshot_store.save(snapshot)?;
+}
+```
+
+### 9.2 Running a Replay
+
+```rust
+let engine = ReplayEngine::new();
+let bundle = engine.load(&identity_plane, &snapshot_store, &failed_event_id)?;
+
+let result = engine.replay(
+    &bundle,
+    &mut reinstalled_modules,
+    ReplayOptions {
+        use_memory_snapshot: true,
+        trace: true,
+        ..Default::default()
+    },
+)?;
+
+if result.diverged {
+    println!("DIVERGED at receipts: {:?}", result.diff.changed_receipts);
+} else {
+    println!("Replay identical — failure is deterministic.");
+}
+```
+
+---
+
+## 10. Determinism Guarantees and Limitations
+
+### What IS deterministic given a complete bundle:
+
+- Stage 1 verdict (axiom evaluation is a pure function)
+- Stage 2 regime selection (deterministic algorithm)
+- Stage 3 memory context (when using snapshot)
+- Stage 4 dispatch order (HashMap iteration order is fixed per seed in replay engine)
+- Stage 6 post-check verdict
+
+### What is NOT deterministic without additional recording:
+
+| Source of non-determinism | Mitigation |
+|---|---|
+| `Uuid::new_v4()` inside modules | Module must use a seeded RNG in replay mode; or Receipt ids are not compared in diff |
+| `chrono::Utc::now()` in timestamps | Timestamps excluded from `ReplayDiff` comparison by default |
+| External IO inside modules | Modules must not call IoBus during replay (IOPlane is stubbed) |
+| HashMap iteration order | ReplayEngine sorts module dispatch by `module.id()` alphabetically |
+| Non-deterministic module logic | Module bug — replay will surface the divergence |
+
+**ReplayDiff comparison excludes:** `receipt.id`, `receipt.completed_at` — these are inherently non-deterministic.  
+**ReplayDiff compares:** `outcome`, `payload`, `message`, `regime`, `event_id`.
+
+---
+
+## 11. Replay Test Harness (Unit Test Pattern)
+
+```rust
+#[test]
+fn test_failure_is_reproducible() {
+    // 1. Run original dispatch and capture bundle
+    let mut substrate = NovaSubstrate::new();
+    substrate.install(Box::new(MyFaultyModule::new())).unwrap();
+
+    let event = Event::new("some.topic", json!({"trigger": "fault"}));
+    let event_id = event.id;
+    let original_receipts = substrate.handle(event).unwrap();
+
+    assert!(original_receipts.iter().any(|r| r.outcome == Outcome::Failed),
+        "Expected at least one failure");
+
+    // 2. Build bundle manually (in production: load from IdentityPlane)
+    let bundle = ReplayBundle {
+        execution_record: build_execution_record(&original_receipts, &event_id),
+        memory_snapshot:  None,
+        axiom_set:        vec![],
+        installed_modules: vec!["my_faulty_module".into()],
+    };
+
+    // 3. Replay
+    let engine = ReplayEngine::new();
+    let mut replay_modules: Vec<Box<dyn ModuleHandle>> =
+        vec![Box::new(MyFaultyModule::new())];
+
+    let result = engine.replay(&bundle, &mut replay_modules, ReplayOptions::default()).unwrap();
+
+    // 4. Assert identical failure
+    assert!(!result.diverged, "Replay should be identical: {:?}", result.diff);
+    assert!(result.receipts.iter().any(|r| r.outcome == Outcome::Failed));
+}
+```
+
+---
+
+## Appendix — Glossary
+
+| Term | Definition |
+|---|---|
+| ExecutionRecord | Complete record of one `handle()` call stored in IdentityPlane |
+| MemorySnapshot | Point-in-time capture of MemoryPlane state at dispatch time |
+| ReplayBundle | Self-contained package sufficient to reconstruct one execution |
+| ReplayDiff | Field-level comparison between original and replayed receipts |
+| Fault injection | Deliberate introduction of a failure at a specific pipeline stage |
+| Deterministic | Produces byte-comparable output given identical inputs and state |
+| Divergence | Any difference between original and replayed receipt set |
+
+NOVAEOF_SPEC_PATCH
+
+mkdir -p "nova_substrate"
+cat > "nova_substrate/substrate_compiler_spec.md" << 'NOVAEOF_SPEC_PATCH'
+# NovaSubstrate Compiler Specification — v1
+
+**Document type:** Normative specification  
+**Spec ref:** `substrate_spec.md` §6 (Module Manifest Schema), `plane_interface_contracts.md` §3 (CognitionPlane)  
+**Status:** Draft  
+**Revision:** 2026-06-15  
+
+---
+
+## Abstract
+
+The NovaSubstrate Compiler (`nsc`) is the offline tool that transforms raw module artefacts — `module.toml` manifests, Rust source, and axiom definitions — into validated, capability-resolved, axiom-compiled **substrate packages** (`.nspkg`). A substrate package is the only unit the substrate runtime accepts at install time. Nothing reaches `NovaSubstrate::install()` without passing through the compiler.
+
+The compiler enforces all structural and semantic constraints that the runtime cannot check cheaply at dispatch time, shifting error detection left to build time.
+
+---
+
+## 1. Compiler Responsibilities
+
+| Phase | Input | Output |
+|---|---|---|
+| **Manifest validation** | `module.toml` | Validated `ModuleHeader` or error list |
+| **Capability resolution** | `ModuleHeader.capabilities` + global capability registry | Resolved `CapabilityGrant` set or missing-capability errors |
+| **Topic validation** | `ModuleHeader.subscriptions` + topic schema | Validated topic list or pattern errors |
+| **Axiom compilation** | `axioms/*.toml` | Compiled `AxiomSet` (sorted, deduplicated, type-checked) |
+| **Dependency resolution** | `[dependencies]` in `module.toml` | Resolved module dependency graph (DAG) or cycle error |
+| **Binary linking** | Compiled Rust `.so` / `.wasm` + validated header | Signed `.nspkg` bundle |
+| **Package signing** | Bundle + signing key | `key_fingerprint` embedded in `AgentIdentity` |
+
+---
+
+## 2. Compiler Pipeline
+
+```
+ module.toml          axioms/*.toml        src/*.rs
+      │                     │                  │
+      ▼                     ▼                  ▼
+┌─────────────┐   ┌──────────────────┐  ┌────────────┐
+│  PHASE 1    │   │    PHASE 4       │  │  rustc /   │
+│  Manifest   │   │  Axiom           │  │  wasm-pack │
+│  Validation │   │  Compilation     │  └─────┬──────┘
+└──────┬──────┘   └────────┬─────────┘        │
+       │                   │                  │
+       ▼                   ▼                  │
+┌─────────────┐   ┌──────────────────┐        │
+│  PHASE 2    │   │  AxiomSet        │        │
+│  Capability │   │  (compiled)      │        │
+│  Resolution │   └────────┬─────────┘        │
+└──────┬──────┘            │                  │
+       │                   │                  │
+       ▼                   │                  │
+┌─────────────┐            │                  │
+│  PHASE 3    │            │                  │
+│  Topic      │            │                  │
+│  Validation │            │                  │
+└──────┬──────┘            │                  │
+       │                   │                  │
+       ▼                   ▼                  ▼
+┌──────────────────────────────────────────────────┐
+│                  PHASE 5                         │
+│            Dependency Resolution                 │
+│         (multi-module builds only)               │
+└──────────────────────┬───────────────────────────┘
+                       │
+                       ▼
+┌──────────────────────────────────────────────────┐
+│                  PHASE 6                         │
+│               Binary Linking                     │
+│   bundle(header, axioms, binary, metadata)       │
+└──────────────────────┬───────────────────────────┘
+                       │
+                       ▼
+┌──────────────────────────────────────────────────┐
+│                  PHASE 7                         │
+│               Package Signing                    │
+│   sign(bundle, key) → .nspkg + fingerprint       │
+└──────────────────────┬───────────────────────────┘
+                       │
+                       ▼
+                  module.nspkg
+```
+
+---
+
+## 3. Phase 1 — Manifest Validation
+
+### 3.1 Input Format
+
+```toml
+# module.toml — full schema
+
+[module]
+id          = "semantic_knowledge_core"   # REQUIRED
+name        = "Semantic Knowledge Core"   # REQUIRED
+version     = "1.0.0"                    # REQUIRED: SemVer
+description = "..."                       # REQUIRED
+author      = "Nova Systems"             # REQUIRED
+license     = "MIT"                      # REQUIRED: SPDX id
+
+[subscriptions]
+topics = [                               # REQUIRED: >= 1 entry
+    "cognition.query.semantic",
+    "cognition.store.triple",
+]
+
+[capabilities]
+required = [                             # REQUIRED: may be empty []
+    "memory.read",
+    "memory.write",
+]
+optional = [                             # OPTIONAL
+    "io.stdio",
+]
+
+[dependencies]                           # OPTIONAL
+other_module = ">=1.0.0"
+
+[config]                                 # OPTIONAL: arbitrary key/value
+max_triples     = 100_000
+embedding_model = "nova-embed-v1"
+```
+
+### 3.2 Validation Rules
+
+```
+RULE MV-1 (id format):
+  id MUST match /^[a-z][a-z0-9_]*$/
+  id MUST be non-empty
+  id length MUST be <= 64 characters
+
+RULE MV-2 (id uniqueness):
+  id MUST be unique across all modules in the current build target.
+  Compiler MUST fail with E_DUPLICATE_MODULE_ID if violated.
+
+RULE MV-3 (version):
+  version MUST be a valid SemVer 2.0.0 string.
+  Pre-release and build metadata are allowed.
+
+RULE MV-4 (license):
+  license MUST be a valid SPDX 3.x identifier.
+  Compound expressions (e.g. "MIT OR Apache-2.0") are allowed.
+  Compiler MUST warn (not fail) on non-OSI-approved identifiers.
+
+RULE MV-5 (subscriptions):
+  topics array MUST contain at least one entry.
+  Each entry MUST match /^[a-z][a-z0-9]*(\.[a-z][a-z0-9]*)+$/
+  Wildcard suffixes (e.g. "cognition.generate.*") are allowed;
+    the compiler validates the prefix is well-formed.
+
+RULE MV-6 (capabilities):
+  Each capability token MUST exist in the global capability registry.
+  Unknown tokens → E_UNKNOWN_CAPABILITY.
+
+RULE MV-7 (config types):
+  Config values MUST be one of: string, integer, float, boolean, array of those.
+  Nested tables are allowed one level deep.
+
+RULE MV-8 (required fields):
+  If any REQUIRED field is missing → E_MISSING_FIELD with field name.
+```
+
+### 3.3 Validation Error Codes
+
+| Code | Severity | Meaning |
+|---|---|---|
+| `E_MISSING_FIELD` | Error | A required field is absent |
+| `E_INVALID_SEMVER` | Error | Version is not valid SemVer |
+| `E_INVALID_SPDX` | Error | License is not a valid SPDX identifier |
+| `E_INVALID_ID_FORMAT` | Error | Module id contains illegal characters |
+| `E_DUPLICATE_MODULE_ID` | Error | Two modules share the same id |
+| `E_EMPTY_SUBSCRIPTIONS` | Error | topics array is empty |
+| `E_INVALID_TOPIC_PATTERN` | Error | Topic string is malformed |
+| `E_UNKNOWN_CAPABILITY` | Error | Capability token not in registry |
+| `E_CONFIG_TYPE_MISMATCH` | Error | Config value has wrong type |
+| `W_NON_OSI_LICENSE` | Warning | License is valid SPDX but not OSI-approved |
+| `W_WILDCARD_TOPIC` | Warning | Topic uses `.*` wildcard (broad subscription) |
+| `W_NO_OPTIONAL_CAPABILITIES` | Info | Module declares no optional capabilities |
+
+---
+
+## 4. Phase 2 — Capability Resolution
+
+### 4.1 Global Capability Registry
+
+The registry is a TOML file loaded at compiler startup: `capabilities.toml`.
+
+```toml
+# capabilities.toml — standard registry (excerpt)
+
+[[capability]]
+token       = "memory.read"
+description = "MemoryPlane read operations (all domains)"
+tier        = "Sandbox"
+
+[[capability]]
+token       = "memory.write"
+description = "MemoryPlane write operations (all domains)"
+tier        = "Elevated"
+
+[[capability]]
+token       = "memory.read.semantic"
+description = "MemoryPlane read — semantic domain only"
+tier        = "Sandbox"
+
+[[capability]]
+token       = "io.stdio"
+description = "IoBus Stdio kind"
+tier        = "Sandbox"
+
+[[capability]]
+token       = "io.http"
+description = "IoBus HttpGet + HttpPost"
+tier        = "Elevated"
+
+[[capability]]
+token       = "io.filesystem"
+description = "IoBus FileRead + FileWrite"
+tier        = "Elevated"
+
+[[capability]]
+token       = "identity.read"
+description = "IdentityPlane read operations"
+tier        = "Sandbox"
+
+[[capability]]
+token       = "identity.mission"
+description = "IdentityPlane mission open/update"
+tier        = "Elevated"
+
+[[capability]]
+token       = "law.register"
+description = "Register new axioms at runtime"
+tier        = "System"
+```
+
+### 4.2 Resolution Algorithm
+
+```
+For each capability token C in module.capabilities.required:
+
+  1. Look up C in registry.
+     If not found → E_UNKNOWN_CAPABILITY. Abort.
+
+  2. Look up required trust tier T for C.
+     If module.trust_tier < T → E_CAPABILITY_TIER_VIOLATION.
+       (Module requests a capability it is not trusted enough to hold.)
+
+  3. Check for subsumption:
+     If "memory.read" is declared, "memory.read.semantic" is implied.
+     Compiler SHOULD warn W_REDUNDANT_CAPABILITY if a narrow token
+     is declared alongside its broader parent.
+
+  4. Produce CapabilityGrant { token, tier, source: Required }.
+
+For each capability token C in module.capabilities.optional:
+  Same steps 1–3, but tier violation → W_OPTIONAL_CAPABILITY_TIER_DOWNGRADE
+  (warning, not error — optional cap is silently dropped at runtime if
+   module runs below the required tier).
+
+Output: Vec<CapabilityGrant>
+```
+
+### 4.3 CapabilityGrant Type
+
+```rust
+pub struct CapabilityGrant {
+    pub token:  String,
+    pub tier:   TrustTier,
+    pub source: CapabilitySource,
+}
+
+pub enum CapabilitySource {
+    Required,
+    Optional,
+    Inherited,   // granted via dependency resolution
+}
+```
+
+---
+
+## 5. Phase 3 — Topic Validation
+
+### 5.1 Topic Pattern Rules
+
+```
+RULE TV-1: Every topic MUST be a dotted lowercase path.
+  Regex: /^[a-z][a-z0-9]*(\.[a-z][a-z0-9]*)+$/
+  Wildcard: trailing ".*" allowed for broad subscription.
+
+RULE TV-2: Standard prefix reservation.
+  Prefixes "law.", "identity.", "memory.", "io." are reserved for
+  substrate-internal use. Modules subscribing to these prefixes
+  MUST declare the corresponding capability:
+    "law.*"       → requires capability "law.register"
+    "identity.*"  → requires capability "identity.read"
+    "memory.*"    → requires capability "memory.read"
+    "io.*"        → requires capability "io.http" (or specific io.* cap)
+
+RULE TV-3: Cognition prefix regime mapping.
+  Compiler MUST warn if a module subscribes to a generative or
+  convergent topic but declares GOVERNED-only config:
+    "cognition.generate.*" → W_REGIME_MISMATCH if module has no
+                              generative-specific config keys
+    "cognition.converge.*" → W_REGIME_MISMATCH if module has no
+                              convergent-specific config keys
+
+RULE TV-4: Duplicate subscriptions.
+  Same topic appearing twice in subscriptions → W_DUPLICATE_SUBSCRIPTION.
+  Compiler deduplicates silently after warning.
+```
+
+### 5.2 Topic Validation Error Codes
+
+| Code | Severity | Meaning |
+|---|---|---|
+| `E_INVALID_TOPIC_FORMAT` | Error | Topic does not match allowed pattern |
+| `E_RESERVED_PREFIX_NO_CAP` | Error | Reserved prefix subscription without matching capability |
+| `W_WILDCARD_TOPIC` | Warning | Topic uses `.*` wildcard |
+| `W_DUPLICATE_SUBSCRIPTION` | Warning | Same topic listed twice |
+| `W_REGIME_MISMATCH` | Warning | Topic implies regime module does not appear to support |
+
+---
+
+## 6. Phase 4 — Axiom Compilation
+
+Axioms are defined in `axioms/*.toml` files, one or more per module. The compiler reads all axiom files, validates them, and produces a compiled `AxiomSet`.
+
+### 6.1 Axiom Source Format
+
+```toml
+# axioms/core.toml
+
+[[axiom]]
+id          = "law.no_external_io_without_capability"
+description = "Modules must declare io.* capability before submitting IO requests."
+hard        = true
+
+[[axiom]]
+id          = "law.snapshot_on_failure"
+description = "Capture MemorySnapshot when Stage 4 produces any Failed receipt."
+hard        = false   # advisory
+
+[[axiom]]
+id          = "law.governed_for_identity_topics"
+description = "All identity.* topic events must run in GOVERNED regime."
+hard        = false
+advisory_directives = ["force_governed"]
+```
+
+### 6.2 Axiom Compilation Rules
+
+```
+RULE AC-1 (id format):
+  Axiom id MUST match /^[a-z][a-z0-9]*(\.[a-z][a-z0-9]*)*$/
+  Axiom id MUST be globally unique across the compiled set.
+  Duplicate id → E_DUPLICATE_AXIOM_ID.
+
+RULE AC-2 (advisory_directives):
+  Each directive string MUST be one of the recognised directive tokens:
+    "force_governed"     — override regime to GOVERNED
+    "snapshot_required"  — trigger full MemorySnapshot capture
+    "audit_log"          — emit structured audit entry
+    "rate_limit:<n>"     — apply rate limit of n events/sec
+  Unknown directive → E_UNKNOWN_DIRECTIVE (error).
+
+RULE AC-3 (hard + directive conflict):
+  A hard axiom MUST NOT carry advisory_directives (hard axioms abort;
+  directives are only meaningful when execution continues).
+  Violation → E_HARD_AXIOM_WITH_DIRECTIVE.
+
+RULE AC-4 (ordering):
+  Compiled AxiomSet MUST be sorted: hard axioms first, then soft,
+  each group sorted by id lexicographically. This ensures
+  deterministic evaluation order across builds.
+
+RULE AC-5 (scope):
+  Axioms may declare a topic_scope to restrict evaluation:
+    topic_scope = "cognition.*"  — only evaluate for matching topics
+  No scope = evaluate for all events. Scope MUST follow TV-1 pattern.
+```
+
+### 6.3 Compiled AxiomSet Type
+
+```rust
+pub struct CompiledAxiomSet {
+    /// Hard axioms in evaluation order (sorted by id).
+    pub hard: Vec<CompiledAxiom>,
+    /// Soft axioms in evaluation order (sorted by id).
+    pub soft: Vec<CompiledAxiom>,
+    /// Compiler metadata.
+    pub compiled_at: chrono::DateTime<chrono::Utc>,
+    pub source_hash: String,   // SHA-256 of all source axiom TOML content
+}
+
+pub struct CompiledAxiom {
+    pub id:                  String,
+    pub description:         String,
+    pub hard:                bool,
+    pub advisory_directives: Vec<String>,
+    pub topic_scope:         Option<String>,
+}
+```
+
+### 6.4 Axiom Compilation Error Codes
+
+| Code | Severity | Meaning |
+|---|---|---|
+| `E_INVALID_AXIOM_ID` | Error | Axiom id format invalid |
+| `E_DUPLICATE_AXIOM_ID` | Error | Two axioms share an id |
+| `E_UNKNOWN_DIRECTIVE` | Error | Advisory directive not in recognised set |
+| `E_HARD_AXIOM_WITH_DIRECTIVE` | Error | Hard axiom carries advisory directives |
+| `E_INVALID_TOPIC_SCOPE` | Error | topic_scope is malformed |
+| `W_AXIOM_SHADOWS_BUILTIN` | Warning | Axiom id shadows a built-in substrate axiom |
+
+---
+
+## 7. Phase 5 — Dependency Resolution
+
+### 7.1 Dependency Declaration
+
+```toml
+[dependencies]
+embedding_backend = ">=1.2.0, <2.0.0"
+knowledge_graph   = "^2.0.0"
+```
+
+Values are SemVer requirement strings (compatible with the `semver` crate's `VersionReq`).
+
+### 7.2 Resolution Algorithm
+
+```
+1. Build the full dependency graph G = (V, E) where:
+   V = all modules in the build target
+   E = declared dependency edges with version constraints
+
+2. Topological sort G.
+   If a cycle is detected → E_CIRCULAR_DEPENDENCY with cycle description.
+
+3. For each dependency edge (A → B with constraint C):
+   a. Find the installed/available version of B.
+   b. If no version satisfies C → E_UNSATISFIED_DEPENDENCY.
+   c. If multiple versions satisfy C → select the highest compatible.
+
+4. Verify capability inheritance:
+   If module A depends on module B, and B requires "memory.write",
+   A implicitly inherits "memory.write" as CapabilitySource::Inherited.
+   Inherited capabilities appear in A's resolved CapabilityGrant set.
+   LawPlane evaluates inherited grants identically to declared ones.
+
+5. Output: resolved DependencyGraph with pinned versions.
+```
+
+### 7.3 Dependency Error Codes
+
+| Code | Severity | Meaning |
+|---|---|---|
+| `E_CIRCULAR_DEPENDENCY` | Error | Dependency graph contains a cycle |
+| `E_UNSATISFIED_DEPENDENCY` | Error | No available version satisfies constraint |
+| `E_UNKNOWN_DEPENDENCY` | Error | Dependency references unknown module id |
+| `W_LOOSE_VERSION_CONSTRAINT` | Warning | Constraint allows major version bump (e.g. `>=1.0.0`) |
+
+---
+
+## 8. Phase 6 — Binary Linking
+
+The linker bundles:
+
+```
+.nspkg (tar.gz under the hood)
+├── manifest.json         ← serialised ModuleHeader (JSON)
+├── axioms.bin            ← compiled AxiomSet (bincode or JSON)
+├── capabilities.json     ← resolved Vec<CapabilityGrant>
+├── dependencies.json     ← pinned DependencyGraph
+├── module.so             ← compiled Rust dynamic library (native)
+│   OR module.wasm        ← compiled WebAssembly (portable)
+└── nspkg.sig             ← detached Ed25519 signature over all above
+```
+
+### 8.1 Bundle Integrity Rules
+
+```
+RULE BL-1: manifest.json MUST be the canonical serialisation of the
+  validated ModuleHeader. No fields may be added or removed at link time.
+
+RULE BL-2: axioms.bin MUST contain the CompiledAxiomSet exactly as
+  produced by Phase 4. The source_hash MUST be recomputed at link time
+  and MUST match the Phase 4 output.
+
+RULE BL-3: The binary (module.so or module.wasm) MUST export exactly
+  the symbols required by the ModuleHandle ABI:
+    nova_module_id()
+    nova_module_handle()
+    nova_module_on_install()
+    nova_module_on_uninstall()
+  Missing symbol → E_MISSING_ABI_SYMBOL.
+
+RULE BL-4: Native (.so) and WASM (.wasm) are mutually exclusive.
+  A package MUST NOT contain both. Presence of both → E_AMBIGUOUS_BINARY.
+```
+
+---
+
+## 9. Phase 7 — Package Signing
+
+### 9.1 Signing Algorithm
+
+```
+1. Compute SHA-256 hash H over concatenation of:
+     manifest.json || axioms.bin || capabilities.json ||
+     dependencies.json || module.so (or module.wasm)
+   (files concatenated in alphabetical order by filename)
+
+2. Sign H using Ed25519 private key K:
+     sig = Ed25519Sign(K, H)
+
+3. Encode sig as hex string → nspkg.sig
+
+4. Embed key fingerprint:
+     fingerprint = SHA-256(public_key_bytes).to_hex()
+   This value is stored as AgentIdentity::key_fingerprint at install time.
+```
+
+### 9.2 Verification (at install time, inside NovaSubstrate)
+
+```rust
+// Future: substrate verifies signature before calling ModuleHandle::on_install()
+pub fn verify_package(pkg: &NspkgBundle, trusted_keys: &[PublicKey]) -> Result<()> {
+    // TODO: implement Ed25519 signature verification
+    // For v1: verification is stubbed; fingerprint is stored but not checked.
+    unimplemented!("Package signature verification — implement with `ed25519-dalek` crate")
+}
+```
+
+---
+
+## 10. Compiler CLI (`nsc`)
+
+### 10.1 Commands
+
+```
+nsc build [OPTIONS] <manifest_dir>
+    Compile a module from source. Runs all 7 phases.
+    Options:
+      --axioms <dir>        Axiom source directory (default: axioms/)
+      --capabilities <file> Capability registry file (default: capabilities.toml)
+      --key <file>          Ed25519 signing key (PEM). Required for --sign.
+      --sign                Sign the output package.
+      --target native|wasm  Output binary target (default: native)
+      --out <dir>           Output directory (default: ./dist/)
+      --strict              Treat warnings as errors.
+
+nsc validate <manifest.toml>
+    Run Phase 1 only. Print validation report. Exit 0 if valid.
+
+nsc inspect <package.nspkg>
+    Print the manifest, capabilities, and axiom set from a compiled package.
+    Does not verify signature.
+
+nsc verify <package.nspkg> --key <public_key.pem>
+    Verify the Ed25519 signature of a compiled package.
+
+nsc diff <package_a.nspkg> <package_b.nspkg>
+    Compare two package versions: manifest deltas, capability changes,
+    new/removed axioms, subscription changes.
+
+nsc registry list
+    Print all registered capability tokens from the active registry.
+
+nsc registry add <capabilities.toml>
+    Merge additional capability definitions into the active registry.
+```
+
+### 10.2 Exit Codes
+
+| Code | Meaning |
+|---|---|
+| 0 | Success |
+| 1 | Validation error (at least one E_* error) |
+| 2 | Warning promoted to error (--strict mode) |
+| 3 | Signing failure |
+| 4 | Internal compiler error (bug) |
+
+### 10.3 Output Format
+
+All `nsc` output is structured JSON to stderr (machine-readable) and human-readable to stdout. The JSON report has this shape:
+
+```json
+{
+  "phase":    "manifest_validation",
+  "module":   "semantic_knowledge_core",
+  "errors":   [],
+  "warnings": [
+    {
+      "code":    "W_WILDCARD_TOPIC",
+      "field":   "subscriptions.topics[1]",
+      "message": "Topic 'cognition.generate.*' uses a wildcard — broad subscription"
+    }
+  ],
+  "ok": true
+}
+```
+
+---
+
+## 11. Compiler Configuration File
+
+```toml
+# nsc.toml — place in workspace root
+
+[compiler]
+strict          = false          # treat warnings as errors
+target          = "native"       # native | wasm
+sign            = false          # auto-sign if key is present
+
+[paths]
+capabilities    = "capabilities.toml"
+axioms          = "axioms/"
+output          = "dist/"
+
+[registry]
+# Additional capability registries to merge
+extra = []
+
+[signing]
+key_file        = "keys/signing.pem"
+trusted_keys    = ["keys/trusted/"]
+```
+
+---
+
+## 12. Integration with Cargo Workspace
+
+For Rust-native modules, `nsc build` wraps `cargo build --release` and post-processes the output:
+
+```toml
+# In the module's Cargo.toml, add:
+[package.metadata.nsc]
+axioms   = "axioms/"
+manifest = "module.toml"
+```
+
+Then from the workspace root:
+
+```bash
+nsc build nova_substrate/                # validate + compile all members
+nsc build nova_substrate/semantic_knowledge_core/   # single module
+cargo test && nsc build --sign           # typical CI pipeline
+```
+
+---
+
+## 13. Error Message Format
+
+All errors MUST include:
+
+```
+[E_CODE] Phase: <phase_name>
+  Module: <module_id>
+  Field:  <field_path>          (e.g. "subscriptions.topics[0]")
+  Value:  <offending_value>
+  Reason: <human-readable explanation>
+  Hint:   <corrective action>
+
+Example:
+[E_UNKNOWN_CAPABILITY] Phase: capability_resolution
+  Module: semantic_knowledge_core
+  Field:  capabilities.required[2]
+  Value:  "memory.teleport"
+  Reason: Token "memory.teleport" does not exist in the capability registry.
+  Hint:   Run `nsc registry list` to see all registered tokens.
+          If this is a new capability, add it to capabilities.toml first.
+```
+
+---
+
+## 14. Compiler Implementation Notes (Rust)
+
+```rust
+// Future crate: nova_substrate_compiler
+
+pub struct Compiler {
+    capability_registry: CapabilityRegistry,
+    axiom_registry:      AxiomRegistry,
+    options:             CompilerOptions,
+}
+
+impl Compiler {
+    pub fn new(options: CompilerOptions) -> Result<Self> { unimplemented!() }
+
+    /// Run all phases for a single module directory.
+    pub fn build(&self, manifest_dir: &Path) -> Result<CompileOutput> { unimplemented!() }
+
+    /// Run Phase 1 only.
+    pub fn validate_manifest(&self, path: &Path) -> Result<ValidationReport> { unimplemented!() }
+
+    /// Run Phases 4 only.
+    pub fn compile_axioms(&self, axiom_dir: &Path) -> Result<CompiledAxiomSet> { unimplemented!() }
+}
+
+pub struct CompileOutput {
+    pub header:       ModuleHeader,
+    pub capabilities: Vec<CapabilityGrant>,
+    pub axiom_set:    CompiledAxiomSet,
+    pub dependencies: DependencyGraph,
+    pub package_path: PathBuf,
+    pub fingerprint:  Option<String>,
+    pub warnings:     Vec<CompilerWarning>,
+}
+```
+
+---
+
+## 15. Validity Rules
+
+The compiler output is **valid** iff:
+
+1. All Phase 1–4 rules produce zero errors.
+2. Phase 5 dependency graph is a DAG with all constraints satisfied.
+3. Phase 6 binary exports all four required ABI symbols.
+4. Phase 7 signature verifies against a trusted public key (when signing is enabled).
+
+A package that does not pass all four conditions MUST NOT be accepted by `NovaSubstrate::install()`. The runtime MUST reject unsigned packages in production trust tiers (Elevated, System). Sandbox tier MAY accept unsigned packages for local development.
+
+---
+
+## Appendix A — Standard Capability Registry (Complete)
+
+| Token | Tier | Grants |
+|---|---|---|
+| `memory.read` | Sandbox | MemoryPlane read, all domains |
+| `memory.write` | Elevated | MemoryPlane write, all domains |
+| `memory.read.semantic` | Sandbox | MemoryPlane read, semantic domain |
+| `memory.read.episodic` | Sandbox | MemoryPlane read, episodic domain |
+| `memory.read.working` | Sandbox | MemoryPlane read, working domain |
+| `memory.read.identity` | Elevated | MemoryPlane read, identity domain |
+| `memory.write.semantic` | Elevated | MemoryPlane write, semantic domain |
+| `memory.write.episodic` | Elevated | MemoryPlane write, episodic domain |
+| `memory.write.working` | Sandbox | MemoryPlane write, working domain |
+| `memory.write.identity` | System | MemoryPlane write, identity domain |
+| `io.stdio` | Sandbox | IoBus Stdio |
+| `io.http` | Elevated | IoBus HttpGet + HttpPost |
+| `io.filesystem` | Elevated | IoBus FileRead + FileWrite |
+| `io.mq` | Elevated | IoBus MessageQueue |
+| `identity.read` | Sandbox | IdentityPlane read (agents, receipts) |
+| `identity.mission` | Elevated | IdentityPlane mission open/update |
+| `identity.write` | System | IdentityPlane agent register/revoke |
+| `law.register` | System | Register axioms at runtime |
+| `cognition.install` | System | Install/uninstall modules at runtime |
+
+---
+
+## Appendix B — Recognised Advisory Directives
+
+| Directive | Effect at runtime |
+|---|---|
+| `force_governed` | CognitionPlane forced to GOVERNED regime |
+| `snapshot_required` | Full MemorySnapshot captured before dispatch |
+| `audit_log` | Structured audit entry emitted to IOPlane |
+| `rate_limit:<n>` | Event rate limited to n per second for this topic |
+| `quarantine_output` | Stage 6 always quarantines payload (for test axioms) |
+
+---
+
+## Appendix C — Glossary
+
+| Term | Definition |
+|---|---|
+| `nsc` | NovaSubstrate Compiler CLI |
+| `.nspkg` | Compiled and signed substrate package bundle |
+| `AxiomSet` | Compiled, sorted, deduplicated set of axioms ready for LawPlane |
+| `CapabilityGrant` | A resolved capability token with its source (Required / Optional / Inherited) |
+| `DependencyGraph` | Directed acyclic graph of module dependencies with pinned versions |
+| Manifest validation | Phase 1: structural and semantic check of `module.toml` |
+| Capability resolution | Phase 2: mapping declared tokens to the global registry |
+| Axiom compilation | Phase 4: parsing, validating, and ordering axiom source files |
+| Signing | Phase 7: Ed25519 signature over the bundle; fingerprint stored in AgentIdentity |
+
+NOVAEOF_SPEC_PATCH
+
+echo ""
+echo "Patch applied. New files:"
+echo "  nova_substrate/handle_execution_diagram.md (13.7 KB)"
+echo "  nova_substrate/failure_replay_spec.md (16.6 KB)"
+echo "  nova_substrate/substrate_compiler_spec.md (25.7 KB)"
+echo ""
+echo "All NovaSubstrate spec artifacts are now complete:"
+echo "  substrate_spec.md                (RFC v1)"
+echo "  plane_interface_contracts.md     (typed plane contracts)"
+echo "  event_schema.json                (JSON Schema Draft 2020-12)"
+echo "  handle_execution_diagram.md      (6-stage state machine)"
+echo "  failure_replay_spec.md           (deterministic replay)"
+echo "  substrate_compiler_spec.md       (nsc compiler spec)"

@@ -3,6 +3,8 @@
 This folder contains the active laws, doctrines, protocols, and contracts that
 govern AAIS behavior.
 
+Operating-governance companions (agent safety, evidence receipts, init contract): [docs/governance/README.md](../governance/README.md).
+
 ## What Lives Here
 
 - document protocol and documentation law
@@ -17,10 +19,16 @@ govern AAIS behavior.
 - immune protocol and collective pattern ledger law
 - swarm coordination law
 - Jarvis protocol and reasoning contracts
+- AAIS reasoning profile and CCS/DZI-1 continuity-evidence handshake (`AAIS_REASONING_PROFILE.md`)
+- CCS core object schema and AAIS/CSLEIS adapter contract (`CCS_CORE_SCHEMA.md`, `../../schemas/ccs_core_objects.v1.json`)
 - Jarvis LoRA training contract (bounded adapter fine-tuning)
 - reasoning exchange protocol for external packet admission
 - memory doctrine
 - tracing protocol and proof-layer contract
+- AAES-OS v1.0 governed span formal spec (`AAES_OS_V1_FORMAL_SPEC.md`)
+- AAES-OS language-agnostic interface contract (`AAES_OS_INTERFACE_V1.md`) — cognitive pipeline TS/Rust signatures; **coding agent starter:** `archive/cold-storage/reference/aaes-os-starter/` (live: `aaes-os/`)
+- AAES-OS trace-layer stubs (`archive/cold-storage/reference/aaes_os_v1/`) — RFC `TraceEvent` / `TraceBus` TypeScript and Rust
+- AAES-OS architecture coding-agent contract (`AAES_OS_ARCHITECTURE_V1.md`)
 - ARIS runtime contract and non-copy clause
 - ARIS standalone service admission spec (Phase 4 unblock path)
 - seam law and seam checklist

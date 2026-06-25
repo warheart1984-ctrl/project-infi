@@ -1,0 +1,83 @@
+{
+  "id": "BK-PKG-1",
+  "chain_id": "CHAIN-BK-1",
+  "designation": "CP-001",
+  "version": "1.0",
+  "mission_id": "MISSION-001",
+  "artifacts": {
+    "event": {
+      "id": "EVT-1",
+      "actor_id": "PLAYER-1",
+      "action_type": "boss_defeated",
+      "action_payload": {
+        "boss": "Bone King"
+      },
+      "location": "Forgotten Crypt",
+      "timestamp": "2026-06-22T20:00:00Z"
+    },
+    "memory": {
+      "id": "WMR-1",
+      "event_id": "EVT-1",
+      "event_hash": "17211718cb1e9397ac877b493a3a7cf24196744c4749255a883765c6c5144538",
+      "raw": {
+        "id": "EVT-1",
+        "actor_id": "PLAYER-1",
+        "action_type": "boss_defeated",
+        "action_payload": {
+          "boss": "Bone King"
+        },
+        "location": "Forgotten Crypt",
+        "timestamp": "2026-06-22T20:00:00Z"
+      },
+      "observed_at": "2026-06-22T20:00:01Z"
+    },
+    "replay_state": {
+      "id": "WSS-1",
+      "chain_id": "CHAIN-BK-1",
+      "state": {
+        "locations": {
+          "Forgotten Crypt": {
+            "flags": {
+              "boss_defeated": true,
+              "boss_name": "Bone King"
+            }
+          }
+        }
+      },
+      "captured_at": "2026-06-22T20:00:01Z"
+    },
+    "derived_claim": {
+      "id": "WCLAIM-1",
+      "summary": "The boss in Forgotten Crypt was defeated.",
+      "claim_type": "boss_defeated",
+      "location": "Forgotten Crypt"
+    },
+    "claim_record": {
+      "id": "WCR-1",
+      "claim_id": "WCLAIM-1",
+      "event_ids": [
+        "EVT-1"
+      ],
+      "raw": {
+        "claim_id": "WCLAIM-1",
+        "claim_type": "boss_defeated",
+        "location": "Forgotten Crypt",
+        "event_ids": [
+          "EVT-1"
+        ]
+      }
+    },
+    "verification": {
+      "id": "WVERIF-1",
+      "claim_id": "WCLAIM-1",
+      "status": "verified",
+      "method": "verify_world_claim@alpha",
+      "details": {
+        "message": "replay confirms boss_defeated flag",
+        "location": "Forgotten Crypt"
+      },
+      "verified_at": "2026-06-22T20:00:01Z"
+    }
+  },
+  "canonical_hash": "b1d4f5a5c9a5e7d8565617aadd6240213664bd624120ba31dce290fbeba53f52"
+}

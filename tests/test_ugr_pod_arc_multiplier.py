@@ -76,7 +76,7 @@ class TestPodArcMultiplier(unittest.TestCase):
         }
         deltas = compute_deltas(EVENT_PROOF_PACKET_PUBLISHED, receipt, profile)
         self.assertIsNotNone(deltas)
-        self.assertEqual(deltas["reputation"], 180.0)
+        self.assertEqual(deltas["reputation"], 580.0)
         self.assertEqual(deltas["pod_reward_multiplier"], 10.0)
         self.assertEqual(deltas["governance_arc_tier"], TIER_CIVILIZATIONAL)
 
@@ -242,6 +242,68 @@ class TestPodArcReactivation(unittest.TestCase):
         )
         self.assertTrue(again.get("skipped"))
         self.assertTrue(again.get("idempotent"))
+
+    def test_newer_proven_event_controls_last_reputation_after_arc_reactivation(self):
+        from src.ugr.discovery.discovery_pod_ledger import DiscoveryPodLedger
+
+        rows = [
+            {
+                "event_id": "pod-seed",
+                "event_type": "pod_registered",
+                "recorded_at_utc": "2026-06-07T00:00:00Z",
+                "pod_index": 1,
+                "pod_id": "pod:arc-tester",
+                "display_name": "Arc Tester",
+                "operator_id": "operator:arc-tester",
+                "status": "active",
+            },
+            {
+                "event_id": "pprov-base",
+                "event_type": "pod_proven",
+                "recorded_at_utc": "2026-06-07T01:00:00Z",
+                "pod_id": "pod:arc-tester",
+                "operator_id": "operator:arc-tester",
+                "contribution_id": "contrib-base",
+                "reputation_awarded": 18.0,
+                "rail_credits_awarded": 2.0,
+                "reward_status": "issued",
+            },
+            {
+                "event_id": "parc-base",
+                "event_type": "pod_arc_reactivated",
+                "recorded_at_utc": "2026-06-07T02:00:00Z",
+                "pod_id": "pod:arc-tester",
+                "operator_id": "operator:arc-tester",
+                "contribution_id": "contrib-base",
+                "reputation_adjustment": 162.0,
+                "reputation_awarded": 180.0,
+                "rail_credits_adjustment": 18.0,
+                "rail_credits_awarded": 20.0,
+                "pod_reward_multiplier": 10.0,
+            },
+            {
+                "event_id": "pprov-new",
+                "event_type": "pod_proven",
+                "recorded_at_utc": "2026-06-08T01:00:00Z",
+                "pod_id": "pod:arc-tester",
+                "operator_id": "operator:arc-tester",
+                "contribution_id": "contrib-new",
+                "reputation_awarded": 580.0,
+                "rail_credits_awarded": 100.0,
+                "reward_status": "issued",
+            },
+        ]
+        self.ledger_path.write_text(
+            "\n".join(json.dumps(row) for row in rows) + "\n",
+            encoding="utf-8",
+        )
+
+        stats = DiscoveryPodLedger().proven_stats("pod:arc-tester")
+
+        self.assertEqual(stats["proven_count"], 2)
+        self.assertEqual(stats["total_reputation_awarded"], 760.0)
+        self.assertEqual(stats["last_proven_contribution_id"], "contrib-new")
+        self.assertEqual(stats["last_reputation_awarded"], 580.0)
 
 
 class TestPodArcRelabel(unittest.TestCase):

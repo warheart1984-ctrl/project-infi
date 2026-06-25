@@ -22,6 +22,20 @@ Use this file when you need to answer questions like:
 
 Start here, then jump to the linked source file for the full contract.
 
+## Operating Governance (AAIS)
+
+Human-readable companions for mixed-intelligence operation (agents, proof, init). Supreme law remains [META_ARCHITECT_LAWBOOK.md](../../META_ARCHITECT_LAWBOOK.md).
+
+| Document | Role |
+|----------|------|
+| [docs/governance/README.md](../../docs/governance/README.md) | Index |
+| [docs/governance/AGENT_SAFETY_DOCTRINE.md](../../docs/governance/AGENT_SAFETY_DOCTRINE.md) | MA-14 companion |
+| [docs/governance/EVIDENCE_RECEIPT_MODEL.md](../../docs/governance/EVIDENCE_RECEIPT_MODEL.md) | Receipt classes |
+| [docs/governance/COGNITIVE_KERNEL_BOUNDARY_MAP.md](../../docs/governance/COGNITIVE_KERNEL_BOUNDARY_MAP.md) | Kernel role boundaries |
+| [docs/governance/RUNTIME_INITIALIZATION_CONTRACT.md](../../docs/governance/RUNTIME_INITIALIZATION_CONTRACT.md) | Boot admission |
+| [docs/contracts/AAES_OS_V1_FORMAL_SPEC.md](../../docs/contracts/AAES_OS_V1_FORMAL_SPEC.md) | Governed span trace (AAES-OS v1.0) |
+| [HUMAN_AI_CO_COLLABORATION_CHARTER.md](../../HUMAN_AI_CO_COLLABORATION_CHARTER.md) | Human–AI interface |
+
 ## Priority Rule
 
 Not every governing file does the same job.
@@ -104,6 +118,14 @@ lock-backed dependency state may enter governed runtime truth.
 **Core idea:** canonical authority docs belong in one deterministic document root; mirrored, archive, and vendor trees are explicitly excluded from migration rewrites.
 
 **Source:** [document/governance/DOCUMENT_SCOPE_LAW.md](../governance/DOCUMENT_SCOPE_LAW.md)
+
+### 13. AAES-OS Governed Span Trace
+
+**What it governs:** span lifecycle, causal trace events, authority roles, and deterministic reconstruction for governed actions.
+
+**Core idea:** every bounded action is a span with INTENT → DECISION → EXECUTION → RESULT; illegal transitions fail closed.
+
+**Source:** [docs/contracts/AAES_OS_V1_FORMAL_SPEC.md](../../docs/contracts/AAES_OS_V1_FORMAL_SPEC.md)
 
 ## Governing Doctrines And Protocols
 

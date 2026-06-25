@@ -11,8 +11,8 @@ from pathlib import Path
 os.environ.setdefault("AAIS_GENOME_BOOT", "warn")
 
 import src.api as api
-from src.inter_substrate_diplomacy_registry import validate_diplomatic_registry
-from src.inter_substrate_diplomacy_runtime import InterSubstrateDiplomacyRuntime
+from src.diplomacy.registry import validate_diplomatic_registry
+from src.diplomacy.runtime import InterSubstrateDiplomacyRuntime
 
 
 class InterSubstrateDiplomacyObserveTests(unittest.TestCase):

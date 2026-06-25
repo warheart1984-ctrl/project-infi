@@ -1,0 +1,6 @@
+{
+  "thread_id": "ct.specimen.003",
+  "replay_hash": "replay.css1.003",
+  "stable": true,
+  "events": ["evt.003.ugr", "evt.003.aais", "evt.003.darz", "evt.003.aaes"]
+}

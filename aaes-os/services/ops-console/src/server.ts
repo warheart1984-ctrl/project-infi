@@ -36,6 +36,8 @@ import {
 import { getSubsystemCoverage } from './coverageState.js';
 import { getCabTelemetrySummary } from './cabTelemetry.js';
 import { getAaisTelemetryStatus } from './aaisBridge.js';
+import { getNexusExecutionEvents } from './nexusExecutions.js';
+import { getTsrTelemetrySummary } from './tsrTelemetry.js';
 
 const PORT = Number(process.env.PORT ?? 4000);
 const serviceDir = path.dirname(fileURLToPath(import.meta.url));
@@ -101,14 +103,22 @@ app.get('/telemetry', async (_req, res) => {
   const patterns = patternLedger.getAll();
   const drift = new DriftMetrics().computeDrift(faults, patterns);
   const aais = await getAaisTelemetryStatus();
+  const nexusExecutions = await getNexusExecutionEvents();
   res.json({
     drift,
     topPatterns: patternLedger.getTopRecurring(5),
     lastFaults: faults.slice(-10).reverse(),
     patchTimeline: patchAnalytics.getTimeline(),
     cab: getCabTelemetrySummary(),
+    tsr: getTsrTelemetrySummary(),
     aais,
+    nexusExecutions: nexusExecutions.executions.slice(0, 10),
+    nexusExecutionsError: nexusExecutions.error,
   });
+});
+
+app.get('/tsr', (_req, res) => {
+  res.json({ tsr: getTsrTelemetrySummary() });
 });
 
 app.get('/aais/health', async (_req, res) => {

@@ -1,0 +1,163 @@
+{
+  "linguistic_predictive_cycle_version": "linguistic_predictive_cycle.v1",
+  "cycle_id": "20260614T050638Z",
+  "generated_at": "2026-06-14T05:06:38Z",
+  "policy_mode": "observe",
+  "metrics": {
+    "gene_count": 199,
+    "predicted_high": 0,
+    "predicted_medium": 68,
+    "predicted_low": 131,
+    "preemptive_written": 15
+  },
+  "phases": {
+    "drift_refreshed": false,
+    "baseline_loaded": true,
+    "forecast_report": "governance/linguistic_drift_forecast.v1.json",
+    "preemptive_written": 15
+  },
+  "preemptive_recommendations": [
+    {
+      "kind": "watch_gene",
+      "gene": "linguistic_drift_forecast_organ",
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "reason": "latent alignment gap (header/doc vs genome ssp)"
+    },
+    {
+      "kind": "watch_gene",
+      "gene": "linguistic_forecast_calibration_organ",
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "reason": "latent alignment gap (header/doc vs genome ssp)"
+    },
+    {
+      "kind": "watch_gene",
+      "gene": "linguistic_governance_cycle_organ",
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "reason": "latent alignment gap (header/doc vs genome ssp)"
+    },
+    {
+      "kind": "watch_gene",
+      "gene": "linguistic_predictive_governance_organ",
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "reason": "latent alignment gap (header/doc vs genome ssp)"
+    },
+    {
+      "kind": "watch_gene",
+      "gene": "meta_linguistic_governance_organ",
+      "predicted_band": "medium",
+      "lead_time_days": 21,
+      "reason": "latent alignment gap (header/doc vs genome ssp)"
+    }
+  ],
+  "top_predicted": [
+    {
+      "gene": "linguistic_drift_forecast_organ",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 58,
+      "lead_time_days": 21
+    },
+    {
+      "gene": "linguistic_forecast_calibration_organ",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 58,
+      "lead_time_days": 21
+    },
+    {
+      "gene": "linguistic_governance_cycle_organ",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 58,
+      "lead_time_days": 21
+    },
+    {
+      "gene": "linguistic_predictive_governance_organ",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 58,
+      "lead_time_days": 21
+    },
+    {
+      "gene": "meta_linguistic_governance_organ",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 58,
+      "lead_time_days": 21
+    },
+    {
+      "gene": "cisiv_operator_lineage_console",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 56,
+      "lead_time_days": 23
+    },
+    {
+      "gene": "coding_organs_stack",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 56,
+      "lead_time_days": 23
+    },
+    {
+      "gene": "naming_genome_organ",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 56,
+      "lead_time_days": 23
+    },
+    {
+      "gene": "plug_adapter_runtime",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 56,
+      "lead_time_days": 23
+    },
+    {
+      "gene": "autobiographical_agency_runtime",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 54,
+      "lead_time_days": 21
+    },
+    {
+      "gene": "culture_of_beings_runtime",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 54,
+      "lead_time_days": 21
+    },
+    {
+      "gene": "identity_self_model_runtime",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 54,
+      "lead_time_days": 21
+    },
+    {
+      "gene": "linguistic_closed_loop_fabric_organ",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 54,
+      "lead_time_days": 21
+    },
+    {
+      "gene": "linguistic_drift_predictor_organ",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 54,
+      "lead_time_days": 21
+    },
+    {
+      "gene": "linguistic_full_governance_cycle_organ",
+      "current_band": "low",
+      "predicted_band": "medium",
+      "predicted_risk_30d": 54,
+      "lead_time_days": 21
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>OperatorDesktop</RootNamespace>
+    <AssemblyName>OperatorDesktop</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x64</Platforms>
+    <UseWinUI>true</UseWinUI>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableMsixTooling>false</EnableMsixTooling>
+    <WindowsPackageType>None</WindowsPackageType>
+    <DisableMsixProjectCapabilityAddition>true</DisableMsixProjectCapabilityAddition>
+    <EnableDefaultMsixItems>false</EnableDefaultMsixItems>
+    <GeneratePri>false</GeneratePri>
+    <EnableCoreMrtTooling>false</EnableCoreMrtTooling>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+  </PropertyGroup>
+  <Target Name="DisablePriGeneration" BeforeTargets="ExpandPriContent">
+    <PropertyGroup>
+      <_SuppressPriGeneration>true</_SuppressPriGeneration>
+    </PropertyGroup>
+  </Target>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2957.106" />
+  </ItemGroup>
+</Project>

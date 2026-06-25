@@ -21,6 +21,9 @@ Nova Cortex here is the governed **Python runtime** under `nova/` — not a sepa
 | Stack config | `config/nova/nova-stack.json` | All |
 | Shared bash library | `setup/lib/common.sh` | Linux, macOS |
 | Standalone Python package | `pyproject.toml`, `nova/` | All |
+| **Cursor + NVIDIA guide** | [`CURSOR.md`](CURSOR.md) | All (requires project-infi for frontier) |
+| Cursor bootstrap (delegate) | `scripts/start-nova-for-cursor.ps1` | Windows (embedded in project-infi) |
+| Cursor verify (delegate) | `scripts/verify-nova-local.ps1` | Windows (embedded in project-infi) |
 | Parent-repo stack start | `../scripts/start-nova-stack.sh` | Linux, macOS (when embedded in project-infi) |
 | Parent-repo stack start | `../scripts/start-nova-stack.ps1` | Windows (when embedded in project-infi) |
 
@@ -117,6 +120,8 @@ After `source lawful-nova-shell/setup/novrc.sh`:
 | `novdoc` | Open productization status doc |
 | `novsec` | JSON health snapshot |
 | `novstack` | Start full Nova stack |
+| `novcursor` | Start Nova + HTTPS tunnel for Cursor (PowerShell) |
+| `novverify` | Read-only Nova/Cursor diagnostics |
 
 ## Environment variables
 
@@ -127,8 +132,45 @@ After `source lawful-nova-shell/setup/novrc.sh`:
 | `NOVA_API_URL` | `http://127.0.0.1:8080` | API base URL |
 | `NOVA_CORTEX_PATH` | `$REPO/nova` | Cortex runtime path |
 | `NOVA_VOSS_RUNTIME_PATH` | `$REPO/nova` | Voss runtime path |
+| `NOVA_LSG_PATH` | `$REPO/lsg/LSG-CORE.v1.yaml` | LSG YAML bundle |
+| `NOVA_LSG_STORE` | `~/.nova/lsg/local.jsonl` | LSG JSONL store |
+| `NOVA_UGR_STRICT` | unset | Fail closed on UGR invariant violations |
 | `NOVA_RSL_PATH` | `$REPO/governance` | RSL / governance path |
+| `NOVA_FRONTIER_PROVIDER` | unset | `nvidia`, `openai`, etc. — see [CURSOR.md](CURSOR.md) |
+| `NVIDIA_API_KEY` | unset | NVIDIA NIM key when frontier is `nvidia` |
 | `NOVA_CLI` | `lawful-nova-shell/bin/nova` | CLI entrypoint |
+
+### LSG bootstrap and PowerShell arg forwarding
+
+Seed the local LSG store before conversational chat:
+
+```bash
+./scripts/nova-bootstrap-lsg.sh          # Linux / macOS
+```
+
+```powershell
+.\scripts\nova-bootstrap-lsg.ps1       # Windows
+```
+
+PowerShell `nova-chat` forwards arguments to `nova chat` (same as bash `novrc.sh`):
+
+```powershell
+nova-chat "how are you"
+```
+
+See [`../docs/contracts/NOVA_LSG_BOOTSTRAP.md`](../docs/contracts/NOVA_LSG_BOOTSTRAP.md) for the full contract.
+
+### Connect Cursor to Lawful Nova
+
+Full step-by-step (tunnel, `.env`, Cursor settings, troubleshooting): **[CURSOR.md](CURSOR.md)**.
+
+Quick start from project-infi root:
+
+```powershell
+.\scripts\start-nova-for-cursor.ps1 -FrontierProvider nvidia -NgrokDomain your-subdomain.ngrok-free.dev
+```
+
+Or via shell path: `.\lawful-nova-shell\scripts\start-nova-for-cursor.ps1` (same script).
 
 ## Productization gate
 
@@ -137,6 +179,17 @@ After `source lawful-nova-shell/setup/novrc.sh`:
 ```
 
 Expect `local_lawful_slice_ready: true` when Python runtime and in-process LawfulLLM pass. `local_services_ready: true` additionally requires operator services on 8790/8791 (and Nova API if you start the full stack).
+
+## Reasoning Profile
+
+Lawful Nova inherits the workspace canonical AAIS reasoning profile for
+governed conclusions, traceable evidence, bounded uncertainty, invariant
+checks, and continuity impact:
+[`../docs/contracts/AAIS_REASONING_PROFILE.md`](../docs/contracts/AAIS_REASONING_PROFILE.md).
+CCS object schemas and fixtures are in
+[`../docs/contracts/CCS_CORE_SCHEMA.md`](../docs/contracts/CCS_CORE_SCHEMA.md),
+[`../schemas/ccs_core_objects.v1.json`](../schemas/ccs_core_objects.v1.json),
+and [`../fixtures/ccs/`](../fixtures/ccs/).
 
 ## Stack config
 
@@ -160,6 +213,7 @@ pytest tests/test_nova_productization.py -q
 
 ## Related docs
 
+- **[CURSOR.md](CURSOR.md)** — connect Cursor Agent to Lawful Nova (tunnel + Nemotron)
 - [docs/runtime/NOVA_LAWFUL_PRODUCTIZATION.md](../docs/runtime/NOVA_LAWFUL_PRODUCTIZATION.md)
 - [docs/runtime/NOVA_CORTEX.md](../docs/runtime/NOVA_CORTEX.md)
 - [AGENTS.md](AGENTS.md) — agent behavior rules for Nova sessions

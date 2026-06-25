@@ -24,10 +24,10 @@
 | The Global Policy Genome — Toward a Computational Framework for Compa... | 0 `denied` (excluded) | denied | `docs/proof/discovery/packets/THE_GLOBAL_POLICY_GENOME_TOWARD_A_COMPUTATIONAL_FRAMEWORK_FOR_COMPARATIVE_GOVERNANCE_1_DISCOVERY_PROOF.md` |
 | The Goblin Engineer's Guide to the Cognitive Universe | 0 `denied` (excluded) | denied | `docs/proof/discovery/packets/THE_GOBLIN_ENGINEER_S_GUIDE_TO_THE_COGNITIVE_UNIVERSE_DISCOVERY_PROOF.md` |
 | The Goblin Primer — A Runtime Field Guide to AI Governance | 0 `denied` (excluded) | denied | `docs/proof/discovery/packets/THE_GOBLIN_PRIMER_A_RUNTIME_FIELD_GUIDE_TO_AI_GOVERNANCE_DISCOVERY_PROOF.md` |
-| The Law of Duality - A Formal Theoretical Proposal | 1 `hypothetical` | hypothetical | `docs/proof/discovery/packets/THE_LAW_OF_DUALITY_A_FORMAL_THEORETICAL_PROPOSAL_DISCOVERY_PROOF.md` |
+| The Law of Duality - A Formal Theoretical Proposal | 3 `proven` | proven | `docs/proof/discovery/packets/THE_LAW_OF_DUALITY_A_FORMAL_THEORETICAL_PROPOSAL_DISCOVERY_PROOF.md` |
 | The LinkedIn Lockout — A Live Case Study in Automated Governance Failure | 0 `denied` (excluded) | denied | `docs/proof/discovery/packets/THE_LINKEDIN_LOCKOUT_A_LIVE_CASE_STUDY_IN_AUTOMATED_GOVERNANCE_FAILURE_DISCOVERY_PROOF.md` |
-| The Six Invariants | 1 `hypothetical` | hypothetical | `docs/proof/discovery/packets/SIX_INVARIANTS_DISCOVERY_PROOF.md` |
-| The Six Invariants — A Formal Framework of Cosmological and Epistemol... | 1 `hypothetical` | hypothetical | `docs/proof/discovery/packets/THE_SIX_INVARIANTS_A_FORMAL_FRAMEWORK_OF_COSMOLOGICAL_AND_EPISTEMOLOGICAL_LAW_DISCOVERY_PROOF.md` |
+| The Six Invariants | 3 `proven` | proven | `docs/proof/discovery/packets/SIX_INVARIANTS_DISCOVERY_PROOF.md` |
+| The Six Invariants — A Formal Framework of Cosmological and Epistemol... | 3 `proven` | proven | `docs/proof/discovery/packets/THE_SIX_INVARIANTS_A_FORMAL_FRAMEWORK_OF_COSMOLOGICAL_AND_EPISTEMOLOGICAL_LAW_DISCOVERY_PROOF.md` |
 | The Voss Binding - Unified Runtime Calculus | 2 `asserted` | asserted | `docs/proof/discovery/packets/THE_VOSS_BINDING_UNIFIED_RUNTIME_CALCULUS_DISCOVERY_PROOF.md` |
 | URG Architecture_ A Governed Cognitive Infrastructure for Multi‑Tenan... | 2 `asserted` | asserted | `docs/proof/discovery/packets/URG_ARCHITECTURE_A_GOVERNED_COGNITIVE_INFRASTRUCTURE_FOR_MULTI_TENANT_CONSTITUTIONAL_AI_SYSTEMS_DISCOVERY_PROOF.md` |
 | WOLF‑1_ A Radiation‑Hardened Cognitive Spacecraft Node for Autonomous... | 0 `denied` (excluded) | denied | `docs/proof/discovery/packets/WOLF_1_A_RADIATION_HARDENED_COGNITIVE_SPACECRAFT_NODE_FOR_AUTONOMOUS_ON_ORBIT_REASONING_A_DARPA_STYLE_CONCEPT_WHITE_PAPE_DISCOVERY_PROOF.md` |

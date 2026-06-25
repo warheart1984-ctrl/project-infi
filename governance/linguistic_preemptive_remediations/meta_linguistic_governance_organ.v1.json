@@ -3,14 +3,13 @@
   "gene": "meta_linguistic_governance_organ",
   "current_band": "low",
   "predicted_band": "medium",
-  "predicted_risk_30d": 55,
-  "lead_time_days": 24,
+  "predicted_risk_30d": 59,
+  "lead_time_days": 21,
   "drivers": [
     "latent alignment gap (header/doc vs genome ssp)",
-    "parent gene in forecast or cycle at-risk set",
-    "ecosystem mean drift trending upward"
+    "parent gene in forecast or cycle at-risk set"
   ],
-  "generated_at": "2026-06-07T20:37:32Z",
+  "generated_at": "2026-06-24T08:48:15Z",
   "actions": [
     {
       "kind": "watch_wave2_header",

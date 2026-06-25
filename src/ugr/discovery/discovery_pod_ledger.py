@@ -324,7 +324,10 @@ class DiscoveryPodLedger:
         last_rep = last.get("reputation_awarded")
         if arc_events:
             last_arc = arc_events[-1]
-            last_rep = last_arc.get("reputation_awarded") or last_rep
+            last_time = str(last.get("recorded_at_utc") or "")
+            arc_time = str(last_arc.get("recorded_at_utc") or "")
+            if not last_time or not arc_time or arc_time >= last_time:
+                last_rep = last_arc.get("reputation_awarded") or last_rep
         return {
             "proven_count": len(events),
             "total_reputation_awarded": total_rep,

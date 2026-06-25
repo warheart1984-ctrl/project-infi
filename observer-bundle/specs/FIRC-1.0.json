@@ -1,0 +1,77 @@
+{
+  "id": "FIRC-1.0",
+  "title": "Founder-Independent Reproduction Criteria 1.0",
+  "version": "1.0",
+  "mission_id": "MISSION-001",
+  "package_id": "BK-PKG-1",
+  "reproduction_category": "B",
+  "purpose": "Define when a third-party reproduction qualifies as founder-independent (Category B).",
+  "criteria": [
+    {
+      "id": "B-1",
+      "title": "Independent Execution Environment",
+      "requirements": [
+        "Outside founder control",
+        "No founder infrastructure, cached state, or privileged context",
+        "Clean interpreter/runtime"
+      ]
+    },
+    {
+      "id": "B-2",
+      "title": "No Founder Assistance",
+      "requirements": [
+        "Observer executes using only the Observer Bundle",
+        "No clarifications or corrections from founders",
+        "No access to internal repos or private notes"
+      ]
+    },
+    {
+      "id": "B-3",
+      "title": "Replay State Match",
+      "requirements": [
+        "replay.py reconstructs exact event sequence",
+        "State deltas match byte-for-byte",
+        "No divergence in ordering or timestamps"
+      ]
+    },
+    {
+      "id": "B-4",
+      "title": "Evidence Extraction Match",
+      "requirements": [
+        "extract_evidence.py produces same evidence set as canonical bundle",
+        "No missing or extra fields",
+        "Structural equivalence required"
+      ]
+    },
+    {
+      "id": "B-5",
+      "title": "Claim Verification Match",
+      "requirements": [
+        "verify_claim.py confirms the derived claim",
+        "Must match canonical claim in BK-PKG-1.json"
+      ]
+    },
+    {
+      "id": "B-6",
+      "title": "Canonical Hash Match",
+      "requirements": [
+        "Final canonical hash matches founder-sealed hash",
+        "Decisive invariant for founder-independent reproduction"
+      ],
+      "expected_hash": "b1d4f5a5c9a5e7d8565617aadd6240213664bd624120ba31dce290fbeba53f52"
+    },
+    {
+      "id": "B-7",
+      "title": "Observer Report Submitted",
+      "requirements": [
+        "Signed report using observer template",
+        "Environment details, outputs, and hash confirmations included"
+      ]
+    }
+  ],
+  "vault_transitions": {
+    "mission_status": "VERIFIED → COMPLETED",
+    "seal": "D-3 (Founder-Independent Reproduction Achieved)",
+    "dossier_state": "CLOSED"
+  }
+}

@@ -12,7 +12,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 CHECKS = [
-    ("src.otem_substrate_store", "substrate_db_enabled"),
+    ("src.otem.store", "substrate_db_enabled"),
     ("src.workflow_family_readiness", "list_families_with_readiness"),
     ("src.operator_somatic_health", "build_somatic_health_snapshot"),
     ("src.otem_autonomic_routines", "load_routines_registry"),

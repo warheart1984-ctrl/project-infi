@@ -67,7 +67,7 @@ def _suggested_membrane_policies(text: str) -> list[dict[str, Any]]:
 
 def _suggested_diplomatic_accords(text: str) -> list[dict[str, Any]]:
     try:
-        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+        from src.diplomacy.runtime import inter_substrate_diplomacy_runtime
 
         return inter_substrate_diplomacy_runtime.rank_diplomacy_candidates(text)
     except Exception:

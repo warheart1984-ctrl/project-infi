@@ -11,6 +11,9 @@ reference doc that sits above raw code but below vague planning notes.
   - human-facing runtime overview
 - [AAIS_RUNTIME_CANONICAL.md](./AAIS_RUNTIME_CANONICAL.md)
   - canonical runtime/system map
+- [AAIS_D3_SYSTEM_CURRENT_STATE.md](./AAIS_D3_SYSTEM_CURRENT_STATE.md)
+  - current AAIS/D3 kernel implementation posture: EGL, SCIL, SDAF, SSAGL, SCOL,
+    ledger, replay, and Jon fuzz layer
 - [AAIS_SUBSYSTEM_SPEC.md](./AAIS_SUBSYSTEM_SPEC.md)
   - subsystem-by-subsystem technical status and activation guidance
 - [SPECIALIST_REGISTRY_SPEC.md](./SPECIALIST_REGISTRY_SPEC.md)

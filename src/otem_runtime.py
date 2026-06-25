@@ -15,7 +15,7 @@ mutation, run creation, or durable memory writes are allowed.
 from __future__ import annotations
 
 def _wrap_ul_payload(payload: dict) -> dict:
-    from src.aais_ul_substrate import attach_ul_substrate
+    from src.aais_ul.runtime import attach_ul_substrate
 
     return attach_ul_substrate(dict(payload))
 import re
@@ -668,7 +668,7 @@ def enrich_otem_result(
     suggested_charter_amendments = None
     suggested_civilization_charters = None
     try:
-        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+        from src.diplomacy.runtime import inter_substrate_diplomacy_runtime
 
         accords = inter_substrate_diplomacy_runtime.rank_diplomacy_candidates(task_text)
         if accords:

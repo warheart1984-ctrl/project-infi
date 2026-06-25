@@ -21,7 +21,7 @@ from src.mesh.invariants import InvariantStore
 from src.mesh.invariants_adapter import build_export_bundle
 from src.mesh.known_peers import KnownPeersStore
 from src.mesh.runtime import mesh_base
-from src.mesh.topology import load_mesh_config, topology_snapshot
+from src.mesh.topology import configured_peer_count, load_mesh_config, mesh_enabled, topology_snapshot
 from src.mesh.trust import TrustStore
 
 logger = logging.getLogger(__name__)
@@ -53,8 +53,16 @@ def _ensure_gossip_daemon() -> None:
     global _gossip_started
     if _gossip_started:
         return
+    if not mesh_enabled():
+        logger.info("Mesh gossip daemon skipped (AAIS_MESH_ENABLED=0 or no mesh peers configured)")
+        return
+    peer_count = configured_peer_count(_base())
+    if peer_count <= 0:
+        logger.info("Mesh gossip daemon skipped (no remote peers in mesh config)")
+        return
     _gossip_started = True
     start_gossip_daemon(_base(), _identity, _config, gossip_all)
+    logger.info("Mesh gossip daemon started (%s configured peer(s))", peer_count)
 
 
 def register_mesh_routes(app) -> None:
@@ -96,20 +104,31 @@ def register_mesh_routes(app) -> None:
 
     @app.route("/api/mesh/gossip/run", methods=["POST"])
     def mesh_gossip_run():
+        if not mesh_enabled():
+            return jsonify(
+                {
+                    "mesh_enabled": False,
+                    "results": [],
+                    "message": "Mesh gossip is disabled (set AAIS_MESH_ENABLED=1 or MESH_PEERS_JSON to enable)",
+                }
+            )
         results = gossip_all(_base(), _identity(), _config())
-        return jsonify({"results": results})
+        return jsonify({"mesh_enabled": True, "results": results})
 
     @app.route("/api/mesh/topology", methods=["GET"])
     def mesh_topology():
         trust = _trust()
-        return jsonify(
-            topology_snapshot(
-                _config(),
-                _identity(),
-                base_dir=_base(),
-                peer_status={pid: rec.get("score") for pid, rec in trust.snapshot().items()},
-            )
+        snap = topology_snapshot(
+            _config(),
+            _identity(),
+            base_dir=_base(),
+            peer_status={pid: rec.get("score") for pid, rec in trust.snapshot().items()},
         )
+        snap["mesh_enabled"] = mesh_enabled()
+        if not mesh_enabled():
+            snap["peers"] = []
+            snap["peer_details"] = []
+        return jsonify(snap)
 
     @app.route("/api/mesh/identity", methods=["GET"])
     def mesh_identity():
@@ -138,11 +157,14 @@ def register_mesh_routes(app) -> None:
         from src.mesh.gossip_runtime import _DAEMON_THREAD
 
         daemon_alive = bool(_DAEMON_THREAD and _DAEMON_THREAD.is_alive())
+        enabled = mesh_enabled()
         return jsonify(
             {
                 "node_id": _identity()["node_id"],
+                "mesh_enabled": enabled,
+                "configured_peer_count": configured_peer_count(_base()) if enabled else 0,
                 "mesh_data_dir": mesh_base(),
-                **gossip_health_snapshot(_base(), daemon_alive=daemon_alive),
+                **gossip_health_snapshot(_base(), daemon_alive=daemon_alive if enabled else False),
             }
         )
 

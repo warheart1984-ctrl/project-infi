@@ -1,0 +1,16 @@
+{
+  "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
+  "gene": "multi_being_continuity_runtime",
+  "status": "pending",
+  "urgency_score": 48.8,
+  "queue_generated_at": "2026-06-24T06:55:16Z",
+  "recommended_actions": [
+    {
+      "kind": "cascade_report",
+      "command": "python tools/linguistic_cascade_report.py --gene multi_being_continuity_runtime",
+      "note": "Review lineage cascade impact"
+    }
+  ],
+  "operator_notes": "",
+  "updated_at": "2026-06-24T06:55:16Z"
+}

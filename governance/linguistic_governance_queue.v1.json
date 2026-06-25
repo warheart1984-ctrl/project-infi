@@ -1,10 +1,10 @@
 {
   "linguistic_governance_queue_version": "linguistic_governance_queue.v1",
-  "generated_at": "2026-06-07T20:35:33Z",
+  "generated_at": "2026-06-24T07:40:10Z",
   "items": [
     {
       "gene": "linguistic_drift_forecast_organ",
-      "urgency_score": 58.0,
+      "urgency_score": 59.6,
       "sources": [
         "forecast",
         "preemptive",
@@ -13,7 +13,7 @@
       "current_band": "low",
       "predicted_band": "medium",
       "current_risk": 30,
-      "predicted_risk_30d": 55,
+      "predicted_risk_30d": 59,
       "calibration_outcome": "false_alarm",
       "recommended_actions": [
         {
@@ -45,7 +45,7 @@
     },
     {
       "gene": "linguistic_forecast_calibration_organ",
-      "urgency_score": 58.0,
+      "urgency_score": 59.6,
       "sources": [
         "forecast",
         "preemptive",
@@ -54,7 +54,7 @@
       "current_band": "low",
       "predicted_band": "medium",
       "current_risk": 30,
-      "predicted_risk_30d": 55,
+      "predicted_risk_30d": 59,
       "calibration_outcome": "false_alarm",
       "recommended_actions": [
         {
@@ -86,7 +86,7 @@
     },
     {
       "gene": "linguistic_governance_cycle_organ",
-      "urgency_score": 58.0,
+      "urgency_score": 59.6,
       "sources": [
         "forecast",
         "preemptive",
@@ -95,7 +95,7 @@
       "current_band": "low",
       "predicted_band": "medium",
       "current_risk": 30,
-      "predicted_risk_30d": 55,
+      "predicted_risk_30d": 59,
       "calibration_outcome": "false_alarm",
       "recommended_actions": [
         {
@@ -127,7 +127,7 @@
     },
     {
       "gene": "linguistic_predictive_governance_organ",
-      "urgency_score": 58.0,
+      "urgency_score": 59.6,
       "sources": [
         "forecast",
         "preemptive",
@@ -136,7 +136,7 @@
       "current_band": "low",
       "predicted_band": "medium",
       "current_risk": 30,
-      "predicted_risk_30d": 55,
+      "predicted_risk_30d": 59,
       "calibration_outcome": "false_alarm",
       "recommended_actions": [
         {
@@ -168,7 +168,7 @@
     },
     {
       "gene": "meta_linguistic_governance_organ",
-      "urgency_score": 58.0,
+      "urgency_score": 59.6,
       "sources": [
         "forecast",
         "preemptive",
@@ -177,7 +177,7 @@
       "current_band": "low",
       "predicted_band": "medium",
       "current_risk": 30,
-      "predicted_risk_30d": 55,
+      "predicted_risk_30d": 59,
       "calibration_outcome": "false_alarm",
       "recommended_actions": [
         {

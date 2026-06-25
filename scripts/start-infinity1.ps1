@@ -8,7 +8,8 @@
 param(
     [switch]$SkipInstall,
     [switch]$ReplaceExisting,
-    [ValidateSet("default", "laptop", "mock")]
+    [switch]$InstallReal,
+    [ValidateSet("default", "production", "laptop", "mock")]
     [string]$Preset = "default",
     [int]$Port = 8000,
     [string]$DataDir = "./.runtime/aais-data"
@@ -45,6 +46,24 @@ function Invoke-Python {
     if ($LASTEXITCODE -ne 0) { throw "Command failed: $($Spec.Exe) $($Spec.Args -join ' ') $($ScriptArgs -join ' ')" }
 }
 
+function Invoke-ExternalCommand {
+    param(
+        [string]$Exe,
+        [string[]]$Args,
+        [string]$FailureMessage = "External command failed"
+    )
+    # pip and other native tools write resolver warnings to stderr; with $ErrorActionPreference=Stop
+    # PowerShell treats those as terminating NativeCommandError even when exit code is 0.
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    try {
+        & $Exe @Args 2>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0) { throw $FailureMessage }
+    } finally {
+        $ErrorActionPreference = $prev
+    }
+}
+
 Write-Host "=== Project Infinity 1 - AAIS bootstrap ===" -ForegroundColor Cyan
 Write-Host "Repo: $Root"
 
@@ -73,12 +92,27 @@ if (-not $SkipInstall) {
         }
     }
     Write-Host "Installing AAIS package and dependencies (editable)..."
-    & $venvPython -m pip install --upgrade pip wheel setuptools 2>&1 | Out-Null
-    & $venvPython -m pip install -e ".[dev]"
-    if ($LASTEXITCODE -ne 0) { throw "pip install failed" }
+    Invoke-ExternalCommand -Exe $venvPython -Args @("-m", "pip", "install", "--upgrade", "pip", "wheel", "setuptools") -FailureMessage "pip upgrade failed"
+    $extras = @("dev")
+    if ($InstallReal -or $Preset -in @("production", "default")) {
+        $extras += "real"
+    }
+    $extraSpec = ($extras | Select-Object -Unique) -join ","
+    Invoke-ExternalCommand -Exe $venvPython -Args @("-m", "pip", "install", "-e", ".[$extraSpec]") -FailureMessage "pip install failed"
 }
 
-$runPy = if (Test-Path $venvPython) { $venvPython } else { throw "Missing .venv - run without -SkipInstall" }
+$runPy = if (Test-Path $venvPython) { $venvPython } else {
+    if ($SkipInstall) { throw "Missing .venv - run without -SkipInstall" }
+    $venvPython
+}
+
+if ($Preset -eq "production") {
+    Write-Host "Production AI preflight (preset=production)..."
+    & $runPy (Join-Path $Root "scripts\preflight_production_ai.py") --preset production
+    if ($LASTEXITCODE -ne 0) { throw "Production AI preflight failed - set API keys in .env or install .[real] extras" }
+}
+
+if (-not (Test-Path $venvPython)) { throw "Missing .venv - run without -SkipInstall" }
 
 if (-not (Test-Path (Join-Path $Root ".env"))) {
     Copy-Item (Join-Path $Root ".env.example") (Join-Path $Root ".env")

@@ -156,7 +156,7 @@ class ImmuneSystemController:
             state["active_incident"] = dict(active_incident) if active_incident else None
             state["hardening"] = self._hardening.snapshot()
             state["heal_eligible"] = self._evaluate_heal_eligibility_locked()
-            from src.aais_ul_substrate import wrap_runtime_snapshot
+            from src.aais_ul.runtime import wrap_runtime_snapshot
 
             return wrap_runtime_snapshot(state)
 

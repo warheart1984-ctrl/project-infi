@@ -10,7 +10,9 @@ import { useLaws } from '../hooks/useLaws';
 import { useEvidence } from '../hooks/useEvidence';
 import { Cockpit } from '../components/constitutional/Cockpit';
 import { LawsPage } from '../components/constitutional/LawsPage';
+import { PodsPanel } from '../components/constitutional/PodsPanel';
 import { EvidenceDetailPanel, LawDetailPage } from '../components/constitutional/LawDetailPage';
+import { SurvivabilityDashboard } from '../components/constitutional/SurvivabilityDashboard';
 import '../styles/constitutional/tokens.css';
 import '../styles/constitutional/layout.css';
 import '../styles/constitutional/cockpit.css';
@@ -109,7 +111,24 @@ export default function ConstitutionalCockpit() {
                 <Link className="constitutional-btn constitutional-btn-primary" to="laws">
                   Open Law Registry
                 </Link>
+                <Link className="constitutional-btn constitutional-btn-secondary" to="pods">
+                  Discovery Pods
+                </Link>
+                <Link className="constitutional-btn constitutional-btn-secondary" to="survivability">
+                  Survivability Dashboard
+                </Link>
               </div>
+            </>
+          )}
+        />
+        <Route
+          path="pods"
+          element={(
+            <>
+              <Link className="constitutional-btn constitutional-btn-secondary" to="/operator/constitutional">
+                ← Cockpit
+              </Link>
+              <PodsPanel />
             </>
           )}
         />
@@ -134,6 +153,17 @@ export default function ConstitutionalCockpit() {
           )}
         />
         <Route path="evidence/:evidenceId" element={<EvidenceRoute stewardMode={cockpitState.stewardMode} />} />
+        <Route
+          path="survivability"
+          element={(
+            <>
+              <Link className="constitutional-btn constitutional-btn-secondary" to="/operator/constitutional">
+                ← Cockpit
+              </Link>
+              <SurvivabilityDashboard />
+            </>
+          )}
+        />
       </Routes>
     </div>
   );

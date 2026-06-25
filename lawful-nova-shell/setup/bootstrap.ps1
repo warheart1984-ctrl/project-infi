@@ -189,9 +189,20 @@ Set-NovaVar -Name "NOVA_CLI" -Prompt "Nova CLI command" -Default (Join-Path $Rep
 Set-NovaVar -Name "NOVA_VOSS_RUNTIME_PATH" -Prompt "Path to Voss Runtime" -Default (Join-Path $RepoRoot "nova")
 Set-NovaVar -Name "NOVA_CORTEX_PATH" -Prompt "Path to Nova Cortex" -Default (Join-Path $RepoRoot "nova")
 Set-NovaVar -Name "NOVA_GOW_CONFIG" -Prompt "Path to Gates of Wonder config" -Default (Join-Path $RepoRoot "config\nova\nova-stack.json")
-Set-NovaVar -Name "NOVA_RSL_PATH" -Prompt "Path to RSL" -Default (Join-Path $RepoRoot "nova")
+Set-NovaVar -Name "NOVA_RSL_PATH" -Prompt "Path to RSL" -Default (Join-Path $RepoRoot "governance")
 Set-NovaVar -Name "NOVA_GPU_DEVICE" -Prompt "NVIDIA GPU device index" -Default "0"
 Set-NovaVar -Name "GITHUB_TOKEN" -Prompt "GitHub PAT (optional, leave blank)" -Default ""
+
+Write-Banner "Optional - LSG bootstrap"
+$bootstrapLsg = Join-Path $RepoRoot "scripts\nova-bootstrap-lsg.ps1"
+if (Test-Path $bootstrapLsg) {
+    try {
+        & $bootstrapLsg -RepoRoot $RepoRoot
+        Write-Ok "LSG store bootstrapped."
+    } catch {
+        Write-Warn "LSG bootstrap skipped: $_"
+    }
+}
 
 Write-Banner "Step 6/6 - Verification"
 & "$ScriptDir\verify.ps1"

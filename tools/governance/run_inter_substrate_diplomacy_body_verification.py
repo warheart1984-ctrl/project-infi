@@ -32,15 +32,15 @@ CHECKS = [
 
     ("governance/operator_diplomatic_registry.v1.json", "file"),
 
-    ("src.inter_substrate_diplomacy_runtime", "InterSubstrateDiplomacyRuntime"),
+    ("src.diplomacy.runtime", "InterSubstrateDiplomacyRuntime"),
 
-    ("src.inter_substrate_diplomacy_registry", "validate_diplomatic_registry"),
+    ("src.diplomacy.registry", "validate_diplomatic_registry"),
 
     ("src.jarvis_diplomacy_authority", "authorize_diplomacy_overlay_admission"),
 
     ("src.diplomatic_accord_adoption_bridge", "enqueue_diplomatic_accord_adoption"),
 
-    ("src.inter_substrate_diplomacy_organ", "build_inter_substrate_diplomacy_status"),
+    ("src.diplomacy.organ", "build_inter_substrate_diplomacy_status"),
 
 ]
 
@@ -78,7 +78,7 @@ def main() -> int:
 
 
 
-    from src.inter_substrate_diplomacy_registry import validate_diplomatic_registry
+    from src.diplomacy.registry import validate_diplomatic_registry
 
 
 

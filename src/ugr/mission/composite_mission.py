@@ -456,6 +456,25 @@ def attach_gcm_to_response(
     updated["governed_composite_mission"] = gcm
     updated["mission_receipt"] = legacy_receipt
     updated["mission_receipt_schema"] = schema_receipt
+
+    try:
+        from src.ugr.mission.csr_bridge import sync_mission_finalize_to_csr
+        from src.ugr.mission.observer_packet import write_observer_packet_for_mission
+        from src.ugr.state_runtime import CSR as URG_CSR
+
+        sync_mission_finalize_to_csr(
+            URG_CSR,
+            mission_id,
+            urg_status=str(response.get("status") or "unknown"),
+            mission_receipt=schema_receipt,
+            summary=str(response.get("summary") or ""),
+        )
+        if str(response.get("status") or "") in {"ok", "blocked"}:
+            packet_dir = write_observer_packet_for_mission(mission_id)
+            updated["constitutional_observer_packet"] = str(packet_dir)
+            updated["constitutional_state"] = URG_CSR.get_state(mission_id).current_state
+    except Exception:
+        pass  # observability-only
     if str(response.get("status") or "") == "ok" and schema_receipt:
         try:
             from src.ugr.rewards.reward_hooks import emit_cloud_invariant_set_passed

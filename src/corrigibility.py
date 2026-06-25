@@ -93,7 +93,7 @@ def _clip_text(value: str | None, limit: int = 220) -> str:
 
 def default_corrigibility_state() -> dict:
     """Return a fresh default state for one AAIS chat session."""
-    from src.aais_ul_substrate import wrap_runtime_snapshot
+    from src.aais_ul.runtime import wrap_runtime_snapshot
 
     return wrap_runtime_snapshot(
         {
@@ -118,7 +118,7 @@ def ensure_corrigibility_state(session) -> dict:
     else:
         for key, value in default_corrigibility_state().items():
             state.setdefault(key, value)
-    from src.aais_ul_substrate import attach_ul_substrate
+    from src.aais_ul.runtime import attach_ul_substrate
 
     return attach_ul_substrate(state)
 
@@ -128,7 +128,7 @@ class CorrigibilityEngine:
 
     @staticmethod
     def _wrap_response(payload: dict) -> dict:
-        from src.aais_ul_substrate import attach_ul_substrate
+        from src.aais_ul.runtime import attach_ul_substrate
 
         return attach_ul_substrate(dict(payload))
 

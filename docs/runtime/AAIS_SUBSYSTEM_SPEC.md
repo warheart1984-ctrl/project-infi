@@ -42,7 +42,7 @@ AAIS subsystems currently cluster into these architectural layers:
 
 ## 3. Subsystem Records
 
-### Jarvis Core Runtime
+### Tri-Core Runtime
 
 - status: `live`
 - primary purpose: main authority shell for turn routing, tool envelopes, reply
@@ -1055,7 +1055,7 @@ AAIS subsystems currently cluster into these architectural layers:
   - input: not a canonical runtime path
   - output: not a canonical runtime path
 - related files/modules:
-  - `src/jarvis_modular2.py`
+  - `src/jarvis_modular.py` (canonical; `jarvis_modular2.py` removed in Phase 1 cleanup)
 - invariants or doctrine surfaces:
   - `docs/audit/AAIS_STATUS_AUDIT.md`
 - current implementation gaps:

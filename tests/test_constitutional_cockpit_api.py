@@ -21,6 +21,9 @@ def ledger_paths(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setenv("EVIDENCE_LEDGER_PATH", str(evidence_path))
     monkeypatch.setenv("COMPREHENSION_LEDGER_PATH", str(comprehension_path))
     monkeypatch.setenv("MIT_LEDGER_PATH", str(meaning_path))
+    monkeypatch.setenv("RESOURCE_LEDGER_PATH", str(tmp_path / "resource-ledger.sqlite3"))
+    monkeypatch.setenv("OUTCOME_LEDGER_PATH", str(tmp_path / "outcome-ledger.sqlite3"))
+    monkeypatch.setenv("DECISION_LEDGER_PATH", str(tmp_path / "decision-ledger.sqlite3"))
     return law_path, evidence_path, comprehension_path, meaning_path
 
 
@@ -104,6 +107,22 @@ def test_cockpit_api_routes(ledger_paths) -> None:
     eit = client.get("/api/eit/law/PIT-1")
     assert eit.status_code == 200
     assert "omega" in eit.get_json()
+
+    fitness_eit = client.get("/api/fitness/evidence/law/PIT-1")
+    assert fitness_eit.status_code == 200
+    assert fitness_eit.get_json()["omega"] == eit.get_json()["omega"]
+
+    cit = client.get("/api/fitness/comprehension/law/PIT-1")
+    assert cit.status_code == 200
+    assert "chi" in cit.get_json()
+
+    mit = client.get("/api/fitness/meaning/law/PIT-1")
+    assert mit.status_code == 200
+    assert "mu" in mit.get_json()
+
+    attention = client.get("/api/fitness/attention")
+    assert attention.status_code == 200
+    assert attention.get_json()["count"] >= 1
 
     trace = client.get("/api/trace/law/PIT-1")
     assert trace.status_code == 200

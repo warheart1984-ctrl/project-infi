@@ -62,7 +62,7 @@ class TestAAISComposedRuntime(unittest.TestCase):
         self.assertEqual(result.aris["status"], "enforced")
         self.assertIsNone(result.speaking_reply)
         self.assertIn("jarvis.reasoning", (
-            (result.nova_bridge or {}).get("jarvis_core") or {}
+            (result.nova_bridge or {}).get("tri_core") or {}
         ).get("active_cognitive_runtimes", []))
         stored = session.metadata.get("aais_composed_turn")
         self.assertIsInstance(stored, dict)
@@ -84,7 +84,7 @@ class TestAAISComposedRuntime(unittest.TestCase):
         self.assertIsNone(result.nova_bridge)
         self.assertIsNone(result.speaking_reply)
 
-    def test_jarvis_authority_preserved(self):
+    def test_tri_core_authority_preserved(self):
         session = _session(persona_mode="tiny_nova", response_mode="tiny")
         result = run_composed_turn(
             session,
@@ -93,9 +93,9 @@ class TestAAISComposedRuntime(unittest.TestCase):
             companion_turn=True,
             surface_profile=TINY_PROFILE,
         )
-        binding = (result.nova_bridge or {}).get("jarvis_core") or {}
-        self.assertEqual(binding.get("routing_authority"), "jarvis")
-        self.assertEqual(binding.get("state_authority"), "jarvis")
+        binding = (result.nova_bridge or {}).get("tri_core") or {}
+        self.assertEqual(binding.get("routing_authority"), "tri_core")
+        self.assertEqual(binding.get("state_authority"), "tri_core")
 
     def test_emit_speaking_produces_reply(self):
         session = _session(persona_mode="tiny_nova", response_mode="tiny")
@@ -145,7 +145,7 @@ class TestAAISComposedRuntime(unittest.TestCase):
             compose_mode=mode,
         )
         runtimes = (
-            ((result.nova_bridge or {}).get("jarvis_core") or {}).get("active_cognitive_runtimes")
+            ((result.nova_bridge or {}).get("tri_core") or {}).get("active_cognitive_runtimes")
             or []
         )
         self.assertEqual(set(runtimes), {"jarvis.reasoning", "cognitive.attention"})

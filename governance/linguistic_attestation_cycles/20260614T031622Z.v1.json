@@ -1,0 +1,69 @@
+{
+  "linguistic_governance_attestation_version": "linguistic_governance_attestation.v1",
+  "generated_at": "2026-06-14T03:16:15Z",
+  "closed_loop_score": 65,
+  "policy_mode": "observe",
+  "registry_summary": {
+    "policy_mode": "observe",
+    "last_gate_run_at": "2026-06-14T03:16:14Z",
+    "last_forecast_at": "2026-06-14T03:14:14Z",
+    "last_calibration_at": "2026-06-14T03:13:55Z",
+    "last_cycle_at": "2026-06-14T03:15:25Z",
+    "last_work_order_sync_at": "2026-06-14T03:16:14Z",
+    "last_attestation_at": "2026-06-07T20:33:14Z"
+  },
+  "forecast_summary": {
+    "present": true,
+    "generated_at": "2026-06-14T03:14:49Z",
+    "predicted_medium_high": 68,
+    "stale": false
+  },
+  "calibration_summary": {
+    "present": true,
+    "generated_at": "2026-06-14T03:14:13Z",
+    "band_hit_rate": 0.668,
+    "false_alarm_rate": 0.332,
+    "miss_rate": 0.0,
+    "stale": false
+  },
+  "queue_summary": {
+    "present": true,
+    "generated_at": "2026-06-14T03:16:14Z",
+    "item_count": 30,
+    "top_genes": [
+      "linguistic_drift_forecast_organ",
+      "linguistic_forecast_calibration_organ",
+      "linguistic_governance_cycle_organ",
+      "linguistic_predictive_governance_organ",
+      "meta_linguistic_governance_organ"
+    ]
+  },
+  "work_order_summary": {
+    "total": 66,
+    "pending": 66,
+    "acknowledged": 0,
+    "completed": 0,
+    "deferred": 0
+  },
+  "full_cycle_summary": {
+    "present": false
+  },
+  "governed_lifecycle_summary": {
+    "aligned": true,
+    "operator_execution_aligned": true,
+    "lifecycle_artifact_aligned": true
+  },
+  "meta_gate_summary": {
+    "last_gate_run_at": "2026-06-14T03:16:14Z"
+  },
+  "recommendations": [
+    {
+      "action": "run_full_governance_cycle",
+      "reason": "no full cycle on record"
+    },
+    {
+      "action": "triage_work_orders",
+      "reason": "66 pending work order(s)"
+    }
+  ]
+}

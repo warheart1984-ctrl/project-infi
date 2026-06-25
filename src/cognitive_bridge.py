@@ -484,7 +484,7 @@ def _attach_governance_ir_artifacts(result: dict[str, Any]) -> dict[str, Any]:
 
 
 def _finalize_bridge_result(result: dict[str, Any]) -> dict[str, Any]:
-    from src.aais_ul_substrate import wrap_bridge_result
+    from src.aais_ul.runtime import wrap_bridge_result
 
     return wrap_bridge_result(_attach_governance_ir_artifacts(result))
 

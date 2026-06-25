@@ -1,0 +1,9 @@
+{
+  "thread_id": "ct.specimen.002",
+  "edges": [
+    ["evt.002.ugr", "evt.002.aais", "CAUSES"],
+    ["evt.002.aais", "evt.002.darz", "DERIVES_FROM"],
+    ["evt.002.darz", "evt.002.aaes", "CONSTRAINS"],
+    ["evt.002.ugr", "evt.002.darz", "REINFORCES"]
+  ]
+}

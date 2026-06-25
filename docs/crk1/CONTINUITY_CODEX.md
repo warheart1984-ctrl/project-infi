@@ -98,3 +98,4 @@ See `docs/crk1/KOMEGA-KERNEL-CONSEQUENCE-EXPOSURE.md`.
 | Event | MVCD / CorrectionObject | Minimal observable calibration unit |
 | Preservation | CRR‑1 | Calibration correction receipt |
 | Proof | C‑PoLT | Continuity proof-of-life test suite |
+| Runtime behavior | CRC v0.1 | Canonical Runtime Contract — seven behavioral invariants per cycle (`docs/crk1/CRC-V0.1-CANONICAL-RUNTIME-CONTRACT.md`) |

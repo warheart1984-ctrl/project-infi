@@ -221,6 +221,6 @@ def build_operator_console_snapshot(*, runtime: Any | None = None) -> dict[str, 
         "verification_command": "make ugr-operator-console-gate",
     }
     snapshot["readout"] = build_operator_readout(snapshot)
-    from src.aais_ul_substrate import wrap_runtime_snapshot
+    from src.aais_ul.runtime import wrap_runtime_snapshot
 
     return wrap_runtime_snapshot(snapshot)

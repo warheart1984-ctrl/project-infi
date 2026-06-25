@@ -25,15 +25,21 @@ def build_cross_ledger_trace(
     evidence_store: EvidenceLedgerStore | None = None,
     comprehension_store: Any | None = None,
     mit_store: Any | None = None,
+    sit_store: Any | None = None,
+    git_store: Any | None = None,
     epoch: int | None = None,
 ) -> dict[str, Any]:
     from src.continuity.comprehension_ledger import ComprehensionLedgerStore
+    from src.continuity.git_ledger import GitLedgerStore
     from src.continuity.mit_ledger import MitLedgerStore
+    from src.continuity.sit_ledger import SitLedgerStore
 
     laws = law_store or LawLedgerStore()
     evidence = evidence_store or EvidenceLedgerStore()
     comprehension = comprehension_store or ComprehensionLedgerStore()
     meaning = mit_store or MitLedgerStore()
+    structure = sit_store or SitLedgerStore()
+    generative = git_store or GitLedgerStore()
 
     record = laws.get_law_record(law_id)
     if record is None:
@@ -57,6 +63,8 @@ def build_cross_ledger_trace(
 
     chi_record = comprehension.get_latest_record("law", law_id)
     mu_record = meaning.get_latest_record("law", law_id)
+    sigma_record = structure.get_latest_record("law", law_id)
+    lambda_record = generative.get_latest_record("law", law_id)
 
     nodes: dict[str, dict[str, Any]] = {}
     edges: list[dict[str, Any]] = []
@@ -94,6 +102,7 @@ def build_cross_ledger_trace(
             add_node(bound_evidence, layer="evidence_ref", label=bound_evidence)
             edges.append({"from": entry.entry_id, "to": bound_evidence, "kind": "evidence_bound"})
 
+    omega_value: float | None = None
     if ev:
         add_node(
             ev.evidence_id,
@@ -104,6 +113,7 @@ def build_cross_ledger_trace(
         )
         edges.append({"from": law_id, "to": ev.evidence_id, "kind": "evaluated_with"})
         eit = evaluate_evidence_fitness(ev, graph=graph)
+        omega_value = eit["omega"]
         add_node(
             f"OMEGA-{ev.evidence_id}",
             layer="eit",
@@ -143,6 +153,41 @@ def build_cross_ledger_trace(
         )
         edges.append({"from": law_id, "to": mu_record.id, "kind": "meaning"})
 
+    if sigma_record:
+        add_node(
+            sigma_record.id,
+            layer="sit",
+            label=f"Σ={sigma_record.sigma:.3f}",
+            sigma=round(sigma_record.sigma, 6),
+        )
+        edges.append({"from": law_id, "to": sigma_record.id, "kind": "structure"})
+
+    if lambda_record:
+        add_node(
+            lambda_record.id,
+            layer="git",
+            label=f"Λ={lambda_record.lambda_value:.3f}",
+            lambda_value=round(lambda_record.lambda_value, 6),
+        )
+        edges.append({"from": law_id, "to": lambda_record.id, "kind": "generative"})
+
+    from src.continuity.pit_fitness import evaluate_law_pit
+
+    law_dict = record.to_dict()
+    pit_eval = evaluate_law_pit(
+        law_dict,
+        omega=omega_value,
+    )
+    pit_id = f"PIT-{law_id}-E{resolved_epoch}"
+    add_node(
+        pit_id,
+        layer="pit",
+        label=f"Φ={pit_eval['phi']:.3f}",
+        phi=pit_eval["phi"],
+        fitness=round(record.current_fitness, 6),
+    )
+    edges.append({"from": law_id, "to": pit_id, "kind": "proof_fitness"})
+
     strip = build_evidence_eit_strip(ev, graph=graph) if ev else None
 
     return {
@@ -155,6 +200,9 @@ def build_cross_ledger_trace(
         "eit_strip": strip.to_dict() if strip else None,
         "chi": chi_record.chi if chi_record else None,
         "mu": mu_record.mu if mu_record else None,
+        "sigma": sigma_record.sigma if sigma_record else None,
+        "lambda": lambda_record.lambda_value if lambda_record else None,
+        "phi": pit_eval["phi"],
         "law_ledger_tail": [entry.to_dict() for entry in law_entries],
     }
 

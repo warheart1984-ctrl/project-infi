@@ -105,6 +105,40 @@ def test_evaluate_adapter_load_gate_base_model_mismatch():
     assert reason == "base_model_mismatch"
 
 
+def test_prepare_messages_dataset_marks_nova_lawful_source(tmp_path):
+    from training.prepare_messages_dataset import build_dataset, build_dataset_manifest
+
+    seed_path = ROOT / "training" / "data" / "jarvis_seed_messages.jsonl"
+    nova_path = ROOT / "training" / "data" / "nova_lawful_turns.jsonl"
+    if not nova_path.exists():
+        return
+
+    examples, source_files = build_dataset(seed_path, [nova_path])
+    output_path = tmp_path / "jarvis_train_messages.jsonl"
+    output_path.write_text(
+        "\n".join(json.dumps(example, ensure_ascii=True) for example in examples) + "\n",
+        encoding="utf-8",
+    )
+    manifest_path = build_dataset_manifest(output_path, source_files, len(examples))
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+    assert "nova-lawful-turns-export-v1" in manifest["admission_ids"]
+    assert manifest.get("export_manifest_sha256", "").startswith("sha256:")
+
+
+def test_validate_dataset_manifest_requires_export_hash():
+    from src.jarvis_lora_training_validator import validate_dataset_manifest
+
+    errors = validate_dataset_manifest(
+        {
+            "manifest_version": "jarvis_lora_dataset_manifest.v1",
+            "admission_ids": ["nova-lawful-turns-export-v1"],
+            "source_files": [{"path": "training/data/nova_lawful_turns.jsonl"}],
+        }
+    )
+    assert any("export_manifest_sha256" in error for error in errors)
+
+
 def test_prepare_messages_dataset_marks_external_source(tmp_path):
     from training.prepare_messages_dataset import build_dataset, build_dataset_manifest
 

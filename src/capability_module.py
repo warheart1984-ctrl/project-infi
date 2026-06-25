@@ -88,7 +88,7 @@ class AAISCapabilityModule:
 
     @staticmethod
     def _attach_ul_substrate(result: dict[str, Any]) -> dict[str, Any]:
-        from src.aais_ul_substrate import wrap_capability_result
+        from src.aais_ul.runtime import wrap_capability_result
 
         return wrap_capability_result(dict(result))
 

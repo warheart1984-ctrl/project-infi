@@ -20,7 +20,7 @@ from app.db import (
 from app.db import get_conn
 from app.workflow_validation import build_workflow_config_from_graph
 from src.cisiv import normalize_cisiv_stage
-from src.otem_execution_substrate import get_otem_execution_substrate
+from src.otem.execution import get_otem_execution_substrate
 
 import logging
 
@@ -321,7 +321,7 @@ def _substrate_workflow_exists(otem_execution_workflow_id: str) -> bool:
     except KeyError:
         pass
     try:
-        from src.otem_substrate_store import load_substrate_workflow, rehydrate_substrate_workflow_from_proposal
+        from src.otem.store import load_substrate_workflow, rehydrate_substrate_workflow_from_proposal
 
         row = load_substrate_workflow(otem_execution_workflow_id)
         if row:
@@ -365,7 +365,7 @@ def _try_rehydrate_substrate_from_approval(approval: dict[str, Any]) -> bool:
     if not workflow_id or not proposal_snapshot:
         return False
     try:
-        from src.otem_substrate_store import rehydrate_substrate_workflow_from_proposal
+        from src.otem.store import rehydrate_substrate_workflow_from_proposal
 
         rehydrate_substrate_workflow_from_proposal(workflow_id, proposal_snapshot)
         return True

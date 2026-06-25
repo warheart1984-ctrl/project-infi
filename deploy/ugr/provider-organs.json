@@ -19,7 +19,7 @@
         "response_mode": "fast"
       },
       "function": {
-        "capabilities": ["general_qa", "governed_super_router_demo"],
+        "capabilities": ["general_qa", "governed_super_router_demo", "governed_constitutional_spine"],
         "max_tokens": 512
       },
       "contract": {
@@ -32,7 +32,7 @@
         },
         "risk_ceiling": "low",
         "allowed_regions": ["local-primary", "tenant-us", "tenant-eu"],
-        "allowed_domains": ["general_qa", "explain", "governed_super_router_demo"],
+        "allowed_domains": ["general_qa", "explain", "governed_super_router_demo", "governed_constitutional_spine"],
         "admissible_rails": ["SAFE", "NORMAL", "EXPRESS"]
       }
     },

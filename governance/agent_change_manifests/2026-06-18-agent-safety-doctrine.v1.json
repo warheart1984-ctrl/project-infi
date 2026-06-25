@@ -1,0 +1,47 @@
+{
+  "agent_safety_doctrine_version": "agent_safety_doctrine.v1",
+  "change_id": "MA-14-agent-safety-doctrine-gate",
+  "claim_label": "proven",
+  "authority_chain": [
+    "Law",
+    "Blueprint",
+    "Contract",
+    "Implementation",
+    "Pipeline",
+    "Tool"
+  ],
+  "blueprint_refs": [
+    "META_ARCHITECT_LAWBOOK.md",
+    "REPO_PROOF_LAW.md",
+    "HUMAN_AI_CO_COLLABORATION_CHARTER.md"
+  ],
+  "change_boundary": {
+    "what_changed": "Added MA-14 Agent Safety Doctrine text, a JSON manifest schema template, an enforcement validator, tests, a Makefile target, a CI gate, and an MA-12 README subsection label alignment required by the documentation validator.",
+    "why_changed": "The attached architecture review requires hardening against implementation drift by making coding agents subordinate to law, blueprint, contract, implementation, pipeline, and tool authority.",
+    "evidence_refs": [
+      "tests/test_agent_safety_doctrine.py",
+      ".github/scripts/validate-agent-safety-doctrine.py",
+      "docs/trust_bundles/2026-06-18-agent-safety-doctrine-gate.md",
+      "README.md"
+    ],
+    "assumptions": [
+      "Agent-authored governance changes can be represented as JSON manifests.",
+      "Blueprint authority references can be repository paths to constitutional or blueprint artifacts."
+    ],
+    "reversal": "Remove .github/scripts/validate-agent-safety-doctrine.py, tests/test_agent_safety_doctrine.py, .github/workflows/agent-safety-doctrine-gate.yml, templates/AGENT_SAFETY_DOCTRINE_MANIFEST_TEMPLATE.json, this manifest, and revert the MA-14 additions in META_ARCHITECT_LAWBOOK.md, REPO_PROOF_LAW.md, HUMAN_AI_CO_COLLABORATION_CHARTER.md, README.md, and Makefile."
+  },
+  "prohibited_actions": {
+    "rewrite_architecture_without_blueprint_approval": false,
+    "delete_governance_artifacts": false,
+    "remove_validation_gates": false,
+    "weaken_tests_to_pass": false,
+    "replace_determinism_with_convenience": false,
+    "introduce_hidden_dependencies": false,
+    "claim_completion_without_proof": false
+  },
+  "uncertainty": {
+    "level": "low",
+    "authority_delta": "unchanged",
+    "resolution_path": "If manifest scope or blueprint authority is disputed, hold the change and escalate to Meta Architect review before merge."
+  }
+}

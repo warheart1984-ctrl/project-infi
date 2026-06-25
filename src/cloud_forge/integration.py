@@ -187,7 +187,7 @@ def schedule_request_observed(
         ledger_record_id=ledger_record_id,
         promotion=promotion,
     )
-    from src.aais_ul_substrate import wrap_cloud_forge_bundle
+    from src.aais_ul.runtime import wrap_cloud_forge_bundle
 
     return wrap_cloud_forge_bundle(bundle)
 

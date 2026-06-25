@@ -35,6 +35,45 @@ def _project_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
 
+def _truthy_env(name: str, *, default: bool = False) -> bool:
+    raw = os.environ.get(name)
+    if raw is None or str(raw).strip() == "":
+        return default
+    return str(raw).strip().lower() in {"1", "true", "yes", "on"}
+
+
+def mesh_enabled() -> bool:
+    """Whether background mesh gossip should run on this node.
+
+    Mesh is opt-in only: set ``AAIS_MESH_ENABLED=1`` or provide a non-empty
+    ``MESH_PEERS_JSON`` list. A ``deploy/mesh/peers.json`` file alone does not
+    enable gossip (avoids solo installs probing 127.0.0.1:5000/5001).
+    """
+    env = os.environ.get("AAIS_MESH_ENABLED", "").strip().lower()
+    if env in {"0", "false", "no", "off"}:
+        return False
+    if env in {"1", "true", "yes", "on"}:
+        return True
+    raw = os.environ.get("MESH_PEERS_JSON", "").strip()
+    if not raw:
+        return False
+    try:
+        parsed = json.loads(raw)
+        peers = parsed if isinstance(parsed, list) else list(parsed.get("peers") or [])
+        return bool(peers)
+    except json.JSONDecodeError:
+        return False
+
+
+def configured_peer_count(base_dir: str | Path | None = None) -> int:
+    """Count remote peers configured for gossip (seeds + peers, deduped)."""
+    return len(iter_peers(load_mesh_config(base_dir)))
+
+
+def _allow_example_mesh_peers() -> bool:
+    return _truthy_env("AAIS_MESH_USE_EXAMPLE_PEERS", default=False)
+
+
 def mesh_config_path(base_dir: str | Path | None = None) -> Path:
     return mesh_dir(base_dir) / "mesh_config.json"
 
@@ -42,6 +81,8 @@ def mesh_config_path(base_dir: str | Path | None = None) -> Path:
 def _load_deploy_peers() -> list:
     peers_file = _project_root() / "deploy" / "mesh" / "peers.json"
     if not peers_file.exists():
+        if not _allow_example_mesh_peers():
+            return []
         example = _project_root() / "deploy" / "mesh" / "peers.example.json"
         if example.exists():
             peers_file = example
@@ -69,7 +110,7 @@ def load_mesh_config(base_dir: str | Path | None = None) -> dict:
             merged["peers"] = parsed if isinstance(parsed, list) else list(parsed.get("peers") or [])
         except json.JSONDecodeError:
             pass
-    elif not merged.get("peers"):
+    elif not merged.get("peers") and (mesh_enabled() or _allow_example_mesh_peers()):
         merged["peers"] = _load_deploy_peers()
 
     return merged
@@ -116,7 +157,7 @@ def iter_all_peers(config: dict, base_dir: str | Path | None = None) -> list[dic
         url = peer["url"]
         records[url] = dict(peer)
 
-    if base_dir is not None:
+    if base_dir is not None and mesh_enabled():
         try:
             from src.mesh.known_peers import KnownPeersStore
 

@@ -24,6 +24,8 @@ export CUDA_VISIBLE_DEVICES="${NOVA_GPU_DEVICE}"
 # ── GitHub ────────────────────────────────────────────────────────────────────
 export GITHUB_TOKEN=""
 
-# ── Telemetry opt-out ─────────────────────────────────────────────────────────
-export DO_NOT_TRACK=1
-export NEXT_TELEMETRY_DISABLED=1
+# Unlawful agent kill switches (lawful Nova only)
+export URG_MISSION_KILL_SWITCH=1
+export URG_EXECUTION_MODE=DRY_RUN
+export AAIS_UNLAWFUL_AGENTS_DISABLED=1
+export OPERATOR_KERNEL_PLANNER_FALLBACK=0

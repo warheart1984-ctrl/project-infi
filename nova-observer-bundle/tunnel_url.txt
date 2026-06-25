@@ -1,0 +1,4 @@
+# Mission #002 public Nova endpoint (Cursor Override OpenAI Base URL).
+# Mission operator replaces this line before dispatching the bundle:
+# https://<your-subdomain>.ngrok-free.dev/v1
+REPLACE_BEFORE_MISSION

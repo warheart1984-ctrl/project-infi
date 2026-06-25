@@ -12,7 +12,7 @@ from uuid import uuid4
 
 from src.constitutional_ecosystem_runtime import validate_charter_against_upstream_layers
 from src.governed_civilization_registry import CIVILIZATION_VERSION, adopted_civilizations, save_adopted_civilization
-from src.inter_substrate_diplomacy_runtime import validate_accord_against_upstream_layers
+from src.diplomacy.runtime import validate_accord_against_upstream_layers
 
 DRIFT_VERSION = "civilization_drift.v1"
 

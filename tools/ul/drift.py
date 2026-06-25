@@ -13,7 +13,7 @@ from tools.ul.smoke import SMOKE_SAMPLES, _load_sample
 def collect_adapter_sections() -> dict[str, object]:
     ensure_project_root()
     from src.aais_ul import DEFAULT_REGISTRY
-    from src.aais_ul_substrate import substrate_status
+    from src.aais_ul.runtime import substrate_status
 
     doctrine_path = PROJECT_ROOT / "src" / "aais_ul.json"
     doctrine = json.loads(doctrine_path.read_text(encoding="utf-8"))

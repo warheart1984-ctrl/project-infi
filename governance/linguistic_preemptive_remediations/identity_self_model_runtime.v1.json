@@ -1,0 +1,30 @@
+{
+  "linguistic_preemptive_playbook_version": "linguistic_preemptive_playbook.v1",
+  "gene": "identity_self_model_runtime",
+  "current_band": "low",
+  "predicted_band": "medium",
+  "predicted_risk_30d": 55,
+  "lead_time_days": 21,
+  "drivers": [
+    "latent alignment gap (header/doc vs genome ssp)",
+    "parent gene in forecast or cycle at-risk set"
+  ],
+  "generated_at": "2026-06-24T08:48:25Z",
+  "actions": [
+    {
+      "kind": "watch_wave2_header",
+      "path": "src/identity_self_model_runtime.py",
+      "note": "Add # Engineering header before band escalates"
+    },
+    {
+      "kind": "watch_cascade",
+      "command": "python tools/linguistic_cascade_report.py --gene culture_habit_runtime",
+      "note": "Parent at risk \u2014 monitor cascade"
+    },
+    {
+      "kind": "schedule_remediation",
+      "command": "python tools/governance/generate_linguistic_remediations.py --gene identity_self_model_runtime",
+      "note": "Pre-generate remediation when predicted band materializes"
+    }
+  ]
+}

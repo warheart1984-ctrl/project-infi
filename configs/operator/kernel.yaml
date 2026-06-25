@@ -1,0 +1,6 @@
+# Operator kernel defaults (template — copy to install dir as operator_kernel.config.yaml)
+host: "127.0.0.1"
+port: 8790
+lawful_brain_url: "http://127.0.0.1:8791"
+workspace_root: ""
+planner_fallback_enabled: true

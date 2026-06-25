@@ -6,7 +6,7 @@ import asyncio
 import json
 import os
 from dataclasses import dataclass, field
-from typing import Any, Callable
+from typing import Any, Callable, Iterator
 from urllib import error, request
 
 from src.jarvis_protocol import JarvisMessage, ProviderResponse, ToolResult
@@ -109,44 +109,49 @@ class HttpChatProvider:
         headers.update(self.config.extra_headers)
         return headers
 
-    async def invoke(
+    def _build_request_payload(
         self,
         messages: list[JarvisMessage | dict[str, Any]],
         tools: list[dict] | None = None,
-        **kwargs,
-    ) -> ProviderResponse:
+        **kwargs: Any,
+    ) -> dict[str, Any]:
         normalized_messages = [
             message if isinstance(message, JarvisMessage) else JarvisMessage.from_dict(message)
             for message in messages or []
         ]
         provider_messages = [message.to_provider_message() for message in normalized_messages]
+        max_tokens = int(kwargs.get("max_tokens") or 2048)
         request_payload: dict[str, Any] = {
             "model": kwargs.get("model") or self.model,
             "messages": provider_messages or [{"role": "user", "content": "Hello."}],
-            "max_tokens": int(kwargs.get("max_tokens") or 2048),
-            "temperature": float(kwargs.get("temperature") or 0.7),
+            "max_tokens": max_tokens,
+            "temperature": float(kwargs.get("temperature") if kwargs.get("temperature") is not None else 0.7),
         }
+        if kwargs.get("top_p") is not None:
+            request_payload["top_p"] = float(kwargs["top_p"])
         if "max_completion_tokens" not in request_payload:
-            request_payload["max_completion_tokens"] = request_payload["max_tokens"]
+            request_payload["max_completion_tokens"] = max_tokens
         if tools:
             request_payload["tools"] = list(tools)
         extra_body = dict(self.config.default_extra_body)
         extra_body.update(dict(kwargs.get("extra_body") or {}))
         if extra_body:
             request_payload.update(extra_body)
+        return request_payload
 
-        response = await asyncio.to_thread(
-            self.client,
-            request_payload,
-            self._build_headers(),
-        )
+    def _parse_completion_response(
+        self,
+        response: dict[str, Any],
+        *,
+        request_model: str,
+    ) -> ProviderResponse:
         choice = ((response.get("choices") or [None])[0]) or {}
         message = choice.get("message") or {}
         content = extract_text_content(message.get("content"))
         tool_calls = parse_tool_calls(message, provider_id=self.provider_id)
         usage = response.get("usage") or {}
         finish_reason = str(choice.get("finish_reason") or "").strip().lower() or None
-        model_name = response.get("model") or request_payload["model"]
+        model_name = response.get("model") or request_model
 
         return ProviderResponse(
             content=content,
@@ -159,6 +164,89 @@ class HttpChatProvider:
             output_tokens=int(usage.get("completion_tokens") or 0) or None,
             raw=response,
         )
+
+    def invoke_sync(
+        self,
+        messages: list[JarvisMessage | dict[str, Any]],
+        tools: list[dict] | None = None,
+        **kwargs: Any,
+    ) -> ProviderResponse:
+        """Blocking invoke for sync callers (FastAPI sync routes, LawfulLLM)."""
+        request_payload = self._build_request_payload(messages, tools, **kwargs)
+        response = self.client(request_payload, self._build_headers())
+        return self._parse_completion_response(
+            response,
+            request_model=str(request_payload["model"]),
+        )
+
+    def iter_stream_sync(
+        self,
+        messages: list[JarvisMessage | dict[str, Any]],
+        tools: list[dict] | None = None,
+        **kwargs: Any,
+    ) -> Iterator[dict[str, Any]]:
+        """Blocking SSE iterator for sync streaming handlers."""
+        request_payload = self._build_request_payload(messages, tools, **kwargs)
+        yield from self._iter_sse_json(request_payload, self._build_headers())
+
+    async def invoke(
+        self,
+        messages: list[JarvisMessage | dict[str, Any]],
+        tools: list[dict] | None = None,
+        **kwargs,
+    ) -> ProviderResponse:
+        request_payload = self._build_request_payload(messages, tools, **kwargs)
+
+        response = await asyncio.to_thread(
+            self.client,
+            request_payload,
+            self._build_headers(),
+        )
+        return self._parse_completion_response(
+            response,
+            request_model=str(request_payload["model"]),
+        )
+
+    def _iter_sse_json(self, payload: dict[str, Any], headers: dict[str, str]) -> Iterator[dict[str, Any]]:
+        stream_payload = {**payload, "stream": True}
+        body = json.dumps(stream_payload).encode("utf-8")
+        req = request.Request(self.endpoint, data=body, headers=headers, method="POST")
+        try:
+            with request.urlopen(req, timeout=self.config.timeout_sec) as response:
+                for raw_line in response:
+                    line = raw_line.decode("utf-8", errors="replace").strip()
+                    if not line or not line.startswith("data:"):
+                        continue
+                    data = line[5:].strip()
+                    if data == "[DONE]":
+                        return
+                    try:
+                        yield json.loads(data)
+                    except json.JSONDecodeError:
+                        continue
+        except error.HTTPError as exc:
+            message = exc.read().decode("utf-8", errors="replace")
+            raise RuntimeError(
+                f"{self.provider_id} stream failed: {exc.code} {message}"
+            ) from exc
+        except error.URLError as exc:
+            raise RuntimeError(f"{self.provider_id} stream failed: {exc.reason}") from exc
+
+    async def invoke_stream(
+        self,
+        messages: list[JarvisMessage | dict[str, Any]],
+        tools: list[dict] | None = None,
+        **kwargs: Any,
+    ):
+        request_payload = self._build_request_payload(messages, tools, **kwargs)
+        headers = self._build_headers()
+
+        def _collect() -> list[dict[str, Any]]:
+            return list(self._iter_sse_json(request_payload, headers))
+
+        chunks = await asyncio.to_thread(_collect)
+        for chunk in chunks:
+            yield chunk
 
 
 def env_flag(name: str, *, default: bool = False) -> bool:

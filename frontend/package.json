@@ -1,66 +1,20 @@
 {
-  "name": "aais-frontend",
+  "name": "cori-trace-viewer",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": ">=18"
-  },
   "dependencies": {
-    "@aws-amplify/ui-react": "^6.11.2",
-    "aws-amplify": "^6.14.4",
-    "axios": "^1.17.0",
+    "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hot-toast": "^2.4.0",
-    "react-icons": "^4.7.0",
-    "react-router-dom": "^6.30.4",
-    "reactflow": "^11.11.4",
-    "tailwindcss": "^3.2.0",
-    "zustand": "^4.3.0"
-  },
-  "devDependencies": {
-    "@testing-library/react": "^16.3.0",
-    "@vitejs/plugin-react": "^4.7.0",
-    "@vitest/coverage-v8": "^4.1.8",
-    "eslint": "^8.57.1",
-    "eslint-config-react-app": "^7.0.1",
-    "jsdom": "^27.0.1",
-    "playwright": "^1.59.1",
-    "vite": "^6.4.2",
-    "vitest": "^4.1.8"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
-    "dev": "vite --host 0.0.0.0 --port 3000 --strictPort",
-    "start": "vite --host 0.0.0.0 --port 3000 --strictPort",
-    "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0 --port 3000 --strictPort",
-    "test": "node ./scripts/run-vitest.mjs",
-    "test:ci": "node ./scripts/run-vitest.mjs --run",
-    "smoke:workflow": "node ./scripts/workflow-smoke.mjs",
-    "lint": "eslint \"src/**/*.{js,jsx}\"",
-    "audit:prod": "npm audit --omit=dev",
-    "audit:full": "npm audit"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "overrides": {
-    "follow-redirects": "1.16.0",
-    "lodash": "4.18.1",
-    "postcss": "8.5.12"
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
   }
 }

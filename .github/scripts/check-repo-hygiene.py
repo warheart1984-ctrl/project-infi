@@ -10,6 +10,7 @@ import json
 import subprocess
 import sys
 import tempfile
+from collections.abc import Callable
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,6 +25,7 @@ class Finding:
     severity: str
     path: str
     message: str
+    remediation_hint: str = ""
 
     def render(self) -> str:
         level = "WARN" if self.severity == "warn" else "ERROR"
@@ -38,6 +40,13 @@ def _load_manifest(repo_root: Path) -> dict:
     if not isinstance(data, dict):
         raise ValueError("hygiene manifest root must be an object")
     return data
+
+
+def _remediation_for(manifest: dict, rule_id: str) -> str:
+    for rule in manifest.get("rules") or []:
+        if isinstance(rule, dict) and rule.get("id") == rule_id:
+            return str(rule.get("remediation") or "")
+    return ""
 
 
 def _git_ls_files(repo_root: Path) -> list[str]:
@@ -79,17 +88,35 @@ def _root_children(repo_root: Path) -> list[Path]:
     return children
 
 
+def _finding(
+    manifest: dict,
+    *,
+    rule_id: str,
+    severity: str,
+    path: str,
+    message: str,
+) -> Finding:
+    return Finding(
+        rule_id=rule_id,
+        severity=severity,
+        path=path,
+        message=message,
+        remediation_hint=_remediation_for(manifest, rule_id),
+    )
+
+
 def _check_forbidden_root_names(repo_root: Path, manifest: dict) -> list[Finding]:
     findings: list[Finding] = []
     forbidden = set(manifest.get("forbidden_root_names") or [])
     for child in _root_children(repo_root):
         if child.name in forbidden:
             findings.append(
-                Finding(
+                _finding(
+                    manifest,
                     rule_id="hygiene.forbidden_root_name",
                     severity="error",
                     path=child.as_posix(),
-                    message=f"forbidden root entry '{child.name}' — remove or relocate per ROOT_STRUCTURE_AUDIT",
+                    message=f"forbidden root entry '{child.name}'",
                 )
             )
     return findings
@@ -104,7 +131,8 @@ def _check_forbidden_root_globs(repo_root: Path, manifest: dict) -> list[Finding
         for pattern in patterns:
             if fnmatch.fnmatch(child.name, pattern):
                 findings.append(
-                    Finding(
+                    _finding(
+                        manifest,
                         rule_id="hygiene.forbidden_root_glob",
                         severity="warn",
                         path=child.as_posix(),
@@ -122,11 +150,12 @@ def _check_whitespace_poison_dirs(repo_root: Path, manifest: dict) -> list[Findi
         name = child.name
         if not name or name.isspace():
             findings.append(
-                Finding(
+                _finding(
+                    manifest,
                     rule_id="hygiene.poison_dir",
                     severity="error",
                     path=child.as_posix(),
-                    message="root child has empty or whitespace-only name — likely accidental bundle staging",
+                    message="root child has empty or whitespace-only name",
                 )
             )
             continue
@@ -135,11 +164,12 @@ def _check_whitespace_poison_dirs(repo_root: Path, manifest: dict) -> list[Findi
         for marker in markers:
             if _path_exists(child / marker) and child.parent == repo_root:
                 findings.append(
-                    Finding(
+                    _finding(
+                        manifest,
                         rule_id="hygiene.poison_dir",
                         severity="error",
                         path=(child / marker).as_posix(),
-                        message=f"unexpected '{marker}' under repo root — bundle mirror outside allowed paths",
+                        message=f"unexpected '{marker}' under repo root",
                     )
                 )
     return findings
@@ -153,7 +183,8 @@ def _check_forbidden_tracked(repo_root: Path, manifest: dict) -> list[Finding]:
         for prefix in prefixes:
             if norm == prefix.rstrip("/") or norm.startswith(prefix):
                 findings.append(
-                    Finding(
+                    _finding(
+                        manifest,
                         rule_id="hygiene.forbidden_tracked",
                         severity="error",
                         path=norm,
@@ -170,13 +201,35 @@ def _check_local_work_dirs(repo_root: Path, manifest: dict) -> list[Finding]:
         path = repo_root / name
         if _path_exists(path):
             findings.append(
-                Finding(
+                _finding(
+                    manifest,
                     rule_id="hygiene.local_work_dir",
                     severity="warn",
                     path=path.as_posix(),
-                    message="local work directory present — safe to delete when not in active use",
+                    message="local work directory present",
                 )
             )
+    return findings
+
+
+def _check_stray_root_argv(repo_root: Path, manifest: dict) -> list[Finding]:
+    findings: list[Finding] = []
+    patterns = list(manifest.get("forbidden_root_argv_globs") or [])
+    for child in _root_children(repo_root):
+        if not child.is_file():
+            continue
+        for pattern in patterns:
+            if fnmatch.fnmatch(child.name, pattern):
+                findings.append(
+                    _finding(
+                        manifest,
+                        rule_id="hygiene.stray_root_argv",
+                        severity="warn",
+                        path=child.as_posix(),
+                        message=f"stray root argv file '{child.name}' matches '{pattern}'",
+                    )
+                )
+                break
     return findings
 
 
@@ -226,7 +279,8 @@ def _check_stale_payload_runtime(repo_root: Path, manifest: dict) -> list[Findin
                 sample = ", ".join(mismatches[:5])
                 suffix = "..." if len(mismatches) > 5 else ""
                 findings.append(
-                    Finding(
+                    _finding(
+                        manifest,
                         rule_id="hygiene.stale_payload_runtime",
                         severity="warn",
                         path=payload_runtime.as_posix(),
@@ -238,7 +292,8 @@ def _check_stale_payload_runtime(repo_root: Path, manifest: dict) -> list[Findin
                 )
     except Exception as exc:  # noqa: BLE001
         findings.append(
-            Finding(
+            _finding(
+                manifest,
                 rule_id="hygiene.stale_payload_runtime",
                 severity="warn",
                 path=payload_runtime.as_posix(),
@@ -248,16 +303,30 @@ def _check_stale_payload_runtime(repo_root: Path, manifest: dict) -> list[Findin
     return findings
 
 
+CHECK_BY_NAME: dict[str, Callable[[Path, dict], list[Finding]]] = {
+    "forbidden_root_names": _check_forbidden_root_names,
+    "forbidden_root_globs": _check_forbidden_root_globs,
+    "poison_dir_markers": _check_whitespace_poison_dirs,
+    "forbidden_tracked_prefixes": _check_forbidden_tracked,
+    "local_work_dirs": _check_local_work_dirs,
+    "forbidden_root_argv_globs": _check_stray_root_argv,
+    "stale_payload_runtime": _check_stale_payload_runtime,
+}
+
+
 def scan_repo(repo_root: Path, *, skip_bundle_compare: bool = False) -> list[Finding]:
     manifest = _load_manifest(repo_root)
     findings: list[Finding] = []
-    findings.extend(_check_forbidden_root_names(repo_root, manifest))
-    findings.extend(_check_forbidden_root_globs(repo_root, manifest))
-    findings.extend(_check_whitespace_poison_dirs(repo_root, manifest))
-    findings.extend(_check_forbidden_tracked(repo_root, manifest))
-    findings.extend(_check_local_work_dirs(repo_root, manifest))
-    if not skip_bundle_compare:
-        findings.extend(_check_stale_payload_runtime(repo_root, manifest))
+    for rule in manifest.get("rules") or []:
+        if not isinstance(rule, dict):
+            continue
+        check_name = str(rule.get("check") or "")
+        if skip_bundle_compare and check_name == "stale_payload_runtime":
+            continue
+        checker = CHECK_BY_NAME.get(check_name)
+        if checker is None:
+            continue
+        findings.extend(checker(repo_root, manifest))
     return findings
 
 
@@ -270,7 +339,7 @@ def main() -> int:
     parser.add_argument(
         "--skip-bundle-compare",
         action="store_true",
-        help="Skip stale payload runtime hash comparison (faster CI unit tests)",
+        help="Skip stale payload runtime hash comparison (faster CI)",
     )
     args = parser.parse_args()
 

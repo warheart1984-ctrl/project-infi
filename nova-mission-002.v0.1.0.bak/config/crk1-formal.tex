@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{CRK-1: Constitutional Runtime Kernel --- Formal Specification}
+\author{Nova / Mission \#002}
+\date{v1.0}
+
+\begin{document}
+\maketitle
+
+\section{State Space}
+Let $S \in \mathcal{S}$ denote workspace state and $A \in \mathcal{A}$ denote the action space.
+Let $\mathcal{I} = \{I_1, I_2, \ldots, I_n\}$ be the invariant set, where each
+$I_k : \mathcal{S} \times \mathcal{A} \to \{0,1\}$ and $I_k(S,A)=1$ means the invariant holds.
+
+\section{Lawful Action Predicate}
+An action $A$ on state $S$ is lawful iff:
+\[
+L(S,A) = \bigwedge_{k=1}^{n} I_k(S,A)
+\]
+
+\section{Transition Function}
+The kernel defines a governed transition $T : \mathcal{S} \times \mathcal{A} \to \mathcal{S}$ subject to:
+\[
+L(S,A) = 1 \implies S' = T(S,A)
+\]
+If $L(S,A) = 0$, the transition is rejected.
+
+\section{Continuity Substrate}
+Define snapshot function $\Sigma : \mathcal{S} \to \mathcal{C}$ where $\mathcal{C}$ is the space of continuity hashes.
+For each transition: $c = \Sigma(S)$, $c' = \Sigma(S')$.
+Diff operator: $D : \mathcal{S} \times \mathcal{S} \to \Delta$.
+
+\section{Governance Receipt}
+A receipt $R = (A, S, S', \{I_k\}, c, c', t)$ where $t \in \mathbb{R}$ is timestamp.
+Pattern ledger $\mathcal{L} = (R_1, R_2, \ldots, R_m)$ with chaining:
+\[
+h_i = H(R_i \parallel h_{i-1})
+\]
+for hash function $H$.
+
+\section{Reproducibility}
+Given $\mathcal{L}$ and initial state $S_0$, replaying $S_i = T(S_{i-1}, A_i)$ yields states consistent with recorded $S_i$ in receipts.
+
+\end{document}

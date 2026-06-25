@@ -7,7 +7,7 @@ export function ComprehensionHealth({ health }) {
 
   return (
     <div className="constitutional-panel">
-      <h3>Comprehension Health</h3>
+      <h3>Comprehension Fitness</h3>
       <div className="law-card-metrics">
         <span>avg Χ={Number(health.avg_chi || 0).toFixed(3)}</span>
         <span>Θ≥{Number(health.theta_min || 0).toFixed(2)}</span>

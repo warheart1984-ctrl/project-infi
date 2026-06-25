@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from src.jarvis_lora_training_validator import validate_training_run
+from src.jarvis_lora_training_validator import validate_dataset_manifest, validate_training_run
 
 import torch
 from datasets import load_dataset
@@ -268,6 +268,10 @@ def main():
 
     dataset = load_dataset("json", data_files=str(dataset_path), split="train")
     manifest = _load_dataset_manifest(dataset_path)
+    manifest_errors = validate_dataset_manifest(manifest, label="dataset_manifest")
+    if manifest_errors:
+        joined = "; ".join(manifest_errors)
+        raise ValueError(f"Invalid dataset manifest: {joined}")
     use_4bit = not args.disable_4bit
     hyperparams = _build_hyperparams(args, use_4bit=use_4bit)
 

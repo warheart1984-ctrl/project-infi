@@ -1,0 +1,35 @@
+{
+  "agent_safety_doctrine_version": "agent_safety_doctrine.v1",
+  "change_id": "",
+  "claim_label": "asserted",
+  "authority_chain": [
+    "Law",
+    "Blueprint",
+    "Contract",
+    "Implementation",
+    "Pipeline",
+    "Tool"
+  ],
+  "blueprint_refs": [],
+  "change_boundary": {
+    "what_changed": "",
+    "why_changed": "",
+    "evidence_refs": [],
+    "assumptions": [],
+    "reversal": ""
+  },
+  "prohibited_actions": {
+    "rewrite_architecture_without_blueprint_approval": false,
+    "delete_governance_artifacts": false,
+    "remove_validation_gates": false,
+    "weaken_tests_to_pass": false,
+    "replace_determinism_with_convenience": false,
+    "introduce_hidden_dependencies": false,
+    "claim_completion_without_proof": false
+  },
+  "uncertainty": {
+    "level": "low",
+    "authority_delta": "unchanged",
+    "resolution_path": ""
+  }
+}

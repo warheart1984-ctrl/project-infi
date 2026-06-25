@@ -1,8 +1,8 @@
 # Six Invariants — Proof-of-Discovery Packet
 
-Claim: The **Six Invariants** theoretical framework PDF is registered as governed Proof-of-Discovery evidence under UGR contribution type `proof`, attested by the first Discovery Pod.
+Claim: The historical **Six Invariants** artifact, internally resolved as the **Seven Invariants** final canonical set, is registered as governed Proof-of-Discovery evidence under UGR contribution type `proof`, attested by the first Discovery Pod.
 
-Claim status: **proven** (artifact hash-anchored; validator pass; runtime discovery receipt recorded).
+Claim status: **proven** (artifact hash-anchored; validator pass; runtime discovery receipt recorded; final seven-invariant canonical set recorded).
 
 ## Discovery Pod
 
@@ -34,10 +34,27 @@ Claim status: **proven** (artifact hash-anchored; validator pass; runtime discov
 | `law_id` | `REPO_PROOF_LAW` |
 | `discovery_pod_id` | `pod:jon-halstead` |
 
+## Final canonical set
+
+The current authority is [Seven Invariants Canonical Set](../../contracts/SEVEN_INVARIANTS_CANONICAL_SET.md).
+
+| # | Invariant | Layer |
+|---|---|---|
+| 1 | Identity Preservation | Identity |
+| 2 | Authority Continuity | Identity |
+| 3 | Bidirectional Coherence | Transformation / Duality |
+| 4 | Symmetric Constraint Surface | Transformation / Duality |
+| 5 | Evidence Integrity | Governance |
+| 6 | Law Surface Binding | Governance |
+| 7 | The Unifier | Continuity |
+
+The seventh invariant binds the other six into a single atomic compliance set: continuity exists only when all invariants are simultaneously satisfied.
+
 ## Linked contracts
 
 - `docs/contracts/UGR_CONTRIBUTION_DISCOVERY_CONTRACT.md`
 - `docs/contracts/UGR_OPERATOR_REWARDS_CONTRACT.md` (reputation via Proof of Discovery)
+- `docs/contracts/SEVEN_INVARIANTS_CANONICAL_SET.md`
 - `docs/trust_bundles/SIX_INVARIANTS_DISCOVERY_PROVEN_TRUST_BUNDLE.md`
 
 ## Runtime receipt
@@ -67,4 +84,4 @@ Expected: PDF exists; SHA256 matches; contribution discovery tests pass.
 
 ## Notes
 
-The PDF preamble describes seven paired invariants across three logical layers plus an observer interface. The repository filename follows the operator label **Six Invariants**; the document body uses **Seven Invariants** for the complete edition.
+The PDF preamble describes seven paired invariants across three logical layers plus an observer interface. The repository filename follows the historical operator label **Six Invariants**; the current canonical set is **Seven Invariants**.

@@ -1,0 +1,68 @@
+{
+  "harness_id": "pre_june.early_concepts.v1",
+  "thread_id": "pre_june",
+  "parent_thread_id": "aais",
+  "description": "Early concepts sealed under ROOT-014 — reconstruction validation only.",
+  "ground_truth": {
+    "frozen_concept_ids": ["PJ001", "PJ002", "PJ003"],
+    "concept_event_ids": ["PJ001", "PJ002", "PJ003"],
+    "decision_event_ids": ["PJ010"],
+    "lineage_pointers": [
+      { "from_event_id": "PJ002", "to_event_id": "PJ001" },
+      { "from_event_id": "PJ003", "to_event_id": "PJ001" },
+      { "from_event_id": "PJ010", "to_event_id": "PJ002" },
+      { "from_event_id": "PJ010", "to_event_id": "PJ003" }
+    ],
+    "anchor_decision_id": "PJ010"
+  },
+  "events": [
+    {
+      "event_id": "PJ001",
+      "thread_id": "pre_june",
+      "type": "Concept",
+      "timestamp": "2026-03-01T00:00:00Z",
+      "lineage": [],
+      "payload": {
+        "name": "Continuity-native substrate",
+        "definition": "Institutional memory must survive personnel change without tacit-only knowledge.",
+        "frozen_under": "ROOT-014"
+      }
+    },
+    {
+      "event_id": "PJ002",
+      "thread_id": "pre_june",
+      "type": "Concept",
+      "timestamp": "2026-04-01T00:00:00Z",
+      "lineage": ["PJ001"],
+      "payload": {
+        "name": "Meaning Ledger intent",
+        "definition": "Encode rationale as recoverable artifacts, not blame assignments.",
+        "frozen_under": "ROOT-014"
+      }
+    },
+    {
+      "event_id": "PJ003",
+      "thread_id": "pre_june",
+      "type": "Concept",
+      "timestamp": "2026-05-01T00:00:00Z",
+      "lineage": ["PJ001"],
+      "payload": {
+        "name": "Nexus control plane",
+        "definition": "Telemetry, CAB, and TSR ownership converge at ops-console.",
+        "frozen_under": "ROOT-014"
+      }
+    },
+    {
+      "event_id": "PJ010",
+      "thread_id": "pre_june",
+      "type": "Decision",
+      "timestamp": "2026-05-20T00:00:00Z",
+      "lineage": ["PJ002", "PJ003"],
+      "payload": {
+        "decision": "Proceed to implementation once continuity mechanisms are encoded.",
+        "anchor": true,
+        "freeze_ref": "ROOT-014"
+      }
+    }
+  ]
+}

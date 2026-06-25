@@ -32,7 +32,7 @@ def build_spine_profile(spec: AIBuildSpec) -> dict[str, Any]:
         "risk_level": spec.risk_level,
         "data_sensitivity": spec.data_sensitivity,
         "stages": {
-            "wolf_check": {
+            "rls_substrate": {
                 "enabled": True,
                 "substrate_ok_default": _substrate_default(spec.risk_level),
                 "fail_closed": spec.risk_level == "high",
@@ -73,14 +73,14 @@ def build_turn_context_from_profile(
     """Build a spine turn dict for proof scenarios (not live api.py wiring in v1)."""
 
     meta = dict(session_metadata or {})
-    wolf = profile.get("stages", {}).get("wolf_check", {})
+    substrate = profile.get("stages", {}).get("rls_substrate", {})
     jarvis = profile.get("stages", {}).get("jarvis_authorize", {})
     cortex = profile.get("stages", {}).get("cortex_execute", {})
     speaking = profile.get("stages", {}).get("speaking_emit", {})
 
-    substrate_ok = meta.get("substrate_ok", wolf.get("substrate_ok_default", True))
-    if wolf.get("fail_closed") and "substrate_ok" not in meta:
-        substrate_ok = wolf.get("substrate_ok_default", False)
+    substrate_ok = meta.get("substrate_ok", substrate.get("substrate_ok_default", True))
+    if substrate.get("fail_closed") and "substrate_ok" not in meta:
+        substrate_ok = substrate.get("substrate_ok_default", False)
 
     return {
         "substrate_ok": bool(substrate_ok),

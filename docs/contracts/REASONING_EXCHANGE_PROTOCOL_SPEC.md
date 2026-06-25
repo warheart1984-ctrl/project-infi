@@ -17,6 +17,18 @@ The shared layer does not define truth.
 
 AAIS still decides locally whether a packet is usable.
 
+## Compatibility Profile
+
+External reasoning that asks for continuity-grade admission should align with
+the canonical
+[`AAIS_REASONING_PROFILE.md`](AAIS_REASONING_PROFILE.md): evidence references,
+declared assumptions, alternatives, bounded uncertainty, law surface,
+continuity impact, and governed recommendations.
+
+CCS object references should conform to
+[`CCS_CORE_SCHEMA.md`](CCS_CORE_SCHEMA.md) and
+[`../../schemas/ccs_core_objects.v1.json`](../../schemas/ccs_core_objects.v1.json).
+
 ## Canonical Packet
 
 ```json

@@ -2,8 +2,8 @@
   "linguistic_governance_work_order_version": "linguistic_governance_work_order.v1",
   "gene": "meta_linguistic_governance_organ",
   "status": "pending",
-  "urgency_score": 58.0,
-  "queue_generated_at": "2026-06-07T20:33:13Z",
+  "urgency_score": 59.6,
+  "queue_generated_at": "2026-06-24T06:55:16Z",
   "recommended_actions": [
     {
       "kind": "watch_wave2_header",
@@ -31,5 +31,5 @@
     }
   ],
   "operator_notes": "",
-  "updated_at": "2026-06-07T20:33:13Z"
+  "updated_at": "2026-06-24T06:55:16Z"
 }

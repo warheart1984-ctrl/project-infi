@@ -32,7 +32,7 @@ def _summarize_trace(row: dict[str, Any]) -> dict[str, Any]:
 
 
 def _wrap_readout(payload: dict[str, Any]) -> dict[str, Any]:
-    from src.aais_ul_substrate import attach_ul_substrate
+    from src.aais_ul.runtime import attach_ul_substrate
 
     return attach_ul_substrate(dict(payload))
 

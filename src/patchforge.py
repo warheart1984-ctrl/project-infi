@@ -133,7 +133,7 @@ class PatchForge:
         plan.hunk_count = len(plan.hunks)
         plan.review_complete = len(plan.hunks) == 0
         plan.unified_diff = self.render_unified_diff(plan.to_dict())
-        from src.aais_ul_substrate import wrap_runtime_snapshot
+        from src.aais_ul.runtime import wrap_runtime_snapshot
 
         return wrap_runtime_snapshot(plan.to_dict())
 

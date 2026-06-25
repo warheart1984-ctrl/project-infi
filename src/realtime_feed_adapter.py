@@ -23,7 +23,7 @@ FeedSource = Callable[[], Iterator[RealtimeFeedEvent]]
 
 
 def _wrap_ul(payload: dict[str, Any]) -> dict[str, Any]:
-    from src.aais_ul_substrate import attach_ul_substrate
+    from src.aais_ul.runtime import attach_ul_substrate
 
     return attach_ul_substrate(dict(payload))
 

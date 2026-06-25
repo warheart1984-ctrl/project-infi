@@ -51,7 +51,7 @@ _ACTIVITY_RETRY = StepConfig(
 @durable_step
 def otem_substrate_approve(step_ctx: StepContext, workflow_id: str) -> dict[str, Any]:
     try:
-        from src.otem_execution_substrate import get_otem_execution_substrate
+        from src.otem.execution import get_otem_execution_substrate
 
         return get_otem_execution_substrate().approve(
             workflow_id,
@@ -65,7 +65,7 @@ def otem_substrate_approve(step_ctx: StepContext, workflow_id: str) -> dict[str,
 @durable_step
 def otem_substrate_apply(step_ctx: StepContext, workflow_id: str) -> dict[str, Any]:
     try:
-        from src.otem_execution_substrate import get_otem_execution_substrate
+        from src.otem.execution import get_otem_execution_substrate
 
         return get_otem_execution_substrate().apply(
             workflow_id,

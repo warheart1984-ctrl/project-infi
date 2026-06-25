@@ -197,6 +197,23 @@ class OtemCeilingController:
         with self._lock:
             return bool(self._state.get("containment_mode") or self._state.get("ceiling_active"))
 
+    def clear_local_containment(self) -> dict[str, Any]:
+        """Reset containment/ceiling flags for local dev and mock preset loops."""
+        with self._lock:
+            idle = default_rules_snapshot()
+            for key in (
+                "ceiling_active",
+                "containment_mode",
+                "activation_triggers",
+                "pipeline_state",
+                "diagnostic_bundle_id",
+                "preview_fingerprint",
+                "pending_decision",
+            ):
+                self._state[key] = idle[key]
+            self._persist()
+            return dict(self._state)
+
     def evaluate_trigger(
         self,
         *,

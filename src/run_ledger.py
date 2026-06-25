@@ -26,7 +26,7 @@ def _utc_now() -> str:
 
 
 def _wrap_run_record(run: dict[str, Any]) -> dict[str, Any]:
-    from src.aais_ul_substrate import attach_ul_substrate
+    from src.aais_ul.runtime import attach_ul_substrate
 
     return attach_ul_substrate(dict(run))
 

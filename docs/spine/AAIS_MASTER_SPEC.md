@@ -53,9 +53,9 @@ AAIS currently includes these major areas:
 | V9/V10 | `src/v9_runtime.py`, `src/v10_runtime.py` | bounded creative/runtime cores | Live |
 | Governance and record | `src/module_governance.py`, `src/run_ledger.py`, `src/governance_layer.py` | module law, CISIV, logs, governance | Live |
 
-## Jarvis Core Spec
+## Tri-Core Spec
 
-Current Jarvis core responsibilities:
+Current Tri-Core responsibilities:
 
 - authority lane
 - mode guidance

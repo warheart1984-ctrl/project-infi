@@ -44,7 +44,7 @@ flowchart LR
   UserMsg[User message] --> NovaFace[Nova Face]
   NovaFace --> Attention[Attention lobe v1.1]
   Attention --> Deliberation[Deliberation lobe v1.1]
-  Deliberation --> JarvisCore[Jarvis Core OODA]
+  Deliberation --> TriCore[Tri-Core OODA]
   JarvisCore --> LLM[Model answer]
   LLM --> Speaking[Speaking Runtime]
   Speaking --> UserReply[User reply]
@@ -55,7 +55,7 @@ flowchart LR
 | Nova Face | `nova_voice_policy.json`, companion profiles | `nova_face` envelope |
 | Attention | `cognitive.attention` in cortex manifest | `focus_artifact` |
 | Deliberation | `cognitive.deliberation` + optional LLM | `decision_object` |
-| Jarvis Core | `god_brain.json`, `aais_stripped.json` | OODA packet, routing |
+| Tri-Core | `god_brain.json`, `aais_stripped.json` | OODA packet, routing |
 | Speaking | Speaking Runtime spec | narrated reply |
 
 ## Boot stack (8 artifacts)

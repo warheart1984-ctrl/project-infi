@@ -1,0 +1,101 @@
+:root {
+  color-scheme: dark;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: #0f1117;
+  color: #e8eaed;
+
+  --bg: #0f1117;
+  --bg-elevated: #151922;
+  --bg-hover: #222836;
+  --panel: #1a1f2b;
+  --panel-elevated: #222836;
+  --border: #2a3142;
+  --text: #e8eaed;
+  --muted: #9aa3b5;
+  --accent: #3b6eea;
+  --accent-dim: #2a4a9a;
+  --success: #3ecf6e;
+  --danger: #e85d5d;
+  --warn: #e8b84a;
+  --font-mono: "Cascadia Mono", "Consolas", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  margin: 0;
+  min-height: 100vh;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: var(--panel);
+  color: inherit;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.75rem;
+}
+
+button:hover:not(:disabled) {
+  background: #364158;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+button.danger {
+  background: #4a2020;
+  border-color: var(--danger);
+  color: #ffc9c9;
+}
+
+input,
+textarea,
+select {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: inherit;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+.badge.allow {
+  background: #1e4d2b;
+  color: #9be7b0;
+}
+.badge.deny {
+  background: #5c1f1f;
+  color: #ffb4b4;
+}
+.badge.revise {
+  background: #4a3f1a;
+  color: #ffe08a;
+}

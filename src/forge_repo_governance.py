@@ -119,7 +119,7 @@ def finalize_contractor_runtime_action(
 
 def wrap_contractor_governed_payload(payload: dict[str, Any]) -> dict[str, Any]:
     """Attach UL substrate to one governed contractor payload."""
-    from src.aais_ul_substrate import wrap_contractor_payload
+    from src.aais_ul.runtime import wrap_contractor_payload
 
     wrapped = wrap_contractor_payload(dict(payload))
     wrapped["cisiv_stage"] = payload.get("cisiv_stage")

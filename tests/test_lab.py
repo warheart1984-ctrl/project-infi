@@ -74,7 +74,7 @@ def test_load_default_spec() -> None:
 def test_spine_profile_shape() -> None:
     spec = LabProjectSpec(project_id="spine-test", intent_summary="test")
     profile = build_lab_spine_profile(spec)
-    assert profile["stages"]["wolf_check"]["network_allowed"] is False
+    assert profile["stages"]["rls_substrate"]["network_allowed"] is False
     assert "jarvis_authorize" in profile["stages"]
 
 

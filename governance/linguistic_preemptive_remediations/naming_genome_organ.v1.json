@@ -3,13 +3,12 @@
   "gene": "naming_genome_organ",
   "current_band": "low",
   "predicted_band": "medium",
-  "predicted_risk_30d": 54,
-  "lead_time_days": 25,
+  "predicted_risk_30d": 58,
+  "lead_time_days": 21,
   "drivers": [
-    "latent alignment gap (header/doc vs genome ssp)",
-    "ecosystem mean drift trending upward"
+    "latent alignment gap (header/doc vs genome ssp)"
   ],
-  "generated_at": "2026-06-07T20:37:33Z",
+  "generated_at": "2026-06-24T08:48:18Z",
   "actions": [
     {
       "kind": "watch_wave2_header",

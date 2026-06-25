@@ -1553,6 +1553,10 @@ class TestChatApi(unittest.TestCase):
         api.module_governance.reset()
         api.cognitive_bridge_service.detachment_guard.configure_runtime_dir(self.temp_root / "detachment-guard")
         api.cognitive_bridge_service.detachment_guard.reset()
+        from src.otem_ceiling import otem_ceiling
+
+        self.original_otem_ceiling_state = otem_ceiling.snapshot()
+        otem_ceiling.clear_local_containment()
         api.continuity_profile_store.configure_runtime_dir(self.temp_root / "continuity")
         api.continuity_profile_store.reset()
         api.continuity_witness_store.configure_runtime_dir(self.temp_root / "continuity-witness")

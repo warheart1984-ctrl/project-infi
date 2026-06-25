@@ -1,0 +1,44 @@
+.leftRail {
+  background: var(--color-bg-rail);
+  border-right: 1px solid var(--color-border-soft);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-sm);
+  gap: var(--space-xs);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.navItem,
+.navItemActive {
+  text-align: left;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+}
+
+.navItem:hover {
+  background: rgba(58, 123, 255, 0.08);
+  color: var(--color-text-primary);
+}
+
+.navItemActive {
+  background: rgba(58, 123, 255, 0.18);
+  color: var(--color-accent-nova);
+  font-weight: 500;
+}
+
+.consoleWrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}

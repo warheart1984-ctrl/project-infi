@@ -1,4 +1,4 @@
-.PHONY: run worker test governance-check rootfs iso-tree rootfs-forge iso-tree-forge forge-installer forge-shippable-gate forge-platform-gate forge-dashboard forge-nightly-evolution forge-nightly-build installer-smoke installer-integration sign-artifacts verify-artifacts ugr-cloud-gate ugr-rewards-gate ugr-ingestion-gate ugr-platform-gate ugr-graph-index-gate ugr-embryo-gate ugr-causal-graph-gate ugr-llm-provider-gate ugr-cogos-write-path-gate ugr-graph-backend-gate ugr-trust-bundle-gate ugr-operator-console-gate ugr-mission-gate forge-clean forge-rocky forge-rocky-fallback fetch-rocky-substrate ai-factory-build ai-factory-gate synthetic-mind-gate repo-hygiene-gate lab-init lab-gate mechanic-gate slingshot-gate lineage-gate triangulation-gate narrative-gate recipe-module-gate imagine-generator-gate human-voice-extraction-gate alt3-gate ssp-gate genome-gate alt4-gate promotion-scan recipe-module-prototype-gate imagine-generator-prototype-gate human-voice-extraction-prototype-gate narrative-trust-pack-prototype-gate forensic-triangulation-prototype-gate cisiv-operator-lineage-console-prototype-gate recipe-module-mutation-gate narrative-trust-pack-mutation-gate platform-gate platform-smoke platform-up library-gate workflow-family-gate brain-proposal-gate jarvis-lora-training-gate operator-workflow-stack-gate infinity1-flagship-verification dishamory-hrm-aais-ci-gate
+.PHONY: run worker test governance-check rootfs iso-tree rootfs-forge iso-tree-forge forge-installer forge-shippable-gate forge-platform-gate forge-dashboard forge-nightly-evolution forge-nightly-build installer-smoke installer-integration sign-artifacts verify-artifacts ugr-cloud-gate ugr-rewards-gate ugr-ingestion-gate ugr-platform-gate ugr-graph-index-gate ugr-embryo-gate ugr-causal-graph-gate ugr-llm-provider-gate ugr-cogos-write-path-gate ugr-graph-backend-gate ugr-trust-bundle-gate ugr-operator-console-gate ugr-mission-gate forge-clean forge-rocky forge-rocky-fallback fetch-rocky-substrate ai-factory-build ai-factory-gate synthetic-mind-gate repo-hygiene-gate agent-safety-doctrine-gate lab-init lab-gate mechanic-gate slingshot-gate lineage-gate triangulation-gate narrative-gate recipe-module-gate imagine-generator-gate human-voice-extraction-gate alt3-gate ssp-gate genome-gate alt4-gate promotion-scan recipe-module-prototype-gate imagine-generator-prototype-gate human-voice-extraction-prototype-gate narrative-trust-pack-prototype-gate forensic-triangulation-prototype-gate cisiv-operator-lineage-console-prototype-gate recipe-module-mutation-gate narrative-trust-pack-mutation-gate platform-gate platform-smoke platform-up library-gate workflow-family-gate brain-proposal-gate jarvis-lora-training-gate operator-workflow-stack-gate infinity1-flagship-verification dishamory-hrm-aais-ci-gate
 
 REPO_HYGIENE_MODE ?= fail
 
@@ -284,7 +284,11 @@ ai-factory-gate:
 	python3 .github/scripts/check-ai-factory-governance.py
 
 repo-hygiene-gate:
-	python3 .github/scripts/check-repo-hygiene.py --mode $(REPO_HYGIENE_MODE) --output ci-artifacts/repo-hygiene-report.json
+	python3 .github/scripts/validate-repo-hygiene-manifest.py --mode fail
+	python3 .github/scripts/check-repo-hygiene.py --mode $(REPO_HYGIENE_MODE) --skip-bundle-compare --output ci-artifacts/repo-hygiene-report.json
+
+agent-safety-doctrine-gate:
+	python3 .github/scripts/validate-agent-safety-doctrine.py
 
 synthetic-mind-gate:
 	python3 scripts/cogos/build_synthetic_mind_bundle.py
@@ -1601,3 +1605,7 @@ stack-closure-gate: stage2-fidelity-gate ai-factory-gate lab-gate
 	python3 .github/scripts/check-nova-cortex-governance.py
 	python3 .github/scripts/check-nova-narrative-continuity.py
 	python3 .github/scripts/check-nova-intent-agency.py
+
+nova-productization-gate:
+	$(PYTHON) -m pytest tests/test_nova_productization.py nova/tests/test_lawful_llm_runtime.py tests/test_nova_lawful_eval.py tests/operator_kernel -q
+	$(PYTHON) scripts/nova_productization_gate.py --json-out .runtime/nova_productization_report.json

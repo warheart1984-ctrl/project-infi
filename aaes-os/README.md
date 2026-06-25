@@ -90,6 +90,16 @@ tri-core-protocol (standalone types)
 
 See [docs/architecture/AAES_OS_UCR_MAPPING.md](../docs/architecture/AAES_OS_UCR_MAPPING.md) at the repo root.
 
+## Reasoning Contract
+
+AAES-OS follows the workspace canonical AAIS reasoning handshake for
+continuity-grade evaluations:
+[`docs/contracts/AAIS_REASONING_PROFILE.md`](../docs/contracts/AAIS_REASONING_PROFILE.md).
+CCS object schemas and examples are in
+[`docs/contracts/CCS_CORE_SCHEMA.md`](../docs/contracts/CCS_CORE_SCHEMA.md),
+[`schemas/ccs_core_objects.v1.json`](../schemas/ccs_core_objects.v1.json), and
+[`fixtures/ccs/`](../fixtures/ccs/).
+
 ## Phase status
 
 | Phase | Scope | Status |

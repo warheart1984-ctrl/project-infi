@@ -8,6 +8,30 @@ import pytest
 
 
 @pytest.fixture(scope="session", autouse=True)
+def _constitutional_boot_test_mode():
+    """Tests skip fail-closed constitutional boot unless explicitly enabled."""
+    prior = os.environ.get("CONSTITUTIONAL_BOOT_SKIP")
+    os.environ["CONSTITUTIONAL_BOOT_SKIP"] = "1"
+    yield
+    if prior is None:
+        os.environ.pop("CONSTITUTIONAL_BOOT_SKIP", None)
+    else:
+        os.environ["CONSTITUTIONAL_BOOT_SKIP"] = prior
+
+
+@pytest.fixture(autouse=True)
+def _reset_constitutional_boot_flag():
+    import importlib
+
+    gg = importlib.import_module("constitutional.runtime.governance_gate")
+
+    prior = gg._BOOT_COMPLETED
+    gg._BOOT_COMPLETED = False
+    yield
+    gg._BOOT_COMPLETED = prior
+
+
+@pytest.fixture(scope="session", autouse=True)
 def _genome_boot_warn_for_fastapi():
     """FastAPI lifespan uses strict genome boot by default; warn for test sessions."""
     prior = os.environ.get("AAIS_GENOME_BOOT")
@@ -21,7 +45,7 @@ def _genome_boot_warn_for_fastapi():
 
 @pytest.fixture(autouse=True)
 def _reset_otem_execution_substrate_singleton():
-    from src.otem_execution_substrate import reset_otem_execution_substrate
+    from src.otem.execution import reset_otem_execution_substrate
 
     reset_otem_execution_substrate()
     yield

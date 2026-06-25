@@ -275,14 +275,15 @@ class NovaCortex:
             {"role": "user", "content": prompt},
         ]
         model = getattr(self.provider, "model", None)
-        response = asyncio.run(
-            self.provider.invoke(
-                messages,
-                model=model,
-                max_tokens=2048,
-                temperature=0.7,
-            )
-        )
+        invoke_kwargs: dict[str, Any] = {
+            "model": model,
+            "max_tokens": 8192,
+            "temperature": 0.7,
+        }
+        if hasattr(self.provider, "invoke_sync"):
+            response = self.provider.invoke_sync(messages, **invoke_kwargs)
+        else:
+            response = asyncio.run(self.provider.invoke(messages, **invoke_kwargs))
         return {
             "core": "Nova Cortex",
             "ul": ul,
@@ -513,3 +514,78 @@ class LawfulLLM:
 
     def verify_receipt(self, receipt: dict[str, Any]) -> bool:
         return self.voss.verify_receipt(receipt)
+
+    def complete_openai(
+        self,
+        messages: list[dict[str, Any]],
+        *,
+        tenant_id: str = "local",
+        capability: str = "observe",
+        tools: list[dict] | None = None,
+        model: str | None = None,
+        max_tokens: int | None = None,
+        temperature: float | None = None,
+        top_p: float | None = None,
+        memory_facts: Iterable[MemoryFact] = (),
+    ) -> LawfulTurn:
+        """OpenAI-compatible completion with full message history (Cursor / Agent path)."""
+        from nova.openai_cursor_compat import extract_user_prompt
+        from nova.provider_factory import resolve_provider_model
+
+        prompt = extract_user_prompt(messages)
+        rsl = self.law.validate(tenant_id=tenant_id, capability=capability, prompt=prompt)
+        api_kernel = APIKernel(
+            tenant_id=tenant_id,
+            capability=capability,
+            tools=self.tools,
+        ).route(prompt=prompt)
+
+        provider = self.cortex.provider
+        if provider is not None:
+            frontier_model = resolve_provider_model(model, provider)
+            invoke_kwargs: dict[str, Any] = {
+                "tools": tools,
+                "model": frontier_model,
+                "max_tokens": max_tokens or 8192,
+            }
+            if temperature is not None:
+                invoke_kwargs["temperature"] = temperature
+            if top_p is not None:
+                invoke_kwargs["top_p"] = top_p
+            if hasattr(provider, "invoke_sync"):
+                response = provider.invoke_sync(messages, **invoke_kwargs)
+            else:
+                response = asyncio.run(provider.invoke(messages, **invoke_kwargs))
+            nova_cortex: dict[str, object] = {
+                "core": "Nova Cortex",
+                "text": response.content,
+                "provider": response.provider or getattr(provider, "provider_id", None),
+                "model": response.model or frontier_model,
+            }
+        else:
+            nova_cortex = self.cortex.think(
+                prompt=prompt,
+                tenant_id=tenant_id,
+                memory_facts=memory_facts,
+            )
+
+        voss_runtime = self.voss.execute(
+            identity=self.identity,
+            api_kernel=api_kernel,
+            nova_cortex=nova_cortex,
+            rsl=rsl,
+            prompt=prompt,
+        )
+        gates = {
+            "interface": "Gates of Wonder",
+            "presentation": "human_readable_insight",
+        }
+        return LawfulTurn(
+            text=str(nova_cortex["text"]),
+            gates_of_wonder=gates,
+            nova_cortex=nova_cortex,
+            api_kernel=api_kernel,
+            voss_runtime=voss_runtime,
+            rsl=rsl,
+            receipt=voss_runtime["receipt"],
+        )

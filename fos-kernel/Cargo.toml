@@ -1,0 +1,16 @@
+[package]
+name = "fos-kernel"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "FOS minimal continuity primitives."
+
+[lib]
+name = "fos_kernel"
+path = "src/lib.rs"
+
+[dependencies]
+chrono = { version = "0.4", features = ["serde"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+uuid = { version = "1", features = ["serde", "v4"] }

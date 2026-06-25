@@ -24,6 +24,8 @@ contracts.
   - Forensic Triangulation correlator MVP (partial live)
 - [platform/README.md](./platform/README.md)
   - multi-tenant platform membrane (identity, jobs, artifacts, ingress)
+- [repo_steward/README.md](./repo_steward/README.md)
+  - workspace hygiene gate (root pollution, mirror drift, bundle staging)
 
 ## Rule
 

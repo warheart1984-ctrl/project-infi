@@ -10,8 +10,8 @@ from pathlib import Path
 
 os.environ.setdefault("AAIS_GENOME_BOOT", "warn")
 
-from src.inter_substrate_diplomacy_registry import adopted_accords
-from src.inter_substrate_diplomacy_runtime import InterSubstrateDiplomacyRuntime
+from src.diplomacy.registry import adopted_accords
+from src.diplomacy.runtime import InterSubstrateDiplomacyRuntime
 from src.jarvis_diplomacy_authority import authorize_diplomacy_overlay_admission
 
 

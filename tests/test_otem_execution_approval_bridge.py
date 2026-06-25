@@ -22,7 +22,7 @@ from src.otem_execution_approval_bridge import (
     maybe_enqueue_otem_execution_approval,
     resolve_otem_execution_approval,
 )
-from src.otem_execution_substrate import get_otem_execution_substrate, reset_otem_execution_substrate
+from src.otem.execution import get_otem_execution_substrate, reset_otem_execution_substrate
 
 
 class OtemExecutionApprovalBridgeTests(unittest.TestCase):

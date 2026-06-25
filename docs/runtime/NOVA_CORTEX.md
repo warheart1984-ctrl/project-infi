@@ -14,7 +14,7 @@ This document is the **canonical constitution** for Nova Cortex inside CoG OS an
 
 | Layer | Role | Maps to |
 |-------|------|---------|
-| **Jarvis Core** | Thalamus / router | Single authority; OODA routing |
+| **Tri-Core** | Thalamus / router | Single authority; OODA routing |
 | **Wolf CoG OS** | Constitutional brainstem | Boot, governance, substrate law |
 | **Speaking Runtime** | Prefrontal speech loop | User-visible narration |
 | **Deliberation Runtime** | Decision lobe | Structured choices |
@@ -61,7 +61,7 @@ Narrative      — continuity of self (observe · synthesize · record)
 ## Three-Layer Bridge (Face → Cortex → Jarvis)
 
 ```text
-Nova Face          Nova Cortex              Jarvis Core
+Nova Face          Nova Cortex              Tri-Core
 (companion UI)  →  (modular lobes)     →   (authority / routing)
 Tiny/Small/Super    Attention, Deliberation   OODA, tools, safety
 Nova persona        Memory, Speaking          God Brain, sovereignty
@@ -71,11 +71,11 @@ Nova persona        Memory, Speaking          God Brain, sovereignty
 |-------|--------|------|
 | **Nova Face** | [src/cog_runtime/nova_face.py](../../src/cog_runtime/nova_face.py) | Visible companion surface (persona, tone, scope) |
 | **Nova Cortex** | [src/cog_runtime/nova.py](../../src/cog_runtime/nova.py) | Cognitive lobes + shared ledger |
-| **Jarvis Core** | [src/api.py](../../src/api.py), [src/god_brain.py](../../src/god_brain.py) | Routing, state, safety authority |
+| **Tri-Core** | [src/api.py](../../src/api.py), [src/god_brain.py](../../src/god_brain.py) | Routing, state, safety authority |
 
 Bridge entrypoint: `bridge_nova_face_to_cortex_and_jarvis()`
 
-Pipeline stored on session as `nova_face_bridge` with keys `face`, `cortex`, `jarvis_core`.
+Pipeline stored on session as `nova_face_bridge` with keys `face`, `cortex`, `tri_core`.
 
 ## Shared Runtime Contract
 
@@ -120,7 +120,7 @@ Ledger rules:
 
 | ID | Rule |
 |----|------|
-| `single_authority` | Jarvis Core routes; runtimes do not compete for control |
+| `single_authority` | Tri-Core routes; runtimes do not compete for control |
 | `clarity` | Every output understandable on first read |
 | `traceability` | Any part of a reply maps to a named stage in the ledger |
 | `intent_alignment` | Every response serves the user's stated or inferred goal |

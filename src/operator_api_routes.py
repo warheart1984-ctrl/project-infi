@@ -674,13 +674,13 @@ def register_operator_api_routes(app: Flask) -> None:
 
     @app.route("/api/operator/diplomacy", methods=["GET"])
     def operator_diplomacy_snapshot():
-        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+        from src.diplomacy.runtime import inter_substrate_diplomacy_runtime
 
         return jsonify(inter_substrate_diplomacy_runtime.diplomacy_snapshot()), 200
 
     @app.route("/api/operator/diplomacy/observe", methods=["POST"])
     def operator_diplomacy_observe():
-        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+        from src.diplomacy.runtime import inter_substrate_diplomacy_runtime
 
         body: dict[str, Any] = request.get_json(silent=True) or {}
         result = inter_substrate_diplomacy_runtime.observe_substrate_drift(
@@ -691,8 +691,8 @@ def register_operator_api_routes(app: Flask) -> None:
 
     @app.route("/api/operator/diplomacy/accords", methods=["GET"])
     def operator_diplomacy_accords_list():
-        from src.inter_substrate_diplomacy_registry import adopted_accords
-        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+        from src.diplomacy.registry import adopted_accords
+        from src.diplomacy.runtime import inter_substrate_diplomacy_runtime
 
         return jsonify(
             {
@@ -705,7 +705,7 @@ def register_operator_api_routes(app: Flask) -> None:
     @app.route("/api/operator/diplomacy/accords/adopt", methods=["POST"])
     def operator_diplomacy_accords_adopt():
         from src.jarvis_diplomacy_authority import authorize_diplomacy_overlay_admission
-        from src.inter_substrate_diplomacy_runtime import inter_substrate_diplomacy_runtime
+        from src.diplomacy.runtime import inter_substrate_diplomacy_runtime
 
         body: dict[str, Any] = request.get_json(silent=True) or {}
         candidate = dict(body.get("candidate") or body.get("accord_candidate") or {})

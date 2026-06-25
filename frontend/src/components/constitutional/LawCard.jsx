@@ -6,6 +6,9 @@ export function LawCard({ law, onSelect }) {
   const chi = law?.chi ?? law?.cit_strip?.chi;
   const mu = law?.mu ?? law?.meaning_strip?.mu;
   const omega = law?.omega ?? law?.eit_strip?.omega;
+  const sigma = law?.sigma ?? law?.sit_strip?.sigma;
+  const lambdaValue = law?.lambda ?? law?.git_strip?.lambda;
+  const phi = law?.phi ?? law?.pit_strip?.phi;
 
   return (
     <button type="button" className="constitutional-panel law-card" onClick={() => onSelect?.(law.law_id)}>
@@ -19,6 +22,9 @@ export function LawCard({ law, onSelect }) {
         {chi != null ? <span>Χ={Number(chi).toFixed(3)}</span> : null}
         {mu != null ? <span>Μ={Number(mu).toFixed(3)}</span> : null}
         {omega != null ? <span>Ω={Number(omega).toFixed(3)}</span> : null}
+        {sigma != null ? <span>Σ={Number(sigma).toFixed(3)}</span> : null}
+        {lambdaValue != null ? <span>Λ={Number(lambdaValue).toFixed(3)}</span> : null}
+        {phi != null ? <span>Φ={Number(phi).toFixed(3)}</span> : null}
       </div>
     </button>
   );

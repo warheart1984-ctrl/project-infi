@@ -56,7 +56,7 @@ new diplomacy lobes in [`src/cog_runtime/nova.py`](../../../src/cog_runtime/nova
 |---------|-------|--------|
 | Modular lobes (attention, deliberation, memory, speaking) | Nova Cortex | `cog_runtime/nova.py` |
 | Cross-substrate accords, drift, dual-gate adoption | Civilizational governance (Stage 15) | `inter_substrate_diplomacy_runtime.py` |
-| Authorization / no self-expansion | Jarvis Core | `jarvis_diplomacy_authority.py` |
+| Authorization / no self-expansion | Tri-Core | `jarvis_diplomacy_authority.py` |
 
 Nova may **interpret** substrate posture for operators; Jarvis must **authorize** diplomatic adoption.
 ISD is the governance answer to multi-substrate coordination — not an extension of cortex lobes.

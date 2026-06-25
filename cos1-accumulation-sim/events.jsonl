@@ -1,0 +1,3 @@
+{"id":"E_JON_A2","actor":"Jon","timestamp":"2026-06-23T22:00:00Z","accumulationType":"A2","targetsLayer":"Continuity","fromExposure":false,"buildsOn":[],"phenomenonAnchor":"calibration drift in judgment transmission"}
+{"id":"E_SUE_A1","actor":"Sue","timestamp":"2026-06-23T22:05:00Z","accumulationType":"A1","targetsLayer":"Continuity","fromExposure":true,"buildsOn":["E_JON_A2"],"phenomenonAnchor":"calibration drift"}
+{"id":"E_BRADLEY_A2","actor":"Bradley","timestamp":"2026-06-23T22:10:00Z","accumulationType":"A2","targetsLayer":"Transferability","fromExposure":true,"buildsOn":["E_JON_A2"],"phenomenonAnchor":"judgment transmission failure"}

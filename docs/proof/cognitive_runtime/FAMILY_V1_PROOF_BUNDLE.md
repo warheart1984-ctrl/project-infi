@@ -38,7 +38,7 @@ pytest: 49 passed (full cog runtime + speaking + jarvis protocol suite)
 
 | Component | Role |
 |-----------|------|
-| Jarvis Core | Thalamus / router |
+| Tri-Core | Thalamus / router |
 | Wolf CoG OS | Constitutional brainstem |
 | Speaking Runtime | Prefrontal speech loop |
 | Deliberation | Decision lobe |

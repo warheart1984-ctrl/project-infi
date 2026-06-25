@@ -1,0 +1,12 @@
+# Minimal traffic policy for Lawful Nova + Cursor (dev).
+#
+# Intentionally empty: no OAuth, no deny rules. Cursor's servers must reach
+# your OpenAI-compatible API without an interactive login.
+#
+# Usage:
+#   ngrok http 8080 --url=scoreless-calzone-plant.ngrok-free.dev --traffic-policy-file scripts/ngrok/policy-cursor-dev.yaml
+#
+# Or via bootstrap script:
+#   .\scripts\start-nova-for-cursor.ps1 -NgrokDomain scoreless-calzone-plant.ngrok-free.dev
+
+on_http_request: []

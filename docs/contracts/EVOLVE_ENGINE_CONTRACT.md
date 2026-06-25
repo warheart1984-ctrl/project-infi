@@ -13,7 +13,7 @@ EvolveEngine is the bounded search lane for AAIS.
 ## Start
 
 ```powershell
-.\.venv\Scripts\python.exe .\start_evolve_engine.py
+.\.venv\Scripts\python.exe .\tools\services\start_evolve_engine.py
 ```
 
 ## Health

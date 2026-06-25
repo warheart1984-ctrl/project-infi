@@ -1328,7 +1328,7 @@ class CapabilityServiceBridge:
         """Expose governed capability bridge state for runtime inspection."""
         self._ensure_phase_gate_components()
         available_capabilities = self._grouped_capabilities()
-        from src.aais_ul_substrate import wrap_runtime_snapshot
+        from src.aais_ul.runtime import wrap_runtime_snapshot
 
         return wrap_runtime_snapshot(
             {
@@ -1416,7 +1416,7 @@ class CapabilityServiceBridge:
         spec = self._selection_routes.get((_normalize_name(capability_id), _normalize_name(action)))
         if spec is None:
             raise ValueError("Unsupported capability or action selection.")
-        from src.aais_ul_substrate import wrap_runtime_snapshot
+        from src.aais_ul.runtime import wrap_runtime_snapshot
 
         return wrap_runtime_snapshot(
             self._build_execution_preview(spec, execution_profile)
@@ -1633,7 +1633,7 @@ class CapabilityServiceBridge:
             result=result_payload,
             phase_gate=phase_gate,
         )
-        from src.aais_ul_substrate import wrap_service_bridge_result
+        from src.aais_ul.runtime import wrap_service_bridge_result
 
         wrapped = wrap_service_bridge_result(
             {

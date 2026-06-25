@@ -1,0 +1,89 @@
+{
+  "specimen_id": "css1.002.identity_reinforcement",
+  "specimen_type": "identity_reinforcement",
+  "thread_id": "ct.specimen.002",
+  "events": [
+    {
+      "event_id": "evt.002.ugr",
+      "event_type": "EvidenceEvent",
+      "timestamp": 1.0,
+      "kernel": "UGR",
+      "payload": {
+        "summary": "identity proof repeated"
+      }
+    },
+    {
+      "event_id": "evt.002.aais",
+      "event_type": "ArchitectureEvent",
+      "timestamp": 2.0,
+      "kernel": "AAIS",
+      "payload": {
+        "summary": "identity lineage strengthened"
+      }
+    },
+    {
+      "event_id": "evt.002.darz",
+      "event_type": "ContinuityEvent",
+      "timestamp": 3.0,
+      "kernel": "DARZ",
+      "payload": {
+        "summary": "identity substrate resonance increased"
+      }
+    },
+    {
+      "event_id": "evt.002.aaes",
+      "event_type": "DecisionEvent",
+      "timestamp": 4.0,
+      "kernel": "AAES",
+      "payload": {
+        "summary": "identity-aware execution allowed"
+      }
+    }
+  ],
+  "lineage": [
+    {
+      "from": "evt.002.ugr",
+      "to": "evt.002.aais",
+      "relation": "CAUSES"
+    },
+    {
+      "from": "evt.002.aais",
+      "to": "evt.002.darz",
+      "relation": "DERIVES_FROM"
+    },
+    {
+      "from": "evt.002.darz",
+      "to": "evt.002.aaes",
+      "relation": "CONSTRAINS"
+    },
+    {
+      "from": "evt.002.ugr",
+      "to": "evt.002.darz",
+      "relation": "REINFORCES"
+    }
+  ],
+  "metrics": {
+    "coherence": 0.94,
+    "identity_drift": 0.01,
+    "replay_stability": 1.0,
+    "governance_alignment": 0.94,
+    "resonance": 0.86
+  },
+  "wave": {
+    "A": 0.44,
+    "f": 0.38,
+    "phi": 0.96,
+    "C": 0.94,
+    "R": 0.86
+  },
+  "receipt": {
+    "proof_status": "PROVEN",
+    "replay_hash": "replay.css1.002",
+    "substrate_hash": "substrate.css1.002"
+  },
+  "conditions": {
+    "description": "Identity lineage recurrence reinforces substrate resonance.",
+    "perturbation": "identity signal repeated",
+    "kernel_context": "ICK reinforcement through DAR-Z"
+  }
+}

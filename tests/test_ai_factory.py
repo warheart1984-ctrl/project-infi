@@ -49,8 +49,8 @@ def test_spine_profile_high_risk_fail_closed() -> None:
         risk_level="high",
     )
     profile = build_spine_profile(spec)
-    assert profile["stages"]["wolf_check"]["substrate_ok_default"] is False
-    assert profile["stages"]["wolf_check"]["fail_closed"] is True
+    assert profile["stages"]["rls_substrate"]["substrate_ok_default"] is False
+    assert profile["stages"]["rls_substrate"]["fail_closed"] is True
 
 
 def test_turn_context_from_profile_high_risk() -> None:

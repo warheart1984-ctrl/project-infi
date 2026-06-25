@@ -42,11 +42,19 @@ def normalize_app_base(value: str | None) -> str:
 
 
 def discover_project_root(start: Path | None = None) -> Path:
-    candidates = [
-        Path(start or Path.cwd()),
-        Path(__file__).resolve().parent.parent,
-        Path.cwd(),
-    ]
+    candidates: list[Path] = []
+    if getattr(sys, "frozen", False):
+        meipass = getattr(sys, "_MEIPASS", None)
+        if meipass:
+            candidates.append(Path(meipass).resolve())
+        candidates.append(Path(sys.executable).resolve().parent)
+    candidates.extend(
+        [
+            Path(start or Path.cwd()),
+            Path(__file__).resolve().parent.parent,
+            Path.cwd(),
+        ]
+    )
 
     seen: set[Path] = set()
     for candidate in candidates:
@@ -228,6 +236,9 @@ def handle_doctor(args: argparse.Namespace) -> int:
 def handle_start(args: argparse.Namespace) -> int:
     root = discover_project_root()
     ensure_project_root_on_path(root)
+    from runtime_law_spine.runtime_law_spine.startup import ensure_rls_sealed
+
+    ensure_rls_sealed()
     static_dir = prepare_frontend_bundle(root, args.app_base, force_build=args.force_build)
     data_dir = resolve_data_dir(args.data_dir)
     configure_runtime_environment(data_dir=data_dir, static_dir=static_dir, app_base=args.app_base)
@@ -266,7 +277,12 @@ def build_parser() -> argparse.ArgumentParser:
     add_common_arguments(start_parser)
     start_parser.add_argument("--host", default=DEFAULT_HOST, help="Server host to bind.")
     start_parser.add_argument("--port", type=int, default=DEFAULT_PORT, help="Server port to bind.")
-    start_parser.add_argument("--preset", choices=["default", "laptop", "mock"], default="default", help="AAIS runtime preset.")
+    start_parser.add_argument(
+        "--preset",
+        choices=["default", "production", "laptop", "mock"],
+        default="default",
+        help="AAIS runtime preset (production = strict real AI, no mock fallback).",
+    )
     start_parser.add_argument("--reload", action="store_true", help="Run uvicorn with live reload for local development.")
     start_parser.add_argument("--force-build", action="store_true", help="Rebuild the frontend bundle before launch.")
     start_parser.add_argument("--no-browser", action="store_true", help="Do not open a browser after the server becomes healthy.")

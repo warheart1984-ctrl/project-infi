@@ -65,6 +65,15 @@ type TelemetryResponse = {
       reconstructionPlans: string[];
     };
   };
+  nexusExecutions?: {
+    recorded_at?: string;
+    mission_id?: string;
+    law_eval_id?: string;
+    aaes_trace_id?: string;
+    aaes_status?: string;
+    steward_id?: string;
+    event_type?: string;
+  }[];
 };
 
 type ScoreVector = {
@@ -254,6 +263,47 @@ export const OpsConsoleView: React.FC<LoadedState> = ({ telemetry, mriV2, enforc
           <p>{String(telemetry.aais?.contractors?.length ?? 0)} contractor checks reported</p>
         </Panel>
       </div>
+    </section>
+
+    <section id="nexus-executions" style={sectionStyle}>
+      <h2>Governed AAES Executions</h2>
+      <div style={gridStyle}>
+        <Metric label="Recent" value={String(telemetry.nexusExecutions?.length ?? 0)} />
+        <Metric
+          label="Latest status"
+          value={telemetry.nexusExecutions?.[0]?.aaes_status || 'none'}
+        />
+        <Metric
+          label="Mission"
+          value={telemetry.nexusExecutions?.[0]?.mission_id?.slice(0, 12) || 'none'}
+        />
+        <Metric
+          label="Law eval"
+          value={telemetry.nexusExecutions?.[0]?.law_eval_id?.slice(0, 12) || 'none'}
+        />
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Mission</th>
+            <th>Law eval</th>
+            <th>AAES</th>
+            <th>Steward</th>
+            <th>Recorded</th>
+          </tr>
+        </thead>
+        <tbody>
+          {(telemetry.nexusExecutions ?? []).map((event) => (
+            <tr key={`${event.mission_id}-${event.recorded_at}`}>
+              <td>{event.mission_id ?? '—'}</td>
+              <td>{event.law_eval_id ?? '—'}</td>
+              <td>{event.aaes_status ?? '—'}</td>
+              <td>{event.steward_id ?? '—'}</td>
+              <td>{event.recorded_at ?? '—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </section>
 
     <section id="cab" style={sectionStyle}>

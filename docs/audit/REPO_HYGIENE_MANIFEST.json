@@ -1,6 +1,50 @@
 {
   "manifest_version": "repo_hygiene_manifest.v1",
-  "authority": "docs/audit/ROOT_STRUCTURE_AUDIT.md",
+  "authority": "docs/subsystems/repo_steward/RULE_SET.md",
+  "rules": [
+    {
+      "id": "hygiene.forbidden_root_name",
+      "severity": "error",
+      "check": "forbidden_root_names",
+      "remediation": "Delete locally or never commit; see ROOT_STRUCTURE_AUDIT section 3"
+    },
+    {
+      "id": "hygiene.forbidden_root_glob",
+      "severity": "warn",
+      "check": "forbidden_root_globs",
+      "remediation": "Move off repo root or delete locally"
+    },
+    {
+      "id": "hygiene.poison_dir",
+      "severity": "error",
+      "check": "poison_dir_markers",
+      "remediation": "Run python scripts/repo/remove-poison-dir.py on Windows; delete accidental bundle mirror"
+    },
+    {
+      "id": "hygiene.forbidden_tracked",
+      "severity": "error",
+      "check": "forbidden_tracked_prefixes",
+      "remediation": "git rm --cached and fix source"
+    },
+    {
+      "id": "hygiene.local_work_dir",
+      "severity": "warn",
+      "check": "local_work_dirs",
+      "remediation": "Safe to delete when not in active use"
+    },
+    {
+      "id": "hygiene.stale_payload_runtime",
+      "severity": "warn",
+      "check": "stale_payload_runtime",
+      "remediation": "Delete payload cog_runtime tree; re-run stage-nova-cortex-into-payload.sh"
+    },
+    {
+      "id": "hygiene.stray_root_argv",
+      "severity": "warn",
+      "check": "forbidden_root_argv_globs",
+      "remediation": "Delete stray argv files per .gitignore"
+    }
+  ],
   "forbidden_root_names": [
     "AAIS-main",
     "Aris--main",
@@ -17,6 +61,11 @@
     "ProjectInfinity_UL_Documentation.pdf",
     "project_blueprints_infinity.html",
     "Aris--main.zip"
+  ],
+  "forbidden_root_argv_globs": [
+    "--*",
+    "bash",
+    "python3"
   ],
   "forbidden_tracked_prefixes": [
     "AAIS-main/",

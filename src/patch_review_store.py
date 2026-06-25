@@ -20,7 +20,7 @@ PATCH_REVIEW_FILENAME = "patch-reviews.json"
 
 
 def _wrap_review(review: dict[str, Any]) -> dict[str, Any]:
-    from src.aais_ul_substrate import wrap_runtime_snapshot
+    from src.aais_ul.runtime import wrap_runtime_snapshot
 
     return wrap_runtime_snapshot(dict(review))
 

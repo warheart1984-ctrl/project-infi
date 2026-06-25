@@ -27,6 +27,16 @@ let decision = validator.evaluate(&message);
 - Single runtime gate: mutation runtimes must dispatch only from an `Execute`.
 - Auditability: every evaluation emits an append-only `ExecutionAudit`.
 
+## AAIS Handshake
+
+DAR-Z interop uses the workspace canonical AAIS reasoning profile and CCS/DZI-1
+continuity-evidence handshake:
+[`docs/contracts/AAIS_REASONING_PROFILE.md`](../docs/contracts/AAIS_REASONING_PROFILE.md).
+Concrete CCS object schemas and fixtures are in
+[`docs/contracts/CCS_CORE_SCHEMA.md`](../docs/contracts/CCS_CORE_SCHEMA.md),
+[`schemas/ccs_core_objects.v1.json`](../schemas/ccs_core_objects.v1.json), and
+[`fixtures/ccs/`](../fixtures/ccs/).
+
 ## Voss Binary Runtime
 
 `runtime::voss` is the post-kernel binary runtime adapter. It does not decide

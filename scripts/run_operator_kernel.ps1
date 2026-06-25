@@ -11,7 +11,8 @@ if (-not $env:AAIS_SIGNING_SECRET) {
     $env:AAIS_SIGNING_SECRET = "operator-kernel-dev-secret"
 }
 if (-not $env:AAIS_WORKSPACE_ROOT) {
-    $env:AAIS_WORKSPACE_ROOT = Join-Path $Root ".runtime\e2e-operator-workspace"
+    # Dev default: the repo itself (override for E2E with .runtime\e2e-operator-workspace).
+    $env:AAIS_WORKSPACE_ROOT = $Root
 }
 if (-not $env:OPERATOR_AGENT_INTER_STEP_SLEEP_SEC) {
     $env:OPERATOR_AGENT_INTER_STEP_SLEEP_SEC = "2"

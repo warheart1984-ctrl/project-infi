@@ -148,7 +148,7 @@ set_nova_var "NOVA_CLI"               "Nova CLI command"              "$REPO_ROO
 set_nova_var "NOVA_VOSS_RUNTIME_PATH" "Path to Voss Runtime"         "$REPO_ROOT/nova"
 set_nova_var "NOVA_CORTEX_PATH"       "Path to Nova Cortex"          "$REPO_ROOT/nova"
 set_nova_var "NOVA_GOW_CONFIG"        "Path to Gates of Wonder config" "$REPO_ROOT/config/nova/nova-stack.json"
-set_nova_var "NOVA_RSL_PATH"          "Path to RSL"                  "$REPO_ROOT/nova"
+set_nova_var "NOVA_RSL_PATH"          "Path to RSL"                  "$REPO_ROOT/governance"
 set_nova_var "NOVA_GPU_DEVICE"        "NVIDIA GPU device index"      "0"
 set_nova_var "GITHUB_TOKEN"           "GitHub PAT (optional)"        ""
 

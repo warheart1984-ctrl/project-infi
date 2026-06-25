@@ -166,7 +166,7 @@ def _base_output(
 
 
 def _with_ul_substrate(result: dict[str, Any]) -> dict[str, Any]:
-    from src.aais_ul_substrate import wrap_runtime_snapshot
+    from src.aais_ul.runtime import wrap_runtime_snapshot
 
     return wrap_runtime_snapshot(result)
 

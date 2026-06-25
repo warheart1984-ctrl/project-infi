@@ -1,0 +1,4 @@
+[[modules]]
+name = "daniel"
+path = "src/modules/daniel/executor.ts"
+description = "Daniel execution core — cinematic render lane stub"

@@ -13,7 +13,7 @@ from tools.ul._common import ensure_project_root, load_json_payload, print_json
 def probe_payload(raw: Any, *, wrap: bool = False, list_adapters: bool = False) -> dict[str, Any]:
     ensure_project_root()
     from src.aais_ul import DEFAULT_REGISTRY, adapt_ingress, build_ul_snapshot
-    from src.aais_ul_substrate import attach_ul_substrate, substrate_status
+    from src.aais_ul.runtime import attach_ul_substrate, substrate_status
 
     matched: list[dict[str, Any]] = []
     for adapter in DEFAULT_REGISTRY.adapters:

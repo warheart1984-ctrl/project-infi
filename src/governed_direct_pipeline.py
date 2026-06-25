@@ -1328,7 +1328,7 @@ def _refresh_governed_pipeline_turn_layer(
         }
     )
     refreshed["continuity_witness_input"] = build_continuity_witness_input(refreshed)
-    from src.aais_ul_substrate import wrap_pipeline
+    from src.aais_ul.runtime import wrap_pipeline
 
     return wrap_pipeline(refreshed)
 

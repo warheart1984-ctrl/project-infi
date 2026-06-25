@@ -295,7 +295,7 @@ class MysticEngine:
             risk=self.build_risk(state),
             detected_signals=signals,
         )
-        from src.aais_ul_substrate import wrap_runtime_snapshot
+        from src.aais_ul.runtime import wrap_runtime_snapshot
 
         return wrap_runtime_snapshot(reading.to_dict())
 

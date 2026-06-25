@@ -7,7 +7,7 @@
     "cognitive.planning": "sequencing lobe",
     "cognitive.reflection": "cross-lobe reflection loop",
     "jarvis.reasoning": "OODA routing plane",
-    "jarvis_core": "thalamus / router",
+    "tri_core": "thalamus / router",
     "nova.intent": "agency layer (commitments \u00b7 tensions \u00b7 consult only)",
     "nova.narrative": "continuity layer (observe \u00b7 synthesize \u00b7 record)",
     "speaking.runtime": "prefrontal speech loop",
@@ -21,7 +21,7 @@
   "composition_rules": [
     {
       "id": "single_authority",
-      "rule": "Jarvis Core routes; cognitive runtimes do not compete for control."
+      "rule": "Tri-Core routes; cognitive runtimes do not compete for control."
     },
     {
       "id": "speaking_required_for_user_output",

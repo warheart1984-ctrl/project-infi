@@ -1,0 +1,14 @@
+{
+  "name": "nova-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "ts-node -r tsconfig-paths/register src/index.ts",
+    "agent": "ts-node src/agent-loop.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.0"
+  }
+}

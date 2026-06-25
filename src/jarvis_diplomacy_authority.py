@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any
 from uuid import uuid4
 
-from src.inter_substrate_diplomacy_runtime import validate_accord_against_upstream_layers
+from src.diplomacy.runtime import validate_accord_against_upstream_layers
 
 MODULE_ID = "AAIS-JDPA-01"
 

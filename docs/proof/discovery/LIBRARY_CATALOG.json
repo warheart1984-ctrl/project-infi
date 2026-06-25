@@ -116,46 +116,87 @@
       "kind": "document",
       "slug": "the_law_of_duality_a_formal_theoretical_proposal",
       "title": "The Law of Duality - A Formal Theoretical Proposal",
-      "standing": 1,
-      "claim_label": "hypothetical",
+      "standing": 3,
+      "claim_label": "proven",
       "library_admitted": true,
       "library_pattern_id": null,
       "library_reference": false,
       "rewards_suppressed": false,
       "proof_path": "docs/proof/discovery/packets/THE_LAW_OF_DUALITY_A_FORMAL_THEORETICAL_PROPOSAL_DISCOVERY_PROOF.md",
-      "promotion_rule": "hypothetical:formal_theory",
+      "promotion_rule": "proven:duality_two_invariants",
       "source_path": "The Law of Duality - A Formal Theoretical Proposal.pdf",
-      "canonical_path": null
+      "canonical_path": "docs/trust_bundles/LAW_OF_DUALITY_PROVEN_TRUST_BUNDLE.md",
+      "proven_basis": {
+        "invariants": [
+          "duality_invariant_1_bidirectional_coherence",
+          "duality_invariant_2_symmetric_constraint_surface"
+        ]
+      },
+      "proven_contribution_id": "7d4ab62a266bec8d6a5385f6b1bb953ad75f7a1c13221cf61e29e0e6724ac463",
+      "proven_receipt_id": "40052f54-f514-41b1-9b19-647c67edf803",
+      "last_proven_at_utc": "2026-06-19T13:17:43Z"
     },
     {
       "kind": "document",
       "slug": "six_invariants",
       "title": "The Six Invariants",
-      "standing": 1,
-      "claim_label": "hypothetical",
+      "standing": 3,
+      "claim_label": "proven",
       "library_admitted": true,
       "library_pattern_id": null,
       "library_reference": false,
       "rewards_suppressed": false,
       "proof_path": "docs/proof/discovery/packets/SIX_INVARIANTS_DISCOVERY_PROOF.md",
-      "promotion_rule": "hypothetical:formal_theory",
+      "promotion_rule": "proven:seven_invariants_canonical_set",
       "source_path": "The Six Invariants \u2014 A Formal Framework of Cosmological and Epistemological Law.pdf",
-      "canonical_path": null
+      "canonical_path": "docs/contracts/SEVEN_INVARIANTS_CANONICAL_SET.md",
+      "proven_basis": {
+        "trust_bundle": "docs/trust_bundles/SIX_INVARIANTS_DISCOVERY_PROVEN_TRUST_BUNDLE.md",
+        "canonical_contract": "docs/contracts/SEVEN_INVARIANTS_CANONICAL_SET.md",
+        "invariants": [
+          "identity_preservation",
+          "authority_continuity",
+          "bidirectional_coherence",
+          "symmetric_constraint_surface",
+          "evidence_integrity",
+          "law_surface_binding",
+          "the_unifier"
+        ]
+      },
+      "canonical_proven_contribution_id": "f989fbe77fcae8d65a977ed68e882f283a6b244c4f718c47f1de0efb77e58d2a",
+      "canonical_proven_receipt_id": "00278ed2-306f-457d-84c9-65d2d5031c1a",
+      "canonical_proven_at_utc": "2026-06-19T13:45:13Z"
     },
     {
       "kind": "document",
       "slug": "the_six_invariants_a_formal_framework_of_cosmological_and_epistemological_law",
       "title": "The Six Invariants \u2014 A Formal Framework of Cosmological and Epistemological Law",
-      "standing": 1,
-      "claim_label": "hypothetical",
+      "standing": 3,
+      "claim_label": "proven",
       "library_admitted": true,
       "library_pattern_id": null,
       "library_reference": false,
       "rewards_suppressed": false,
       "proof_path": "docs/proof/discovery/packets/THE_SIX_INVARIANTS_A_FORMAL_FRAMEWORK_OF_COSMOLOGICAL_AND_EPISTEMOLOGICAL_LAW_DISCOVERY_PROOF.md",
-      "promotion_rule": "hypothetical:formal_theory",
+      "promotion_rule": "proven:seven_invariants_canonical_set",
       "source_path": "The Six Invariants \u2014 A Formal Framework of Cosmological and Epistemological Law.pdf",
-      "canonical_path": null
+      "canonical_path": "docs/contracts/SEVEN_INVARIANTS_CANONICAL_SET.md",
+      "proven_basis": {
+        "trust_bundle": "docs/trust_bundles/SIX_INVARIANTS_DISCOVERY_PROVEN_TRUST_BUNDLE.md",
+        "canonical_contract": "docs/contracts/SEVEN_INVARIANTS_CANONICAL_SET.md",
+        "invariants": [
+          "identity_preservation",
+          "authority_continuity",
+          "bidirectional_coherence",
+          "symmetric_constraint_surface",
+          "evidence_integrity",
+          "law_surface_binding",
+          "the_unifier"
+        ]
+      },
+      "canonical_proven_contribution_id": "f989fbe77fcae8d65a977ed68e882f283a6b244c4f718c47f1de0efb77e58d2a",
+      "canonical_proven_receipt_id": "00278ed2-306f-457d-84c9-65d2d5031c1a",
+      "canonical_proven_at_utc": "2026-06-19T13:45:13Z"
     },
     {
       "kind": "document",

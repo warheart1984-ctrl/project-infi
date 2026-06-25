@@ -115,7 +115,7 @@ Governance substrate — authority, receipts, boundaries.
 | Component | Path |
 |-----------|------|
 | UL substrate | `src/aais_ul_substrate.py` |
-| Constitutional lawbook | `lawbook/META_ARCHITECT_LAWBOOK.md` |
+| Constitutional lawbook | `META_ARCHITECT_LAWBOOK.md` (repo root) |
 | Governance gates | `Makefile` targets |
 | Phase gates | `src/phase_gate.py` |
 | Operator approvals | OTEM checkpoints, explicit approve |

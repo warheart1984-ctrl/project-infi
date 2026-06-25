@@ -30,7 +30,7 @@ OBSERVATION_CONFIDENCE_FLOOR = 0.35
 
 
 def _with_ul_observation(payload: dict[str, Any]) -> dict[str, Any]:
-    from src.aais_ul_substrate import wrap_runtime_snapshot
+    from src.aais_ul.runtime import wrap_runtime_snapshot
 
     return wrap_runtime_snapshot(payload)
 
@@ -640,7 +640,7 @@ class ContinuityWitnessStore:
 
     def snapshot(self) -> dict[str, Any]:
         with self._lock:
-            from src.aais_ul_substrate import wrap_runtime_snapshot
+            from src.aais_ul.runtime import wrap_runtime_snapshot
 
             return wrap_runtime_snapshot(deepcopy(self._state))
 

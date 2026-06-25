@@ -16,6 +16,7 @@ import time
 import uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
+from typing import Literal, Optional
 
 try:
     import requests
@@ -26,6 +27,7 @@ from fastapi import FastAPI, Depends, HTTPException, Request, Response as FastAP
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 from app.schemas import (
     ChatRequest, ChatResponse,
     JarvisCompatRequest, JarvisCompatResponse, JarvisMemoryWriteRequest,
@@ -46,6 +48,7 @@ from app.workflow_validation import (
 )
 from app.config import (
     STATIC_DIR,
+    DATA_DIR,
     REDIS_URL,
     CELERY_BROKER_URL,
     CELERY_RESULT_BACKEND,
@@ -59,6 +62,9 @@ from app.memory import store_memory
 from app.db import (
     init_db, save_message, load_recent_messages, export_session, load_all_messages,
     get_job, create_job, log_event, add_job_event, get_job_events_since, update_job,
+    create_continuity_event, create_continuity_receipt, get_continuity_event,
+    get_continuity_lineage, get_latest_file_continuity_event, list_continuity_events,
+    list_continuity_receipts,
     get_active_workflow_run,
     complete_onboarding, create_workflow, create_workflow_run,
     get_latest_workflow, get_onboarding_state, get_workflow,
@@ -68,8 +74,9 @@ from app.db import (
 from app.auth import require_token, check_sse_token, check_ws_token
 from app.tasks import run_agent_job, run_workflow_job
 from app.rag import index_project, query_project
+from app.runtime_services import agent_fault_journal, project_infi_law, run_ledger
 from src.cisiv import normalize_cisiv_stage
-from src.project_infi_law import PROJECT_INFI_CONTRACT_VERSION, ProjectInfiLaw
+from src.project_infi_law import PROJECT_INFI_CONTRACT_VERSION
 
 logger = logging.getLogger(__name__)
 # The workflow shell stays on its own mount path and bridges into the canonical
@@ -94,6 +101,29 @@ def _normalize_app_shell_base_path(value: str | None) -> str:
 
 
 APP_SHELL_BASE_PATH = _normalize_app_shell_base_path(os.getenv("AAIS_APP_BASE"))
+CONTINUITY_WORKSPACE_ROOT = Path(os.getenv("AAIS_CONTINUITY_WORKSPACE_ROOT") or os.getcwd()).resolve()
+CONTINUITY_FILE_MAX_CHARS = 200_000
+
+
+class EventCreate(BaseModel):
+    name: str
+    parentId: Optional[str] = None
+    payload: Optional[dict] = None
+
+
+class ReceiptCreate(BaseModel):
+    eventId: str
+    status: Literal["PASS", "FAIL"]
+    details: Optional[str] = None
+
+
+class FileOpenRequest(BaseModel):
+    path: str
+
+
+class FileSaveRequest(BaseModel):
+    path: str
+    content: str
 
 
 class LegacyFlaskApiBridge:
@@ -135,7 +165,7 @@ class LegacyFlaskApiBridge:
             logger.warning("Legacy Flask API could not be loaded: %s", exc)
             raise
 
-        bootstrap_ai_runtime(reason="legacy_bridge_load")
+        bootstrap_ai_runtime(reason="legacy_bridge_load", prefer_real=_bootstrap_prefer_real())
         self._app = legacy_flask_app
         self.loaded = True
         return self._app
@@ -193,7 +223,7 @@ async def lifespan(_app: FastAPI):
 
 def _run_otem_substrate_reconcile() -> None:
     try:
-        from src.otem_substrate_reconciler import reconcile_otem_substrate_on_startup
+        from src.otem.reconciler import reconcile_otem_substrate_on_startup
 
         summary = reconcile_otem_substrate_on_startup()
         if summary.get("stale_count") or summary.get("rehydrated_count"):
@@ -203,6 +233,20 @@ def _run_otem_substrate_reconcile() -> None:
 
 
 app = FastAPI(title="AAIS Workflow Shell", version="11.0.0", lifespan=lifespan)
+
+from src.aaes_os.api import router as aaes_os_router
+from src.dashboard.api import router as cori_dashboard_router
+from src.dashboard.pel_api import router as pel_router
+from src.dashboard.claims_api import router as claims_router
+from src.runtime.api import audit_router as runtime_audit_router
+from src.runtime.api import router as runtime_router
+
+app.include_router(aaes_os_router)
+app.include_router(cori_dashboard_router)
+app.include_router(pel_router)
+app.include_router(claims_router)
+app.include_router(runtime_router)
+app.include_router(runtime_audit_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=APP_CORS_ORIGINS,
@@ -236,9 +280,13 @@ def _serve_frontend_index() -> FileResponse:
     return FileResponse(STATIC_DIR / "index.html")
 
 
+def _contractor_health_url(port: int, path: str = "/health") -> str:
+    return f"http://127.0.0.1:{port}{path}"
+
+
 def _probe_contractor(name: str, port: int, path: str = "/health") -> dict:
     """Lightweight probe for optional contractors. Short timeout so health stays snappy."""
-    url = f"http://127.0.0.1:{port}{path}"
+    url = _contractor_health_url(port, path)
     if requests is None:
         return {"name": name, "url": url, "reachable": False, "error": "requests not installed"}
     try:
@@ -255,6 +303,65 @@ def _probe_contractor(name: str, port: int, path: str = "/health") -> dict:
         return out
     except Exception as exc:
         return {"name": name, "url": url, "reachable": False, "error": str(exc)[:120]}
+
+
+def _bootstrap_prefer_real() -> bool:
+    """True when startup should initialize real AI (not mock auto_bootstrap)."""
+    mode = os.getenv("AAIS_MODEL_MODE", "").strip().lower()
+    if mode == "real":
+        return True
+    return os.getenv("AAIS_BOOTSTRAP_REAL_AT_STARTUP", "0").strip().lower() in (
+        "1",
+        "true",
+        "yes",
+        "on",
+    )
+
+
+def _contractor_health_rows() -> list:
+    """Contractor probe rows for /health — skip blocking HTTP in mock dev runs."""
+    model_mode = os.getenv("AAIS_MODEL_MODE", "").strip().lower()
+    skip_probes = model_mode == "mock" or os.getenv("AAIS_HEALTH_SKIP_CONTRACTOR_PROBES", "").lower() in (
+        "1",
+        "true",
+        "yes",
+        "on",
+    )
+    if skip_probes:
+        return [
+            {
+                "name": "forge",
+                "url": _contractor_health_url(6060),
+                "reachable": False,
+                "skipped": "mock_mode" if model_mode == "mock" else "health_lite",
+            },
+            {
+                "name": "forge_eval",
+                "url": _contractor_health_url(6061),
+                "reachable": False,
+                "skipped": "mock_mode" if model_mode == "mock" else "health_lite",
+            },
+            {
+                "name": "evolve",
+                "url": _contractor_health_url(6062),
+                "reachable": False,
+                "skipped": "mock_mode" if model_mode == "mock" else "health_lite",
+            },
+        ]
+    return [
+        _probe_contractor("forge", 6060),
+        _probe_contractor("forge_eval", 6061),
+        _probe_contractor("evolve", 6062),
+    ]
+
+
+def _maybe_bootstrap_legacy_runtime(legacy_api, reason: str) -> None:
+    """Bootstrap AI runtime only when not yet initialized (keeps /health cheap under stress)."""
+    runtime_status = legacy_api._build_ai_runtime_status()
+    if runtime_status.get("ai_status") != "initialized":
+        bootstrap = getattr(legacy_api, "bootstrap_ai_runtime", None)
+        if callable(bootstrap):
+            bootstrap(reason=reason, prefer_real=_bootstrap_prefer_real())
 
 
 def _build_operator_health_payload() -> dict:
@@ -278,18 +385,12 @@ def _build_operator_health_payload() -> dict:
         "ai_fallback_active": False,
         "mock_mode_active": model_mode == "mock",
         "strict_startup": strict_startup,
-        "contractors": [
-            _probe_contractor("forge", 6060),
-            _probe_contractor("forge_eval", 6061),
-            _probe_contractor("evolve", 6062),
-        ],
+        "contractors": _contractor_health_rows(),
     }
 
     try:
         legacy_api = importlib.import_module("src.api")
-        bootstrap = getattr(legacy_api, "bootstrap_ai_runtime", None)
-        if callable(bootstrap):
-            bootstrap(reason="canonical_health")
+        _maybe_bootstrap_legacy_runtime(legacy_api, "canonical_health")
         runtime_status = legacy_api._build_ai_runtime_status()
         # Only pull lightweight ai status for the compact health.
         # Heavy snapshots (system_guard, dreamspace, full law traces)
@@ -309,10 +410,11 @@ def _build_operator_health_payload() -> dict:
                 )
             }
         )
-        # Ensure overall status reflects legacy bridge health
-        if legacy_ok:
+        # Healthy when legacy bridge is up or AI runtime is already initialized (mock/steady-state).
+        ai_initialized = runtime_status.get("ai_status") == "initialized"
+        if legacy_ok or ai_initialized:
             payload["status"] = "healthy"
-            payload["service"] = payload.get("service") or "AAIS"
+            payload["service"] = "AAIS Multi-Modal AI"
     except Exception as exc:  # pragma: no cover - only exercised when the bridge env is broken
         logger.warning("Legacy runtime health unavailable: %s", exc)
         payload["ai_init_error"] = str(exc)
@@ -333,7 +435,7 @@ def _build_project_infi_shell_envelope(
     session_id: str | None = None,
     surface: str = PROJECT_INFI_SHELL_SURFACE,
 ) -> dict:
-    law = ProjectInfiLaw()
+    law = project_infi_law
     normalized_action_id = str(action_id or "").strip() or "workflow_shell_action"
     normalized_target = str(target or normalized_action_id).strip() or normalized_action_id
     contract, ul_snapshot, _ = law.require_contract(
@@ -466,6 +568,26 @@ def _extract_bearer_token(request: Request) -> str:
     if authorization.startswith("Bearer "):
         return authorization.removeprefix("Bearer ").strip()
     return ""
+
+
+def _normalize_continuity_payload(value) -> dict:
+    return value if isinstance(value, dict) else {}
+
+
+def _resolve_continuity_workspace_path(raw_path: str | None) -> tuple[Path, str]:
+    value = str(raw_path or "").strip()
+    if not value:
+        raise ValueError("path is required")
+    candidate = Path(value)
+    if candidate.is_absolute():
+        resolved = candidate.resolve()
+    else:
+        resolved = (CONTINUITY_WORKSPACE_ROOT / candidate).resolve()
+    try:
+        relative = resolved.relative_to(CONTINUITY_WORKSPACE_ROOT)
+    except ValueError as exc:
+        raise ValueError("path must stay inside the continuity workspace") from exc
+    return resolved, relative.as_posix()
 
 
 def _authorize_workflow_webhook(request: Request, workflow: dict) -> None:
@@ -636,6 +758,19 @@ def index():
         return RedirectResponse(APP_SHELL_BASE_PATH)
     return _serve_frontend_index()
 
+
+@app.get("/operator")
+@app.get("/operator/{full_path:path}")
+def operator_shell_redirect(full_path: str = ""):
+    """Canonical operator product routes live in the packaged SPA under APP_SHELL_BASE_PATH."""
+    if not _has_modern_frontend_bundle():
+        raise HTTPException(status_code=404, detail="Packaged frontend bundle is not available")
+    target = f"{APP_SHELL_BASE_PATH}/operator"
+    if full_path:
+        target = f"{target}/{full_path.lstrip('/')}"
+    return RedirectResponse(target, status_code=307)
+
+
 @app.get("/health")
 def health(request: Request):
     """Compact, operator-friendly health for MVP happy path.
@@ -652,6 +787,8 @@ def health(request: Request):
         "service": "AAIS",
         "legacy_api_loaded": bool(payload.get("legacy_api_loaded")),
         "active_model_mode": payload.get("active_model_mode"),
+        "ai_status": payload.get("ai_status"),
+        "ai_bootstrap_status": payload.get("ai_bootstrap_status"),
         "mock_mode_active": payload.get("mock_mode_active"),
         "strict_startup": payload.get("strict_startup"),
         "contractors": payload.get("contractors", []),
@@ -696,9 +833,7 @@ def health_details():
     # Pull the heavy internal snapshots that used to bloat the top-level health
     try:
         legacy_api = importlib.import_module("src.api")
-        bootstrap = getattr(legacy_api, "bootstrap_ai_runtime", None)
-        if callable(bootstrap):
-            bootstrap(reason="health_details")
+        _maybe_bootstrap_legacy_runtime(legacy_api, "health_details")
         runtime_status = legacy_api._build_ai_runtime_status()
         base.update(runtime_status)
         base.update({
@@ -716,6 +851,119 @@ def health_details():
         summary="Workflow shell health details served.",
         details={"contract_version": PROJECT_INFI_CONTRACT_VERSION},
     )
+
+
+@app.get("/api/continuity/events")
+@app.get("/events")
+def list_continuity_events_route(limit: int = 100):
+    return {"events": list_continuity_events(limit=limit)}
+
+
+@app.post("/api/continuity/events")
+@app.post("/events")
+def create_continuity_event_route(request: EventCreate):
+    try:
+        event = create_continuity_event(
+            name=request.name,
+            parent_id=request.parentId,
+            payload=_normalize_continuity_payload(request.payload),
+        )
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=f"Parent event not found: {exc.args[0]}") from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    return {"event": event}
+
+
+@app.get("/api/continuity/lineage/{event_id}")
+@app.get("/lineage/{event_id}")
+def get_continuity_lineage_route(event_id: str):
+    event = get_continuity_event(event_id)
+    if event is None:
+        raise HTTPException(status_code=404, detail="Event not found")
+    lineage = [
+        {"depth": item["depth"], "event": {key: value for key, value in item.items() if key != "depth"}}
+        for item in get_continuity_lineage(event_id)
+    ]
+    return {"event": event, "lineage": lineage}
+
+
+@app.get("/api/continuity/receipts")
+@app.get("/receipts")
+def list_continuity_receipts_route(
+    eventId: str | None = None,
+    event_id: str | None = None,
+    limit: int = 100,
+):
+    return {"receipts": list_continuity_receipts(event_id=eventId or event_id, limit=limit)}
+
+
+@app.post("/api/continuity/receipts")
+@app.post("/receipts")
+def create_continuity_receipt_route(request: ReceiptCreate):
+    try:
+        receipt = create_continuity_receipt(
+            event_id=request.eventId,
+            status=request.status,
+            details=request.details or "",
+        )
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=f"Event not found: {exc.args[0]}") from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    return {"receipt": receipt}
+
+
+@app.post("/api/continuity/file/open")
+@app.post("/file/open")
+def open_continuity_file(request: FileOpenRequest):
+    try:
+        file_path, relative_path = _resolve_continuity_workspace_path(request.path)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    if not file_path.is_file():
+        raise HTTPException(status_code=404, detail="File not found")
+
+    content = file_path.read_text(encoding="utf-8")
+    latest = get_latest_file_continuity_event(relative_path)
+    try:
+        event = create_continuity_event(
+            "File.Opened",
+            parent_id=latest["id"] if latest else None,
+            payload={"path": relative_path, "bytes": len(content.encode("utf-8"))},
+            file_path=relative_path,
+        )
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=f"Parent event not found: {exc.args[0]}") from exc
+    return {"path": relative_path, "content": content, "event": event}
+
+
+@app.post("/api/continuity/file/save")
+@app.post("/file/save")
+def save_continuity_file(request: FileSaveRequest):
+    try:
+        file_path, relative_path = _resolve_continuity_workspace_path(request.path)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    content = request.content
+    if len(content) > CONTINUITY_FILE_MAX_CHARS:
+        raise HTTPException(status_code=413, detail="content exceeds continuity file size limit")
+
+    latest = get_latest_file_continuity_event(relative_path)
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+    file_path.write_text(content, encoding="utf-8")
+    try:
+        event = create_continuity_event(
+            "File.Saved",
+            parent_id=latest["id"] if latest else None,
+            payload={"path": relative_path, "bytes": len(content.encode("utf-8"))},
+            file_path=relative_path,
+        )
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=f"Parent event not found: {exc.args[0]}") from exc
+    return {"path": relative_path, "event": event}
+
 
 @app.post("/chat", response_model=ChatResponse, dependencies=[Depends(require_token)], include_in_schema=False)
 def chat(req: ChatRequest):
@@ -738,6 +986,53 @@ def chat(req: ChatRequest):
         cache_hit=cache_hit,
         route=route,
     )
+
+
+class GovernedMissionRequest(BaseModel):
+    text: str
+    steward_identity: dict | None = None
+    operator_id: str | None = None
+    session_id: str | None = None
+    tenant_id: str | None = None
+    aais_instance_id: str | None = None
+
+
+@app.post("/governed/mission")
+def governed_mission_endpoint(body: GovernedMissionRequest):
+    """Entry point for governed constitutional missions (Nova → URG → AAES → Nexus)."""
+    from src.governed.make_governed_mission import make_governed_mission
+    from src.governed.config import get_governed_config
+
+    steward = dict(body.steward_identity or {})
+    if body.operator_id:
+        steward.setdefault("operator_id", body.operator_id)
+        steward.setdefault("steward_id", body.operator_id)
+    if body.session_id:
+        steward["session_id"] = body.session_id
+
+    cfg = get_governed_config()
+    if body.tenant_id:
+        cfg.tenant_id = body.tenant_id
+        cfg.mission_tenant_id = body.tenant_id
+    if body.aais_instance_id:
+        cfg.aais_instance_id = body.aais_instance_id
+
+    text = str(body.text or "").strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="text is required")
+
+    try:
+        return make_governed_mission(text, steward, config=cfg)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.get("/api/nexus/executions")
+def list_nexus_executions(limit: int = 50):
+    """Recent governed AAES execution events for Nexus ops-console."""
+    from src.aaes_os.modules.nexus import list_execution_events
+
+    return {"executions": list_execution_events(limit=limit)}
 
 
 @app.post("/api/jarvis", response_model=JarvisCompatResponse)
@@ -801,22 +1096,80 @@ async def ws_chat(websocket: WebSocket, session_id: str):
     except WebSocketDisconnect:
         pass
 
+def _unlawful_agents_disabled() -> bool:
+    raw = os.getenv("AAIS_UNLAWFUL_AGENTS_DISABLED", "").strip().lower()
+    return raw in {"1", "true", "yes", "on"}
+
+
+def _ensure_agent_run(session_id: str, goal: str) -> dict:
+    sid = str(session_id or "agent-default").strip() or "agent-default"
+    return run_ledger.ensure_run(
+        sid,
+        title=str(goal or "Agent run")[:120],
+        kind="agent",
+        meta={"surface": "agent_run", "cisiv_stage": "implementation"},
+    )
+
+
 @app.post("/agent/run", response_model=AgentResponse, dependencies=[Depends(require_token)])
 def run_agent(req: AgentRequest):
-    plan, steps, final_response = run_goal_workflow(req.goal, session_id=req.session_id)
-    return AgentResponse(
-        plan=plan,
-        steps=[AgentStep(**s) for s in steps],
-        final_response=final_response,
-        session_id=req.session_id,
-    )
+    if _unlawful_agents_disabled():
+        raise HTTPException(status_code=503, detail="Unlawful agent paths are disabled (AAIS_UNLAWFUL_AGENTS_DISABLED).")
+    run = _ensure_agent_run(req.session_id, req.goal)
+    run_id = str(run.get("id") or "")
+    try:
+        plan, steps, final_response = run_goal_workflow(req.goal, session_id=req.session_id)
+        run_ledger.append_step(
+            run_id,
+            {
+                "kind": "agent_workflow",
+                "title": "Agent workflow completed",
+                "summary": str(final_response or "")[:500],
+                "status": "completed",
+                "cisiv_stage": "implementation",
+                "meta": {"step_count": len(steps)},
+            },
+        )
+        run_ledger.close_run(run_id, status="completed", summary=str(final_response or "")[:500])
+        return AgentResponse(
+            plan=plan,
+            steps=[AgentStep(**s) for s in steps],
+            final_response=final_response,
+            session_id=req.session_id,
+        )
+    except Exception as exc:
+        agent_fault_journal.record_agent_failure(
+            run_id=run_id,
+            goal=req.goal,
+            error=str(exc),
+            session_id=req.session_id,
+        )
+        run_ledger.append_step(
+            run_id,
+            {
+                "kind": "agent_workflow",
+                "title": "Agent workflow failed",
+                "summary": str(exc)[:500],
+                "status": "failed",
+                "cisiv_stage": "verification",
+                "meta": {"fault_code": "AGENT_RUN_FAILED"},
+            },
+        )
+        run_ledger.close_run(run_id, status="failed", summary=str(exc)[:500])
+        raise
 
 @app.post("/jobs/agent", response_model=JobResponse, dependencies=[Depends(require_token)])
 def start_agent_job(req: AgentRequest):
+    if _unlawful_agents_disabled():
+        raise HTTPException(status_code=503, detail="Unlawful agent paths are disabled (AAIS_UNLAWFUL_AGENTS_DISABLED).")
     job_id = str(uuid.uuid4())
     create_job(job_id, req.session_id, req.goal)
     add_job_event(job_id, "queued", {"goal": req.goal, "session_id": req.session_id})
-    run_agent_job.delay(job_id, req.goal, req.session_id)
+    try:
+        run_agent_job.delay(job_id, req.goal, req.session_id)
+    except Exception as exc:
+        logger.warning("Celery broker unavailable; running agent job synchronously: %s", exc)
+        run_agent_job(job_id, req.goal, req.session_id)
     return JobResponse(job_id=job_id, status="queued")
 
 @app.post("/jobs/{job_id}/cancel", dependencies=[Depends(require_token)])

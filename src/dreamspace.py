@@ -175,7 +175,7 @@ class DreamspaceController:
     def snapshot(self, limit_dreams: int = 3) -> dict:
         """Return the current Dreamspace posture plus recent generated entries."""
         with self._lock:
-            from src.aais_ul_substrate import wrap_runtime_snapshot
+            from src.aais_ul.runtime import wrap_runtime_snapshot
 
             return wrap_runtime_snapshot(self._snapshot_locked(limit_dreams=limit_dreams))
 

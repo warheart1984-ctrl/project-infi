@@ -26,7 +26,7 @@ if (Test-Path (Join-Path $NvmHome "nvm.exe")) {
 function global:nova-chat {
     $cmd = $env:NOVA_CLI
     if (-not $cmd) { $cmd = "nova" }
-    & $cmd chat
+    & $cmd chat @args
 }
 
 function global:novr {
@@ -88,7 +88,35 @@ function global:novstack {
     }
 }
 
+function global:novcursor {
+    $repo = $env:LAWFUL_NOVA_REPO_ROOT
+    if (-not $repo) { $repo = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent }
+    $script = Join-Path $repo "lawful-nova-shell\scripts\start-nova-for-cursor.ps1"
+    if (-not (Test-Path $script)) {
+        $script = Join-Path $repo "scripts\start-nova-for-cursor.ps1"
+    }
+    if (-not (Test-Path $script)) {
+        Write-Host "[Nova] start-nova-for-cursor.ps1 not found. See lawful-nova-shell/CURSOR.md" -ForegroundColor Yellow
+        return
+    }
+    & $script @args
+}
+
+function global:novverify {
+    $repo = $env:LAWFUL_NOVA_REPO_ROOT
+    if (-not $repo) { $repo = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent }
+    $script = Join-Path $repo "lawful-nova-shell\scripts\verify-nova-local.ps1"
+    if (-not (Test-Path $script)) {
+        $script = Join-Path $repo "scripts\verify-nova-local.ps1"
+    }
+    if (-not (Test-Path $script)) {
+        Write-Host "[Nova] verify-nova-local.ps1 not found. See lawful-nova-shell/CURSOR.md" -ForegroundColor Yellow
+        return
+    }
+    & $script @args
+}
+
 Write-Host ""
 Write-Host "[Nova] Lawful Nova shell ready (PowerShell)." -ForegroundColor Green
-Write-Host "   nova-chat | novr | novtest | novpr | novdoc | novsec | novstack"
+Write-Host "   nova-chat | novr | novtest | novpr | novdoc | novsec | novstack | novcursor | novverify"
 Write-Host ""

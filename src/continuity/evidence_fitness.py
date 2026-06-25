@@ -379,11 +379,18 @@ def build_spine_health(
     evidence_store: Any | None = None,
     comprehension_store: Any | None = None,
     mit_store: Any | None = None,
+    sit_store: Any | None = None,
+    git_store: Any | None = None,
+    outcome_store: Any | None = None,
 ) -> dict[str, Any]:
-    """Unified CIT + MIT + EIT-2 health for cockpit and epoch gates."""
+    """Unified constitutional spine — CIT, MIT, EIT-2, SIT, GIT, PIT, outcome drift."""
 
-    from src.continuity.comprehension_ledger import ComprehensionLedgerStore, build_comprehension_health
-    from src.continuity.mit_ledger import MitLedgerStore, build_mit_health
+    from src.continuity.comprehension_ledger import build_comprehension_health
+    from src.continuity.git_ledger import build_git_health
+    from src.continuity.mit_ledger import build_mit_health
+    from src.continuity.outcome_fitness import build_outcome_health
+    from src.continuity.pit_fitness import build_pit_health
+    from src.continuity.sit_ledger import build_sit_health
 
     comprehension = build_comprehension_health(
         law_store=law_store,
@@ -395,17 +402,53 @@ def build_spine_health(
         law_store=law_store,
         evidence_store=evidence_store,
     )
+    structure = build_sit_health(
+        law_store=law_store,
+        evidence_store=evidence_store,
+        sit_store=sit_store,
+    )
+    generative = build_git_health(law_store=law_store, git_store=git_store)
+    proof = build_pit_health(law_store=law_store, evidence_store=evidence_store)
+    outcome = build_outcome_health(outcome_store=outcome_store)
 
     block_reasons: list[str] = []
     if comprehension.get("epoch_commit_blocked"):
         block_reasons.append("CIT-BLOCK")
+    if meaning.get("below_threshold"):
+        block_reasons.append("MIT-BLOCK")
     if evidence.get("epoch_commit_blocked"):
         block_reasons.append("EIT-BLOCK")
+    if structure.get("epoch_commit_blocked"):
+        block_reasons.append("SIT-BLOCK")
+    if generative.get("epoch_commit_blocked"):
+        block_reasons.append("GIT-BLOCK")
+    if proof.get("epoch_commit_blocked"):
+        block_reasons.append("PIT-BLOCK")
+    if outcome.get("epoch_commit_blocked"):
+        block_reasons.append("OIT-BLOCK")
+
+    layers = [
+        comprehension.get("avg_chi", 0.0),
+        meaning.get("avg_mu", 0.0),
+        evidence.get("avg_omega", 0.0),
+        structure.get("avg_sigma", 0.0),
+        generative.get("avg_lambda", 0.0),
+        proof.get("avg_phi", 0.0),
+    ]
+    layer_avg = round(sum(layers) / len(layers), 6) if layers else 0.0
+    outcome_drift = float(outcome.get("outcome_drift") or 0.0)
+    overall = round(max(0.0, layer_avg - outcome_drift), 6)
 
     return {
         "comprehension_health": comprehension,
         "meaning_health": meaning,
         "evidence_fitness_health": evidence,
+        "structural_health": structure,
+        "generative_health": generative,
+        "proof_health": proof,
+        "outcome_health": outcome,
+        "outcome_drift": outcome_drift,
+        "overall": overall,
         "epoch_commit_blocked": bool(block_reasons),
         "block_reasons": block_reasons,
     }

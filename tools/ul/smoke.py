@@ -247,7 +247,7 @@ def _load_sample(sample: dict[str, Any]) -> Any:
 
 def run_smoke(*, wrap: bool = True, run_pytest: bool = True) -> dict[str, Any]:
     ensure_project_root()
-    from src.aais_ul_substrate import attach_ul_substrate
+    from src.aais_ul.runtime import attach_ul_substrate
 
     results: list[dict[str, Any]] = []
     failures = 0
