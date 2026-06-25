@@ -1,6 +1,0 @@
-{
-  "version": "linguistic_cascade_policy.v1",
-  "max_depth": 3,
-  "block_apply_without_cascade_ack": false,
-  "high_fanout_threshold": 4
-}

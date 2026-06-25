@@ -1,2 +1,0 @@
-{"ts_ns": 1000, "domain": "memory_lifecycle", "actor": "pid:300", "payload": {"op": "alloc", "bytes": 4096}, "lineage_id": "fixture-mem-001"}
-{"ts_ns": 2000, "domain": "memory_lifecycle", "actor": "pid:300", "payload": {"op": "alloc", "bytes": 8192}, "lineage_id": "fixture-mem-001"}

@@ -1,5 +1,0 @@
-# Mission #002 expected integration hash
-# Regenerate when tunnel_url.txt changes (mission coordinator).
-# Observer: run `python tools/integration_hash.py` and compare to SHA256 below.
-
-SHA256: 3c9ed20c5217b9550d447021bdac6cca4b73e7890a265d976fb6d823f54c86e1

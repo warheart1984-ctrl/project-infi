@@ -1,5 +1,11 @@
 # AAES-OS Monorepo
 
+## Vision
+
+AAES-OS provides a **stable, auditable spine** for agentic systems. It enforces invariants, journals faults, and supports governed evolution of behavior — enabling AI systems that are **deterministic, inspectable, and accountable** by design.
+
+**v1.0 launch docs:** [docs/aaes-os/](../docs/aaes-os/) · **Roadmap:** [ROADMAP.md](ROADMAP.md) · **Contributing:** [CONTRIBUTING.md](CONTRIBUTING.md)
+
 pnpm workspace for the AAES-OS **UCR spine** TypeScript packages. The legacy v1 cognitive runtime (`src/`, HTTP orchestrator) remains at the repo root for backward compatibility.
 
 ## Layout

@@ -1,5 +1,0 @@
-{"id": "mc_a", "model_call": "gpt-4o", "source_path": "deploy_bot.py"}
-{"id": "mc_b", "model_call": "gpt-4o", "source_path": "deploy_bot.py"}
-{"id": "tool_x", "tool_call": "mcp_deploy", "source_path": "tools/mcp_gateway.py"}
-{"type": "edge", "source": "mc_a", "target": "mc_b", "edge_type": "calls"}
-{"type": "edge", "source": "mc_b", "target": "mc_a", "edge_type": "calls"}

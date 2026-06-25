@@ -1,0 +1,22 @@
+# Root ownership
+/                         @warheart1984-ctrl
+
+# Governance-critical areas
+/docs/aaes-os/governance/ @warheart1984-ctrl
+/aaes-os/governance/      @warheart1984-ctrl
+/src/crk1/                @warheart1984-ctrl
+/aaes-os/packages/aaes-governance/ @warheart1984-ctrl
+
+# Persistence and ledger
+/aaes-os/packages/runledger/ @warheart1984-ctrl
+
+# Benchmarks and replication
+/sdk/continuity-sdk/      @warheart1984-ctrl
+/docs/crk1/continuity/    @warheart1984-ctrl
+
+# Launch docs and tutorials
+/docs/aaes-os/            @warheart1984-ctrl
+
+# CI / infra
+/.github/                 @warheart1984-ctrl
+/aaes-os/.github/         @warheart1984-ctrl

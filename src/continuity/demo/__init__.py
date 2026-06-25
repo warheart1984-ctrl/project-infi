@@ -1,1 +1,0 @@
-"""RA-COS demo package."""

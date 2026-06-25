@@ -1,6 +1,0 @@
-# Minimal deps for embedded operator_kernel (bundled with Operator Desktop).
-fastapi>=0.109,<1
-uvicorn[standard]>=0.27,<1
-pydantic>=2,<3
-httpx>=0.27,<1
-PyYAML>=6,<7

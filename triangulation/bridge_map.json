@@ -1,9 +1,0 @@
-{
-  "bridges": [
-    {
-      "mechanic_invariant_id": "GOV-CI-03",
-      "scorpion_invariant_ids": ["fd_flow"],
-      "rationale": "Deploy-window CI gap may correlate with fd_flow syscall drift"
-    }
-  ]
-}

@@ -1,7 +1,0 @@
-{
-  "name": "deploy-ai",
-  "steps": [
-    {"type": "ai.analyze", "label": "plan"},
-    {"type": "api.call", "label": "deploy"}
-  ]
-}

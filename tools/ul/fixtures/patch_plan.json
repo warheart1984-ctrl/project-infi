@@ -1,9 +1,0 @@
-{
-  "plan_id": "patch_probe_001",
-  "status": "proposal_only",
-  "goal": "Tighten auth middleware seam",
-  "target_files": ["src/api.py"],
-  "hunk_count": 1,
-  "preview_only": true,
-  "review_complete": false
-}

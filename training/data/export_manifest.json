@@ -1,9 +1,0 @@
-{
-  "export_manifest_version": "nova_lawful_export_manifest.v1",
-  "generated_at": "2026-06-23T19:20:04Z",
-  "corpus_path": "training\\data\\nova_lawful_turns.jsonl",
-  "corpus_sha256": "sha256:5b16b51e94d0f49059824896048ab68bc240d641e075042fca87790cec70ff4e",
-  "example_count": 4,
-  "admission_id": "nova-lawful-turns-export-v1",
-  "source": "nova_lawful_turn"
-}

@@ -1,1 +1,0 @@
-Repository documentation exists not only for human developers, but as operational context for code-generation and reasoning agents. If doctrine is not present in-repo, it cannot reliably govern automated implementation.

@@ -1,0 +1,58 @@
+name: AAES-OS CTS and Determinism
+
+on:
+  push:
+    branches: [main, codex/aaes-os-production-sweep]
+    paths:
+      - 'aaes-os/**'
+      - 'src/crk1/**'
+      - 'tests/crk1/**'
+      - 'sdk/continuity-sdk/**'
+      - 'docs/aaes-os/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'aaes-os/**'
+      - 'src/crk1/**'
+      - 'tests/crk1/**'
+      - 'sdk/continuity-sdk/**'
+
+jobs:
+  aaes-os-spine:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aaes-os
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Run unit and integration tests (CTS spine)
+        run: pnpm test
+
+  crk1-python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install package
+        run: pip install -e .
+
+      - name: Run CRK-1 conformance tests
+        run: pytest tests/crk1 -q --tb=short

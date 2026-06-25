@@ -1,1 +1,0 @@
-"""CORI operator CLI package."""

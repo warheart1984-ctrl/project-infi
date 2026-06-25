@@ -1,6 +1,0 @@
-{
-  "response_mode": "think",
-  "contract": "gather_plan_answer",
-  "expected_lane": "direct_cognitive",
-  "expect_service_packets": false
-}

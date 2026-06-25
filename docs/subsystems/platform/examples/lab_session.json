@@ -1,7 +1,0 @@
-{
-  "subsystem": "lab",
-  "kind": "lab.session",
-  "params": {
-    "project_id": "nova-ai-factory"
-  }
-}

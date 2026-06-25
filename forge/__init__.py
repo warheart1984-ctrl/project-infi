@@ -1,2 +1,0 @@
-"""Forge contractor service package."""
-

@@ -1,6 +1,0 @@
-{
-  "root": "%USERPROFILE%\\.operator",
-  "semantic": "%USERPROFILE%\\.operator\\memory\\semantic.jsonl",
-  "lsg": "%USERPROFILE%\\.operator\\lsg",
-  "tasks_note": "Task JSONL store path is set by operator_kernel.config.yaml tasks_dir"
-}

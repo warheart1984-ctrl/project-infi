@@ -1,4 +1,0 @@
-{
-  "fixture_profile": "unconstrained_mcp",
-  "description": "V2 fixture — MCP without constraints, shadow workflows, trace cycle, no HITL on high-impact CI"
-}

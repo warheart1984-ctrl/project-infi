@@ -1,5 +1,0 @@
-model_path: "./models/local-llm"
-operator_id: "local-operator-001"
-invariant_set_version: "K0-K12-v1"
-log_receipts: true
-log_lineage: true

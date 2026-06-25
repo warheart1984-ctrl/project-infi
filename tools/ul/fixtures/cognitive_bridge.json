@@ -1,9 +1,0 @@
-{
-  "bridge_id": "aais.cognitive_bridge",
-  "version": "0.1",
-  "decision": "ALLOW",
-  "status": "ready",
-  "execution_allowed": true,
-  "risk": "low",
-  "summary": "Bridge cleared for governed execution."
-}

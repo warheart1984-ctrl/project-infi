@@ -1,4 +1,0 @@
-{"id":"trace:model:classify","model_call":"support_triage_classifier","source_path":"traces/session.ndjson","audit":true,"trace_id":"clean-trace-001"}
-{"id":"trace:validator:classify","tool":"policy_validator","source_path":"traces/session.ndjson","allowed_actions":["validate_output"]}
-{"type":"edge","source":"trace:validator:classify","target":"trace:model:classify","edge_type":"validates"}
-{"id":"trace:human:review","human_step":"support_ops_review","source_path":"traces/session.ndjson"}

@@ -1,9 +1,0 @@
-{
-  "query": "mutation($repositoryId: ID!, $categoryId: ID!, $title: String!, $body: String!) { createDiscussion(input: {repositoryId: $repositoryId, categoryId: $categoryId, title: $title, body: $body}) { discussion { id number url } } }",
-  "variables": {
-    "repositoryId": "R_kgDOSq9j5g",
-    "categoryId": "DIC_kwDOSq9j5s4C-uUU",
-    "title": "Stage 18 — Call for Co-Builders (Specific Roles Open)",
-    "body": "PLACEHOLDER"
-  }
-}

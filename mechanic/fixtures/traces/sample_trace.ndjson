@@ -1,3 +1,0 @@
-{"id": "trace_mc_1", "model_call": "gpt-4o-mini", "source_path": "agent_bot.py", "trace_id": "t-001"}
-{"id": "trace_tool_1", "tool_call": "read_file", "source_path": "agent_bot.py", "allowed_actions": ["read"]}
-{"parent": "trace_mc_1", "child": "trace_tool_1", "edge_type": "calls"}

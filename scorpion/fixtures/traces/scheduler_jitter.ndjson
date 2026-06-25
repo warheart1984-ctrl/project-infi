@@ -1,2 +1,0 @@
-{"ts_ns": 0, "domain": "scheduler_rhythm", "actor": "cpu:0", "payload": {"tick": 1}, "lineage_id": "fixture-sched-001"}
-{"ts_ns": 8000000, "domain": "scheduler_rhythm", "actor": "cpu:0", "payload": {"tick": 2}, "lineage_id": "fixture-sched-001"}

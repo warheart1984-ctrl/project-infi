@@ -1,2 +1,0 @@
-{"ts_ns": 1000, "domain": "privilege_transition", "actor": "pid:600", "payload": {"uid": 1000}, "lineage_id": "fixture-priv-001"}
-{"ts_ns": 2000, "domain": "privilege_transition", "actor": "pid:600", "payload": {"uid": 1337}, "lineage_id": "fixture-priv-001"}

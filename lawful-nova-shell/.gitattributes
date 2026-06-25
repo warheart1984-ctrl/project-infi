@@ -1,5 +1,0 @@
-# Keep cross-platform launch scripts usable after Windows checkouts.
-*.sh text eol=lf
-bin/nova text eol=lf
-config/.zshrc text eol=lf
-config/.novarc text eol=lf
