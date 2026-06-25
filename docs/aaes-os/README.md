@@ -51,6 +51,18 @@ This directory is the canonical documentation index for the AAES-OS v1.0 public 
 | [Certification exam](dev/CERTIFICATION_EXAM.md) | CAS/CRK-1 exam |
 | [Answer key](dev/CERTIFICATION_ANSWER_KEY.md) | Instructor key |
 
+## Release operations
+
+| Document | Description |
+|----------|-------------|
+| [Release dashboard](../../aaes-os/RELEASE_DASHBOARD.md) | Deliverables, gates, risks |
+| [Evidence ledger](../../aaes-os/EVIDENCE_LEDGER.md) | Claim → evidence tracking |
+| [Release checklist](../../aaes-os/RELEASE_MANAGER_CHECKLIST.md) | Pre-ship checklist |
+| [Council review packet](../../aaes-os/GOVERNANCE_COUNCIL_REVIEW_PACKET.md) | Governance sign-off |
+| [Version 2.0 backlog](../../aaes-os/VERSION_2_BACKLOG.md) | Deferred ideas |
+| [Replication package](../../aaes-os/replication/README.md) | Independent replication |
+| [CDP-1 template](../../aaes-os/benchmarks/cdp1/TEMPLATE_MINIMAL_CDP1.md) | Minimal experiment spec |
+
 Monorepo spine: [`aaes-os/`](../../aaes-os/) · CRK-1 runtime: [`src/crk1/`](../../src/crk1/) · CDP-1: [`sdk/continuity-sdk/`](../../sdk/continuity-sdk/)
 
 ## Repositories

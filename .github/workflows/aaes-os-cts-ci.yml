@@ -56,3 +56,24 @@ jobs:
 
       - name: Run CRK-1 conformance tests
         run: pytest tests/crk1 -q --tb=short
+
+  release-gatekeeper-advisory:
+    runs-on: ubuntu-latest
+    needs: [aaes-os-spine, crk1-python]
+    if: github.event_name == 'workflow_dispatch'
+    defaults:
+      run:
+        working-directory: aaes-os
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - name: Write CI gate results
+        run: pnpm run release:ci-results
+        continue-on-error: true
+      - name: Release gatekeeper (advisory)
+        run: node ../.github/scripts/release_gatekeeper.js
+        continue-on-error: true

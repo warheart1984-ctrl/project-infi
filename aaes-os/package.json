@@ -1,0 +1,39 @@
+{
+  "name": "@aaes-os/aaes-os-workspace",
+  "version": "0.2.0",
+  "private": true,
+  "description": "AAES-OS monorepo — UCR runtime spine packages (TypeScript)",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "services/*"
+  ],
+  "scripts": {
+    "build": "corepack pnpm -r run build",
+    "test": "corepack pnpm -r run build && corepack pnpm exec vitest run",
+    "test:packages": "corepack pnpm -r run test",
+    "test:cts": "corepack pnpm -r run build && corepack pnpm exec vitest run tests/integration benchmarks/cdp1 packages/aaes-governance",
+    "test:determinism": "corepack pnpm -r run build && corepack pnpm exec tsx tools/validateDeterministicReplay.ts",
+    "cdp1": "corepack pnpm -r run build && corepack pnpm exec tsx -e \"import { runMinimalCDP1 } from './benchmarks/cdp1/runMinimalCDP1.ts'; runMinimalCDP1().then(r => console.log(JSON.stringify(r, null, 2)));\"",
+    "cep:minimal": "corepack pnpm -r run build && corepack pnpm exec tsx -e \"import { CEPOrchestrator } from './cep/experimentOrchestrator.ts'; new CEPOrchestrator().runMinimalExperiment().then(r => console.log(JSON.stringify(r, null, 2)));\"",
+    "release:notes": "node scripts/generate-release-notes.js",
+    "release:ci-results": "node scripts/write-ci-results.mjs",
+    "build:legacy": "tsc -p tsconfig.json",
+    "test:legacy": "npm run build:legacy && node --test dist/tests/*.test.js",
+    "drift-demo": "tsx tools/scripts/drift-demo.ts",
+    "patch-demo": "tsx tools/patch-effectiveness-demo.ts",
+    "telemetry": "tsx tools/telemetry-cli.ts",
+    "coverage:docs": "tsx tools/check-doc-coverage.ts",
+    "ops-console": "corepack pnpm --filter @aaes-os/ops-console start"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  },
+  "packageManager": "pnpm@10.15.0"
+}

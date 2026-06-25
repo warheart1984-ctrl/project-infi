@@ -6,6 +6,8 @@ AAES-OS provides a **stable, auditable spine** for agentic systems. It enforces 
 
 **v1.0 launch docs:** [docs/aaes-os/](../docs/aaes-os/) · **Roadmap:** [ROADMAP.md](ROADMAP.md) · **Contributing:** [CONTRIBUTING.md](CONTRIBUTING.md)
 
+**Release ops:** [RELEASE_DASHBOARD.md](RELEASE_DASHBOARD.md) · [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) · [Replication](replication/README.md)
+
 pnpm workspace for the AAES-OS **UCR spine** TypeScript packages. The legacy v1 cognitive runtime (`src/`, HTTP orchestrator) remains at the repo root for backward compatibility.
 
 ## Layout
