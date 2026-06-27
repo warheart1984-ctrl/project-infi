@@ -1,0 +1,29 @@
+# .novarc — Nova LLM Stack Environment Variables (template)
+# bootstrap.sh copies/links this to ~/.novarc (home copy is gitignored).
+# Fill paths after your Nova stack is built.
+
+# ── Nova API ──────────────────────────────────────────────────────────────────
+export NOVA_PORT=8080
+export NOVA_API_URL="http://localhost:${NOVA_PORT}"
+
+# ── Nova CLI ──────────────────────────────────────────────────────────────────
+export NOVA_CLI="nova"
+
+# ── Stack Component Paths ─────────────────────────────────────────────────────
+export NOVA_VOSS_RUNTIME_PATH=""
+export NOVA_CORTEX_PATH=""
+export NOVA_GOW_CONFIG=""
+export NOVA_RSL_PATH=""
+export NOVA_SLICE_CONFIG="$HOME/.nova/nova-stack.json"
+
+# ── NVIDIA Backend ────────────────────────────────────────────────────────────
+export NOVA_GPU_DEVICE="0"
+export NOVA_MEGATRON_ENDPOINT="http://localhost:5000"
+export CUDA_VISIBLE_DEVICES="${NOVA_GPU_DEVICE}"
+
+# ── GitHub ────────────────────────────────────────────────────────────────────
+export GITHUB_TOKEN=""
+
+# ── Telemetry opt-out ─────────────────────────────────────────────────────────
+export DO_NOT_TRACK=1
+export NEXT_TELEMETRY_DISABLED=1
