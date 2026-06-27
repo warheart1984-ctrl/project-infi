@@ -8,7 +8,7 @@ import time
 from uuid import uuid4
 from typing import Any
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
@@ -51,8 +51,23 @@ def chat(request: ChatRequest) -> dict[str, Any]:
     )
 
 
+def _require_api_key(
+    authorization: str | None = Header(default=None),
+    x_api_key: str | None = Header(default=None),
+) -> None:
+    expected = os.environ.get("NOVA_API_KEY")
+    if not expected:
+        return
+    bearer = ""
+    if authorization and authorization.lower().startswith("bearer "):
+        bearer = authorization[7:].strip()
+    provided = bearer or (x_api_key or "").strip()
+    if provided != expected:
+        raise HTTPException(status_code=401, detail="invalid or missing Nova API key")
+
+
 @app.get("/v1/models")
-def openai_models() -> dict[str, Any]:
+def openai_models(_: None = Depends(_require_api_key)) -> dict[str, Any]:
     return {
         "object": "list",
         "data": [
@@ -67,7 +82,10 @@ def openai_models() -> dict[str, Any]:
 
 
 @app.post("/v1/chat/completions")
-def openai_chat_completions(request: OpenAIChatCompletionRequest) -> Any:
+def openai_chat_completions(
+    request: OpenAIChatCompletionRequest,
+    _: None = Depends(_require_api_key),
+) -> Any:
     prompt = _messages_to_prompt(request.messages)
     result = _run_lawful_chat(
         prompt=prompt,

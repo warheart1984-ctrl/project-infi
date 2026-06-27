@@ -105,6 +105,43 @@ def test_openai_chat_completions_streams_sse_chunks() -> None:
     assert "data: [DONE]" in body
 
 
+def test_openai_compat_routes_require_api_key_when_configured(monkeypatch) -> None:
+    from fastapi.testclient import TestClient
+    from nova.api import app
+
+    monkeypatch.setenv("NOVA_API_KEY", "cursor-secret")
+    client = TestClient(app)
+
+    models_response = client.get("/v1/models")
+    chat_response = client.post(
+        "/v1/chat/completions",
+        json={"model": "nova-local", "messages": [{"role": "user", "content": "observe auth"}]},
+    )
+
+    assert models_response.status_code == 401
+    assert chat_response.status_code == 401
+
+
+def test_openai_compat_routes_accept_cursor_bearer_key(monkeypatch) -> None:
+    from fastapi.testclient import TestClient
+    from nova.api import app
+
+    monkeypatch.setenv("NOVA_API_KEY", "cursor-secret")
+    client = TestClient(app)
+    headers = {"Authorization": "Bearer cursor-secret"}
+
+    models_response = client.get("/v1/models", headers=headers)
+    chat_response = client.post(
+        "/v1/chat/completions",
+        headers=headers,
+        json={"model": "nova-local", "messages": [{"role": "user", "content": "observe auth"}]},
+    )
+
+    assert models_response.status_code == 200
+    assert chat_response.status_code == 200
+    assert chat_response.json()["nova"]["decision"] == "EXECUTED"
+
+
 def test_parent_stack_launchers_prefer_lawful_nova_package() -> None:
     repo_root = ROOT.parent
     windows_launcher = (repo_root / "scripts" / "start-nova-stack.ps1").read_text(encoding="utf-8")
