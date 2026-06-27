@@ -6,13 +6,88 @@ import os
 import json
 import time
 from uuid import uuid4
+from dataclasses import dataclass
 from typing import Any
+import asyncio
+import urllib.error
+import urllib.request
 
 from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 from nova.lawful_llm import LawfulLLM
+
+
+@dataclass(frozen=True)
+class ProviderResponse:
+    content: str
+    provider: str
+    model: str
+    input_tokens: int = 0
+    output_tokens: int = 0
+
+
+class OllamaChatProvider:
+    provider_id = "ollama"
+
+    def __init__(self, *, base_url: str, model: str) -> None:
+        self.base_url = base_url.rstrip("/")
+        self.model = model
+
+    async def invoke(
+        self,
+        messages: list[dict[str, str]],
+        *,
+        model: str | None,
+        max_tokens: int,
+        temperature: float,
+    ) -> ProviderResponse:
+        return await asyncio.to_thread(
+            self._invoke_sync,
+            messages,
+            model=model or self.model,
+            max_tokens=max_tokens,
+            temperature=temperature,
+        )
+
+    def _invoke_sync(
+        self,
+        messages: list[dict[str, str]],
+        *,
+        model: str,
+        max_tokens: int,
+        temperature: float,
+    ) -> ProviderResponse:
+        payload = {
+            "model": model,
+            "messages": messages,
+            "stream": False,
+            "options": {
+                "num_predict": max_tokens,
+                "temperature": temperature,
+            },
+        }
+        request = urllib.request.Request(
+            f"{self.base_url}/api/chat",
+            data=json.dumps(payload).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=float(os.environ.get("NOVA_OLLAMA_TIMEOUT", "120"))) as response:
+                body = json.loads(response.read().decode("utf-8"))
+        except urllib.error.URLError as exc:
+            raise RuntimeError(f"Ollama provider unavailable at {self.base_url}: {exc}") from exc
+        message = body.get("message") or {}
+        text = str(message.get("content") or "")
+        return ProviderResponse(
+            content=text,
+            provider=self.provider_id,
+            model=str(body.get("model") or model),
+            input_tokens=int(body.get("prompt_eval_count") or 0),
+            output_tokens=int(body.get("eval_count") or 0),
+        )
 
 
 class ChatRequest(BaseModel):
@@ -106,7 +181,11 @@ def openai_chat_completions(
 
 
 def _run_lawful_chat(*, prompt: str, tenant_id: str, capability: str) -> dict[str, Any]:
-    llm = LawfulLLM(operator_session_id="nova-local-api", signing_secret="local-api-secret")
+    llm = LawfulLLM(
+        operator_session_id="nova-local-api",
+        signing_secret="local-api-secret",
+        provider=_build_provider(),
+    )
     turn = llm.ask(
         prompt,
         tenant_id=tenant_id,
@@ -119,6 +198,18 @@ def _run_lawful_chat(*, prompt: str, tenant_id: str, capability: str) -> dict[st
         "chain": _receipt_chain(turn.receipt),
         "receipt_verified": llm.verify_receipt(turn.receipt),
     }
+
+
+def _build_provider() -> Any | None:
+    provider = os.environ.get("NOVA_PROVIDER", "").strip().lower()
+    if not provider:
+        return None
+    if provider != "ollama":
+        raise RuntimeError(f"unsupported NOVA_PROVIDER: {provider}")
+    return OllamaChatProvider(
+        base_url=os.environ.get("NOVA_OLLAMA_BASE_URL", "http://127.0.0.1:11434"),
+        model=os.environ.get("NOVA_OLLAMA_MODEL", "qwen2.5-coder:7b"),
+    )
 
 
 def _messages_to_prompt(messages: list[OpenAIChatMessage]) -> str:

@@ -4,6 +4,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -140,6 +141,48 @@ def test_openai_compat_routes_accept_cursor_bearer_key(monkeypatch) -> None:
     assert models_response.status_code == 200
     assert chat_response.status_code == 200
     assert chat_response.json()["nova"]["decision"] == "EXECUTED"
+
+
+def test_openai_chat_completions_can_route_through_ollama_provider(monkeypatch) -> None:
+    from fastapi.testclient import TestClient
+    import nova.api as nova_api
+
+    class FakeOllamaProvider:
+        provider_id = "ollama"
+
+        def __init__(self, *, base_url: str, model: str) -> None:
+            self.base_url = base_url
+            self.model = model
+
+        async def invoke(self, messages, *, model, max_tokens, temperature):
+            assert self.base_url == "http://127.0.0.1:11434"
+            assert model == "qwen2.5-coder:7b"
+            assert messages[-1]["role"] == "user"
+            return SimpleNamespace(
+                content="ollama-coded-response",
+                provider="ollama",
+                model=model,
+                input_tokens=12,
+                output_tokens=3,
+            )
+
+    monkeypatch.setenv("NOVA_PROVIDER", "ollama")
+    monkeypatch.setenv("NOVA_OLLAMA_MODEL", "qwen2.5-coder:7b")
+    monkeypatch.setattr(nova_api, "OllamaChatProvider", FakeOllamaProvider)
+
+    client = TestClient(nova_api.app)
+    response = client.post(
+        "/v1/chat/completions",
+        json={"model": "nova-local", "messages": [{"role": "user", "content": "write code"}]},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["choices"][0]["message"]["content"] == "ollama-coded-response"
+    receipt_payload = json.loads(payload["nova"]["receipt"]["payload"])
+    assert receipt_payload["provider"] == "ollama"
+    assert receipt_payload["model"] == "qwen2.5-coder:7b"
+    assert receipt_payload["reproducibility"]["deterministic_core"] is False
 
 
 def test_parent_stack_launchers_prefer_lawful_nova_package() -> None:
