@@ -60,15 +60,16 @@ lawful_nova_load_stack() {
 }
 
 lawful_nova_export_paths() {
-  local repo
+  local repo shell_root
   repo="$(lawful_nova_repo_root)"
+  shell_root="$(lawful_nova_shell_root)"
   export LAWFUL_NOVA_REPO_ROOT="${repo}"
   export NOVA_CORTEX_PATH="${NOVA_CORTEX_PATH:-${repo}/nova}"
   export NOVA_VOSS_RUNTIME_PATH="${NOVA_VOSS_RUNTIME_PATH:-${repo}/nova}"
   export NOVA_RSL_PATH="${NOVA_RSL_PATH:-${repo}/governance}"
   export NOVA_API_URL="${NOVA_API_URL:-http://127.0.0.1:${NOVA_PORT:-8080}}"
-  export NOVA_CLI="${NOVA_CLI:-$(lawful_nova_shell_root)/bin/nova}"
-  export PYTHONPATH="${repo}${PYTHONPATH:+:${PYTHONPATH}}"
+  export NOVA_CLI="${NOVA_CLI:-${shell_root}/bin/nova}"
+  export PYTHONPATH="${shell_root}:${repo}${PYTHONPATH:+:${PYTHONPATH}}"
 }
 
 lawful_nova_http_health() {

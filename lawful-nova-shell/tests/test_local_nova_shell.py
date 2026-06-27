@@ -44,6 +44,80 @@ def test_local_nova_api_chat_exposes_chain_contract() -> None:
     assert payload["chain"]["reproducibility"]["prompt_sha256"]
 
 
+def test_openai_models_lists_nova_local_for_cursor() -> None:
+    from fastapi.testclient import TestClient
+    from nova.api import app
+
+    client = TestClient(app)
+    response = client.get("/v1/models")
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["object"] == "list"
+    assert any(model["id"] == "nova-local" for model in payload["data"])
+
+
+def test_openai_chat_completions_wraps_lawful_nova_turn() -> None:
+    from fastapi.testclient import TestClient
+    from nova.api import app
+
+    client = TestClient(app)
+    response = client.post(
+        "/v1/chat/completions",
+        json={
+            "model": "nova-local",
+            "messages": [
+                {"role": "system", "content": "You are Nova inside Cursor."},
+                {"role": "user", "content": "observe cursor adapter"},
+            ],
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["object"] == "chat.completion"
+    assert payload["model"] == "nova-local"
+    assert payload["choices"][0]["message"]["role"] == "assistant"
+    assert "Nova Cortex" in payload["choices"][0]["message"]["content"]
+    assert payload["nova"]["decision"] == "EXECUTED"
+    assert payload["nova"]["receipt_verified"] is True
+
+
+def test_openai_chat_completions_streams_sse_chunks() -> None:
+    from fastapi.testclient import TestClient
+    from nova.api import app
+
+    client = TestClient(app)
+    with client.stream(
+        "POST",
+        "/v1/chat/completions",
+        json={
+            "model": "nova-local",
+            "stream": True,
+            "messages": [{"role": "user", "content": "observe streaming cursor adapter"}],
+        },
+    ) as response:
+        body = "".join(response.iter_text())
+
+    assert response.status_code == 200
+    assert "text/event-stream" in response.headers["content-type"]
+    assert '"object":"chat.completion.chunk"' in body
+    assert "data: [DONE]" in body
+
+
+def test_parent_stack_launchers_prefer_lawful_nova_package() -> None:
+    repo_root = ROOT.parent
+    windows_launcher = (repo_root / "scripts" / "start-nova-stack.ps1").read_text(encoding="utf-8")
+    bash_launcher = (repo_root / "scripts" / "start-nova-stack.sh").read_text(encoding="utf-8")
+    bash_common = (repo_root / "lawful-nova-shell" / "setup" / "lib" / "common.sh").read_text(encoding="utf-8")
+
+    assert 'Join-Path $Root "lawful-nova-shell"' in windows_launcher
+    assert '$ShellRoot;$Root' in windows_launcher
+    assert '-WorkingDirectory $ShellRoot' in windows_launcher
+    assert 'export PYTHONPATH="${shell_root}:${repo}${PYTHONPATH:+:${PYTHONPATH}}"' in bash_common
+    assert '(cd "${shell_root}" && "${PY}" -m nova.api' in bash_launcher
+
+
 def test_productization_gate_checks_chain_contract() -> None:
     out = ROOT / ".runtime" / "test_nova_productization_report.json"
     result = subprocess.run(

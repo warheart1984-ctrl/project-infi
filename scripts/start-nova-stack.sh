@@ -43,12 +43,14 @@ cleanup() {
 trap cleanup EXIT INT TERM
 
 start_api() {
+  local shell_root
+  shell_root="$(lawful_nova_shell_root)"
   if lawful_nova_http_health "${NOVA_API_URL}" >/dev/null 2>&1; then
     echo "Nova API already up at ${NOVA_API_URL}"
     return 0
   fi
   echo "Starting Nova API on ${NOVA_API_URL} ..."
-  "${PY}" -m nova.api >/dev/null 2>&1 &
+  (cd "${shell_root}" && "${PY}" -m nova.api) >/dev/null 2>&1 &
   PIDS+=("$!")
   sleep 2
   if lawful_nova_http_health "${NOVA_API_URL}" >/dev/null 2>&1; then

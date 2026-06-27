@@ -9,6 +9,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
+$ShellRoot = Join-Path $Root "lawful-nova-shell"
 Set-Location $Root
 
 $VenvPy = Join-Path $Root ".venv\Scripts\python.exe"
@@ -19,7 +20,7 @@ if (Test-Path $VenvPy) {
 }
 
 $env:LAWFUL_NOVA_REPO_ROOT = $Root
-$env:PYTHONPATH = $Root
+$env:PYTHONPATH = if ($env:PYTHONPATH) { "$ShellRoot;$Root;$env:PYTHONPATH" } else { "$ShellRoot;$Root" }
 $env:NOVA_API_URL = if ($env:NOVA_API_URL) { $env:NOVA_API_URL } else { "http://127.0.0.1:8080" }
 
 function Test-NovaHealth([string]$BaseUrl) {
@@ -37,7 +38,7 @@ function Start-NovaApi {
         return
     }
     Write-Host "Starting Nova API on $($env:NOVA_API_URL) ..."
-    Start-Process -FilePath $PyExe -ArgumentList @("-m", "nova.api") -WorkingDirectory $Root -WindowStyle Hidden
+    Start-Process -FilePath $PyExe -ArgumentList @("-m", "nova.api") -WorkingDirectory $ShellRoot -WindowStyle Hidden
     Start-Sleep -Seconds 2
     if (-not (Test-NovaHealth $env:NOVA_API_URL)) {
         throw "Nova API failed to start"
