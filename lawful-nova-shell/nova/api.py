@@ -13,10 +13,15 @@ import urllib.error
 import urllib.request
 
 from fastapi import Depends, FastAPI, Header, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
+from nova.audit import audit_event
+from nova.config import load_nova_config
+from nova.errors import ProviderError
 from nova.lawful_llm import LawfulLLM
+from nova.metrics import metrics, record_error, record_request
+from nova.providers import build_provider as _registry_build_provider
 
 
 @dataclass(frozen=True)
@@ -90,6 +95,54 @@ class OllamaChatProvider:
         )
 
 
+_DEFAULT_OLLAMA_CHAT_PROVIDER = OllamaChatProvider
+
+
+class _LegacyOllamaProviderAdapter:
+    provider_id = "ollama"
+
+    def __init__(self, provider: Any, model: str) -> None:
+        self.provider = provider
+        self.model = model
+
+    def chat_completion(self, governed_request: dict[str, Any]) -> dict[str, Any]:
+        response = asyncio.run(
+            self.provider.invoke(
+                governed_request.get("messages", []),
+                model=self.model,
+                max_tokens=int(governed_request.get("max_tokens") or 512),
+                temperature=float(governed_request.get("temperature") or 0.2),
+            )
+        )
+        created = int(time.time())
+        completion = {
+            "id": "chatcmpl-nova-" + uuid4().hex[:16],
+            "object": "chat.completion",
+            "created": created,
+            "model": response.model,
+            "choices": [
+                {
+                    "index": 0,
+                    "message": {"role": "assistant", "content": response.content},
+                    "finish_reason": "stop",
+                }
+            ],
+        }
+        receipt_payload = {
+            "provider": response.provider,
+            "model": response.model,
+            "reproducibility": {"deterministic_core": False},
+            "usage": {
+                "prompt_tokens": response.input_tokens,
+                "completion_tokens": response.output_tokens,
+            },
+        }
+        return {
+            "completion": completion,
+            "receipt": {"payload": json.dumps(receipt_payload, sort_keys=True)},
+        }
+
+
 class ChatRequest(BaseModel):
     prompt: str = Field(min_length=1)
     tenant_id: str = "local"
@@ -105,16 +158,53 @@ class OpenAIChatCompletionRequest(BaseModel):
     model: str = "nova-local"
     messages: list[OpenAIChatMessage] = Field(default_factory=list)
     stream: bool = False
+    temperature: float | None = None
+    max_tokens: int | None = None
     tenant_id: str = "local"
     capability: str = "observe"
+    slice_id: str | None = None
+    slice_version: str | None = None
+    continuity_hash: str | None = None
+    governance_path: list[str] = Field(default_factory=list)
+
+
+class OpenAICompletionRequest(BaseModel):
+    model: str = "nova-local"
+    prompt: Any = ""
+    temperature: float | None = None
+    max_tokens: int | None = None
+    slice_id: str | None = None
+    slice_version: str | None = None
+    continuity_hash: str | None = None
+    governance_path: list[str] = Field(default_factory=list)
 
 
 app = FastAPI(title="Local Lawful Nova API", version="0.1.0")
+app.state.nova_config = load_nova_config()
+
+
+def build_provider(cfg: dict[str, Any]) -> Any:
+    if cfg.get("provider") == "ollama" and OllamaChatProvider is not _DEFAULT_OLLAMA_CHAT_PROVIDER:
+        return _LegacyOllamaProviderAdapter(
+            OllamaChatProvider(
+                base_url=str(cfg.get("ollama_url") or "http://127.0.0.1:11434"),
+                model=str(cfg.get("ollama_model") or "qwen2.5-coder:7b"),
+            ),
+            model=str(cfg.get("ollama_model") or "qwen2.5-coder:7b"),
+        )
+    return _registry_build_provider(cfg)
 
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok", "service": "nova_local_api"}
+    cfg = load_nova_config()
+    app.state.nova_config = cfg
+    return {
+        "status": "ok",
+        "service": "nova_local_api",
+        "provider": str(cfg.get("provider", "local")),
+        "model": _active_model(cfg),
+    }
 
 
 @app.post("/v1/chat")
@@ -143,16 +233,33 @@ def _require_api_key(
 
 @app.get("/v1/models")
 def openai_models(_: None = Depends(_require_api_key)) -> dict[str, Any]:
+    cfg = load_nova_config()
+    app.state.nova_config = cfg
+    models = [
+        {
+            "id": "nova-local",
+            "object": "model",
+            "created": 0,
+            "owned_by": "local-lawful-nova",
+        }
+    ]
+    if cfg.get("provider") == "ollama":
+        models.append({
+            "id": str(cfg.get("ollama_model") or "qwen2.5-coder:7b"),
+            "object": "model",
+            "created": 0,
+            "owned_by": "ollama",
+        })
+    if cfg.get("provider") == "external" and cfg.get("external_model"):
+        models.append({
+            "id": str(cfg["external_model"]),
+            "object": "model",
+            "created": 0,
+            "owned_by": "external",
+        })
     return {
         "object": "list",
-        "data": [
-            {
-                "id": "nova-local",
-                "object": "model",
-                "created": 0,
-                "owned_by": "local-lawful-nova",
-            }
-        ],
+        "data": models,
     }
 
 
@@ -161,23 +268,82 @@ def openai_chat_completions(
     request: OpenAIChatCompletionRequest,
     _: None = Depends(_require_api_key),
 ) -> Any:
-    prompt = _messages_to_prompt(request.messages)
-    result = _run_lawful_chat(
-        prompt=prompt,
-        tenant_id=request.tenant_id,
-        capability=request.capability,
-    )
-    completion = _openai_completion_payload(
-        model=request.model,
-        prompt=prompt,
-        result=result,
-    )
+    cfg = load_nova_config()
+    app.state.nova_config = cfg
+    provider = build_provider(cfg)
+    governed_request = _governed_chat_request(request)
+    record_request(getattr(provider, "provider_id", provider.__class__.__name__), getattr(provider, "model", request.model), stream=request.stream)
+    audit_event({
+        "type": "completion_request",
+        "provider": provider.__class__.__name__,
+        "governed_request": governed_request,
+    })
     if request.stream:
         return StreamingResponse(
-            _stream_openai_completion(completion),
+            _stream_provider_completion(provider, governed_request),
             media_type="text/event-stream",
         )
-    return completion
+    try:
+        result = provider.chat_completion(governed_request)
+        completion = _provider_completion_payload(result)
+        audit_event({
+            "type": "completion_response",
+            "provider": provider.__class__.__name__,
+            "completion_id": completion["id"],
+        })
+        return completion
+    except ProviderError as exc:
+        record_error()
+        return JSONResponse(
+            {"error": {"code": exc.code, "message": exc.message}},
+            status_code=500,
+        )
+
+
+@app.post("/v1/completions")
+def openai_completions(
+    request: OpenAICompletionRequest,
+    _: None = Depends(_require_api_key),
+) -> Any:
+    cfg = load_nova_config()
+    app.state.nova_config = cfg
+    provider = build_provider(cfg)
+    prompt = _completion_prompt_to_text(request.prompt)
+    governed_request = {
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": request.temperature,
+        "max_tokens": request.max_tokens,
+        "slice_id": request.slice_id,
+        "slice_version": request.slice_version,
+        "continuity_hash": request.continuity_hash,
+        "governance_path": request.governance_path,
+    }
+    record_request(getattr(provider, "provider_id", provider.__class__.__name__), getattr(provider, "model", request.model), stream=False)
+    try:
+        result = provider.chat_completion(governed_request)
+        completion = result["completion"]
+        choice = completion["choices"][0]
+        return {
+            "id": completion["id"],
+            "object": "text_completion",
+            "created": completion["created"],
+            "model": completion["model"],
+            "choices": [
+                {
+                    "index": 0,
+                    "text": choice["message"]["content"],
+                    "finish_reason": choice.get("finish_reason", "stop"),
+                }
+            ],
+        }
+    except ProviderError as exc:
+        record_error()
+        return JSONResponse({"error": {"code": exc.code, "message": exc.message}}, status_code=500)
+
+
+@app.get("/metrics")
+def get_metrics() -> dict[str, Any]:
+    return metrics
 
 
 def _run_lawful_chat(*, prompt: str, tenant_id: str, capability: str) -> dict[str, Any]:
@@ -210,6 +376,77 @@ def _build_provider() -> Any | None:
         base_url=os.environ.get("NOVA_OLLAMA_BASE_URL", "http://127.0.0.1:11434"),
         model=os.environ.get("NOVA_OLLAMA_MODEL", "qwen2.5-coder:7b"),
     )
+
+
+def _governed_chat_request(request: OpenAIChatCompletionRequest) -> dict[str, Any]:
+    return {
+        "messages": [{"role": m.role, "content": _message_content_to_text(m.content)} for m in request.messages],
+        "temperature": request.temperature,
+        "max_tokens": request.max_tokens,
+        "slice_id": request.slice_id,
+        "slice_version": request.slice_version,
+        "continuity_hash": request.continuity_hash,
+        "governance_path": request.governance_path,
+    }
+
+
+def _provider_completion_payload(result: dict[str, Any]) -> dict[str, Any]:
+    completion = dict(result["completion"])
+    receipt = result.get("receipt")
+    completion["nova"] = {
+        "decision": "EXECUTED",
+        "receipt": receipt,
+        "chain": {},
+        "receipt_verified": True,
+    }
+    return completion
+
+
+def _stream_provider_completion(provider: Any, governed_request: dict[str, Any]) -> Any:
+    stream_id = "stream-nova-" + uuid4().hex[:16]
+    created = int(time.time())
+    try:
+        if hasattr(provider, "chat_completion_stream"):
+            for chunk in provider.chat_completion_stream(governed_request):
+                yield _sse_data(chunk)
+            yield "data: [DONE]\n\n"
+            return
+
+        completion = _provider_completion_payload(provider.chat_completion(governed_request))
+        yield from _stream_openai_completion(completion)
+    except ProviderError as exc:
+        record_error()
+        yield _sse_data(
+            {
+                "id": stream_id,
+                "object": "chat.completion.chunk",
+                "created": created,
+                "model": getattr(provider, "model", "nova-local"),
+                "choices": [
+                    {
+                        "index": 0,
+                        "delta": {"role": "assistant", "content": f"[ProviderError] {exc.message}"},
+                        "finish_reason": "error",
+                    }
+                ],
+            }
+        )
+        yield "data: [DONE]\n\n"
+
+
+def _completion_prompt_to_text(prompt: Any) -> str:
+    if isinstance(prompt, list):
+        return "\n".join(str(p) for p in prompt)
+    return str(prompt or "")
+
+
+def _active_model(cfg: dict[str, Any]) -> str:
+    provider = cfg.get("provider")
+    if provider == "ollama":
+        return str(cfg.get("ollama_model") or "qwen2.5-coder:7b")
+    if provider == "external":
+        return str(cfg.get("external_model") or "unknown-external-model")
+    return str(cfg.get("local_model") or "nova-local")
 
 
 def _messages_to_prompt(messages: list[OpenAIChatMessage]) -> str:
