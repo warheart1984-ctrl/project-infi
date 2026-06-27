@@ -35,14 +35,14 @@ Modern AI systems behave like black boxes. AAES-OS replaces opacity with:
 
 ## The AAES-OS Promise
 
-Every claim is backed by:
+Every specified guarantee and empirical claim is backed by:
 
 - Executable artifacts
 - Deterministic tests
 - Public benchmarks
-- Independent replication
+- Replay validation or independent replication, as applicable
 
-No hidden state. No unverifiable behavior. No untestable assumptions.
+Architectural objectives and research hypotheses remain explicitly labeled.
 
 ---
 

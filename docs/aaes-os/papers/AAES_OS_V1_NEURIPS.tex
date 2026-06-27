@@ -20,22 +20,19 @@
 \maketitle
 
 \begin{abstract}
-We introduce AAES-OS v1.0, the first constitutional operating system for governed AI systems. AAES-OS unifies three mathematical layers---Wave Math (micro-level judgment dynamics), Continuity Failure Theory (macro-level consequence propagation), and Reconstruction Sufficiency (meta-level reconstructability)---into a deterministic runtime capable of enforcing constitutional constraints on model behavior. The system includes CAS 1.0, a formal object model; CRK-1, a deterministic constitutional runtime; CTS, a conformance test suite; CDP-1, a reproducible continuity benchmark; and CEP, an experimental platform enabling independent replication. All claims in AAES-OS v1.0 are backed by executable artifacts, deterministic tests, and a complete replication package. This establishes a reproducible scientific foundation for governed intelligence.
+We introduce AAES-OS v1.0, the first constitutional operating system for governed AI systems. AAES-OS unifies three mathematical layers---Wave Math (micro-level judgment dynamics), Continuity Failure Theory (macro-level consequence propagation), and Reconstruction Sufficiency (meta-level reconstructability)---into a deterministic runtime capable of enforcing constitutional constraints on model behavior. The system includes CAS 1.0, a formal object model; CRK-1, a deterministic constitutional runtime; CTS, a conformance test suite; CDP-1, a reproducible continuity benchmark; and CEP, an experimental platform enabling independent replication. Version 1.0 separates architectural objectives, specified guarantees, empirical claims, and research hypotheses so evidence can be evaluated without overclaiming. Specified guarantees and empirical claims are tied to executable artifacts, deterministic tests, replay validation, reproducibility evidence, or replication packages as applicable.
 \end{abstract}
 
 \section{Introduction}
 Modern AI systems exhibit drift, nondeterminism, and opaque internal reasoning. These properties undermine safety, reproducibility, and scientific evaluation. Existing governance approaches rely on post-hoc analysis or heuristic constraints that cannot guarantee constitutional compliance.
 
-AAES-OS addresses this gap by introducing a constitutional architecture: a system where governance is enforced at runtime through deterministic rules, invariant validation, and content-addressed receipts. The architecture is designed to be testable, reproducible, and independently verifiable.
+AAES-OS addresses this gap by introducing a constitutional architecture: a system where governance is enforced at runtime through deterministic rules, invariant validation, and content-addressed receipts. The architecture is designed to be testable, replayable, and independently verifiable.
 
 Our contributions are:
 \begin{itemize}
-    \item A unified constitutional architecture grounded in three mathematical layers.
-    \item CAS 1.0, a formal object model for governed cognition.
-    \item CRK-1, a deterministic constitutional runtime.
-    \item CTS, a conformance test suite for invariant compliance.
-    \item CDP-1, a reproducible continuity benchmark.
-    \item CEP, an experimental platform enabling independent replication.
+    \item Normative contribution: constitutional specification, governance model, and architectural contracts.
+    \item Engineering contribution: CRK-1 runtime, ledger, receipts, cockpit, CTS, CDP-1, CEP, and tooling.
+    \item Research contribution: hypotheses about continuity, reconstruction, and semantic boundaries evaluated through evidence and replication rather than assumed universal.
 \end{itemize}
 
 \section{Related Work}
@@ -92,11 +89,13 @@ CEP enables experiment execution, logging, deterministic replay, trace capture, 
 \section{Independent Replication}
 AAES-OS v1.0 includes a complete replication package enabling external teams to run CAS, CRK-1, CTS, and CDP-1, publish results, and challenge conclusions.
 
+Replayability means the reference implementation reproduces the same result from the same recorded evidence. Independent verifiability means a separate implementation reaches the same result using only the specification and recorded artifacts. AAES-OS treats these as distinct evidentiary thresholds.
+
 \section{Discussion}
-We discuss limitations, future work, and implications for governed intelligence.
+We discuss limitations, future work, and implications for governed intelligence. Specifications define intended behavior; implementations demonstrate one realization; evidence establishes what has been achieved; replication determines confidence.
 
 \section{Conclusion}
-AAES-OS v1.0 establishes the first reproducible, constitutional framework for governed AI systems. It provides a scientific foundation for deterministic governance, continuity measurement, and independent replication.
+AAES-OS v1.0 establishes a reproducible constitutional framework for governed AI systems by separating normative contribution, engineering contribution, and research contribution. Its scientific posture is evidence-first: guarantees are specified, implementations are tested, empirical claims are backed by artifacts, and confidence grows through independent replication.
 
 \bibliographystyle{plain}
 \bibliography{references}

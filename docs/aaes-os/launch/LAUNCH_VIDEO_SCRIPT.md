@@ -54,7 +54,7 @@ Tone: clear, confident, scientific, accessible. **~90 seconds.**
 **Visual:** Lab diagrams, reproducibility loops.
 
 **Narration:**  
-"Every claim is backed by executable artifacts. Every experiment is reproducible. Independent teams can validate — or challenge — the results."
+"Specified guarantees and empirical claims are backed by executable artifacts. Replayability and independent verification are tracked separately. Independent teams can validate - or challenge - the results."
 
 ---
 

@@ -16,7 +16,7 @@ At the foundation of AAES-OS are three mathematical layers: **Wave Math**, **Con
 
 On top of this foundation sits **CAS 1.0** — the constitutional object model — and **CRK-1**, the deterministic runtime that enforces the rules. With **CTS**, we can test invariant compliance. With **CDP-1**, we can measure continuity. With **CEP**, we can reproduce experiments.
 
-Every claim in AAES-OS v1.0 is backed by executable artifacts. No hidden state. No unverifiable behavior. No untestable assumptions.
+Every specified guarantee and empirical claim in AAES-OS v1.0 is backed by executable artifacts, replay evidence, tests, benchmarks, or replication packages as applicable. Architectural objectives and research hypotheses remain labeled so the evidence can be inspected without overclaiming.
 
 This is not just a release. It is the beginning of a scientific discipline — one grounded in reproducibility, constitutional governance, and empirical rigor.
 

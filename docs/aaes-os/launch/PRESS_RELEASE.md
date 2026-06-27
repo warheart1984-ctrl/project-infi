@@ -17,7 +17,7 @@ AAES-OS integrates three foundational mathematical layers — **Wave Math**, **C
 - Governance Handbook
 - Developer Guide
 
-The release establishes a new standard for AI governance: **every claim must be backed by executable artifacts and independent replication**.
+The release establishes a new standard for AI governance: **specified guarantees and empirical claims must be backed by executable artifacts, replay evidence, tests, benchmarks, or independent replication as applicable**.
 
 AAES-OS v1.0 is now available on [Zenodo](https://doi.org/10.5281/zenodo.20587377) and [GitHub](https://github.com/warheart1984-ctrl/Project-Infinity1).
 

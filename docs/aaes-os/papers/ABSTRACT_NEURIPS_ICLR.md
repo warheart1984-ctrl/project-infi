@@ -12,4 +12,4 @@ AAES-OS introduces:
 - **CDP-1**, a reproducible continuity benchmark measuring drift under controlled perturbations.
 - **CEP**, an experimental platform enabling independent replication.
 
-All claims in AAES-OS v1.0 are backed by executable artifacts, deterministic tests, and a complete replication package. This establishes a reproducible scientific foundation for governed intelligence and provides the first end-to-end framework for evaluating continuity, drift, and constitutional compliance in AI systems.
+AAES-OS v1.0 separates architectural objectives, specified guarantees, empirical claims, and research hypotheses. Specified guarantees and empirical claims are tied to executable artifacts, deterministic tests, replay validation, reproducibility evidence, or replication packages as applicable. This establishes an evidence-first foundation for governed intelligence and provides an end-to-end framework for evaluating continuity, drift, and constitutional compliance in AI systems.

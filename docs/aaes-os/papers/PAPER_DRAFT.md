@@ -1,25 +1,24 @@
 # AAES-OS v1.0: A Constitutional Architecture for Governed Intelligence
 
-**Authors:** Jon Halstead, Dar-z Morris, et al. · **2026**
+**Authors:** Jon Halstead, Dar-z Morris, et al. - **2026**
 
 ## Abstract
 
-We introduce AAES-OS v1.0, the first constitutional operating system for governed AI systems. AAES-OS unifies three mathematical layers — Wave Math (micro-level judgment dynamics), Continuity Failure Theory (macro-level consequence propagation), and Reconstruction Sufficiency (meta-level reconstructability) — into a deterministic runtime capable of enforcing constitutional constraints on model behavior. The system includes CAS 1.0, a formal object model; CRK-1, a deterministic constitutional runtime; CTS, a conformance test suite; CDP-1, a reproducible continuity benchmark; and CEP, an experimental platform enabling independent replication. All claims in AAES-OS v1.0 are backed by executable artifacts, deterministic tests, and a complete replication package. This establishes a reproducible scientific foundation for governed intelligence.
+We introduce AAES-OS v1.0, the first constitutional operating system for governed AI systems. AAES-OS unifies three mathematical layers - Wave Math (micro-level judgment dynamics), Continuity Failure Theory (macro-level consequence propagation), and Reconstruction Sufficiency (meta-level reconstructability) - into a deterministic runtime capable of enforcing constitutional constraints on model behavior. The system includes CAS 1.0, a formal object model; CRK-1, a deterministic constitutional runtime; CTS, a conformance test suite; CDP-1, a reproducible continuity benchmark; and CEP, an experimental platform enabling independent replication.
+
+Version 1.0 separates architectural objectives, specified guarantees, empirical claims, and research hypotheses so evidence can be evaluated without overclaiming. Specified guarantees and empirical claims are tied to executable artifacts, deterministic tests, replay validation, reproducibility evidence, or replication packages as applicable.
 
 ## 1. Introduction
 
 Modern AI systems exhibit drift, nondeterminism, and opaque internal reasoning. These properties undermine safety, reproducibility, and scientific evaluation. Existing governance approaches rely on post-hoc analysis or heuristic constraints that cannot guarantee constitutional compliance.
 
-AAES-OS addresses this gap by introducing a constitutional architecture: a system where governance is enforced at runtime through deterministic rules, invariant validation, and content-addressed receipts. The architecture is designed to be testable, reproducible, and independently verifiable.
+AAES-OS addresses this gap by introducing a constitutional architecture: a system where governance is enforced at runtime through deterministic rules, invariant validation, and content-addressed receipts. The architecture is designed to be testable, replayable, and independently verifiable.
 
 **Contributions:**
 
-1. A unified constitutional architecture grounded in three mathematical layers.
-2. CAS 1.0, a formal object model for governed cognition.
-3. CRK-1, a deterministic constitutional runtime.
-4. CTS, a conformance test suite for invariant compliance.
-5. CDP-1, a reproducible continuity benchmark.
-6. CEP, an experimental platform enabling independent replication.
+1. Normative contribution: constitutional specification, governance model, and architectural contracts.
+2. Engineering contribution: CRK-1 runtime, ledger, receipts, cockpit, CTS, CDP-1, CEP, and tooling.
+3. Research contribution: hypotheses about continuity, reconstruction, and semantic boundaries evaluated through evidence and replication rather than assumed universal.
 
 ## 2. Related Work
 
@@ -43,7 +42,7 @@ Ensures that all system states are reconstructable from receipts and evidence.
 
 ### 4.1 Invariants
 
-Frozen set (K-∞, K0–K15, KΩ) governing all transitions.
+Frozen set (K-infinity, K0-K15, KOmega) governing all transitions.
 
 ### 4.2 Object Model
 
@@ -59,28 +58,30 @@ No hidden state, no nondeterministic branches, no side-effects outside receipts.
 
 ## 5. CRK-1 Runtime
 
-Constitutional boot · Proof gate · Capability gate · Receipt generation · Drift detection · Deterministic execution engine.
+Constitutional boot, proof gate, capability gate, receipt generation, drift detection, deterministic execution engine.
 
 ## 6. CAS 1.0
 
-Formal object model · Reference implementation · CTS.
+Formal object model, reference implementation, CTS.
 
 ## 7. CDP-1 Benchmark
 
-Dataset · Metrics · Thresholds · Reproduction scripts · Continuity graphs.
+Dataset, metrics, thresholds, reproduction scripts, continuity graphs.
 
 ## 8. CEP Platform
 
-Experiment execution · Logging · Deterministic replay · Trace capture.
+Experiment execution, logging, deterministic replay, trace capture.
 
 ## 9. Independent Replication
 
-External teams can run CAS, CRK-1, CTS, CDP-1, publish results, and challenge conclusions.
+External teams can run CAS, CRK-1, CTS, and CDP-1, publish results, and challenge conclusions.
+
+Replayability means the reference implementation reproduces the same result from the same recorded evidence. Independent verifiability means a separate implementation reaches the same result using only the specification and recorded artifacts. AAES-OS treats these as distinct evidentiary thresholds.
 
 ## 10. Discussion
 
-Limitations, future work, implications for governed intelligence.
+Limitations, future work, implications for governed intelligence. Specifications define intended behavior; implementations demonstrate one realization; evidence establishes what has been achieved; replication determines confidence.
 
 ## 11. Conclusion
 
-AAES-OS v1.0 establishes the first reproducible, constitutional framework for governed AI systems.
+AAES-OS v1.0 establishes a reproducible constitutional framework for governed AI systems by separating normative contribution, engineering contribution, and research contribution. Its scientific posture is evidence-first: guarantees are specified, implementations are tested, empirical claims are backed by artifacts, and confidence grows through independent replication.
