@@ -1,6 +1,37 @@
 import { defineConfig } from 'vitest/config';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+
+const root = path.dirname(fileURLToPath(import.meta.url));
+
+const workspaceAliases: Record<string, string> = {
+  '@aaes-os/runledger': 'packages/runledger/src/index.ts',
+  '@aaes-os/aaes-governance': 'packages/aaes-governance/src/index.ts',
+  '@aaes-os/trace-bus': 'packages/trace-bus/src/index.ts',
+  '@aaes-os/ucr-runtime': 'packages/ucr-runtime/src/index.ts',
+  '@aaes-os/tri-core-protocol': 'packages/tri-core-protocol/src/index.ts',
+  '@aaes-os/mri-instrument': 'packages/mri-instrument/src/index.ts',
+  '@aaes-os/trust-root': 'packages/trust-root/src/index.ts',
+  '@aaes-os/ucr-attestation': 'packages/ucr-attestation/src/index.ts',
+  '@aaes-os/runtime-law-spine': 'packages/runtime-law-spine/src/index.ts',
+  '@aaes-os/evidence-receipts': 'packages/evidence-receipts/src/index.ts',
+  '@aaes-os/constitutional-enforcement-node': 'packages/constitutional-enforcement-node/src/index.ts',
+  '@aaes-os/meta-constitutional-calculus': 'packages/meta-constitutional-calculus/src/index.ts',
+  '@aaes-os/transition-validation-pipeline': 'packages/transition-validation-pipeline/src/index.ts',
+  '@aaes-os/sovereignty-ledger': 'packages/sovereignty-ledger/src/index.ts',
+  '@aaes-os/invariant-registry': 'packages/invariant-registry/src/index.ts',
+  '@aaes-os/nimf': 'packages/nimf/src/index.ts',
+  '@aaes-os/constitutional-evolution': 'packages/constitutional-evolution/src/index.ts',
+  '@aaes-os/omega-stress-harness': 'packages/omega-stress-harness/src/index.ts',
+  '@aaes-os/theta-codec': 'packages/theta-codec/src/index.ts',
+};
 
 export default defineConfig({
+  resolve: {
+    alias: Object.fromEntries(
+      Object.entries(workspaceAliases).map(([name, relPath]) => [name, path.join(root, relPath)]),
+    ),
+  },
   test: {
     include: [
       'tests/**/*.test.ts',
