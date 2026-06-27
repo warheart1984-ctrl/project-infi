@@ -94,6 +94,15 @@ Regenerate OpenAPI types after spec changes:
 pnpm sdk:generate
 ```
 
+### Optional: SkillzMcGee lawful Nova slice
+
+AAES-OS can be run independently with CTS and CRK-1. If you want an operator
+surface backed by the SkillzMcGee governed LLM slice, use SkillzMcGee as a
+neighboring runtime and configure its `llm_echo` capability for deterministic,
+Ollama, or Nova/OpenAI-compatible provider mode.
+
+See [docs/integrations/skillzmcgee-lawful-nova.md](docs/integrations/skillzmcgee-lawful-nova.md).
+
 ### Run CDP-1 minimal benchmark
 
 ```bash
