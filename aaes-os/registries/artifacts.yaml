@@ -1,0 +1,36 @@
+# AAES-OS Artifact Registry v1.0
+
+ArtifactRegistry:
+  version: "1.0"
+  artifacts:
+    - id: ART-CONST-001
+      type: Legal
+      title: AAES-OS Constitution v1.0
+      version: "1.0"
+      checksum: pending
+      created_at: "2026-06-25T00:00:00Z"
+      links:
+        - id: REQ-GOV-001
+          type: Requirement
+
+    - id: ART-CHARTER-001
+      type: Spec
+      title: Governance Charter v1.0
+      version: "1.0"
+      checksum: pending
+      created_at: "2026-06-25T00:00:00Z"
+      links:
+        - id: GOV-POL-001
+          type: Policy
+        - id: REQ-GOV-001
+          type: Requirement
+
+    - id: ART-EVIDENCE-STD-001
+      type: Spec
+      title: Evidence & Traceability Standard v1.0
+      version: "1.0"
+      checksum: pending
+      created_at: "2026-06-25T00:00:00Z"
+      links:
+        - id: REQ-GOV-001
+          type: Requirement

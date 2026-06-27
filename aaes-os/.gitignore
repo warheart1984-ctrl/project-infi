@@ -1,2 +1,7 @@
 # CEP / CDP-1 experiment artifacts (generated)
 artifacts/
+
+# Local dependency recovery artifacts (generated)
+node_modules/
+.node_modules.*/
+*.tsbuildinfo

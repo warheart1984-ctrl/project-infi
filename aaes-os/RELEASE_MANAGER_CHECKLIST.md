@@ -1,6 +1,6 @@
 # AAES-OS v1.0 — Release Manager's Checklist
 
-Ensures v1.0 ships only when every deliverable is complete, every release gate is satisfied, and every claim is backed by evidence.
+Ensures v1.0 ships only when every deliverable is complete, every release gate is satisfied, and every specified guarantee or empirical claim is backed by evidence. Architectural objectives and research hypotheses must remain explicitly labeled.
 
 ---
 
@@ -32,8 +32,11 @@ Ensures v1.0 ships only when every deliverable is complete, every release gate i
 
 ## 3. Evidence Ledger Updated
 
-- [ ] All claims have supporting artifacts
-- [ ] All claims have tests or benchmarks
+- [ ] Each claim has a claim class
+- [ ] Specified guarantees and empirical claims have supporting artifacts
+- [ ] Specified guarantees and empirical claims have tests, benchmarks, replay validation, or reproducibility artifacts
+- [ ] Research hypotheses remain explicitly labeled
+- [ ] Replayability and independent verifiability are tracked separately
 - [ ] Evidence levels updated
 - [ ] Replication status updated
 - [ ] Notes added for any gaps

@@ -1,8 +1,8 @@
-# AAES-OS v1.0 — Release Dashboard
+# AAES-OS v1.0 - Release Dashboard
 
 Unified operational view of AAES-OS v1.0 readiness. Tracks deliverables, release gates, evidence, and open risks.
 
-**Rule:** Version 1.0 ships only when every architectural claim is backed by executable, reproducible evidence.
+**Rule:** Version 1.0 ships only when every specified guarantee and empirical claim is backed by executable, reproducible evidence. Architectural objectives and research hypotheses must remain explicitly labeled as such.
 
 ---
 
@@ -40,16 +40,16 @@ Each deliverable must satisfy its objective release gate before it is considered
 
 ## 3. Evidence Status
 
-See [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for the full ledger.
+See [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for the full ledger and [Evidence Claim Discipline](../docs/aaes-os/architecture/EVIDENCE_CLAIM_DISCIPLINE.md) for claim classes.
 
-| Claim | Evidence Level | Replication |
-|-------|----------------|-------------|
-| CRK-1 deterministic receipts | Hypothesis → Internally Validated (pending) | None |
-| CAS 1.0 independently implementable | Hypothesis | None |
-| Governance Engine enforces invariants | Hypothesis → Internally Validated (pending) | None |
-| CEP runs CDP-1 end-to-end | Hypothesis | None |
-| CDP-1 externally reproducible | Hypothesis | None |
-| All claims backed by artifacts | Hypothesis | None |
+| Claim | Claim Class | Evidence Level | Verification |
+|-------|-------------|----------------|--------------|
+| CRK-1 deterministic receipts | Specified guarantee | Hypothesis -> Internally Validated (pending) | Replay pending |
+| CAS 1.0 independently implementable | Specified guarantee | Hypothesis | Independent verification pending |
+| Governance Engine enforces invariants | Specified guarantee | Hypothesis -> Internally Validated (pending) | Replay pending |
+| CEP runs CDP-1 end-to-end | Engineering contribution | Hypothesis | Replay pending |
+| CDP-1 externally reproducible | Empirical claim | Hypothesis | Independent verification pending |
+| Specified guarantees and empirical claims backed by artifacts | Release objective | Hypothesis | Ledger review pending |
 
 ---
 
@@ -66,11 +66,13 @@ See [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for the full ledger.
 
 - CAS 1.0 spec needs alignment with implementation
 - Governance docs must reflect actual invariants
+- Public language must preserve the distinction between objectives, guarantees, empirical claims, and research hypotheses
 
 ### Reproducibility
 
 - No independent replication yet
 - CDP-1 minimal slice not fully validated across environments
+- Replayability and independent verifiability must be tracked separately
 
 ### Governance
 

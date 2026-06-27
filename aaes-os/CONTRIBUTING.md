@@ -8,6 +8,7 @@ AAES-OS is a governed system. Contributions must respect the constitutional arch
 2. **Determinism first** — preserve deterministic execution.
 3. **Receipts, or it didn't happen** — new behavior must produce receipts or integrate with the ledger.
 4. **Governance is not optional** — features must pass through the InvariantEngine.
+5. **Governance evaluates; evidence adopts** — governance determines how changes are evaluated; evidence determines whether changes are adopted. See [`constitution/Governance-Charter.md`](constitution/Governance-Charter.md#evaluation-vs-adoption).
 
 ## Workflow
 
@@ -48,6 +49,6 @@ Must include span emission, ledger integration, governance validation, and deter
 
 ## Documentation
 
-Governance changes require updates under `docs/aaes-os/governance/`.
+Governance changes require updates under [`constitution/`](constitution/) and [`registries/`](registries/).
 
 Thank you for strengthening the constitutional spine of AAES-OS.

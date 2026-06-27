@@ -1,0 +1,276 @@
+{
+  "inventory": {
+    "generatedAt": "2026-06-18T00:00:00.000Z",
+    "windowDays": 3,
+    "expectedCount": 38,
+    "scope": "Document-like files created outside aaes-os in the last 3 days, excluding dependency, build, temporary unzip, and egg-info folders."
+  },
+  "documents": [
+    {
+      "path": "The Continuity Index.docx",
+      "subsystem": "mri-instrument",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/mri-instrument/src/index.ts", "services/ops-console/src/mriState.ts"],
+      "testRefs": ["packages/mri-instrument/src/mriInstrument.test.ts", "services/ops-console/src/server.test.ts"]
+    },
+    {
+      "path": "docs/contracts/AAES_GOVERNED_MEMORY_TRI_STRATA.md",
+      "subsystem": "governed-memory",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/governed-memory/src/index.ts", "packages/governed-memory/src/types.ts"],
+      "testRefs": ["packages/governed-memory/src/governedMemory.test.ts"]
+    },
+    {
+      "path": "docs/contracts/RLS_GAP_MATRIX.md",
+      "subsystem": "runtime-law-spine",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/runtime-law-spine/src/index.ts"],
+      "testRefs": ["packages/runtime-law-spine/src/runtimeLawSpine.test.ts"]
+    },
+    {
+      "path": "docs/contracts/RLS_RUNTIME_LAW_SPINE.md",
+      "subsystem": "runtime-law-spine",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/runtime-law-spine/src/index.ts"],
+      "testRefs": ["packages/runtime-law-spine/src/runtimeLawSpine.test.ts"]
+    },
+    {
+      "path": ".tmp_epsilon.docx",
+      "subsystem": "reference-intake",
+      "coverageType": "reference-only",
+      "codeRefs": ["docs/coverage/recent-doc-subsystem-coverage.json"],
+      "testRefs": ["tests/integration/recent-doc-coverage.test.ts"]
+    },
+    {
+      "path": "Epsilon\u2011Alpha spec (clean, 1\u2011page architecture).docx",
+      "subsystem": "reference-intake",
+      "coverageType": "reference-only",
+      "codeRefs": ["docs/coverage/recent-doc-subsystem-coverage.json"],
+      "testRefs": ["tests/integration/recent-doc-coverage.test.ts"]
+    },
+    {
+      "path": "docs/architecture/AAES_OS_UCR_MAPPING.md",
+      "subsystem": "ucr-runtime",
+      "coverageType": "tested-bridge",
+      "codeRefs": ["packages/ucr-runtime/src/ucrRuntime.ts", "tests/integration/boot-attestation-runtime.test.ts"],
+      "testRefs": ["tests/integration/invariant-engine.test.ts", "tests/integration/boot-attestation-runtime.test.ts"]
+    },
+    {
+      "path": "docs/subsystems/repo_steward/BASELINE_CHECKLIST.md",
+      "subsystem": "coverage-gate",
+      "coverageType": "imported-contract",
+      "codeRefs": ["tools/check-doc-coverage.ts"],
+      "testRefs": ["tests/integration/recent-doc-coverage.test.ts"]
+    },
+    {
+      "path": "docs/subsystems/repo_steward/RULE_SET.md",
+      "subsystem": "coverage-gate",
+      "coverageType": "imported-contract",
+      "codeRefs": ["tools/check-doc-coverage.ts"],
+      "testRefs": ["tests/integration/recent-doc-coverage.test.ts"]
+    },
+    {
+      "path": "docs/contracts/COG_ACT_COMMIT_SPEC.md",
+      "subsystem": "runtime-law-spine",
+      "coverageType": "tested-bridge",
+      "codeRefs": ["packages/runtime-law-spine/src/index.ts", "packages/ucr-runtime/src/ucrRuntime.ts"],
+      "testRefs": ["tests/integration/boot-attestation-runtime.test.ts"]
+    },
+    {
+      "path": "docs/contracts/TRUST_ROOT_SPEC.md",
+      "subsystem": "trust-root",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/trust-root/src/index.ts"],
+      "testRefs": ["packages/trust-root/src/trustRoot.test.ts"]
+    },
+    {
+      "path": "docs/contracts/UCR_ATTESTATION_SPEC.md",
+      "subsystem": "ucr-attestation",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/ucr-attestation/src/index.ts"],
+      "testRefs": ["packages/ucr-attestation/src/ucrAttestation.test.ts"]
+    },
+    {
+      "path": "docs/contracts/UCR_ATTESTATION_TOKEN.md",
+      "subsystem": "ucr-attestation",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/ucr-attestation/src/index.ts"],
+      "testRefs": ["packages/ucr-attestation/src/ucrAttestation.test.ts"]
+    },
+    {
+      "path": "docs/contracts/CORRIDOR_LOADER_SPEC_v0.1.md",
+      "subsystem": "runtime-law-spine",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/runtime-law-spine/src/index.ts"],
+      "testRefs": ["packages/runtime-law-spine/src/runtimeLawSpine.test.ts"]
+    },
+    {
+      "path": "docs/contracts/H_CORRIDORS_BOOT_MANIFEST.md",
+      "subsystem": "trust-root",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/trust-root/src/index.ts", "packages/runtime-law-spine/src/index.ts"],
+      "testRefs": ["packages/trust-root/src/trustRoot.test.ts", "packages/runtime-law-spine/src/runtimeLawSpine.test.ts"]
+    },
+    {
+      "path": "docs/contracts/TRUST_ROOT_MEASUREMENT_CHAIN.md",
+      "subsystem": "trust-root",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/trust-root/src/index.ts"],
+      "testRefs": ["packages/trust-root/src/trustRoot.test.ts"]
+    },
+    {
+      "path": "reference/aaes-os-starter/docs/cognitive_pipeline.md",
+      "subsystem": "legacy-aaes-pipeline",
+      "coverageType": "implemented",
+      "codeRefs": ["src/pipeline/perception.ts", "src/pipeline/deliberation.ts", "src/pipeline/planning.ts", "src/pipeline/action_engine.ts"],
+      "testRefs": ["tests/pipeline.test.ts"]
+    },
+    {
+      "path": "reference/aaes-os-starter/docs/invariants.md",
+      "subsystem": "aaes-governance",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/aaes-governance/src/invariantEngine.ts", "src/governance/invariants.ts"],
+      "testRefs": ["packages/aaes-governance/src/invariantEngine.test.ts", "tests/invariants.test.ts"]
+    },
+    {
+      "path": "reference/aaes-os-starter/docs/architecture.md",
+      "subsystem": "legacy-aaes-orchestrator",
+      "coverageType": "implemented",
+      "codeRefs": ["src/orchestrator.ts", "src/types.ts"],
+      "testRefs": ["tests/omega.test.ts", "tests/pipeline.test.ts"]
+    },
+    {
+      "path": "docs/contracts/AAES_OS_ARCHITECTURE_V1.md",
+      "subsystem": "aaes-os-architecture",
+      "coverageType": "implemented",
+      "codeRefs": ["src/orchestrator.ts", "packages/trace-bus/src/traceEvents.ts"],
+      "testRefs": ["tests/runtime_v01.test.ts", "tests/integration/run-trace-flow.test.ts"]
+    },
+    {
+      "path": "docs/contracts/AAES_OS_INTERFACE_V1.md",
+      "subsystem": "aaes-os-interface",
+      "coverageType": "implemented",
+      "codeRefs": ["src/types.ts", "packages/runledger/src/models.ts"],
+      "testRefs": ["tests/pipeline.test.ts", "packages/runledger/src/runStore.test.ts"]
+    },
+    {
+      "path": "docs/contracts/AAES_OS_V1_FORMAL_SPEC.md",
+      "subsystem": "trace-bus",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/trace-bus/src/traceEvents.ts", "packages/trace-bus/src/traceBus.ts"],
+      "testRefs": ["packages/trace-bus/src/traceBus.test.ts", "tests/integration/run-trace-flow.test.ts"]
+    },
+    {
+      "path": "docs/governance/RUNTIME_INITIALIZATION_CONTRACT.md",
+      "subsystem": "runtime-law-spine",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/runtime-law-spine/src/index.ts"],
+      "testRefs": ["packages/runtime-law-spine/src/runtimeLawSpine.test.ts"]
+    },
+    {
+      "path": "docs/governance/COGNITIVE_KERNEL_BOUNDARY_MAP.md",
+      "subsystem": "runtime-law-spine",
+      "coverageType": "imported-contract",
+      "codeRefs": ["packages/runtime-law-spine/src/index.ts"],
+      "testRefs": ["tests/integration/boot-attestation-runtime.test.ts"]
+    },
+    {
+      "path": "docs/governance/EVIDENCE_RECEIPT_MODEL.md",
+      "subsystem": "evidence-receipts",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/evidence-receipts/src/index.ts"],
+      "testRefs": ["packages/evidence-receipts/src/evidenceReceipts.test.ts"]
+    },
+    {
+      "path": "docs/governance/AGENT_SAFETY_DOCTRINE.md",
+      "subsystem": "coverage-gate",
+      "coverageType": "imported-contract",
+      "codeRefs": ["docs/coverage/recent-doc-subsystem-coverage.json", "tools/check-doc-coverage.ts"],
+      "testRefs": ["tests/integration/recent-doc-coverage.test.ts"]
+    },
+    {
+      "path": "docs/trust_bundles/2026-06-18-agent-safety-doctrine-gate.md",
+      "subsystem": "evidence-receipts",
+      "coverageType": "tested-bridge",
+      "codeRefs": ["packages/evidence-receipts/src/index.ts", "docs/coverage/recent-doc-subsystem-coverage.json"],
+      "testRefs": ["packages/evidence-receipts/src/evidenceReceipts.test.ts"]
+    },
+    {
+      "path": "lawful-nova-shell/requirements.txt",
+      "subsystem": "reference-intake",
+      "coverageType": "reference-only",
+      "codeRefs": ["package.json"],
+      "testRefs": ["tests/integration/recent-doc-coverage.test.ts"]
+    },
+    {
+      "path": "lawful-nova-shell/requirements-dev.txt",
+      "subsystem": "reference-intake",
+      "coverageType": "reference-only",
+      "codeRefs": ["package.json"],
+      "testRefs": ["tests/integration/recent-doc-coverage.test.ts"]
+    },
+    {
+      "path": "docs/runtime/NOVA_LAWFUL_PRODUCTIZATION.md",
+      "subsystem": "runtime-law-spine",
+      "coverageType": "imported-contract",
+      "codeRefs": ["packages/runtime-law-spine/src/index.ts", "services/ops-console/src/server.ts"],
+      "testRefs": ["packages/runtime-law-spine/src/runtimeLawSpine.test.ts", "services/ops-console/src/server.test.ts"]
+    },
+    {
+      "path": "docs/Vision of Chat \u2014 What the OS Does (1).pdf",
+      "subsystem": "operator-console",
+      "coverageType": "reference-only",
+      "codeRefs": ["services/ops-console/src/App.tsx", "services/ops-console/src/server.ts"],
+      "testRefs": ["services/ops-console/src/server.test.ts"]
+    },
+    {
+      "path": "docs/THE PERFECT GLASS\u2011BOX GOVERNANCE RUNTIME (NO VOSS) Core Principle_ Every action an AI system takes must be visible, explainable, constrained, reproducible, and auditable.docx",
+      "subsystem": "trace-bus",
+      "coverageType": "implemented",
+      "codeRefs": ["packages/trace-bus/src/traceBus.ts", "packages/evidence-receipts/src/index.ts"],
+      "testRefs": ["packages/trace-bus/src/traceBus.test.ts", "packages/evidence-receipts/src/evidenceReceipts.test.ts"]
+    },
+    {
+      "path": "docs/Project Infinity \u2014 Governance Resolution Document.docx",
+      "subsystem": "aaes-governance",
+      "coverageType": "reference-only",
+      "codeRefs": ["packages/aaes-governance/src/index.ts"],
+      "testRefs": ["packages/aaes-governance/src/invariantEngine.test.ts"]
+    },
+    {
+      "path": "docs/NOVA_SPEC \u2014 Cursor Build Context.pdf",
+      "subsystem": "reference-intake",
+      "coverageType": "reference-only",
+      "codeRefs": ["docs/coverage/recent-doc-subsystem-coverage.json"],
+      "testRefs": ["tests/integration/recent-doc-coverage.test.ts"]
+    },
+    {
+      "path": "docs/Nova Cortex_ A Constitutional, Runtime\u2011Composed Cognitive Architecture for Synthetic Minds.pdf",
+      "subsystem": "runtime-law-spine",
+      "coverageType": "reference-only",
+      "codeRefs": ["packages/runtime-law-spine/src/index.ts"],
+      "testRefs": ["packages/runtime-law-spine/src/runtimeLawSpine.test.ts"]
+    },
+    {
+      "path": "Cnc.pdf",
+      "subsystem": "reference-intake",
+      "coverageType": "reference-only",
+      "codeRefs": ["docs/coverage/recent-doc-subsystem-coverage.json"],
+      "testRefs": ["tests/integration/recent-doc-coverage.test.ts"]
+    },
+    {
+      "path": "Cognitive Kernel v1.pdf",
+      "subsystem": "runtime-law-spine",
+      "coverageType": "reference-only",
+      "codeRefs": ["packages/runtime-law-spine/src/index.ts"],
+      "testRefs": ["tests/integration/boot-attestation-runtime.test.ts"]
+    },
+    {
+      "path": "nova_substrate_patch_v2_specs.txt",
+      "subsystem": "tri-core-protocol",
+      "coverageType": "tested-bridge",
+      "codeRefs": ["packages/tri-core-protocol/src/index.ts", "packages/ucr-runtime/src/outputPatches.ts"],
+      "testRefs": ["packages/tri-core-protocol/src/patchLedger.test.ts", "packages/ucr-runtime/src/outputPatches.test.ts"]
+    }
+  ]
+}

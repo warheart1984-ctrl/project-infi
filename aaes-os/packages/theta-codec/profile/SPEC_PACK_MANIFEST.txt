@@ -1,0 +1,36 @@
+theta-bip39-profile-v0.1-spec-pack.zip
+`-- profiles/
+    `-- v0.1/
+        |-- README.md
+        |-- manifest.json
+        |-- governance_charter.md
+        |-- security_audit_checklist.md
+        |-- formal_verification_plan.md
+        |-- verification_report_template.md
+        |-- verification_report_example.md
+        |-- threat_mitigation_matrix.md
+        |-- architecture_diagram.txt
+        |-- reference_implementation.ts
+        |-- test_runner.ts
+        |-- ci_pipeline.yml
+        |-- conformance_badge_ascii.txt
+        |-- conformance_badge_svg.svg
+        |-- compliance_checklist.md
+        |-- migration_guide_v01_to_v02.md
+        |-- change_proposal_template.md
+        |-- repro_lock_v01.json
+        |-- reproducibility_harness.ts
+        `-- profile_diff.ts
+
+AAES OS implementation note:
+- The canonical reference implementation is `packages/theta-codec/src/index.ts`.
+- The canonical test runner is `packages/theta-codec/src/thetaCodec.test.ts`.
+- Python reference names from the source packet are represented here as TypeScript
+  equivalents because AAES OS keeps this implementation inside the TypeScript
+  workspace.
+
+To create a distributable bundle from the package directory:
+
+```bash
+zip -r theta-bip39-profile-v0.1-spec-pack.zip profile scripts src/index.ts src/thetaCodec.test.ts
+```

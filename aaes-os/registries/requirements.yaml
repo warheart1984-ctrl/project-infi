@@ -1,0 +1,21 @@
+# AAES-OS Requirements Registry v1.0
+
+RequirementsRegistry:
+  version: "1.0"
+  requirements:
+    - id: REQ-GOV-001
+      title: Governance Evaluates; Evidence Adopts
+      description: >
+        Governance bodies and processes define how proposals are evaluated
+        (review gates, ADRs, CTS, separation of powers). Adoption decisions
+        must be justified by linked evidence artifacts, not authority alone.
+      principle: Governance Evaluates; Evidence Adopts
+      specification: constitution/Governance-Charter.md#evaluation-vs-adoption
+      validation:
+        - test_id: CTS-GOV-001
+          method: cts/tests/governance/evaluation-vs-adoption.md
+      traceability:
+        - artifact_id: ART-CONST-001
+        - artifact_id: ART-CHARTER-001
+        - artifact_id: ART-EVIDENCE-STD-001
+        - adr_id: null

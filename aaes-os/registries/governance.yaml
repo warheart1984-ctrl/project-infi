@@ -1,0 +1,67 @@
+# AAES-OS Governance Registry v1.0
+# Canonical governance bodies, roles, and policies.
+
+GovernanceRegistry:
+  version: "1.0"
+  entities:
+    - id: GOV-COUNCIL-001
+      type: council
+      name: Constitutional Council
+      description: Oversees invariants, amendments, and governance evolution
+      authority: constitutional
+      version: "1.0"
+      links:
+        - type: Policy
+          id: GOV-POL-001
+
+    - id: GOV-BOARD-ARB
+      type: board
+      name: Architecture Review Board
+      description: Reviews all core architectural changes
+      authority: architecture
+      version: "1.0"
+      links:
+        - type: Policy
+          id: GOV-POL-001
+
+    - id: GOV-BOARD-SEC
+      type: board
+      name: Security Council
+      description: Oversees security invariants, threat models, and controls
+      authority: security
+      version: "1.0"
+      links: []
+
+    - id: GOV-BOARD-STEW
+      type: board
+      name: Stewardship Board
+      description: Maintains institutional memory and continuity
+      authority: continuity
+      version: "1.0"
+      links: []
+
+    - id: GOV-ROLE-FOUNDER
+      type: role
+      name: Founders
+      description: Ultimate constitutional authority during early phase (until v2.0)
+      authority: constitutional
+      version: "1.0"
+      links: []
+
+    - id: GOV-POL-001
+      type: policy
+      name: Governance Evaluates; Evidence Adopts
+      description: >
+        Governance determines how changes are evaluated;
+        evidence determines whether changes are adopted.
+      authority: constitutional
+      version: "1.0"
+      links:
+        - type: Requirement
+          id: REQ-GOV-001
+        - type: Artifact
+          id: ART-CONST-001
+        - type: Artifact
+          id: ART-CHARTER-001
+        - type: Artifact
+          id: ART-EVIDENCE-STD-001

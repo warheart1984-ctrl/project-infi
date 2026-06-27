@@ -1,0 +1,29 @@
+{
+  "name": "@aaes-os/evidence-receipts",
+  "version": "0.2.0",
+  "description": "AAES-OS evidence receipt generation for trust bundles",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run --config vitest.config.ts"
+  },
+  "dependencies": {
+    "@aaes-os/aaes-governance": "workspace:*",
+    "@aaes-os/mri-instrument": "workspace:*",
+    "@aaes-os/trust-root": "workspace:*",
+    "@aaes-os/ucr-attestation": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

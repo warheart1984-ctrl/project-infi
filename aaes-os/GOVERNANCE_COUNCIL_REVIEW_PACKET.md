@@ -38,10 +38,15 @@ Materials for evaluating AAES-OS v1.0 for constitutional compliance, architectur
 
 ## 3. Evidence Ledger Review
 
-- [ ] Every architectural claim has a supporting artifact
-- [ ] Every claim has an automated test or benchmark
+- [ ] Each claim has a claim class: architectural objective, specified guarantee, empirical claim, or research hypothesis
+- [ ] Every specified guarantee and empirical claim has a supporting artifact
+- [ ] Every specified guarantee and empirical claim has an automated test, benchmark, replay validation, or reproducibility artifact
+- [ ] Specified guarantees are tied to normative text, CTS coverage, and release gates
+- [ ] Empirical claims cite receipts, traces, tests, replay validation, or reproducibility artifacts
+- [ ] Research hypotheses remain explicitly labeled and are not treated as guarantees
 - [ ] Evidence levels updated
 - [ ] Replication status updated
+- [ ] Replayability and independent verifiability are recorded separately
 - [ ] No claims remain at "Hypothesis" unless explicitly deferred
 
 ---

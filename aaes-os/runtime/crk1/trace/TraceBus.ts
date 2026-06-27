@@ -21,7 +21,7 @@ export class TraceBus {
       data,
     };
     ctx.spans.push(span);
-    this.sink.onSpan(ctx, type);
+    this.sink.onSpan(ctx, type, span);
     return span;
   }
 }

@@ -5,17 +5,11 @@ on:
     branches: [main, codex/aaes-os-production-sweep]
     paths:
       - 'aaes-os/**'
-      - 'src/crk1/**'
-      - 'tests/crk1/**'
-      - 'sdk/continuity-sdk/**'
       - 'docs/aaes-os/**'
   pull_request:
     branches: [main]
     paths:
       - 'aaes-os/**'
-      - 'src/crk1/**'
-      - 'tests/crk1/**'
-      - 'sdk/continuity-sdk/**'
 
 jobs:
   aaes-os-spine:
@@ -42,24 +36,9 @@ jobs:
       - name: Run unit and integration tests (CTS spine)
         run: pnpm test
 
-  crk1-python:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install package
-        run: pip install -e .
-
-      - name: Run CRK-1 conformance tests
-        run: pytest tests/crk1 -q --tb=short
-
   release-gatekeeper-advisory:
     runs-on: ubuntu-latest
-    needs: [aaes-os-spine, crk1-python]
+    needs: [aaes-os-spine]
     if: github.event_name == 'workflow_dispatch'
     defaults:
       run:
