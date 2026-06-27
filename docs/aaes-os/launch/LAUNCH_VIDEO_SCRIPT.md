@@ -9,7 +9,7 @@ Tone: clear, confident, scientific, accessible. **~90 seconds.**
 **Visual:** Clean black screen → AAES-OS logo fades in.
 
 **Narration:**  
-"Today, we're introducing AAES-OS v1.0 — the first constitutional architecture for governed intelligence."
+"Today, we're introducing AAES-OS v1.0 - a constitutional runtime architecture for governed intelligence."
 
 ---
 

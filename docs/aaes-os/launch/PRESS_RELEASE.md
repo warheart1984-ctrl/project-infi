@@ -1,6 +1,6 @@
 # FOR IMMEDIATE RELEASE
 
-## AAES-OS v1.0 Launches: The First Constitutional Architecture for Governed Intelligence
+## AAES-OS v1.0 Launches: A Constitutional Runtime Architecture for Governed Intelligence
 
 **June 2026** — Today marks the public release of **AAES-OS v1.0**, the first open, reproducible operating system designed to govern AI systems through constitutional constraints, deterministic execution, and scientifically verifiable continuity.
 

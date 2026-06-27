@@ -10,7 +10,7 @@ Today marks a milestone in the scientific study of governed intelligence. For ye
 
 **AAES-OS v1.0 changes that.**
 
-This release introduces the first constitutional operating system for AI — a system where governance is not an afterthought, but a runtime guarantee. A system where every action is validated by constitutional invariants. A system where every decision produces a verifiable receipt. A system where continuity can be measured, drift can be detected, and experiments can be reproduced by independent teams.
+This release introduces a constitutional operating system architecture for governed AI - a system where governance is not an afterthought, but a runtime boundary. A system where every governed action is validated by constitutional invariants. A system where every decision produces a verifiable receipt. A system where continuity can be measured, drift can be detected, and experiments can be reproduced by independent teams.
 
 At the foundation of AAES-OS are three mathematical layers: **Wave Math**, **Continuity Failure Theory**, and **Reconstruction Sufficiency**. Together, they define how judgments form, how consequences propagate, and how system states can be reconstructed from evidence.
 
