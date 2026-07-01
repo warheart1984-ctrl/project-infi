@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import zipfile
 import subprocess
 from pathlib import Path
 
@@ -70,3 +71,38 @@ def test_shell_scripts_are_lf_only() -> None:
     ]:
         data = (ROOT / path).read_bytes()
         assert b"\r\n" not in data, path
+
+
+def test_macos_quickstart_documents_source_zip_flow() -> None:
+    guide = read("MACOS.md")
+
+    assert "setup/bootstrap.sh --non-interactive" in guide
+    assert "bin/nova health --json" in guide
+    assert "setup/verify.sh" in guide
+    assert "LAWFUL_NOVA_REPO_ROOT" in guide
+
+
+def test_macos_package_script_preserves_unix_modes_and_excludes_generated_dirs(tmp_path) -> None:
+    from scripts.package_macos_shell import create_macos_shell_zip
+
+    archive = tmp_path / "lawful-nova-shell-macos.zip"
+    create_macos_shell_zip(ROOT, archive)
+
+    assert archive.exists()
+    with zipfile.ZipFile(archive) as zf:
+        names = set(zf.namelist())
+        assert "lawful-nova-shell/bin/nova" in names
+        assert "lawful-nova-shell/GITHUB-10-MINUTE-START.md" in names
+        assert "lawful-nova-shell/quickstart.sh" in names
+        assert "lawful-nova-shell/setup/bootstrap.sh" in names
+        assert "lawful-nova-shell/MACOS.md" in names
+        assert not any("/node_modules/" in name for name in names)
+        assert not any(name.startswith("lawful-nova-shell/.runtime/") for name in names)
+        assert not any(name.startswith("lawful-nova-shell/desktop/") for name in names)
+
+        nova_info = zf.getinfo("lawful-nova-shell/bin/nova")
+        bootstrap_info = zf.getinfo("lawful-nova-shell/setup/bootstrap.sh")
+        nova_mode = (nova_info.external_attr >> 16) & 0o777
+        bootstrap_mode = (bootstrap_info.external_attr >> 16) & 0o777
+        assert nova_mode == 0o755
+        assert bootstrap_mode == 0o755

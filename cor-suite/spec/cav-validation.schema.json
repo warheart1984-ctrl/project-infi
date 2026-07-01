@@ -1,0 +1,40 @@
+{
+  "$id": "https://continuity-os.dev/schemas/cor-suite/cav-validation/1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CAV-1.0 Validation Report",
+  "type": "object",
+  "properties": {
+    "cavVersion": { "type": "string" },
+    "carRef": { "type": "string" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "valid": { "type": "boolean" },
+    "blockingCount": { "type": "integer", "minimum": 0 },
+    "advisoryCount": { "type": "integer", "minimum": 0 },
+    "findings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/finding" }
+    }
+  },
+  "required": ["cavVersion", "carRef", "generatedAt", "valid", "blockingCount", "advisoryCount", "findings"],
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "properties": {
+        "findingId": { "type": "string" },
+        "category": {
+          "type": "string",
+          "enum": ["schema", "integrity", "duplicate_id", "lifecycle", "hash_mismatch", "missing_path", "advisory"]
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["info", "warning", "error", "critical"]
+        },
+        "blocking": { "type": "boolean" },
+        "artifactId": { "type": "string" },
+        "path": { "type": "string" },
+        "message": { "type": "string" }
+      },
+      "required": ["findingId", "category", "severity", "blocking", "message"]
+    }
+  }
+}

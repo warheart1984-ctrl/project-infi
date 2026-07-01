@@ -1,0 +1,7 @@
+stateDiagram-v2
+  [*] --> Nominal
+  Nominal --> LowPower: solar dip
+  LowPower --> Nominal: recovery
+  Nominal --> ThermalLimit: thermal event
+  ThermalLimit --> SafePointing: Class A
+  SafePointing --> Nominal: ground auth

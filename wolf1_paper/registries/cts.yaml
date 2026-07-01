@@ -1,0 +1,10 @@
+# CTS case registry
+cases:
+  - requirement_id: REQ-WOLF1-ARCH-001
+    test_ids:
+      - CTS-WOLF1-001
+      - CTS-GOV-TRACE-001
+    paths:
+      - cts/run_all.sh
+      - cts/run_all.mjs
+      - cts/tests/governance/traceability-chain.md

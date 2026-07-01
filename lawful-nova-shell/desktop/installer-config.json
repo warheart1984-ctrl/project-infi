@@ -1,0 +1,24 @@
+{
+  "appId": "com.nova.desktop",
+  "productName": "Nova Desktop",
+  "directories": {
+    "output": "dist"
+  },
+  "files": [
+    "main.js",
+    "preload.js",
+    "commands.json",
+    "core/**/*",
+    "renderer/**/*",
+    "package.json",
+    "node_modules/monaco-editor/min/vs/**/*"
+  ],
+  "npmRebuild": false,
+  "win": {
+    "target": "nsis"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true
+  }
+}

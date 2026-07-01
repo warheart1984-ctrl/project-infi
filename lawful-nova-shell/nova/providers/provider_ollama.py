@@ -17,7 +17,7 @@ class OllamaProvider:
         self,
         *,
         base_url: str = "http://127.0.0.1:11434",
-        model: str = "qwen2.5-coder:7b",
+        model: str = "qwen2.5-coder:3b",
         timeout: float = 60,
     ) -> None:
         self.base_url = base_url.rstrip("/")

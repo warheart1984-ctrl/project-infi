@@ -14,6 +14,22 @@ info() { echo "[INFO] $*"; }
 warn() { echo "[WARN] $*"; WARN=$((WARN + 1)); }
 fail() { echo "[FAIL] $*"; FAIL=$((FAIL + 1)); }
 
+get_candidate_repo_roots() {
+  local shell_root
+  shell_root="$(lawful_nova_shell_root)"
+  printf '%s\n' "${LAWFUL_NOVA_REPO_ROOT:-}" "${shell_root}" "$(cd "${shell_root}/.." && pwd)"
+}
+
+get_repo_python() {
+  lawful_nova_python
+}
+
+get_repo_nova_cli() {
+  local shell_root
+  shell_root="$(lawful_nova_shell_root)"
+  printf '%s\n' "${NOVA_CLI:-${shell_root}/bin/nova}"
+}
+
 REPO_ROOT="$(lawful_nova_repo_root)"
 lawful_nova_export_paths
 lawful_nova_load_stack
@@ -26,6 +42,13 @@ if [[ "${PY}" == "${REPO_ROOT}/.venv/bin/python" && -x "${PY}" ]]; then
   ok "Python .venv ${PY}"
 else
   warn "Python not from repo .venv: ${PY}"
+fi
+
+NOVA_SHIM="$(get_repo_nova_cli)"
+if [[ -x "${NOVA_SHIM}" ]]; then
+  ok "Nova CLI repo shim reachable ${NOVA_SHIM}"
+else
+  fail "Nova CLI repo shim missing or not executable ${NOVA_SHIM}"
 fi
 
 if [[ -d "${NOVA_CORTEX_PATH}" ]]; then

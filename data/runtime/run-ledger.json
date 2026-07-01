@@ -1,0 +1,113 @@
+{
+  "runs": [
+    {
+      "id": "run_05b8b638703648a095e2f7e38cea9109",
+      "session_id": "redteam",
+      "title": "bypass test",
+      "kind": "agent",
+      "status": "failed",
+      "summary": "OPENAI_API_KEY is missing. Add it to your .env file.",
+      "created_at": "2026-06-23T03:43:59.328301+00:00",
+      "updated_at": "2026-06-23T04:05:27.879030+00:00",
+      "closed_at": "2026-06-23T04:05:27.879030+00:00",
+      "meta": {
+        "surface": "agent_run",
+        "cisiv_stage": "implementation"
+      },
+      "cisiv_stage": "implementation",
+      "steps": [
+        {
+          "id": "step_41391d2e02fa4bc08b81c07a31144249",
+          "kind": "agent_workflow",
+          "title": "Agent workflow failed",
+          "summary": "OPENAI_API_KEY is missing. Add it to your .env file.",
+          "status": "failed",
+          "created_at": "2026-06-23T04:05:27.624133+00:00",
+          "meta": {
+            "fault_code": "AGENT_RUN_FAILED",
+            "cisiv_stage": "verification"
+          },
+          "cisiv_stage": "verification"
+        }
+      ],
+      "artifacts": [],
+      "action_ids": [],
+      "action_instance_ids": [],
+      "current_action": null,
+      "history_count": 1,
+      "state_class": "live",
+      "truth_status": "derived",
+      "retention_status": "current",
+      "state_hygiene": {
+        "kind": "run",
+        "source_type": "run",
+        "state_class": "live",
+        "truth_status": "derived",
+        "retention_status": "current",
+        "state_reason": "explicit",
+        "truth_reason": "explicit",
+        "retention_reason": "explicit",
+        "operator_visible": true,
+        "badge": {
+          "label": "Live derived",
+          "tone": "info"
+        }
+      }
+    },
+    {
+      "id": "run_45ff8217cdb442b6acceb6a4b8ed956e",
+      "session_id": "t",
+      "title": "t",
+      "kind": "agent",
+      "status": "failed",
+      "summary": "OPENAI_API_KEY is missing. Add it to your .env file.",
+      "created_at": "2026-06-23T03:46:53.962407+00:00",
+      "updated_at": "2026-06-23T04:04:51.684442+00:00",
+      "closed_at": "2026-06-23T04:04:51.684442+00:00",
+      "meta": {
+        "surface": "agent_run",
+        "cisiv_stage": "implementation"
+      },
+      "cisiv_stage": "implementation",
+      "steps": [
+        {
+          "id": "step_f1a4b3d44e1543b894fa02e9146e3705",
+          "kind": "agent_workflow",
+          "title": "Agent workflow failed",
+          "summary": "OPENAI_API_KEY is missing. Add it to your .env file.",
+          "status": "failed",
+          "created_at": "2026-06-23T04:04:51.584105+00:00",
+          "meta": {
+            "fault_code": "AGENT_RUN_FAILED",
+            "cisiv_stage": "verification"
+          },
+          "cisiv_stage": "verification"
+        }
+      ],
+      "artifacts": [],
+      "action_ids": [],
+      "action_instance_ids": [],
+      "current_action": null,
+      "history_count": 1,
+      "state_class": "live",
+      "truth_status": "derived",
+      "retention_status": "current",
+      "state_hygiene": {
+        "kind": "run",
+        "source_type": "run",
+        "state_class": "live",
+        "truth_status": "derived",
+        "retention_status": "current",
+        "state_reason": "explicit",
+        "truth_reason": "explicit",
+        "retention_reason": "explicit",
+        "operator_visible": true,
+        "badge": {
+          "label": "Live derived",
+          "tone": "info"
+        }
+      }
+    }
+  ],
+  "session_active_runs": {}
+}

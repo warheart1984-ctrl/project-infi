@@ -1,0 +1,10 @@
+# Reference implementation registry
+implementations:
+  - requirement_id: REQ-WOLF1-ARCH-001
+    paths:
+      - src/wolf1_v1.1.md
+      - src/sections/
+      - src/sync_sections_from_master.js
+      - build.mjs
+      - cts/run_all.sh
+      - scripts/enforce_governance.sh

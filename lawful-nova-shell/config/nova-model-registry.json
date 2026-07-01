@@ -1,0 +1,51 @@
+{
+  "coding_substrate": {
+    "id": "coding-substrate-1",
+    "backend": "ollama",
+    "model": "qwen2.5-coder:3b",
+    "tier": 15,
+    "role": "codegen + refactor + evidence"
+  },
+  "qwen_coder_7b": {
+    "id": "qwen2.5-coder-7b",
+    "backend": "ollama",
+    "model": "qwen2.5-coder:7b",
+    "tier": 14,
+    "role": "larger codegen fallback"
+  },
+  "deepseek_coder": {
+    "id": "deepseek-coder-6.7b",
+    "backend": "ollama",
+    "model": "deepseek-coder:6.7b",
+    "tier": 13,
+    "role": "completion + refactor fallback"
+  },
+  "coding_substrate_full": {
+    "id": "coding-substrate-1-full",
+    "backend": "ollama",
+    "model": "coding-substrate-1:latest",
+    "tier": 12,
+    "role": "heavy governed codegen fallback"
+  },
+  "gemma4": {
+    "id": "gemma4-local",
+    "backend": "ollama",
+    "model": "gemma4:latest",
+    "tier": 11,
+    "role": "general reasoning fallback"
+  },
+  "analysis_substrate": {
+    "id": "analysis-1",
+    "backend": "ollama",
+    "model": "gemma4:latest",
+    "tier": 14,
+    "role": "specs + reasoning"
+  },
+  "qwen_governed": {
+    "id": "qwen-governed-1",
+    "backend": "ollama",
+    "model": "qwen2.5-coder:3b",
+    "tier": 15,
+    "role": "codegen + refactor + evidence"
+  }
+}

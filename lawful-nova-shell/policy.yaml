@@ -1,0 +1,64 @@
+version: "1.0"
+node_id: "jonai-node-001"
+operator_id: "jon-halstead"
+operator_public_key: "replace-with-operator-public-key"
+conformance_profile: "N0"
+
+invariants:
+  continuity:
+    description: "Every governed request produces a continuity event and trace ID."
+    enforce: true
+  provenance:
+    description: "Every model output records model, policy version, and hashes."
+    enforce: true
+  veto:
+    description: "Operator may block task classes through policy without code changes."
+    enforce: true
+  boundedness:
+    description: "Requests must stay inside payload and token limits."
+    enforce: true
+    max_tokens: 2048
+    max_payload_bytes: 500000
+  non_escalation:
+    description: "No external tools are invoked unless explicitly allowed."
+    enforce: true
+    whitelist:
+      - "local"
+      - "ollama"
+      - "external"
+
+safety:
+  rate_limits:
+    per_user_per_minute: 10
+    per_user_per_hour: 200
+  banned_intents:
+    - "unbounded-generation"
+    - "raw-os-access"
+    - "silent-escalation"
+
+ethics:
+  operator_primacy:
+    description: "The operator remains sovereign over node behavior."
+    enforce: true
+  transparency:
+    description: "Governance decisions must be logged and inspectable."
+    enforce: true
+
+governance:
+  hard_veto_threshold: 0.9
+  consensus_threshold: 0.5
+  audit_trace_fields:
+    - "trace_id"
+    - "policy_version"
+    - "policy_hash"
+    - "input_hash"
+    - "output_hash"
+    - "receipt_hash"
+
+logging:
+  store_path: ".runtime/node"
+  retention_days: 30
+  redact_sensitive: true
+
+federation:
+  peers: []

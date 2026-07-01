@@ -14,7 +14,7 @@ def build_provider(config: dict[str, Any]) -> NovaProvider:
     if provider_name == "ollama":
         return OllamaProvider(
             base_url=str(config.get("ollama_url") or "http://127.0.0.1:11434"),
-            model=str(config.get("ollama_model") or "qwen2.5-coder:7b"),
+            model=str(config.get("ollama_model") or "qwen2.5-coder:3b"),
             timeout=timeout,
         )
     if provider_name == "external":

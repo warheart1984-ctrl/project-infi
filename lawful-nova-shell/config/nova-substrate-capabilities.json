@@ -1,0 +1,46 @@
+{
+  "coding-substrate-1": {
+    "id": "coding-substrate-1",
+    "role": "codegen",
+    "capabilities": [
+      "generate_code",
+      "refactor_code",
+      "explain_code",
+      "write_tests"
+    ],
+    "constraints": [
+      "no_global_state",
+      "no_unbounded_io",
+      "no_external_network"
+    ]
+  },
+  "qwen-governed-1": {
+    "id": "qwen-governed-1",
+    "role": "codegen",
+    "capabilities": [
+      "generate_code",
+      "refactor_code",
+      "explain_code",
+      "write_tests"
+    ],
+    "constraints": [
+      "no_global_state",
+      "no_unbounded_io",
+      "no_external_network"
+    ]
+  },
+  "analysis-1": {
+    "id": "analysis-1",
+    "role": "analysis",
+    "capabilities": [
+      "summarize_context",
+      "explain_code",
+      "write_docs"
+    ],
+    "constraints": [
+      "no_global_state",
+      "no_unbounded_io",
+      "no_external_network"
+    ]
+  }
+}

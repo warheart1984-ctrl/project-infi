@@ -1,0 +1,24 @@
+{
+  "$id": "https://continuity-os.dev/schemas/cor-suite/maturity-vector/1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Maturity Vector",
+  "type": "object",
+  "properties": {
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "requirementId": { "type": "string" },
+          "maturity": {
+            "type": "string",
+            "enum": ["normative", "implemented", "verified", "reproduced"]
+          }
+        },
+        "required": ["requirementId", "maturity"]
+      }
+    }
+  },
+  "required": ["generatedAt", "requirements"]
+}

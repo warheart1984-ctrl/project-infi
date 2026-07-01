@@ -1,0 +1,41 @@
+{
+  "$id": "https://continuity-os.dev/schemas/cor-suite/governance-receipt/1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Governance Receipt",
+  "type": "object",
+  "properties": {
+    "decisionId": { "type": "string" },
+    "corStateRef": { "type": "string" },
+    "analysisRef": { "type": "string" },
+    "decision": {
+      "type": "string",
+      "enum": ["approve", "reject", "require_fixes", "escalate", "freeze", "retire"]
+    },
+    "scope": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "rationale": { "type": "string" },
+    "evidenceRefs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "invariantsEnforced": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "steward": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "signature": { "type": "string" }
+  },
+  "required": [
+    "decisionId",
+    "corStateRef",
+    "decision",
+    "scope",
+    "rationale",
+    "steward",
+    "timestamp",
+    "signature"
+  ]
+}

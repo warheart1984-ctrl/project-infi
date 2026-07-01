@@ -21,6 +21,20 @@ from nova.config import load_nova_config
 from nova.errors import ProviderError
 from nova.lawful_llm import LawfulLLM
 from nova.metrics import metrics, record_error, record_request
+from nova.node import NodeVeto, load_node_result, node_status, submit_node_task
+from nova.node import agent_manifest as node_agent_routes
+from nova.node import evidence as node_evidence_routes
+from nova.node import event_bus as node_event_routes
+from nova.node import federation as node_federation_routes
+from nova.node import alerts as node_alert_routes
+from nova.node import conformance as node_conformance_routes
+from nova.node import mesh as node_mesh_routes
+from nova.node import policy_diff as node_policy_routes
+from nova.node import replay as node_replay_routes
+from nova.node import status as node_status_routes
+from nova.node import submit as node_submit_routes
+from nova.node import substrate_events as node_substrate_event_routes
+from nova.node.tools import routes as node_tool_routes
 from nova.providers import build_provider as _registry_build_provider
 
 
@@ -179,6 +193,13 @@ class OpenAICompletionRequest(BaseModel):
     governance_path: list[str] = Field(default_factory=list)
 
 
+class NodeSubmitRequest(BaseModel):
+    task_id: str = Field(default_factory=lambda: f"task-{uuid4()}")
+    payload: dict[str, Any] = Field(default_factory=dict)
+    intent: str = "unspecified"
+    caller_id: str = "unknown"
+
+
 app = FastAPI(title="Local Lawful Nova API", version="0.1.0")
 app.state.nova_config = load_nova_config()
 
@@ -188,11 +209,14 @@ def build_provider(cfg: dict[str, Any]) -> Any:
         return _LegacyOllamaProviderAdapter(
             OllamaChatProvider(
                 base_url=str(cfg.get("ollama_url") or "http://127.0.0.1:11434"),
-                model=str(cfg.get("ollama_model") or "qwen2.5-coder:7b"),
+                model=str(cfg.get("ollama_model") or "qwen2.5-coder:3b"),
             ),
-            model=str(cfg.get("ollama_model") or "qwen2.5-coder:7b"),
+            model=str(cfg.get("ollama_model") or "qwen2.5-coder:3b"),
         )
     return _registry_build_provider(cfg)
+
+
+app.state.node_provider_factory = build_provider
 
 
 @app.get("/health")
@@ -245,7 +269,7 @@ def openai_models(_: None = Depends(_require_api_key)) -> dict[str, Any]:
     ]
     if cfg.get("provider") == "ollama":
         models.append({
-            "id": str(cfg.get("ollama_model") or "qwen2.5-coder:7b"),
+            "id": str(cfg.get("ollama_model") or "qwen2.5-coder:3b"),
             "object": "model",
             "created": 0,
             "owned_by": "ollama",
@@ -346,6 +370,62 @@ def get_metrics() -> dict[str, Any]:
     return metrics
 
 
+@app.get("/node/status")
+def get_node_status(_: None = Depends(_require_api_key)) -> dict[str, Any]:
+    return node_status()
+
+
+@app.post("/node/submit")
+def submit_node(
+    request: NodeSubmitRequest,
+    _: None = Depends(_require_api_key),
+) -> Any:
+    cfg = load_nova_config()
+    provider = build_provider(cfg)
+    try:
+        return submit_node_task(request.model_dump(), provider)
+    except NodeVeto as exc:
+        return JSONResponse(
+            {
+                "error": {
+                    "decision": "blocked",
+                    "reason": exc.reason,
+                    "policy_version": exc.policy_version,
+                }
+            },
+            status_code=400,
+        )
+    except ProviderError as exc:
+        record_error()
+        return JSONResponse(
+            {"error": {"code": exc.code, "message": exc.message}},
+            status_code=500,
+        )
+
+
+@app.get("/node/result/{trace_id}")
+def get_node_result(trace_id: str, _: None = Depends(_require_api_key)) -> Any:
+    try:
+        return load_node_result(trace_id)
+    except KeyError:
+        raise HTTPException(status_code=404, detail="node result not found") from None
+
+
+app.include_router(node_status_routes.router)
+app.include_router(node_event_routes.router)
+app.include_router(node_substrate_event_routes.router)
+app.include_router(node_agent_routes.router)
+app.include_router(node_evidence_routes.router)
+app.include_router(node_federation_routes.router)
+app.include_router(node_submit_routes.router)
+app.include_router(node_tool_routes.router)
+app.include_router(node_replay_routes.router)
+app.include_router(node_mesh_routes.router)
+app.include_router(node_alert_routes.router)
+app.include_router(node_policy_routes.router)
+app.include_router(node_conformance_routes.router)
+
+
 def _run_lawful_chat(*, prompt: str, tenant_id: str, capability: str) -> dict[str, Any]:
     llm = LawfulLLM(
         operator_session_id="nova-local-api",
@@ -374,7 +454,7 @@ def _build_provider() -> Any | None:
         raise RuntimeError(f"unsupported NOVA_PROVIDER: {provider}")
     return OllamaChatProvider(
         base_url=os.environ.get("NOVA_OLLAMA_BASE_URL", "http://127.0.0.1:11434"),
-        model=os.environ.get("NOVA_OLLAMA_MODEL", "qwen2.5-coder:7b"),
+        model=os.environ.get("NOVA_OLLAMA_MODEL", "qwen2.5-coder:3b"),
     )
 
 
@@ -443,7 +523,7 @@ def _completion_prompt_to_text(prompt: Any) -> str:
 def _active_model(cfg: dict[str, Any]) -> str:
     provider = cfg.get("provider")
     if provider == "ollama":
-        return str(cfg.get("ollama_model") or "qwen2.5-coder:7b")
+        return str(cfg.get("ollama_model") or "qwen2.5-coder:3b")
     if provider == "external":
         return str(cfg.get("external_model") or "unknown-external-model")
     return str(cfg.get("local_model") or "nova-local")

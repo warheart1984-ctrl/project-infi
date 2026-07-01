@@ -1,0 +1,126 @@
+<h2>/nova/coding-agent v1 route design</h2>
+<p class="subtitle">Hybrid live cockpit: real backend loop first, continuity/corridor fallbacks until substrate events exist.</p>
+
+<div class="mockup">
+  <div class="mockup-header">Primary workflow: file selection -> patch plan/preview -> governance/receipt update -> accept/revert</div>
+  <div class="mockup-body">
+    <div style="display:grid;grid-template-rows:auto 1fr auto;min-height:560px;border:1px solid #263347;border-radius:8px;overflow:hidden;background:#07111e;color:#dbeafe">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid #263347;background:#0d1827">
+        <div style="font-weight:700">Nova Coding Agent</div>
+        <div style="display:flex;gap:10px;font-size:12px;color:#9fb4d0">
+          <span>Project: project-infi</span>
+          <span>Branch: codex/aaes-os-production-sweep</span>
+          <span style="color:#6ee7b7">Continuity: 0.91</span>
+          <span style="color:#facc15">Mode: Planning</span>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:260px minmax(420px,1fr) 300px;gap:0;min-height:0">
+        <aside style="border-right:1px solid #263347;padding:12px;background:#091523;display:flex;flex-direction:column;gap:12px">
+          <section style="border:1px solid #243449;border-radius:8px;padding:10px;background:#0e1b2b">
+            <strong>Continuity Context</strong>
+            <div style="margin-top:10px;display:grid;gap:8px;font-size:12px">
+              <div style="padding:7px;border-left:3px solid #38bdf8;background:#111f31">UGR -> AAIS handoff</div>
+              <div style="padding:7px;border-left:3px solid #a78bfa;background:#111f31">CKCE plan check</div>
+              <div style="padding:7px;border-left:3px solid #6ee7b7;background:#111f31">Patch preview receipt</div>
+            </div>
+          </section>
+          <section style="border:1px solid #243449;border-radius:8px;padding:10px;background:#0e1b2b;min-height:140px">
+            <strong>Lineage Graph</strong>
+            <div style="margin-top:16px;display:flex;align-items:center;justify-content:center;gap:10px;color:#9fb4d0;font-size:12px">
+              <span style="padding:8px;border-radius:999px;background:#17263a">File</span>
+              <span>-></span>
+              <span style="padding:8px;border-radius:999px;background:#17263a">Plan</span>
+              <span>-></span>
+              <span style="padding:8px;border-radius:999px;background:#17263a">Receipt</span>
+            </div>
+          </section>
+          <section style="border:1px solid #243449;border-radius:8px;padding:10px;background:#0e1b2b">
+            <strong>Health</strong>
+            <div style="margin-top:8px;display:grid;gap:6px;font-size:12px">
+              <div>Coherence <span style="float:right;color:#6ee7b7">91%</span></div>
+              <div>Drift <span style="float:right;color:#facc15">low</span></div>
+              <div>Replay <span style="float:right;color:#93c5fd">stable</span></div>
+            </div>
+          </section>
+        </aside>
+
+        <main style="padding:12px;display:grid;grid-template-rows:minmax(260px,1.1fr) minmax(200px,.9fr) auto;gap:12px;background:#08111d">
+          <section style="display:grid;grid-template-columns:170px 1fr;gap:10px;min-height:0">
+            <div style="border:1px solid #243449;border-radius:8px;padding:10px;background:#0e1b2b;font-size:12px">
+              <strong>Files</strong>
+              <div style="margin-top:10px;display:grid;gap:6px;color:#9fb4d0">
+                <span>src/api.py</span>
+                <span style="color:#dbeafe">frontend/src/App.jsx</span>
+                <span>tests/test_api.py</span>
+              </div>
+            </div>
+            <div style="border:1px solid #243449;border-radius:8px;background:#0a1422;overflow:hidden">
+              <div style="padding:8px 10px;border-bottom:1px solid #243449;font-size:12px;color:#9fb4d0">Code editor + patch preview</div>
+              <pre style="margin:0;padding:12px;font-size:12px;line-height:1.55;color:#dbeafe;white-space:pre-wrap">+ Route /nova/coding-agent
++ load selected file from /api/jarvis/workspace/file
++ create patch plan via /api/jarvis/patch/plan
++ render preview from /api/jarvis/patch/preview
++ accept/revert with review apply/decision</pre>
+            </div>
+          </section>
+
+          <section style="border:1px solid #243449;border-radius:8px;padding:10px;background:#0e1b2b">
+            <strong>Nova Reasoning Corridor</strong>
+            <div style="margin-top:10px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;font-size:12px">
+              <div style="padding:8px;background:#122034;border-radius:6px">Intent<br><span style="color:#9fb4d0">live/fallback</span></div>
+              <div style="padding:8px;background:#122034;border-radius:6px">Plan<br><span style="color:#6ee7b7">live</span></div>
+              <div style="padding:8px;background:#122034;border-radius:6px">Trace<br><span style="color:#9fb4d0">fallback</span></div>
+              <div style="padding:8px;background:#122034;border-radius:6px">Calls<br><span style="color:#6ee7b7">live</span></div>
+              <div style="padding:8px;background:#122034;border-radius:6px">Receipts<br><span style="color:#facc15">mixed</span></div>
+            </div>
+          </section>
+
+          <section style="display:flex;gap:8px;align-items:center">
+            <button class="mock-button">Propose Fix</button>
+            <button class="mock-button">Generate Tests</button>
+            <button class="mock-button">Show Proof</button>
+            <button class="mock-button">Run Replay</button>
+            <button class="mock-button">Accept Patch</button>
+            <button class="mock-button">Revert</button>
+          </section>
+        </main>
+
+        <aside style="border-left:1px solid #263347;padding:12px;background:#091523;display:flex;flex-direction:column;gap:12px">
+          <section style="border:1px solid #243449;border-radius:8px;padding:10px;background:#0e1b2b">
+            <strong>CKCE-1 Enforcement</strong>
+            <div style="margin-top:8px;font-size:12px;color:#9fb4d0">Invariant checks from governance endpoints when available; fallback derives status from patch lifecycle.</div>
+          </section>
+          <section style="border:1px solid #243449;border-radius:8px;padding:10px;background:#0e1b2b">
+            <strong>Wave Signature</strong>
+            <svg viewBox="0 0 260 80" style="width:100%;margin-top:8px">
+              <path d="M0 42 C 30 10, 55 70, 85 42 S 145 10, 175 42 S 230 72,260 40" fill="none" stroke="#38bdf8" stroke-width="3"/>
+              <path d="M0 50 C 35 25, 60 65, 95 48 S 150 20, 182 50 S 232 68,260 45" fill="none" stroke="#facc15" stroke-width="2" opacity=".75"/>
+            </svg>
+          </section>
+          <section style="border:1px solid #243449;border-radius:8px;padding:10px;background:#0e1b2b">
+            <strong>Continuity Receipt</strong>
+            <div style="margin-top:8px;font-size:12px;color:#9fb4d0">replay hash, proof status, cross-kernel coherence</div>
+          </section>
+          <section style="border:1px solid #243449;border-radius:8px;padding:10px;background:#0e1b2b">
+            <strong>Specimen Export</strong>
+            <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+              <button class="mock-button">Export</button>
+              <button class="mock-button">Compare</button>
+            </div>
+          </section>
+        </aside>
+      </div>
+
+      <footer style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:1px solid #263347;background:#0d1827;font-size:12px;color:#9fb4d0">
+        <span>Live event log: selected file -> patch plan -> preview receipt -> governance status</span>
+        <span>Replay: Play | Step | Jump to Event</span>
+      </footer>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Design approval checkpoint</h3>
+  <p>This confirms the route anatomy only. Visual polish, exact CSS, and component breakdown come after this design is approved.</p>
+</div>

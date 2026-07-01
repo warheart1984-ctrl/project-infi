@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "ledger_id": "forge-substrate-evolution",
+  "default_verification_policy": "fail",
+  "entries": [
+    {
+      "id": "substrate.v2.registry-baseline",
+      "date": "2026-05-27",
+      "author": "forge-platform-program",
+      "change_type": "add",
+      "registry_version": "substrate-registry.v2",
+      "contract_version": "forge-substrate.v2",
+      "substrate_ids": [
+        "generic-live-squashfs",
+        "debian-live",
+        "ubuntu-live",
+        "arch-live",
+        "fedora-live",
+        "alpine-live",
+        "opensuse-live",
+        "cogos-replay",
+        "trixie-live"
+      ],
+      "status": "active",
+      "verification": {
+        "tests": ["tests/test_validate_substrate.py", "tests/test_substrate_evolution_ledger.py"],
+        "scripts": ["cog-os/scripts/validate-substrate.py"]
+      },
+      "notes": "P5 substrate platform v2 baseline: multi-distro classes + automatic classification."
+    },
+    {
+      "id": "substrate.v2.replay-adapters-non-debian",
+      "date": "2026-05-27",
+      "author": "forge-platform-program",
+      "change_type": "register",
+      "registry_version": "substrate-registry.v2",
+      "contract_version": "forge-substrate.v2",
+      "substrate_ids": ["arch-live", "fedora-live", "alpine-live", "opensuse-live"],
+      "status": "experimental",
+      "verification": {
+        "tests": ["tests/test_validate_substrate.py"],
+        "scripts": ["cog-os/scripts/validate-substrate.py"]
+      },
+      "notes": "Classification-only until replay adapters are implemented in build.sh."
+    },
+    {
+      "id": "substrate.v2.replay-adapters-production",
+      "date": "2026-05-28",
+      "author": "forge-platform-program",
+      "change_type": "promote",
+      "registry_version": "substrate-registry.v2",
+      "contract_version": "forge-substrate.v2",
+      "substrate_ids": ["debian-live", "ubuntu-live"],
+      "status": "active",
+      "verification": {
+        "tests": ["tests/test_replay_adapter.py"],
+        "scripts": ["cog-os/scripts/validate-replay-adapter.py"]
+      },
+      "notes": "P10: debian-live-layout + ubuntu-live-layout production in build.sh dispatcher."
+    },
+    {
+      "id": "substrate.v2.universal-windows-macos-android",
+      "date": "2026-05-28",
+      "author": "forge-universal-substrate-program",
+      "change_type": "register",
+      "registry_version": "substrate-registry.v2",
+      "contract_version": "forge-substrate.v2",
+      "substrate_ids": ["windows-installer", "macos-installer", "android-bootable"],
+      "status": "experimental",
+      "verification": {
+        "tests": ["tests/test_universal_substrate.py"],
+        "scripts": [
+          "cog-os/scripts/validate-substrate-invariants.py",
+          "cog-os/scripts/validate-replay-adapter.py"
+        ]
+      },
+      "notes": "P15 universal foundry: WIM/APFS/super.img classification + replay adapter contracts."
+    },
+    {
+      "id": "substrate.v2.rocky-live-classification",
+      "date": "2026-06-07",
+      "author": "operator-campaign-phase3",
+      "change_type": "register",
+      "registry_version": "substrate-registry.v2",
+      "contract_version": "forge-substrate.v2",
+      "substrate_ids": ["rocky-live"],
+      "status": "experimental",
+      "verification": {
+        "tests": ["tests/test_validate_substrate.py"],
+        "scripts": ["cog-os/scripts/validate-substrate.py"]
+      },
+      "notes": "Rocky Linux LiveOS classification via fedora-liveos-layout replay adapter (classification-only)."
+    },
+    {
+      "id": "substrate.v2.cog-os-path-migration",
+      "date": "2026-06-08",
+      "author": "nova-northstar-cog-os",
+      "change_type": "migrate",
+      "registry_version": "substrate-registry.v2",
+      "contract_version": "forge-substrate.v2",
+      "substrate_ids": [],
+      "status": "active",
+      "verification": {
+        "tests": ["tests/test_substrate_evolution_ledger.py"],
+        "scripts": ["cog-os/scripts/validate-substrate.py"]
+      },
+      "notes": "Verification script paths migrated from wolf-cog-os/scripts/* to cog-os/scripts/*; historical entries retain legacy context."
+    }
+  ]
+}

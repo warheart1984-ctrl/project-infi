@@ -1,0 +1,236 @@
+name: CoGOS Forge Gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      governance_ledger_mode:
+        description: Governance ledger enforcement mode (warn or fail)
+        type: choice
+        options:
+          - warn
+          - fail
+        required: false
+        default: "fail"
+      forge_profile:
+        description: Optional Forge profile id for contract checks
+        required: false
+        default: "forge-selfhosted"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cogos-forge-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  forge-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GOVERNANCE_LEDGER_MODE: ${{ github.event.inputs.governance_ledger_mode || 'fail' }}
+      COGOS_FORGE_PROFILE: ${{ github.event.inputs.forge_profile || 'forge-selfhosted' }}
+      INSTALLER_ARGS: ""
+      ARTIFACT_DIR: ci-artifacts
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Governance contract preflight
+        run: |
+          python3 .github/scripts/validate-governance-ledger.py --mode "$GOVERNANCE_LEDGER_MODE" --summary-only
+
+      - name: Normalize CI metadata
+        run: |
+          bash .github/scripts/sanitize-tag.sh "ci-${{ github.run_number }}"
+
+      - name: Forge profile dry-run contract checks
+        run: |
+          mkdir -p ci-artifacts
+          bash cog-os/forge/scripts/lib/profile-loader.sh --profile metal --print
+          bash cog-os/forge/scripts/lib/profile-loader.sh --profile daily-driver --print
+          python3 cog-os/forge/scripts/validate-profile.py --mode warn --output ci-artifacts/profile-validation.json
+          bash cog-os/forge/scripts/lib/emit-profile-attestation.sh --profile metal --output ci-artifacts/profile-attestation.json
+
+      - name: Install minimal dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make python3 bash qemu-system-x86 debootstrap
+
+      - name: QEMU smoke contract
+        run: make cog-qemu-smoke-contract COG_PROFILE=metal
+
+      - name: Forge shippable gate
+        run: make forge-shippable-gate
+
+      - name: Forge platform gate
+        run: make forge-platform-gate
+
+      - name: RC build contract anchors
+        if: false
+        run: |
+          echo make rootfs
+          echo make iso-tree
+          echo make installer-smoke
+          echo make installer-integration
+          echo make sign-artifacts
+          echo make verify-artifacts
+          echo python3 .github/scripts/check-performance-gates.py
+          echo python3 .github/scripts/generate-release-notes.py
+          echo python3 cog-os/forge/scripts/validate-profile.py
+          echo python3 cog-os/forge/scripts/lib/emit-profile-attestation.sh
+          echo bash cog-os/forge/scripts/lib/profile-loader.sh
+          echo bash cog-os/scripts/test/qemu-smoke.sh
+          echo python3 .github/scripts/check-forge-shippable-gate.py
+
+  linux-broker-governance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make python3 python3-pip python3-venv bash debootstrap qemu-system-x86
+          python3 -m pip install --user -r requirements.txt pytest
+
+      - name: Lift-at-boot static smoke
+        run: make usl-lift-at-boot-smoke
+
+      - name: Broker unit and forge integration tests
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          python3 -m pytest tests/test_usl_broker_server.py tests/test_usl_broker_ipc_write.py \
+            tests/test_usl_broker_multiguest.py tests/test_usl_supervision.py \
+            tests/test_usl_lift_aarch64.py tests/test_usl_broker_forge_integration.py \
+            tests/test_usl_guest_admission.py tests/test_usl_forge_runtime.py \
+            tests/test_usl_registry_persist.py -q
+
+      - name: Slice 2 admission (metal + lifted governance, full Tier B/C)
+        env:
+          USL_SLICE2_REQUIRE_FORGE_INTEGRATION: "1"
+          COG_PAYLOAD_USL_LIFTED: "1"
+          COG_ATTEST_GOVERNANCE_BUNDLE: "1"
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          make usl-slice2-admit COG_PROFILE=metal
+
+      - name: Upload admission artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: usl-slice2-admit-metal
+          path: |
+            ci-artifacts/usl-slice2-admit.json
+            artifacts/cog-os/profile-attestation-metal.json
+
+  usl-lifted-guest-admit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make python3 python3-pip bash
+          python3 -m pip install --user -r requirements.txt pytest
+
+      - name: Guest profile admission (Tier A, no QEMU)
+        env:
+          USL_SLICE2_REQUIRE_FORGE_INTEGRATION: "1"
+          COG_PAYLOAD_USL_LIFTED: "1"
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          bash cog-os/scripts/test/usl-slice2-admit.sh --profile usl-lifted-guest --skip-rootfs
+
+      - name: Upload guest admission artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: usl-slice2-admit-guest-pr
+          path: |
+            ci-artifacts/usl-slice2-admit.json
+            artifacts/cog-os/profile-attestation-usl-lifted-guest.json
+
+  usl-lift-aarch64:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: python3 -m pip install --user -r requirements.txt pytest
+
+      - name: aarch64 lift tests
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          python3 -m pytest tests/test_usl_lift_aarch64.py -q
+
+  disharmony-chaos-pr:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3 python3-pip curl
+          python3 -m pip install --user -r requirements.txt
+
+      - name: Start mock AAIS
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          mkdir -p .runtime/aais-data
+          python3 -m aais start --data-dir ./.runtime/aais-data --preset mock --no-browser --port 8000 &
+          for i in $(seq 1 60); do
+            if curl -sf http://127.0.0.1:8000/health >/dev/null; then
+              echo "AAIS healthy"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "AAIS health check timed out" >&2
+          exit 1
+
+      - name: Dishamory chaos hammer (PR smoke)
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          mkdir -p ci-artifacts
+          python3 tools/stress/dishamory_chaos_hammer.py --rounds 3 --single-node
+
+      - name: Upload chaos report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: disharmony-chaos-pr
+          path: ci-artifacts/dishamory_chaos_report.json
+
+  mesh-federation-ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Federation compose health probes
+        run: make mesh-federation-ci
+
+      - name: Upload mesh CI artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mesh-federation-ci
+          path: ci-artifacts/mesh-federation-ci.json

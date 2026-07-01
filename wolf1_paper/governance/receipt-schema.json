@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aaes-os.local/schemas/doc-build-receipt.json",
+  "title": "GovernedDocumentBuildReceipt",
+  "type": "object",
+  "required": [
+    "receipt_id",
+    "document_id",
+    "version",
+    "timestamp",
+    "commit",
+    "source",
+    "artifacts",
+    "cts_status",
+    "traceability",
+    "builder"
+  ],
+  "properties": {
+    "receipt_id": { "type": "string" },
+    "document_id": { "type": "string" },
+    "version": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "commit": { "type": "string" },
+    "source": { "type": "string" },
+    "source_sha256": { "type": "string" },
+    "artifacts": {
+      "type": "object",
+      "required": ["pdf_sha256", "html_sha256"],
+      "properties": {
+        "pdf_sha256": { "type": "string" },
+        "html_sha256": { "type": "string" },
+        "pdf_file": { "type": "string" },
+        "html_file": { "type": "string" }
+      }
+    },
+    "outputs": { "type": "object" },
+    "cts_status": { "type": "string", "enum": ["PASS", "FAIL", "UNKNOWN"] },
+    "cts_passed": { "type": "boolean" },
+    "traceability": {
+      "type": "object",
+      "properties": {
+        "requirements": { "type": "array", "items": { "type": "string" } },
+        "adr_ids": { "type": "array", "items": { "type": "string" } },
+        "reference_implementations": { "type": "array", "items": { "type": "string" } },
+        "cts_cases": { "type": "array", "items": { "type": "string" } },
+        "evidence_entries": { "type": "array", "items": { "type": "string" } },
+        "benchmarks": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "builder": { "type": "string" },
+    "notes": { "type": "string" }
+  }
+}

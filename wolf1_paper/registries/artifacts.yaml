@@ -1,0 +1,31 @@
+# WOLF-1 Artifact Registry
+artifacts:
+  - id: ART-WOLF1-ARCH-001
+    type: Spec
+    title: WOLF-1 Architecture Document v1.1
+    version: "1.1.0"
+    path: src/wolf1_v1.1.md
+    checksum: pending
+    links:
+      - id: REQ-WOLF1-ARCH-001
+        type: Requirement
+
+  - id: ART-WOLF1-PDF-001
+    type: Build
+    title: WOLF-1 Architecture PDF
+    version: "1.1.0"
+    path: build/wolf1_v1.1-1.1.0.pdf
+    checksum: pending
+    links:
+      - id: ART-WOLF1-ARCH-001
+        type: Spec
+
+  - id: ART-WOLF1-HTML-001
+    type: Build
+    title: WOLF-1 Architecture HTML
+    version: "1.1.0"
+    path: build/wolf1_v1.1-1.1.0.html
+    checksum: pending
+    links:
+      - id: ART-WOLF1-ARCH-001
+        type: Spec

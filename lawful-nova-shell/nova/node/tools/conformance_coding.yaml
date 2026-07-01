@@ -1,0 +1,33 @@
+profile: "N2-coding-tools"
+description: "Ring-2 governed coding and wiring tools inside a Constitutional Node."
+
+requirements:
+  - id: "CT-1"
+    name: "Stateless tools"
+    description: "Coder and wiring tools must be stateless and not persist internal memory."
+    ring: 2
+    mandatory: true
+
+  - id: "CT-2"
+    name: "Local-only inference"
+    description: "All tool inference must use local_model.py with Ollama/vLLM and no external SaaS."
+    ring: 2
+    mandatory: true
+
+  - id: "CT-3"
+    name: "Governed invocation"
+    description: "/node/tool must be wrapped by GovernanceRuntime and produce receipts."
+    ring: 1
+    mandatory: true
+
+  - id: "CT-4"
+    name: "Diff-required coding"
+    description: "Coder tool must return unified diff for every patch."
+    ring: 2
+    mandatory: true
+
+  - id: "CT-5"
+    name: "Replayable actions"
+    description: "Every coding/wiring action must produce a receipt that can be replayed."
+    ring: 1
+    mandatory: true

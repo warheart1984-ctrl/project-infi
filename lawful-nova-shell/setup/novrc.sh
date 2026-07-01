@@ -15,6 +15,26 @@ nova-chat() {
   "${NOVA_CLI}" chat "$@"
 }
 
+nova-deepseek() {
+  local prompt="${1:-observe lawful nova coding substrate}"
+  local model="${NOVA_DEEPSEEK_MODEL:-deepseek-coder:6.7b}"
+  if ! command -v ollama >/dev/null 2>&1; then
+    echo "ollama is required for nova-deepseek, but it was not found on PATH." >&2
+    return 127
+  fi
+  ollama run "${model}" "${prompt}"
+}
+
+nova-qwen() {
+  local prompt="${1:-observe lawful nova qwen substrate}"
+  local model="${NOVA_QWEN_MODEL:-qwen2.5-coder:3b}"
+  if ! command -v ollama >/dev/null 2>&1; then
+    echo "ollama is required for nova-qwen, but it was not found on PATH." >&2
+    return 127
+  fi
+  ollama run "${model}" "${prompt}"
+}
+
 novr() {
   "${NOVA_CLI}" run "$@"
 }
@@ -48,4 +68,5 @@ novstack() {
 }
 
 echo "[Nova] Lawful Nova shell ready (bash)."
-echo "   nova-chat | novr | novtest | novpr | novdoc | novsec | novstack"
+echo "   nova-chat | novr | novtest | novpr | novdoc | novsec | novstack | nova-deepseek | nova-qwen"
+echo "   Coding substrate: ${NOVA_CODING_SUBSTRATE:-qwen2.5-coder:3b} (qwen2.5-coder:3b, tier 15)"

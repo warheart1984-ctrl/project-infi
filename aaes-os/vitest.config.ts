@@ -22,6 +22,7 @@ const workspaceAliases: Record<string, string> = {
   '@aaes-os/invariant-registry': 'packages/invariant-registry/src/index.ts',
   '@aaes-os/nimf': 'packages/nimf/src/index.ts',
   '@aaes-os/constitutional-evolution': 'packages/constitutional-evolution/src/index.ts',
+  '@aaes-os/architect-agent': 'packages/architect-agent/src/index.ts',
   '@aaes-os/omega-stress-harness': 'packages/omega-stress-harness/src/index.ts',
   '@aaes-os/theta-codec': 'packages/theta-codec/src/index.ts',
 };

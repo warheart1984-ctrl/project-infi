@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AAES-OS Governance Traceability Graph</title>
+  <link rel="stylesheet" href="dashboard-dark.css" />
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Governance Traceability Graph</h1>
+    <p>Requirements → ADRs → Artifacts (WOLF-1 scope)</p>
+    <div class="toolbar"><a href="dashboard.html">← Dashboard</a></div>
+  </header>
+  <main>
+    <section class="panel">
+      <h2>Traceability</h2>
+      <pre class="mermaid">
+graph LR
+  subgraph Requirements
+    REQ_WOLF1["REQ-WOLF1-ARCH-001<br/>WOLF-1 Constitutional Architecture"]
+  end
+
+  subgraph ADRs
+    ADR_0001["ADR-0001<br/>v1.1 Constitutional Extensions"]
+  end
+
+  subgraph Artifacts
+    ART_ARCH["ART-WOLF1-ARCH-001<br/>Architecture MD"]
+    ART_PDF["ART-WOLF1-PDF-001<br/>Build PDF"]
+    ART_HTML["ART-WOLF1-HTML-001<br/>Build HTML"]
+  end
+
+  REQ_WOLF1 --> ADR_0001
+  ADR_0001 --> ART_ARCH
+  ART_ARCH --> ART_PDF
+  ART_ARCH --> ART_HTML
+      </pre>
+    </section>
+
+    <section class="panel">
+      <h2>Amendment Timeline</h2>
+      <pre class="mermaid">
+timeline
+  title WOLF-1 Constitutional Amendments
+  2026-06-25 : amendment-0001 : WOLF-1 v1.0 → v1.1 constitutional extensions
+      </pre>
+    </section>
+  </main>
+</body>
+</html>

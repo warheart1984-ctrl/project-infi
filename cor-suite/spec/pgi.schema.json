@@ -1,0 +1,52 @@
+{
+  "$id": "https://continuity-os.dev/schemas/cor-suite/pgi-1.0.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Proof-Graph Index (PGI-1.0)",
+  "type": "object",
+  "properties": {
+    "pgiVersion": { "type": "string" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "nodes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" }
+    }
+  },
+  "required": ["pgiVersion", "generatedAt", "nodes", "edges"],
+  "$defs": {
+    "node": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "requirement",
+            "specification",
+            "implementation",
+            "verification",
+            "evidence",
+            "governance_receipt"
+          ]
+        },
+        "path": { "type": "string" }
+      },
+      "required": ["id", "kind", "path"]
+    },
+    "edge": {
+      "type": "object",
+      "properties": {
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "relation": {
+          "type": "string",
+          "enum": ["implements", "verifies", "evidences", "supersedes", "related"]
+        }
+      },
+      "required": ["from", "to", "relation"]
+    }
+  }
+}

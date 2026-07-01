@@ -1,0 +1,38 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\title{WOLF-1: Copilot in Orbit \\ A Constitutional Architecture for Governed Space Compute}
+
+\author{
+  Jon Halstead\\Project Infinity - AAIS / Mythar Root Systems\\[0.5em]
+  \textit{Architectural review: Bradley Bates (SkillsMcGee)}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+WOLF-1 is a constitutional architecture for a sovereign governed compute node in high Earth orbit or at a Lagrange point. It hosts Copilot-class large language model workloads under strict constitutional constraints derived from the AAES-OS stack (CRK-1, CAS 1.0, CFT, Wave Math) and is designed for decade-scale operation under the principle: fail safe, not fail silent.
+\end{abstract}
+
+% Build .tex section files from markdown via: make sections (pandoc)
+\input{../../src/sections/01_mission_context.tex}
+\input{../../src/sections/02_system_architecture.tex}
+\input{../../src/sections/03_bus_architecture.tex}
+\input{../../src/sections/04_invariants.tex}
+\input{../../src/sections/04_9_invariant_promotion.tex}
+\input{../../src/sections/04_10_meta_governance_crk1.tex}
+\input{../../src/sections/06_sequence_diagram.tex}
+\input{../../src/sections/06_4_epistemic_receipts.tex}
+\input{../../src/sections/08_safe_mode.tex}
+\input{../../src/sections/08_5_graded_safe_mode.tex}
+\input{../../src/sections/12_telemetry_observability.tex}
+\input{../../src/sections/12_4_anomaly_discovery.tex}
+\input{../../src/sections/14_constitutional_evolution.tex}
+
+\end{document}

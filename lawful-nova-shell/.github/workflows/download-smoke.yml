@@ -1,0 +1,48 @@
+name: download-smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  fresh-checkout:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - name: Install backend
+        run: python -m pip install -e .[dev]
+
+      - name: Install desktop
+        working-directory: desktop
+        run: npm ci
+
+      - name: Test backend
+        run: python -m pytest tests -q
+
+      - name: Test desktop
+        working-directory: desktop
+        run: npm test
+
+      - name: Package release zips
+        run: |
+          python scripts/package_windows_program.py
+          python scripts/package_macos_shell.py
+
+      - name: Upload source packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: nova-download-ready-source-zips
+          path: dist/*.zip

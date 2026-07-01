@@ -1,0 +1,13 @@
+flowchart LR
+  S0[Profile S0: Full Operations]
+  S1[Profile S1: Cognitive Degradation]
+  S2[Profile S2: Autonomy Degradation]
+  S3[Profile S3: Governance-Only]
+
+  S0 --> S1
+  S1 --> S2
+  S2 --> S3
+
+  S3 --> S2
+  S2 --> S1
+  S1 --> S0

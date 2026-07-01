@@ -1,0 +1,64 @@
+{
+  "$id": "https://continuity-os.dev/schemas/cor-suite/car-1.0.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Canonical Artifact Registry (CAR-1.0)",
+  "type": "object",
+  "properties": {
+    "carVersion": { "type": "string" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "artifacts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/artifact" }
+    }
+  },
+  "required": ["carVersion", "generatedAt", "artifacts"],
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "namespace": { "type": "string" },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "requirement",
+            "specification",
+            "implementation",
+            "verification",
+            "evidence",
+            "governance_receipt",
+            "schema",
+            "registry"
+          ]
+        },
+        "version": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "active", "deprecated", "retired"]
+        },
+        "authority": { "type": "string" },
+        "schemaRef": { "type": "string" },
+        "path": { "type": "string" },
+        "hash": { "type": "string" },
+        "lifecycle": {
+          "type": "object",
+          "properties": {
+            "createdAt": { "type": "string", "format": "date-time" },
+            "updatedAt": { "type": "string", "format": "date-time" },
+            "deprecatedAt": { "type": "string", "format": "date-time" },
+            "retiredAt": { "type": "string", "format": "date-time" }
+          }
+        },
+        "links": {
+          "type": "object",
+          "properties": {
+            "supersedes": { "type": "array", "items": { "type": "string" } },
+            "supersededBy": { "type": "array", "items": { "type": "string" } },
+            "related": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      },
+      "required": ["id", "namespace", "kind", "version", "status", "path", "hash"]
+    }
+  }
+}

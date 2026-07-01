@@ -1,0 +1,56 @@
+[
+  {
+    "receipt_id": "REC-wolf1-arch-1.1.0",
+    "document_id": "wolf1-arch",
+    "version": "1.1.0",
+    "timestamp": "2026-06-25T16:21:38Z",
+    "commit": "a9d5bd15b9940e33dbf56371926d1e5f2fdbceec",
+    "source": "src/wolf1_v1.1.md",
+    "source_sha256": "30a39beca824cbfd798078c482e9834000d3999f126989a694abed15065678d8",
+    "artifacts": {
+      "pdf_sha256": "e5399842f6ee38d63c172dc372d21c01320d20e236f448fd03f4faad3196775a",
+      "html_sha256": "5b4b10ec4791655698abe4959389e173ff5146364a950b06638a1c1affb4e245",
+      "pdf_file": "wolf1_v1.1-1.1.0.pdf",
+      "html_file": "wolf1_v1.1-1.1.0.html"
+    },
+    "outputs": {
+      "pdf": {
+        "file": "wolf1_v1.1-1.1.0.pdf",
+        "path": "build/wolf1_v1.1-1.1.0.pdf",
+        "sha256": "e5399842f6ee38d63c172dc372d21c01320d20e236f448fd03f4faad3196775a"
+      },
+      "html": {
+        "file": "wolf1_v1.1-1.1.0.html",
+        "path": "build/wolf1_v1.1-1.1.0.html",
+        "sha256": "5b4b10ec4791655698abe4959389e173ff5146364a950b06638a1c1affb4e245"
+      }
+    },
+    "cts_status": "PASS",
+    "cts_passed": true,
+    "traceability": {
+      "requirements": [
+        "REQ-WOLF1-ARCH-001"
+      ],
+      "adr_ids": [
+        "ADR-0001-wolf1-v11-constitutional-extensions"
+      ],
+      "reference_implementations": [
+        "src/wolf1_v1.1.md",
+        "src/sections/",
+        "src/sync_sections_from_master.js",
+        "build.mjs",
+        "cts/run_all.sh",
+        "scripts/enforce_governance.sh"
+      ],
+      "cts_cases": [
+        "CTS-WOLF1-001",
+        "CTS-GOV-TRACE-001"
+      ],
+      "evidence_entries": [
+        "EVI-WOLF1-0001"
+      ],
+      "benchmarks": []
+    },
+    "builder": "cursor"
+  }
+]

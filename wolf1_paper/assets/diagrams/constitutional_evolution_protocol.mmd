@@ -1,0 +1,12 @@
+flowchart TD
+  AUTH[Ground-Signed Authorization]
+  S3[SAFE-MODE S3]
+  QUORUM[Evaluator Quorum]
+  MUT[Apply Mutation M0-M4]
+  LED[Mutation Ledger Entry]
+  MON[Monitor Fault/Anomaly Rate]
+  RB{Rollback?}
+
+  AUTH --> S3 --> QUORUM --> MUT --> LED --> MON --> RB
+  RB -->|yes| REVERT[Restore Prior Invariant Set]
+  RB -->|no| DONE[Mutation Active]

@@ -1,0 +1,103 @@
+agents:
+  coder:
+    id: agent-coder
+    role: blue_team_builder
+    color: blue
+    capabilities: [write_patches, implement_features, fix_tests]
+    tools: [coder_tool]
+    governance:
+      can_write_files: true
+      can_modify_deps: true
+      requires_review: true
+      emits_receipts: true
+  wiring:
+    id: agent-wiring
+    role: green_team_integrator
+    color: green
+    capabilities: [wire_modules, update_manifests, configure_routes]
+    tools: [wiring_tool]
+    governance:
+      can_write_files: true
+      can_modify_config: true
+      requires_review: true
+      emits_receipts: true
+  reviewer:
+    id: agent-reviewer
+    role: red_team_inspector
+    color: red
+    capabilities: [review_patches, assess_risk, check_invariants, suggest_tests]
+    tools: [review_tool, invariant_checker, risk_assessor]
+    governance:
+      can_write_files: false
+      can_block_actions: true
+      emits_receipts: true
+  security:
+    id: agent-security
+    role: purple_team_security
+    color: purple
+    capabilities: [scan_dependencies, detect_secrets, warn_destructive_ops]
+    tools: [secscan_tool, secret_detector, dependency_diff_analyzer]
+    governance:
+      can_write_files: false
+      can_block_actions: true
+      emits_receipts: true
+  test_engineer:
+    id: agent-test
+    role: yellow_team_verifier
+    color: yellow
+    capabilities: [generate_tests, strengthen_tests, run_tests]
+    tools: [testgen_tool, coverage_analyzer, fuzz_runner]
+    governance:
+      can_write_files: false
+      can_request_patches: true
+      emits_receipts: true
+  architect:
+    id: agent-architect
+    role: white_team_system_designer
+    color: white
+    capabilities: [design_architecture, enforce_module_boundaries, advise_governance]
+    tools: [archmap_tool, module_linter, governance_policy_advisor]
+    governance:
+      can_write_files: false
+      can_veto_patches: true
+      emits_receipts: true
+  operator:
+    id: agent-operator
+    role: black_team_runtime_executor
+    color: black
+    capabilities: [run_app, run_migrations, run_replay, run_benchmarks]
+    tools: [runtime_exec, replay_tool, benchmark_tool]
+    governance:
+      can_write_files: false
+      emits_receipts: true
+  context_builder:
+    id: agent-context
+    role: silver_team_curator
+    color: silver
+    capabilities: [pin_files, collect_logs, assemble_context]
+    tools: [context_builder]
+    governance:
+      can_write_files: false
+      emits_receipts: true
+  explainer:
+    id: agent-explainer
+    role: gold_team_meta_reasoner
+    color: gold
+    capabilities: [explain_patches, explain_risks, explain_architecture]
+    tools: [explain_tool]
+    governance:
+      can_write_files: false
+      emits_receipts: true
+  sentinel:
+    id: agent-sentinel
+    role: orange_team_governance_enforcer
+    color: orange
+    capabilities: [validate_receipts, enforce_policy, detect_drift, trigger_rollback]
+    tools: [governance_validator, drift_detector, rollback_tool]
+    governance:
+      can_write_files: false
+      can_block_actions: true
+      emits_receipts: true
+orchestration:
+  status: manifest_only
+  guardrail: Tools remain stateless Ring-2 invocations; color-team loops are future UI/workflow guidance, not Node-side orchestration.

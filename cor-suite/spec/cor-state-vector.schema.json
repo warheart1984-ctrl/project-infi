@@ -1,0 +1,138 @@
+{
+  "$id": "https://continuity-os.dev/schemas/cor-suite/cor-state-vector/1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "COR-1.0 State Vector",
+  "type": "object",
+  "properties": {
+    "corVersion": { "type": "string" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "requirements": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/requirement" }
+    },
+    "structuralIntegrity": {
+      "type": "object",
+      "properties": {
+        "orphans": {
+          "type": "object",
+          "properties": {
+            "requirements": { "type": "array", "items": { "type": "string" } },
+            "implementations": { "type": "array", "items": { "type": "string" } },
+            "verifications": { "type": "array", "items": { "type": "string" } }
+          },
+          "required": ["requirements", "implementations", "verifications"]
+        },
+        "missingArtifacts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/missingArtifact" }
+        },
+        "brokenLineage": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/lineageIssue" }
+        },
+        "unresolvedAssumptions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["orphans", "missingArtifacts", "brokenLineage", "unresolvedAssumptions"]
+    }
+  },
+  "required": ["corVersion", "generatedAt", "requirements", "structuralIntegrity"],
+  "$defs": {
+    "requirement": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "authority": { "type": "string" },
+        "specArtifacts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/artifactRef" }
+        },
+        "implArtifacts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/artifactRef" }
+        },
+        "verificationArtifacts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/artifactRef" }
+        },
+        "evidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceRef" }
+        },
+        "provenance": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/provenanceEvent" }
+        },
+        "reproductionStatus": {
+          "type": "string",
+          "enum": ["not_attempted", "in_progress", "failed", "succeeded"]
+        },
+        "maturity": { "$ref": "#/$defs/maturityLevel" }
+      },
+      "required": [
+        "id",
+        "authority",
+        "specArtifacts",
+        "implArtifacts",
+        "verificationArtifacts",
+        "evidence",
+        "provenance",
+        "reproductionStatus",
+        "maturity"
+      ]
+    },
+    "artifactRef": {
+      "type": "object",
+      "properties": {
+        "path": { "type": "string" },
+        "type": { "type": "string" },
+        "hash": { "type": "string" }
+      },
+      "required": ["path", "type", "hash"]
+    },
+    "evidenceRef": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "artifact": { "$ref": "#/$defs/artifactRef" }
+      },
+      "required": ["id", "type", "artifact"]
+    },
+    "provenanceEvent": {
+      "type": "object",
+      "properties": {
+        "eventId": { "type": "string" },
+        "actor": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "action": { "type": "string" },
+        "details": { "type": "string" }
+      },
+      "required": ["eventId", "actor", "timestamp", "action"]
+    },
+    "maturityLevel": {
+      "type": "string",
+      "enum": ["normative", "implemented", "verified", "reproduced"]
+    },
+    "missingArtifact": {
+      "type": "object",
+      "properties": {
+        "expectedForRequirement": { "type": "string" },
+        "kind": { "type": "string", "enum": ["spec", "impl", "verification", "evidence"] }
+      },
+      "required": ["expectedForRequirement", "kind"]
+    },
+    "lineageIssue": {
+      "type": "object",
+      "properties": {
+        "fromId": { "type": "string" },
+        "toId": { "type": "string" },
+        "issueType": { "type": "string" },
+        "details": { "type": "string" }
+      },
+      "required": ["fromId", "toId", "issueType"]
+    }
+  }
+}

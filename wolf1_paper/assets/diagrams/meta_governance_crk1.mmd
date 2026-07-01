@@ -1,0 +1,11 @@
+flowchart LR
+  PE[Primary Evaluator PE]
+  SE[Shadow Evaluator SE]
+  CMP{Match?}
+  OK[Continue Run]
+  FAULT[Class A Fault + SAFE-MODE S3]
+
+  PE --> CMP
+  SE --> CMP
+  CMP -->|yes| OK
+  CMP -->|no| FAULT

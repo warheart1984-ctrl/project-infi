@@ -1,0 +1,16 @@
+# WOLF-1 Requirements Registry
+requirements:
+  - id: REQ-WOLF1-ARCH-001
+    title: WOLF-1 Constitutional Architecture v1.1
+    description: >
+      Architecture document for governed orbital compute node with CRK-1,
+      invariant promotion, meta-governance, epistemic receipts, graded safe-mode,
+      anomaly discovery, and constitutional evolution protocol.
+    principle: fail-safe-not-fail-silent
+    specification: wolf1-arch-v1.1.md
+    validation:
+      - test_id: CTS-WOLF1-001
+        method: cts/run_all.sh
+    traceability:
+      - adr_id: ADR-0001-wolf1-v11-constitutional-extensions
+        artifact_id: ART-WOLF1-ARCH-001

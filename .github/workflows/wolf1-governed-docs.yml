@@ -1,0 +1,84 @@
+name: Governed WOLF-1 Documents
+
+on:
+  push:
+    tags:
+      - 'wolf1-v*'
+    paths:
+      - 'wolf1_paper/**'
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: wolf1_paper
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: wolf1_paper/package-lock.json
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate traceability chains
+        run: python scripts/validate_traceability_chain.py
+
+      - name: Governance enforcement
+        run: bash scripts/enforce_governance.sh
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Build versioned PDF and HTML
+        run: npm run build:pdf -- --skip-cts
+
+      - name: Changelog, amendments, ADR index, diagrams
+        run: |
+          npm run changelog
+          npm run amendments
+          npm run adr-index
+          npm run diagrams
+
+      - name: Emit governance receipt
+        run: npm run receipt
+        env:
+          BUILDER: github-actions
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wolf1-arch-${{ github.ref_name }}
+          path: |
+            wolf1_paper/build/*.pdf
+            wolf1_paper/build/*.html
+            wolf1_paper/governance/receipts/*.json
+            wolf1_paper/adr/INDEX.md
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/wolf1-v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: wolf1-arch-${{ github.ref_name }}
+          path: wolf1_paper
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: wolf1_paper/build/*.pdf
+          body_path: wolf1_paper/CHANGELOG.md

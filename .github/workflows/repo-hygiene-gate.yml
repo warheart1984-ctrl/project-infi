@@ -1,0 +1,48 @@
+name: Repo Hygiene Gate
+
+on:
+  pull_request:
+    paths:
+      - "docs/audit/REPO_HYGIENE_MANIFEST.json"
+      - "docs/subsystems/repo_steward/**"
+      - "schemas/repo_hygiene_manifest.v1.json"
+      - ".github/scripts/check-repo-hygiene.py"
+      - ".github/scripts/validate-repo-hygiene-manifest.py"
+      - ".github/workflows/repo-hygiene-gate.yml"
+      - "tests/test_check_repo_hygiene_script.py"
+      - "Makefile"
+  push:
+    branches: [main]
+    paths:
+      - "docs/audit/REPO_HYGIENE_MANIFEST.json"
+      - "docs/subsystems/repo_steward/**"
+      - "schemas/repo_hygiene_manifest.v1.json"
+      - ".github/scripts/check-repo-hygiene.py"
+      - ".github/scripts/validate-repo-hygiene-manifest.py"
+      - ".github/workflows/repo-hygiene-gate.yml"
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repo-hygiene:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Repo hygiene unit tests
+        run: python3 -m unittest tests.test_check_repo_hygiene_script -q
+      - name: Repo hygiene gate (fail mode)
+        run: make repo-hygiene-gate REPO_HYGIENE_MODE=fail
+      - name: Upload hygiene report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: repo-hygiene-report
+          path: ci-artifacts/repo-hygiene-report.json

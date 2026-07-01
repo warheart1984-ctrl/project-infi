@@ -1,0 +1,7 @@
+build/
+node_modules/
+governance/receipts/*.json
+!governance/receipts/.gitkeep
+docs-portal/build/
+*.pdf
+!build/.gitkeep

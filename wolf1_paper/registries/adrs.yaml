@@ -1,0 +1,6 @@
+# ADR registry — maps requirements to architecture decision records
+adrs:
+  - requirement_id: REQ-WOLF1-ARCH-001
+    id: ADR-0001-wolf1-v11-constitutional-extensions
+    path: adr/ADR-0001-wolf1-v11-constitutional-extensions.md
+    status: accepted

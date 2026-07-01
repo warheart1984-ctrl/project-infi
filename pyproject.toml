@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "project-infi-skillzmcgee"
+version = "0.1.0"
+description = "SkillzMcGee governed runtime for Project Infinity."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+skillzmcgee = "skillzmcgee.main:main"
+
+[tool.setuptools.packages.find]
+include = ["skillzmcgee*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

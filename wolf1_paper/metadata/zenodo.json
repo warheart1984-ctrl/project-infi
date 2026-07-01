@@ -1,0 +1,31 @@
+{
+  "title": "WOLF-1: Copilot in Orbit - Architecture Document v1.1",
+  "upload_type": "publication",
+  "publication_type": "article",
+  "description": "WOLF-1 is a constitutional architecture for a sovereign governed compute node in high Earth orbit or at a Lagrange point. It hosts Copilot-class large language model workloads under strict constitutional constraints derived from the AAES-OS stack (CRK-1, CAS 1.0, CFT, Wave Math). v1.1 adds invariant promotion criteria, meta-governance of CRK-1, epistemic receipts, graded safe-mode profiles, anomaly discovery, and a constitutional evolution protocol.",
+  "creators": [
+    {
+      "name": "Halstead, Jon",
+      "affiliation": "Project Infinity - AAIS / Mythar Root Systems",
+      "orcid": ""
+    },
+    {
+      "name": "Bates, Bradley",
+      "affiliation": "Architectural Review (SkillsMcGee)",
+      "orcid": ""
+    }
+  ],
+  "keywords": [
+    "governed AI",
+    "space compute",
+    "constitutional runtime",
+    "CRK-1",
+    "CAS",
+    "WOLF-1",
+    "LLM safety"
+  ],
+  "license": "Apache-2.0",
+  "language": "eng",
+  "version": "1.1.0",
+  "notes": "Bradley Bates (SkillsMcGee) contributed architectural review that materially strengthened Sections 4.9, 4.10, 6.4, 8.5, 12.4, and 14."
+}

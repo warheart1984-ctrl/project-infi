@@ -1,0 +1,23 @@
+safe_mode_profiles:
+  output: safe_mode_profiles.mmd
+  type: flowchart
+  states:
+    - "S0: Full Operations"
+    - "S1: Cognitive Degradation"
+    - "S2: Autonomy Degradation"
+    - "S3: Governance-Only"
+  forward: true
+  reverse: true
+
+invariant_promotion:
+  output: invariant_promotion_flow.mmd
+  type: flowchart
+  states:
+    - Observation
+    - Hypothesis
+    - Stress-Testing
+    - Redundancy Analysis
+    - Constitutional Review
+    - Adoption
+  forward: true
+  reverse: false

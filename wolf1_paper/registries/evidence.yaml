@@ -1,0 +1,9 @@
+# Evidence ledger registry
+entries:
+  - requirement_id: REQ-WOLF1-ARCH-001
+    evidence_ids:
+      - EVI-WOLF1-0001
+    paths:
+      - governance/receipts/
+      - governance/receipt-schema.json
+      - governance/receipts-index.json

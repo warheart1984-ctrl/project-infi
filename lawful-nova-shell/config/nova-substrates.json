@@ -1,0 +1,26 @@
+{
+  "coding_substrate_1": {
+    "id": "coding-substrate-1",
+    "backend": "ollama",
+    "model": "qwen2.5-coder:3b",
+    "role": "codegen",
+    "tier": 15,
+    "node": "nova-node-1"
+  },
+  "analysis_substrate_1": {
+    "id": "analysis-1",
+    "backend": "ollama",
+    "model": "gemma4:latest",
+    "role": "analysis",
+    "tier": 14,
+    "node": "nova-node-1"
+  },
+  "qwen_governed_1": {
+    "id": "qwen-governed-1",
+    "backend": "ollama",
+    "model": "qwen2.5-coder:3b",
+    "role": "codegen",
+    "tier": 15,
+    "node": "nova-node-1"
+  }
+}

@@ -1,0 +1,12 @@
+# WOLF-1 Governance Registry
+governance:
+  - id: GOV-WOLF1-DOC-001
+    type: policy
+    name: Governed Document Build Policy
+    description: CTS must pass before PDF/HTML build; every build emits a signed receipt.
+    version: "1.1.0"
+    links:
+      - type: Requirement
+        id: REQ-WOLF1-ARCH-001
+      - type: Artifact
+        id: ART-WOLF1-ARCH-001

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "EVT-0001",
+    "type": "receipt",
+    "document_id": "wolf1-arch",
+    "version": "1.1.0",
+    "receipt_id": "REC-wolf1-arch-1.1.0",
+    "timestamp": "2026-06-25T16:21:38Z",
+    "summary": "RECEIPT — REC-wolf1-arch-1.1.0"
+  },
+  {
+    "id": "EVT-0002",
+    "type": "amendment",
+    "amendment_id": "amendment-0001",
+    "timestamp": "2026-06-25T12:00:00Z",
+    "summary": "AMENDMENT — amendment-0001.md"
+  }
+]

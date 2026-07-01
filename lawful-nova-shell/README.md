@@ -1,5 +1,17 @@
 # Lawful Nova LLM Shell v1
 
+## GitHub 10-minute start
+
+For a fresh GitHub clone or **Download ZIP**, start here:
+
+- [GITHUB-10-MINUTE-START.md](GITHUB-10-MINUTE-START.md)
+- Windows: `powershell -NoProfile -ExecutionPolicy Bypass -File .\quickstart.ps1`
+- macOS / Linux: `chmod +x quickstart.sh bin/nova setup/*.sh && ./quickstart.sh`
+
+The quickstart scripts install the governed `nova/node` backend, install the
+Electron desktop dependencies, verify the local Node, start `python -m nova.api`,
+and launch Nova Desktop.
+
 Cross-platform shell and CLI for the **Local Lawful Nova** slice in [project-infi](https://github.com/warheart1984-ctrl/project-infi).
 
 Nova Cortex here is the governed **Python runtime** under `nova/` — not a separate `nova.exe` binary. The shell wraps `python -m nova.cli` and starts the HTTP surfaces operators expect.

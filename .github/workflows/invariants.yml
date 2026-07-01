@@ -1,0 +1,46 @@
+name: AAES-OS Invariants CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "aaes-os/**"
+      - ".github/workflows/invariants.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "aaes-os/**"
+      - ".github/workflows/invariants.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  aaes-os-invariants:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: aaes-os
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build AAES workspace
+        run: pnpm run build
+
+      - name: Run CTS invariants
+        run: pnpm run test:cts

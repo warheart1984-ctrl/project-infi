@@ -1,0 +1,11 @@
+provider: env
+mode: continuity-aware
+default_aais_endpoint: /legacy_api/api/text/generate
+default_nova_endpoint: /api/text/generate
+env:
+  provider: SKILLZMCGEE_LLM_PROVIDER
+  url:
+    - SKILLZMCGEE_LLM_URL
+    - AAIS_BASE_URL
+    - NOVA_BASE_URL
+  endpoint: SKILLZMCGEE_LLM_ENDPOINT

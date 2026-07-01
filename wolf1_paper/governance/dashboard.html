@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AAES-OS Governance Dashboard</title>
+  <link id="theme-css" rel="stylesheet" href="dashboard-dark.css" />
+</head>
+<body>
+  <header>
+    <h1>AAES-OS Governance Dashboard</h1>
+    <p>Mission control for constitutional operations — receipts, requirements, CTS, and traceability.</p>
+    <div class="toolbar">
+      <button type="button" id="theme-toggle" aria-label="Toggle theme">Light mode</button>
+      <a href="graph.html">Traceability graph</a>
+      <a href="../adr/INDEX.md">ADR index</a>
+    </div>
+  </header>
+  <main>
+    <div class="grid">
+      <div class="card" id="cts-card">
+        <div class="label">CTS Status</div>
+        <div class="value" id="cts-status">…</div>
+      </div>
+      <div class="card">
+        <div class="label">Documents Built</div>
+        <div class="value" id="docs-built">…</div>
+      </div>
+      <div class="card">
+        <div class="label">Open ADRs</div>
+        <div class="value" id="open-adrs">…</div>
+      </div>
+    </div>
+
+    <section class="panel">
+      <h2>Recent Governance Receipts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Receipt ID</th>
+            <th>Document</th>
+            <th>Version</th>
+            <th>Commit</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody id="receipts-table"></tbody>
+      </table>
+      <p id="receipts-status" class="status">Loading receipts…</p>
+    </section>
+
+    <section class="panel">
+      <h2>Active Requirements</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>REQ ID</th>
+            <th>Title</th>
+            <th>Principle</th>
+          </tr>
+        </thead>
+        <tbody id="requirements-table"></tbody>
+      </table>
+      <p id="requirements-status" class="status">Loading requirements…</p>
+    </section>
+
+    <section class="panel">
+      <h2>Governance Event Feed</h2>
+      <ul id="gov-feed"></ul>
+      <p id="events-status" class="status">Loading events…</p>
+    </section>
+
+    <section class="panel legend">
+      <h2>Legend</h2>
+      <p><strong>CTS Status:</strong> PASS/FAIL from constitutional test suite</p>
+      <p><strong>Receipts:</strong> Immutable build receipts (SHA-256, commit, version)</p>
+      <p><strong>Requirements:</strong> Loaded from <code>registries/requirements.yaml</code></p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <script src="dashboard-loader.js"></script>
+</body>
+</html>

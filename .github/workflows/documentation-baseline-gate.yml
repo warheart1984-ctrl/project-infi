@@ -1,0 +1,62 @@
+name: Documentation Baseline Gate
+
+on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - "templates/**"
+      - ".cursor/rules/**"
+      - ".github/scripts/validate-documentation-baseline.py"
+      - ".github/scripts/validate-agent-safety-doctrine.py"
+      - ".github/scripts/validate-trust-bundle.py"
+      - ".github/workflows/agent-safety-doctrine-gate.yml"
+      - ".github/workflows/documentation-baseline-gate.yml"
+      - "HUMAN_AI_CO_COLLABORATION_CHARTER.md"
+      - "REPO_PROOF_LAW.md"
+      - "META_ARCHITECT_LAWBOOK.md"
+      - "README.md"
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "templates/**"
+      - ".cursor/rules/**"
+      - ".github/scripts/validate-documentation-baseline.py"
+      - ".github/scripts/validate-agent-safety-doctrine.py"
+      - ".github/scripts/validate-trust-bundle.py"
+      - ".github/workflows/agent-safety-doctrine-gate.yml"
+      - ".github/workflows/documentation-baseline-gate.yml"
+      - "HUMAN_AI_CO_COLLABORATION_CHARTER.md"
+      - "REPO_PROOF_LAW.md"
+      - "META_ARCHITECT_LAWBOOK.md"
+      - "README.md"
+
+permissions:
+  contents: read
+
+jobs:
+  documentation-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate documentation baseline
+        run: |
+          python3 .github/scripts/validate-documentation-baseline.py
+
+      - name: Collect changed files
+        id: changed
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git fetch --no-tags --depth=1 origin "${{ github.base_ref }}"
+            CHANGED="$(git diff --name-only "origin/${{ github.base_ref }}"...HEAD | tr '\n' ',' | sed 's/,$//')"
+          else
+            CHANGED="$(git diff --name-only HEAD^ HEAD 2>/dev/null | tr '\n' ',' | sed 's/,$//')"
+          fi
+          echo "files=$CHANGED" >> "$GITHUB_OUTPUT"
+
+      - name: Validate Doctrine XI Trust Bundles
+        run: |
+          python3 .github/scripts/validate-trust-bundle.py --changed-files "${{ steps.changed.outputs.files }}"

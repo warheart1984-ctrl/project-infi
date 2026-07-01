@@ -20,6 +20,7 @@ AAES-OS enforces invariants before and after every run, emits verifiable receipt
 | **CDP-1** | `benchmarks/cdp1/` | Minimal continuity / drift experiment |
 | **CEP** | `cep/` | Experiment orchestration scaffold |
 | **Replication** | `replication/` | Independent replication package |
+| **Architect-agent loop** | `packages/architect-agent/` | UGR-to-UCR contracts, ALA runtimes, reversible envelopes, EGL-1, receipts |
 
 ---
 

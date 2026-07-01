@@ -1,0 +1,50 @@
+{
+  "$id": "https://continuity-os.dev/schemas/cor-suite/repo-hygiene-status/1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Repo Hygiene and COR Pipeline Status",
+  "type": "object",
+  "properties": {
+    "repoId": { "type": "string" },
+    "scanTimestamp": { "type": "string", "format": "date-time" },
+    "deterministicArtifacts": { "type": "boolean" },
+    "directoryHygieneOk": { "type": "boolean" },
+    "canonicalPathsOk": { "type": "boolean" },
+    "reproducibleBuildsOk": { "type": "boolean" },
+    "ciCdIntegrated": { "type": "boolean" },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "issueId": { "type": "string" },
+          "category": {
+            "type": "string",
+            "enum": [
+              "determinism",
+              "directory_hygiene",
+              "canonical_paths",
+              "reproducibility",
+              "ci_cd",
+              "other"
+            ]
+          },
+          "description": { "type": "string" },
+          "severity": {
+            "type": "string",
+            "enum": ["info", "warning", "error", "critical"]
+          }
+        },
+        "required": ["issueId", "category", "description", "severity"]
+      }
+    }
+  },
+  "required": [
+    "repoId",
+    "scanTimestamp",
+    "deterministicArtifacts",
+    "directoryHygieneOk",
+    "canonicalPathsOk",
+    "reproducibleBuildsOk",
+    "ciCdIntegrated"
+  ]
+}

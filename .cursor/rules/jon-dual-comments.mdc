@@ -1,0 +1,36 @@
+---
+description: Dual-layer Mythic + Engineering comments with invariants and boundaries
+globs: "**/*.{py,ts,tsx,js,jsx}"
+alwaysApply: false
+---
+
+# Dual-Layer Comments
+
+Canonical: [docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](../../docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md)
+
+Every class and public function:
+
+```python
+# Mythic: <metaphor for operator intent>
+# Engineering: <literal deterministic behavior>
+```
+
+Add when relevant:
+
+```python
+# Invariant: <must always hold>
+# Boundary: <explicitly out of scope>
+```
+
+## Bad → good
+
+```python
+# BAD — mythic as identifier
+def summon_wave(state): ...
+
+# GOOD
+# Mythic: Release wave — batch admission of subsystems.
+# Engineering: Admit concept specs and genomes for a seed batch.
+# Invariant: no runtime surface until promotion gates pass.
+def admit_subsystem_batch(seeds: list[str]) -> AdmissionResult: ...
+```

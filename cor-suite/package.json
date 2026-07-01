@@ -1,0 +1,35 @@
+{
+  "name": "@project-infi/cor-suite",
+  "version": "1.0.0",
+  "description": "COR-1.0 observability, proof analysis, governance, maturity, and repo hygiene for project-infi",
+  "type": "module",
+  "bin": {
+    "cor-suite": "./src/cli/cor-suite.ts"
+  },
+  "scripts": {
+    "cor": "tsx src/cli/cor-suite.ts cor",
+    "analyze": "tsx src/cli/cor-suite.ts analyze",
+    "govern": "tsx src/cli/cor-suite.ts govern",
+    "maturity": "tsx src/cli/cor-suite.ts maturity",
+    "hygiene": "tsx src/cli/cor-suite.ts hygiene",
+    "car": "tsx src/cli/cor-suite.ts car",
+    "cav": "tsx src/cli/cor-suite.ts cav",
+    "validate": "tsx src/cli/cor-suite.ts validate",
+    "pgi": "tsx src/cli/cor-suite.ts pgi",
+    "dra": "tsx src/cli/cor-suite.ts dra",
+    "csr": "tsx src/cli/cor-suite.ts csr",
+    "car:bootstrap": "tsx src/cli/cor-suite.ts car-bootstrap",
+    "pipeline": "tsx src/cli/cor-suite.ts pipeline",
+    "ci-gate": "tsx src/cli/ci-gate.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}

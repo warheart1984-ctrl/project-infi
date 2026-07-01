@@ -1,0 +1,18 @@
+sequenceDiagram
+  participant G as Ground
+  participant CRK as CRK-1
+  participant CAS as CAS
+  participant LLM as Cognitive Plane
+
+  G->>CRK: Command / Payload
+  CRK->>CAS: Init Span
+  CRK->>CRK: Pre-run Invariants (PE + SE)
+  alt violation
+    CRK->>CAS: Fault + SAFE-MODE
+  else pass
+    CRK->>LLM: Execute (if profile permits)
+    LLM-->>CRK: Result
+    CRK->>CRK: Post-run Invariants
+    CRK->>CAS: Receipt + Epistemic Receipt
+    CRK->>G: Telemetry
+  end

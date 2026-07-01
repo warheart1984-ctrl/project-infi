@@ -1,0 +1,20 @@
+flowchart TD
+  TEL[Telemetry]
+  PWR[Power/Thermal]
+  LLM[LLM Output Distributions]
+  INV[Invariant Timing]
+  EPI[Epistemic Metrics]
+  DRIFT[Drift Signatures]
+
+  BASE[Baseline Models]
+  DET[Anomaly Detector]
+  RCPT[Anomaly Receipt]
+
+  TEL --> DET
+  PWR --> DET
+  LLM --> DET
+  INV --> DET
+  EPI --> DET
+  DRIFT --> DET
+  BASE --> DET
+  DET --> RCPT

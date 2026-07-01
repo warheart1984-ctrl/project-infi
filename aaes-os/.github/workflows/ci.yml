@@ -29,3 +29,23 @@ jobs:
 
       - name: Run tests
         run: pnpm run test:packages
+
+  smoke-dist-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Smoke packed architect-agent package
+        run: pnpm smoke:architect-agent

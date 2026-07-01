@@ -1,0 +1,23 @@
+---
+description: Constitutional precedence — law over pipeline
+alwaysApply: true
+globs: ["**/*"]
+---
+
+# AAIS Precedence
+
+Canonical: [META_ARCHITECT_LAWBOOK.md](../../META_ARCHITECT_LAWBOOK.md)
+
+## Order (highest wins)
+
+Law → Blueprint → Contract → Implementation → Pipeline → Tool
+
+## CI vs lawbook
+
+- Pipelines **enforce**; they do **not** authorize
+- Passing CI does not supersede constitutional requirements (Doctrine VII)
+- No CI bypass for required governance gates
+
+## Engineering names in code
+
+Mythic labels belong in comments and docs only. See [AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md](../../docs/contracts/AAIS_CODEX_CURSOR_NAMING_PROTOCOL.md).

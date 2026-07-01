@@ -1,0 +1,32 @@
+{
+  "name": "@project-infinity/wolf1-paper",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Governed document pipeline for WOLF-1 Architecture v1.1",
+  "scripts": {
+    "sync:sections": "node src/sync_sections_from_master.js",
+    "build:master": "node src/build_master.js",
+    "cts": "node cts/run_all.mjs",
+    "traceability": "node scripts/validate_traceability_chain.mjs",
+    "traceability:py": "python scripts/validate_traceability_chain.py",
+    "enforce": "bash scripts/enforce_governance.sh",
+    "build:pdf": "node build.mjs",
+    "build:all": "node scripts/run_pipeline.mjs all",
+    "changelog": "node scripts/update_changelog.mjs",
+    "amendments": "node scripts/gen_amendment_diffs.mjs",
+    "receipt": "node scripts/gen_build_receipt.mjs",
+    "receipt-index": "node scripts/gen_receipts_index.mjs",
+    "dashboard": "node scripts/gen_dashboard_artifacts.mjs",
+    "adr-index": "node scripts/gen_adr_index.mjs",
+    "diagrams": "node scripts/gen_diagrams_from_specs.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "marked": "^15.0.12",
+    "puppeteer": "^24.8.2",
+    "yaml": "^2.8.0"
+  }
+}

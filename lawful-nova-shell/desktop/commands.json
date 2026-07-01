@@ -1,0 +1,68 @@
+{
+  "$schema": "https://nova.desktop/schema/commands.json",
+  "version": "1.0",
+  "commands": [
+    {
+      "id": "coder.apply_instruction",
+      "title": "Apply Instruction with Coder",
+      "shortcut": "Ctrl+Enter",
+      "category": "Coding",
+      "action": {
+        "type": "node.tool",
+        "intent": "code",
+        "args": ["file_path", "instruction", "current_code"]
+      }
+    },
+    {
+      "id": "wiring.generate_glue",
+      "title": "Generate Glue Code",
+      "shortcut": "Ctrl+Shift+W",
+      "category": "Wiring",
+      "action": {
+        "type": "node.tool",
+        "intent": "wire",
+        "args": ["components", "goal", "context"]
+      }
+    },
+    {
+      "id": "ui.toggle_diff",
+      "title": "Toggle Diff View",
+      "shortcut": "Ctrl+D",
+      "category": "UI",
+      "action": {
+        "type": "ui.toggle",
+        "target": "diff"
+      }
+    },
+    {
+      "id": "ui.toggle_receipts",
+      "title": "Toggle Receipts Drawer",
+      "shortcut": "Ctrl+Shift+G",
+      "category": "UI",
+      "action": {
+        "type": "ui.toggle",
+        "target": "receipts"
+      }
+    },
+    {
+      "id": "node.replay_last",
+      "title": "Replay Last Action",
+      "shortcut": "Ctrl+R",
+      "category": "Governance",
+      "action": {
+        "type": "node.replay",
+        "args": ["last_replay_id"]
+      }
+    },
+    {
+      "id": "node.switch_model",
+      "title": "Switch Local Model",
+      "shortcut": "Ctrl+Shift+M",
+      "category": "Models",
+      "action": {
+        "type": "node.config.update",
+        "args": ["model"]
+      }
+    }
+  ]
+}

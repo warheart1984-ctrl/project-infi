@@ -1,0 +1,79 @@
+name: Constitutional Governance Pipeline
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "cor-suite/**"
+      - ".github/workflows/cor-governance-pipeline.yml"
+  push:
+    branches: [main]
+    paths:
+      - "cor-suite/**"
+      - ".github/workflows/cor-governance-pipeline.yml"
+
+jobs:
+  cor-governance:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cor-suite
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Load CAR-1.0
+        run: npm run car
+
+      - name: Run CAV-1.0 (Validation)
+        run: npm run cav
+
+      - name: Generate COR-1.0 (Measurement)
+        run: npm run cor
+
+      - name: Build PGI-1.0 (Proof Graph)
+        run: npm run pgi
+
+      - name: Compute DRA-1.0 (Risk Assessment)
+        run: npm run dra
+
+      - name: Proof Analysis
+        run: npm run analyze
+
+      - name: Governance Decision
+        run: npm run govern
+
+      - name: Constitutional CI gate
+        run: npm run ci-gate
+
+      # Uncomment for strict approve-only releases (blocks require_fixes / advisory paths):
+      # - name: Enforce Governance Decision (approve only)
+      #   run: |
+      #     decision=$(jq -r '.decision' out/governance-receipt.json)
+      #     if [ "$decision" != "approve" ]; then
+      #       echo "Governance decision: $decision"
+      #       exit 1
+      #     fi
+
+      - name: Enforce Governance Decision
+        run: |
+          decision=$(jq -r '.decision' out/governance-receipt.json)
+          if [ "$decision" = "reject" ] || [ "$decision" = "freeze" ]; then
+            echo "Governance decision: $decision"
+            exit 1
+          fi
+          echo "Governance decision: $decision (allowed for CI)"
+
+      - name: Upload Governance Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: cor-governance-artifacts
+          path: cor-suite/out/

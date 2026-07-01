@@ -1,0 +1,14 @@
+# Governed document version manifest — AAES-OS / WOLF-1
+documents:
+  - id: wolf1-arch
+    name: WOLF-1 Architecture
+    current_version: 1.1.0
+    source: src/wolf1_v1.1.md
+    changelog: CHANGELOG.md
+    zenodo_metadata: metadata/zenodo.json
+    outputs:
+      - build/wolf1_v1.1-1.1.0.pdf
+      - build/wolf1_v1.1-1.1.0.html
+      - build/wolf1_v1.1.pdf
+    sections_dir: src/sections
+    diagrams_dir: assets/diagrams

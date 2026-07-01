@@ -1,0 +1,30 @@
+{
+  "$id": "https://continuity-os.dev/schemas/cor-suite/cav-report/1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CAV-1.0 Simplified Validation Report",
+  "type": "object",
+  "properties": {
+    "cavVersion": { "type": "string" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "blocking": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    },
+    "advisory": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "required": ["cavVersion", "generatedAt", "blocking", "advisory"],
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "issue": { "type": "string" },
+        "detail": { "type": "string" }
+      },
+      "required": ["id", "issue", "detail"]
+    }
+  }
+}

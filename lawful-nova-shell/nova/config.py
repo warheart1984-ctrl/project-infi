@@ -14,7 +14,7 @@ def load_nova_config() -> dict[str, Any]:
             "NOVA_OLLAMA_URL",
             os.getenv("NOVA_OLLAMA_BASE_URL", "http://127.0.0.1:11434"),
         ),
-        "ollama_model": os.getenv("NOVA_OLLAMA_MODEL", "qwen2.5-coder:7b"),
+        "ollama_model": os.getenv("NOVA_OLLAMA_MODEL", "qwen2.5-coder:3b"),
         "external_url": os.getenv("NOVA_EXTERNAL_URL"),
         "external_api_key": os.getenv("NOVA_EXTERNAL_API_KEY"),
         "external_model": os.getenv("NOVA_EXTERNAL_MODEL"),

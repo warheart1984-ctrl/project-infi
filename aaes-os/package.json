@@ -13,6 +13,7 @@
     "test": "corepack pnpm -r run build && corepack pnpm exec vitest run",
     "test:packages": "corepack pnpm -r run test",
     "test:cts": "corepack pnpm exec vitest run tests/cts",
+    "smoke:architect-agent": "corepack pnpm --filter @aaes-os/architect-agent run smoke:dist",
     "sdk:generate": "corepack pnpm exec tsx sdk/scripts/generate-sdk-types.ts",
     "test:determinism": "corepack pnpm -r run build && corepack pnpm exec tsx tools/validateDeterministicReplay.ts",
     "cdp1": "corepack pnpm -r run build && corepack pnpm exec tsx -e \"import { runMinimalCDP1 } from './benchmarks/cdp1/runMinimalCDP1.ts'; runMinimalCDP1().then(r => console.log(JSON.stringify(r, null, 2)));\"",

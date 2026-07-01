@@ -1,0 +1,50 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  background: #f5f5f7;
+  color: #222;
+}
+h1, h2 { color: #1f4b99; }
+a { color: #0056b3; }
+header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+main { padding: 1.5rem 2rem 3rem; max-width: 1200px; margin: 0 auto; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 1.5rem; }
+@media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+.card { background: #ffffff; padding: 1rem 1.2rem; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+.card.pass .value { color: #1a7f37; }
+.card.fail .value { color: #cf222e; }
+.label { font-size: 0.8rem; text-transform: uppercase; color: #888; }
+.value { font-size: 1.4rem; margin-top: 0.3rem; }
+section.panel {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1rem 1.25rem 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+section.panel h2 { margin: 0 0 1rem; font-size: 1.1rem; }
+table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; background: #fff; }
+th, td { padding: 0.4rem 0.6rem; border-bottom: 1px solid #ddd; font-size: 0.9rem; }
+th { text-align: left; color: #1f4b99; }
+tbody tr:hover { background: rgba(31, 75, 153, 0.04); }
+.status { color: #666; font-size: 0.85rem; margin-top: 0.5rem; }
+.error { color: #cf222e; }
+.legend { font-size: 0.85rem; color: #666; line-height: 1.6; }
+#gov-feed { list-style: none; padding: 0; margin: 0; }
+#gov-feed li { padding: 0.45rem 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+.toolbar { display: flex; gap: 1rem; align-items: center; margin-top: 0.75rem; flex-wrap: wrap; }
+.toolbar a, .toolbar button {
+  background: #e8eef7;
+  color: #1f4b99;
+  border: 1px solid #c5d4ef;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+.toolbar button:hover, .toolbar a:hover { background: #d8e4f7; }

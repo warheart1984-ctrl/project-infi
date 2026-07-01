@@ -1,0 +1,36 @@
+{
+  "$id": "https://continuity-os.dev/schemas/cor-suite/csr-report/1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CSR-1.0 Constitutional Stewardship Report",
+  "type": "object",
+  "properties": {
+    "csrVersion": { "type": "string" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "stewardParticipation": {
+      "type": "object",
+      "properties": {
+        "registeredReceipts": { "type": "integer", "minimum": 0 },
+        "uniqueStewards": { "type": "integer", "minimum": 0 }
+      },
+      "required": ["registeredReceipts", "uniqueStewards"]
+    },
+    "governanceActivity": {
+      "type": "object",
+      "properties": {
+        "activeRequirements": { "type": "integer", "minimum": 0 },
+        "governanceArtifacts": { "type": "integer", "minimum": 0 }
+      },
+      "required": ["activeRequirements", "governanceArtifacts"]
+    },
+    "decisionCoverage": {
+      "type": "object",
+      "properties": {
+        "requirementsTotal": { "type": "integer", "minimum": 0 },
+        "requirementsWithGovernanceLink": { "type": "integer", "minimum": 0 },
+        "coverageRatio": { "type": "number", "minimum": 0, "maximum": 1 }
+      },
+      "required": ["requirementsTotal", "requirementsWithGovernanceLink", "coverageRatio"]
+    }
+  },
+  "required": ["csrVersion", "generatedAt", "stewardParticipation", "governanceActivity", "decisionCoverage"]
+}

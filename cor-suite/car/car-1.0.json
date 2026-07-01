@@ -1,0 +1,1803 @@
+{
+  "carVersion": "1.0.0",
+  "generatedAt": "2026-06-27T00:57:37.795Z",
+  "artifacts": [
+    {
+      "id": "RUNLEDGER.REQ-001",
+      "namespace": "RUNLEDGER",
+      "kind": "requirement",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "schemaRef": "cor-suite/spec/cor-state-vector.schema.json",
+      "path": "cor-suite/car/requirements/runledger.md",
+      "hash": "8d01e90d87db5513e42f00cd82153a87d0772682f2c1b795f358b0e2d536d161",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      },
+      "links": {
+        "related": []
+      }
+    },
+    {
+      "id": "TRACEBUS.REQ-001",
+      "namespace": "TRACEBUS",
+      "kind": "requirement",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "schemaRef": "cor-suite/spec/cor-state-vector.schema.json",
+      "path": "cor-suite/car/requirements/tracebus.md",
+      "hash": "25548132cb84fe90ed953d8caae02eb4067030a18bda1707c9cff8edbc6e959b",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      },
+      "links": {
+        "related": []
+      }
+    },
+    {
+      "id": "GOV.REQ-001",
+      "namespace": "GOV",
+      "kind": "requirement",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "schemaRef": "cor-suite/spec/cor-state-vector.schema.json",
+      "path": "cor-suite/car/requirements/gov.md",
+      "hash": "bb69bd3fa5b883a995f017aa3fb0d3b460156be254f041744a2a1b7f98febaaf",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      },
+      "links": {
+        "related": []
+      }
+    },
+    {
+      "id": "UCR.REQ-001",
+      "namespace": "UCR",
+      "kind": "requirement",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "schemaRef": "cor-suite/spec/cor-state-vector.schema.json",
+      "path": "cor-suite/car/requirements/ucr.md",
+      "hash": "d3093fbc808c862771d0dba77dbb7afad9baa6d8c566f3045a5e01ad0ffcc955",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      },
+      "links": {
+        "related": []
+      }
+    },
+    {
+      "id": "TRICORE.REQ-001",
+      "namespace": "TRICORE",
+      "kind": "requirement",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "schemaRef": "cor-suite/spec/cor-state-vector.schema.json",
+      "path": "cor-suite/car/requirements/tricore.md",
+      "hash": "986042828a024d197b46bd4273f4210bf75539bf84e4a86de4b9685329a621ad",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      },
+      "links": {
+        "related": []
+      }
+    },
+    {
+      "id": "OPSCONSOLE.REQ-001",
+      "namespace": "OPSCONSOLE",
+      "kind": "requirement",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "schemaRef": "cor-suite/spec/cor-state-vector.schema.json",
+      "path": "cor-suite/car/requirements/opsconsole.md",
+      "hash": "21da04816eb05131aba479cac924c451b70cb57bab70f08d28de40d2c87db7d9",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      },
+      "links": {
+        "related": []
+      }
+    },
+    {
+      "id": "AAES-TEST.REQ-001",
+      "namespace": "AAES-TEST",
+      "kind": "requirement",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "schemaRef": "cor-suite/spec/cor-state-vector.schema.json",
+      "path": "cor-suite/car/requirements/aaes-test.md",
+      "hash": "d9720037bf9d27f69ef49e2fea1a68007a098732e034d6591f8d32741fe74443",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      },
+      "links": {
+        "related": []
+      }
+    },
+    {
+      "id": "OPSURF.REQ-001",
+      "namespace": "OPSURF",
+      "kind": "requirement",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "operator-surface",
+      "schemaRef": "cor-suite/spec/cor-state-vector.schema.json",
+      "path": "cor-suite/car/requirements/opsurf.md",
+      "hash": "918dcee8381c82f33837b7965a801942067ced6554797b65a1625586a97729fb",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      },
+      "links": {
+        "related": []
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-001",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/vite.config.ts",
+      "hash": "b0f9cb90cce489edc9f37d0bcaf6acb2546fab11d8ea2b06a203c43293a6dafa",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-002",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/vitest.config.ts",
+      "hash": "ef9ad85da21967a9f47151b18fee785d310e9f82de079c0ca6d2e8f9d376176b",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-001",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/helpers/runtime.ts",
+      "hash": "a8f9e2282eda3472b465ab2422f7382772395e911dce7711ccde5db7cae61b18",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-002",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/helpers/crk1Runtime.ts",
+      "hash": "a7db5ddbfc9c1d08d8ade62bdc81aae5e2e06b6501cb7b9a44a5631da83a595f",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-003",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/integration/determinism.test.ts",
+      "hash": "19b3e603bb3e445b5d0fbc2cbe4bcf3e0a1c3fa8f0b3b1e57e34c445ec30162e",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSURF.IMPL-001",
+      "namespace": "OPSURF",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "operator-surface",
+      "path": "operator-surface/src/lib/api.ts",
+      "hash": "607c6cebf6d828213071e1207ef7f3f14e73f3a2f3546681200b7c4abbf8475c",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSURF.IMPL-002",
+      "namespace": "OPSURF",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "operator-surface",
+      "path": "operator-surface/src/lib/types.ts",
+      "hash": "d700b0b04084ac3fcd57bf15ca038aa1db7d187df39d1323de221fe1145dbd88",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSURF.IMPL-003",
+      "namespace": "OPSURF",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "operator-surface",
+      "path": "operator-surface/src/lib/formatActivity.ts",
+      "hash": "d690db29e4c3e25ba0ca129810c698ca071f62f776e323347c88254661f8f9a0",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSURF.IMPL-004",
+      "namespace": "OPSURF",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "operator-surface",
+      "path": "operator-surface/src/lib/settings.ts",
+      "hash": "cdee027a76459e7c369019dcf26f5c44888e06b3e0bd339c96ef588ee36033fd",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSURF.IMPL-005",
+      "namespace": "OPSURF",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "operator-surface",
+      "path": "operator-surface/src/lib/workspaceTree.ts",
+      "hash": "7b00ccf0831121542fa0a5c80b02169bbb2256147890af6de4a324bb4c0ee5d4",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSURF.IMPL-006",
+      "namespace": "OPSURF",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "operator-surface",
+      "path": "operator-surface/src/lib/pathHints.ts",
+      "hash": "86faace3dcdf67f1605231c9ec44d0a3c853ad1b3739641bece4c57aa38d112e",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSURF.IMPL-007",
+      "namespace": "OPSURF",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "operator-surface",
+      "path": "operator-surface/src/lib/diffParse.ts",
+      "hash": "92f1ea169f0c0db1e6e3bfbd135ed781113e6a3265b90d373d94dc98c6f8af98",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSURF.IMPL-008",
+      "namespace": "OPSURF",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "operator-surface",
+      "path": "operator-surface/src/lib/diffGenerate.ts",
+      "hash": "f24d7683c2ba085f8ad53fb7f142667dce7538b0ae96b0277695011156fa3e5a",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "RUNLEDGER.IMPL-001",
+      "namespace": "RUNLEDGER",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/runledger/src/index.ts",
+      "hash": "f992e1fca9dc27015b182049410ff950ebd7fcaa58a745d80337d30a832a8cbd",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "RUNLEDGER.IMPL-002",
+      "namespace": "RUNLEDGER",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/runledger/src/models.ts",
+      "hash": "961401be25eafa8be464bd663a88694168a883c9b2bfcea44805c99ce471e41d",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "RUNLEDGER.IMPL-003",
+      "namespace": "RUNLEDGER",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/runledger/src/runStore.test.ts",
+      "hash": "8fbb7f591a72e59f2699852fc06563bfef41a4d81ce407af271c394378e9d3e7",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "RUNLEDGER.IMPL-004",
+      "namespace": "RUNLEDGER",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/runledger/src/runStore.ts",
+      "hash": "73e6b72e6b741400ed041de663d05a970491f48b473ca78edd7c2826dde684b8",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRACEBUS.IMPL-001",
+      "namespace": "TRACEBUS",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/trace-bus/src/bus.test.ts",
+      "hash": "f39dfa68e97d4adc4ad4e04bb989acd904fe56b12cb41b9b71eaf1e15df25f67",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRACEBUS.IMPL-002",
+      "namespace": "TRACEBUS",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/trace-bus/src/bus.ts",
+      "hash": "34b1d881b424cea0790b7fb2f1161dafc368e07d9f708513697c4913c9cce569",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRACEBUS.IMPL-003",
+      "namespace": "TRACEBUS",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/trace-bus/src/console-sink.ts",
+      "hash": "15d019801232e42153ac41a726899266461930b56d89e3de10d676d204c3e261",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRACEBUS.IMPL-004",
+      "namespace": "TRACEBUS",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/trace-bus/src/index.ts",
+      "hash": "92e4cc16e0736d5dc664ebb7590041e99f9928d862e8c2d04866335d6419c0b9",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRACEBUS.IMPL-005",
+      "namespace": "TRACEBUS",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/trace-bus/src/traceBus.test.ts",
+      "hash": "055aa5db2b56f4cd729a36a4f1ca1da7bee52bfb85445c3e281dd6789eddc0f5",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRACEBUS.IMPL-006",
+      "namespace": "TRACEBUS",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/trace-bus/src/traceBus.ts",
+      "hash": "9c77e0089a710bd5673d75a84699fdfb9e344df28928bb78c5d856af4fe8dd9a",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRACEBUS.IMPL-007",
+      "namespace": "TRACEBUS",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/trace-bus/src/traceEvents.ts",
+      "hash": "8e145127a1bd6bdb1ea4aaeb89432c24d503147fd76dfa0c5edad36b2c7f033e",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRACEBUS.IMPL-008",
+      "namespace": "TRACEBUS",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/trace-bus/src/types.ts",
+      "hash": "2f935a47d27b13d33577c60dd70b4a86d3081bb000caee4f45d683dbc9c6a595",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-001",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/bootstrap.test.ts",
+      "hash": "b9670995f61593753f2fe49afe741daaaa3a7817bd761b5aeeef917be3121982",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-002",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/bootstrap.ts",
+      "hash": "63844bdb093542bcb3bbc4a4109ac2231dcc509cfa3c430e23b9624376a80652",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-003",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/driftMetrics.test.ts",
+      "hash": "3ac411f0df742161aa52f1488482b4e81cf6f3e6cdf2ab1161398eee787d8456",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-004",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/driftMetrics.ts",
+      "hash": "cfb9edb626a27fef47e094f18d8e46a34fccd48638b054d439acbbae1dc5ce49",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-005",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/faultCodes.ts",
+      "hash": "826de0b76002b931f166abcb9b0aa020c53c2b442a305efde61d539b5ac8c03f",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-006",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/faultJournal.test.ts",
+      "hash": "0cdb0b4babd0f5ec46ec39eff648ca4b773d1cc6ea7d2396e0c53a7e826b6a7a",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-007",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/faultJournal.ts",
+      "hash": "dac8bfae1e05c3c72b6fbd39d9f68b740591e5774ece256ec70f65fd7a04b81b",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-008",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/faultTypes.ts",
+      "hash": "43a5f276d9e2e88ffadedcda1727c719cb4ec8cf709df234c59d687728016377",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-009",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/global.d.ts",
+      "hash": "77f4ecff49df34484d56e7c06ba54a28a232887f50d9588dc5c80914f9266594",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-010",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/governanceHub.ts",
+      "hash": "3fc2533bf5e3283f3d4e80a65131e711a782db145c4bfd8e23cd8d57a50661b1",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-011",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/index.ts",
+      "hash": "578b56f5802b23c338984e5677eaa630d61429557e78a1a4cff388d74ba04605",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-012",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/invariantEngine.test.ts",
+      "hash": "ab21d8eee839fad89f47e03f453ab9ecaedb8db37cd465191902d61ed026d61c",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-013",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/invariantEngine.ts",
+      "hash": "506bfde10ce1f182c0c2effc9873001e00bd1f3a0a93321b37feaf18bac275d4",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-014",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/patchAnalytics.test.ts",
+      "hash": "9b78611c897502fe674f755511b3d906f1fad86764cbb6400d892f7102dc18a5",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-015",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/patchAnalytics.ts",
+      "hash": "4d45f62a35ce5667275296e21b15e98aa53cb93346d56f38c20d89d42c6cbe18",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-016",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/patchRegression.test.ts",
+      "hash": "78d284ea15e3bc5215964d8f4ea5f856bd716db228b6a3b4f3fcdd18b45d16a3",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-017",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/patchTypes.ts",
+      "hash": "36fc81cea0a0fd471c6bed44d7cc0f6d3fbfcf2d1eec1b3fd0e0c2c26b067506",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-018",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/patternLedger.test.ts",
+      "hash": "3831c37b739e56a776df418a78da7f3935f8af0dc7a61037f9d37146a4cadca1",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-019",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/patternLedger.ts",
+      "hash": "fa2287b4a0c72553b9e0ab65fb1c6e8f0cc8239c715aca93a8a06f20ecb2351a",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-020",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/telemetry.ts",
+      "hash": "2c63e465cd0b3c1be99f03114a730e7e6d7c219dea9635a948ece565a6ac7651",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-021",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/tracePort.ts",
+      "hash": "3d1b52bb721ce58e1a51728839fb6c1c3d717d9851ddce60188b06192f083486",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRICORE.IMPL-001",
+      "namespace": "TRICORE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/tri-core-protocol/src/index.ts",
+      "hash": "48a2e9643152853457f7fdb90aab1e755f0c7f88ae2c4fb848929ed19a3dae9e",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRICORE.IMPL-002",
+      "namespace": "TRICORE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/tri-core-protocol/src/patchApply.ts",
+      "hash": "57b0f23412dc7d20bd37c73e5f8cdc65ef01702dbda71dbfa91709c5c0c622f2",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRICORE.IMPL-003",
+      "namespace": "TRICORE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/tri-core-protocol/src/patchLedger.test.ts",
+      "hash": "9a7451b97978fdd0294500a752d133416d4a0643a987722c1ddb6e34f84c1cb0",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRICORE.IMPL-004",
+      "namespace": "TRICORE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/tri-core-protocol/src/patchLedger.ts",
+      "hash": "fc19d0cfcf06c40ac512023550949cbf24389c79298177fcb376d60a2766e5f2",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRICORE.IMPL-005",
+      "namespace": "TRICORE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/tri-core-protocol/src/patchProposals.ts",
+      "hash": "f0d7940fd39a05de8409cdd3342ad434c8c1cb6a366778c943f164d76237ff72",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRICORE.IMPL-006",
+      "namespace": "TRICORE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/tri-core-protocol/src/patchProvenance.ts",
+      "hash": "2778b78c5af32c62cf9b67f60d2a65bd1cb54cc98b990e2a081c34399587f85a",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRICORE.IMPL-007",
+      "namespace": "TRICORE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/tri-core-protocol/src/seedPatches.ts",
+      "hash": "16ccf94660b42d509c82477885bb4a3a3719cea1cb870f5be6234dc6c83e2468",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "TRICORE.IMPL-008",
+      "namespace": "TRICORE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/tri-core-protocol/src/types.ts",
+      "hash": "459e7ce37701421a3c3f2ab0860056f625db8b1a0fa6e00428e289c18e9f4e73",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "UCR.IMPL-001",
+      "namespace": "UCR",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/ucr-runtime/src/index.ts",
+      "hash": "1c13f282fdfd37b5c665682170527aa3a74f8ebe133bc9e86a02e8038c624bab",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "UCR.IMPL-002",
+      "namespace": "UCR",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/ucr-runtime/src/integration.test.ts",
+      "hash": "bf91eb3c2f7a1b29f12b07e2c512b5b5599ab6e3f9cbba3883fdab749d6adb6e",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "UCR.IMPL-003",
+      "namespace": "UCR",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/ucr-runtime/src/outputPatches.test.ts",
+      "hash": "d2605580f743a8f89f21716cc1407ddb6e581d1afce6efe86729523f62d865ba",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "UCR.IMPL-004",
+      "namespace": "UCR",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/ucr-runtime/src/outputPatches.ts",
+      "hash": "125d90dabde83682c1742507f18187265be57d80ded88a317baecc67d5edc619",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "UCR.IMPL-005",
+      "namespace": "UCR",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/ucr-runtime/src/patches.integration.test.ts",
+      "hash": "e22b5f9de136371d7751c625cf74eb6da52124be9a69287cd06ee91615c0c617",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "UCR.IMPL-006",
+      "namespace": "UCR",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/ucr-runtime/src/stub-runtime.ts",
+      "hash": "e17b4c30c9de9e21612e379da28fe3a0d3315432d8df5a497ddd98b200c01678",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "UCR.IMPL-007",
+      "namespace": "UCR",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/ucr-runtime/src/types.ts",
+      "hash": "4ae5dcb6b90c9b1943e7086e3b9463c0599c20f9ab3bfe8af41c47a76e2b7cd6",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "UCR.IMPL-008",
+      "namespace": "UCR",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/ucr-runtime/src/ucrRuntime.test.ts",
+      "hash": "fc22984f788c00afe13fbad54dd0166617a8b2494f2f6d617fc98d20965e358a",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "UCR.IMPL-009",
+      "namespace": "UCR",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/ucr-runtime/src/ucrRuntime.ts",
+      "hash": "5d3f81ab528d98d47a3f91ca3c197e5dda77bc2d8fa67508f439122f681c252c",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "UCR.IMPL-010",
+      "namespace": "UCR",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/ucr-runtime/src/withSpanGuard.test.ts",
+      "hash": "c08ad3027038ab4a26a0518b3c2a162bf3f06c5ed2a126ff41c68e8f2e67dc7d",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "UCR.IMPL-011",
+      "namespace": "UCR",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/ucr-runtime/src/withSpanGuard.ts",
+      "hash": "a84667dfb7a68dd5ae5000c6c732f0f7344a6c213f0f9cb3f12763817422c1e7",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-003",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/aaisBridge.ts",
+      "hash": "b6e8afacb1423e8e96d305d9dafddfd424f3ed484df560b4665b19d528862db9",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-004",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/cabTelemetry.ts",
+      "hash": "55f9a84c17818f90339db4e08b445f44f02b7ca286446e5334ea3d309da710ea",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-005",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/coverageState.ts",
+      "hash": "4e15a6ec2ae3bedb682f8dc867a225c682f6cc3c00431dcf560354078016425b",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-006",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/metrics.test.ts",
+      "hash": "1a3987d99a643ddb076af41d8e8c657a177d5cc7375549558da5ca99b2cf479b",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-007",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/metrics.ts",
+      "hash": "9d1b8bc458cf9464bc7be1ab1419ddd74c4de5db4ddf03d20b0946613e44b2a8",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-008",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/mriState.ts",
+      "hash": "d0304f27fe5dce8f90a3836324c3534507483b5668ebe3364cc066b7e6c4f508",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-009",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/patchLedgerState.ts",
+      "hash": "ef4c45d8108b41b789a28dc2bb5e28b4d900bee3c928c1fef9be439910def3b9",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-010",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/seedTelemetry.ts",
+      "hash": "3197e670131000939bce488b2a9ccb2efef04fed828213d81e4b173359d5f3e7",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-011",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/server.test.ts",
+      "hash": "26e1b381e3f31b0db0f74812cc651f747a586a3a6b39b8fc6381844d128bbb58",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-012",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/server.ts",
+      "hash": "61fe630129bcb81a9383aacf1d88e093a99dd5119f53a13fcfa7fefc971d5fbd",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-013",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/telemetryState.ts",
+      "hash": "e7ce1b64e10347bcf744d4d3efddcfb4beb3fa5ffa693645b4c6851188dceb00",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-014",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/vite-env.d.ts",
+      "hash": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-015",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/viteConfig.test.ts",
+      "hash": "c6d8ac1ff1e3f92efe262b13f95f64970e9c7cb305f88f503426ebdcd1a605f9",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-004",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/determinism/deterministic_run.test.ts",
+      "hash": "7e93a27352f0c07884c16a45cfd4f6e660a820ca7793b1c7045dac1e92e9031a",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-005",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/determinism/deterministic_replay.test.ts",
+      "hash": "da9c007e95122ea5d688c9acda7a615dc3e9b86f03d80f0beca222a02f609978",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-006",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/helpers/schemaValidator.ts",
+      "hash": "87faf88de41b0609656f2b1779d0e1c3b9f86f313390d3227969bff5d3ce4123",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-007",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/crk1/runtime_persistence.test.ts",
+      "hash": "73e8487fbe9f5055a9ff63b334baa330053994a56d61d3bf9970c55d5b9e8556",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-022",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/invariants/determinism.ts",
+      "hash": "3f54790981300848ada68402d5504e65ba32333250315e8035fe20b169ac6fc8",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "GOV.IMPL-023",
+      "namespace": "GOV",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/packages/aaes-governance/src/invariants/outputShape.ts",
+      "hash": "efd76f682a060869374bf8c8d13c475e7228a473a892a651fd7196374438d0aa",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-016",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/nova-studio/routes.ts",
+      "hash": "021923490d544d642918dc23d46d22285cd1b12861a0049d99c7ada0d7724f1f",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-017",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/nova-studio/index.ts",
+      "hash": "3ee804e3efe1f0a92c7d0cb92ac2d6820642045a743388db64b911349f1e5b78",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-018",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/nova-studio/server.ts",
+      "hash": "5571c26673c41aec781cc72baf04efa15a35beb29cf2554352e9025448045d21",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-008",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/identity/identity_shape.test.ts",
+      "hash": "67971866bbd19ad5782818df3cc10af1347aa56dc861343147c36cfcebc9e658",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-009",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/identity/identity_invariants.test.ts",
+      "hash": "65fadcb5d045b52f1bf2c9de769f1e9f78c4f0d5d1618084d1c83f160a539fd1",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-010",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/run/run_shape.test.ts",
+      "hash": "fe0cb247061872f0499bee58bbe902f3278482148aaefbcb0f658968adc9c506",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-011",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/run/run_lifecycle.test.ts",
+      "hash": "77df75c4b2c77cd56b8622b012068b86b6452223b0e9c065aa271937e142b447",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-012",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/run/run_invariants.test.ts",
+      "hash": "cd243d59fafe701c08a7c9da263885ee6027d4bf2233a7d4c781b2f672a8a284",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-013",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/span/span_emission.test.ts",
+      "hash": "7bd417227a11ce42f0db82010afd866c4b18f2068901e502c00dc23b5d70cca0",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-014",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/span/span_shape.test.ts",
+      "hash": "e1a69011f1538e28f094f79bc5c47da90108d43d9794f4306060a713af393977",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-015",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/receipt/receipt_determinism.test.ts",
+      "hash": "1cfc8233985b75ca1642ff7d70335d6876f9f6c57c858a10c53454e335ac8cee",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-016",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/receipt/receipt_shape.test.ts",
+      "hash": "223c5665339dcebacda90f57b8ac0475d22702e55197c8ab2de925780161baff",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-017",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/fault/fault_shape.test.ts",
+      "hash": "3aaf622fa276d702fc6df232f5224e0ee6f247566ddd13c1a020dc5913a4d079",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-018",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/fault/fault_emission.test.ts",
+      "hash": "20075de248117f0b13d938de7e48a39d9df1b7835c2f7392be8b36339ba3ba51",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-019",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/schema/validateIdentity.test.ts",
+      "hash": "40ee8e1b8d0a1053f0f1e675e4dc30e538ee004f91c3e39754f8098f59abf32c",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-020",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/schema/validateRun.test.ts",
+      "hash": "983bfa2da0ab1b3020632b8fec34aebd31530b0c69a74556df0402b99cfad531",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-021",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/schema/validateSpan.test.ts",
+      "hash": "911e8c2d254bec343699d19dfaff22ba20061ab64d942b0cb0418ebde8aff42d",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-022",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/schema/validateReceipt.test.ts",
+      "hash": "9e807654649c33fe6922da1d07d0d6337adc9edf888a04df533f768a04373264",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-023",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/schema/validateFault.test.ts",
+      "hash": "b126291797b2e5147e5487cceca4ea7937647212e9d2a285f17184ccecb3437e",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-024",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/cas/schema/validateRuntimeOutput.test.ts",
+      "hash": "c0ba8e692b05fff28bdb53dab48daca536df465868d995ef4f762562e76a282f",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-025",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/governance/invariants/noEmptyPayload.test.ts",
+      "hash": "af375b6687b3d4e86916a3eb7e35ed99d6a5cc3d4de7dd5a6f3566caa63aa87a",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-026",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/governance/invariants/mustEmitExecuteSpan.test.ts",
+      "hash": "34ddbb294223ef037e5f708647d190c5e26796697d69174d069702a2b79d9016",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "AAES-TEST.VER-027",
+      "namespace": "AAES-TEST",
+      "kind": "verification",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/tests/cts/governance/enforcement/enforcement_path.test.ts",
+      "hash": "611bc06b2fb3059c0b6e92d87f229754d761085d6484e9321a25bd18c67cc596",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-019",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/nova-studio/state/studioState.ts",
+      "hash": "f5f20e7134bc46d68e5ffb898ef6f34e6ced9a6b6d3045c0b3fa0ee44545a100",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-020",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/nova-studio/state/operatorContext.ts",
+      "hash": "afe7495843467379eed74707ea588be63c21b03572f1a5f20d672186b7545eb9",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-021",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/nova-studio/state/substrateStreams.ts",
+      "hash": "74aff8e428767700fc67590ae418a51261b9fcf5859ddd7022a461c93f78a6bc",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-022",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/nova-studio/state/skillzMcgeeLedger.ts",
+      "hash": "e393fc159d384a1ee73a33ffa03d5cb648db27df1b9d93f7fa7dc3de731337b2",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-023",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/nova-studio/governance/receiptTypes.ts",
+      "hash": "28908853c8ce83bbf9f4ec6bea84b1a57053f9979611edc9f6097ef17dbe5b09",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-024",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/nova-studio/governance/envelope.ts",
+      "hash": "d04727325d3ebe05160da0ccc3dcaba708fdc4e9c653d02f69920a44ee62b7b2",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-025",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/nova-studio/governance/invariants.ts",
+      "hash": "d59295847c52bba2d705f8b5f66e92b520f7927c0f954e209396417bda49c540",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-026",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/nova-studio/hooks/useSubstrateEvents.ts",
+      "hash": "60ca1d99abf323f15d538a21e8c94aaea1aa8ed6e795d696faac5b1f08b59d5f",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-027",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/nova-studio/hooks/useGovernanceReceipts.ts",
+      "hash": "78877fe87bf847c7ba718e82c2339cb8ae3009cc60340a7dceb98275de844cfa",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-028",
+      "namespace": "OPSCONSOLE",
+      "kind": "implementation",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "aaes-os",
+      "path": "aaes-os/services/ops-console/src/nova-studio/hooks/useOperatorIdentity.ts",
+      "hash": "7f4c6fbff8969b5dd019b2eb6454dcff459af2770bb7f41d86ae24f5393110ac",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    },
+    {
+      "id": "COR-SUITE.SCHEMA-CAR",
+      "namespace": "COR-SUITE",
+      "kind": "schema",
+      "version": "1.0.0",
+      "status": "active",
+      "authority": "CAR-1.0",
+      "schemaRef": "cor-suite/spec/car-1.0.schema.json",
+      "path": "cor-suite/spec/car-1.0.schema.json",
+      "hash": "3b8af78a33a13dc660c41cf3bd6d6011879e5a2968e1e7c6c433fb94a7883d3a",
+      "lifecycle": {
+        "createdAt": "2026-06-27T00:57:37.795Z",
+        "updatedAt": "2026-06-27T00:57:37.795Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+name: COR Suite
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "cor-suite/**"
+      - "aaes-os/**"
+      - "operator-surface/**"
+      - "frontend/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "cor-suite/**"
+      - "aaes-os/**"
+      - "operator-surface/**"
+      - "frontend/**"
+
+jobs:
+  cor-suite:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cor-suite
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Repo hygiene
+        run: npm run hygiene
+
+      - name: Validate CAR (CAV-1.0)
+        run: npm run validate
+
+      - name: Generate COR
+        run: npm run cor
+
+      - name: Proof Analysis
+        run: npm run analyze
+
+      - name: Maturity
+        run: npm run maturity
+
+      - name: Governance
+        run: npm run govern
+
+      - name: CI gate
+        run: npm run ci-gate
+
+      - name: Upload COR artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: cor-suite-artifacts
+          path: |
+            cor-suite/out/cor-state.json
+            cor-suite/out/cav-validation.json
+            cor-suite/out/proof-analysis.json
+            cor-suite/out/maturity-vector.json
+            cor-suite/out/governance-receipt.json
+            cor-suite/out/repo-hygiene-status.json

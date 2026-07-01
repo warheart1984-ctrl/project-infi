@@ -1,0 +1,24 @@
+{
+  "name": "nova-desktop",
+  "version": "0.1.0",
+  "description": "Cursor-style governed desktop shell for Lawful Nova Node.",
+  "author": "Project Infinity",
+  "type": "commonjs",
+  "packageManager": "npm@11.13.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/*.cjs",
+    "build:win": "electron-builder --config installer-config.json --win"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^42.5.0",
+    "electron-builder": "^26.15.3",
+    "monaco-editor": "^0.45.0"
+  },
+  "build": {
+    "appId": "com.nova.desktop",
+    "productName": "Nova Desktop"
+  }
+}

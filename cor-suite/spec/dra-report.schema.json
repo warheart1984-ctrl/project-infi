@@ -1,0 +1,35 @@
+{
+  "$id": "https://continuity-os.dev/schemas/cor-suite/dra-report/1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DRA-1.0 Dependency-Risk Assessment Report",
+  "type": "object",
+  "properties": {
+    "draVersion": { "type": "string" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "risk": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "requirementId": { "type": "string" },
+          "dependencyDepth": { "type": "number" },
+          "fanIn": { "type": "number" },
+          "fanOut": { "type": "number" },
+          "verificationGaps": { "type": "number" },
+          "deprecatedDependencies": { "type": "number" },
+          "score": { "type": "number" }
+        },
+        "required": [
+          "requirementId",
+          "dependencyDepth",
+          "fanIn",
+          "fanOut",
+          "verificationGaps",
+          "deprecatedDependencies",
+          "score"
+        ]
+      }
+    }
+  },
+  "required": ["draVersion", "generatedAt", "risk"]
+}

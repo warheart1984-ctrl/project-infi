@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Desktop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="splash">
+    <div id="splash-logo">Nova Studio</div>
+    <div id="splash-sub">Sovereign - Local - Governed</div>
+    <div id="splash-loading"></div>
+  </div>
+
+  <aside id="sidebar-shell">
+    <div class="sidebar-header">
+      <span>Workspace</span>
+      <button id="open-folder" title="Open folder">Open</button>
+    </div>
+    <div id="sidebar" aria-label="Project files"></div>
+  </aside>
+
+  <main id="main">
+    <header id="topbar">
+      <div id="topbar-left">
+        <span id="nova-logo">Nova Studio</span>
+        <span id="heartbeat" title="Node heartbeat"></span>
+        <span id="status-panel">Node checking...</span>
+      </div>
+      <div id="topbar-center">
+        <span id="topbar-current-file">No file selected</span>
+      </div>
+      <div class="status-actions">
+        <select id="model-select" aria-label="Local model">
+          <option value="qwen2.5-coder:3b">qwen2.5-coder:3b</option>
+          <option value="qwen2.5-coder:7b">qwen2.5-coder:7b</option>
+          <option value="deepseek-coder:6.7b">deepseek-coder:6.7b</option>
+          <option value="coding-substrate-1:latest">coding-substrate-1:latest</option>
+          <option value="gemma4:latest">gemma4:latest</option>
+        </select>
+        <button id="receipts-btn" title="Show governance receipts">Receipts</button>
+        <button id="tools-btn" title="Show tool registry">Tools</button>
+        <button id="diagnostics-btn" title="Show diagnostics">Diagnostics</button>
+        <button id="replay-btn" title="Replay last action">Replay Last</button>
+      </div>
+    </header>
+
+    <section id="invariants" aria-label="Governance invariants"></section>
+
+    <section id="editor-diff-container">
+      <section class="pane">
+        <div class="pane-title" id="current-file">No file selected</div>
+        <div id="editor"></div>
+      </section>
+      <section class="pane">
+        <div class="pane-title">Patch Preview</div>
+        <div id="diff"></div>
+      </section>
+    </section>
+
+    <section id="settings">
+      <input id="settings-node-url" aria-label="Node URL" placeholder="Node URL">
+      <input id="settings-model" aria-label="Model name" placeholder="Model name">
+      <button id="settings-save">Save</button>
+      <span id="settings-state"></span>
+    </section>
+
+    <section id="chat">
+      <textarea id="chat-input" placeholder="Describe the change you want..."></textarea>
+      <button id="chat-send">Apply with Coder</button>
+      <button id="wire-send">Generate Wiring</button>
+      <button id="apply-patch" disabled>Apply Patch</button>
+      <button id="explain-btn">Explain</button>
+      <button id="diff-toggle-btn">Diff</button>
+    </section>
+
+    <section id="timeline" aria-label="Replay timeline"></section>
+  </main>
+
+  <aside id="receipts-drawer" aria-label="Governance receipts"></aside>
+  <aside id="context-panel" aria-label="Smart context panel"></aside>
+  <aside id="tool-registry" aria-label="Node tool registry"></aside>
+  <aside id="diagnostics" aria-label="Node diagnostics console"></aside>
+  <aside id="profiler" aria-label="Tool invocation profiler"></aside>
+
+  <section id="wizard">
+    <h2>Create New Project</h2>
+    <select id="wizard-type">
+      <option value="python">Python</option>
+      <option value="node">Node.js</option>
+      <option value="rust">Rust</option>
+    </select>
+    <input id="wizard-name" placeholder="Project Name">
+    <button id="wizard-create">Create</button>
+    <button id="wizard-close">Close</button>
+  </section>
+
+  <section id="command-palette">
+    <input id="command-search" placeholder="Type a command...">
+    <div id="command-list"></div>
+  </section>
+
+  <section id="gov-inspector"></section>
+  <section id="replay-overlay"></section>
+
+  <script src="../node_modules/monaco-editor/min/vs/loader.js"></script>
+  <script src="editor.js"></script>
+  <script src="diff.js"></script>
+  <script src="sidebar.js"></script>
+  <script src="chat.js"></script>
+  <script src="settings.js"></script>
+  <script src="status.js"></script>
+  <script src="receipts.js"></script>
+  <script src="replay.js"></script>
+  <script src="timeline.js"></script>
+  <script src="profiler.js"></script>
+  <script src="context-panel.js"></script>
+  <script src="command-palette.js"></script>
+  <script src="model-select.js"></script>
+  <script src="inspector.js"></script>
+  <script src="tool-registry.js"></script>
+  <script src="diagnostics.js"></script>
+  <script src="templates.js"></script>
+  <script src="studio-panels.js"></script>
+  <script src="splash.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>

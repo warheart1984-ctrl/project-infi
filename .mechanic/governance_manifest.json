@@ -1,0 +1,14 @@
+{
+  "manifest_version": "1.0",
+  "decision_owner": "meta-architect-ops",
+  "owner": "meta-architect-ops",
+  "repo_governance": {
+    "human_control_required": true,
+    "loop_boundary_markers": ["retry_ceiling", "invariant_boundary"],
+    "high_impact_hitl": true
+  },
+  "workflow_overrides": {
+    "default_decision_owner": "meta-architect-ops",
+    "default_owner": "meta-architect-ops"
+  }
+}

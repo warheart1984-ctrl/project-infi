@@ -1,0 +1,13 @@
+page_size: A4
+margin:
+  left: 40
+  right: 40
+  top: 40
+  bottom: 40
+font:
+  family: Helvetica
+  size: 11
+heading:
+  h1: 18
+  h2: 14
+  h3: 12

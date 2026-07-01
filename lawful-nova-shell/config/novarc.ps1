@@ -6,6 +6,8 @@ $env:LAWFUL_NOVA_REPO_ROOT = ""
 
 $env:NOVA_PORT = "8080"
 $env:NOVA_API_URL = "http://localhost:$($env:NOVA_PORT)"
+$env:NOVA_CODING_SUBSTRATE = "coding-substrate-1"
+$env:NOVA_MODEL_REGISTRY = Join-Path $env:USERPROFILE "nova-model-registry.json"
 if ($env:LAWFUL_NOVA_REPO_ROOT -and (Test-Path (Join-Path $env:LAWFUL_NOVA_REPO_ROOT "bin\nova.ps1"))) {
     $env:NOVA_CLI = Join-Path $env:LAWFUL_NOVA_REPO_ROOT "bin\nova.ps1"
 } else {
