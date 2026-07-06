@@ -46,10 +46,6 @@ python -m aais prepare --force-build --data-dir ./.runtime/aais-data
 python -m aais doctor --data-dir ./.runtime/aais-data
 ```
 
-Legacy note:
-
-- [`../start_jarvis.py`](../start_jarvis.py) now forwards to this launcher path
-
 ## Read Next
 
 1. [../docs/operators/AAIS_OPERATOR_GUIDE.md](../docs/operators/AAIS_OPERATOR_GUIDE.md) — **operators: start here**

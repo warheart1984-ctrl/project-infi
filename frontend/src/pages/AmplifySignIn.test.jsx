@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
+import AmplifySignIn from './AmplifySignIn';
 
 vi.mock('@aws-amplify/ui-react', () => ({
   Authenticator: ({ children }) => <div data-testid="authenticator">{children}</div>,
@@ -13,8 +14,6 @@ vi.mock('../lib/amplifyAuth', () => ({
   ensureAmplifySession: vi.fn(async () => ''),
   isAmplifyAuthActive: vi.fn(() => false),
 }));
-
-import AmplifySignIn from './AmplifySignIn';
 
 describe('AmplifySignIn', () => {
   it('shows disabled state when VITE_AMPLIFY_AUTH is off', () => {

@@ -1,0 +1,27 @@
+{
+  "name": "@aais/aaes-os",
+  "version": "1.0.0",
+  "description": "AAES-OS v1 — governed cognitive runtime (TypeScript)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "node ./node_modules/typescript/bin/tsc",
+    "test": "npm run build && node --test dist/tests/*.test.js",
+    "start": "node dist/src/server.js",
+    "serve": "node dist/src/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "typescript": "^5.9.3"
+  }
+}
