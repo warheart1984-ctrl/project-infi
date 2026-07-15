@@ -7,4 +7,11 @@ fi
 
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
-corepack pnpm run dropbox:sync
+
+if command -v corepack >/dev/null 2>&1; then
+  corepack pnpm run dropbox:sync
+elif [ -f "/g/.runtime/node-v22.23.1-win-x64/corepack.cmd" ]; then
+  cmd.exe /d /c "G:\\.runtime\\node-v22.23.1-win-x64\\corepack.cmd pnpm run dropbox:sync"
+else
+  echo "AAIS post-commit: corepack unavailable; Dropbox sync skipped." >&2
+fi
