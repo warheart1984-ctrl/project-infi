@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        cd emergent-substrate
+        pip install -r requirements.txt
+    
+    - name: Run tests
+      run: |
+        cd emergent-substrate
+        pytest tests/ -v
+
+  schema-validation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        cd emergent-substrate
+        pip install -r requirements.txt
+        pip install jsonschema
+    
+    - name: Validate JSON schemas
+      run: |
+        cd emergent-substrate
+        python -c "
+        import json
+        import jsonschema
+        from pathlib import Path
+        
+        schemas_dir = Path('spec/schemas')
+        for schema_file in schemas_dir.glob('*.json'):
+            with open(schema_file) as f:
+                schema = json.load(f)
+            jsonschema.Draft7Validator.check_schema(schema)
+            print(f'✓ {schema_file.name} valid')
+        "
+
+  docker-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build Docker image
+      run: |
+        cd emergent-substrate
+        docker build -t emergent-substrate:latest .
+    
+    - name: Test Docker container
+      run: |
+        cd emergent-substrate
+        docker run -d -p 8000:8000 emergent-substrate:latest
+        sleep 10
+        curl -f http://localhost:8000/health || exit 1

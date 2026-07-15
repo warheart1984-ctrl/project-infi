@@ -16,7 +16,9 @@
     "@aaes-os/platform-sdk": "workspace:*",
     "@aaes-os/psom-mesh": "workspace:*",
     "@aaes-os/sgce": "workspace:*",
+    "@aaes-os/sovereignx-router": "workspace:*",
     "@aaes-os/sovren": "workspace:*",
+    "@next/swc-win32-x64-msvc": "15.5.20",
     "next": "^15.5.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"

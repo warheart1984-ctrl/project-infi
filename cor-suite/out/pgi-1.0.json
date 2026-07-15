@@ -1,0 +1,1218 @@
+{
+  "pgiVersion": "1.0.0",
+  "generatedAt": "2026-06-27T01:11:37.171Z",
+  "nodes": [
+    {
+      "id": "RUNLEDGER.REQ-001",
+      "kind": "requirement",
+      "path": "cor-suite/car/requirements/runledger.md"
+    },
+    {
+      "id": "TRACEBUS.REQ-001",
+      "kind": "requirement",
+      "path": "cor-suite/car/requirements/tracebus.md"
+    },
+    {
+      "id": "GOV.REQ-001",
+      "kind": "requirement",
+      "path": "cor-suite/car/requirements/gov.md"
+    },
+    {
+      "id": "UCR.REQ-001",
+      "kind": "requirement",
+      "path": "cor-suite/car/requirements/ucr.md"
+    },
+    {
+      "id": "TRICORE.REQ-001",
+      "kind": "requirement",
+      "path": "cor-suite/car/requirements/tricore.md"
+    },
+    {
+      "id": "OPSCONSOLE.REQ-001",
+      "kind": "requirement",
+      "path": "cor-suite/car/requirements/opsconsole.md"
+    },
+    {
+      "id": "AAES-TEST.REQ-001",
+      "kind": "requirement",
+      "path": "cor-suite/car/requirements/aaes-test.md"
+    },
+    {
+      "id": "OPSURF.REQ-001",
+      "kind": "requirement",
+      "path": "cor-suite/car/requirements/opsurf.md"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-001",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/vite.config.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-002",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/vitest.config.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-001",
+      "kind": "verification",
+      "path": "aaes-os/tests/helpers/runtime.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-002",
+      "kind": "verification",
+      "path": "aaes-os/tests/helpers/crk1Runtime.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-003",
+      "kind": "verification",
+      "path": "aaes-os/tests/integration/determinism.test.ts"
+    },
+    {
+      "id": "OPSURF.IMPL-001",
+      "kind": "implementation",
+      "path": "operator-surface/src/lib/api.ts"
+    },
+    {
+      "id": "OPSURF.IMPL-002",
+      "kind": "implementation",
+      "path": "operator-surface/src/lib/types.ts"
+    },
+    {
+      "id": "OPSURF.IMPL-003",
+      "kind": "implementation",
+      "path": "operator-surface/src/lib/formatActivity.ts"
+    },
+    {
+      "id": "OPSURF.IMPL-004",
+      "kind": "implementation",
+      "path": "operator-surface/src/lib/settings.ts"
+    },
+    {
+      "id": "OPSURF.IMPL-005",
+      "kind": "implementation",
+      "path": "operator-surface/src/lib/workspaceTree.ts"
+    },
+    {
+      "id": "OPSURF.IMPL-006",
+      "kind": "implementation",
+      "path": "operator-surface/src/lib/pathHints.ts"
+    },
+    {
+      "id": "OPSURF.IMPL-007",
+      "kind": "implementation",
+      "path": "operator-surface/src/lib/diffParse.ts"
+    },
+    {
+      "id": "OPSURF.IMPL-008",
+      "kind": "implementation",
+      "path": "operator-surface/src/lib/diffGenerate.ts"
+    },
+    {
+      "id": "RUNLEDGER.IMPL-001",
+      "kind": "implementation",
+      "path": "aaes-os/packages/runledger/src/index.ts"
+    },
+    {
+      "id": "RUNLEDGER.IMPL-002",
+      "kind": "implementation",
+      "path": "aaes-os/packages/runledger/src/models.ts"
+    },
+    {
+      "id": "RUNLEDGER.IMPL-003",
+      "kind": "implementation",
+      "path": "aaes-os/packages/runledger/src/runStore.test.ts"
+    },
+    {
+      "id": "RUNLEDGER.IMPL-004",
+      "kind": "implementation",
+      "path": "aaes-os/packages/runledger/src/runStore.ts"
+    },
+    {
+      "id": "TRACEBUS.IMPL-001",
+      "kind": "implementation",
+      "path": "aaes-os/packages/trace-bus/src/bus.test.ts"
+    },
+    {
+      "id": "TRACEBUS.IMPL-002",
+      "kind": "implementation",
+      "path": "aaes-os/packages/trace-bus/src/bus.ts"
+    },
+    {
+      "id": "TRACEBUS.IMPL-003",
+      "kind": "implementation",
+      "path": "aaes-os/packages/trace-bus/src/console-sink.ts"
+    },
+    {
+      "id": "TRACEBUS.IMPL-004",
+      "kind": "implementation",
+      "path": "aaes-os/packages/trace-bus/src/index.ts"
+    },
+    {
+      "id": "TRACEBUS.IMPL-005",
+      "kind": "implementation",
+      "path": "aaes-os/packages/trace-bus/src/traceBus.test.ts"
+    },
+    {
+      "id": "TRACEBUS.IMPL-006",
+      "kind": "implementation",
+      "path": "aaes-os/packages/trace-bus/src/traceBus.ts"
+    },
+    {
+      "id": "TRACEBUS.IMPL-007",
+      "kind": "implementation",
+      "path": "aaes-os/packages/trace-bus/src/traceEvents.ts"
+    },
+    {
+      "id": "TRACEBUS.IMPL-008",
+      "kind": "implementation",
+      "path": "aaes-os/packages/trace-bus/src/types.ts"
+    },
+    {
+      "id": "GOV.IMPL-001",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/bootstrap.test.ts"
+    },
+    {
+      "id": "GOV.IMPL-002",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/bootstrap.ts"
+    },
+    {
+      "id": "GOV.IMPL-003",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/driftMetrics.test.ts"
+    },
+    {
+      "id": "GOV.IMPL-004",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/driftMetrics.ts"
+    },
+    {
+      "id": "GOV.IMPL-005",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/faultCodes.ts"
+    },
+    {
+      "id": "GOV.IMPL-006",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/faultJournal.test.ts"
+    },
+    {
+      "id": "GOV.IMPL-007",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/faultJournal.ts"
+    },
+    {
+      "id": "GOV.IMPL-008",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/faultTypes.ts"
+    },
+    {
+      "id": "GOV.IMPL-009",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/global.d.ts"
+    },
+    {
+      "id": "GOV.IMPL-010",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/governanceHub.ts"
+    },
+    {
+      "id": "GOV.IMPL-011",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/index.ts"
+    },
+    {
+      "id": "GOV.IMPL-012",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/invariantEngine.test.ts"
+    },
+    {
+      "id": "GOV.IMPL-013",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/invariantEngine.ts"
+    },
+    {
+      "id": "GOV.IMPL-014",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/patchAnalytics.test.ts"
+    },
+    {
+      "id": "GOV.IMPL-015",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/patchAnalytics.ts"
+    },
+    {
+      "id": "GOV.IMPL-016",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/patchRegression.test.ts"
+    },
+    {
+      "id": "GOV.IMPL-017",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/patchTypes.ts"
+    },
+    {
+      "id": "GOV.IMPL-018",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/patternLedger.test.ts"
+    },
+    {
+      "id": "GOV.IMPL-019",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/patternLedger.ts"
+    },
+    {
+      "id": "GOV.IMPL-020",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/telemetry.ts"
+    },
+    {
+      "id": "GOV.IMPL-021",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/tracePort.ts"
+    },
+    {
+      "id": "TRICORE.IMPL-001",
+      "kind": "implementation",
+      "path": "aaes-os/packages/tri-core-protocol/src/index.ts"
+    },
+    {
+      "id": "TRICORE.IMPL-002",
+      "kind": "implementation",
+      "path": "aaes-os/packages/tri-core-protocol/src/patchApply.ts"
+    },
+    {
+      "id": "TRICORE.IMPL-003",
+      "kind": "implementation",
+      "path": "aaes-os/packages/tri-core-protocol/src/patchLedger.test.ts"
+    },
+    {
+      "id": "TRICORE.IMPL-004",
+      "kind": "implementation",
+      "path": "aaes-os/packages/tri-core-protocol/src/patchLedger.ts"
+    },
+    {
+      "id": "TRICORE.IMPL-005",
+      "kind": "implementation",
+      "path": "aaes-os/packages/tri-core-protocol/src/patchProposals.ts"
+    },
+    {
+      "id": "TRICORE.IMPL-006",
+      "kind": "implementation",
+      "path": "aaes-os/packages/tri-core-protocol/src/patchProvenance.ts"
+    },
+    {
+      "id": "TRICORE.IMPL-007",
+      "kind": "implementation",
+      "path": "aaes-os/packages/tri-core-protocol/src/seedPatches.ts"
+    },
+    {
+      "id": "TRICORE.IMPL-008",
+      "kind": "implementation",
+      "path": "aaes-os/packages/tri-core-protocol/src/types.ts"
+    },
+    {
+      "id": "UCR.IMPL-001",
+      "kind": "implementation",
+      "path": "aaes-os/packages/ucr-runtime/src/index.ts"
+    },
+    {
+      "id": "UCR.IMPL-002",
+      "kind": "implementation",
+      "path": "aaes-os/packages/ucr-runtime/src/integration.test.ts"
+    },
+    {
+      "id": "UCR.IMPL-003",
+      "kind": "implementation",
+      "path": "aaes-os/packages/ucr-runtime/src/outputPatches.test.ts"
+    },
+    {
+      "id": "UCR.IMPL-004",
+      "kind": "implementation",
+      "path": "aaes-os/packages/ucr-runtime/src/outputPatches.ts"
+    },
+    {
+      "id": "UCR.IMPL-005",
+      "kind": "implementation",
+      "path": "aaes-os/packages/ucr-runtime/src/patches.integration.test.ts"
+    },
+    {
+      "id": "UCR.IMPL-006",
+      "kind": "implementation",
+      "path": "aaes-os/packages/ucr-runtime/src/stub-runtime.ts"
+    },
+    {
+      "id": "UCR.IMPL-007",
+      "kind": "implementation",
+      "path": "aaes-os/packages/ucr-runtime/src/types.ts"
+    },
+    {
+      "id": "UCR.IMPL-008",
+      "kind": "implementation",
+      "path": "aaes-os/packages/ucr-runtime/src/ucrRuntime.test.ts"
+    },
+    {
+      "id": "UCR.IMPL-009",
+      "kind": "implementation",
+      "path": "aaes-os/packages/ucr-runtime/src/ucrRuntime.ts"
+    },
+    {
+      "id": "UCR.IMPL-010",
+      "kind": "implementation",
+      "path": "aaes-os/packages/ucr-runtime/src/withSpanGuard.test.ts"
+    },
+    {
+      "id": "UCR.IMPL-011",
+      "kind": "implementation",
+      "path": "aaes-os/packages/ucr-runtime/src/withSpanGuard.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-003",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/aaisBridge.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-004",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/cabTelemetry.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-005",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/coverageState.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-006",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/metrics.test.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-007",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/metrics.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-008",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/mriState.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-009",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/patchLedgerState.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-010",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/seedTelemetry.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-011",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/server.test.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-012",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/server.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-013",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/telemetryState.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-014",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/vite-env.d.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-015",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/viteConfig.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-004",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/determinism/deterministic_run.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-005",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/determinism/deterministic_replay.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-006",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/helpers/schemaValidator.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-007",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/crk1/runtime_persistence.test.ts"
+    },
+    {
+      "id": "GOV.IMPL-022",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/invariants/determinism.ts"
+    },
+    {
+      "id": "GOV.IMPL-023",
+      "kind": "implementation",
+      "path": "aaes-os/packages/aaes-governance/src/invariants/outputShape.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-016",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/nova-studio/routes.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-017",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/nova-studio/index.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-018",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/nova-studio/server.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-008",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/identity/identity_shape.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-009",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/identity/identity_invariants.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-010",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/run/run_shape.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-011",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/run/run_lifecycle.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-012",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/run/run_invariants.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-013",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/span/span_emission.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-014",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/span/span_shape.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-015",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/receipt/receipt_determinism.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-016",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/receipt/receipt_shape.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-017",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/fault/fault_shape.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-018",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/fault/fault_emission.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-019",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/schema/validateIdentity.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-020",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/schema/validateRun.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-021",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/schema/validateSpan.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-022",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/schema/validateReceipt.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-023",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/schema/validateFault.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-024",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/cas/schema/validateRuntimeOutput.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-025",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/governance/invariants/noEmptyPayload.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-026",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/governance/invariants/mustEmitExecuteSpan.test.ts"
+    },
+    {
+      "id": "AAES-TEST.VER-027",
+      "kind": "verification",
+      "path": "aaes-os/tests/cts/governance/enforcement/enforcement_path.test.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-019",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/nova-studio/state/studioState.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-020",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/nova-studio/state/operatorContext.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-021",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/nova-studio/state/substrateStreams.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-022",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/nova-studio/state/skillzMcgeeLedger.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-023",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/nova-studio/governance/receiptTypes.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-024",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/nova-studio/governance/envelope.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-025",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/nova-studio/governance/invariants.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-026",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/nova-studio/hooks/useSubstrateEvents.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-027",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/nova-studio/hooks/useGovernanceReceipts.ts"
+    },
+    {
+      "id": "OPSCONSOLE.IMPL-028",
+      "kind": "implementation",
+      "path": "aaes-os/services/ops-console/src/nova-studio/hooks/useOperatorIdentity.ts"
+    }
+  ],
+  "edges": [
+    {
+      "from": "OPSCONSOLE.IMPL-001",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-002",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "AAES-TEST.VER-001",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-002",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-003",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "OPSURF.IMPL-001",
+      "to": "OPSURF.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSURF.IMPL-002",
+      "to": "OPSURF.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSURF.IMPL-003",
+      "to": "OPSURF.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSURF.IMPL-004",
+      "to": "OPSURF.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSURF.IMPL-005",
+      "to": "OPSURF.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSURF.IMPL-006",
+      "to": "OPSURF.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSURF.IMPL-007",
+      "to": "OPSURF.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSURF.IMPL-008",
+      "to": "OPSURF.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "RUNLEDGER.IMPL-001",
+      "to": "RUNLEDGER.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "RUNLEDGER.IMPL-002",
+      "to": "RUNLEDGER.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "RUNLEDGER.IMPL-003",
+      "to": "RUNLEDGER.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "RUNLEDGER.IMPL-004",
+      "to": "RUNLEDGER.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRACEBUS.IMPL-001",
+      "to": "TRACEBUS.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRACEBUS.IMPL-002",
+      "to": "TRACEBUS.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRACEBUS.IMPL-003",
+      "to": "TRACEBUS.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRACEBUS.IMPL-004",
+      "to": "TRACEBUS.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRACEBUS.IMPL-005",
+      "to": "TRACEBUS.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRACEBUS.IMPL-006",
+      "to": "TRACEBUS.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRACEBUS.IMPL-007",
+      "to": "TRACEBUS.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRACEBUS.IMPL-008",
+      "to": "TRACEBUS.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-001",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-002",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-003",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-004",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-005",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-006",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-007",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-008",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-009",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-010",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-011",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-012",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-013",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-014",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-015",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-016",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-017",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-018",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-019",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-020",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-021",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRICORE.IMPL-001",
+      "to": "TRICORE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRICORE.IMPL-002",
+      "to": "TRICORE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRICORE.IMPL-003",
+      "to": "TRICORE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRICORE.IMPL-004",
+      "to": "TRICORE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRICORE.IMPL-005",
+      "to": "TRICORE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRICORE.IMPL-006",
+      "to": "TRICORE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRICORE.IMPL-007",
+      "to": "TRICORE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "TRICORE.IMPL-008",
+      "to": "TRICORE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "UCR.IMPL-001",
+      "to": "UCR.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "UCR.IMPL-002",
+      "to": "UCR.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "UCR.IMPL-003",
+      "to": "UCR.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "UCR.IMPL-004",
+      "to": "UCR.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "UCR.IMPL-005",
+      "to": "UCR.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "UCR.IMPL-006",
+      "to": "UCR.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "UCR.IMPL-007",
+      "to": "UCR.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "UCR.IMPL-008",
+      "to": "UCR.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "UCR.IMPL-009",
+      "to": "UCR.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "UCR.IMPL-010",
+      "to": "UCR.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "UCR.IMPL-011",
+      "to": "UCR.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-003",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-004",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-005",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-006",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-007",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-008",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-009",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-010",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-011",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-012",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-013",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-014",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-015",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "AAES-TEST.VER-004",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-005",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-006",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-007",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "GOV.IMPL-022",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "GOV.IMPL-023",
+      "to": "GOV.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-016",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-017",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-018",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "AAES-TEST.VER-008",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-009",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-010",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-011",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-012",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-013",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-014",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-015",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-016",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-017",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-018",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-019",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-020",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-021",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-022",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-023",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-024",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-025",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-026",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "AAES-TEST.VER-027",
+      "to": "AAES-TEST.REQ-001",
+      "relation": "verifies"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-019",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-020",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-021",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-022",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-023",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-024",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-025",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-026",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-027",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    },
+    {
+      "from": "OPSCONSOLE.IMPL-028",
+      "to": "OPSCONSOLE.REQ-001",
+      "relation": "implements"
+    }
+  ]
+}

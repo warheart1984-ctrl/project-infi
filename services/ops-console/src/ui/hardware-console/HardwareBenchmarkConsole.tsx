@@ -1,5 +1,5 @@
 import type { HardwareConsoleSummary, HardwareRoute } from '../../hardwareConsole.js';
-import { Metric, Panel, gridStyle, subtleTextStyle, buttonStyle, secondaryButtonStyle } from './shared.js';
+import { Panel, gridStyle, subtleTextStyle, buttonStyle, secondaryButtonStyle } from './shared.js';
 
 export interface HardwareBenchmarkConsoleProps {
   hardwareConsole: HardwareConsoleSummary | null;

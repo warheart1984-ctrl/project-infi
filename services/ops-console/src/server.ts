@@ -1,4 +1,5 @@
 import express from 'express';
+import type { Express } from 'express';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -278,7 +279,7 @@ resetSovereignXClusterControlState();
 const platformApiBaseUrl = (process.env.PLATFORM_API_URL ?? 'http://localhost:4100').replace(/\/+$/, '');
 let platformApiSessionIdPromise: Promise<string | null> | null = null;
 
-const app = express();
+const app: Express = express();
 const sovereignxRouterProofSurface: ProofSurface = {
   identity: {
     id: '@aaes-os/sovereignx-router',
@@ -642,17 +643,7 @@ function buildSovereignXClusterNodes(snapshot: SovereignXHardwareSnapshot): Sove
   ];
 }
 
-function buildSovereignXClusterRoutingSnapshot(snapshot: SovereignXHardwareSnapshot) {
-  const router = createSovereignXClusterRoutingRouter();
-  return routeSovereignXClusterWork(
-    router,
-    buildSovereignXClusterRoutingRequest(snapshot, buildHardwareEvidenceContext()),
-    {
-      clock: () => snapshot.governor.state.lastUpdatedAtMs,
-      maxHeartbeatAgeMs: 60_000,
-    },
-  );
-}
+type SovereignXClusterRoutingSnapshot = ReturnType<typeof routeSovereignXClusterWork>;
 
 function buildSovereignXClusterRoutingRequest(
   snapshot: SovereignXHardwareSnapshot,
@@ -1139,7 +1130,7 @@ function buildSovereignXHardwareProofSurface(snapshot: SovereignXHardwareSnapsho
 }
 
 function buildSovereignXClusterRoutingProofSurface(
-  clusterRouting: ReturnType<typeof buildSovereignXClusterRoutingSnapshot>,
+  clusterRouting: SovereignXClusterRoutingSnapshot,
 ): ProofSurface {
   const selectedNode = clusterRouting.selectedNode;
   return {
@@ -1255,7 +1246,7 @@ function buildSovereignXClusterRoutingProofSurface(
 
 function buildSovereignXClusterGovernanceProofSurface(
   clusterGovernanceSnapshot: SovereignXClusterGovernanceProjection,
-  clusterRouting: ReturnType<typeof buildSovereignXClusterRoutingSnapshot>,
+  clusterRouting: SovereignXClusterRoutingSnapshot,
 ): ProofSurface {
   return {
     identity: {
@@ -1378,7 +1369,7 @@ function buildSovereignXClusterGovernanceProofSurface(
 
 function buildSovereignXTraceabilityProofSurface(
   clusterGovernanceSnapshot: SovereignXClusterGovernanceProjection,
-  clusterRouting: ReturnType<typeof buildSovereignXClusterRoutingSnapshot>,
+  clusterRouting: SovereignXClusterRoutingSnapshot,
 ): ProofSurface {
   const matrix = clusterGovernanceSnapshot.traceabilityMatrix;
   return {

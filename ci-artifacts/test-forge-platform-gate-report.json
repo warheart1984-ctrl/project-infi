@@ -1,0 +1,139 @@
+{
+  "schema_version": "forge-platform-gate.v1",
+  "generated_at": "2026-06-24T04:19:24.854844+00:00",
+  "mode": "fail",
+  "status": "fail",
+  "checks": [
+    {
+      "gate_id": "P",
+      "name": "Shippable gate baseline",
+      "status": "fail",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python .github/scripts/check-forge-shippable-gate.py --mode fail",
+      "output_tail": [
+        "forge shippable gate: status=fail output=/mnt/e/project-infi/ci-artifacts/forge-shippable-gate-report.json",
+        "blockers: B:Governance ledger fail mode, B:Substrate evolution ledger, E:Forge profile loader tests, E:Substrate evolution ledger tests, D:Promotion dry-run fixture, C:QEMU smoke contract, C:QEMU contract artifact"
+      ]
+    },
+    {
+      "gate_id": "P7",
+      "name": "Forge profile validation",
+      "status": "pass",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python cog-os/forge/scripts/validate-profile.py --mode fail",
+      "output_tail": [
+        "validated 5 profiles"
+      ]
+    },
+    {
+      "gate_id": "E",
+      "name": "Forge profile loader tests",
+      "status": "fail",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python cog-os/scripts/test/test-forge-profile-loader.py",
+      "output_tail": [
+        "missing profile loader: /mnt/e/project-infi/cog-os/forge/scripts/lib/profile-loader.sh"
+      ]
+    },
+    {
+      "gate_id": "P9",
+      "name": "Substrate evolution ledger",
+      "status": "fail",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python .github/scripts/validate-substrate-evolution-ledger.py --mode fail --registry cog-os/forge/substrates/registry.json",
+      "output_tail": [
+        "substrate evolution ledger: status=fail, entries=6, registry_substrates=15, findings=1",
+        "[ERROR] registry substrates without active ledger coverage: ['usl-guest', 'usl-lifted-guest']"
+      ]
+    },
+    {
+      "gate_id": "P9",
+      "name": "Backend evolution ledger",
+      "status": "pass",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python .github/scripts/validate-backend-evolution-ledger.py --mode fail --registry cog-os/forge/backends/registry.json",
+      "output_tail": [
+        "backend evolution ledger: status=pass, findings=0"
+      ]
+    },
+    {
+      "gate_id": "D",
+      "name": "Promotion dry-run fixture",
+      "status": "fail",
+      "required": true,
+      "command": "bash cog-os/scripts/test/promotion-dry-run.sh --skip-verify",
+      "output_tail": [
+        "Promotion source validation: status=pass, source_run_id=424242, observed_run_id=424242, expected_profile=forge-selfhosted, observed_profile=forge-selfhosted, findings=0",
+        "promotion dry-run report: status=fail output=/mnt/e/project-infi/ci-artifacts/promotion-dry-run-report.json"
+      ]
+    },
+    {
+      "gate_id": "C",
+      "name": "QEMU smoke contract",
+      "status": "fail",
+      "required": true,
+      "command": "bash cog-os/scripts/test/qemu-smoke.sh --contract",
+      "output_tail": [
+        "cog-os/scripts/test/qemu-smoke.sh: line 11: /mnt/e/project-infi/cog-os/forge/scripts/lib/resolve-rootfs.sh: No such file or directory"
+      ]
+    },
+    {
+      "gate_id": "C",
+      "name": "QEMU contract artifact",
+      "status": "fail",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python -c import json, pathlib, sys; p=pathlib.Path('ci-artifacts/qemu-contract.json'); assert p.is_file(), 'missing ci-artifacts/qemu-contract.json'; d=json.loads(p.read_text(encoding='utf-8')); sys.exit(0 if d.get('status') == 'pass' else 1)",
+      "output_tail": [
+        "    import json, pathlib, sys; p=pathlib.Path('ci-artifacts/qemu-contract.json'); assert p.is_file(), 'missing ci-artifacts/qemu-contract.json'; d=json.loads(p.read_text(encoding='utf-8')); sys.exit(0 if d.get('status') == 'pass' else 1)",
+        "                                                                                         ~~~~~~~~~^^",
+        "AssertionError: missing ci-artifacts/qemu-contract.json"
+      ]
+    },
+    {
+      "gate_id": "P9",
+      "name": "Nightly evolution ledger",
+      "status": "pass",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python .github/scripts/validate-nightly-evolution-ledger.py --mode fail",
+      "output_tail": [
+        "nightly evolution ledger: status=pass, entries=3, findings=0"
+      ]
+    },
+    {
+      "gate_id": "P9",
+      "name": "Nightly evolution dry-run",
+      "status": "pass",
+      "required": true,
+      "command": "bash cog-os/scripts/test/forge-nightly-evolution.sh --dry-run",
+      "output_tail": [
+        "forge-nightly-evolution dry-run: ok"
+      ]
+    },
+    {
+      "gate_id": "G",
+      "name": "Platform tier Meta Architect approval",
+      "status": "pass",
+      "required": false,
+      "command": "docs/forge-platform-gate.md",
+      "output_tail": [
+        "Meta Architect APPROVE recorded."
+      ]
+    }
+  ],
+  "blockers": [
+    "P:Shippable gate baseline",
+    "E:Forge profile loader tests",
+    "P9:Substrate evolution ledger",
+    "D:Promotion dry-run fixture",
+    "C:QEMU smoke contract",
+    "C:QEMU contract artifact"
+  ],
+  "meta_architect_gate": {
+    "gate_id": "G",
+    "decision_required": false,
+    "decision": "approve",
+    "authority": "Meta Architect",
+    "notes": "Platform-tier release channel authorization.",
+    "decision_doc": "docs/forge-platform-gate.md"
+  }
+}

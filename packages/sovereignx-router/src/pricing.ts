@@ -442,11 +442,6 @@ function estimateMonthlyEconomics(
   marginPct: number;
 } {
   const rates = getPricingRatios(strategy);
-  const routedRequests = input.monthlyCustomers * input.routedRequestsPerCustomer;
-  const governanceReviews = input.monthlyCustomers * input.governanceReviewsPerCustomer;
-  const knowledgeUpdates = input.monthlyCustomers * input.knowledgeUpdatesPerCustomer;
-  const serviceHours = input.monthlyCustomers * input.serviceHoursPerCustomer;
-
   const subscriptionFee = 49 * rates.subscriptionMultiplier;
   const usageFee = 0.09 * rates.usageMultiplier;
   const assuranceFee = 10 * rates.assuranceMultiplier;

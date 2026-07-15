@@ -11,18 +11,19 @@
     "test": "vitest run --config vitest.config.ts"
   },
   "dependencies": {
+    "@aaes-os/aaes-governance": "workspace:*",
     "@aaes-os/platform-core": "workspace:*",
     "@aaes-os/platform-mesh": "workspace:*",
     "@aaes-os/platform-sdk": "workspace:*",
     "@aaes-os/psom-mesh": "workspace:*",
     "@aaes-os/sgce": "workspace:*",
-    "@aaes-os/sovren": "workspace:*",
-    "@aaes-os/aaes-governance": "workspace:*",
     "@aaes-os/sovereignx-router": "workspace:*",
+    "@aaes-os/sovren": "workspace:*",
     "express": "^5.1.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
+    "@types/express-serve-static-core": "5.1.1",
     "@types/node": "^22.19.21",
     "tsx": "^4.20.5",
     "typescript": "^5.9.3",

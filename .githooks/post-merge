@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+if [ "${DROPBOX_SYNC_DISABLED:-0}" = "1" ]; then
+  exit 0
+fi
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+corepack pnpm run dropbox:sync

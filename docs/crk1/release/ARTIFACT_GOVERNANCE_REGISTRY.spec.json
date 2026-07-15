@@ -1,0 +1,1066 @@
+{
+  "specId": "artifact-governance-registry",
+  "displayName": "Artifact Governance Registry",
+  "version": "1.0.0",
+  "status": "Frozen",
+  "governanceModel": {
+    "documentStatusLifecycle": [
+      "Draft",
+      "Technical Review",
+      "Baseline Candidate",
+      "Constitutional Approval",
+      "Frozen",
+      "Published"
+    ],
+    "requiredFields": [
+      "Document Status",
+      "Version",
+      "Owner / Steward",
+      "Normative or Informative",
+      "Parent Specification",
+      "Traceability Links",
+      "CCP / CCR History",
+      "Release History"
+    ]
+  },
+  "artifacts": [
+    {
+      "artifactId": "cis-core-principles",
+      "title": "CIS Core Principles",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_CONFORMANCE_REQUIREMENTS.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-PRINCIPLES-001",
+          "status": "Draft",
+          "summary": "Introduce the longevity and independent implementability principle."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial principle draft."
+        }
+      ]
+    },
+    {
+      "artifactId": "cis-conformance-requirements",
+      "title": "CIS Conformance Requirements",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_CORE_PRINCIPLES.md",
+        "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-CONFORMANCE-001",
+          "status": "Draft",
+          "summary": "Introduce no-founder-dependency conformance criteria."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial conformance requirement set."
+        }
+      ]
+    },
+    {
+      "artifactId": "cis-standards-hierarchy",
+      "title": "CIS Standards Hierarchy",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_CORE_PRINCIPLES.md",
+        "docs/crk1/release/CIS_CONFORMANCE_REQUIREMENTS.md",
+        "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-HIERARCHY-001",
+          "status": "Draft",
+          "summary": "Add governance process as part of the spec surface."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial hierarchy publication."
+        }
+      ]
+    },
+    {
+      "artifactId": "cis-standards-traceability-matrix",
+      "title": "CIS Standards Traceability Matrix",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Standards Hierarchy",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json",
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_INPUT.spec.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-TRACEABILITY-001",
+          "status": "Draft",
+          "summary": "Publish requirement, component, evidence, and test matrix."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial traceability matrix."
+        }
+      ]
+    },
+    {
+      "artifactId": "artifact-governance-registry",
+      "title": "Artifact Governance Registry",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Standards Hierarchy",
+      "traceabilityLinks": [
+        "docs/crk1/release/ARTIFACT_GOVERNANCE_MODEL.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-ARTIFACT-GOV-001",
+          "status": "Draft",
+          "summary": "Standardize metadata across major artifacts."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial artifact governance registry."
+        }
+      ]
+    },
+    {
+      "artifactId": "sovereign-router-x-product-spec",
+      "title": "Sovereign Router X Product Architecture Specification",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "Platform maintainers",
+      "classification": "Informative",
+      "parentSpecification": "CIS Standards Hierarchy",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json",
+        "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-SRX-001",
+          "status": "Draft",
+          "summary": "Document the orchestration layer that sits above model selection."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial product architecture specification."
+        }
+      ]
+    },
+    {
+      "artifactId": "sovereign-router-x-pricing",
+      "title": "Sovereign Router X Pricing and Unit Economics Worksheet",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "Platform maintainers",
+      "classification": "Informative",
+      "parentSpecification": "CIS Standards Hierarchy",
+      "traceabilityLinks": [
+        "docs/crk1/release/SOVEREIGN_ROUTER_X_PRICING.md",
+        "docs/crk1/release/SOVEREIGN_ROUTER_X_PRICING.spec.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-SRX-PRICING-001",
+          "status": "Draft",
+          "summary": "Expand pricing beyond inference to platform, assurance, knowledge, enterprise, and professional services."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial layered pricing specification."
+        }
+      ]
+    },
+    {
+      "artifactId": "cis-companion-spec-registry",
+      "title": "CIS Companion Specification Registry",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Standards Hierarchy",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-REGISTRY-001",
+          "status": "Draft",
+          "summary": "List companion specifications and implementation profiles in one registry."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial companion registry."
+        }
+      ]
+    },
+    {
+      "artifactId": "crk1-release-manifest",
+      "title": "CRK-1 v1.0 Release Manifest",
+      "documentStatus": "Published",
+      "version": "1.0.0",
+      "ownerSteward": "CRK-1 Governance Body",
+      "classification": "Normative",
+      "parentSpecification": "CRK-1 v1.0",
+      "traceabilityLinks": [
+        "docs/crk1/release/CRK1_V1_RELEASE_INDEX.md",
+        "docs/crk1/release/CRK1_V1_RELEASE_NOTES.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CRK1-RELEASE-001",
+          "status": "Published",
+          "summary": "Declare the release manifest and kernel status stable."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-06-24",
+          "note": "Initial stable release manifest."
+        }
+      ]
+    },
+    {
+      "artifactId": "crk1-release-notes",
+      "title": "CRK-1 v1.0 Release Notes",
+      "documentStatus": "Published",
+      "version": "1.0.0",
+      "ownerSteward": "CRK-1 Governance Body",
+      "classification": "Informative",
+      "parentSpecification": "CRK-1 v1.0",
+      "traceabilityLinks": [
+        "docs/crk1/release/CRK1_V1_RELEASE_MANIFEST.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CRK1-RELEASE-002",
+          "status": "Published",
+          "summary": "Summarize the stable release and next steps."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-06-24",
+          "note": "Initial release notes."
+        }
+      ]
+    },
+    {
+      "artifactId": "crk1-release-index",
+      "title": "CRK-1 v1.0 Release Package Index",
+      "documentStatus": "Published",
+      "version": "1.0.0",
+      "ownerSteward": "CRK-1 release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "CRK-1 v1.0",
+      "traceabilityLinks": [
+        "docs/README.md",
+        "docs/crk1/release/CRK1_V1_RELEASE_MANIFEST.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CRK1-INDEX-001",
+          "status": "Published",
+          "summary": "Publish the canonical release package index."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-06-24",
+          "note": "Initial release package index."
+        }
+      ]
+    },
+    {
+      "artifactId": "codex-workflow",
+      "title": "Codex Handoff Workflow",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "Platform maintainers",
+      "classification": "Informative",
+      "parentSpecification": "CIS Standards Hierarchy",
+      "traceabilityLinks": [
+        "docs/crk1/release/CODEX_HANDOFF_PACKET.md",
+        "docs/crk1/release/CODEX_ROUTER_BRIDGE.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CODEX-WORKFLOW-001",
+          "status": "Draft",
+          "summary": "Document the prompt -> reply -> ingest workflow."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial workflow draft."
+        }
+      ]
+    },
+    {
+      "artifactId": "reference-architecture",
+      "title": "Reference Architecture",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-ARCH-001",
+          "status": "Draft",
+          "summary": "Describe system decomposition and boundaries."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial reference architecture coverage."
+        }
+      ]
+    },
+    {
+      "artifactId": "ontology",
+      "title": "Ontology",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-ONTOLOGY-001",
+          "status": "Draft",
+          "summary": "Define the shared semantic contract."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial ontology coverage."
+        }
+      ]
+    },
+    {
+      "artifactId": "knowledge-graph-specification",
+      "title": "Knowledge Graph Specification",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-KG-001",
+          "status": "Approved",
+          "summary": "Describe operational knowledge and continuity structure."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Frozen as part of the companion baseline."
+        }
+      ]
+    },
+    {
+      "artifactId": "conformance-suite",
+      "title": "Conformance Suite",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_SPECIFICATION.md",
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_FREEZE.md",
+        "docs/crk1/release/CIS_CONFORMANCE_REQUIREMENTS.md",
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_INPUT.spec.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-CONFORMANCE-SUITE-001",
+          "status": "Approved",
+          "summary": "Bind validation and compliance testing to the traceability matrix."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial conformance suite coverage."
+        }
+      ]
+    },
+    {
+      "artifactId": "reference-runtime",
+      "title": "Reference Runtime",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-RUNTIME-001",
+          "status": "Approved",
+          "summary": "Describe the executable proof of the architecture."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Frozen as part of the companion baseline."
+        }
+      ]
+    },
+    {
+      "artifactId": "standards-traceability-matrix",
+      "title": "Standards Traceability Matrix",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-TRACEABILITY-MATRIX-001",
+          "status": "Draft",
+          "summary": "Map requirements to evidence and tests."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial standards traceability coverage."
+        }
+      ]
+    },
+    {
+      "artifactId": "implementation-profiles",
+      "title": "Implementation Profiles",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-PROFILES-001",
+          "status": "Approved",
+          "summary": "Adapt CIS for domain-specific deployment classes."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Frozen as part of the companion baseline."
+        }
+      ]
+    },
+    {
+      "artifactId": "dx-guide",
+      "title": "DX Guide",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-DX-001",
+          "status": "Approved",
+          "summary": "Explain implementation and onboarding guidance."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Frozen as part of the companion baseline."
+        }
+      ]
+    },
+    {
+      "artifactId": "documentation-specification-family",
+      "title": "Documentation Specification Family",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-DOCS-001",
+          "status": "Approved",
+          "summary": "Define authoring, filing, and release rules."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Frozen as part of the companion baseline."
+        }
+      ]
+    },
+    {
+      "artifactId": "implementation-profile-freeze-criteria",
+      "title": "Implementation Profile Freeze Criteria",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "Implementation Profiles",
+      "traceabilityLinks": [
+        "docs/crk1/release/IMPLEMENTATION_PROFILE_FREEZE_CRITERIA_FREEZE.md",
+        "docs/crk1/release/IMPLEMENTATION_PROFILE_FREEZE_CRITERIA.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-PROFILE-FREEZE-001",
+          "status": "Approved",
+          "summary": "Define the objective criteria for freezing implementation profile artifacts."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-12",
+          "note": "Frozen baseline for profile freeze criteria."
+        }
+      ]
+    },
+    {
+      "artifactId": "implementation-profile-worked-example-policy",
+      "title": "Implementation Profile Worked-Example Policy",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "Implementation Profiles",
+      "traceabilityLinks": [
+        "docs/crk1/release/IMPLEMENTATION_PROFILE_WORKED_EXAMPLE_POLICY.md",
+        "docs/crk1/release/IMPLEMENTATION_PROFILE_FREEZE_CRITERIA.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-PROFILE-WORKED-EXAMPLE-POLICY-001",
+          "status": "Approved",
+          "summary": "Set the frozen worked-example count for implementation profiles."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-12",
+          "note": "Frozen summary rule for the current profile example set."
+        }
+      ]
+    },
+    {
+      "artifactId": "external-standards-mapping",
+      "title": "External Standards Mapping Layer",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/EXTERNAL_STANDARDS_MAPPING_FREEZE.md",
+        "docs/crk1/release/EXTERNAL_STANDARDS_MAPPING.md",
+        "docs/crk1/release/EXTERNAL_STANDARDS_MAPPING.spec.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-EXTERNAL-STANDARDS-001",
+          "status": "Approved",
+          "summary": "Map CIS artifacts to ISO, NIST, IEEE, W3C, and IETF."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Frozen as part of the companion baseline."
+        }
+      ]
+    },
+    {
+      "artifactId": "cis-conformance-suite-input",
+      "title": "CIS Conformance Suite Input",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Standards Hierarchy",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_SPECIFICATION.md",
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_INPUT.spec.json",
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_GENERATION.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-CONFORMANCE-INPUT-001",
+          "status": "Approved",
+          "summary": "Generate the conformance suite from the traceability matrix."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial conformance suite input."
+        }
+      ]
+    },
+    {
+      "artifactId": "cis-conformance-suite-generation",
+      "title": "CIS Conformance Suite Generation",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "CIS Standards Hierarchy",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_SPECIFICATION.md",
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_GENERATION.md",
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_INPUT.spec.generator.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CIS-CONFORMANCE-GENERATION-001",
+          "status": "Approved",
+          "summary": "Define generation rules for the suite input."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Initial conformance suite generation coverage."
+        }
+      ]
+    },
+    {
+      "artifactId": "profile-government",
+      "title": "Implementation Profile: Government",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "Implementation Profiles",
+      "traceabilityLinks": [
+        "docs/crk1/release/IMPLEMENTATION_PROFILE_GOVERNMENT_FREEZE.md",
+        "docs/crk1/release/IMPLEMENTATION_PROFILE_GOVERNMENT.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json",
+        "docs/crk1/release/IMPLEMENTATION_PROFILE_FREEZE_CRITERIA.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-PROFILE-GOV-001",
+          "status": "Approved",
+          "summary": "Adapt CIS for public-sector constraints."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Frozen as the contrasting worked example for the implementation profile freeze process."
+        }
+      ]
+    },
+    {
+      "artifactId": "profile-healthcare",
+      "title": "Implementation Profile: Healthcare",
+      "documentStatus": "Draft",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "Implementation Profiles",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-PROFILE-HLTH-001",
+          "status": "Draft",
+          "summary": "Adapt CIS for healthcare privacy and evidence needs."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Active adaptation surface; remains Draft pending profile-specific evidence and a formal freeze notice."
+        }
+      ]
+    },
+    {
+      "artifactId": "profile-finance",
+      "title": "Implementation Profile: Finance",
+      "documentStatus": "Draft",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "Implementation Profiles",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-PROFILE-FIN-001",
+          "status": "Draft",
+          "summary": "Adapt CIS for financial controls and auditability."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Active adaptation surface; remains Draft pending profile-specific evidence and a formal freeze notice."
+        }
+      ]
+    },
+    {
+      "artifactId": "profile-research",
+      "title": "Implementation Profile: Research",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "Implementation Profiles",
+      "traceabilityLinks": [
+        "docs/crk1/release/IMPLEMENTATION_PROFILE_RESEARCH_FREEZE.md",
+        "docs/crk1/release/IMPLEMENTATION_PROFILE_RESEARCH.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json",
+        "docs/crk1/release/RESEARCH_OS_SPECIFICATION.md",
+        "docs/crk1/release/RESEARCH_OS_FREEZE.md",
+        "docs/crk1/release/IMPLEMENTATION_PROFILE_FREEZE_CRITERIA.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-PROFILE-RES-001",
+          "status": "Approved",
+          "summary": "Adapt CIS for reproducibility and evidence-rich research workflows."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Frozen as the worked example for the implementation profile freeze process."
+        }
+      ]
+    },
+    {
+      "artifactId": "profile-education",
+      "title": "Implementation Profile: Education",
+      "documentStatus": "Draft",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "Implementation Profiles",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-PROFILE-EDU-001",
+          "status": "Draft",
+          "summary": "Adapt CIS for learning and accessibility requirements."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Active adaptation surface; remains Draft pending profile-specific evidence and a formal freeze notice."
+        }
+      ]
+    },
+    {
+      "artifactId": "profile-infrastructure",
+      "title": "Implementation Profile: Infrastructure",
+      "documentStatus": "Draft",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "Implementation Profiles",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-PROFILE-INFRA-001",
+          "status": "Draft",
+          "summary": "Adapt CIS for reliability and failover constraints."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Active adaptation surface; remains Draft pending profile-specific evidence and a formal freeze notice."
+        }
+      ]
+    },
+    {
+      "artifactId": "profile-regenerative-intelligence",
+      "title": "Implementation Profile: Regenerative Intelligence",
+      "documentStatus": "Draft",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "Implementation Profiles",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-PROFILE-RI-001",
+          "status": "Draft",
+          "summary": "Adapt CIS for stewardship and continuous improvement loops."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-11",
+          "note": "Active adaptation surface; remains Draft pending profile-specific evidence and a formal freeze notice."
+        }
+      ]
+    },
+    {
+      "artifactId": "governed-knowledge-store-specification",
+      "title": "Governed Knowledge Store Specification (GKS)",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/GOVERNED_KNOWLEDGE_STORE_SPECIFICATION.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-GKS-001",
+          "status": "Draft",
+          "summary": "Define the governed knowledge store and extend the operational model with constitutional receipts, replay, and trust ledger integration."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-12",
+          "note": "Frozen as part of the companion baseline."
+        }
+      ]
+    },
+    {
+      "artifactId": "cis-launch-readiness-specification",
+      "title": "CIS Launch Readiness Specification",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CIS_LAUNCH_READINESS_SPECIFICATION.md",
+        "docs/crk1/release/CIS_LAUNCH_READINESS_FREEZE.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-LRS-001",
+          "status": "Draft",
+          "summary": "Define evidence-governed release lifecycle and freeze rules."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-12",
+          "note": "Frozen as part of the companion baseline."
+        }
+      ]
+    },
+    {
+      "artifactId": "research-os-specification",
+      "title": "Research OS Specification",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/RESEARCH_OS_SPECIFICATION.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-ROS-001",
+          "status": "Draft",
+          "summary": "Define Research OS as the Evidence -> Insights -> Ideas -> Actions workflow."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-12",
+          "note": "Frozen as part of the companion baseline."
+        }
+      ]
+    },
+    {
+      "artifactId": "sock-alignment-specification",
+      "title": "SOCK Alignment Specification",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Informative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/SOCK_ALIGNMENT_FREEZE.md",
+        "docs/crk1/release/SOCK_ALIGNMENT_SPECIFICATION.md",
+        "docs/specifications/aaes-os-constitutional-kernel-specification.md",
+        "docs/runtime/sovereign-os-constitutional-kernel-control-plane.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-SOCK-ALIGN-001",
+          "status": "Approved",
+          "summary": "Bridge CIS obligations to SOCK runtime semantics."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-12",
+          "note": "Frozen as part of the companion baseline."
+        }
+      ]
+    },
+    {
+      "artifactId": "cori-alpha-proof-chain",
+      "title": "CORI Alpha Proof Chain",
+      "documentStatus": "Frozen",
+      "version": "1.0.0",
+      "ownerSteward": "CIS release maintainers",
+      "classification": "Normative",
+      "parentSpecification": "CIS Core",
+      "traceabilityLinks": [
+        "docs/crk1/release/CORI_ALPHA_PROOF_CHAIN_FREEZE.md",
+        "docs/crk1/release/CORI_ALPHA_PROOF_CHAIN.md",
+        "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md"
+      ],
+      "ccpCcrHistory": [
+        {
+          "id": "CCR-CORI-001",
+          "status": "Approved",
+          "summary": "Define the minimum governed proof chain for CORI Alpha."
+        }
+      ],
+      "releaseHistory": [
+        {
+          "version": "1.0.0",
+          "date": "2026-07-12",
+          "note": "Frozen as part of the companion baseline."
+        }
+      ]
+    }
+  ]
+}

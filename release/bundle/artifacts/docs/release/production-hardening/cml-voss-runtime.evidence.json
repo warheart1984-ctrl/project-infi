@@ -1,0 +1,88 @@
+{
+  "id": "cml-voss-runtime",
+  "packageName": "@aaes-os/cml-voss-runtime",
+  "status": "release-evidence-ready",
+  "packageDir": "packages/cml-voss-runtime",
+  "docsPage": "docs-site/docs/runtime/cml-voss-runtime.md",
+  "registryId": "The Voss Binding",
+  "checks": {
+    "packageJson": true,
+    "source": true,
+    "tests": true,
+    "buildOutput": true,
+    "docsPage": true,
+    "registryLive": true,
+    "packageName": true,
+    "buildScript": true,
+    "testScript": true
+  },
+  "commands": {
+    "build": "corepack pnpm --filter @aaes-os/cml-voss-runtime build",
+    "test": "corepack pnpm --filter @aaes-os/cml-voss-runtime test"
+  },
+  "replayAuditPacket": {
+    "replayReference": "cml-voss-runtime.evidence.json#replayAuditPacket",
+    "auditReference": "cml-voss-runtime.evidence.json#checks",
+    "documentationReference": "docs-site/docs/runtime/cml-voss-runtime.md",
+    "requiredArtifacts": [
+      "packageJson",
+      "source",
+      "tests",
+      "buildOutput",
+      "docsPage",
+      "registryLive"
+    ]
+  },
+  "releasePackagingPacket": {
+    "manifestId": "cml-voss-runtime-a3cf11a5c2e4604019795e4386aee91f7f873c16664a7728ccaf304c2039684c",
+    "checksumAlgorithm": "sha256",
+    "includedFiles": [
+      {
+        "path": "packages/cml-voss-runtime/package.json",
+        "sha256": "e94edcbe2669abe0eafb0ada529d5a311437f6b4a6ff0b381162686b779a62b2",
+        "bytes": 567
+      },
+      {
+        "path": "packages/cml-voss-runtime/src/index.ts",
+        "sha256": "2be279832413f3d458c9c333bb5147cd5dfebfba3c2b4527feeae93444555c99",
+        "bytes": 10208
+      },
+      {
+        "path": "packages/cml-voss-runtime/src/index.test.ts",
+        "sha256": "9d1cf310134d56ea67459e5888802e0cdfdb0df49b3acd07a8870c32e2a60712",
+        "bytes": 2723
+      },
+      {
+        "path": "packages/cml-voss-runtime/dist/index.js",
+        "sha256": "88672c38d24c9ab7aff0de6a9a75c2605dbfcd00d3e8fbbc9a35274c9266c259",
+        "bytes": 8224
+      },
+      {
+        "path": "docs-site/docs/runtime/cml-voss-runtime.md",
+        "sha256": "153e1f9d55eba2a837e0a379e5f6255dece2b3d4141712808b8ccdc3e7368ae0",
+        "bytes": 1221
+      },
+      {
+        "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+        "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+        "bytes": 7972
+      }
+    ]
+  },
+  "externalIntegrationPacket": {
+    "target": "CML/CVM corpus binding adapter",
+    "readiness": "live-integration-verified",
+    "evidence": [
+      "docs-site/docs/runtime/cml-voss-runtime.md",
+      "packages/cml-voss-runtime/src/index.ts",
+      "cml-voss-runtime.evidence.json",
+      "docs/release/external-integrations/README.md",
+      "docs/release/external-integrations/external-integration-index.json"
+    ],
+    "serviceEvidenceIds": [
+      "github-origin-remote",
+      "npm-registry-toolchain"
+    ]
+  },
+  "blockers": []
+}

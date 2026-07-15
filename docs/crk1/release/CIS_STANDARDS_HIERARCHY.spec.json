@@ -1,0 +1,294 @@
+{
+  "specId": "cis-standards-hierarchy",
+  "displayName": "CIS Standards Hierarchy",
+  "version": "1.0.0",
+  "status": "Frozen",
+  "cisCorePrinciples": [
+    {
+      "id": "cis-principle-longevity",
+      "name": "Longevity and Independent Implementability",
+      "statement": "CIS Core must be specified so that an implementer who has never met the original authors can build, verify, and evolve a conforming implementation years later without founder dependency."
+    },
+    {
+      "id": "cis-principle-normative-stability",
+      "name": "Normative Stability",
+      "statement": "Core terminology and constitutional requirements remain stable unless changed through the governed constitutional process."
+    },
+    {
+      "id": "cis-principle-inheritance",
+      "name": "Inheritance Over Redefinition",
+      "statement": "Companion specifications, profiles, and documentation families inherit CIS terminology rather than redefining it."
+    },
+    {
+      "id": "cis-principle-governance-continuity",
+      "name": "Governance Continuity",
+      "statement": "Governance is part of the specification surface and must be documented alongside the runtime."
+    }
+  ],
+  "conformanceCriteria": [
+    {
+      "id": "CR-1",
+      "name": "No Founder Dependency",
+      "statement": "A conforming implementation must not require private explanation, unpublished conventions, or hidden operator knowledge from the original authors.",
+      "verification": "An independent implementer can build, test, and evolve the system using only published CIS artifacts."
+    },
+    {
+      "id": "CR-2",
+      "name": "Governance Process as Spec Surface",
+      "statement": "The governance process must be exposed as part of the specification surface.",
+      "verification": "The spec defines document status, stewardship, versioning, traceability, and release lifecycle."
+    },
+    {
+      "id": "CR-3",
+      "name": "Model Agnosticism",
+      "statement": "The platform must remain agnostic to any specific reasoning engine or provider.",
+      "verification": "Routing and orchestration can target multiple compatible reasoning engines."
+    },
+    {
+      "id": "CR-4",
+      "name": "Shared Artifact Governance",
+      "statement": "Major artifacts must follow the shared governance model with status, version, stewardship, classification, parent specification, traceability, and history fields.",
+      "verification": "Each major artifact is represented in the artifact governance registry with the required metadata."
+    }
+  ],
+  "coreSpecification": {
+    "name": "CIS Core",
+    "role": "Single authoritative constitutional specification",
+    "inheritanceRule": "Companion specifications inherit Core terminology and may not redefine constitutional terms."
+  },
+  "governanceModel": {
+    "documentStatusLifecycle": [
+      "Draft",
+      "Technical Review",
+      "Baseline Candidate",
+      "Constitutional Approval",
+      "Frozen",
+      "Published"
+    ],
+    "governanceFields": [
+      "Document Status",
+      "CCP / CCR",
+      "Stewardship",
+      "Versioning",
+      "Traceability",
+      "Release lifecycle"
+    ]
+  },
+  "companionSpecifications": [
+    {
+      "name": "Reference Architecture",
+      "responsibility": "System decomposition and boundaries",
+      "status": "Frozen"
+    },
+    {
+      "name": "Ontology",
+      "responsibility": "Shared semantic contract",
+      "status": "Frozen"
+    },
+    {
+      "name": "Knowledge Graph Specification",
+      "responsibility": "Operational knowledge and continuity structure",
+      "status": "Frozen"
+    },
+    {
+      "name": "Governed Knowledge Store Specification",
+      "responsibility": "Canonical knowledge admission, replay, and trust lifecycle",
+      "status": "Frozen"
+    },
+    {
+      "name": "Conformance Suite",
+      "responsibility": "Validation and compliance testing",
+      "status": "Frozen"
+    },
+    {
+      "name": "Reference Runtime",
+      "responsibility": "Executable proof of the architecture",
+      "status": "Frozen"
+    },
+    {
+      "name": "Standards Traceability Matrix",
+      "responsibility": "Requirement-to-evidence mapping",
+      "status": "Frozen"
+    },
+    {
+      "name": "Implementation Profiles",
+      "responsibility": "Domain adaptation without constitutional drift",
+      "status": "Draft"
+    },
+    {
+      "name": "Implementation Profile Freeze Criteria",
+      "responsibility": "Objective gate for promoting profile artifacts from Draft to Frozen",
+      "status": "Frozen"
+    },
+    {
+      "name": "Implementation Profile Worked-Example Policy",
+      "responsibility": "Summary rule for the current frozen profile example set",
+      "status": "Frozen"
+    },
+    {
+      "name": "DX Guide",
+      "responsibility": "Developer onboarding and implementation guidance",
+      "status": "Frozen"
+    },
+    {
+      "name": "Documentation Specification Family",
+      "responsibility": "Authoring, filing, and release rules",
+      "status": "Frozen"
+    },
+    {
+      "name": "Launch Readiness Specification",
+      "responsibility": "Evidence-governed release lifecycle",
+      "status": "Frozen"
+    },
+    {
+      "name": "Research OS",
+      "responsibility": "Evidence, insights, ideas, and actions workflow",
+      "status": "Frozen"
+    },
+    {
+      "name": "SOCK Alignment Specification",
+      "responsibility": "Bridge CIS obligations to SOCK runtime semantics",
+      "status": "Frozen"
+    },
+    {
+      "name": "CORI Alpha Proof Chain",
+      "responsibility": "Minimum governed proof workflow for constitutional evidence",
+      "status": "Frozen"
+    }
+  ],
+  "implementationProfiles": [
+    "Government",
+    "Healthcare",
+    "Finance",
+    "Research",
+    "Education",
+    "Infrastructure",
+    "Regenerative Intelligence"
+  ],
+  "researchOS": {
+    "name": "Research OS",
+    "role": "Permanent institutional memory and improvement loop",
+    "flow": [
+      "Evidence",
+      "Insights",
+      "Ideas",
+      "Actions"
+    ]
+  },
+  "governanceProcess": {
+    "partOfSpecSurface": true,
+    "documentStatusLifecycle": [
+      "Draft",
+      "Technical Review",
+      "Baseline Candidate",
+      "Constitutional Approval",
+      "Frozen",
+      "Published"
+    ],
+    "requiredArtifacts": [
+      "Principle draft",
+      "Conformance requirements",
+      "Traceability matrix",
+      "Machine-readable hierarchy spec",
+      "Companion spec registry",
+      "Artifact governance model",
+      "Artifact governance registry",
+      "External standards mapping",
+      "Conformance suite generation",
+      "Governed Knowledge Store specification",
+      "Launch readiness specification",
+      "Research OS specification",
+      "Implementation profile freeze criteria",
+      "SOCK alignment specification",
+      "CORI Alpha proof chain",
+      "Proof-surface publication"
+    ]
+  },
+  "traceabilityMatrix": [
+    {
+      "requirement": "CIS Core remains the single authoritative constitutional specification",
+      "component": "CIS_STANDARDS_HIERARCHY.md and CIS_STANDARDS_HIERARCHY.spec.json",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "test": "packages/aaes-governance/src/proofSurface.test.ts"
+    },
+    {
+      "requirement": "Companion specifications inherit Core terminology rather than redefining it",
+      "component": "CIS_STANDARDS_HIERARCHY.md",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "test": "packages/aaes-governance/src/proofSurface.test.ts"
+    },
+    {
+      "requirement": "Every artifact carries consistent governance status, stewardship, versioning, traceability, and release lifecycle fields",
+      "component": "CIS_STANDARDS_HIERARCHY.md",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "test": "packages/aaes-governance/src/proofSurface.test.ts"
+    },
+    {
+      "requirement": "Implementation profiles adapt CIS for domain-specific constraints without changing constitutional requirements",
+      "component": "CIS_STANDARDS_HIERARCHY.spec.json",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "test": "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+    },
+    {
+      "requirement": "Standards traceability answers requirement, component, evidence, replay, receipt, and test for each capability",
+      "component": "CIS_STANDARDS_TRACEABILITY_MATRIX.md",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md"
+      ],
+      "test": "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md"
+    },
+    {
+      "requirement": "Research OS preserves evidence, insights, ideas, and actions as durable institutional memory",
+      "component": "CIS_STANDARDS_HIERARCHY.md",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "test": "packages/aaes-governance/src/proofSurface.test.ts"
+    },
+    {
+      "requirement": "Major artifacts follow the shared governance model",
+      "component": "ARTIFACT_GOVERNANCE_MODEL.md and ARTIFACT_GOVERNANCE_REGISTRY.spec.json",
+      "evidence": [
+        "docs/crk1/release/ARTIFACT_GOVERNANCE_MODEL.md",
+        "docs/crk1/release/ARTIFACT_GOVERNANCE_REGISTRY.spec.json"
+      ],
+      "test": "tests/release/artifact-governance.test.ts"
+    },
+    {
+      "requirement": "External standards families are mapped for interoperability and traceability",
+      "component": "EXTERNAL_STANDARDS_MAPPING.md and EXTERNAL_STANDARDS_MAPPING.spec.json",
+      "evidence": [
+        "docs/crk1/release/EXTERNAL_STANDARDS_MAPPING.md",
+        "docs/crk1/release/EXTERNAL_STANDARDS_MAPPING.spec.json"
+      ],
+      "test": "tests/release/external-standards.test.ts"
+    },
+    {
+      "requirement": "The conformance suite is generated from the traceability matrix source of truth",
+      "component": "CIS_CONFORMANCE_SUITE_SPECIFICATION.md, CIS_CONFORMANCE_SUITE_GENERATION.md, and CIS_CONFORMANCE_SUITE_INPUT.spec.generator.json",
+      "evidence": [
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_SPECIFICATION.md",
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_GENERATION.md",
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_INPUT.spec.generator.json"
+      ],
+      "test": "tests/release/cis-conformance-generation.test.ts"
+    },
+    {
+      "requirement": "CORI Alpha is the first independently verifiable constitutional proof",
+      "component": "CORI_ALPHA_PROOF_CHAIN.md",
+      "evidence": [
+        "docs/crk1/release/CORI_ALPHA_PROOF_CHAIN.md"
+      ],
+      "test": "tests/release/cori-alpha-proof.test.ts replay, receipt, and conformance coverage"
+    }
+  ]
+}

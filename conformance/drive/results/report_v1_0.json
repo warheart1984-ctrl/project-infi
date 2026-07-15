@@ -1,0 +1,85 @@
+{
+  "suite": "AAIS-DRIVE-CONFORMANCE-V1.0",
+  "vector": "v1_0",
+  "generated_at": "2026-07-15T12:55:33.827Z",
+  "level_achieved": 0,
+  "declaration": null,
+  "summary_digest": "73fbca3738039e3f4112c8f77fe9a334ee72f45e9ffa3da714ce775147849beb",
+  "tests": [
+    {
+      "test_id": "C1.1",
+      "status": "SKIP",
+      "detail": "Expected evidence: auth"
+    },
+    {
+      "test_id": "C1.2",
+      "status": "SKIP",
+      "detail": "Expected evidence: store"
+    },
+    {
+      "test_id": "C1.3",
+      "status": "SKIP",
+      "detail": "Expected evidence: load"
+    },
+    {
+      "test_id": "C1.4",
+      "status": "SKIP",
+      "detail": "Expected evidence: revoke"
+    },
+    {
+      "test_id": "C2.1",
+      "status": "SKIP",
+      "detail": "Expected evidence: list"
+    },
+    {
+      "test_id": "C2.2",
+      "status": "SKIP",
+      "detail": "Expected evidence: search"
+    },
+    {
+      "test_id": "C2.3",
+      "status": "SKIP",
+      "detail": "Expected evidence: fetch|export"
+    },
+    {
+      "test_id": "C2.4",
+      "status": "SKIP",
+      "detail": "Expected evidence: upload"
+    },
+    {
+      "test_id": "C2.5",
+      "status": "SKIP",
+      "detail": "Expected evidence: update"
+    },
+    {
+      "test_id": "C3.1",
+      "status": "SKIP",
+      "detail": "CEIP actor/org/provider binding"
+    },
+    {
+      "test_id": "C3.2",
+      "status": "SKIP",
+      "detail": "Half-open intervals and lineage nodes"
+    },
+    {
+      "test_id": "C3.3",
+      "status": "SKIP",
+      "detail": "Canonical receipt and SHA-256"
+    },
+    {
+      "test_id": "C4.1",
+      "status": "PASS",
+      "detail": "Evidence failure halt"
+    },
+    {
+      "test_id": "C4.2",
+      "status": "PASS",
+      "detail": "Authority failure halt"
+    },
+    {
+      "test_id": "C4.3",
+      "status": "PASS",
+      "detail": "Canonicalization failure halt"
+    }
+  ]
+}

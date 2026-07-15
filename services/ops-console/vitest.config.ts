@@ -1,7 +1,6 @@
 import { defineConfig } from 'vitest/config';
 import { fileURLToPath } from 'node:url';
 
-const serviceDir = fileURLToPath(new URL('.', import.meta.url));
 const coriAlphaSummaryEntry = fileURLToPath(new URL('../../packages/platform-core/src/coriAlphaSummary.tsx', import.meta.url));
 
 export default defineConfig({

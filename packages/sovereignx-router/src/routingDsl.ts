@@ -133,7 +133,7 @@ export function parseRoutingDsl(dsl: string): ParsedRoutingDsl {
     const line = rawLine.trim();
     if (!line || line.startsWith('#')) continue;
 
-    const match = line.match(/^(require|prefer|avoid|enforce)\s+([a-zA-Z0-9_.]+)\s*(=|!=|<=|>=|<|>)\s*([^\[]+?)(?:\s*\[(.+)\])?$/);
+    const match = line.match(/^(require|prefer|avoid|enforce)\s+([a-zA-Z0-9_.]+)\s*(=|!=|<=|>=|<|>)\s*([^[]+?)(?:\s*\[(.+)\])?$/);
     if (!match) {
       throw new Error(`Invalid routing DSL clause: ${line}`);
     }

@@ -17,6 +17,22 @@ import {
 import { createTreasuryPaymentSchedule, createTreasuryPlan, executeTreasuryPayPalCheckout, executeTreasuryPayPalPayout } from './treasury.js';
 import { buildPricingEvaluationBundle } from './pricingEvaluation.js';
 import { buildRelationshipTrustSurface, signCustomerAuditSurface, type CustomerQuotaSummary } from './customerAudit.js';
+import {
+  buildGoogleDriveAuthorization,
+  completeGoogleDriveAuthorization,
+  createGoogleDriveTextFile,
+  fetchGoogleDriveFile,
+  getGoogleDriveFile,
+  googleDriveStatus,
+  listGoogleDriveFiles,
+  revokeGoogleDriveToken,
+  updateGoogleDriveFile,
+  uploadGoogleDriveFile,
+} from './googleDrive.js';
+
+function driveOrganization(req: Request): string {
+  return req.platformCtx!.organizationId ?? `personal:${req.platformCtx!.ownerId}`;
+}
 
 function asyncHandler(
   fn: (req: Request, res: Response, next: NextFunction) => Promise<void>,
@@ -118,6 +134,57 @@ export function mountRoutes(app: Express): void {
       res.status(400).json({ error: error instanceof Error ? error.message : String(error) });
     }
   });
+
+  app.get('/v1/integrations/google-drive/start', authRequired, (req, res) => {
+    try {
+      res.json(buildGoogleDriveAuthorization(req.platformCtx!.ownerId, driveOrganization(req), String(req.query.returnTo ?? '/integrations/google-drive')));
+    } catch (error) {
+      res.status(400).json({ error: error instanceof Error ? error.message : String(error) });
+    }
+  });
+
+  app.get('/v1/integrations/google-drive/callback', asyncHandler(async (req, res) => {
+    const code = String(req.query.code ?? '');
+    const state = String(req.query.state ?? '');
+    if (!code || !state) { res.status(400).json({ error: 'GOOGLE_DRIVE: code and state are required' }); return; }
+    res.json(await completeGoogleDriveAuthorization(code, state));
+  }));
+
+  app.get('/v1/integrations/google-drive/status', authRequired, asyncHandler(async (req, res) => {
+    res.json(await googleDriveStatus(req.platformCtx!.ownerId, driveOrganization(req)));
+  }));
+
+  app.delete('/v1/integrations/google-drive', authRequired, asyncHandler(async (req, res) => {
+    await revokeGoogleDriveToken(req.platformCtx!.ownerId, driveOrganization(req));
+    res.status(204).end();
+  }));
+
+  app.get('/v1/integrations/google-drive/files', authRequired, asyncHandler(async (req, res) => {
+    res.json(await listGoogleDriveFiles(req.platformCtx!.ownerId, driveOrganization(req), typeof req.query.q === 'string' ? req.query.q : undefined));
+  }));
+
+  app.post('/v1/integrations/google-drive/files', authRequired, asyncHandler(async (req, res) => {
+    const name = String(req.body.name ?? '').trim();
+    if (!name) { res.status(400).json({ error: 'GOOGLE_DRIVE: name is required' }); return; }
+    if (req.body.dataBase64) {
+      res.status(201).json(await uploadGoogleDriveFile(req.platformCtx!.ownerId, driveOrganization(req), { name, data: Buffer.from(String(req.body.dataBase64), 'base64'), mimeType: String(req.body.mimeType ?? 'application/octet-stream'), parentId: req.body.parentId ? String(req.body.parentId) : undefined }));
+    } else {
+      res.status(201).json(await createGoogleDriveTextFile(req.platformCtx!.ownerId, driveOrganization(req), { name, content: String(req.body.content ?? ''), mimeType: req.body.mimeType ? String(req.body.mimeType) : undefined, parentId: req.body.parentId ? String(req.body.parentId) : undefined }));
+    }
+  }));
+
+  app.get('/v1/integrations/google-drive/files/:fileId/content', authRequired, asyncHandler(async (req, res) => {
+    res.json(await fetchGoogleDriveFile(req.platformCtx!.ownerId, driveOrganization(req), String(req.params.fileId), typeof req.query.mimeType === 'string' ? req.query.mimeType : undefined));
+  }));
+
+  app.patch('/v1/integrations/google-drive/files/:fileId', authRequired, asyncHandler(async (req, res) => {
+    if (!req.body.dataBase64) { res.status(400).json({ error: 'GOOGLE_DRIVE: dataBase64 is required' }); return; }
+    res.json(await updateGoogleDriveFile(req.platformCtx!.ownerId, driveOrganization(req), String(req.params.fileId), { name: req.body.name ? String(req.body.name) : undefined, mimeType: String(req.body.mimeType ?? 'application/octet-stream'), data: Buffer.from(String(req.body.dataBase64), 'base64') }));
+  }));
+
+  app.get('/v1/integrations/google-drive/files/:fileId', authRequired, asyncHandler(async (req, res) => {
+    res.json(await getGoogleDriveFile(req.platformCtx!.ownerId, driveOrganization(req), String(req.params.fileId)));
+  }));
 
   app.get('/v1/customers/me', authRequired, (req, res) => {
     if (!req.platformCtx?.customerId) {

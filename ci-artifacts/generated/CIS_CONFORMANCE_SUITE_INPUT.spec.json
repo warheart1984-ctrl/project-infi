@@ -1,0 +1,111 @@
+{
+  "specId": "cis-conformance-suite-input",
+  "displayName": "CIS Conformance Suite Input",
+  "version": "1.0.0",
+  "generatedFrom": "cis-standards-hierarchy",
+  "requirements": [
+    {
+      "id": "CR-1",
+      "requirement": "CIS Core remains the single authoritative constitutional specification",
+      "component": "CIS_STANDARDS_HIERARCHY.md and CIS_STANDARDS_HIERARCHY.spec.json",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "tests": [
+        "packages/aaes-governance/src/proofSurface.test.ts"
+      ]
+    },
+    {
+      "id": "CR-2",
+      "requirement": "Companion specifications inherit Core terminology rather than redefining it",
+      "component": "CIS_STANDARDS_HIERARCHY.md",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "tests": [
+        "packages/aaes-governance/src/proofSurface.test.ts"
+      ]
+    },
+    {
+      "id": "CR-3",
+      "requirement": "Every artifact carries consistent governance status, stewardship, versioning, traceability, and release lifecycle fields",
+      "component": "CIS_STANDARDS_HIERARCHY.md",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "tests": [
+        "packages/aaes-governance/src/proofSurface.test.ts"
+      ]
+    },
+    {
+      "id": "CR-4",
+      "requirement": "Implementation profiles adapt CIS for domain-specific constraints without changing constitutional requirements",
+      "component": "CIS_STANDARDS_HIERARCHY.spec.json",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "tests": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ]
+    },
+    {
+      "id": "CR-5",
+      "requirement": "Standards traceability answers requirement, component, evidence, and test for each capability",
+      "component": "CIS_STANDARDS_TRACEABILITY_MATRIX.md",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md"
+      ],
+      "tests": [
+        "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md"
+      ]
+    },
+    {
+      "id": "CR-6",
+      "requirement": "Research OS preserves evidence, insights, ideas, and actions as durable institutional memory",
+      "component": "CIS_STANDARDS_HIERARCHY.md",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "tests": [
+        "packages/aaes-governance/src/proofSurface.test.ts"
+      ]
+    },
+    {
+      "id": "CR-7",
+      "requirement": "Major artifacts follow the shared governance model",
+      "component": "ARTIFACT_GOVERNANCE_MODEL.md and ARTIFACT_GOVERNANCE_REGISTRY.spec.json",
+      "evidence": [
+        "docs/crk1/release/ARTIFACT_GOVERNANCE_MODEL.md",
+        "docs/crk1/release/ARTIFACT_GOVERNANCE_REGISTRY.spec.json"
+      ],
+      "tests": [
+        "tests/release/artifact-governance.test.ts"
+      ]
+    },
+    {
+      "id": "CR-8",
+      "requirement": "External standards families are mapped for interoperability and traceability",
+      "component": "EXTERNAL_STANDARDS_MAPPING.md and EXTERNAL_STANDARDS_MAPPING.spec.json",
+      "evidence": [
+        "docs/crk1/release/EXTERNAL_STANDARDS_MAPPING.md",
+        "docs/crk1/release/EXTERNAL_STANDARDS_MAPPING.spec.json"
+      ],
+      "tests": [
+        "tests/release/external-standards.test.ts"
+      ]
+    },
+    {
+      "id": "CR-9",
+      "requirement": "The conformance suite is generated from the traceability matrix source of truth",
+      "component": "CIS_CONFORMANCE_SUITE_GENERATION.md and CIS_CONFORMANCE_SUITE_INPUT.spec.generator.json",
+      "evidence": [
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_GENERATION.md",
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_INPUT.spec.generator.json"
+      ],
+      "tests": [
+        "tests/release/cis-conformance-generation.test.ts"
+      ]
+    }
+  ]
+}

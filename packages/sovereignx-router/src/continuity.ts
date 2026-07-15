@@ -672,14 +672,3 @@ function clamp01(value: number): number {
   }
   return Math.min(1, Math.max(0, value));
 }
-
-function trustBandRank(value: TrustBand): number {
-  switch (value) {
-    case 'low':
-      return 0;
-    case 'medium':
-      return 1;
-    case 'high':
-      return 2;
-  }
-}

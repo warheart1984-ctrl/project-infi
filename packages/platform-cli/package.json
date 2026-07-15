@@ -4,7 +4,8 @@
   "description": "Organism CLI — unified command-line interface for the AAES super-platform",
   "type": "module",
   "bin": {
-    "organism": "./dist/bin.js"
+    "organism": "./dist/bin.js",
+    "aais": "./dist/bin.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

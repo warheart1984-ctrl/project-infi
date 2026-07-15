@@ -1,0 +1,120 @@
+{
+  "specId": "external-standards-mapping",
+  "displayName": "External Standards Mapping Layer",
+  "version": "1.0.0",
+  "status": "Frozen",
+  "standardsFamilies": [
+    {
+      "family": "ISO",
+      "exampleStandards": [
+        "ISO/IEC 42001",
+        "ISO/IEC 25010",
+        "ISO 9001"
+      ],
+      "cisFocus": [
+        "Governance",
+        "Quality",
+        "Management systems"
+      ]
+    },
+    {
+      "family": "NIST",
+      "exampleStandards": [
+        "NIST AI RMF 1.0",
+        "NIST CSF 2.0",
+        "NIST SP 800-53"
+      ],
+      "cisFocus": [
+        "Risk",
+        "Controls",
+        "Assurance"
+      ]
+    },
+    {
+      "family": "IEEE",
+      "exampleStandards": [
+        "IEEE 7000",
+        "IEEE 7010",
+        "IEEE 7011"
+      ],
+      "cisFocus": [
+        "Ethics",
+        "Human-centered systems",
+        "Implementation guidance"
+      ]
+    },
+    {
+      "family": "W3C",
+      "exampleStandards": [
+        "PROV-O",
+        "JSON-LD",
+        "RDF"
+      ],
+      "cisFocus": [
+        "Provenance",
+        "Semantic interoperability",
+        "Web data models"
+      ]
+    },
+    {
+      "family": "IETF",
+      "exampleStandards": [
+        "RFC 2119",
+        "RFC 8174",
+        "RFC 8259"
+      ],
+      "cisFocus": [
+        "Requirement language",
+        "JSON conventions",
+        "Protocol interoperability"
+      ]
+    }
+  ],
+  "mappings": [
+    {
+      "family": "ISO",
+      "supports": [
+        "CIS Core",
+        "Artifact Governance Model",
+        "Implementation Profiles"
+      ],
+      "rationale": "Supports governed lifecycle, quality management, and repeatable release control."
+    },
+    {
+      "family": "NIST",
+      "supports": [
+        "Conformance Suite",
+        "Reference Runtime",
+        "Governance and Assurance"
+      ],
+      "rationale": "Supports risk management, control mapping, and assurance evaluation."
+    },
+    {
+      "family": "IEEE",
+      "supports": [
+        "Ontology",
+        "Knowledge Graph Specification",
+        "Research OS"
+      ],
+      "rationale": "Supports implementation guidance, ethics, and structured system behavior."
+    },
+    {
+      "family": "W3C",
+      "supports": [
+        "Knowledge Graph Specification",
+        "Traceability Matrix",
+        "Replay and provenance"
+      ],
+      "rationale": "Supports semantic interoperability and provenance representation."
+    },
+    {
+      "family": "IETF",
+      "supports": [
+        "Request Packet",
+        "Reply Packet",
+        "Machine-readable registry artifacts"
+      ],
+      "rationale": "Supports protocol-style requirement language and interoperable JSON conventions."
+    }
+  ]
+}

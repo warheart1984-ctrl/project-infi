@@ -1,0 +1,161 @@
+---
+title: AAES-OS Docs
+description: Governed runtime entry point for the AAES-OS workspace, with first-class live surfaces and evidence-linked docs.
+---
+
+import { RuntimeDiagram } from '../components/RuntimeDiagram';
+import { SovereignXRouterDiagram } from '../components/SovereignXRouterDiagram';
+import { LiveProofSurfaces } from '../components/LiveProofSurfaces';
+
+<main className="docs-home">
+  <section className="docs-home__hero">
+    <h1 className="docs-home__title">AAES-OS Runtime Docs</h1>
+    <p className="docs-home__lead">
+      Start here for the governed runtime model, the constitutional baseline, live package surfaces, and the ULX
+      language/runtime reference used across the workspace.
+    </p>
+    <div className="docs-home__actions">
+      <a className="button button--primary" href="/docs/runtime/live-surfaces">
+        Open live surfaces
+      </a>
+      <a className="button button--secondary" href="/docs/overview">
+        Read the overview
+      </a>
+      <a className="button button--secondary" href="/docs/specifications">
+        Open specifications
+      </a>
+      <a className="button button--secondary" href="/docs/specifications/aaes-os-v1-implementation-slice">
+        First implementation slice
+      </a>
+      <a className="button button--secondary" href="/docs/governance/doctrine">
+        Read the doctrine
+      </a>
+      <a className="button button--secondary" href="/docs/runtime/runtime-core">
+        Inspect the runtime
+      </a>
+      <a className="button button--secondary" href="/docs/runtime/nova-coda">
+        Inspect NovaCoda
+      </a>
+    </div>
+  </section>
+
+  <section className="docs-home__section">
+    <article className="docs-home__card docs-home__card--accent">
+      <div className="docs-home__eyebrow">First entry point</div>
+      <h2>Live Surfaces</h2>
+      <p>
+        The live package surfaces are now the default way into the runtime docs. Use this hub when you want the
+        implementation pages first: CodaDoc, CodaRuntime, NovaCoda, the Nova substrate client, ISL Runtime, and
+        GCRE-SYSMIN-001.
+      </p>
+      <div className="docs-home__actions">
+        <a className="button button--primary" href="/docs/runtime/live-surfaces">
+          Open the hub
+        </a>
+        <a className="button button--secondary" href="/docs/runtime/coda-runtime">
+          Read CodaRuntime
+        </a>
+        <a className="button button--secondary" href="/docs/runtime/isl-runtime">
+          Read ISL Runtime
+        </a>
+      </div>
+    </article>
+  </section>
+
+  <section className="docs-home__grid">
+    <article className="docs-home__card">
+      <h2>What is documented</h2>
+      <ul className="docs-home__list">
+        <li>Governance doctrine, invariants, ledgering, and fault handling</li>
+        <li>AAES-OS engineering handbook, standards, governance, and roadmap</li>
+        <li>Runtime core, SovereignX router, substrate, lifecycle, and Nova shell integration</li>
+        <li>Agents, AAIS, URG, and ULX language / VM / governance references</li>
+      </ul>
+    </article>
+
+    <article className="docs-home__card">
+      <h2>Proof & Challenge Surface</h2>
+      <p>
+        Every constitutional artifact in the workspace should expose a proof-and-challenge surface that separates
+        claim, supporting evidence, invalidation evidence, verification, replay, operational status, truth
+        boundary, and next evidence required.
+      </p>
+      <ul className="docs-home__list">
+        <li>P0 Concept</li>
+        <li>P1 Implemented</li>
+        <li>P2 Verified</li>
+        <li>P3 Operational</li>
+        <li>P4 Independently Verified</li>
+        <li>P5 Mission-Critical</li>
+      </ul>
+    </article>
+
+    <article className="docs-home__card">
+      <h2>Best first reads</h2>
+      <ul className="docs-home__list">
+        <li><a href="/docs/runtime/live-surfaces">Live Surfaces</a> for the live package hub</li>
+        <li><a href="/docs/overview">Overview</a> for the workspace baseline</li>
+        <li><a href="/docs/specifications">AAES-OS Specifications</a> for the canonical handbook and roadmap set</li>
+        <li><a href="/docs/specifications/aaes-os-v1-implementation-slice">AAES-OS v1.x First Implementation Slice</a> for the first sprint chunk</li>
+        <li><a href="/docs/specifications/aaes-os-api-reference-stabilization">API reference stabilization</a> for the next sprint-sized backlog item</li>
+        <li><a href="/docs/specifications/aaes-os-governance-traceability">Governance traceability</a> for the next claim-and-evidence backlog item</li>
+        <li><a href="/docs/specifications/aaes-os-example-path-cleanup">Example path cleanup</a> for the next docs-only backlog item</li>
+        <li><a href="/docs/ulx/ulx-ide-integration">ULX IDE integration map</a> for the concrete ULX wiring surface</li>
+        <li><a href="/docs/veilthorn">VEILTHORN</a> for the Stage 1 proof surface and API contract</li>
+        <li><a href="/docs/runtime/node-v0-1">Node v0.1</a> for the document-only reference artifact</li>
+        <li><a href="/docs/governance/doctrine">Governance doctrine</a> for the control model</li>
+        <li><a href="/docs/runtime/runtime-core">Runtime core</a> for the execution surface</li>
+        <li><a href="/docs/agents/infinity-agents">Infinity agents</a> for the agent layer</li>
+      </ul>
+    </article>
+
+    <article className="docs-home__card">
+      <h2>Run and verify</h2>
+      <p>The docs app is runnable on its own from the `docs-site` directory.</p>
+      <pre className="docs-home__code">
+        <code>{`npm run start
+npm run build
+npm run serve`}</code>
+      </pre>
+    </article>
+  </section>
+
+  <section className="docs-home__section docs-home__card">
+    <h2>Navigation map</h2>
+    <p>
+      Use the top navigation for the primary system views, then drill into the live-surface hub for the runtime
+      implementation pages before reading the broader governance tree.
+    </p>
+    <ul className="docs-home__list">
+      <li>Overview: one-page workspace orientation</li>
+      <li>Governance: doctrine, invariants, ledger, fault journal, and policy DSL</li>
+      <li>Specifications: handbook, engineering spec, standards, governance, and roadmap</li>
+      <li>Live Surfaces: CodaDoc, CodaRuntime, NovaCoda, Nova Substrate Client, ISL Runtime, and GCRE-SYSMIN-001</li>
+      <li>Backlog: first implementation slice, API reference stabilization, governance traceability, then example path cleanup</li>
+      <li>Runtime: runtime core, Node v0.1 reference, Nova shell, SovereignX router, and substrate</li>
+      <li>ULX: language, VM, governance, and IDE integration</li>
+      <li>VEILTHORN: Stage 1 docs, proof surface, and API contract</li>
+      <li>Agents: Infinity Agents, AAIS, and URG</li>
+    </ul>
+  </section>
+
+  <section className="docs-home__grid">
+    <article className="docs-home__card">
+      <h2>Governed Routing</h2>
+      <p>
+        SovereignX treats the CPU as the governor and the GPU as the accelerator. Planning, continuity, throttling,
+        and invariants stay on the CPU while matmul, attention, render passes, and physics are routed to the GPU when
+        governance allows it.
+      </p>
+      <SovereignXRouterDiagram />
+    </article>
+
+    <article className="docs-home__card">
+      <h2>Runtime Flow</h2>
+      <p>The runtime diagram now shows the governed router in the execution path so operators can read the control flow.</p>
+      <RuntimeDiagram />
+    </article>
+  </section>
+
+  <LiveProofSurfaces />
+</main>

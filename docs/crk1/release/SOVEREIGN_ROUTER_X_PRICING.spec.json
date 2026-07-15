@@ -1,0 +1,240 @@
+{
+  "specId": "sovereign-router-x-pricing",
+  "displayName": "Sovereign Router X Pricing and Unit Economics",
+  "version": "1.0.0",
+  "status": "Draft",
+  "revenueLayers": [
+    {
+      "name": "Platform subscription",
+      "covers": ["Governance", "Identity", "Workspace", "Administration"]
+    },
+    {
+      "name": "AI usage",
+      "covers": ["Requests", "Tokens", "Workflows"]
+    },
+    {
+      "name": "Governance & Assurance",
+      "covers": ["Conformance", "Evidence", "Policy", "Audit"]
+    },
+    {
+      "name": "Knowledge services",
+      "covers": ["Knowledge Graph", "Replay", "Provenance", "Storage"]
+    },
+    {
+      "name": "Enterprise services",
+      "covers": ["Private Deployment", "Implementation Profiles", "Support"]
+    },
+    {
+      "name": "Professional services",
+      "covers": ["Consulting", "Training", "Implementation"]
+    }
+  ],
+  "customerSegments": [
+    {
+      "name": "Individual",
+      "buyerMotive": "Personal productivity, learning, side projects",
+      "pricingEmphasis": "Low entry price, simple usage"
+    },
+    {
+      "name": "Professional",
+      "buyerMotive": "Higher leverage and repeat workflows",
+      "pricingEmphasis": "Value-based subscription plus usage"
+    },
+    {
+      "name": "Team",
+      "buyerMotive": "Shared work and governance",
+      "pricingEmphasis": "Seat-based subscription and workflow pricing"
+    },
+    {
+      "name": "Enterprise",
+      "buyerMotive": "Scale, risk management, and controls",
+      "pricingEmphasis": "Platform plus assurance plus support"
+    },
+    {
+      "name": "Public Sector",
+      "buyerMotive": "Policy compliance and stewardship",
+      "pricingEmphasis": "Procurement-friendly packaging, auditability, private deployment"
+    }
+  ],
+  "unitEconomics": {
+    "symbols": {
+      "C": "Monthly customers",
+      "R": "Average routed requests per customer per month",
+      "G": "Average governance reviews per customer",
+      "K": "Average knowledge updates per customer",
+      "H": "Average professional service hours per customer",
+      "I": "Average inference cost per routed request",
+      "O": "Average validation and orchestration cost per request",
+      "S": "Average replay and storage cost per request",
+      "A": "Average governance and assurance cost per review",
+      "N": "Average knowledge service cost per update",
+      "T": "Average professional service cost per hour",
+      "P": "Average support and observability cost per customer",
+      "B": "Base platform subscription price per customer",
+      "U": "Usage fee per routed request",
+      "Q": "Governance and assurance fee per review",
+      "L": "Knowledge services fee per update",
+      "M": "Professional services revenue per hour"
+    }
+  },
+  "pricingStrategies": [
+    "Subscription-led",
+    "Usage-led",
+    "Assurance-led",
+    "Services-led",
+    "Hybrid platform-plus-usage",
+    "Enterprise bundle"
+  ],
+  "pricingScenarioMatrix": [
+    {
+      "segment": "Individual",
+      "targetMarginBand": "55-70%",
+      "models": [
+        {
+          "strategy": "Subscription-led",
+          "packaging": "Low-entry monthly plan with modest usage allowance",
+          "valueFocus": "Predictable access and simple billing",
+          "marginDriver": "High subscription share and low support overhead"
+        },
+        {
+          "strategy": "Usage-led",
+          "packaging": "Small base fee plus metered requests and storage",
+          "valueFocus": "Pay only for activity",
+          "marginDriver": "Good for variable workloads but requires tight usage controls"
+        },
+        {
+          "strategy": "Assurance-led",
+          "packaging": "Optional governance add-on for compliance-sensitive solo users",
+          "valueFocus": "Evidence and replay for important work",
+          "marginDriver": "Higher margin if assurance is standardized"
+        },
+        {
+          "strategy": "Enterprise bundle",
+          "packaging": "Not the default fit for this segment",
+          "valueFocus": "Reserved for contractor or regulated solo deployments",
+          "marginDriver": "Usually overspecified unless compliance is mandatory"
+        }
+      ]
+    },
+    {
+      "segment": "Professional",
+      "targetMarginBand": "60-75%",
+      "models": [
+        {
+          "strategy": "Subscription-led",
+          "packaging": "Tiered workspace plan with elevated usage caps",
+          "valueFocus": "Repeat workflows and personal leverage",
+          "marginDriver": "Strong balance of recurring revenue and manageable support"
+        },
+        {
+          "strategy": "Usage-led",
+          "packaging": "Lower base fee with metered request bundles",
+          "valueFocus": "Usage elasticity for variable workload",
+          "marginDriver": "Useful when volume is uncertain but margin control is essential"
+        },
+        {
+          "strategy": "Assurance-led",
+          "packaging": "Workflow assurance add-on with evidence retention",
+          "valueFocus": "Trustworthy client-facing delivery",
+          "marginDriver": "Can lift ARPU without heavy inference exposure"
+        },
+        {
+          "strategy": "Enterprise bundle",
+          "packaging": "Consultant-grade package with controlled routing and reporting",
+          "valueFocus": "Premium positioning for independent operators serving enterprise clients",
+          "marginDriver": "Highest willingness to pay when compliance matters"
+        }
+      ]
+    },
+    {
+      "segment": "Team",
+      "targetMarginBand": "62-78%",
+      "models": [
+        {
+          "strategy": "Subscription-led",
+          "packaging": "Seat-based team plan with shared workspace and admin controls",
+          "valueFocus": "Predictable team collaboration",
+          "marginDriver": "Efficient when seat growth outpaces support growth"
+        },
+        {
+          "strategy": "Usage-led",
+          "packaging": "Seat minimum plus metered workflow activity",
+          "valueFocus": "Aligns price with throughput",
+          "marginDriver": "Good if team usage varies but can pressure margin at scale"
+        },
+        {
+          "strategy": "Assurance-led",
+          "packaging": "Evidence, policy, and audit bundle for shared governance",
+          "valueFocus": "Internal controls and reviewability",
+          "marginDriver": "Fits team governance budgets with sticky retention"
+        },
+        {
+          "strategy": "Enterprise bundle",
+          "packaging": "Team bundle with support, reporting, and private routing options",
+          "valueFocus": "Bridges mid-market to enterprise adoption",
+          "marginDriver": "Best when bundled support offsets heavier servicing"
+        }
+      ]
+    },
+    {
+      "segment": "Enterprise",
+      "targetMarginBand": "70-85%",
+      "models": [
+        {
+          "strategy": "Subscription-led",
+          "packaging": "Platform subscription with minimum annual commitment",
+          "valueFocus": "Governed access and procurement predictability",
+          "marginDriver": "Stable recurring base that funds service delivery"
+        },
+        {
+          "strategy": "Usage-led",
+          "packaging": "Commitment plus metered overage",
+          "valueFocus": "Aligns price to routed workload",
+          "marginDriver": "Useful for large tenants with bursty workloads"
+        },
+        {
+          "strategy": "Assurance-led",
+          "packaging": "Conformance, policy, audit, and evidence bundle",
+          "valueFocus": "Regulatory and executive assurance",
+          "marginDriver": "Strong margin if standardized and repeatable"
+        },
+        {
+          "strategy": "Enterprise bundle",
+          "packaging": "Private deployment, support, assurance, and services bundle",
+          "valueFocus": "Highest-value procurement option",
+          "marginDriver": "Best fit for regulated or mission-critical deployments"
+        }
+      ]
+    },
+    {
+      "segment": "Public Sector",
+      "targetMarginBand": "65-80%",
+      "models": [
+        {
+          "strategy": "Subscription-led",
+          "packaging": "Contracted platform fee with procurement terms",
+          "valueFocus": "Budgetable access and continuity",
+          "marginDriver": "Works when contract size is predictable"
+        },
+        {
+          "strategy": "Usage-led",
+          "packaging": "Metered usage with spend controls and reporting",
+          "valueFocus": "Aligns costs to program activity",
+          "marginDriver": "Requires tight caps and transparent reporting"
+        },
+        {
+          "strategy": "Assurance-led",
+          "packaging": "Compliance, evidence, and audit package",
+          "valueFocus": "Public accountability and traceability",
+          "marginDriver": "Often a separate line item with strong justification"
+        },
+        {
+          "strategy": "Enterprise bundle",
+          "packaging": "Private deployment with support and implementation profile",
+          "valueFocus": "Procurement-friendly all-in package",
+          "marginDriver": "Preferred when procurement wants one accountable vendor"
+        }
+      ]
+    }
+  ]
+}

@@ -846,9 +846,9 @@ export const App: React.FC = () => {
   const [state, setState] = useState<LoadedState | null>(null);
   const [selectedCepArtifactId, setSelectedCepArtifactId] = useState<string | null>(null);
   const [selectedGovernanceEvolutionId, setSelectedGovernanceEvolutionId] = useState<string | null>(null);
-  const [cepTrustBandFilter, setCepTrustBandFilter] = useState<CepTrustBand | 'all'>('all');
-  const [cepTrustGovernanceFilter, setCepTrustGovernanceFilter] = useState<CepTrustGovernanceLevel | 'all'>('all');
-  const [cepTrustMinScoreFilter, setCepTrustMinScoreFilter] = useState<string>('');
+  const [cepTrustBandFilter] = useState<CepTrustBand | 'all'>('all');
+  const [cepTrustGovernanceFilter] = useState<CepTrustGovernanceLevel | 'all'>('all');
+  const [cepTrustMinScoreFilter] = useState<string>('');
   const [hardwareRefreshNonce, setHardwareRefreshNonce] = useState(0);
   const [proofSurfaceCatalog, setProofSurfaceCatalog] = useState<ProofSurfaceCatalogState>(() => {
     const initialCatalogUrl = resolveInitialProofSurfaceCatalogUrl(
@@ -1759,10 +1759,6 @@ function isProofSurfaceSummary(value: unknown): value is ProofSurfaceSummary {
   );
 }
 
-function formatCurrency(value: number): string {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(value);
-}
-
 const sectionStyle: React.CSSProperties = {
   background: '#fff',
   border: '1px solid #dfe3e8',
@@ -1789,20 +1785,6 @@ const secondaryButtonStyle: React.CSSProperties = {
 
 const subtleTextStyle: React.CSSProperties = {
   color: '#64748b',
-  lineHeight: 1.6,
-};
-
-const preStyle: React.CSSProperties = {
-  margin: 0,
-  padding: 12,
-  borderRadius: 12,
-  background: '#0f172a',
-  color: '#e2e8f0',
-  overflowX: 'auto',
-  whiteSpace: 'pre-wrap',
-  wordBreak: 'break-word',
-  fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
-  fontSize: 12,
   lineHeight: 1.6,
 };
 

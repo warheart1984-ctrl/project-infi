@@ -1,0 +1,9 @@
+Program             ::= IntentSpec* ;
+IntentSpec          ::= "INTENT" Identifier "{" Preconditions Capabilities PlanningRules "}" ;
+Preconditions       ::= "REQUIRES" "{" Identifier* "}" ;
+Capabilities        ::= "USES" "{" Identifier* "}" ;
+PlanningRules       ::= "PLAN" "{" Rule* "}" ;
+Rule                ::= StepRule | GovernanceRule ;
+StepRule            ::= "STEP" Identifier ":" Identifier ;
+GovernanceRule      ::= "GOVERNANCE" ":" Identifier ;
+Identifier          ::= Letter ( Letter | Digit | "_" | "-" )* ;

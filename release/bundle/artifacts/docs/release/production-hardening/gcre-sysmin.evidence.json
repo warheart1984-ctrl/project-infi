@@ -1,0 +1,88 @@
+{
+  "id": "gcre-sysmin",
+  "packageName": "@aaes-os/gcre-sysmin",
+  "status": "release-evidence-ready",
+  "packageDir": "packages/gcre-sysmin",
+  "docsPage": "docs-site/docs/runtime/gcre-sysmin.md",
+  "registryId": "GCRE-SYSMIN-001",
+  "checks": {
+    "packageJson": true,
+    "source": true,
+    "tests": true,
+    "buildOutput": true,
+    "docsPage": true,
+    "registryLive": true,
+    "packageName": true,
+    "buildScript": true,
+    "testScript": true
+  },
+  "commands": {
+    "build": "corepack pnpm --filter @aaes-os/gcre-sysmin build",
+    "test": "corepack pnpm --filter @aaes-os/gcre-sysmin test"
+  },
+  "replayAuditPacket": {
+    "replayReference": "gcre-sysmin.evidence.json#replayAuditPacket",
+    "auditReference": "gcre-sysmin.evidence.json#checks",
+    "documentationReference": "docs-site/docs/runtime/gcre-sysmin.md",
+    "requiredArtifacts": [
+      "packageJson",
+      "source",
+      "tests",
+      "buildOutput",
+      "docsPage",
+      "registryLive"
+    ]
+  },
+  "releasePackagingPacket": {
+    "manifestId": "gcre-sysmin-00db121ac8625f73d888cb494aef22d74209975b457f8b73b9ab25fe5aa9bb5c",
+    "checksumAlgorithm": "sha256",
+    "includedFiles": [
+      {
+        "path": "packages/gcre-sysmin/package.json",
+        "sha256": "b0c5a78c3e6b1f4e8223f42fcbdacda8cbc4a1e93083a410d5fb9e40849ea619",
+        "bytes": 577
+      },
+      {
+        "path": "packages/gcre-sysmin/src/index.ts",
+        "sha256": "da22ed870ec1b80b0dc39a6b87e53c809009dd93c946fceee2c9c29e8b0f7ae5",
+        "bytes": 6069
+      },
+      {
+        "path": "packages/gcre-sysmin/src/index.test.ts",
+        "sha256": "5d7a951eadcf7a3dc35fdf4ad5817eb593b41e5e94d439f45ff08d7d39a75edc",
+        "bytes": 1168
+      },
+      {
+        "path": "packages/gcre-sysmin/dist/index.js",
+        "sha256": "a5286db09867b16c228ab5ea5657052ce46e13f836cce0996d2e601ecaf7f7d9",
+        "bytes": 5182
+      },
+      {
+        "path": "docs-site/docs/runtime/gcre-sysmin.md",
+        "sha256": "6714a9f6bf3a80cf4c246671b15e930cb801d03aeb7c02bc6248e13d238d41ee",
+        "bytes": 701
+      },
+      {
+        "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+        "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+        "bytes": 7972
+      }
+    ]
+  },
+  "externalIntegrationPacket": {
+    "target": "GCRE language-family adapter",
+    "readiness": "live-integration-verified",
+    "evidence": [
+      "docs-site/docs/runtime/gcre-sysmin.md",
+      "packages/gcre-sysmin/src/index.ts",
+      "gcre-sysmin.evidence.json",
+      "docs/release/external-integrations/README.md",
+      "docs/release/external-integrations/external-integration-index.json"
+    ],
+    "serviceEvidenceIds": [
+      "github-origin-remote",
+      "npm-registry-toolchain"
+    ]
+  },
+  "blockers": []
+}

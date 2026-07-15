@@ -386,7 +386,7 @@ function buildThermalWarnings(
   return warnings;
 }
 
-function memoryPressure(snapshot: SovereignXHardwareSnapshot): number {
+function memoryPressure(_snapshot: SovereignXHardwareSnapshot): number {
   const total = typeof process.memoryUsage === 'function' ? process.memoryUsage().rss : 0;
   const totalMem = os.totalmem();
   return totalMem > 0 ? clamp((total / totalMem) * 100, 0, 100) : 0;

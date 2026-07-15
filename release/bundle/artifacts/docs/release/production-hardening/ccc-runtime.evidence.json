@@ -1,0 +1,88 @@
+{
+  "id": "ccc-runtime",
+  "packageName": "@aaes-os/ccc-runtime",
+  "status": "release-evidence-ready",
+  "packageDir": "packages/ccc-runtime",
+  "docsPage": "docs-site/docs/runtime/ccc-runtime.md",
+  "registryId": "CCC",
+  "checks": {
+    "packageJson": true,
+    "source": true,
+    "tests": true,
+    "buildOutput": true,
+    "docsPage": true,
+    "registryLive": true,
+    "packageName": true,
+    "buildScript": true,
+    "testScript": true
+  },
+  "commands": {
+    "build": "corepack pnpm --filter @aaes-os/ccc-runtime build",
+    "test": "corepack pnpm --filter @aaes-os/ccc-runtime test"
+  },
+  "replayAuditPacket": {
+    "replayReference": "ccc-runtime.evidence.json#replayAuditPacket",
+    "auditReference": "ccc-runtime.evidence.json#checks",
+    "documentationReference": "docs-site/docs/runtime/ccc-runtime.md",
+    "requiredArtifacts": [
+      "packageJson",
+      "source",
+      "tests",
+      "buildOutput",
+      "docsPage",
+      "registryLive"
+    ]
+  },
+  "releasePackagingPacket": {
+    "manifestId": "ccc-runtime-08e90738ab8907d2af4febbbe64126df95b578b065cbdc7581dcbf7ebcca1cb2",
+    "checksumAlgorithm": "sha256",
+    "includedFiles": [
+      {
+        "path": "packages/ccc-runtime/package.json",
+        "sha256": "679f34b0d150118768da3b6711ae9dba9662183b275a49a6fa979ee57bf6290a",
+        "bytes": 598
+      },
+      {
+        "path": "packages/ccc-runtime/src/index.ts",
+        "sha256": "85c210344416106102ae5a9b9e9535a2d497b253aedbb1fd64bc9f583b18596e",
+        "bytes": 11453
+      },
+      {
+        "path": "packages/ccc-runtime/src/index.test.ts",
+        "sha256": "a1e741e50b9c713e6196d3b2ddca1aa190e1fd2591e5e7d1eb929c8be94faa07",
+        "bytes": 3354
+      },
+      {
+        "path": "packages/ccc-runtime/dist/index.js",
+        "sha256": "044390b0f99e59ac95c19862e8aea8e2862c195837561a0d747792e5c953eff3",
+        "bytes": 8814
+      },
+      {
+        "path": "docs-site/docs/runtime/ccc-runtime.md",
+        "sha256": "c086bce04c6d3a569eaceb984b5b8269ed38e383f0c236b78cdde2f9dbc8cb77",
+        "bytes": 1243
+      },
+      {
+        "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+        "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+        "bytes": 7972
+      }
+    ]
+  },
+  "externalIntegrationPacket": {
+    "target": "replay ledger continuity adapter",
+    "readiness": "live-integration-verified",
+    "evidence": [
+      "docs-site/docs/runtime/ccc-runtime.md",
+      "packages/ccc-runtime/src/index.ts",
+      "ccc-runtime.evidence.json",
+      "docs/release/external-integrations/README.md",
+      "docs/release/external-integrations/external-integration-index.json"
+    ],
+    "serviceEvidenceIds": [
+      "github-origin-remote",
+      "npm-registry-toolchain"
+    ]
+  },
+  "blockers": []
+}

@@ -1,4 +1,4 @@
-import { gridStyle, Metric, Panel, sectionStyle } from './shared.js';
+import { gridStyle, Metric, sectionStyle } from './shared.js';
 
 type OrganizationRegistry = {
   organizations: {

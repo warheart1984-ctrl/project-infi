@@ -1,0 +1,11 @@
+{
+  "name": "@aaes-os/nova-substrate",
+  "version": "0.1.0",
+  "description": "Rust NovaCoda substrate that exposes the live socket protocol surface",
+  "private": true,
+  "scripts": {
+    "build": "node ./scripts/verify.mjs build",
+    "test": "node ./scripts/verify.mjs test",
+    "run": "node ./scripts/verify.mjs run"
+  }
+}

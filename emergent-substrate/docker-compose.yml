@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./substrate.db:/app/substrate.db
+    environment:
+      - ES_DB_PATH=/app/substrate.db
+    restart: unless-stopped
+
+  # PostgreSQL service (optional - uncomment to use instead of SQLite)
+  # postgres:
+  #   image: postgres:15
+  #   environment:
+  #     POSTGRES_DB: substrate
+  #     POSTGRES_USER: substrate
+  #     POSTGRES_PASSWORD: substrate_password
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+
+# volumes:
+#   postgres_data:

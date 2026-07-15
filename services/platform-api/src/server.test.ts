@@ -233,7 +233,6 @@ describe('platform-api', () => {
       organizationRole: 'owner',
       governanceProfile: 'balanced',
     });
-    const ownerId = signup.session.ownerId;
     const session = signup.session;
     const app = createApp();
     const server = app.listen(0);

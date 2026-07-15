@@ -1,0 +1,502 @@
+{
+  "specId": "cori-alpha-minimal-runtime-status",
+  "displayName": "CORI Alpha Minimal Runtime Status",
+  "version": "1.0.0",
+  "status": "Draft",
+  "derivedFrom": "CORI_ALPHA_MINIMAL_RUNTIME_PROOF_PLAN.md",
+  "purpose": "Machine-readable status companion for the CORI Alpha minimal runtime proof slices.",
+  "statusModel": {
+    "states": [
+      "Not Started",
+      "In Progress",
+      "Evidence Pending",
+      "Verified",
+      "Complete"
+    ],
+    "evidenceGates": [
+      "Build verification",
+      "Test verification",
+      "Runtime verification",
+      "Conformance verification",
+      "Replay verification",
+      "Evidence package generation"
+    ]
+  },
+  "slices": [
+    {
+      "sliceId": "identity",
+      "name": "Identity",
+      "version": "1.0.0",
+      "currentStatus": "In Progress",
+      "owningCisRequirements": [
+        "CORI Alpha is the first independently verifiable constitutional proof",
+        "Every CIS requirement traces through the full constitutional path"
+      ],
+      "companionSpecification": [
+        "CORI_ALPHA_PROOF_CHAIN.md",
+        "CIS_STANDARDS_TRACEABILITY_MATRIX.md"
+      ],
+      "buildVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "release/build-release.ts",
+          "release/package-release.ts"
+        ],
+        "notes": [
+          "The identity slice is wired through the governed release pipeline."
+        ]
+      },
+      "testVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "tests/release/cori-alpha-proof.test.ts",
+          "tests/release/release-pipeline.test.ts"
+        ],
+        "notes": [
+          "The proof and release pipeline tests are the current verification anchors."
+        ]
+      },
+      "runtimeVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "src/governance/invariants.ts",
+          "src/governance/trace_store.ts",
+          "src/ledger/DurableLedger.ts",
+          "src/envelope/Envelope.ts"
+        ],
+        "notes": [
+          "Identity is anchored in the governance and ledger runtime surfaces."
+        ]
+      },
+      "conformanceVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "CIS_STANDARDS_TRACEABILITY_MATRIX.md",
+          "CIS_CONFORMANCE_SUITE_SPECIFICATION.md"
+        ],
+        "notes": [
+          "Identity will be verified against the traceability matrix and conformance suite inputs."
+        ]
+      },
+      "replayVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "src/replay/EglReplay.ts",
+          "src/replay/ReplayDriftDetector.ts"
+        ],
+        "notes": [
+          "Replay will confirm the canonical identity path without hidden state."
+        ]
+      },
+      "evidencePackageReference": null,
+      "constitutionalReceiptReference": null,
+      "conformanceRecordReference": null,
+      "replayVerificationRecordReference": null,
+      "dependencies": [
+        "CIS Core v1.0",
+        "CIS_STANDARDS_TRACEABILITY_MATRIX.md",
+        "src/governance/invariants.ts"
+      ],
+      "acceptanceCriteria": [
+        "Identity is canonical, traceable to a CIS requirement, and included in the evidence package."
+      ],
+      "lastVerificationTimestamp": null
+    },
+    {
+      "sliceId": "evidence",
+      "name": "Evidence",
+      "version": "1.0.0",
+      "currentStatus": "In Progress",
+      "owningCisRequirements": [
+        "CORI Alpha is the first independently verifiable constitutional proof",
+        "The conformance suite is generated from the traceability matrix source of truth"
+      ],
+      "companionSpecification": [
+        "CORI_ALPHA_PROOF_CHAIN.md",
+        "CIS_CONFORMANCE_SUITE_SPECIFICATION.md"
+      ],
+      "buildVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "release/build-release.ts",
+          "release/package-release.ts"
+        ],
+        "notes": [
+          "Evidence artifacts are packaged through the governed release build."
+        ]
+      },
+      "testVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "tests/release/cori-alpha-proof.test.ts",
+          "tests/release/cis-conformance-generation.test.ts"
+        ],
+        "notes": [
+          "Verification is tied to the proof and generated conformance inputs."
+        ]
+      },
+      "runtimeVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "src/ledger/DurableLedger.ts",
+          "src/governance/trace_store.ts",
+          "packages/aaes-governance/src/evidenceGraph.ts"
+        ],
+        "notes": [
+          "Evidence capture is grounded in the ledger and evidence graph runtime surfaces."
+        ]
+      },
+      "conformanceVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "CIS_STANDARDS_TRACEABILITY_MATRIX.md",
+          "CIS_CONFORMANCE_SUITE_INPUT.spec.json"
+        ],
+        "notes": [
+          "Evidence becomes conformance input only when it is objectively traceable."
+        ]
+      },
+      "replayVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "src/replay/EglReplay.ts",
+          "src/replay/ReplayDriftDetector.ts"
+        ],
+        "notes": [
+          "Replay will re-derive the evidence path from recorded inputs."
+        ]
+      },
+      "evidencePackageReference": null,
+      "constitutionalReceiptReference": null,
+      "conformanceRecordReference": null,
+      "replayVerificationRecordReference": null,
+      "dependencies": [
+        "identity",
+        "CIS_CONFORMANCE_SUITE_SPECIFICATION.md",
+        "src/ledger/DurableLedger.ts"
+      ],
+      "acceptanceCriteria": [
+        "Every evidence artifact is objective, inspectable, and tied to the governing requirement."
+      ],
+      "lastVerificationTimestamp": null
+    },
+    {
+      "sliceId": "constitutional-state-record",
+      "name": "Constitutional State Record",
+      "version": "1.0.0",
+      "currentStatus": "In Progress",
+      "owningCisRequirements": [
+        "CORI Alpha is the first independently verifiable constitutional proof",
+        "Every artifact carries consistent governance status, stewardship, versioning, traceability, and release lifecycle fields"
+      ],
+      "companionSpecification": [
+        "GOVERNED_KNOWLEDGE_STORE_SPECIFICATION.md",
+        "CORI_ALPHA_PROOF_CHAIN.md"
+      ],
+      "buildVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "release/build-release.ts",
+          "release/package-release.ts"
+        ],
+        "notes": [
+          "State record artifacts will be surfaced through the governed release build."
+        ]
+      },
+      "testVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "tests/release/cori-alpha-proof.test.ts",
+          "tests/release/artifact-governance.test.ts"
+        ],
+        "notes": [
+          "Governance and proof tests cover the canonical state record shape."
+        ]
+      },
+      "runtimeVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "src/governance/invariants.ts",
+          "src/governance/policies.ts",
+          "src/ledger/DurableLedger.ts",
+          "src/ledger/Ledger.types.ts"
+        ],
+        "notes": [
+          "The state record is assembled from governance, policy, and ledger runtime surfaces."
+        ]
+      },
+      "conformanceVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "CIS_STANDARDS_TRACEABILITY_MATRIX.md",
+          "GOVERNED_KNOWLEDGE_STORE_SPECIFICATION.md"
+        ],
+        "notes": [
+          "The governed state record must remain consistent with the knowledge store model."
+        ]
+      },
+      "replayVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "src/replay/EglReplay.ts",
+          "src/envelope/EnvelopeValidator.ts"
+        ],
+        "notes": [
+          "Replay will confirm that state transitions are reconstructible from recorded inputs."
+        ]
+      },
+      "evidencePackageReference": null,
+      "constitutionalReceiptReference": null,
+      "conformanceRecordReference": null,
+      "replayVerificationRecordReference": null,
+      "dependencies": [
+        "identity",
+        "evidence",
+        "GOVERNED_KNOWLEDGE_STORE_SPECIFICATION.md"
+      ],
+      "acceptanceCriteria": [
+        "The state record identifies the governed decision path and stays auditable."
+      ],
+      "lastVerificationTimestamp": null
+    },
+    {
+      "sliceId": "constitutional-receipt",
+      "name": "Constitutional Receipt",
+      "version": "1.0.0",
+      "currentStatus": "In Progress",
+      "owningCisRequirements": [
+        "CORI Alpha is the first independently verifiable constitutional proof",
+        "Launch readiness is governed by evidence rather than subjective judgment"
+      ],
+      "companionSpecification": [
+        "CIS_LAUNCH_READINESS_SPECIFICATION.md",
+        "CORI_ALPHA_PROOF_CHAIN.md"
+      ],
+      "buildVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "release/build-release.ts",
+          "release/package-release.ts"
+        ],
+        "notes": [
+          "Receipt generation is packaged as part of the governed release build."
+        ]
+      },
+      "testVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "tests/release/cori-alpha-proof.test.ts",
+          "tests/release/release-pipeline.test.ts"
+        ],
+        "notes": [
+          "Receipt verification will be enforced through proof and release pipeline checks."
+        ]
+      },
+      "runtimeVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "src/receipts/Receipt.types.ts",
+          "src/receipts/ReceiptBuilder.ts",
+          "src/receipts/ReceiptVerifier.ts",
+          "src/receipts/ReceiptSigner.ts",
+          "src/ledger/DurableLedger.ts"
+        ],
+        "notes": [
+          "Receipt creation, verification, and persistence are all runtime-governed."
+        ]
+      },
+      "conformanceVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "CIS_LAUNCH_READINESS_SPECIFICATION.md",
+          "CIS_CONFORMANCE_SUITE_SPECIFICATION.md"
+        ],
+        "notes": [
+          "Receipts are only complete when launch and conformance rules agree."
+        ]
+      },
+      "replayVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "src/replay/EglReplay.ts",
+          "src/replay/ReplayDriftDetector.ts"
+        ],
+        "notes": [
+          "Replay will confirm the receipt is derived from recorded evidence."
+        ]
+      },
+      "evidencePackageReference": null,
+      "constitutionalReceiptReference": null,
+      "conformanceRecordReference": null,
+      "replayVerificationRecordReference": null,
+      "dependencies": [
+        "evidence",
+        "constitutional-state-record",
+        "CIS_LAUNCH_READINESS_SPECIFICATION.md"
+      ],
+      "acceptanceCriteria": [
+        "The receipt verifies independently and links back to the evidence package."
+      ],
+      "lastVerificationTimestamp": null
+    },
+    {
+      "sliceId": "replay",
+      "name": "Replay",
+      "version": "1.0.0",
+      "currentStatus": "In Progress",
+      "owningCisRequirements": [
+        "CORI Alpha is the first independently verifiable constitutional proof",
+        "The conformance suite validates constitutional, replay, receipt, trust, and acceptance criteria"
+      ],
+      "companionSpecification": [
+        "CIS_CONFORMANCE_SUITE_SPECIFICATION.md",
+        "CORI_ALPHA_PROOF_CHAIN.md"
+      ],
+      "buildVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "release/build-release.ts",
+          "release/package-release.ts"
+        ],
+        "notes": [
+          "Replay artifacts will be surfaced through the governed release bundle."
+        ]
+      },
+      "testVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "tests/release/cori-alpha-proof.test.ts",
+          "tests/release/release-pipeline.test.ts"
+        ],
+        "notes": [
+          "Replay behavior is exercised by the proof and release validations."
+        ]
+      },
+      "runtimeVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "src/replay/EglReplay.ts",
+          "src/replay/ReplayDriftDetector.ts",
+          "src/envelope/EnvelopeValidator.ts"
+        ],
+        "notes": [
+          "The runtime replay path must remain deterministic and auditable."
+        ]
+      },
+      "conformanceVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "CIS_CONFORMANCE_SUITE_SPECIFICATION.md",
+          "CIS_CONFORMANCE_SUITE_INPUT.spec.json"
+        ],
+        "notes": [
+          "Replay validation is a named conformance concern in the proof chain."
+        ]
+      },
+      "replayVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "src/replay/EglReplay.ts",
+          "src/replay/ReplayDriftDetector.ts",
+          "src/envelope/EnvelopeValidator.ts"
+        ],
+        "notes": [
+          "Replay reconstructs the governed path without hidden state or private explanation."
+        ]
+      },
+      "evidencePackageReference": null,
+      "constitutionalReceiptReference": null,
+      "conformanceRecordReference": null,
+      "replayVerificationRecordReference": null,
+      "dependencies": [
+        "constitutional-state-record",
+        "constitutional-receipt",
+        "src/replay/EglReplay.ts"
+      ],
+      "acceptanceCriteria": [
+        "Replay reconstructs the governed path without hidden state or private explanation."
+      ],
+      "lastVerificationTimestamp": null
+    },
+    {
+      "sliceId": "conformance",
+      "name": "Conformance",
+      "version": "1.0.0",
+      "currentStatus": "In Progress",
+      "owningCisRequirements": [
+        "The conformance suite is generated from the traceability matrix source of truth",
+        "CORI Alpha is the first independently verifiable constitutional proof"
+      ],
+      "companionSpecification": [
+        "CIS_STANDARDS_TRACEABILITY_MATRIX.md",
+        "CIS_CONFORMANCE_SUITE_SPECIFICATION.md",
+        "CIS_CONFORMANCE_SUITE_INPUT.spec.json"
+      ],
+      "buildVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "release/build-release.ts",
+          "release/package-release.ts"
+        ],
+        "notes": [
+          "Conformance inputs are packaged alongside the governed release artifacts."
+        ]
+      },
+      "testVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "tests/release/cis-conformance-generation.test.ts",
+          "tests/release/cori-alpha-proof.test.ts"
+        ],
+        "notes": [
+          "Generated conformance inputs must stay aligned with the proof chain."
+        ]
+      },
+      "runtimeVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "packages/aaes-governance/src/crec.ts",
+          "packages/aaes-governance/src/evidenceGraph.ts",
+          "tests/release/cis-conformance-generation.test.ts"
+        ],
+        "notes": [
+          "Conformance is assembled from the governed evidence and comparison surfaces."
+        ]
+      },
+      "conformanceVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "CIS_STANDARDS_TRACEABILITY_MATRIX.md",
+          "CIS_CONFORMANCE_SUITE_INPUT.spec.json",
+          "CIS_CONFORMANCE_SUITE_SPECIFICATION.md"
+        ],
+        "notes": [
+          "Conformance is the final check that the traceability matrix has been preserved."
+        ]
+      },
+      "replayVerification": {
+        "status": "In Progress",
+        "evidence": [
+          "src/replay/EglReplay.ts",
+          "src/replay/ReplayDriftDetector.ts"
+        ],
+        "notes": [
+          "Replay proves the conformance input can be independently reconstructed."
+        ]
+      },
+      "evidencePackageReference": null,
+      "constitutionalReceiptReference": null,
+      "conformanceRecordReference": null,
+      "replayVerificationRecordReference": null,
+      "dependencies": [
+        "CIS_STANDARDS_TRACEABILITY_MATRIX.md",
+        "CIS_CONFORMANCE_SUITE_SPECIFICATION.md",
+        "CIS_CONFORMANCE_SUITE_INPUT.spec.json"
+      ],
+      "acceptanceCriteria": [
+        "The conformance result is objective, reproducible, and aligned with the traceability matrix."
+      ],
+      "lastVerificationTimestamp": null
+    }
+  ]
+}

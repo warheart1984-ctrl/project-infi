@@ -1,0 +1,17 @@
+{
+  "csrVersion": "1.0.0",
+  "generatedAt": "2026-06-27T01:11:37.199Z",
+  "stewardParticipation": {
+    "registeredReceipts": 1,
+    "uniqueStewards": 1
+  },
+  "governanceActivity": {
+    "activeRequirements": 8,
+    "governanceArtifacts": 0
+  },
+  "decisionCoverage": {
+    "requirementsTotal": 8,
+    "requirementsWithGovernanceLink": 0,
+    "coverageRatio": 0
+  }
+}

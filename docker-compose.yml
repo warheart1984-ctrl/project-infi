@@ -1,0 +1,22 @@
+services:
+  node-a:
+    build: .
+    environment:
+      - NODE_ID=node-a
+      - SOVREN_LAW_KEY=${SOVREN_LAW_KEY}
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./constitution:/app/constitution:ro
+
+  node-b:
+    build: .
+    environment:
+      - NODE_ID=node-b
+      - SOVREN_LAW_KEY=${SOVREN_LAW_KEY}
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./constitution:/app/constitution:ro

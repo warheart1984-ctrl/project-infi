@@ -1,0 +1,2 @@
+{"ts":"2026-07-06T16:28:00Z","node":"test-node","backend":"cpu","prompt_tokens":12,"completion_tokens":47,"latency_ms":891,"temperature":0.7,"status":"ok","error":null,"cpu_temp_c":71,"vram_used_mb":3241,"fallback":false}
+{"ts":"2026-07-06T16:28:00Z","node":"test-node","runtime_version":"","backend":"cpu","model":"","evidence_receipt":"","replay_id":"","proof_level":"","verification_status":"","governance_decision":"","prompt_tokens":12,"completion_tokens":47,"latency_ms":891,"temperature":0.7,"status":"ok","error":null,"cpu_temp_c":71,"vram_used_mb":3241,"fallback":false}

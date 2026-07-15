@@ -25,3 +25,25 @@ packages/*/src/**/*.d.ts.map
 Thumbs.db
 .vscode/
 .idea/
+.runtime/
+.local/
+
+# Generated Python and application state.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.egg-info/
+
+# Framework and native build output.
+.next/
+**/.next/
+**/bin/
+**/obj/
+
+# Local scratch artifacts.
+.tmp_*
+
+# Reproducible model-training and native compiler outputs.
+training/out/
+llm-inference-engine/build/

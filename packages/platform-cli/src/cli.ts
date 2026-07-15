@@ -1,4 +1,5 @@
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { spawn, spawnSync } from 'node:child_process';
 import { homedir } from 'node:os';
 import path from 'node:path';
 
@@ -47,6 +48,13 @@ export const COMMANDS = {
   workflow: 'Run a cross-organism workflow (organism workflow --file <json>)',
   connect: 'Connect to a remote organism (organism connect --organism <id>)',
   usage: 'Show billing usage (organism usage)',
+  'auth google-drive': 'Connect Google Drive (aais auth google-drive)',
+  'drive ls': 'List accessible Drive files (aais drive ls)',
+  'drive search': 'Search Drive (aais drive search <query>)',
+  'drive fetch': 'Fetch/export a Drive file (aais drive fetch <fileId> [--output <path>])',
+  'drive upload': 'Upload a file (aais drive upload <path>)',
+  'drive update': 'Update a file (aais drive update <fileId> <path>)',
+  'conformance drive': 'Run Drive conformance checks (aais conformance drive --vector v1_0)',
   completion: 'Print shell completion script (organism completion [--shell bash|powershell|zsh])',
   help: 'Show help (organism help [command])',
 } as const;
@@ -152,6 +160,16 @@ export async function runCli(rawArgv: string[]): Promise<number> {
   const config = loadConfig();
   const client = createClient(config);
 
+  const driveRequest = async (route: string, init?: RequestInit) => {
+    if (!config.sessionId && !config.apiKey) throw new Error('HALT:AUTHORITY_ERROR run `aais login` first');
+    const headers: Record<string, string> = { 'content-type': 'application/json', ...(init?.headers as Record<string, string> ?? {}) };
+    if (config.apiKey) headers.authorization = `Bearer ${config.apiKey}`; else headers['x-session-id'] = config.sessionId!;
+    const response = await fetch(`${config.baseUrl}/v1/integrations/google-drive${route}`, { ...init, headers });
+    const body = response.status === 204 ? undefined : await response.json() as Record<string, unknown>;
+    if (!response.ok) throw new Error(String(body?.error ?? `Google Drive request failed (${response.status})`));
+    return body;
+  };
+
   try {
     switch (command) {
       case 'login': {
@@ -219,6 +237,42 @@ export async function runCli(rawArgv: string[]): Promise<number> {
         const usage = await client.getUsage();
         console.log(JSON.stringify(usage, null, 2));
         break;
+      }
+      case 'auth': {
+        if (subcommand !== 'google-drive') throw new Error('Usage: aais auth google-drive');
+        const result = await driveRequest('/start') as { authorizationUrl: string };
+        const opener: [string, string[]] = process.platform === 'win32' ? ['cmd', ['/c', 'start', '', result.authorizationUrl]] : process.platform === 'darwin' ? ['open', [result.authorizationUrl]] : ['xdg-open', [result.authorizationUrl]];
+        const child = spawn(opener[0], opener[1], { detached: true, stdio: 'ignore' }); child.unref();
+        console.log('Google Drive authorization opened. The callback will store the encrypted token and emit the authorization evidence receipt.');
+        break;
+      }
+      case 'drive': {
+        const action = subcommand ?? 'ls';
+        if (action === 'ls' || action === 'search') {
+          const query = action === 'search' ? positional.slice(2).join(' ') : '';
+          if (action === 'search' && !query) throw new Error('Usage: aais drive search <query>');
+          const result = await driveRequest(`/files${query ? `?q=${encodeURIComponent(query)}` : ''}`) as { files?: unknown[]; receipt?: { evidence_id?: string } };
+          console.table(result.files ?? []); console.log(`Evidence: ${result.receipt?.evidence_id ?? 'unavailable'}`);
+        } else if (action === 'fetch') {
+          const fileId = positional[2]; if (!fileId) throw new Error('Usage: aais drive fetch <fileId> [--output <path>]');
+          const result = await driveRequest(`/files/${encodeURIComponent(fileId)}/content`) as { dataBase64: string; mimeType: string; file?: { name?: string }; receipt?: { evidence_id?: string } };
+          const data = Buffer.from(result.dataBase64, 'base64'); const output = typeof args.output === 'string' ? args.output : result.file?.name;
+          if (output) { writeFileSync(output, data); console.log(`Saved ${output}`); } else process.stdout.write(data);
+          console.log(`\nEvidence: ${result.receipt?.evidence_id ?? 'unavailable'}`);
+        } else if (action === 'upload' || action === 'update') {
+          const fileId = action === 'update' ? positional[2] : undefined; const source = action === 'update' ? positional[3] : positional[2];
+          if (!source || (action === 'update' && !fileId)) throw new Error(`Usage: aais drive ${action} ${action === 'update' ? '<fileId> ' : ''}<path>`);
+          const data = readFileSync(source); const name = path.basename(source); const mimeType = typeof args.mime === 'string' ? args.mime : 'application/octet-stream';
+          const result = await driveRequest(action === 'upload' ? '/files' : `/files/${encodeURIComponent(fileId!)}`, { method: action === 'upload' ? 'POST' : 'PATCH', body: JSON.stringify({ name, mimeType, dataBase64: data.toString('base64') }) }) as { file?: { id?: string; version?: string }; receipt?: { evidence_id?: string } };
+          console.log(`${action === 'upload' ? 'Uploaded' : 'Updated'} ${result.file?.id ?? fileId} revision ${result.file?.version ?? 'unknown'}`); console.log(`Evidence: ${result.receipt?.evidence_id ?? 'unavailable'}`);
+        } else throw new Error(`Unknown drive command: ${action}`);
+        break;
+      }
+      case 'conformance': {
+        if (subcommand !== 'drive') throw new Error('Usage: aais conformance drive --vector v1_0');
+        const runner = path.resolve('conformance', 'drive', 'runner_v1_0.mjs');
+        const result = spawnSync(process.execPath, [runner], { stdio: 'inherit', env: { ...process.env, PLATFORM_API_URL: config.baseUrl, AAIS_SESSION_ID: config.sessionId ?? '', AAIS_API_KEY: config.apiKey ?? '' } });
+        return result.status ?? 1;
       }
       default:
         console.error(`Unknown command: ${command}`);

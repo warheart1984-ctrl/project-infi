@@ -1,0 +1,14 @@
+{
+  "specId": "cis-conformance-suite-input-generator",
+  "displayName": "CIS Conformance Suite Input Generator",
+  "version": "1.0.0",
+  "status": "Frozen",
+  "sourceOfTruth": "CIS_STANDARDS_HIERARCHY.spec.json",
+  "generationRule": [
+    "Load the hierarchy source",
+    "Read the traceability matrix rows",
+    "Derive conformance-suite cases, traceability path, validation families, and acceptance criteria",
+    "Serialize the generated suite input",
+    "Compare against the committed release artifact"
+  ]
+}

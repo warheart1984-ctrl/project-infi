@@ -1,0 +1,88 @@
+{
+  "id": "isl-runtime",
+  "packageName": "@aaes-os/isl-runtime",
+  "status": "release-evidence-ready",
+  "packageDir": "packages/isl-runtime",
+  "docsPage": "docs-site/docs/runtime/isl-runtime.md",
+  "registryId": "ISL",
+  "checks": {
+    "packageJson": true,
+    "source": true,
+    "tests": true,
+    "buildOutput": true,
+    "docsPage": true,
+    "registryLive": true,
+    "packageName": true,
+    "buildScript": true,
+    "testScript": true
+  },
+  "commands": {
+    "build": "corepack pnpm --filter @aaes-os/isl-runtime build",
+    "test": "corepack pnpm --filter @aaes-os/isl-runtime test"
+  },
+  "replayAuditPacket": {
+    "replayReference": "isl-runtime.evidence.json#replayAuditPacket",
+    "auditReference": "isl-runtime.evidence.json#checks",
+    "documentationReference": "docs-site/docs/runtime/isl-runtime.md",
+    "requiredArtifacts": [
+      "packageJson",
+      "source",
+      "tests",
+      "buildOutput",
+      "docsPage",
+      "registryLive"
+    ]
+  },
+  "releasePackagingPacket": {
+    "manifestId": "isl-runtime-96ca99441c2f975ce2428f9699c4f9f9a2c47076163e49724aed777c6a776aea",
+    "checksumAlgorithm": "sha256",
+    "includedFiles": [
+      {
+        "path": "packages/isl-runtime/package.json",
+        "sha256": "026d0e27ba225b24d318bbcf9ffb911cf95873383918bf669487a258338a4951",
+        "bytes": 580
+      },
+      {
+        "path": "packages/isl-runtime/src/index.ts",
+        "sha256": "67578abcb0f243b350f8b039ef6c8686007359d5c621656def02c843719a140c",
+        "bytes": 9869
+      },
+      {
+        "path": "packages/isl-runtime/src/index.test.ts",
+        "sha256": "4e06bcc4173990107522e49ce3a96c71027507129ccb94348a4cd33fd38e0b92",
+        "bytes": 2604
+      },
+      {
+        "path": "packages/isl-runtime/dist/index.js",
+        "sha256": "b1bca8de2759b3c81c694ce74057b6d0784c644b290d8bc4f49554e2a595067a",
+        "bytes": 8017
+      },
+      {
+        "path": "docs-site/docs/runtime/isl-runtime.md",
+        "sha256": "d03b04e9b58d734a0f824d837621740cbbb31daddca0e24c9f1f89a84f1cc23d",
+        "bytes": 745
+      },
+      {
+        "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+        "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+        "bytes": 7972
+      }
+    ]
+  },
+  "externalIntegrationPacket": {
+    "target": "governed intent submission adapter",
+    "readiness": "live-integration-verified",
+    "evidence": [
+      "docs-site/docs/runtime/isl-runtime.md",
+      "packages/isl-runtime/src/index.ts",
+      "isl-runtime.evidence.json",
+      "docs/release/external-integrations/README.md",
+      "docs/release/external-integrations/external-integration-index.json"
+    ],
+    "serviceEvidenceIds": [
+      "github-origin-remote",
+      "npm-registry-toolchain"
+    ]
+  },
+  "blockers": []
+}

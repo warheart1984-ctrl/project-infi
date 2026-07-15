@@ -1,0 +1,88 @@
+{
+  "id": "ugr-runtime",
+  "packageName": "@aaes-os/ugr-runtime",
+  "status": "release-evidence-ready",
+  "packageDir": "packages/ugr-runtime",
+  "docsPage": "docs-site/docs/runtime/ugr-runtime.md",
+  "registryId": "UGR",
+  "checks": {
+    "packageJson": true,
+    "source": true,
+    "tests": true,
+    "buildOutput": true,
+    "docsPage": true,
+    "registryLive": true,
+    "packageName": true,
+    "buildScript": true,
+    "testScript": true
+  },
+  "commands": {
+    "build": "corepack pnpm --filter @aaes-os/ugr-runtime build",
+    "test": "corepack pnpm --filter @aaes-os/ugr-runtime test"
+  },
+  "replayAuditPacket": {
+    "replayReference": "ugr-runtime.evidence.json#replayAuditPacket",
+    "auditReference": "ugr-runtime.evidence.json#checks",
+    "documentationReference": "docs-site/docs/runtime/ugr-runtime.md",
+    "requiredArtifacts": [
+      "packageJson",
+      "source",
+      "tests",
+      "buildOutput",
+      "docsPage",
+      "registryLive"
+    ]
+  },
+  "releasePackagingPacket": {
+    "manifestId": "ugr-runtime-99b2d2444727bff7d273dada453337a458b1cbb6193fc0bd6dd7528b0b70232c",
+    "checksumAlgorithm": "sha256",
+    "includedFiles": [
+      {
+        "path": "packages/ugr-runtime/package.json",
+        "sha256": "398f50aa01bc755fbb9073b9540253a57693f16af1678ddc8e50d59f768eef5e",
+        "bytes": 579
+      },
+      {
+        "path": "packages/ugr-runtime/src/index.ts",
+        "sha256": "47c27bcdf8dfe69f0870407daaeb0f4605a92c11ac9a4144b4dfad6d5b0ae2c5",
+        "bytes": 31287
+      },
+      {
+        "path": "packages/ugr-runtime/src/index.test.ts",
+        "sha256": "59c651a2d2a4157b0873f9e4ab17bc4f685743d886b511461347977316fa0083",
+        "bytes": 4416
+      },
+      {
+        "path": "packages/ugr-runtime/dist/index.js",
+        "sha256": "fbe083095869d2490737e191f9e435c6a3d1ebfae6e567443243ea01b4b4a4b7",
+        "bytes": 26682
+      },
+      {
+        "path": "docs-site/docs/runtime/ugr-runtime.md",
+        "sha256": "31ab2b5541024441a7c29e2e23316e293471d5b6a96ecba586e9b5a94b3f96ce",
+        "bytes": 1108
+      },
+      {
+        "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+        "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+        "bytes": 7972
+      }
+    ]
+  },
+  "externalIntegrationPacket": {
+    "target": "UGR knowledge/replay import adapter",
+    "readiness": "live-integration-verified",
+    "evidence": [
+      "docs-site/docs/runtime/ugr-runtime.md",
+      "packages/ugr-runtime/src/index.ts",
+      "ugr-runtime.evidence.json",
+      "docs/release/external-integrations/README.md",
+      "docs/release/external-integrations/external-integration-index.json"
+    ],
+    "serviceEvidenceIds": [
+      "github-origin-remote",
+      "npm-registry-toolchain"
+    ]
+  },
+  "blockers": []
+}

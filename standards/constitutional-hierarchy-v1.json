@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "constitutional-hierarchy-v1",
+  "version": "1.0.0",
+  "status": "normative",
+  "order": [
+    "CONSTITUTION",
+    "STANDARDS",
+    "SPECIFICATIONS",
+    "CONFORMANCE_SUITE",
+    "REFERENCE_RUNTIME",
+    "CERTIFIED_IMPLEMENTATIONS"
+  ],
+  "invariants": {
+    "referenceRuntimeIsNormative": false,
+    "executionPlatformIsNormative": false,
+    "conformanceSuiteDependsOnReferenceRuntime": false,
+    "certifiedImplementationsExtendReferenceRuntime": false,
+    "corpusSpecificRulesMayOverrideConstitution": false
+  },
+  "roles": {
+    "CONSTITUTION": "highest governing authority",
+    "STANDARDS": "normative obligations derived from the Constitution",
+    "SPECIFICATIONS": "testable technical contracts implementing standards",
+    "CONFORMANCE_SUITE": "implementation-independent constitutional court",
+    "REFERENCE_RUNTIME": "non-normative executable reference citizen",
+    "CERTIFIED_IMPLEMENTATIONS": "independent constitutional subjects evaluated by CCS"
+  }
+}

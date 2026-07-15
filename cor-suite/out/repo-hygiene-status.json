@@ -1,0 +1,10 @@
+{
+  "repoId": "project-infi",
+  "scanTimestamp": "2026-06-27T01:11:35.310Z",
+  "deterministicArtifacts": true,
+  "directoryHygieneOk": true,
+  "canonicalPathsOk": true,
+  "reproducibleBuildsOk": true,
+  "ciCdIntegrated": true,
+  "issues": []
+}

@@ -8,6 +8,7 @@
   "exclude": ["dist", "node_modules", "src/**/*.test.ts"],
   "references": [
     { "path": "../coda-doc" },
-    { "path": "../nova-coda" }
+    { "path": "../nova-coda" },
+    { "path": "../nova-substrate-client" }
   ]
 }

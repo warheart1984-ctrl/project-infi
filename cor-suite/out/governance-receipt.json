@@ -1,0 +1,24 @@
+{
+  "decisionId": "decision-2026-06-27T01-11-37-192Z",
+  "corStateRef": "2026-06-27T01:11:35.588Z",
+  "analysisRef": "analysis-2026-06-27T01-11-35-588Z",
+  "decision": "require_fixes",
+  "scope": [
+    "project-infi:main"
+  ],
+  "rationale": "7 critical/error proof claims; 7 missing artifact links",
+  "evidenceRefs": [
+    "E:\\project-infi\\cor-suite\\out\\cor-state.json",
+    "E:\\project-infi\\cor-suite\\out\\proof-analysis.json"
+  ],
+  "invariantsEnforced": [
+    "INV-COR-PURE",
+    "INV-HYGIENE",
+    "INV-STRUCTURAL",
+    "INV-PROOF-CRITICAL",
+    "INV-LINEAGE"
+  ],
+  "steward": "cor-suite-cli",
+  "timestamp": "2026-06-27T01:11:37.192Z",
+  "signature": "b356c6ed06b76a7afa761b4aa50f2b3ed589cd3f6cab15f2f88ba290dbf7b444"
+}

@@ -1,0 +1,92 @@
+{
+  "specId": "aios-constitutional-node-runtime-v1",
+  "title": "AIOS Constitutional Node Runtime v1",
+  "purpose": "Smallest sovereign unit of constitutional administrative intelligence.",
+  "runtimePlanes": [
+    {
+      "name": "Identity Runtime",
+      "apis": ["Identity", "Authority", "Relationship"],
+      "role": "Manage constitutional identities, authority, delegation, and consent."
+    },
+    {
+      "name": "Evidence Runtime",
+      "apis": ["Evidence", "Provenance", "Traceability"],
+      "role": "Ingest, validate, store, and expose evidence artifacts."
+    },
+    {
+      "name": "Truth Runtime",
+      "apis": ["Knowledge", "Conformance"],
+      "role": "Compute context-specific truth evaluations from evidence without overriding ledger neutrality."
+    },
+    {
+      "name": "Knowledge Runtime",
+      "apis": ["Knowledge", "Traceability"],
+      "role": "Maintain ontology, knowledge graph, semantic links, and traceability."
+    },
+    {
+      "name": "Sovereignty Runtime",
+      "apis": ["Governance", "Conformance"],
+      "role": "Enforce constitutional rules, tiers, authority boundaries, and node-level governance."
+    },
+    {
+      "name": "Continuity Runtime",
+      "apis": ["Provenance", "Governance", "Conformance"],
+      "role": "Preserve lineage, invariants, replayability, and constitutional evolution."
+    },
+    {
+      "name": "Institutional Memory Runtime",
+      "apis": ["Relationship", "Evidence", "Traceability"],
+      "role": "Record decisions, receipts, relationships, and institutional workflows."
+    },
+    {
+      "name": "Reality Runtime",
+      "apis": ["Identity", "Evidence", "Knowledge"],
+      "role": "Optional v1 integration of external signals into constitutional context."
+    }
+  ],
+  "ledgerSchema": {
+    "entities": [
+      "Identity",
+      "Evidence",
+      "Provenance",
+      "Relationship",
+      "Trust Assertion",
+      "Constitutional Decision",
+      "Constitutional Receipt"
+    ],
+    "invariants": [
+      "immutable",
+      "hash-chained",
+      "replayable",
+      "ledger-neutrality"
+    ]
+  },
+  "governanceEngineV3": {
+    "tiers": [
+      "policy evaluation",
+      "trust-aware reasoning",
+      "constitutional clause reasoning",
+      "cross-plane conformance",
+      "replay-integrated governance"
+    ],
+    "output": "governed decision packet"
+  },
+  "continuityOS": {
+    "services": [
+      "Lineage Service",
+      "Invariant Service",
+      "Replay Service",
+      "Evolution Service",
+      "Conformance Service",
+      "Institutional Memory Service"
+    ]
+  },
+  "conformanceArtifacts": [
+    "tests/test_aios_node_runtime.py",
+    "docs/crk1/release/AIOS_CONSTITUTIONAL_NODE_RUNTIME_V1.conformance.json"
+  ],
+  "implementationSurface": [
+    "constitutional/aios_node_runtime.py",
+    "docs/specifications/aios-constitutional-node-runtime-v1.md"
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "docs/crk1/release/CORI_ALPHA_STATUS.schema.json",
+  "title": "CORI Alpha Status Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "specId",
+    "displayName",
+    "version",
+    "status",
+    "derivedFrom",
+    "purpose",
+    "statusModel",
+    "slices"
+  ],
+  "properties": {
+    "specId": {
+      "type": "string",
+      "const": "cori-alpha-minimal-runtime-status"
+    },
+    "displayName": {
+      "type": "string",
+      "const": "CORI Alpha Minimal Runtime Status"
+    },
+    "version": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Technical Review",
+        "Baseline Candidate",
+        "Constitutional Approval",
+        "Frozen",
+        "Published"
+      ]
+    },
+    "derivedFrom": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "statusModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "states",
+        "evidenceGates"
+      ],
+      "properties": {
+        "states": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Not Started",
+              "In Progress",
+              "Evidence Pending",
+              "Verified",
+              "Complete"
+            ]
+          },
+          "minItems": 5,
+          "uniqueItems": true
+        },
+        "evidenceGates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 6
+        }
+      }
+    },
+    "slices": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sliceId",
+          "name",
+          "version",
+          "currentStatus",
+          "owningCisRequirements",
+          "companionSpecification",
+          "buildVerification",
+          "testVerification",
+          "runtimeVerification",
+          "conformanceVerification",
+          "replayVerification",
+          "evidencePackageReference",
+          "constitutionalReceiptReference",
+          "conformanceRecordReference",
+          "replayVerificationRecordReference",
+          "dependencies",
+          "acceptanceCriteria",
+          "lastVerificationTimestamp"
+        ],
+        "properties": {
+          "sliceId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "currentStatus": {
+            "type": "string",
+            "enum": [
+              "Not Started",
+              "In Progress",
+              "Evidence Pending",
+              "Verified",
+              "Complete"
+            ]
+          },
+          "owningCisRequirements": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "companionSpecification": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "buildVerification": {
+            "$ref": "#/$defs/verificationItem"
+          },
+          "testVerification": {
+            "$ref": "#/$defs/verificationItem"
+          },
+          "runtimeVerification": {
+            "$ref": "#/$defs/verificationItem"
+          },
+          "conformanceVerification": {
+            "$ref": "#/$defs/verificationItem"
+          },
+          "replayVerification": {
+            "$ref": "#/$defs/verificationItem"
+          },
+          "evidencePackageReference": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "constitutionalReceiptReference": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "conformanceRecordReference": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "replayVerificationRecordReference": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "acceptanceCriteria": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "lastVerificationTimestamp": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "verificationItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "evidence",
+        "notes"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "Not Started",
+            "In Progress",
+            "Evidence Pending",
+            "Verified",
+            "Complete"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "$id": "https://emergent-substrate/spec/schemas/substrate-state.json",
+  "title": "SubstrateState",
+  "description": "Session snapshot of substrate state",
+  "type": "object",
+  "properties": {
+    "state_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "iteration": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "is_alive": {
+      "type": "boolean"
+    },
+    "total_packets_emitted": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "total_specs_produced": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "total_constitutions_attached": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "total_loop_iterations": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "identity_memory_non_empty": {
+      "type": "boolean"
+    },
+    "last_activity": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["iteration", "is_alive"],
+  "additionalProperties": false
+}

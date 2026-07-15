@@ -36,6 +36,8 @@ The docs cockpit and the desktop bridge share a source snapshot contract, so whe
 | `docs-site/src/components/SovereignIdeSurfaceMap.tsx` | Mirrors the live shell in docs-site | Documented ULX surface and editor mirror |
 | `packages/ulx-governance` | Provides the language-to-bytecode-to-trace pipeline | Canonical backend for IDE validate and trace actions |
 | `packages/ulx-vm` | Provides bytecode execution gating | Canonical backend for IDE run and simulate actions |
+| `UL verb language` | Imperative action vocabulary that feeds the governed intent chain | First step before ULX validation and execution |
+| `ULX language registry` | Canonical inventory of named language, DSL, and adjacent surfaces under ULX | Shared vocabulary for cockpit menus, docs navigation, and validation filters |
 | `ulx_integration.py` | Bridges to the external Python ULX core | Optional Python adapter path for direct `E:\ulx.py` execution |
 
 ## Short answer

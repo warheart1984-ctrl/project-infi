@@ -49,7 +49,7 @@
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts"],
-  "exclude": ["dist", "node_modules", "src/**/*.test.ts"],
+  "exclude": ["dist", "node_modules", "src/**/*.test.ts", "src/**/*.vitest.ts"],
   "references": [
     { "path": "../../packages/platform-core" },
     { "path": "../../packages/platform-mesh" },

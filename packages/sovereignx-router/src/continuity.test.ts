@@ -11,8 +11,6 @@ import {
   validateConstitutionalLineage,
   type ConstitutionalArtifactRevision,
   type GovernanceChangeProposal,
-  type PlaneConformanceCheck,
-  type PlaneConformanceRule,
   type ReplayValidationContract,
   type TrustReplayReport,
 } from './continuity.js';

@@ -4,7 +4,6 @@ import type { CustomerRecord } from '@aaes-os/platform-core';
 import {
   buildRelationshipTrustPacket,
   calculateTrustView,
-  signRelationshipTrustPacket,
   trustPolicyForGovernanceLevel,
   type GovernanceTrustPolicy,
   type RelationshipLedgerTrustPacket,
@@ -88,6 +87,42 @@ function canonicalizeSurface(surface: CustomerAuditSurface, signer: string, sign
     signed_at: signedAt,
     surface,
   });
+}
+
+function canonicalizeJson(value: unknown): string {
+  return JSON.stringify(sortValue(value));
+}
+
+function sortValue(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map(sortValue);
+  }
+  if (!value || typeof value !== 'object') {
+    return value;
+  }
+  const result: Record<string, unknown> = {};
+  for (const key of Object.keys(value as Record<string, unknown>).sort()) {
+    const entry = (value as Record<string, unknown>)[key];
+    if (entry !== undefined) {
+      result[key] = sortValue(entry);
+    }
+  }
+  return result;
+}
+
+function signRelationshipTrustPacket(
+  packet: RelationshipLedgerTrustPacket,
+  secret: string,
+  signer = 'platform-api',
+  signedAt = new Date().toISOString(),
+): { algorithm: 'HMAC-SHA256'; signer: string; signedAt: string; value: string } {
+  const value = createHmac('sha256', secret).update(canonicalizeJson(packet)).digest('hex');
+  return {
+    algorithm: 'HMAC-SHA256',
+    signer,
+    signedAt,
+    value,
+  };
 }
 
 export function signCustomerAuditSurface(

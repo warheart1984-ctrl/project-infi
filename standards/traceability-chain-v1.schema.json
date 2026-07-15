@@ -1,0 +1,13 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://aaes-os.local/schemas/traceability-chain-v1.json",
+  "title":"Bidirectional Constitutional Traceability Chain",
+  "type":"object",
+  "required":["traceId","constitution","standard","specification","schemaOrApi","referenceRuntime","conformanceTest","evidence","certification","adoption","forwardLinks","reverseLinks"],
+  "properties":{
+    "traceId":{"type":"string","minLength":1},
+    "constitution":{"$ref":"#/$defs/refs"},"standard":{"$ref":"#/$defs/refs"},"specification":{"$ref":"#/$defs/refs"},"schemaOrApi":{"$ref":"#/$defs/refs"},"referenceRuntime":{"$ref":"#/$defs/refs"},"conformanceTest":{"$ref":"#/$defs/refs"},"evidence":{"$ref":"#/$defs/refs"},"certification":{"$ref":"#/$defs/refs"},"adoption":{"$ref":"#/$defs/refs"},
+    "forwardLinks":{"$ref":"#/$defs/links"},"reverseLinks":{"$ref":"#/$defs/links"}
+  },
+  "$defs":{"refs":{"type":"array","items":{"type":"string","minLength":1},"minItems":1},"links":{"type":"array","items":{"type":"object","required":["from","to","relation"],"properties":{"from":{"type":"string"},"to":{"type":"string"},"relation":{"type":"string"}}},"minItems":1}}
+}

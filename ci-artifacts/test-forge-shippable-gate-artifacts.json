@@ -1,0 +1,172 @@
+{
+  "schema_version": "forge-shippable-gate.v1",
+  "generated_at": "2026-06-24T04:19:33.203397+00:00",
+  "mode": "fail",
+  "status": "fail",
+  "expected_profile_id": "forge-selfhosted",
+  "checks": [
+    {
+      "gate_id": "B",
+      "name": "Governance ledger fail mode",
+      "status": "fail",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python .github/scripts/validate-governance-ledger.py --mode fail --summary-only",
+      "output_tail": [
+        "[ERROR] script.wolf-cog-os.emit-forge-build-state: Owner path does not exist: cog-os/forge/scripts/lib/emit-profile-attestation.sh",
+        "[ERROR] script.wolf-cog-os.emit-forge-build-state: Script path does not exist: cog-os/forge/scripts/lib/emit-profile-attestation.sh",
+        "Governance ledger check: commands=36, warnings=0, errors=6, mode=fail"
+      ]
+    },
+    {
+      "gate_id": "B",
+      "name": "Substrate evolution ledger",
+      "status": "fail",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python .github/scripts/validate-substrate-evolution-ledger.py --mode fail --registry cog-os/forge/substrates/registry.json",
+      "output_tail": [
+        "substrate evolution ledger: status=fail, entries=6, registry_substrates=15, findings=1",
+        "[ERROR] registry substrates without active ledger coverage: ['usl-guest', 'usl-lifted-guest']"
+      ]
+    },
+    {
+      "gate_id": "B",
+      "name": "Repo safety",
+      "status": "pass",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python .github/scripts/check-repo-safety.py --summary-only",
+      "output_tail": [
+        "Repo safety check: surfaces=3, files=28, violations=0"
+      ]
+    },
+    {
+      "gate_id": "B",
+      "name": "Repo hygiene",
+      "status": "pass",
+      "required": false,
+      "command": "/home/cogos/.venvs/project-infi/bin/python .github/scripts/check-repo-hygiene.py --mode warn --summary-only --skip-bundle-compare",
+      "output_tail": [
+        "[WARN] hygiene.local_work_dir: local work directory present | path=/mnt/e/project-infi/ci-artifacts",
+        "Repo hygiene check: errors=0, warnings=1, mode=warn"
+      ]
+    },
+    {
+      "gate_id": "C",
+      "name": "Nova NorthStar CoG OS host init present",
+      "status": "pass",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python -c import pathlib; assert pathlib.Path('cog-os/host/src/init.c').is_file()",
+      "output_tail": []
+    },
+    {
+      "gate_id": "D",
+      "name": "Promotion source unit tests",
+      "status": "pass",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python -m unittest tests.test_validate_promotion_source",
+      "output_tail": [
+        "Ran 6 tests in 1.355s",
+        "",
+        "OK"
+      ]
+    },
+    {
+      "gate_id": "E",
+      "name": "Forge profile loader tests",
+      "status": "fail",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python cog-os/scripts/test/test-forge-profile-loader.py",
+      "output_tail": [
+        "missing profile loader: /mnt/e/project-infi/cog-os/forge/scripts/lib/profile-loader.sh"
+      ]
+    },
+    {
+      "gate_id": "E",
+      "name": "Forge profile validation",
+      "status": "pass",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python cog-os/forge/scripts/validate-profile.py --mode fail",
+      "output_tail": [
+        "validated 5 profiles"
+      ]
+    },
+    {
+      "gate_id": "E",
+      "name": "Substrate evolution ledger tests",
+      "status": "fail",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python -m unittest tests.test_substrate_evolution_ledger",
+      "output_tail": [
+        "Ran 1 test in 0.104s",
+        "",
+        "FAILED (failures=1)"
+      ]
+    },
+    {
+      "gate_id": "D",
+      "name": "Promotion dry-run fixture",
+      "status": "fail",
+      "required": true,
+      "command": "bash cog-os/scripts/test/promotion-dry-run.sh --skip-verify",
+      "output_tail": [
+        "Promotion source validation: status=pass, source_run_id=424242, observed_run_id=424242, expected_profile=forge-selfhosted, observed_profile=forge-selfhosted, findings=0",
+        "promotion dry-run report: status=fail output=/mnt/e/project-infi/ci-artifacts/promotion-dry-run-report.json"
+      ]
+    },
+    {
+      "gate_id": "C",
+      "name": "QEMU smoke contract",
+      "status": "fail",
+      "required": true,
+      "command": "bash cog-os/scripts/test/qemu-smoke.sh --contract",
+      "output_tail": [
+        "cog-os/scripts/test/qemu-smoke.sh: line 11: /mnt/e/project-infi/cog-os/forge/scripts/lib/resolve-rootfs.sh: No such file or directory"
+      ]
+    },
+    {
+      "gate_id": "C",
+      "name": "QEMU contract artifact",
+      "status": "fail",
+      "required": true,
+      "command": "/home/cogos/.venvs/project-infi/bin/python -c import json, pathlib, sys; p=pathlib.Path('ci-artifacts/qemu-contract.json'); assert p.is_file(), 'missing ci-artifacts/qemu-contract.json'; d=json.loads(p.read_text(encoding='utf-8')); sys.exit(0 if d.get('status') == 'pass' else 1)",
+      "output_tail": [
+        "    import json, pathlib, sys; p=pathlib.Path('ci-artifacts/qemu-contract.json'); assert p.is_file(), 'missing ci-artifacts/qemu-contract.json'; d=json.loads(p.read_text(encoding='utf-8')); sys.exit(0 if d.get('status') == 'pass' else 1)",
+        "                                                                                         ~~~~~~~~~^^",
+        "AssertionError: missing ci-artifacts/qemu-contract.json"
+      ]
+    },
+    {
+      "gate_id": "F",
+      "name": "RC artifact promotion readiness",
+      "status": "fail",
+      "required": false,
+      "command": "validate artifacts in cog-os/scripts/test/fixtures/promotion-forge-rc",
+      "output_tail": [
+        "missing promotable ISO"
+      ]
+    }
+  ],
+  "blockers": [
+    "B:Governance ledger fail mode",
+    "B:Substrate evolution ledger",
+    "E:Forge profile loader tests",
+    "E:Substrate evolution ledger tests",
+    "D:Promotion dry-run fixture",
+    "C:QEMU smoke contract",
+    "C:QEMU contract artifact",
+    "F:RC artifact promotion readiness"
+  ],
+  "meta_architect_gate": {
+    "gate_id": "F",
+    "decision_required": true,
+    "decision": "pending",
+    "authority": "Meta Architect",
+    "notes": "Explicit ship approval required after Gate F artifact evidence is green.",
+    "decision_doc": "docs/forge-shippable-gate.md"
+  },
+  "live_ci_evidence": {
+    "p2_3_workflow_run_url": "",
+    "p3_3_promotion_dry_run_url": "",
+    "forge_rc_run_url": "",
+    "status": "pending"
+  }
+}

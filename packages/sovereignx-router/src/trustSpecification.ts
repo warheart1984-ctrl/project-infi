@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-import type { RelationshipLedgerTrustPacket, RelationshipTrustView, TrustBand } from './types.js';
+import type { RelationshipLedgerTrustPacket, TrustBand } from './types.js';
 import { trustBand } from './trust.js';
 
 export type TrustDomain = 'ops' | 'safety' | 'finance' | 'compliance' | 'global';

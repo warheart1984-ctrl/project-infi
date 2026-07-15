@@ -161,17 +161,6 @@ function readJson<T>(filePath: string, fallback: T): T {
   return JSON.parse(raw) as T;
 }
 
-function readJsonEntries(root: string, folder: string): Record<string, unknown>[] {
-  const folderPath = resolve(root, folder);
-  if (!existsSync(folderPath)) {
-    return [];
-  }
-
-  return readdirSync(folderPath)
-    .filter((entry) => entry.endsWith('.json'))
-    .map((entry) => readJson<Record<string, unknown>>(resolve(folderPath, entry), {}));
-}
-
 function hashJson(value: unknown): string {
   return crypto.createHash('sha256').update(JSON.stringify(sortValue(value))).digest('hex');
 }
