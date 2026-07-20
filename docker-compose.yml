@@ -1,22 +1,154 @@
 services:
-  node-a:
-    build: .
+  # Ops Console - Telemetry & HTTP surface
+  ops-console:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_VERSION: 20
+        SERVICE: ops-console
+    image: aaes-os/ops-console:latest
+    container_name: aaes-ops-console
     environment:
-      - NODE_ID=node-a
-      - SOVREN_LAW_KEY=${SOVREN_LAW_KEY}
+      - NODE_ENV=development
+      - PORT=3001
+      - LOG_LEVEL=info
+    ports:
+      - "3001:3000"
+    networks:
+      - aaes-mesh
+    depends_on:
+      platform-api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    volumes:
+      - ./constitution:/app/constitution:ro
+    restart: unless-stopped
+
+  # Platform API - REST API
+  platform-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_VERSION: 20
+        SERVICE: platform-api
+    image: aaes-os/platform-api:latest
+    container_name: aaes-platform-api
+    environment:
+      - NODE_ENV=development
       - PORT=3000
+      - LOG_LEVEL=info
     ports:
       - "3000:3000"
+    networks:
+      - aaes-mesh
+    depends_on:
+      - sovereign-control-plane
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
     volumes:
       - ./constitution:/app/constitution:ro
+    restart: unless-stopped
 
-  node-b:
-    build: .
+  # Platform Web - Next.js Dashboard
+  platform-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_VERSION: 20
+        SERVICE: platform-web
+    image: aaes-os/platform-web:latest
+    container_name: aaes-platform-web
     environment:
-      - NODE_ID=node-b
-      - SOVREN_LAW_KEY=${SOVREN_LAW_KEY}
-      - PORT=3001
+      - NODE_ENV=production
+      - PORT=3002
     ports:
-      - "3001:3001"
+      - "3002:3000"
+    networks:
+      - aaes-mesh
+    depends_on:
+      platform-api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
     volumes:
       - ./constitution:/app/constitution:ro
+    restart: unless-stopped
+
+  # Sovereign Control Plane - Supporting service
+  sovereign-control-plane:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_VERSION: 20
+        SERVICE: sovereign-control-plane
+    image: aaes-os/sovereign-control-plane:latest
+    container_name: aaes-sovereign-control-plane
+    environment:
+      - NODE_ENV=development
+      - PORT=3003
+      - LOG_LEVEL=info
+    ports:
+      - "3003:3000"
+    networks:
+      - aaes-mesh
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    volumes:
+      - ./constitution:/app/constitution:ro
+    restart: unless-stopped
+
+  # USS API - USS API service
+  uss-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_VERSION: 20
+        SERVICE: uss-api
+    image: aaes-os/uss-api:latest
+    container_name: aaes-uss-api
+    environment:
+      - NODE_ENV=development
+      - PORT=3004
+      - LOG_LEVEL=info
+    ports:
+      - "3004:3000"
+    networks:
+      - aaes-mesh
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    volumes:
+      - ./constitution:/app/constitution:ro
+    restart: unless-stopped
+
+networks:
+  aaes-mesh:
+    driver: bridge
+
+volumes:
+  constitution:
