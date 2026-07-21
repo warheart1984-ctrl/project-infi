@@ -36,6 +36,7 @@
       "@aaes-os/ucr-attestation": ["packages/ucr-attestation/src/index.ts"],
       "@aaes-os/runtime-law-spine": ["packages/runtime-law-spine/src/index.ts"],
       "@aaes-os/evidence-receipts": ["packages/evidence-receipts/src/index.ts"],
+      "@aaes-os/lirl": ["packages/lirl/src/index.ts"],
       "@aaes-os/constitutional-enforcement-node": ["packages/constitutional-enforcement-node/src/index.ts"],
       "@aaes-os/meta-constitutional-calculus": ["packages/meta-constitutional-calculus/src/index.ts"],
       "@aaes-os/transition-validation-pipeline": ["packages/transition-validation-pipeline/src/index.ts"],
@@ -67,7 +68,14 @@
       "@aaes-os/sgce": ["packages/sgce/src/index.ts"],
       "@aaes-os/telemetry": ["packages/telemetry/src/index.ts"],
       "@aaes-os/platform-sdk": ["packages/platform-sdk/src/index.ts"],
-      "@aaes-os/platform-cli": ["packages/platform-cli/src/cli.ts"]
+      "@aaes-os/platform-cli": ["packages/platform-cli/src/cli.ts"],
+      "@aaes-os/canonical-replay-matrix": ["packages/canonical-replay-matrix/src/index.ts"],
+      "@aaes-os/canonical-authority-matrix": ["packages/canonical-authority-matrix/src/index.ts"],
+      "@aaes-os/evidence-federation-ledger": ["packages/evidence-federation-ledger/src/index.ts"],
+      "@aaes-os/evidence-lineage-ledger": ["packages/evidence-lineage-ledger/src/index.ts"],
+      "@aaes-os/canonical-stewardship-matrix": ["packages/canonical-stewardship-matrix/src/index.ts"],
+      "@aaes-os/canonical-temporal-grid": ["packages/canonical-temporal-grid/src/index.ts"],
+      "@aaes-os/evidence-sovereign-ledger": ["packages/evidence-sovereign-ledger/src/index.ts"]
     }
   }
 }

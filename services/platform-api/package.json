@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@aaes-os/aaes-governance": "workspace:*",
+    "@aaes-os/lirl": "workspace:*",
     "@aaes-os/platform-core": "workspace:*",
     "@aaes-os/platform-mesh": "workspace:*",
     "@aaes-os/platform-sdk": "workspace:*",

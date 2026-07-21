@@ -6,6 +6,8 @@ import path from 'node:path';
 import type { GovernanceMode } from '@aaes-os/platform-core';
 import { PlatformClient } from '@aaes-os/platform-sdk';
 
+import { parseLirlIntentCliInput, runLirlIntentCli } from './lirlIntent.js';
+
 export interface CliConfig {
   baseUrl: string;
   apiKey?: string;
@@ -55,6 +57,7 @@ export const COMMANDS = {
   'drive upload': 'Upload a file (aais drive upload <path>)',
   'drive update': 'Update a file (aais drive update <fileId> <path>)',
   'conformance drive': 'Run Drive conformance checks (aais conformance drive --vector v1_0)',
+  'lirl intent': 'Run LIRL locally (organism lirl intent --action memory.write --key <key> --value <json>)',
   completion: 'Print shell completion script (organism completion [--shell bash|powershell|zsh])',
   help: 'Show help (organism help [command])',
 } as const;
@@ -273,6 +276,20 @@ export async function runCli(rawArgv: string[]): Promise<number> {
         const runner = path.resolve('conformance', 'drive', 'runner_v1_0.mjs');
         const result = spawnSync(process.execPath, [runner], { stdio: 'inherit', env: { ...process.env, PLATFORM_API_URL: config.baseUrl, AAIS_SESSION_ID: config.sessionId ?? '', AAIS_API_KEY: config.apiKey ?? '' } });
         return result.status ?? 1;
+      }
+      case 'lirl': {
+        if (subcommand !== 'intent') throw new Error('Usage: organism lirl intent --action <action> [--actor <id>] [--key <key>] [--value <json>]');
+        const { result, operatorHtmlPath } = await runLirlIntentCli(parseLirlIntentCliInput(args));
+        console.log(JSON.stringify({
+          intentId: result.intentId,
+          verdict: result.verdict,
+          reasons: result.reasons,
+          receiptId: result.receiptId,
+          memoryWritten: result.memoryWritten,
+          memoryKey: result.memoryKey,
+          operatorHtmlPath,
+        }, null, 2));
+        return result.verdict === 'ACCEPT' ? 0 : 1;
       }
       default:
         console.error(`Unknown command: ${command}`);

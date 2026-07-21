@@ -5,6 +5,7 @@ Project Infinity is the umbrella blueprint for the workspace, while AAES-OS is t
 
 ## Canonical Links
 
+- [Civilization OS (identity freeze + organ ledger)](./civilization-os/README.md)
 - [Repository scorecard](./scorecards/project-infi.md)
 - [Scorecard template](./scorecards/REPO_SCORECARD_TEMPLATE.md)
 - [Canonical Replay & Evidence Contract](../docs-site/docs/governance/crec.md)
@@ -26,6 +27,9 @@ Project Infinity is the umbrella blueprint for the workspace, while AAES-OS is t
 - [Sovereign IDE runtime surface](./runtime/sovereign-ide.md)
 - Live package surfaces: [@aaes-os/coda-doc](../packages/coda-doc/src/index.ts), [@aaes-os/coda-runtime](../packages/coda-runtime/src/index.ts), [@aaes-os/nova-substrate](../packages/nova-substrate/package.json), [@aaes-os/nova-coda](../packages/nova-coda/src/index.ts), [@aaes-os/ul-runtime](../packages/ul-runtime/src/index.ts), [@aaes-os/csl-runtime](../packages/csl-runtime/src/index.ts), [@aaes-os/isl-runtime](../packages/isl-runtime/src/index.ts), [@aaes-os/cic-runtime](../packages/cic-runtime/src/index.ts), [@aaes-os/ccc-runtime](../packages/ccc-runtime/src/index.ts), [@aaes-os/coe-runtime](../packages/coe-runtime/src/index.ts), [@aaes-os/cml-voss-runtime](../packages/cml-voss-runtime/src/index.ts), [@aaes-os/ugr-runtime](../packages/ugr-runtime/src/index.ts), and [@aaes-os/gcre-sysmin](../packages/gcre-sysmin/src/index.ts)
 - [Production hardening evidence](./release/production-hardening/README.md)
+- [AAES-OS Production Baseline v1.0](./release/production-baseline/aaes-os-v1.0/INDEX.md) — frozen operational deployment stack (evidence-producing reference environment)
+- [Operational Evidence Layer (OEL)](./release/operational-evidence-layer/README.md) — Deployment Certificates + Evidence Records (ops projection of CREC)
+- [Constitutional Evidence Framework (CEF) v1.0](./release/cef/README.md) — Charter, Certification Engine, profiles (CREC / OEL / CEL / Security / ModelEval)
 - [External integration evidence](./release/external-integrations/README.md)
 - [Docs-site overview](../docs-site/docs/overview.md)
 - [Workspace README](../README.md)

@@ -8,8 +8,8 @@
   "include": ["src/**/*.ts"],
   "exclude": ["dist", "node_modules", "src/**/*.test.ts"],
   "references": [
-    { "path": "../platform-core" },
-    { "path": "../platform-sdk" },
-    { "path": "../lirl" }
+    { "path": "../aaes-governance" },
+    { "path": "../evidence-receipts" },
+    { "path": "../runledger" }
   ]
 }

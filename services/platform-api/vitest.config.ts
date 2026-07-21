@@ -15,7 +15,10 @@ export default defineConfig({
       '@aaes-os/federation': path.join(svcDir, '../../packages/federation/src/index.ts'),
       '@aaes-os/aaes-governance': path.join(svcDir, '../../packages/aaes-governance/src/index.ts'),
       '@aaes-os/sovren': path.join(svcDir, '../../packages/sovren/src/index.ts'),
-      '@aaes-os/sovereignx-router': path.join(svcDir, 'sovereignx-router.vitest.ts'),
+      '@aaes-os/lirl': path.join(svcDir, '../../packages/lirl/src/index.ts'),
+      '@aaes-os/runledger': path.join(svcDir, '../../packages/runledger/src/index.ts'),
+      '@aaes-os/evidence-receipts': path.join(svcDir, '../../packages/evidence-receipts/src/index.ts'),
+      '@aaes-os/sovereignx-router': path.join(svcDir, 'src/sovereignx-router.vitest.ts'),
     },
   },
   test: {

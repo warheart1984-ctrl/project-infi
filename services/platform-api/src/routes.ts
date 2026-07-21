@@ -1,14 +1,14 @@
-import type { Express, Request, Response, NextFunction } from 'express';
+import type { Express, Request, Response } from 'express';
 
 import {
   platform,
   mesh,
   sgce,
   psom,
-  resolveContext,
   sovereignToken,
   parseGovernanceMode,
 } from './state.js';
+import { asyncHandler, authRequired } from './httpUtils.js';
 import {
   buildOAuthStartPayload,
   completeOAuthCallback,
@@ -17,6 +17,7 @@ import {
 import { createTreasuryPaymentSchedule, createTreasuryPlan, executeTreasuryPayPalCheckout, executeTreasuryPayPalPayout } from './treasury.js';
 import { buildPricingEvaluationBundle } from './pricingEvaluation.js';
 import { buildRelationshipTrustSurface, signCustomerAuditSurface, type CustomerQuotaSummary } from './customerAudit.js';
+import { mountLirlRoutes } from './lirlRoutes.js';
 import {
   buildGoogleDriveAuthorization,
   completeGoogleDriveAuthorization,
@@ -34,24 +35,9 @@ function driveOrganization(req: Request): string {
   return req.platformCtx!.organizationId ?? `personal:${req.platformCtx!.ownerId}`;
 }
 
-function asyncHandler(
-  fn: (req: Request, res: Response, next: NextFunction) => Promise<void>,
-) {
-  return (req: Request, res: Response, next: NextFunction) => {
-    void fn(req, res, next).catch(next);
-  };
-}
-
-function authRequired(req: Request, res: Response, next: NextFunction): void {
-  try {
-    req.platformCtx = resolveContext(req);
-    next();
-  } catch {
-    res.status(401).json({ error: 'AUTH: missing or invalid credentials' });
-  }
-}
-
 export function mountRoutes(app: Express): void {
+  mountLirlRoutes(app);
+
   app.get('/health', (_req, res) => {
     res.json({ status: 'ok', organismId: process.env.ORGANISM_ID ?? 'organism-local' });
   });
@@ -899,10 +885,4 @@ export function mountRoutes(app: Express): void {
   app.get('/mesh/topology', (_req, res) => res.redirect(307, '/v1/mesh/topology'));
 }
 
-declare module 'express-serve-static-core' {
-  interface Request {
-    platformCtx?: import('@aaes-os/platform-core').PlatformContext;
-  }
-}
-
-export { asyncHandler, authRequired };
+export { asyncHandler, authRequired } from './httpUtils.js';

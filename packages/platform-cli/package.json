@@ -12,6 +12,7 @@
     "test": "vitest run --config vitest.config.ts"
   },
   "dependencies": {
+    "@aaes-os/lirl": "workspace:*",
     "@aaes-os/platform-core": "workspace:*",
     "@aaes-os/platform-sdk": "workspace:*"
   },

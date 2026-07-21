@@ -20,6 +20,7 @@
       "@aaes-os/ucr-attestation": ["../../packages/ucr-attestation/src/index.ts"],
       "@aaes-os/runtime-law-spine": ["../../packages/runtime-law-spine/src/index.ts"],
       "@aaes-os/evidence-receipts": ["../../packages/evidence-receipts/src/index.ts"],
+      "@aaes-os/lirl": ["../../packages/lirl/src/index.ts"],
       "@aaes-os/constitutional-enforcement-node": ["../../packages/constitutional-enforcement-node/src/index.ts"],
       "@aaes-os/meta-constitutional-calculus": ["../../packages/meta-constitutional-calculus/src/index.ts"],
       "@aaes-os/transition-validation-pipeline": ["../../packages/transition-validation-pipeline/src/index.ts"],
@@ -56,6 +57,7 @@
     { "path": "../../packages/psom-mesh" },
     { "path": "../../packages/sgce" },
     { "path": "../../packages/sovren" },
-    { "path": "../../packages/aaes-governance" }
+    { "path": "../../packages/aaes-governance" },
+    { "path": "../../packages/lirl" }
   ]
 }

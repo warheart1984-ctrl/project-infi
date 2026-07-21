@@ -37,6 +37,9 @@ jobs:
       - name: Build
         run: corepack pnpm build
 
+      - name: LIRL vertical slice
+        run: corepack pnpm --filter @aaes-os/lirl test
+
       - name: Test
         run: corepack pnpm test
 

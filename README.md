@@ -4,6 +4,8 @@ pnpm workspace for the AAES-OS governed runtime, docs, and tooling packages. Pro
 
 Canonical scorecard: [docs/scorecards/project-infi.md](./docs/scorecards/project-infi.md)
 
+Civilization OS freeze: [docs/civilization-os/README.md](./docs/civilization-os/README.md)
+
 Docs hub: [docs/README.md](./docs/README.md)
 
 The canonical finish criteria for this workspace live in [docs/scorecards/project-infi.md](./docs/scorecards/project-infi.md), including the nested `.runtime/e2e-operator-workspace` quarantine as ephemeral scratch output.
