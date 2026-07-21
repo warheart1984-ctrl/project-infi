@@ -1,0 +1,65 @@
+# Prefer Groq for fast general coding tasks
+- id: "coding.general.prefers_groq"
+  when:
+    domain: "coding"
+    risk: "low"
+  then:
+    routing:
+      preferred_backends: ["groq-llama3-70b"]
+    guardrails:
+      max_tokens_out: 4096
+
+# Use DeepSeek-Coder for multi-file reasoning
+- id: "coding.deepseek.multi_file"
+  when:
+    domain: "coding"
+    tags: ["multi-file"]
+  then:
+    routing:
+      allowed_backends: ["deepseek-coder"]
+    guardrails:
+      require_identity_role: ["developer", "system"]
+
+# Use Cursor for local project refactoring
+- id: "coding.cursor.local_project"
+  when:
+    domain: "coding"
+    tags: ["local-project"]
+  then:
+    routing:
+      allowed_backends: ["cursor"]
+    guardrails:
+      max_tokens_out: 2048
+
+# Use Devin for agentic tool-use coding tasks
+- id: "coding.devin.agentic"
+  when:
+    domain: "coding"
+    tags: ["agentic", "tool-use"]
+  then:
+    routing:
+      allowed_backends: ["devin"]
+    guardrails:
+      require_identity_role: ["developer", "system"]
+
+# Use local LLM for sensitive code (secrets, PHI, proprietary)
+- id: "coding.sensitive.must_use_local"
+  when:
+    domain: "coding"
+    tags: ["sensitive", "proprietary", "phi"]
+  then:
+    routing:
+      allowed_backends: ["local-llm"]
+    guardrails:
+      require_identity_role: ["developer", "system"]
+
+# Default Codex for high-risk coding tasks
+- id: "coding.high_risk.prefers_codex"
+  when:
+    domain: "coding"
+    risk: "high"
+  then:
+    routing:
+      preferred_backends: ["codex"]
+    guardrails:
+      require_identity_role: ["developer", "system"]

@@ -1,4 +1,4 @@
-import type { GovernanceMode, UsageRecord } from '../types.js';
+import type { GovernanceMode, OverageEvent, UsageRecord } from '../types.js';
 
 export interface BillingHook {
   onUsage(record: UsageRecord): void | Promise<void>;
@@ -16,6 +16,7 @@ const TIER_MULTIPLIERS: Record<GovernanceMode, number> = {
 
 export class UsageMeter {
   private readonly records: UsageRecord[] = [];
+  private readonly overages: OverageEvent[] = [];
   private readonly hooks: BillingHook[];
 
   constructor(options: MeterOptions = {}) {
@@ -32,6 +33,16 @@ export class UsageMeter {
     for (const hook of this.hooks) {
       void hook.onUsage(entry);
     }
+    return entry;
+  }
+
+  recordOverage(input: Omit<OverageEvent, 'id' | 'occurredAt'>): OverageEvent {
+    const entry: OverageEvent = {
+      ...input,
+      id: `overage_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`,
+      occurredAt: new Date().toISOString(),
+    };
+    this.overages.push(entry);
     return entry;
   }
 
@@ -66,6 +77,25 @@ export class UsageMeter {
     }
 
     return { totalUnits, byOperation, byProfile };
+  }
+
+  usageSummary(orgId: string): {
+    total: number;
+    byKind: Record<string, number>;
+  } {
+    const filtered = this.records.filter((record) => record.orgId === orgId);
+    const byKind: Record<string, number> = {};
+    let total = 0;
+    for (const record of filtered) {
+      total += record.units;
+      const kind = record.operation;
+      byKind[kind] = (byKind[kind] ?? 0) + record.units;
+    }
+    return { total, byKind };
+  }
+
+  listOverages(orgId: string): OverageEvent[] {
+    return this.overages.filter((record) => record.orgId === orgId).map((record) => ({ ...record }));
   }
 
   allRecords(): UsageRecord[] {

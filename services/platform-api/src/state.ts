@@ -44,6 +44,22 @@ export function resolveContext(req: {
   }
   const sessionId = req.header('x-session-id');
   if (sessionId) {
+    const customerSession = platform.getCustomerSession(sessionId);
+    if (customerSession) {
+      const organization = customerSession.organizationId ? platform.getOrganization(customerSession.organizationId) : undefined;
+      return {
+        ownerId: customerSession.ownerId,
+        customerId: customerSession.customerId,
+        planId: customerSession.planId,
+        customer: platform.getCustomer(customerSession.customerId),
+        entitlements: customerSession.entitlements,
+        organizationId: customerSession.organizationId,
+        organizationRole: customerSession.organizationRole,
+        organization,
+        governanceProfile: customerSession.governanceProfile,
+        scopes: ['*'],
+      };
+    }
     const session = platform.apiKeys.getSession(sessionId);
     if (session) {
       return {

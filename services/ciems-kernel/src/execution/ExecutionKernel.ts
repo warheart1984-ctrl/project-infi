@@ -1,0 +1,4 @@
+import { createHmac } from 'node:crypto'; import type { UUID } from '../common/models.js';
+export interface ExecutionToken { token:string; planId:UUID; actorId:string; expiresAt:string }
+export interface ExecutionAuthority { approved(planId:UUID):boolean; actorAuthorized(planId:UUID,actorId:string):boolean; contextFresh(planId:UUID):boolean }
+export class ExecutionKernel { constructor(private readonly authority:ExecutionAuthority, private readonly secret:string, private readonly ttlMs=300000){} authorizeExecution(planId:UUID,actorId:string):ExecutionToken { if(!this.authority.approved(planId)||!this.authority.actorAuthorized(planId,actorId)||!this.authority.contextFresh(planId)) throw new Error('Execution authorization denied'); const expiresAt=new Date(Date.now()+this.ttlMs).toISOString(); const token=createHmac('sha256',this.secret).update(`${planId}:${actorId}:${expiresAt}`).digest('hex'); return {token,planId,actorId,expiresAt}; } }

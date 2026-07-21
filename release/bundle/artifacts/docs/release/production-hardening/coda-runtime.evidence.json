@@ -1,0 +1,88 @@
+{
+  "id": "coda-runtime",
+  "packageName": "@aaes-os/coda-runtime",
+  "status": "release-evidence-ready",
+  "packageDir": "packages/coda-runtime",
+  "docsPage": "docs-site/docs/runtime/coda-runtime.md",
+  "registryId": "CodaRuntime",
+  "checks": {
+    "packageJson": true,
+    "source": true,
+    "tests": true,
+    "buildOutput": true,
+    "docsPage": true,
+    "registryLive": true,
+    "packageName": true,
+    "buildScript": true,
+    "testScript": true
+  },
+  "commands": {
+    "build": "corepack pnpm --filter @aaes-os/coda-runtime build",
+    "test": "corepack pnpm --filter @aaes-os/coda-runtime test"
+  },
+  "replayAuditPacket": {
+    "replayReference": "coda-runtime.evidence.json#replayAuditPacket",
+    "auditReference": "coda-runtime.evidence.json#checks",
+    "documentationReference": "docs-site/docs/runtime/coda-runtime.md",
+    "requiredArtifacts": [
+      "packageJson",
+      "source",
+      "tests",
+      "buildOutput",
+      "docsPage",
+      "registryLive"
+    ]
+  },
+  "releasePackagingPacket": {
+    "manifestId": "coda-runtime-64d7a74eaf7e2dc3a98575f757b46b6cb698250d8da83e8ff5ca7953f7647bb4",
+    "checksumAlgorithm": "sha256",
+    "includedFiles": [
+      {
+        "path": "packages/coda-runtime/package.json",
+        "sha256": "8435d8040c10ef80720340f0c735c9c14aec3249e7efd053095d2844948882fe",
+        "bytes": 654
+      },
+      {
+        "path": "packages/coda-runtime/src/index.ts",
+        "sha256": "04fa60b75d8b33d600d31cda248342befc1d748986ff27ef0d9cbd48b90a0bd7",
+        "bytes": 2388
+      },
+      {
+        "path": "packages/coda-runtime/src/index.test.ts",
+        "sha256": "9cba406fee923770ac5b2445d2f272d64dd10eb433b4bee6b58f2e49326472e4",
+        "bytes": 1307
+      },
+      {
+        "path": "packages/coda-runtime/dist/index.js",
+        "sha256": "fccd9b4fe70ed2f98b361f8026a456b2ee101bbde631225f75031b07e34750d6",
+        "bytes": 1766
+      },
+      {
+        "path": "docs-site/docs/runtime/coda-runtime.md",
+        "sha256": "2b5afedcf00a4fabc43d37d9e1a62057f9db175261b2ad7d36872006577d3db4",
+        "bytes": 738
+      },
+      {
+        "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+        "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+        "bytes": 7972
+      }
+    ]
+  },
+  "externalIntegrationPacket": {
+    "target": "NovaCoda substrate adapter",
+    "readiness": "live-integration-verified",
+    "evidence": [
+      "docs-site/docs/runtime/coda-runtime.md",
+      "packages/coda-runtime/src/index.ts",
+      "coda-runtime.evidence.json",
+      "docs/release/external-integrations/README.md",
+      "docs/release/external-integrations/external-integration-index.json"
+    ],
+    "serviceEvidenceIds": [
+      "github-origin-remote",
+      "npm-registry-toolchain"
+    ]
+  },
+  "blockers": []
+}

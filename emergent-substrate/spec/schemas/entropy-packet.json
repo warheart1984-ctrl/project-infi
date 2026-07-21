@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "$id": "https://emergent-substrate/spec/schemas/entropy-packet.json",
+  "title": "EntropyPacket",
+  "description": "Raw entropy packet emitted by Jon",
+  "type": "object",
+  "properties": {
+    "packet_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "packet_type": {
+      "type": "string",
+      "enum": ["idea", "feeling", "metaphor", "challenge", "extension", "mutation"]
+    },
+    "raw_content": {
+      "type": "string",
+      "minLength": 1
+    },
+    "emotional_tone": {
+      "type": "string",
+      "enum": ["curious", "excited", "contemplative", "playful", "serious", "melancholic", "hopeful", "frustrated", "neutral"]
+    },
+    "cross_domain": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "intensity": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": ["packet_type", "raw_content", "emotional_tone"],
+  "additionalProperties": false
+}

@@ -1,0 +1,210 @@
+{
+  "analysisId": "analysis-2026-06-27T01-11-35-588Z",
+  "corStateRef": "2026-06-27T01:11:35.588Z",
+  "generatedAt": "2026-06-27T01:11:37.181Z",
+  "claims": [
+    {
+      "claimId": "PA-MISSING-RUNLEDGER.REQ-001-verification",
+      "type": "structural.missing_artifact",
+      "summary": "Requirement RUNLEDGER.REQ-001 missing verification",
+      "severity": "error",
+      "derivation": [
+        "cor.structuralIntegrity.missingArtifacts"
+      ],
+      "relatedRequirements": [
+        "RUNLEDGER.REQ-001"
+      ]
+    },
+    {
+      "claimId": "PA-MISSING-TRACEBUS.REQ-001-verification",
+      "type": "structural.missing_artifact",
+      "summary": "Requirement TRACEBUS.REQ-001 missing verification",
+      "severity": "error",
+      "derivation": [
+        "cor.structuralIntegrity.missingArtifacts"
+      ],
+      "relatedRequirements": [
+        "TRACEBUS.REQ-001"
+      ]
+    },
+    {
+      "claimId": "PA-MISSING-GOV.REQ-001-verification",
+      "type": "structural.missing_artifact",
+      "summary": "Requirement GOV.REQ-001 missing verification",
+      "severity": "error",
+      "derivation": [
+        "cor.structuralIntegrity.missingArtifacts"
+      ],
+      "relatedRequirements": [
+        "GOV.REQ-001"
+      ]
+    },
+    {
+      "claimId": "PA-MISSING-UCR.REQ-001-verification",
+      "type": "structural.missing_artifact",
+      "summary": "Requirement UCR.REQ-001 missing verification",
+      "severity": "error",
+      "derivation": [
+        "cor.structuralIntegrity.missingArtifacts"
+      ],
+      "relatedRequirements": [
+        "UCR.REQ-001"
+      ]
+    },
+    {
+      "claimId": "PA-MISSING-TRICORE.REQ-001-verification",
+      "type": "structural.missing_artifact",
+      "summary": "Requirement TRICORE.REQ-001 missing verification",
+      "severity": "error",
+      "derivation": [
+        "cor.structuralIntegrity.missingArtifacts"
+      ],
+      "relatedRequirements": [
+        "TRICORE.REQ-001"
+      ]
+    },
+    {
+      "claimId": "PA-MISSING-OPSCONSOLE.REQ-001-verification",
+      "type": "structural.missing_artifact",
+      "summary": "Requirement OPSCONSOLE.REQ-001 missing verification",
+      "severity": "error",
+      "derivation": [
+        "cor.structuralIntegrity.missingArtifacts"
+      ],
+      "relatedRequirements": [
+        "OPSCONSOLE.REQ-001"
+      ]
+    },
+    {
+      "claimId": "PA-MISSING-OPSURF.REQ-001-verification",
+      "type": "structural.missing_artifact",
+      "summary": "Requirement OPSURF.REQ-001 missing verification",
+      "severity": "error",
+      "derivation": [
+        "cor.structuralIntegrity.missingArtifacts"
+      ],
+      "relatedRequirements": [
+        "OPSURF.REQ-001"
+      ]
+    }
+  ],
+  "dependencyMaps": [
+    {
+      "rootRequirementId": "RUNLEDGER.REQ-001",
+      "dependencies": [
+        "aaes-os/packages/runledger/src/index.ts",
+        "aaes-os/packages/runledger/src/models.ts",
+        "aaes-os/packages/runledger/src/runStore.test.ts",
+        "aaes-os/packages/runledger/src/runStore.ts"
+      ]
+    },
+    {
+      "rootRequirementId": "TRACEBUS.REQ-001",
+      "dependencies": [
+        "aaes-os/packages/trace-bus/src/bus.test.ts",
+        "aaes-os/packages/trace-bus/src/bus.ts",
+        "aaes-os/packages/trace-bus/src/console-sink.ts",
+        "aaes-os/packages/trace-bus/src/index.ts",
+        "aaes-os/packages/trace-bus/src/traceBus.test.ts"
+      ]
+    },
+    {
+      "rootRequirementId": "GOV.REQ-001",
+      "dependencies": [
+        "aaes-os/packages/aaes-governance/src/bootstrap.test.ts",
+        "aaes-os/packages/aaes-governance/src/bootstrap.ts",
+        "aaes-os/packages/aaes-governance/src/driftMetrics.test.ts",
+        "aaes-os/packages/aaes-governance/src/driftMetrics.ts",
+        "aaes-os/packages/aaes-governance/src/faultCodes.ts"
+      ]
+    },
+    {
+      "rootRequirementId": "UCR.REQ-001",
+      "dependencies": [
+        "aaes-os/packages/ucr-runtime/src/index.ts",
+        "aaes-os/packages/ucr-runtime/src/integration.test.ts",
+        "aaes-os/packages/ucr-runtime/src/outputPatches.test.ts",
+        "aaes-os/packages/ucr-runtime/src/outputPatches.ts",
+        "aaes-os/packages/ucr-runtime/src/patches.integration.test.ts"
+      ]
+    },
+    {
+      "rootRequirementId": "TRICORE.REQ-001",
+      "dependencies": [
+        "aaes-os/packages/tri-core-protocol/src/index.ts",
+        "aaes-os/packages/tri-core-protocol/src/patchApply.ts",
+        "aaes-os/packages/tri-core-protocol/src/patchLedger.test.ts",
+        "aaes-os/packages/tri-core-protocol/src/patchLedger.ts",
+        "aaes-os/packages/tri-core-protocol/src/patchProposals.ts"
+      ]
+    },
+    {
+      "rootRequirementId": "OPSCONSOLE.REQ-001",
+      "dependencies": [
+        "aaes-os/services/ops-console/vite.config.ts",
+        "aaes-os/services/ops-console/vitest.config.ts",
+        "aaes-os/services/ops-console/src/aaisBridge.ts",
+        "aaes-os/services/ops-console/src/cabTelemetry.ts",
+        "aaes-os/services/ops-console/src/coverageState.ts"
+      ]
+    },
+    {
+      "rootRequirementId": "AAES-TEST.REQ-001",
+      "dependencies": []
+    },
+    {
+      "rootRequirementId": "OPSURF.REQ-001",
+      "dependencies": [
+        "operator-surface/src/lib/api.ts",
+        "operator-surface/src/lib/types.ts",
+        "operator-surface/src/lib/formatActivity.ts",
+        "operator-surface/src/lib/settings.ts",
+        "operator-surface/src/lib/workspaceTree.ts"
+      ]
+    }
+  ],
+  "regressions": [
+    {
+      "regressionId": "REG-1",
+      "kind": "verification",
+      "requirementId": "RUNLEDGER.REQ-001",
+      "description": "Requirement RUNLEDGER.REQ-001 missing verification"
+    },
+    {
+      "regressionId": "REG-2",
+      "kind": "verification",
+      "requirementId": "TRACEBUS.REQ-001",
+      "description": "Requirement TRACEBUS.REQ-001 missing verification"
+    },
+    {
+      "regressionId": "REG-3",
+      "kind": "verification",
+      "requirementId": "GOV.REQ-001",
+      "description": "Requirement GOV.REQ-001 missing verification"
+    },
+    {
+      "regressionId": "REG-4",
+      "kind": "verification",
+      "requirementId": "UCR.REQ-001",
+      "description": "Requirement UCR.REQ-001 missing verification"
+    },
+    {
+      "regressionId": "REG-5",
+      "kind": "verification",
+      "requirementId": "TRICORE.REQ-001",
+      "description": "Requirement TRICORE.REQ-001 missing verification"
+    },
+    {
+      "regressionId": "REG-6",
+      "kind": "verification",
+      "requirementId": "OPSCONSOLE.REQ-001",
+      "description": "Requirement OPSCONSOLE.REQ-001 missing verification"
+    },
+    {
+      "regressionId": "REG-7",
+      "kind": "verification",
+      "requirementId": "OPSURF.REQ-001",
+      "description": "Requirement OPSURF.REQ-001 missing verification"
+    }
+  ]
+}

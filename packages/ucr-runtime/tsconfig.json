@@ -10,6 +10,7 @@
     { "path": "../runledger" },
     { "path": "../trace-bus" },
     { "path": "../aaes-governance" },
+    { "path": "../evidence-receipts" },
     { "path": "../tri-core-protocol" }
   ]
 }

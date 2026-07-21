@@ -1,0 +1,70 @@
+{
+  "protocol": "DISHAMORY_HRM_AAIS_CI_GATE",
+  "version": "1.0",
+  "rounds": 1,
+  "probes_total": 11,
+  "timestamp": "2026-06-24T04:17:16.346106+00:00",
+  "status": "PASS",
+  "exit_code": 0,
+  "summary": {
+    "governance_drift": 0,
+    "ledger_divergence": 0,
+    "dishamory_events": 0,
+    "runtime_instability_events": 0,
+    "hrm_violations": 0,
+    "federation_mismatches": 0
+  },
+  "drift_axes": {
+    "governance": [],
+    "memory": [],
+    "runtime": [],
+    "federation": []
+  },
+  "failure_clusters": [],
+  "health": {
+    "preflight": true,
+    "postflight": true
+  },
+  "mesh": {
+    "strict": false,
+    "ready": false,
+    "configured": 0,
+    "unreachable": []
+  },
+  "legacy_summary": {
+    "protocol": "DISHAMORY_100x",
+    "rounds": 1,
+    "phase_filter": "A",
+    "skip_ugr": false,
+    "total_probes": 11,
+    "server_errors_5xx": 0,
+    "unexpected_failures": 0,
+    "phase_counts": {
+      "A": 8,
+      "B": 0,
+      "B2": 0,
+      "C": 0
+    },
+    "probes_per_round": 8,
+    "disharmony": {
+      "governance_drift": 0,
+      "memory_ledger_divergence": 0,
+      "gossip_drift": 0,
+      "split_brain_events": 0,
+      "invariant_violations": 0,
+      "health_pre_ok": 2,
+      "health_post_ok": 2,
+      "notes": [
+        "acceleration_tokens_disabled: preflight skipped"
+      ]
+    },
+    "health_preflight": 200,
+    "health_postflight": 200,
+    "server_still_healthy": true,
+    "cloud_forge_offline_ok": true,
+    "cloud_forge_accel_preflight_skipped": true
+  },
+  "server_errors": [],
+  "unexpected_failures": [],
+  "all_results_count": 11
+}

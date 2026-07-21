@@ -1,0 +1,23 @@
+{
+  "name": "@aaes-os/kerno",
+  "version": "1.0.0",
+  "description": "KERNO compute scheduler — slot reservation and cache-hit-rate monitoring",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run --config vitest.config.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

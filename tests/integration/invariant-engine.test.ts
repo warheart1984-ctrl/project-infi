@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { DefaultUCRRuntime } from '@aaes-os/ucr-runtime';
-import { TRACE_FAULT } from '@aaes-os/trace-bus';
+import { TRACE_FAULT, type TraceFaultEvent } from '@aaes-os/trace-bus';
 
 describe('invariant engine integration', () => {
   it('wires UCRRuntime.run() through runledger, governance, and trace-bus', async () => {
@@ -21,8 +21,8 @@ describe('invariant engine integration', () => {
     const faults = runtime
       .getTraceBus()
       .getLog()
-      .filter((event) => event.type === TRACE_FAULT);
+      .filter((event): event is TraceFaultEvent => event.type === TRACE_FAULT);
     expect(faults.length).toBeGreaterThan(0);
-    expect(faults[0]?.fault?.faultCode).toMatch(/INV_FAIL_/);
+    expect(faults[0]?.fault.faultCode).toMatch(/INV_FAIL_/);
   });
 });

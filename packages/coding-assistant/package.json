@@ -1,0 +1,32 @@
+{
+  "name": "@aaes-os/coding-assistant",
+  "version": "0.1.0",
+  "description": "Governed multi-backend coding assistant — Nova, Infinity, and sandbox unified",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run --config vitest.config.ts"
+  },
+  "dependencies": {
+    "@aaes-os/aais": "workspace:*",
+    "@aaes-os/aaes-governance": "workspace:*",
+    "@aaes-os/governed-runtime": "workspace:*",
+    "@aaes-os/infinity-agents": "workspace:*",
+    "@aaes-os/sovereignx-router": "workspace:*",
+    "@aaes-os/nova-shell": "workspace:*",
+    "@aaes-os/sandbox": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

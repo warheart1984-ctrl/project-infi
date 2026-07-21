@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "$id": "https://emergent-substrate/spec/schemas/gps.json",
+  "title": "GPS Constitution Specification",
+  "description": "Generative Profile Specification constitution",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "const": "GPS"
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "priority": {
+      "type": "integer",
+      "const": 20
+    },
+    "blocks_on": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "profile_axes": {
+      "type": "object",
+      "properties": {
+        "creativity": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "coherence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "novelty": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "depth": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "homogenization_threshold": {
+      "type": "integer",
+      "const": 10
+    }
+  },
+  "required": ["name", "version", "priority", "blocks_on"]
+}

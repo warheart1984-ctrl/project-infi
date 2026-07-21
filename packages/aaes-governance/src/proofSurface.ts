@@ -1,3 +1,8 @@
+import {
+  deriveCanonicalReplayEvidenceContract,
+  validateCanonicalReplayEvidenceContract,
+} from './crec.js';
+
 export type ProofLevel = 'P0' | 'P1' | 'P2' | 'P3' | 'P4' | 'P5';
 
 export type ProofSurfaceVerificationStatus =
@@ -250,6 +255,12 @@ export function validateProofSurface(surface: ProofSurface): ProofSurfaceValidat
 
   if (!surface.nextRequiredEvidence.length) {
     issues.push(issue('nextRequiredEvidence', 'next evidence required should be declared', 'warn'));
+  }
+
+  const crec = deriveCanonicalReplayEvidenceContract(surface);
+  const crecIssues = validateCanonicalReplayEvidenceContract(crec);
+  for (const crecIssue of crecIssues) {
+    issues.push(crecIssue);
   }
 
   return {

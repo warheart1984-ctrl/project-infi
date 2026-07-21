@@ -8,6 +8,8 @@
   "include": ["src/**/*.ts"],
   "exclude": ["dist", "node_modules", "src/**/*.test.ts"],
   "references": [
+    { "path": "../../packages/aaes-governance" },
+    { "path": "../../packages/tri-core-protocol" },
     { "path": "../../packages/psom-mesh" },
     { "path": "../../packages/sgce" },
     { "path": "../../packages/platform-core" }

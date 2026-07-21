@@ -1,0 +1,88 @@
+{
+  "id": "csl-runtime",
+  "packageName": "@aaes-os/csl-runtime",
+  "status": "release-evidence-ready",
+  "packageDir": "packages/csl-runtime",
+  "docsPage": "docs-site/docs/runtime/csl-runtime.md",
+  "registryId": "CSL",
+  "checks": {
+    "packageJson": true,
+    "source": true,
+    "tests": true,
+    "buildOutput": true,
+    "docsPage": true,
+    "registryLive": true,
+    "packageName": true,
+    "buildScript": true,
+    "testScript": true
+  },
+  "commands": {
+    "build": "corepack pnpm --filter @aaes-os/csl-runtime build",
+    "test": "corepack pnpm --filter @aaes-os/csl-runtime test"
+  },
+  "replayAuditPacket": {
+    "replayReference": "csl-runtime.evidence.json#replayAuditPacket",
+    "auditReference": "csl-runtime.evidence.json#checks",
+    "documentationReference": "docs-site/docs/runtime/csl-runtime.md",
+    "requiredArtifacts": [
+      "packageJson",
+      "source",
+      "tests",
+      "buildOutput",
+      "docsPage",
+      "registryLive"
+    ]
+  },
+  "releasePackagingPacket": {
+    "manifestId": "csl-runtime-2785ec6b5d29e9c85b3fb953b375afde959055b2a6ad701017c144bfac62642d",
+    "checksumAlgorithm": "sha256",
+    "includedFiles": [
+      {
+        "path": "packages/csl-runtime/package.json",
+        "sha256": "bee3865e16daec7c7d640fa3e246f3c23590ef4f7ed98b5a558f454798305b21",
+        "bytes": 589
+      },
+      {
+        "path": "packages/csl-runtime/src/index.ts",
+        "sha256": "c0105cc1c9a77f6a30d03ca3ae35cf8ccc9b874c2c272c86e4541593ba9c743c",
+        "bytes": 10090
+      },
+      {
+        "path": "packages/csl-runtime/src/index.test.ts",
+        "sha256": "4e1bab43b39cc0c9557b92da4c738ba0936db281e9296fa456b646389527f7c6",
+        "bytes": 2935
+      },
+      {
+        "path": "packages/csl-runtime/dist/index.js",
+        "sha256": "fc32ab489b6558c4a5ea652c5ad96019575eda03789f2fbdf15f6dff39b6fa10",
+        "bytes": 7843
+      },
+      {
+        "path": "docs-site/docs/runtime/csl-runtime.md",
+        "sha256": "44cf1ad0d1398bb012adf8ef851948bf65805f158f592f0981a5f3e6bc6d81d1",
+        "bytes": 1351
+      },
+      {
+        "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+        "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+        "bytes": 7972
+      }
+    ]
+  },
+  "externalIntegrationPacket": {
+    "target": "constitutional artifact schema adapter",
+    "readiness": "live-integration-verified",
+    "evidence": [
+      "docs-site/docs/runtime/csl-runtime.md",
+      "packages/csl-runtime/src/index.ts",
+      "csl-runtime.evidence.json",
+      "docs/release/external-integrations/README.md",
+      "docs/release/external-integrations/external-integration-index.json"
+    ],
+    "serviceEvidenceIds": [
+      "github-origin-remote",
+      "npm-registry-toolchain"
+    ]
+  },
+  "blockers": []
+}

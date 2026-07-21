@@ -3,6 +3,9 @@ import { NextResponse } from 'next/server';
 import { getMesh } from '../../../../../lib/platform';
 import type { GovernanceMode } from '@aaes-os/platform-core';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   const form = await request.formData();
   const mesh = getMesh();

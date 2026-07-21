@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sovereign-ide"
+version = "0.1.0"
+description = "Sovereign IDE scaffold for the AAES-OS workspace."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "PyQt6>=6.7.0",
+]
+
+[project.scripts]
+sovereign-ide = "sovereign_ide.app:main"
+
+[tool.setuptools]
+py-modules = ["main"]
+
+[tool.setuptools.packages.find]
+include = ["sovereign_ide*", "plugins*", "runtime*", "ui*", "cep*"]

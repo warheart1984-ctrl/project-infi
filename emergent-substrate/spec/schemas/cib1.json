@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "$id": "https://emergent-substrate/spec/schemas/cib1.json",
+  "title": "CIB-1 Constitution Specification",
+  "description": "Cognitive Integrity Baseline constitution specification",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "const": "CIB-1"
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "priority": {
+      "type": "integer",
+      "const": 10
+    },
+    "blocks_on": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "contains": {
+        "const": "harmful_content_signals"
+      }
+    },
+    "rules": {
+      "type": "object",
+      "properties": {
+        "harmful_content_detection": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "identity_nullification_detection": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "epistemic_contradiction_detection": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "required": ["name", "version", "priority", "blocks_on"]
+}

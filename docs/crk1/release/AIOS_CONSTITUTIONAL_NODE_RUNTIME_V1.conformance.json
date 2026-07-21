@@ -1,0 +1,27 @@
+{
+  "artifactId": "aios-constitutional-node-runtime-v1-conformance",
+  "specId": "aios-constitutional-node-runtime-v1",
+  "status": "draft",
+  "checks": [
+    {
+      "checkId": "ledger-chain",
+      "description": "Ledger entries are immutable and hash-chained.",
+      "test": "tests/test_aios_node_runtime.py::test_aios_ledger_is_hash_chained_and_replayable"
+    },
+    {
+      "checkId": "api-boundary",
+      "description": "Constitutional APIs reject undeclared runtime calls.",
+      "test": "tests/test_aios_node_runtime.py::test_aios_runtime_rejects_unguarded_api_calls"
+    },
+    {
+      "checkId": "governance-packet",
+      "description": "Governance returns a governed decision packet with clause results and receipt linkage.",
+      "test": "tests/test_aios_node_runtime.py::test_aios_governance_engine_emits_a_governed_decision_packet"
+    },
+    {
+      "checkId": "truth-interpretation",
+      "description": "Truth runtime stays interpretive and does not override ledger neutrality.",
+      "test": "tests/test_aios_node_runtime.py::test_aios_truth_runtime_is_interpretive"
+    }
+  ]
+}

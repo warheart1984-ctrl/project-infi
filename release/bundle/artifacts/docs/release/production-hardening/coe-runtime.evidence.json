@@ -1,0 +1,88 @@
+{
+  "id": "coe-runtime",
+  "packageName": "@aaes-os/coe-runtime",
+  "status": "release-evidence-ready",
+  "packageDir": "packages/coe-runtime",
+  "docsPage": "docs-site/docs/runtime/coe-runtime.md",
+  "registryId": "COE",
+  "checks": {
+    "packageJson": true,
+    "source": true,
+    "tests": true,
+    "buildOutput": true,
+    "docsPage": true,
+    "registryLive": true,
+    "packageName": true,
+    "buildScript": true,
+    "testScript": true
+  },
+  "commands": {
+    "build": "corepack pnpm --filter @aaes-os/coe-runtime build",
+    "test": "corepack pnpm --filter @aaes-os/coe-runtime test"
+  },
+  "replayAuditPacket": {
+    "replayReference": "coe-runtime.evidence.json#replayAuditPacket",
+    "auditReference": "coe-runtime.evidence.json#checks",
+    "documentationReference": "docs-site/docs/runtime/coe-runtime.md",
+    "requiredArtifacts": [
+      "packageJson",
+      "source",
+      "tests",
+      "buildOutput",
+      "docsPage",
+      "registryLive"
+    ]
+  },
+  "releasePackagingPacket": {
+    "manifestId": "coe-runtime-e29d8de47ce4d324570aba89d83c2b7980bdb97b7c4bf0e62dd46d37149986c9",
+    "checksumAlgorithm": "sha256",
+    "includedFiles": [
+      {
+        "path": "packages/coe-runtime/package.json",
+        "sha256": "bba10622f962b691c954146c19a28cdbcaf8c64a258cd802bf2774f7d972d1b5",
+        "bytes": 600
+      },
+      {
+        "path": "packages/coe-runtime/src/index.ts",
+        "sha256": "25590f7c41176c6b3e05465d886f254d1a7ab0aedd9c3068ba47839fd357e378",
+        "bytes": 10927
+      },
+      {
+        "path": "packages/coe-runtime/src/index.test.ts",
+        "sha256": "80c0c48819f3248744f38be991b2e33ea0ee7583da1c466916ac2cad557e4fd9",
+        "bytes": 3731
+      },
+      {
+        "path": "packages/coe-runtime/dist/index.js",
+        "sha256": "41e5f07e8543722728bdaedca371f76ef887d4ea924c976bbad564d8f3337da2",
+        "bytes": 8198
+      },
+      {
+        "path": "docs-site/docs/runtime/coe-runtime.md",
+        "sha256": "cd87803464e7d6f7b4ed814a064a5e34b1c43d7d8f9f7f6f8f7e960fc250be1d",
+        "bytes": 1435
+      },
+      {
+        "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+        "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+        "bytes": 7972
+      }
+    ]
+  },
+  "externalIntegrationPacket": {
+    "target": "execution receipt adapter",
+    "readiness": "live-integration-verified",
+    "evidence": [
+      "docs-site/docs/runtime/coe-runtime.md",
+      "packages/coe-runtime/src/index.ts",
+      "coe-runtime.evidence.json",
+      "docs/release/external-integrations/README.md",
+      "docs/release/external-integrations/external-integration-index.json"
+    ],
+    "serviceEvidenceIds": [
+      "github-origin-remote",
+      "npm-registry-toolchain"
+    ]
+  },
+  "blockers": []
+}

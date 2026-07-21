@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-infi.local/schemas/codex-handoff-reply.schema.json",
+  "title": "Codex Handoff Reply Packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "summary", "changed_files", "verification", "next_action"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["done", "blocked", "partial"],
+      "description": "The completion state of the handed-off task."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Short summary of what Codex changed or learned."
+    },
+    "changed_files": {
+      "type": "array",
+      "description": "Files that were created, updated, or deleted.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "verification": {
+      "type": "array",
+      "description": "Checks that were run to prove the reply.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "next_action": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The smallest useful next step after the reply."
+    },
+    "blockers": {
+      "type": "array",
+      "description": "Only actual blockers that still stop progress.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

@@ -18,7 +18,7 @@ import {
 
 const fixturePath = join(
   dirname(fileURLToPath(import.meta.url)),
-  '../../../../tests/fixtures/coordination_bottlenecks.md',
+  '../../../tests/fixtures/coordination_bottlenecks.md',
 );
 
 function freshStack() {

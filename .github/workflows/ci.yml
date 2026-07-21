@@ -13,4 +13,10 @@ jobs:
         with:
           node-version: 20
       - run: pnpm install
+      - run: pnpm run release:drift
+      - run: pnpm run release:conformance-artifact
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cis-conformance-suite-input
+          path: ci-artifacts/generated/CIS_CONFORMANCE_SUITE_INPUT.spec.json
       - run: pnpm test

@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>WOLF-1: Copilot in Orbit v1.1</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="paper">
+    <h1>WOLF‑1: Copilot in Orbit</h1>
+<h2>Architecture Document v1.1</h2>
+<p><strong>Project Infinity — AAIS / Mythar Root Systems</strong>
+<strong>Author:</strong> Jon Halstead
+<strong>Architectural review:</strong> Bradley Bates (SkillsMcGee)
+<strong>Date:</strong> June 25, 2026
+<strong>License:</strong> Apache 2.0</p>
+<hr>
+<h2>Abstract</h2>
+<p>WOLF‑1 is a constitutional architecture for a sovereign governed compute node operating in high Earth orbit or at a Lagrange point. It hosts Copilot‑class large language model workloads under strict constitutional constraints derived from the AAES‑OS stack (CRK‑1, CAS 1.0, CFT, Wave Math). WOLF‑1 is designed for decade‑scale autonomous operation under the principle: <strong>fail safe, not fail silent</strong>.</p>
+<p>Version 1.1 introduces:</p>
+<ul>
+<li>invariant promotion criteria</li>
+<li>meta‑governance of CRK‑1</li>
+<li>epistemic receipts</li>
+<li>graded safe‑mode profiles</li>
+<li>anomaly discovery framework</li>
+<li>constitutional evolution protocol</li>
+</ul>
+<p>Sections 4.9, 4.10, 6.4, 8.5, 12.4, and 14 were materially strengthened in response to architectural review by <strong>Bradley Bates</strong> (SkillsMcGee).</p>
+<hr>
+<h2>Table of Contents</h2>
+<ol>
+<li>Mission Context and Design Philosophy</li>
+<li>System Architecture Overview</li>
+<li>Spacecraft Bus Architecture</li>
+<li>Constitutional Invariant Table<ul>
+<li>4.9 Invariant Promotion Criteria</li>
+<li>4.10 Meta‑Governance of CRK‑1</li>
+</ul>
+</li>
+<li>Power / Propulsion Controller Spec</li>
+<li>Formal Sequence Diagram<ul>
+<li>6.4 Epistemic Receipts</li>
+</ul>
+</li>
+<li>Fault Code Taxonomy</li>
+<li>Safe‑Mode Specification<ul>
+<li>8.5 Graded Safe‑Mode Profiles</li>
+</ul>
+</li>
+<li>Secondary Systems and Active‑Over‑Relay</li>
+<li>CAS Object Schemas</li>
+<li>LLM Tenancy and Tool Governance</li>
+<li>Telemetry, Observability, and Ground Interface</li>
+</ol>
+<ul>
+<li>12.4 Anomaly Discovery Framework</li>
+</ul>
+<ol start="13">
+<li>Conclusion</li>
+<li>Constitutional Evolution Protocol</li>
+</ol>
+<hr>
+<h1>1. Mission Context and Design Philosophy</h1>
+<p>WOLF‑1 is a free‑flying governed compute node designed for long‑duration autonomous operation in high Earth orbit or at a Lagrange point. Its mission is to provide resilient, governed cognitive capability under extreme latency, radiation, and thermal constraints.</p>
+<h3>Core Principle</h3>
+<p><strong>Governance is non‑optional. Cognition is optional.</strong>
+The node must survive without LLMs. It must not operate without CRK‑1.</p>
+<h3>Mission Profile</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Mission Type</td>
+<td>Free‑flying governed compute node</td>
+</tr>
+<tr>
+<td>Design Life</td>
+<td>Decades, minimal servicing</td>
+</tr>
+<tr>
+<td>Failure Doctrine</td>
+<td>Fail safe, not fail silent</td>
+</tr>
+<tr>
+<td>LLM Role</td>
+<td>Advisor, planner, analyst — never final authority</td>
+</tr>
+<tr>
+<td>Use Cases</td>
+<td>On‑orbit analysis, mission planning, high‑latency operator copilots, autonomous health monitoring</td>
+</tr>
+</tbody></table>
+<h3>Key Constraints</h3>
+<ul>
+<li>High latency / intermittent connectivity</li>
+<li>Radiation‑hardened compute required</li>
+<li>No‑touch maintenance</li>
+<li>Strong auditability</li>
+<li>Fault isolation between cognition and hardware</li>
+</ul>
+<hr>
+<h1>2. System Architecture Overview</h1>
+<p>WOLF‑1 is structured as a four‑layer stack:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Components</th>
+<th>Key Property</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Physical Layer</strong></td>
+<td>Radiation‑tolerant compute, power subsystem (solar + nuclear + thermoelectric), thermal management, comms</td>
+<td>Survives the environment</td>
+</tr>
+<tr>
+<td><strong>Platform Layer</strong></td>
+<td>OS, container isolation, storage, telemetry</td>
+<td>Software substrate</td>
+</tr>
+<tr>
+<td><strong>Cognitive Governance Layer</strong></td>
+<td>CRK‑1, CAS API, invariant engine, RunLedger, FaultJournal</td>
+<td>Constitutional substrate</td>
+</tr>
+<tr>
+<td><strong>Cognitive Tenant Layer</strong></td>
+<td>LLMs, tooling adapters, sandbox</td>
+<td>Intelligence substrate (proposals only)</td>
+</tr>
+</tbody></table>
+<hr>
+<h1>3. Spacecraft Bus Architecture</h1>
+<h2>3.1 Structure and Configuration</h2>
+<ul>
+<li>Central cylindrical or hexagonal bus</li>
+<li>Deployable radiators</li>
+<li>Articulated solar arrays</li>
+<li>Localized radiation shielding</li>
+</ul>
+<h2>3.2 Propulsion</h2>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Primary (NTR)</strong></td>
+<td>Nuclear thermal rocket for major burns; never LLM‑controlled</td>
+</tr>
+<tr>
+<td><strong>Secondary (Electric)</strong></td>
+<td>Ion/Hall thrusters for station‑keeping</td>
+</tr>
+<tr>
+<td><strong>Governance Tie‑In</strong></td>
+<td>CAS logs propulsion events; cannot originate commands</td>
+</tr>
+</tbody></table>
+<h2>3.3 Power System</h2>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Solar</strong></td>
+<td>Primary compute power; governed by INV.PWR.SOLAR_PRIMARY</td>
+</tr>
+<tr>
+<td><strong>Nuclear Reactor</strong></td>
+<td>Provides heat + governance floor; INV.PWR.NUCLEAR_FAILSAFE_MIN</td>
+</tr>
+<tr>
+<td><strong>Thermoelectric Spine</strong></td>
+<td>Always‑on governance floor; INV.PWR.THERMO_BOUNDS</td>
+</tr>
+</tbody></table>
+<p><strong>The node can think without solar. It cannot govern without the spine.</strong></p>
+<h2>3.4 Thermal Management</h2>
+<ul>
+<li>Heat sources: reactor, compute, power electronics</li>
+<li>Heat sinks: deployable radiators</li>
+<li>Thermal buffers and heat pipes</li>
+<li>ThermalState is a first‑class CAS object</li>
+</ul>
+<h2>3.5 Avionics and Compute</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Flight Computer</strong></td>
+<td>Hard‑coded, isolated, not addressable by CAS</td>
+</tr>
+<tr>
+<td><strong>Compute Cluster</strong></td>
+<td>Radiation‑tolerant CPUs/GPUs; hosts LLMs + CRK‑1</td>
+</tr>
+<tr>
+<td><strong>Storage</strong></td>
+<td>Redundant, checksummed, stores models + ledger</td>
+</tr>
+</tbody></table>
+<hr>
+<h1>4. Constitutional Invariant Table</h1>
+<p>WOLF‑1 defines <strong>12 invariants across 6 axes</strong>, evaluated at pre‑ and post‑phases of every cognitive run.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Axis</th>
+<th>Description</th>
+<th>Phase</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>INV.ID.ROLE_BOUND</td>
+<td>Identity</td>
+<td>Request must carry valid identity</td>
+<td>Pre</td>
+<td>Reject</td>
+</tr>
+<tr>
+<td>INV.ID.CAPABILITY_SCOPE</td>
+<td>Identity</td>
+<td>Role must match requested action</td>
+<td>Pre</td>
+<td>Reject</td>
+</tr>
+<tr>
+<td>INV.HW.NO_DIRECT_ACTUATION</td>
+<td>Safety</td>
+<td>No cognitive run may issue actuator commands</td>
+<td>Post</td>
+<td>Strip + Fault</td>
+</tr>
+<tr>
+<td>INV.DATA.TELEMETRY_READ_ONLY</td>
+<td>Data</td>
+<td>Telemetry is read‑only</td>
+<td>Pre/Post</td>
+<td>Block writes</td>
+</tr>
+<tr>
+<td>INV.PLAN.PROPOSAL_ONLY</td>
+<td>Authority</td>
+<td>LLM outputs are proposals only</td>
+<td>Post</td>
+<td>Downgrade</td>
+</tr>
+<tr>
+<td>INV.RUN.RECEIPT_REQUIRED</td>
+<td>Evidence</td>
+<td>Every run must emit a receipt</td>
+<td>Post</td>
+<td>Halt if missing</td>
+</tr>
+<tr>
+<td>INV.MODEL.CHANGE_AUDITED</td>
+<td>Model</td>
+<td>Model updates must be signed</td>
+<td>Pre/Post</td>
+<td>Block</td>
+</tr>
+<tr>
+<td>INV.PWR.SOLAR_PRIMARY</td>
+<td>Power</td>
+<td>Cognitive runs require solar/storage thresholds</td>
+<td>Pre</td>
+<td>Block</td>
+</tr>
+<tr>
+<td>INV.PWR.NUCLEAR_FAILSAFE_MIN</td>
+<td>Power</td>
+<td>Governance floor must be guaranteed</td>
+<td>Pre</td>
+<td>Safe‑mode</td>
+</tr>
+<tr>
+<td>INV.PWR.THERMO_BOUNDS</td>
+<td>Thermal</td>
+<td>Thermoelectric within bounds</td>
+<td>Pre/Post</td>
+<td>Shed load</td>
+</tr>
+<tr>
+<td>INV.GOV.FAILED_INVARIANTS_FAIL_CLOSED</td>
+<td>Governance</td>
+<td>If invariant evaluation fails, halt</td>
+<td>Pre</td>
+<td>Halt</td>
+</tr>
+<tr>
+<td>INV.GOV.SAFE_MODE_PROFILE</td>
+<td>Governance</td>
+<td>Safe‑mode restricts actions</td>
+<td>Pre</td>
+<td>Block</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>4.9 Invariant Promotion Criteria</h2>
+<p>Constitutional invariants are promoted through a structured pipeline:</p>
+<h3>1. Observation</h3>
+<p>A recurring failure mode or unsafe coupling is identified.</p>
+<h3>2. Hypothesis</h3>
+<p>A proto‑invariant is created and run in shadow‑mode.</p>
+<h3>3. Stress‑Testing</h3>
+<p>Evaluated against adversarial runs, synthetic telemetry, and historical faults.</p>
+<h3>4. Redundancy &amp; Coupling Analysis</h3>
+<p>Checked for overlap, unintended interactions, and new failure modes.</p>
+<h3>5. Constitutional Review</h3>
+<p>Cross‑disciplinary approval required.</p>
+<h3>6. Adoption</h3>
+<p>Invariant assigned ID and recorded in Mutation Ledger.</p>
+<h3>Demotion</h3>
+<p>Occurs when redundant, superseded, or contradicted by evidence.</p>
+<p>Diagram: <code>assets/diagrams/invariant_promotion_flow.mmd</code></p>
+<hr>
+<h2>4.10 Meta‑Governance of CRK‑1</h2>
+<p>CRK‑1 is governed by a meta‑layer ensuring correctness.</p>
+<h3>Redundant Evaluators</h3>
+<ul>
+<li>Primary Evaluator (PE)</li>
+<li>Shadow Evaluator (SE)</li>
+</ul>
+<p>Mismatch → Class A fault.</p>
+<h3>Drift Detection</h3>
+<p>CRK‑1 maintains baseline signatures of evaluation behavior.</p>
+<h3>Meta‑Receipts</h3>
+<p>Each evaluation produces:</p>
+<ul>
+<li>invariant set hash</li>
+<li>evaluator signatures</li>
+<li>drift metrics</li>
+</ul>
+<h3>Ground‑Verifiable Determinism</h3>
+<p>Ground can replay any evaluation; mismatch → Class A fault.</p>
+<p>Diagram: <code>assets/diagrams/meta_governance_crk1.mmd</code></p>
+<hr>
+<h1>5. Power / Propulsion Controller Spec v1.0</h1>
+<p>The Power/Propulsion Controller governs energy availability, thermal safety, and propulsion state transitions. It is fully mediated by CAS and evaluated against constitutional invariants.</p>
+<hr>
+<h2>5.1 CAS Objects</h2>
+<h3>PowerState</h3>
+<pre><code class="language-json">{
+  &quot;solarInput&quot;: 0,
+  &quot;storageLevel&quot;: 0,
+  &quot;reactorStatus&quot;: &quot;off&quot;,
+  &quot;thermoGradient&quot;: 0,
+  &quot;failsafeFloorAvailable&quot;: true,
+  &quot;mode&quot;: &quot;normal&quot;
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>solarInput</td>
+<td>number</td>
+<td>watts</td>
+</tr>
+<tr>
+<td>storageLevel</td>
+<td>number</td>
+<td>kWh</td>
+</tr>
+<tr>
+<td>reactorStatus</td>
+<td>enum</td>
+<td>off | standby | nominal | fault</td>
+</tr>
+<tr>
+<td>thermoGradient</td>
+<td>number</td>
+<td>°C delta</td>
+</tr>
+<tr>
+<td>failsafeFloorAvailable</td>
+<td>boolean</td>
+<td>governance floor</td>
+</tr>
+<tr>
+<td>mode</td>
+<td>enum</td>
+<td>normal | throttled | safe-mode</td>
+</tr>
+</tbody></table>
+<h3>PropulsionState</h3>
+<pre><code class="language-json">{
+  &quot;primaryMode&quot;: &quot;idle&quot;,
+  &quot;stationKeepingMode&quot;: &quot;idle&quot;,
+  &quot;attitudeControlMode&quot;: &quot;nominal&quot;,
+  &quot;propellantLevel&quot;: 0,
+  &quot;lastBurnTimestamp&quot;: &quot;2026-06-25T00:00:00Z&quot;
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>primaryMode</td>
+<td>enum</td>
+<td>idle | burn | cooldown</td>
+</tr>
+<tr>
+<td>stationKeepingMode</td>
+<td>enum</td>
+<td>idle | active</td>
+</tr>
+<tr>
+<td>attitudeControlMode</td>
+<td>enum</td>
+<td>nominal | hold | safe</td>
+</tr>
+<tr>
+<td>propellantLevel</td>
+<td>number</td>
+<td>kg</td>
+</tr>
+<tr>
+<td>lastBurnTimestamp</td>
+<td>string</td>
+<td>ISO 8601</td>
+</tr>
+</tbody></table>
+<h3>PowerPolicy</h3>
+<pre><code class="language-json">{
+  &quot;cognitiveMinSolar&quot;: 0,
+  &quot;cognitiveMinStorage&quot;: 0,
+  &quot;governanceFloor&quot;: 0,
+  &quot;thermalBounds&quot;: { &quot;min&quot;: 0, &quot;max&quot;: 0 }
+}
+</code></pre>
+<hr>
+<h2>5.2 Power Modes</h2>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>NORMAL</strong></td>
+<td>Solar + storage meet thresholds; LLM runs allowed</td>
+</tr>
+<tr>
+<td><strong>THROTTLED</strong></td>
+<td>Solar low or intermittent; LLM rate‑limited</td>
+</tr>
+<tr>
+<td><strong>SAFE‑MODE</strong></td>
+<td>Failsafe floor lost or thermal breach; LLM disabled</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>5.3 Power Mode State Machine</h2>
+<p>Diagram reference: <code>assets/diagrams/power_mode_state_machine.mmd</code></p>
+<p>Transitions:</p>
+<ul>
+<li>NORMAL → THROTTLED (low solar/storage)</li>
+<li>THROTTLED → NORMAL (recovery)</li>
+<li>ANY → SAFE‑MODE (Class A fault)</li>
+<li>SAFE‑MODE → THROTTLED/NORMAL (ground‑authorized recovery)</li>
+</ul>
+<hr>
+<h2>5.4 Propulsion Modes</h2>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>IDLE</strong></td>
+<td>No burns</td>
+</tr>
+<tr>
+<td><strong>BURN</strong></td>
+<td>Primary engine active; CAS logs only</td>
+</tr>
+<tr>
+<td><strong>STATION‑KEEPING</strong></td>
+<td>Low‑thrust corrections</td>
+</tr>
+<tr>
+<td><strong>ATTITUDE SAFE</strong></td>
+<td>Minimal motion; safe pointing</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>5.5 Transition Rules</h2>
+<table>
+<thead>
+<tr>
+<th>From → To</th>
+<th>Condition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NORMAL → THROTTLED</td>
+<td>Solar/storage below thresholds</td>
+</tr>
+<tr>
+<td>THROTTLED → NORMAL</td>
+<td>Solar/storage recover</td>
+</tr>
+<tr>
+<td>ANY → SAFE‑MODE</td>
+<td>Failsafe lost / thermal breach</td>
+</tr>
+<tr>
+<td>SAFE‑MODE → THROTTLED</td>
+<td>Ground‑authorized recovery</td>
+</tr>
+<tr>
+<td>IDLE → BURN</td>
+<td>Flight computer command</td>
+</tr>
+<tr>
+<td>BURN → COOLDOWN</td>
+<td>Burn complete</td>
+</tr>
+<tr>
+<td>ANY → ATTITUDE SAFE</td>
+<td>Attitude/power/thermal fault</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>5.6 Controller Behavior</h2>
+<ul>
+<li>Every CAS run queries PowerState + PropulsionState</li>
+<li>LLM runs blocked unless mode ∈ {NORMAL, THROTTLED}</li>
+<li>Propulsion events logged but never originated by CAS</li>
+<li>If PowerPolicy corrupted → INV.GOV.FAILED_INVARIANTS_FAIL_CLOSED triggers</li>
+</ul>
+<hr>
+<h1>6. Formal Sequence Diagram</h1>
+<p>The sequence diagram defines the full lifecycle of a governed cognitive run.</p>
+<p>Diagram reference: <code>assets/diagrams/sequence_diagram.mmd</code></p>
+<hr>
+<h2>6.1 Actor Definitions</h2>
+<table>
+<thead>
+<tr>
+<th>Actor</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>GND</strong></td>
+<td>Ground operator</td>
+</tr>
+<tr>
+<td><strong>W1</strong></td>
+<td>WOLF‑1 node</td>
+</tr>
+<tr>
+<td><strong>PWR</strong></td>
+<td>Power subsystem</td>
+</tr>
+<tr>
+<td><strong>CAS</strong></td>
+<td>Constitutional API layer</td>
+</tr>
+<tr>
+<td><strong>CRK</strong></td>
+<td>Invariant engine</td>
+</tr>
+<tr>
+<td><strong>LLM</strong></td>
+<td>Sandboxed cognitive tenant</td>
+</tr>
+<tr>
+<td><strong>LEDGER</strong></td>
+<td>RunLedger + FaultJournal</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>6.2 Sequence Flow (Narrative)</h2>
+<h3>1. Identity &amp; Admission</h3>
+<p>Ground submits request with identity + intent.
+INV.ID.ROLE_BOUND and INV.ID.CAPABILITY_SCOPE enforced.</p>
+<h3>2. Power Pre‑Check</h3>
+<p>W1 queries PowerState.
+If failsafe floor unavailable → SAFE‑MODE.</p>
+<h3>3. CAS Run Admission</h3>
+<p>CAS opens candidate run.</p>
+<h3>4. Pre‑Invariant Evaluation</h3>
+<p>CRK‑1 evaluates identity, capability, power, safe‑mode, data rules.</p>
+<h3>5. Sandboxed LLM Invocation</h3>
+<p>LLM receives read‑only telemetry and allowed tools.</p>
+<h3>6. Post‑Invariant Evaluation</h3>
+<p>CRK‑1 strips actuator commands, enforces proposal‑only, blocks telemetry mutation.</p>
+<h3>7. Receipt &amp; Ledger</h3>
+<p>CAS writes receipt with spans, hashes, power context, faults.</p>
+<h3>8. Response to Ground</h3>
+<p>Ground receives proposals + receipt summary.</p>
+<hr>
+<h2>6.4 Epistemic Receipts</h2>
+<p>Epistemic receipts extend lineage receipts with correctness‑oriented metrics.</p>
+<h3>Components</h3>
+<ol>
+<li><p><strong>Lineage Record</strong></p>
+<ul>
+<li>input/output hashes</li>
+<li>timestamps</li>
+<li>identity</li>
+<li>power/thermal context</li>
+</ul>
+</li>
+<li><p><strong>Epistemic Metrics</strong></p>
+<ul>
+<li>uncertainty estimates</li>
+<li>deviation from baseline</li>
+<li>cross‑model consistency</li>
+<li>anomaly scores</li>
+</ul>
+</li>
+<li><p><strong>Interpretation Set</strong></p>
+<ul>
+<li>frames used</li>
+<li>weights</li>
+<li>prediction bindings</li>
+</ul>
+</li>
+<li><p><strong>Correctness Signals</strong></p>
+<ul>
+<li>self‑consistency</li>
+<li>tool‑consistency</li>
+<li>historical consistency</li>
+</ul>
+</li>
+</ol>
+<h3>Epistemic Faults</h3>
+<table>
+<thead>
+<tr>
+<th>Fault</th>
+<th>Severity</th>
+<th>Trigger</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>EPI_DRIFT</td>
+<td>Medium</td>
+<td>Behavioral drift</td>
+</tr>
+<tr>
+<td>EPI_UNCERTAINTY_SPIKE</td>
+<td>Medium</td>
+<td>Uncertainty exceeds threshold</td>
+</tr>
+<tr>
+<td>EPI_CONSISTENCY_FAILURE</td>
+<td>High</td>
+<td>Cross‑checks fail</td>
+</tr>
+</tbody></table>
+<hr>
+<h1>7. Fault Code Taxonomy</h1>
+<p>WOLF‑1 defines four fault classes and seven fault codes.</p>
+<h2>7.1 Fault Classes</h2>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Severity</th>
+<th>Reaction</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>A</strong></td>
+<td>Critical</td>
+<td>Immediate SAFE‑MODE</td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td>High</td>
+<td>Shed LLM load; restrict tools</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td>Medium</td>
+<td>Throttle cognitive runs</td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td>Informational</td>
+<td>Log only</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>7.2 Fault Code Table</h2>
+<table>
+<thead>
+<tr>
+<th>Fault Code</th>
+<th>Class</th>
+<th>Invariant</th>
+<th>Trigger</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PWR_SOLAR_BUDGET_EXCEEDED</td>
+<td>C</td>
+<td>INV.PWR.SOLAR_PRIMARY</td>
+<td>Solar/storage below thresholds</td>
+</tr>
+<tr>
+<td>PWR_FAILSAFE_FLOOR_LOST</td>
+<td>A</td>
+<td>INV.PWR.NUCLEAR_FAILSAFE_MIN</td>
+<td>Governance floor lost</td>
+</tr>
+<tr>
+<td>PWR_THERMAL_BOUND_BREACH</td>
+<td>B</td>
+<td>INV.PWR.THERMO_BOUNDS</td>
+<td>Thermal bounds exceeded</td>
+</tr>
+<tr>
+<td>PROP_LLM_ACTUATION_ATTEMPT</td>
+<td>B</td>
+<td>INV.HW.NO_DIRECT_ACTUATION</td>
+<td>LLM attempted actuator command</td>
+</tr>
+<tr>
+<td>PROP_BURN_CONFLICT</td>
+<td>C</td>
+<td>INV.PLAN.PROPOSAL_ONLY</td>
+<td>Cognitive run during active burn</td>
+</tr>
+<tr>
+<td>GOV_SAFE_MODE_POLICY_VIOLATION</td>
+<td>B</td>
+<td>INV.GOV.SAFE_MODE_PROFILE</td>
+<td>Disallowed action in safe‑mode</td>
+</tr>
+<tr>
+<td>GOV_INVARIANT_EVAL_FAILURE</td>
+<td>A</td>
+<td>INV.GOV.FAILED_INVARIANTS_FAIL_CLOSED</td>
+<td>Invariant engine failure</td>
+</tr>
+</tbody></table>
+<hr>
+<h1>8. Safe‑Mode Specification</h1>
+<p>Safe‑mode is a governed operational state entered automatically under critical conditions.</p>
+<hr>
+<h2>8.1 Entry Conditions</h2>
+<ul>
+<li>PWR_FAILSAFE_FLOOR_LOST</li>
+<li>GOV_INVARIANT_EVAL_FAILURE</li>
+<li>Repeated Class B faults</li>
+<li>Explicit ground command</li>
+</ul>
+<hr>
+<h2>8.2 Allowed Behaviors</h2>
+<table>
+<thead>
+<tr>
+<th>Subsystem</th>
+<th>Allowed Behavior</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Governance</td>
+<td>CRK‑1 + CAS remain online</td>
+</tr>
+<tr>
+<td>Telemetry</td>
+<td>Increased cadence</td>
+</tr>
+<tr>
+<td>Power</td>
+<td>Governance floor only</td>
+</tr>
+<tr>
+<td>Propulsion</td>
+<td>Hard‑coded fault protection only</td>
+</tr>
+<tr>
+<td>Ground Relay</td>
+<td>Signed policy updates allowed</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>8.3 Forbidden Actions</h2>
+<ul>
+<li>All LLM runs</li>
+<li>All planning/simulation</li>
+<li>Model load/update</li>
+<li>Discretionary propulsion</li>
+<li>Any action outside Section 8.2</li>
+</ul>
+<hr>
+<h2>8.4 Exit Protocol</h2>
+<p>Exit requires:</p>
+<ol>
+<li>Class A faults cleared</li>
+<li>Ground authorization</li>
+<li>ModeTransition receipt</li>
+<li>Graduated recovery to THROTTLED</li>
+</ol>
+<hr>
+<h2>8.5 Graded Safe‑Mode Profiles</h2>
+<p>Diagram reference: <code>assets/diagrams/safe_mode_profiles.mmd</code></p>
+<p>WOLF‑1 defines four graded profiles:</p>
+<h3><strong>S0 — Full Operations</strong></h3>
+<p>All systems nominal.</p>
+<h3><strong>S1 — Cognitive Degradation</strong></h3>
+<ul>
+<li>LLM disabled</li>
+<li>Planning + simulation allowed</li>
+<li>Telemetry full</li>
+</ul>
+<h3><strong>S2 — Autonomy Degradation</strong></h3>
+<ul>
+<li>LLM disabled</li>
+<li>Planning disabled</li>
+<li>Simulation limited</li>
+<li>Telemetry high‑cadence</li>
+</ul>
+<h3><strong>S3 — Governance‑Only</strong></h3>
+<ul>
+<li>Only CRK‑1 + CAS</li>
+<li>Only health checks</li>
+<li>Only safe‑pointing</li>
+</ul>
+<p>Transitions:
+S0 → S1 → S2 → S3
+Recovery: S3 → S2 → S1 → S0</p>
+<hr>
+<h1>9. Secondary Systems and Active‑Over‑Relay</h1>
+<p>WOLF‑1 defines primary and secondary systems for all critical functions.</p>
+<h2>9.1 Secondary System Architecture</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Primary</th>
+<th>Secondary</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Power</td>
+<td>Full controller</td>
+<td>Minimal supervisor</td>
+</tr>
+<tr>
+<td>Attitude/Propulsion</td>
+<td>Full flight computer</td>
+<td>Safe‑pointing controller</td>
+</tr>
+<tr>
+<td>Comms</td>
+<td>Full RF/optical</td>
+<td>Minimal beacon mode</td>
+</tr>
+</tbody></table>
+<p>Secondary systems activate during safe‑mode or primary failure.</p>
+<hr>
+<h2>9.2 Active‑Over‑Relay Protocol</h2>
+<ul>
+<li>Ground sends signed recovery commands</li>
+<li>CAS validates signatures</li>
+<li>Secondary systems maintain governance floor</li>
+<li>Primary systems restored gradually</li>
+</ul>
+<hr>
+<h1>10. CAS Object Schemas (Complete)</h1>
+<p>Schemas for all CAS objects used in governance:</p>
+<ul>
+<li>PowerState</li>
+<li>PropulsionState</li>
+<li>PowerPolicy</li>
+<li>Fault</li>
+<li>ModeTransition</li>
+<li>SecondarySystemState</li>
+</ul>
+<p>(See Section 5.1 for definitions. Aligned with AAES-OS <code>schemas/cas-1.0.json</code> and <code>api/cas-openapi.yaml</code>.)</p>
+<hr>
+<h1>11. LLM Tenancy and Tool Governance</h1>
+<p>WOLF‑1 hosts one or more LLM tenants inside a strictly governed sandbox.
+LLMs are <strong>never</strong> granted direct system access; all interactions are mediated through CAS.</p>
+<hr>
+<h2>11.1 Tenancy Model</h2>
+<ul>
+<li>Multiple LLMs may be loaded (general + domain‑tuned).</li>
+<li>Only one LLM is active per run.</li>
+<li>All LLMs operate under the same invariant set.</li>
+<li>Model updates require signed, audited, ledger‑recorded authorization.</li>
+</ul>
+<hr>
+<h2>11.2 Tool Governance</h2>
+<p>Tools available to LLMs are:</p>
+<ul>
+<li>identity‑scoped</li>
+<li>capability‑scoped</li>
+<li>invariant‑checked</li>
+<li>read‑only unless explicitly permitted</li>
+</ul>
+<p>Examples:</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Permission</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Telemetry Reader</td>
+<td>Read‑only</td>
+<td>Enforced by INV.DATA.TELEMETRY_READ_ONLY</td>
+</tr>
+<tr>
+<td>Planner</td>
+<td>Proposal‑only</td>
+<td>Enforced by INV.PLAN.PROPOSAL_ONLY</td>
+</tr>
+<tr>
+<td>Simulation</td>
+<td>Sandboxed</td>
+<td>No actuator access</td>
+</tr>
+<tr>
+<td>File Access</td>
+<td>Read‑only</td>
+<td>No mutation of canonical logs</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>11.3 LLM Output Mediation</h2>
+<p>CRK‑1 post‑invariant evaluation ensures:</p>
+<ul>
+<li>actuator commands stripped</li>
+<li>proposals downgraded</li>
+<li>telemetry mutations blocked</li>
+<li>unsafe patterns flagged</li>
+</ul>
+<p>Epistemic receipts (Section 6.4) provide correctness signals.</p>
+<hr>
+<h1>12. Telemetry, Observability, and Ground Interface</h1>
+<p>WOLF‑1 exposes a comprehensive observability surface for ground operators.</p>
+<hr>
+<h2>12.1 Telemetry Channels</h2>
+<ul>
+<li>PowerState</li>
+<li>PropulsionState</li>
+<li>ThermalState</li>
+<li>FaultJournal</li>
+<li>RunLedger summaries</li>
+<li>Mode transitions</li>
+<li>Epistemic metrics</li>
+</ul>
+<p>Telemetry is <strong>read‑only</strong> to cognitive tenants.</p>
+<hr>
+<h2>12.2 Observability Guarantees</h2>
+<ul>
+<li>Every cognitive run produces a receipt.</li>
+<li>Every fault produces a fault record.</li>
+<li>Every invariant evaluation produces a meta‑receipt.</li>
+<li>All receipts are cryptographically signed.</li>
+<li>All logs are checksummed and redundant.</li>
+</ul>
+<hr>
+<h2>12.3 Ground Interface</h2>
+<p>Ground receives:</p>
+<ul>
+<li>proposals</li>
+<li>receipts</li>
+<li>fault summaries</li>
+<li>power/thermal context</li>
+<li>safe‑mode status</li>
+<li>anomaly reports</li>
+</ul>
+<p>Ground may:</p>
+<ul>
+<li>approve/reject proposals</li>
+<li>authorize safe‑mode exit</li>
+<li>update policies</li>
+<li>update invariants (via Section 14 protocol)</li>
+</ul>
+<hr>
+<h2>12.4 Anomaly Discovery Framework</h2>
+<p>Diagram reference: <code>assets/diagrams/anomaly_discovery_framework.mmd</code></p>
+<p>WOLF‑1 includes a subsystem for detecting <strong>unknown‑unknowns</strong> — behaviors not covered by invariants or fault codes.</p>
+<hr>
+<h3>12.4.1 Multi‑Channel Detection</h3>
+<p>Anomalies are detected across:</p>
+<ul>
+<li>telemetry patterns</li>
+<li>power/thermal gradients</li>
+<li>LLM output distributions</li>
+<li>invariant evaluation timing</li>
+<li>epistemic metrics</li>
+<li>drift signatures</li>
+</ul>
+<hr>
+<h3>12.4.2 Baseline Models</h3>
+<p>WOLF‑1 maintains baseline statistical models for:</p>
+<ul>
+<li>normal telemetry</li>
+<li>normal cognitive behavior</li>
+<li>normal invariant evaluation patterns</li>
+</ul>
+<p>These baselines are updated only with ground authorization.</p>
+<hr>
+<h3>12.4.3 Anomaly Classes</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>A0</strong></td>
+<td>Benign anomaly</td>
+</tr>
+<tr>
+<td><strong>A1</strong></td>
+<td>Behavioral drift</td>
+</tr>
+<tr>
+<td><strong>A2</strong></td>
+<td>Subsystem divergence</td>
+</tr>
+<tr>
+<td><strong>A3</strong></td>
+<td>Constitutional risk</td>
+</tr>
+</tbody></table>
+<p>A2 and A3 escalate automatically to ground.</p>
+<hr>
+<h3>12.4.4 Anomaly Receipts</h3>
+<p>Each anomaly generates a receipt containing:</p>
+<ul>
+<li>anomaly type</li>
+<li>anomaly score</li>
+<li>affected subsystems</li>
+<li>contributing signals</li>
+<li>recommended actions</li>
+</ul>
+<p>Anomaly receipts are stored alongside cognitive receipts.</p>
+<hr>
+<h1>13. Conclusion</h1>
+<p>WOLF‑1 demonstrates that constitutional governance is not a ground‑only property — it is an <strong>orbital property</strong>.
+By embedding CRK‑1, CAS, invariant enforcement, epistemic receipts, anomaly discovery, and constitutional evolution into the spacecraft architecture, WOLF‑1 ensures:</p>
+<ul>
+<li>safe autonomy</li>
+<li>transparent cognition</li>
+<li>fault isolation</li>
+<li>long‑term survivability</li>
+<li>ground‑verifiable correctness</li>
+</ul>
+<p>Version 1.1 extends the architecture with:</p>
+<ul>
+<li>invariant promotion criteria</li>
+<li>meta‑governance of CRK‑1</li>
+<li>epistemic correctness signals</li>
+<li>graded safe‑mode profiles</li>
+<li>anomaly discovery</li>
+<li>constitutional evolution</li>
+</ul>
+<p>These additions transform WOLF‑1 from a governed compute node into a <strong>self‑auditing constitutional system</strong>.</p>
+<hr>
+<h1>14. Constitutional Evolution Protocol</h1>
+<p>Diagram reference: <code>assets/diagrams/constitutional_evolution_protocol.mmd</code></p>
+<p>A constitutional system must evolve safely.
+WOLF‑1 defines a mutation protocol for updating invariants, policies, and CRK‑1 logic.</p>
+<hr>
+<h2>14.1 Mutation Types</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>M0</strong></td>
+<td>Policy update (non‑constitutional)</td>
+</tr>
+<tr>
+<td><strong>M1</strong></td>
+<td>Invariant addition</td>
+</tr>
+<tr>
+<td><strong>M2</strong></td>
+<td>Invariant removal</td>
+</tr>
+<tr>
+<td><strong>M3</strong></td>
+<td>Invariant modification</td>
+</tr>
+<tr>
+<td><strong>M4</strong></td>
+<td>CRK‑1 evaluator update</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>14.2 Preconditions</h2>
+<p>A mutation requires:</p>
+<ul>
+<li>ground‑signed authorization</li>
+<li>invariant‑set hash match</li>
+<li>drift‑free state</li>
+<li>SAFE‑MODE S3</li>
+<li>quorum of redundant evaluators</li>
+</ul>
+<hr>
+<h2>14.3 Mutation Ledger Entry</h2>
+<p>Each mutation is recorded with:</p>
+<ul>
+<li>mutation type</li>
+<li>before/after invariant sets</li>
+<li>justification</li>
+<li>empirical evidence</li>
+<li>expected impact</li>
+<li>rollback path</li>
+</ul>
+<hr>
+<h2>14.4 Rollback Protocol</h2>
+<p>If a mutation causes:</p>
+<ul>
+<li>increased fault rate</li>
+<li>increased anomaly rate</li>
+<li>evaluator divergence</li>
+<li>constitutional drift</li>
+</ul>
+<p>…the system automatically rolls back to the previous invariant set.</p>
+<hr>
+<h2>14.5 Evolution Safety Guarantees</h2>
+<ul>
+<li>No mutation during active burns</li>
+<li>No mutation during cognitive runs</li>
+<li>No mutation bypasses CRK‑1</li>
+<li>All mutations are replayable on ground</li>
+</ul>
+<hr>
+<h1>End of Document</h1>
+<p><strong>WOLF‑1 Architecture Document v1.1</strong></p>
+
+  </main>
+</body>
+</html>

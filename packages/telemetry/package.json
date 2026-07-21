@@ -1,0 +1,21 @@
+{
+  "name": "@aaes-os/telemetry",
+  "version": "0.1.0",
+  "description": "AAES-OS telemetry and constitutional metrics",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "typescript": "^5.9.3"
+  }
+}

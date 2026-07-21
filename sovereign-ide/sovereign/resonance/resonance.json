@@ -1,0 +1,32 @@
+{
+  "continuity": {
+    "symbol": "⧖",
+    "constant": 1.618,
+    "description": "Temporal continuity"
+  },
+  "lineage": {
+    "symbol": "∴",
+    "constant": 3.141,
+    "description": "Causal ancestry"
+  },
+  "replay": {
+    "symbol": "⟳",
+    "constant": 2.718,
+    "description": "Deterministic replay"
+  },
+  "federation": {
+    "symbol": "⚛",
+    "constant": 7.777,
+    "description": "Harmonic alignment"
+  },
+  "accountability": {
+    "symbol": "⚖",
+    "constant": 9.999,
+    "description": "Traceable action"
+  },
+  "advisory": {
+    "symbol": "✶",
+    "constant": 4.444,
+    "description": "Evidence-bound counsel"
+  }
+}

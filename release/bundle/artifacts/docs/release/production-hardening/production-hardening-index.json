@@ -1,0 +1,976 @@
+{
+  "generatedAt": "2026-07-13T13:13:00.595Z",
+  "workspace": "E:/project-infi",
+  "status": "release-evidence-ready",
+  "surfaces": [
+    {
+      "id": "ul-runtime",
+      "packageName": "@aaes-os/ul-runtime",
+      "status": "release-evidence-ready",
+      "packageDir": "packages/ul-runtime",
+      "docsPage": "docs-site/docs/runtime/ul-runtime.md",
+      "registryId": "UL",
+      "checks": {
+        "packageJson": true,
+        "source": true,
+        "tests": true,
+        "buildOutput": true,
+        "docsPage": true,
+        "registryLive": true,
+        "packageName": true,
+        "buildScript": true,
+        "testScript": true
+      },
+      "commands": {
+        "build": "corepack pnpm --filter @aaes-os/ul-runtime build",
+        "test": "corepack pnpm --filter @aaes-os/ul-runtime test"
+      },
+      "replayAuditPacket": {
+        "replayReference": "ul-runtime.evidence.json#replayAuditPacket",
+        "auditReference": "ul-runtime.evidence.json#checks",
+        "documentationReference": "docs-site/docs/runtime/ul-runtime.md",
+        "requiredArtifacts": [
+          "packageJson",
+          "source",
+          "tests",
+          "buildOutput",
+          "docsPage",
+          "registryLive"
+        ]
+      },
+      "releasePackagingPacket": {
+        "manifestId": "ul-runtime-a810135e3a096c8f55702e53644c7640b33f418fed3b95b36a10fb4c36ae0931",
+        "checksumAlgorithm": "sha256",
+        "includedFiles": [
+          {
+            "path": "packages/ul-runtime/package.json",
+            "sha256": "51f05cd408a0ff500e92779e2203676358ea9336d1fc8a2b774c4d7cac9d6144",
+            "bytes": 582
+          },
+          {
+            "path": "packages/ul-runtime/src/index.ts",
+            "sha256": "b91720a071cd192ced805bc282226c3c270b3409a0f37a3f7f3c702ce10391be",
+            "bytes": 12519
+          },
+          {
+            "path": "packages/ul-runtime/src/index.test.ts",
+            "sha256": "dd7c3db172ffee04118b521afc4dcf7dce8434057e0a040ab64411afd733b951",
+            "bytes": 3964
+          },
+          {
+            "path": "packages/ul-runtime/dist/index.js",
+            "sha256": "fa733c01c216de3d491e4ae143d60c88d6b5fa21e12d477ac9927474207eaf8f",
+            "bytes": 9917
+          },
+          {
+            "path": "docs-site/docs/runtime/ul-runtime.md",
+            "sha256": "19ce2140665804f509ba75efe7c087768ccfdc38b5c727f7546bc9a2c0abe24f",
+            "bytes": 1520
+          },
+          {
+            "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+            "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+            "bytes": 7972
+          }
+        ]
+      },
+      "externalIntegrationPacket": {
+        "target": "UL cockpit verb-command adapter",
+        "readiness": "live-integration-verified",
+        "evidence": [
+          "docs-site/docs/runtime/ul-runtime.md",
+          "packages/ul-runtime/src/index.ts",
+          "ul-runtime.evidence.json",
+          "docs/release/external-integrations/README.md",
+          "docs/release/external-integrations/external-integration-index.json"
+        ],
+        "serviceEvidenceIds": [
+          "github-origin-remote",
+          "npm-registry-toolchain"
+        ]
+      },
+      "blockers": []
+    },
+    {
+      "id": "csl-runtime",
+      "packageName": "@aaes-os/csl-runtime",
+      "status": "release-evidence-ready",
+      "packageDir": "packages/csl-runtime",
+      "docsPage": "docs-site/docs/runtime/csl-runtime.md",
+      "registryId": "CSL",
+      "checks": {
+        "packageJson": true,
+        "source": true,
+        "tests": true,
+        "buildOutput": true,
+        "docsPage": true,
+        "registryLive": true,
+        "packageName": true,
+        "buildScript": true,
+        "testScript": true
+      },
+      "commands": {
+        "build": "corepack pnpm --filter @aaes-os/csl-runtime build",
+        "test": "corepack pnpm --filter @aaes-os/csl-runtime test"
+      },
+      "replayAuditPacket": {
+        "replayReference": "csl-runtime.evidence.json#replayAuditPacket",
+        "auditReference": "csl-runtime.evidence.json#checks",
+        "documentationReference": "docs-site/docs/runtime/csl-runtime.md",
+        "requiredArtifacts": [
+          "packageJson",
+          "source",
+          "tests",
+          "buildOutput",
+          "docsPage",
+          "registryLive"
+        ]
+      },
+      "releasePackagingPacket": {
+        "manifestId": "csl-runtime-2785ec6b5d29e9c85b3fb953b375afde959055b2a6ad701017c144bfac62642d",
+        "checksumAlgorithm": "sha256",
+        "includedFiles": [
+          {
+            "path": "packages/csl-runtime/package.json",
+            "sha256": "bee3865e16daec7c7d640fa3e246f3c23590ef4f7ed98b5a558f454798305b21",
+            "bytes": 589
+          },
+          {
+            "path": "packages/csl-runtime/src/index.ts",
+            "sha256": "c0105cc1c9a77f6a30d03ca3ae35cf8ccc9b874c2c272c86e4541593ba9c743c",
+            "bytes": 10090
+          },
+          {
+            "path": "packages/csl-runtime/src/index.test.ts",
+            "sha256": "4e1bab43b39cc0c9557b92da4c738ba0936db281e9296fa456b646389527f7c6",
+            "bytes": 2935
+          },
+          {
+            "path": "packages/csl-runtime/dist/index.js",
+            "sha256": "fc32ab489b6558c4a5ea652c5ad96019575eda03789f2fbdf15f6dff39b6fa10",
+            "bytes": 7843
+          },
+          {
+            "path": "docs-site/docs/runtime/csl-runtime.md",
+            "sha256": "44cf1ad0d1398bb012adf8ef851948bf65805f158f592f0981a5f3e6bc6d81d1",
+            "bytes": 1351
+          },
+          {
+            "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+            "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+            "bytes": 7972
+          }
+        ]
+      },
+      "externalIntegrationPacket": {
+        "target": "constitutional artifact schema adapter",
+        "readiness": "live-integration-verified",
+        "evidence": [
+          "docs-site/docs/runtime/csl-runtime.md",
+          "packages/csl-runtime/src/index.ts",
+          "csl-runtime.evidence.json",
+          "docs/release/external-integrations/README.md",
+          "docs/release/external-integrations/external-integration-index.json"
+        ],
+        "serviceEvidenceIds": [
+          "github-origin-remote",
+          "npm-registry-toolchain"
+        ]
+      },
+      "blockers": []
+    },
+    {
+      "id": "isl-runtime",
+      "packageName": "@aaes-os/isl-runtime",
+      "status": "release-evidence-ready",
+      "packageDir": "packages/isl-runtime",
+      "docsPage": "docs-site/docs/runtime/isl-runtime.md",
+      "registryId": "ISL",
+      "checks": {
+        "packageJson": true,
+        "source": true,
+        "tests": true,
+        "buildOutput": true,
+        "docsPage": true,
+        "registryLive": true,
+        "packageName": true,
+        "buildScript": true,
+        "testScript": true
+      },
+      "commands": {
+        "build": "corepack pnpm --filter @aaes-os/isl-runtime build",
+        "test": "corepack pnpm --filter @aaes-os/isl-runtime test"
+      },
+      "replayAuditPacket": {
+        "replayReference": "isl-runtime.evidence.json#replayAuditPacket",
+        "auditReference": "isl-runtime.evidence.json#checks",
+        "documentationReference": "docs-site/docs/runtime/isl-runtime.md",
+        "requiredArtifacts": [
+          "packageJson",
+          "source",
+          "tests",
+          "buildOutput",
+          "docsPage",
+          "registryLive"
+        ]
+      },
+      "releasePackagingPacket": {
+        "manifestId": "isl-runtime-96ca99441c2f975ce2428f9699c4f9f9a2c47076163e49724aed777c6a776aea",
+        "checksumAlgorithm": "sha256",
+        "includedFiles": [
+          {
+            "path": "packages/isl-runtime/package.json",
+            "sha256": "026d0e27ba225b24d318bbcf9ffb911cf95873383918bf669487a258338a4951",
+            "bytes": 580
+          },
+          {
+            "path": "packages/isl-runtime/src/index.ts",
+            "sha256": "67578abcb0f243b350f8b039ef6c8686007359d5c621656def02c843719a140c",
+            "bytes": 9869
+          },
+          {
+            "path": "packages/isl-runtime/src/index.test.ts",
+            "sha256": "4e06bcc4173990107522e49ce3a96c71027507129ccb94348a4cd33fd38e0b92",
+            "bytes": 2604
+          },
+          {
+            "path": "packages/isl-runtime/dist/index.js",
+            "sha256": "b1bca8de2759b3c81c694ce74057b6d0784c644b290d8bc4f49554e2a595067a",
+            "bytes": 8017
+          },
+          {
+            "path": "docs-site/docs/runtime/isl-runtime.md",
+            "sha256": "d03b04e9b58d734a0f824d837621740cbbb31daddca0e24c9f1f89a84f1cc23d",
+            "bytes": 745
+          },
+          {
+            "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+            "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+            "bytes": 7972
+          }
+        ]
+      },
+      "externalIntegrationPacket": {
+        "target": "governed intent submission adapter",
+        "readiness": "live-integration-verified",
+        "evidence": [
+          "docs-site/docs/runtime/isl-runtime.md",
+          "packages/isl-runtime/src/index.ts",
+          "isl-runtime.evidence.json",
+          "docs/release/external-integrations/README.md",
+          "docs/release/external-integrations/external-integration-index.json"
+        ],
+        "serviceEvidenceIds": [
+          "github-origin-remote",
+          "npm-registry-toolchain"
+        ]
+      },
+      "blockers": []
+    },
+    {
+      "id": "cic-runtime",
+      "packageName": "@aaes-os/cic-runtime",
+      "status": "release-evidence-ready",
+      "packageDir": "packages/cic-runtime",
+      "docsPage": "docs-site/docs/runtime/cic-runtime.md",
+      "registryId": "CIC",
+      "checks": {
+        "packageJson": true,
+        "source": true,
+        "tests": true,
+        "buildOutput": true,
+        "docsPage": true,
+        "registryLive": true,
+        "packageName": true,
+        "buildScript": true,
+        "testScript": true
+      },
+      "commands": {
+        "build": "corepack pnpm --filter @aaes-os/cic-runtime build",
+        "test": "corepack pnpm --filter @aaes-os/cic-runtime test"
+      },
+      "replayAuditPacket": {
+        "replayReference": "cic-runtime.evidence.json#replayAuditPacket",
+        "auditReference": "cic-runtime.evidence.json#checks",
+        "documentationReference": "docs-site/docs/runtime/cic-runtime.md",
+        "requiredArtifacts": [
+          "packageJson",
+          "source",
+          "tests",
+          "buildOutput",
+          "docsPage",
+          "registryLive"
+        ]
+      },
+      "releasePackagingPacket": {
+        "manifestId": "cic-runtime-d95983c75d067631fa287f552ca0db3d10f14473f7e47b7351546c6839bc5329",
+        "checksumAlgorithm": "sha256",
+        "includedFiles": [
+          {
+            "path": "packages/cic-runtime/package.json",
+            "sha256": "8173553a575c2f704b2f0f26f521523f6b8e4a060a52be11845a6d659d19a22b",
+            "bytes": 601
+          },
+          {
+            "path": "packages/cic-runtime/src/index.ts",
+            "sha256": "3fc136cc01326e52ce6afa6883f47d87a229a94d892e5ef57b0de46e907156fb",
+            "bytes": 12684
+          },
+          {
+            "path": "packages/cic-runtime/src/index.test.ts",
+            "sha256": "95dc5b46ef735d0b5cdcbae706c3264b556677b2de55c09ebbc56d0fa01dceaa",
+            "bytes": 3102
+          },
+          {
+            "path": "packages/cic-runtime/dist/index.js",
+            "sha256": "b9461165dc3e42e71f12eeeb04b5c410e4c640a200c3b3a221937fc2e1f8ed0f",
+            "bytes": 9809
+          },
+          {
+            "path": "docs-site/docs/runtime/cic-runtime.md",
+            "sha256": "839a1d840c1a2e18e04184ce76a6912d86f5252c98a98c6723f134c6fa55547c",
+            "bytes": 1423
+          },
+          {
+            "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+            "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+            "bytes": 7972
+          }
+        ]
+      },
+      "externalIntegrationPacket": {
+        "target": "semantic graph inference adapter",
+        "readiness": "live-integration-verified",
+        "evidence": [
+          "docs-site/docs/runtime/cic-runtime.md",
+          "packages/cic-runtime/src/index.ts",
+          "cic-runtime.evidence.json",
+          "docs/release/external-integrations/README.md",
+          "docs/release/external-integrations/external-integration-index.json"
+        ],
+        "serviceEvidenceIds": [
+          "github-origin-remote",
+          "npm-registry-toolchain"
+        ]
+      },
+      "blockers": []
+    },
+    {
+      "id": "ccc-runtime",
+      "packageName": "@aaes-os/ccc-runtime",
+      "status": "release-evidence-ready",
+      "packageDir": "packages/ccc-runtime",
+      "docsPage": "docs-site/docs/runtime/ccc-runtime.md",
+      "registryId": "CCC",
+      "checks": {
+        "packageJson": true,
+        "source": true,
+        "tests": true,
+        "buildOutput": true,
+        "docsPage": true,
+        "registryLive": true,
+        "packageName": true,
+        "buildScript": true,
+        "testScript": true
+      },
+      "commands": {
+        "build": "corepack pnpm --filter @aaes-os/ccc-runtime build",
+        "test": "corepack pnpm --filter @aaes-os/ccc-runtime test"
+      },
+      "replayAuditPacket": {
+        "replayReference": "ccc-runtime.evidence.json#replayAuditPacket",
+        "auditReference": "ccc-runtime.evidence.json#checks",
+        "documentationReference": "docs-site/docs/runtime/ccc-runtime.md",
+        "requiredArtifacts": [
+          "packageJson",
+          "source",
+          "tests",
+          "buildOutput",
+          "docsPage",
+          "registryLive"
+        ]
+      },
+      "releasePackagingPacket": {
+        "manifestId": "ccc-runtime-08e90738ab8907d2af4febbbe64126df95b578b065cbdc7581dcbf7ebcca1cb2",
+        "checksumAlgorithm": "sha256",
+        "includedFiles": [
+          {
+            "path": "packages/ccc-runtime/package.json",
+            "sha256": "679f34b0d150118768da3b6711ae9dba9662183b275a49a6fa979ee57bf6290a",
+            "bytes": 598
+          },
+          {
+            "path": "packages/ccc-runtime/src/index.ts",
+            "sha256": "85c210344416106102ae5a9b9e9535a2d497b253aedbb1fd64bc9f583b18596e",
+            "bytes": 11453
+          },
+          {
+            "path": "packages/ccc-runtime/src/index.test.ts",
+            "sha256": "a1e741e50b9c713e6196d3b2ddca1aa190e1fd2591e5e7d1eb929c8be94faa07",
+            "bytes": 3354
+          },
+          {
+            "path": "packages/ccc-runtime/dist/index.js",
+            "sha256": "044390b0f99e59ac95c19862e8aea8e2862c195837561a0d747792e5c953eff3",
+            "bytes": 8814
+          },
+          {
+            "path": "docs-site/docs/runtime/ccc-runtime.md",
+            "sha256": "c086bce04c6d3a569eaceb984b5b8269ed38e383f0c236b78cdde2f9dbc8cb77",
+            "bytes": 1243
+          },
+          {
+            "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+            "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+            "bytes": 7972
+          }
+        ]
+      },
+      "externalIntegrationPacket": {
+        "target": "replay ledger continuity adapter",
+        "readiness": "live-integration-verified",
+        "evidence": [
+          "docs-site/docs/runtime/ccc-runtime.md",
+          "packages/ccc-runtime/src/index.ts",
+          "ccc-runtime.evidence.json",
+          "docs/release/external-integrations/README.md",
+          "docs/release/external-integrations/external-integration-index.json"
+        ],
+        "serviceEvidenceIds": [
+          "github-origin-remote",
+          "npm-registry-toolchain"
+        ]
+      },
+      "blockers": []
+    },
+    {
+      "id": "coe-runtime",
+      "packageName": "@aaes-os/coe-runtime",
+      "status": "release-evidence-ready",
+      "packageDir": "packages/coe-runtime",
+      "docsPage": "docs-site/docs/runtime/coe-runtime.md",
+      "registryId": "COE",
+      "checks": {
+        "packageJson": true,
+        "source": true,
+        "tests": true,
+        "buildOutput": true,
+        "docsPage": true,
+        "registryLive": true,
+        "packageName": true,
+        "buildScript": true,
+        "testScript": true
+      },
+      "commands": {
+        "build": "corepack pnpm --filter @aaes-os/coe-runtime build",
+        "test": "corepack pnpm --filter @aaes-os/coe-runtime test"
+      },
+      "replayAuditPacket": {
+        "replayReference": "coe-runtime.evidence.json#replayAuditPacket",
+        "auditReference": "coe-runtime.evidence.json#checks",
+        "documentationReference": "docs-site/docs/runtime/coe-runtime.md",
+        "requiredArtifacts": [
+          "packageJson",
+          "source",
+          "tests",
+          "buildOutput",
+          "docsPage",
+          "registryLive"
+        ]
+      },
+      "releasePackagingPacket": {
+        "manifestId": "coe-runtime-e29d8de47ce4d324570aba89d83c2b7980bdb97b7c4bf0e62dd46d37149986c9",
+        "checksumAlgorithm": "sha256",
+        "includedFiles": [
+          {
+            "path": "packages/coe-runtime/package.json",
+            "sha256": "bba10622f962b691c954146c19a28cdbcaf8c64a258cd802bf2774f7d972d1b5",
+            "bytes": 600
+          },
+          {
+            "path": "packages/coe-runtime/src/index.ts",
+            "sha256": "25590f7c41176c6b3e05465d886f254d1a7ab0aedd9c3068ba47839fd357e378",
+            "bytes": 10927
+          },
+          {
+            "path": "packages/coe-runtime/src/index.test.ts",
+            "sha256": "80c0c48819f3248744f38be991b2e33ea0ee7583da1c466916ac2cad557e4fd9",
+            "bytes": 3731
+          },
+          {
+            "path": "packages/coe-runtime/dist/index.js",
+            "sha256": "41e5f07e8543722728bdaedca371f76ef887d4ea924c976bbad564d8f3337da2",
+            "bytes": 8198
+          },
+          {
+            "path": "docs-site/docs/runtime/coe-runtime.md",
+            "sha256": "cd87803464e7d6f7b4ed814a064a5e34b1c43d7d8f9f7f6f8f7e960fc250be1d",
+            "bytes": 1435
+          },
+          {
+            "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+            "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+            "bytes": 7972
+          }
+        ]
+      },
+      "externalIntegrationPacket": {
+        "target": "execution receipt adapter",
+        "readiness": "live-integration-verified",
+        "evidence": [
+          "docs-site/docs/runtime/coe-runtime.md",
+          "packages/coe-runtime/src/index.ts",
+          "coe-runtime.evidence.json",
+          "docs/release/external-integrations/README.md",
+          "docs/release/external-integrations/external-integration-index.json"
+        ],
+        "serviceEvidenceIds": [
+          "github-origin-remote",
+          "npm-registry-toolchain"
+        ]
+      },
+      "blockers": []
+    },
+    {
+      "id": "cml-voss-runtime",
+      "packageName": "@aaes-os/cml-voss-runtime",
+      "status": "release-evidence-ready",
+      "packageDir": "packages/cml-voss-runtime",
+      "docsPage": "docs-site/docs/runtime/cml-voss-runtime.md",
+      "registryId": "The Voss Binding",
+      "checks": {
+        "packageJson": true,
+        "source": true,
+        "tests": true,
+        "buildOutput": true,
+        "docsPage": true,
+        "registryLive": true,
+        "packageName": true,
+        "buildScript": true,
+        "testScript": true
+      },
+      "commands": {
+        "build": "corepack pnpm --filter @aaes-os/cml-voss-runtime build",
+        "test": "corepack pnpm --filter @aaes-os/cml-voss-runtime test"
+      },
+      "replayAuditPacket": {
+        "replayReference": "cml-voss-runtime.evidence.json#replayAuditPacket",
+        "auditReference": "cml-voss-runtime.evidence.json#checks",
+        "documentationReference": "docs-site/docs/runtime/cml-voss-runtime.md",
+        "requiredArtifacts": [
+          "packageJson",
+          "source",
+          "tests",
+          "buildOutput",
+          "docsPage",
+          "registryLive"
+        ]
+      },
+      "releasePackagingPacket": {
+        "manifestId": "cml-voss-runtime-a3cf11a5c2e4604019795e4386aee91f7f873c16664a7728ccaf304c2039684c",
+        "checksumAlgorithm": "sha256",
+        "includedFiles": [
+          {
+            "path": "packages/cml-voss-runtime/package.json",
+            "sha256": "e94edcbe2669abe0eafb0ada529d5a311437f6b4a6ff0b381162686b779a62b2",
+            "bytes": 567
+          },
+          {
+            "path": "packages/cml-voss-runtime/src/index.ts",
+            "sha256": "2be279832413f3d458c9c333bb5147cd5dfebfba3c2b4527feeae93444555c99",
+            "bytes": 10208
+          },
+          {
+            "path": "packages/cml-voss-runtime/src/index.test.ts",
+            "sha256": "9d1cf310134d56ea67459e5888802e0cdfdb0df49b3acd07a8870c32e2a60712",
+            "bytes": 2723
+          },
+          {
+            "path": "packages/cml-voss-runtime/dist/index.js",
+            "sha256": "88672c38d24c9ab7aff0de6a9a75c2605dbfcd00d3e8fbbc9a35274c9266c259",
+            "bytes": 8224
+          },
+          {
+            "path": "docs-site/docs/runtime/cml-voss-runtime.md",
+            "sha256": "153e1f9d55eba2a837e0a379e5f6255dece2b3d4141712808b8ccdc3e7368ae0",
+            "bytes": 1221
+          },
+          {
+            "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+            "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+            "bytes": 7972
+          }
+        ]
+      },
+      "externalIntegrationPacket": {
+        "target": "CML/CVM corpus binding adapter",
+        "readiness": "live-integration-verified",
+        "evidence": [
+          "docs-site/docs/runtime/cml-voss-runtime.md",
+          "packages/cml-voss-runtime/src/index.ts",
+          "cml-voss-runtime.evidence.json",
+          "docs/release/external-integrations/README.md",
+          "docs/release/external-integrations/external-integration-index.json"
+        ],
+        "serviceEvidenceIds": [
+          "github-origin-remote",
+          "npm-registry-toolchain"
+        ]
+      },
+      "blockers": []
+    },
+    {
+      "id": "ugr-runtime",
+      "packageName": "@aaes-os/ugr-runtime",
+      "status": "release-evidence-ready",
+      "packageDir": "packages/ugr-runtime",
+      "docsPage": "docs-site/docs/runtime/ugr-runtime.md",
+      "registryId": "UGR",
+      "checks": {
+        "packageJson": true,
+        "source": true,
+        "tests": true,
+        "buildOutput": true,
+        "docsPage": true,
+        "registryLive": true,
+        "packageName": true,
+        "buildScript": true,
+        "testScript": true
+      },
+      "commands": {
+        "build": "corepack pnpm --filter @aaes-os/ugr-runtime build",
+        "test": "corepack pnpm --filter @aaes-os/ugr-runtime test"
+      },
+      "replayAuditPacket": {
+        "replayReference": "ugr-runtime.evidence.json#replayAuditPacket",
+        "auditReference": "ugr-runtime.evidence.json#checks",
+        "documentationReference": "docs-site/docs/runtime/ugr-runtime.md",
+        "requiredArtifacts": [
+          "packageJson",
+          "source",
+          "tests",
+          "buildOutput",
+          "docsPage",
+          "registryLive"
+        ]
+      },
+      "releasePackagingPacket": {
+        "manifestId": "ugr-runtime-99b2d2444727bff7d273dada453337a458b1cbb6193fc0bd6dd7528b0b70232c",
+        "checksumAlgorithm": "sha256",
+        "includedFiles": [
+          {
+            "path": "packages/ugr-runtime/package.json",
+            "sha256": "398f50aa01bc755fbb9073b9540253a57693f16af1678ddc8e50d59f768eef5e",
+            "bytes": 579
+          },
+          {
+            "path": "packages/ugr-runtime/src/index.ts",
+            "sha256": "47c27bcdf8dfe69f0870407daaeb0f4605a92c11ac9a4144b4dfad6d5b0ae2c5",
+            "bytes": 31287
+          },
+          {
+            "path": "packages/ugr-runtime/src/index.test.ts",
+            "sha256": "59c651a2d2a4157b0873f9e4ab17bc4f685743d886b511461347977316fa0083",
+            "bytes": 4416
+          },
+          {
+            "path": "packages/ugr-runtime/dist/index.js",
+            "sha256": "fbe083095869d2490737e191f9e435c6a3d1ebfae6e567443243ea01b4b4a4b7",
+            "bytes": 26682
+          },
+          {
+            "path": "docs-site/docs/runtime/ugr-runtime.md",
+            "sha256": "31ab2b5541024441a7c29e2e23316e293471d5b6a96ecba586e9b5a94b3f96ce",
+            "bytes": 1108
+          },
+          {
+            "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+            "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+            "bytes": 7972
+          }
+        ]
+      },
+      "externalIntegrationPacket": {
+        "target": "UGR knowledge/replay import adapter",
+        "readiness": "live-integration-verified",
+        "evidence": [
+          "docs-site/docs/runtime/ugr-runtime.md",
+          "packages/ugr-runtime/src/index.ts",
+          "ugr-runtime.evidence.json",
+          "docs/release/external-integrations/README.md",
+          "docs/release/external-integrations/external-integration-index.json"
+        ],
+        "serviceEvidenceIds": [
+          "github-origin-remote",
+          "npm-registry-toolchain"
+        ]
+      },
+      "blockers": []
+    },
+    {
+      "id": "gcre-sysmin",
+      "packageName": "@aaes-os/gcre-sysmin",
+      "status": "release-evidence-ready",
+      "packageDir": "packages/gcre-sysmin",
+      "docsPage": "docs-site/docs/runtime/gcre-sysmin.md",
+      "registryId": "GCRE-SYSMIN-001",
+      "checks": {
+        "packageJson": true,
+        "source": true,
+        "tests": true,
+        "buildOutput": true,
+        "docsPage": true,
+        "registryLive": true,
+        "packageName": true,
+        "buildScript": true,
+        "testScript": true
+      },
+      "commands": {
+        "build": "corepack pnpm --filter @aaes-os/gcre-sysmin build",
+        "test": "corepack pnpm --filter @aaes-os/gcre-sysmin test"
+      },
+      "replayAuditPacket": {
+        "replayReference": "gcre-sysmin.evidence.json#replayAuditPacket",
+        "auditReference": "gcre-sysmin.evidence.json#checks",
+        "documentationReference": "docs-site/docs/runtime/gcre-sysmin.md",
+        "requiredArtifacts": [
+          "packageJson",
+          "source",
+          "tests",
+          "buildOutput",
+          "docsPage",
+          "registryLive"
+        ]
+      },
+      "releasePackagingPacket": {
+        "manifestId": "gcre-sysmin-00db121ac8625f73d888cb494aef22d74209975b457f8b73b9ab25fe5aa9bb5c",
+        "checksumAlgorithm": "sha256",
+        "includedFiles": [
+          {
+            "path": "packages/gcre-sysmin/package.json",
+            "sha256": "b0c5a78c3e6b1f4e8223f42fcbdacda8cbc4a1e93083a410d5fb9e40849ea619",
+            "bytes": 577
+          },
+          {
+            "path": "packages/gcre-sysmin/src/index.ts",
+            "sha256": "da22ed870ec1b80b0dc39a6b87e53c809009dd93c946fceee2c9c29e8b0f7ae5",
+            "bytes": 6069
+          },
+          {
+            "path": "packages/gcre-sysmin/src/index.test.ts",
+            "sha256": "5d7a951eadcf7a3dc35fdf4ad5817eb593b41e5e94d439f45ff08d7d39a75edc",
+            "bytes": 1168
+          },
+          {
+            "path": "packages/gcre-sysmin/dist/index.js",
+            "sha256": "a5286db09867b16c228ab5ea5657052ce46e13f836cce0996d2e601ecaf7f7d9",
+            "bytes": 5182
+          },
+          {
+            "path": "docs-site/docs/runtime/gcre-sysmin.md",
+            "sha256": "6714a9f6bf3a80cf4c246671b15e930cb801d03aeb7c02bc6248e13d238d41ee",
+            "bytes": 701
+          },
+          {
+            "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+            "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+            "bytes": 7972
+          }
+        ]
+      },
+      "externalIntegrationPacket": {
+        "target": "GCRE language-family adapter",
+        "readiness": "live-integration-verified",
+        "evidence": [
+          "docs-site/docs/runtime/gcre-sysmin.md",
+          "packages/gcre-sysmin/src/index.ts",
+          "gcre-sysmin.evidence.json",
+          "docs/release/external-integrations/README.md",
+          "docs/release/external-integrations/external-integration-index.json"
+        ],
+        "serviceEvidenceIds": [
+          "github-origin-remote",
+          "npm-registry-toolchain"
+        ]
+      },
+      "blockers": []
+    },
+    {
+      "id": "coda-runtime",
+      "packageName": "@aaes-os/coda-runtime",
+      "status": "release-evidence-ready",
+      "packageDir": "packages/coda-runtime",
+      "docsPage": "docs-site/docs/runtime/coda-runtime.md",
+      "registryId": "CodaRuntime",
+      "checks": {
+        "packageJson": true,
+        "source": true,
+        "tests": true,
+        "buildOutput": true,
+        "docsPage": true,
+        "registryLive": true,
+        "packageName": true,
+        "buildScript": true,
+        "testScript": true
+      },
+      "commands": {
+        "build": "corepack pnpm --filter @aaes-os/coda-runtime build",
+        "test": "corepack pnpm --filter @aaes-os/coda-runtime test"
+      },
+      "replayAuditPacket": {
+        "replayReference": "coda-runtime.evidence.json#replayAuditPacket",
+        "auditReference": "coda-runtime.evidence.json#checks",
+        "documentationReference": "docs-site/docs/runtime/coda-runtime.md",
+        "requiredArtifacts": [
+          "packageJson",
+          "source",
+          "tests",
+          "buildOutput",
+          "docsPage",
+          "registryLive"
+        ]
+      },
+      "releasePackagingPacket": {
+        "manifestId": "coda-runtime-64d7a74eaf7e2dc3a98575f757b46b6cb698250d8da83e8ff5ca7953f7647bb4",
+        "checksumAlgorithm": "sha256",
+        "includedFiles": [
+          {
+            "path": "packages/coda-runtime/package.json",
+            "sha256": "8435d8040c10ef80720340f0c735c9c14aec3249e7efd053095d2844948882fe",
+            "bytes": 654
+          },
+          {
+            "path": "packages/coda-runtime/src/index.ts",
+            "sha256": "04fa60b75d8b33d600d31cda248342befc1d748986ff27ef0d9cbd48b90a0bd7",
+            "bytes": 2388
+          },
+          {
+            "path": "packages/coda-runtime/src/index.test.ts",
+            "sha256": "9cba406fee923770ac5b2445d2f272d64dd10eb433b4bee6b58f2e49326472e4",
+            "bytes": 1307
+          },
+          {
+            "path": "packages/coda-runtime/dist/index.js",
+            "sha256": "fccd9b4fe70ed2f98b361f8026a456b2ee101bbde631225f75031b07e34750d6",
+            "bytes": 1766
+          },
+          {
+            "path": "docs-site/docs/runtime/coda-runtime.md",
+            "sha256": "2b5afedcf00a4fabc43d37d9e1a62057f9db175261b2ad7d36872006577d3db4",
+            "bytes": 738
+          },
+          {
+            "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+            "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+            "bytes": 7972
+          }
+        ]
+      },
+      "externalIntegrationPacket": {
+        "target": "NovaCoda substrate adapter",
+        "readiness": "live-integration-verified",
+        "evidence": [
+          "docs-site/docs/runtime/coda-runtime.md",
+          "packages/coda-runtime/src/index.ts",
+          "coda-runtime.evidence.json",
+          "docs/release/external-integrations/README.md",
+          "docs/release/external-integrations/external-integration-index.json"
+        ],
+        "serviceEvidenceIds": [
+          "github-origin-remote",
+          "npm-registry-toolchain"
+        ]
+      },
+      "blockers": []
+    },
+    {
+      "id": "nova-coda",
+      "packageName": "@aaes-os/nova-coda",
+      "status": "release-evidence-ready",
+      "packageDir": "packages/nova-coda",
+      "docsPage": "docs-site/docs/runtime/nova-coda.md",
+      "registryId": "NovaCoda",
+      "checks": {
+        "packageJson": true,
+        "source": true,
+        "tests": true,
+        "buildOutput": true,
+        "docsPage": true,
+        "registryLive": true,
+        "packageName": true,
+        "buildScript": true,
+        "testScript": true
+      },
+      "commands": {
+        "build": "corepack pnpm --filter @aaes-os/nova-coda build",
+        "test": "corepack pnpm --filter @aaes-os/nova-coda test"
+      },
+      "replayAuditPacket": {
+        "replayReference": "nova-coda.evidence.json#replayAuditPacket",
+        "auditReference": "nova-coda.evidence.json#checks",
+        "documentationReference": "docs-site/docs/runtime/nova-coda.md",
+        "requiredArtifacts": [
+          "packageJson",
+          "source",
+          "tests",
+          "buildOutput",
+          "docsPage",
+          "registryLive"
+        ]
+      },
+      "releasePackagingPacket": {
+        "manifestId": "nova-coda-0aaf424915daaf1a5eecd48c14275809c7424779145f21b0cc19dcffa91a637b",
+        "checksumAlgorithm": "sha256",
+        "includedFiles": [
+          {
+            "path": "packages/nova-coda/package.json",
+            "sha256": "ed06a885aa1b7569d6b7660d2cace45f500481d9f1327ee90316697d2f93d32d",
+            "bytes": 636
+          },
+          {
+            "path": "packages/nova-coda/src/index.ts",
+            "sha256": "08b9f1c61d4b46e653f97e251ad2055e53fe73e63310da11e726dd9f02ea0983",
+            "bytes": 7138
+          },
+          {
+            "path": "packages/nova-coda/src/index.test.ts",
+            "sha256": "648c629868897f63534ed1c689222c4f974794ad23440fd923f6a01d2d622866",
+            "bytes": 3003
+          },
+          {
+            "path": "packages/nova-coda/dist/index.js",
+            "sha256": "dc8e6271163146a1c3d6468d82b94ea3a98274816a2b637599f97c3bba3770ff",
+            "bytes": 4218
+          },
+          {
+            "path": "docs-site/docs/runtime/nova-coda.md",
+            "sha256": "39718114645eaf3ea11572faa7d18e71f7fde7b3e13603d6db4c8984a22f334f",
+            "bytes": 887
+          },
+          {
+            "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+            "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+            "bytes": 7972
+          }
+        ]
+      },
+      "externalIntegrationPacket": {
+        "target": "Nova substrate socket adapter",
+        "readiness": "live-integration-verified",
+        "evidence": [
+          "docs-site/docs/runtime/nova-coda.md",
+          "packages/nova-coda/src/index.ts",
+          "nova-coda.evidence.json",
+          "docs/release/external-integrations/README.md",
+          "docs/release/external-integrations/external-integration-index.json"
+        ],
+        "serviceEvidenceIds": [
+          "github-origin-remote",
+          "npm-registry-toolchain"
+        ]
+      },
+      "blockers": []
+    }
+  ],
+  "aggregateHash": "0496c5b377b56d81a168eae5094dc34969c406cce706474de39c1ec88f779e10"
+}

@@ -1,0 +1,88 @@
+{
+  "id": "nova-coda",
+  "packageName": "@aaes-os/nova-coda",
+  "status": "release-evidence-ready",
+  "packageDir": "packages/nova-coda",
+  "docsPage": "docs-site/docs/runtime/nova-coda.md",
+  "registryId": "NovaCoda",
+  "checks": {
+    "packageJson": true,
+    "source": true,
+    "tests": true,
+    "buildOutput": true,
+    "docsPage": true,
+    "registryLive": true,
+    "packageName": true,
+    "buildScript": true,
+    "testScript": true
+  },
+  "commands": {
+    "build": "corepack pnpm --filter @aaes-os/nova-coda build",
+    "test": "corepack pnpm --filter @aaes-os/nova-coda test"
+  },
+  "replayAuditPacket": {
+    "replayReference": "nova-coda.evidence.json#replayAuditPacket",
+    "auditReference": "nova-coda.evidence.json#checks",
+    "documentationReference": "docs-site/docs/runtime/nova-coda.md",
+    "requiredArtifacts": [
+      "packageJson",
+      "source",
+      "tests",
+      "buildOutput",
+      "docsPage",
+      "registryLive"
+    ]
+  },
+  "releasePackagingPacket": {
+    "manifestId": "nova-coda-0aaf424915daaf1a5eecd48c14275809c7424779145f21b0cc19dcffa91a637b",
+    "checksumAlgorithm": "sha256",
+    "includedFiles": [
+      {
+        "path": "packages/nova-coda/package.json",
+        "sha256": "ed06a885aa1b7569d6b7660d2cace45f500481d9f1327ee90316697d2f93d32d",
+        "bytes": 636
+      },
+      {
+        "path": "packages/nova-coda/src/index.ts",
+        "sha256": "08b9f1c61d4b46e653f97e251ad2055e53fe73e63310da11e726dd9f02ea0983",
+        "bytes": 7138
+      },
+      {
+        "path": "packages/nova-coda/src/index.test.ts",
+        "sha256": "648c629868897f63534ed1c689222c4f974794ad23440fd923f6a01d2d622866",
+        "bytes": 3003
+      },
+      {
+        "path": "packages/nova-coda/dist/index.js",
+        "sha256": "dc8e6271163146a1c3d6468d82b94ea3a98274816a2b637599f97c3bba3770ff",
+        "bytes": 4218
+      },
+      {
+        "path": "docs-site/docs/runtime/nova-coda.md",
+        "sha256": "39718114645eaf3ea11572faa7d18e71f7fde7b3e13603d6db4c8984a22f334f",
+        "bytes": 887
+      },
+      {
+        "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+        "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+        "bytes": 7972
+      }
+    ]
+  },
+  "externalIntegrationPacket": {
+    "target": "Nova substrate socket adapter",
+    "readiness": "live-integration-verified",
+    "evidence": [
+      "docs-site/docs/runtime/nova-coda.md",
+      "packages/nova-coda/src/index.ts",
+      "nova-coda.evidence.json",
+      "docs/release/external-integrations/README.md",
+      "docs/release/external-integrations/external-integration-index.json"
+    ],
+    "serviceEvidenceIds": [
+      "github-origin-remote",
+      "npm-registry-toolchain"
+    ]
+  },
+  "blockers": []
+}

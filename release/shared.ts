@@ -37,6 +37,10 @@ export function getSignaturePath() {
   return resolve(getReleaseRoot(), 'signature.json');
 }
 
+export function getReceiptPath() {
+  return resolve(getReleaseRoot(), 'constitutional-release-receipt.json');
+}
+
 export function getBundleManifestPath() {
   return resolve(getBundleRoot(), 'release-package.json');
 }
@@ -47,6 +51,10 @@ export function getBundleChecksumsPath() {
 
 export function getBundleSignaturePath() {
   return resolve(getBundleRoot(), 'signature.json');
+}
+
+export function getBundleReceiptPath() {
+  return resolve(getBundleRoot(), 'constitutional-release-receipt.json');
 }
 
 export function readJson(filePath, fallback) {

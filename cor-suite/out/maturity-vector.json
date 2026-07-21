@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-06-27T01:11:37.187Z",
+  "commit": "a9d5bd15b9940e33dbf56371926d1e5f2fdbceec",
+  "requirements": [
+    {
+      "requirementId": "RUNLEDGER.REQ-001",
+      "maturity": "implemented"
+    },
+    {
+      "requirementId": "TRACEBUS.REQ-001",
+      "maturity": "implemented"
+    },
+    {
+      "requirementId": "GOV.REQ-001",
+      "maturity": "implemented"
+    },
+    {
+      "requirementId": "UCR.REQ-001",
+      "maturity": "implemented"
+    },
+    {
+      "requirementId": "TRICORE.REQ-001",
+      "maturity": "implemented"
+    },
+    {
+      "requirementId": "OPSCONSOLE.REQ-001",
+      "maturity": "implemented"
+    },
+    {
+      "requirementId": "AAES-TEST.REQ-001",
+      "maturity": "normative"
+    },
+    {
+      "requirementId": "OPSURF.REQ-001",
+      "maturity": "implemented"
+    }
+  ],
+  "summary": {
+    "normative": 1,
+    "implemented": 7,
+    "verified": 0,
+    "reproduced": 0
+  }
+}

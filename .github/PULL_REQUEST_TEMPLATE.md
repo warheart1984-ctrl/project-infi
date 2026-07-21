@@ -1,49 +1,28 @@
----
-name: Pull Request
-about: Contribute changes to the project
-title: ''
-labels: ''
-assignees: ''
----
+## Summary
+Describe what changed and why it matters.
 
-## Description
-Please include a summary of the changes and the related issue. Please also include relevant motivation and context.
+## Scope
+- Package or service touched:
+- Related issue or follow-up:
+- User-visible impact:
 
-Fixes # (issue)
+## Evidence
+- [ ] `pnpm build`
+- [ ] `pnpm test`
+- [ ] `pnpm lint`
+- [ ] Manual verification completed
+- [ ] New or updated tests included
 
-## Type of change
-Please delete options that are not relevant.
+## Risk Review
+- Potential regressions:
+- Rollback plan:
+- Any breaking change:
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] Documentation update
-- [ ] Performance improvement
-- [ ] Code refactoring
+## Standards Check
+- [ ] Files follow existing naming and directory boundaries
+- [ ] Docs were updated where the change affects operator or contributor flows
+- [ ] No placeholder or TODO-only behavior was introduced
+- [ ] The change is ready for review without extra context
 
-## Package Context
-If this change affects specific packages in the monorepo:
-
-- Package name: [e.g. @aaes-os/theta-codec]
-- Package version change: [e.g. 0.0.1 -> 0.0.2]
-- Breaking changes for downstream packages: [yes/no]
-
-## Testing
-Describe the tests you ran to verify your changes:
-
-- [ ] Unit tests pass
-- [ ] Integration tests pass
-- [ ] Manual testing completed
-- [ ] Added/updated tests for new functionality
-- [ ] Monorepo build passes (`pnpm build`)
-- [ ] Monorepo tests pass (`pnpm test`)
-
-## Checklist
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my own code
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
-- [ ] Any dependent changes have been merged and published in downstream packages
+## Notes
+Add any implementation details, screenshots, or release notes here.

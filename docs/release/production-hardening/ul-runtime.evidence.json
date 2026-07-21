@@ -1,0 +1,88 @@
+{
+  "id": "ul-runtime",
+  "packageName": "@aaes-os/ul-runtime",
+  "status": "release-evidence-ready",
+  "packageDir": "packages/ul-runtime",
+  "docsPage": "docs-site/docs/runtime/ul-runtime.md",
+  "registryId": "UL",
+  "checks": {
+    "packageJson": true,
+    "source": true,
+    "tests": true,
+    "buildOutput": true,
+    "docsPage": true,
+    "registryLive": true,
+    "packageName": true,
+    "buildScript": true,
+    "testScript": true
+  },
+  "commands": {
+    "build": "corepack pnpm --filter @aaes-os/ul-runtime build",
+    "test": "corepack pnpm --filter @aaes-os/ul-runtime test"
+  },
+  "replayAuditPacket": {
+    "replayReference": "ul-runtime.evidence.json#replayAuditPacket",
+    "auditReference": "ul-runtime.evidence.json#checks",
+    "documentationReference": "docs-site/docs/runtime/ul-runtime.md",
+    "requiredArtifacts": [
+      "packageJson",
+      "source",
+      "tests",
+      "buildOutput",
+      "docsPage",
+      "registryLive"
+    ]
+  },
+  "releasePackagingPacket": {
+    "manifestId": "ul-runtime-a810135e3a096c8f55702e53644c7640b33f418fed3b95b36a10fb4c36ae0931",
+    "checksumAlgorithm": "sha256",
+    "includedFiles": [
+      {
+        "path": "packages/ul-runtime/package.json",
+        "sha256": "51f05cd408a0ff500e92779e2203676358ea9336d1fc8a2b774c4d7cac9d6144",
+        "bytes": 582
+      },
+      {
+        "path": "packages/ul-runtime/src/index.ts",
+        "sha256": "b91720a071cd192ced805bc282226c3c270b3409a0f37a3f7f3c702ce10391be",
+        "bytes": 12519
+      },
+      {
+        "path": "packages/ul-runtime/src/index.test.ts",
+        "sha256": "dd7c3db172ffee04118b521afc4dcf7dce8434057e0a040ab64411afd733b951",
+        "bytes": 3964
+      },
+      {
+        "path": "packages/ul-runtime/dist/index.js",
+        "sha256": "fa733c01c216de3d491e4ae143d60c88d6b5fa21e12d477ac9927474207eaf8f",
+        "bytes": 9917
+      },
+      {
+        "path": "docs-site/docs/runtime/ul-runtime.md",
+        "sha256": "19ce2140665804f509ba75efe7c087768ccfdc38b5c727f7546bc9a2c0abe24f",
+        "bytes": 1520
+      },
+      {
+        "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+        "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+        "bytes": 7972
+      }
+    ]
+  },
+  "externalIntegrationPacket": {
+    "target": "UL cockpit verb-command adapter",
+    "readiness": "live-integration-verified",
+    "evidence": [
+      "docs-site/docs/runtime/ul-runtime.md",
+      "packages/ul-runtime/src/index.ts",
+      "ul-runtime.evidence.json",
+      "docs/release/external-integrations/README.md",
+      "docs/release/external-integrations/external-integration-index.json"
+    ],
+    "serviceEvidenceIds": [
+      "github-origin-remote",
+      "npm-registry-toolchain"
+    ]
+  },
+  "blockers": []
+}

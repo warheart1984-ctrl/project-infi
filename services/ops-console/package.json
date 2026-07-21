@@ -7,7 +7,7 @@
   "scripts": {
     "start": "tsx src/server.ts",
     "test": "vitest run --config vitest.config.ts",
-    "build": "tsc -p tsconfig.json --noEmit && vite build"
+    "build": "tsc -b tsconfig.json && vite build"
   },
   "dependencies": {
     "@aaes-os/aaes-governance": "workspace:*",
@@ -19,7 +19,10 @@
     "@aaes-os/mri-instrument": "workspace:*",
     "@aaes-os/nimf": "workspace:*",
     "@aaes-os/omega-stress-harness": "workspace:*",
+    "@aaes-os/operator-config": "workspace:*",
+    "@aaes-os/platform-core": "workspace:*",
     "@aaes-os/runtime-law-spine": "workspace:*",
+    "@aaes-os/sovereignx-router": "workspace:*",
     "@aaes-os/sovereignty-ledger": "workspace:*",
     "@aaes-os/transition-validation-pipeline": "workspace:*",
     "@aaes-os/tri-core-protocol": "workspace:*",

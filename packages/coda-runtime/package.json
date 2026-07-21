@@ -1,0 +1,27 @@
+{
+  "name": "@aaes-os/coda-runtime",
+  "version": "0.1.0",
+  "description": "Runtime facade for the Coda stack over the NovaCoda substrate",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.json",
+    "test": "vitest run --config vitest.config.ts"
+  },
+  "dependencies": {
+    "@aaes-os/coda-doc": "workspace:*",
+    "@aaes-os/nova-coda": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

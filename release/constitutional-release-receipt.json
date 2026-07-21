@@ -1,0 +1,2382 @@
+{
+  "receiptId": "release:aaes-os:0.1.0",
+  "release": {
+    "name": "aaes-os",
+    "version": "0.1.0",
+    "bundle": "release/bundle",
+    "artifactCount": 43,
+    "checksumCount": 43,
+    "signature": "ccf6699420ca769c823167b00eb6bef3f0d836a12826a12753ce60e9abcbee95"
+  },
+  "proofSurfaceLevel": "P2",
+  "buildEvidence": {
+    "status": "Observed",
+    "evidence": [
+      "release/release-manifest.json",
+      "release/checksums.json"
+    ],
+    "notes": [
+      "Checksums are computed from the selected release artifacts."
+    ]
+  },
+  "testEvidence": {
+    "status": "Observed",
+    "evidence": [
+      "pnpm exec vitest run (435 passed, 2 environment-dependent integration tests skipped)",
+      "pnpm run release:drift (25 passed)"
+    ],
+    "notes": [
+      "Fresh local verification completed on 2026-07-14."
+    ]
+  },
+  "lintStatus": {
+    "status": "Observed",
+    "evidence": [
+      "pnpm exec eslint \"packages/**/*.{js,jsx,ts,tsx,mjs,cjs}\" \"services/**/*.{js,jsx,ts,tsx,mjs,cjs}\" --max-warnings 0"
+    ],
+    "notes": [
+      "Strict workspace lint completed with zero errors on 2026-07-14."
+    ]
+  },
+  "replayStatus": {
+    "status": "Observed",
+    "evidence": [
+      "packages/runledger",
+      "packages/evidence-receipts",
+      "release/signature.json",
+      "pnpm run release:drift"
+    ],
+    "notes": [
+      "Replay/drift verification passed 25 tests; external database integration replays remain environment-dependent."
+    ]
+  },
+  "auditStatus": {
+    "status": "Observed",
+    "evidence": [
+      "docs/README.md",
+      "docs/scorecards/project-infi.md",
+      "docs-site/docs/overview.md"
+    ],
+    "notes": [
+      "Audit trace is documented in the docs hub and scorecard."
+    ]
+  },
+  "verificationDate": "2026-07-14T16:52:26.145Z",
+  "knownLimitations": [
+    "Coverage percentages are not yet standardized across every workspace package.",
+    "External database integration tests require configured PostgreSQL and Neo4j services.",
+    "Release verification covers selected artifacts, not production deployment or independent certification."
+  ],
+  "truthBoundary": "This receipt proves the bundle was built, packaged, signed, and verified against the selected artifacts. It does not prove production readiness for unfinished surfaces.",
+  "constitutionalMaturity": "Verified Prototype",
+  "commercialReadiness": "Builder",
+  "generatedAt": "2026-07-14T16:52:22.885Z",
+  "constitutionalEvidenceGraph": {
+    "schemaVersion": "1.0",
+    "graphId": "ceg:release:aaes-os:0.1.0",
+    "generatedAt": "2026-07-14T16:52:22.885Z",
+    "source": "release-receipt",
+    "rootReceipt": {
+      "receiptId": "release:aaes-os:0.1.0",
+      "release": {
+        "name": "aaes-os",
+        "version": "0.1.0",
+        "bundle": "release/bundle",
+        "artifactCount": 43,
+        "checksumCount": 43,
+        "signature": null
+      },
+      "proofSurfaceLevel": "P2",
+      "buildEvidence": {
+        "status": "Observed",
+        "evidence": [
+          "release/release-manifest.json",
+          "release/checksums.json"
+        ],
+        "notes": [
+          "Checksums are computed from the selected release artifacts."
+        ]
+      },
+      "testEvidence": {
+        "status": "Observed",
+        "evidence": [
+          "pnpm exec vitest run (435 passed, 2 environment-dependent integration tests skipped)",
+          "pnpm run release:drift (25 passed)"
+        ],
+        "notes": [
+          "Fresh local verification completed on 2026-07-14."
+        ]
+      },
+      "lintStatus": {
+        "status": "Observed",
+        "evidence": [
+          "pnpm exec eslint \"packages/**/*.{js,jsx,ts,tsx,mjs,cjs}\" \"services/**/*.{js,jsx,ts,tsx,mjs,cjs}\" --max-warnings 0"
+        ],
+        "notes": [
+          "Strict workspace lint completed with zero errors on 2026-07-14."
+        ]
+      },
+      "replayStatus": {
+        "status": "Observed",
+        "evidence": [
+          "packages/runledger",
+          "packages/evidence-receipts",
+          "release/signature.json",
+          "pnpm run release:drift"
+        ],
+        "notes": [
+          "Replay/drift verification passed 25 tests; external database integration replays remain environment-dependent."
+        ]
+      },
+      "auditStatus": {
+        "status": "Observed",
+        "evidence": [
+          "docs/README.md",
+          "docs/scorecards/project-infi.md",
+          "docs-site/docs/overview.md"
+        ],
+        "notes": [
+          "Audit trace is documented in the docs hub and scorecard."
+        ]
+      },
+      "verificationDate": null,
+      "knownLimitations": [
+        "Coverage percentages are not yet standardized across every workspace package.",
+        "External database integration tests require configured PostgreSQL and Neo4j services.",
+        "Release verification covers selected artifacts, not production deployment or independent certification."
+      ],
+      "truthBoundary": "This receipt proves the bundle was built, packaged, signed, and verified against the selected artifacts. It does not prove production readiness for unfinished surfaces.",
+      "constitutionalMaturity": "Verified Prototype",
+      "commercialReadiness": "Builder",
+      "generatedAt": "2026-07-14T16:52:22.885Z"
+    },
+    "proofSurfaces": [
+      {
+        "proofSurfaceId": "@aaes-os/aaes-governance",
+        "proofLevel": "P2",
+        "verificationStatus": "Test Verified",
+        "replayStatus": "Replayable",
+        "operationalStatus": "Verified Prototype",
+        "truthBoundary": "The package proves proof-surface governance and validation, not application deployments.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Builder",
+          "intendedCustomer": "Governance teams and tool builders",
+          "primaryUseCase": "Machine-readable proof-surface publication",
+          "valueProposition": "A standard claim/evidence contract for dashboards and product tiers.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "nextRequiredEvidence": [
+          "Independent consumer integration",
+          "Cross-repo publish/subscribe demos"
+        ]
+      },
+      {
+        "proofSurfaceId": "@aaes-os/ucr-runtime",
+        "proofLevel": "P2",
+        "verificationStatus": "Test Verified",
+        "replayStatus": "Replayable",
+        "operationalStatus": "Verified Prototype",
+        "truthBoundary": "The runtime proves governed execution and trace consistency, not full production orchestration.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Builder",
+          "intendedCustomer": "Runtime and governance teams",
+          "primaryUseCase": "Governed runtime execution",
+          "valueProposition": "A traceable execution path with patch-controlled output behavior.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "nextRequiredEvidence": [
+          "End-to-end integration in a long-running service",
+          "Independent replay of fault traces"
+        ]
+      },
+      {
+        "proofSurfaceId": "@aaes-os/ops-console",
+        "proofLevel": "P2",
+        "verificationStatus": "Test Verified",
+        "replayStatus": "Replayable",
+        "operationalStatus": "Verified Prototype",
+        "truthBoundary": "The console proves operator visibility and proof-surface exposure, not governance authority itself.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Operators and governance teams",
+          "primaryUseCase": "Operational proof-surface visibility",
+          "valueProposition": "A single pane for evidence-backed governance claims.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "nextRequiredEvidence": [
+          "Live registry-backed operator demo",
+          "Independent dashboard integration"
+        ]
+      },
+      {
+        "proofSurfaceId": "@aaes-os/nova-studio",
+        "proofLevel": "P2",
+        "verificationStatus": "Test Verified",
+        "replayStatus": "Replayable",
+        "operationalStatus": "Verified Prototype",
+        "truthBoundary": "The studio proves the visualization concept and the packaged build/smoke path, not a full production desktop platform.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Builder",
+          "intendedCustomer": "Operators, reviewers, and contributors",
+          "primaryUseCase": "Proof-surface visualization and review",
+          "valueProposition": "A clear UI for claim/evidence maturity.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "nextRequiredEvidence": [
+          "Backend integration with operator and proof surfaces",
+          "User-facing session persistence"
+        ]
+      },
+      {
+        "proofSurfaceId": "@cis-core/standards-hierarchy",
+        "proofLevel": "P2",
+        "verificationStatus": "Test Verified",
+        "replayStatus": "Replayable",
+        "operationalStatus": "Verified Prototype",
+        "truthBoundary": "The surface proves documentation and registry publication, not independent external certification.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Standards stewards, platform teams, and implementers",
+          "primaryUseCase": "Constitutional standards publication and traceability",
+          "valueProposition": "A stable hierarchy that can be ingested by tooling and audited by humans.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "nextRequiredEvidence": [
+          "Independent downstream ingest of the JSON hierarchy",
+          "Conformance suite linkage for companion specifications"
+        ]
+      },
+      {
+        "proofSurfaceId": "@cis-core/standards-traceability-matrix",
+        "proofLevel": "P2",
+        "verificationStatus": "Test Verified",
+        "replayStatus": "Replayable",
+        "operationalStatus": "Verified Prototype",
+        "truthBoundary": "The surface proves traceability publication and generation linkage, not external certification.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Standards stewards and conformance teams",
+          "primaryUseCase": "Requirement-to-evidence traceability publication",
+          "valueProposition": "A first-class matrix that prevents documentation and test drift.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "nextRequiredEvidence": [
+          "Publish downstream profile-specific traceability rows",
+          "Generate conformance execution reports from the matrix"
+        ]
+      },
+      {
+        "proofSurfaceId": "@cis-core/companion-spec-registry",
+        "proofLevel": "P2",
+        "verificationStatus": "Test Verified",
+        "replayStatus": "Replayable",
+        "operationalStatus": "Verified Prototype",
+        "truthBoundary": "The registry proves publication and alignment, not external certification of every companion implementation.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Platform and standards teams",
+          "primaryUseCase": "Unified publication of companion specifications",
+          "valueProposition": "One registry for core, companions, profiles, and Research OS.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "nextRequiredEvidence": [
+          "Round-trip registry ingestion in the orchestrator",
+          "Independent companion-spec publish flow"
+        ]
+      },
+      {
+        "proofSurfaceId": "@cis-core/artifact-governance",
+        "proofLevel": "P2",
+        "verificationStatus": "Test Verified",
+        "replayStatus": "Replayable",
+        "operationalStatus": "Verified Prototype",
+        "truthBoundary": "The surface proves repository-level governance metadata publication, not external certification.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Standards stewards and platform operators",
+          "primaryUseCase": "Repository-wide artifact governance",
+          "valueProposition": "One metadata model for major artifacts.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "nextRequiredEvidence": [
+          "Expand registry coverage to more implementation profiles",
+          "Link artifact governance to conformance review workflows"
+        ]
+      },
+      {
+        "proofSurfaceId": "@cis-core/sovereign-router-pricing",
+        "proofLevel": "P2",
+        "verificationStatus": "Test Verified",
+        "replayStatus": "Replayable",
+        "operationalStatus": "Verified Prototype",
+        "truthBoundary": "The surface proves the pricing model is documented and machine-readable, not that every market price is optimized.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Product, finance, and platform teams",
+          "primaryUseCase": "Layered pricing strategy and unit economics",
+          "valueProposition": "Pricing that survives falling inference costs.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "nextRequiredEvidence": [
+          "Segment-specific customer interviews",
+          "Scenario model comparison across tiers"
+        ]
+      },
+      {
+        "proofSurfaceId": "@cis-core/external-standards-mapping",
+        "proofLevel": "P2",
+        "verificationStatus": "Test Verified",
+        "replayStatus": "Replayable",
+        "operationalStatus": "Verified Prototype",
+        "truthBoundary": "The surface proves standards-family mapping, not certification under those standards.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Standards and compliance teams",
+          "primaryUseCase": "Interoperability mapping and traceability",
+          "valueProposition": "Clear mapping to the major external standards families.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "nextRequiredEvidence": [
+          "Map specific CIS artifacts to selected ISO/NIST/IEEE/W3C/IETF standards",
+          "Add downstream reviewer sign-off"
+        ]
+      },
+      {
+        "proofSurfaceId": "@cis-core/conformance-generation",
+        "proofLevel": "P2",
+        "verificationStatus": "Test Verified",
+        "replayStatus": "Replayable",
+        "operationalStatus": "Verified Prototype",
+        "truthBoundary": "The surface proves reproducible generation, not formal standards certification.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Conformance and standards teams",
+          "primaryUseCase": "Reproducible conformance-suite generation",
+          "valueProposition": "No manual drift between traceability and tests.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "nextRequiredEvidence": [
+          "Generate the suite as part of release automation",
+          "Add downstream conformance suite execution against the generated input"
+        ]
+      }
+    ],
+    "claims": [
+      {
+        "claimId": "gov-impl",
+        "claimType": "Implementation",
+        "proofSurfaceId": "@aaes-os/aaes-governance",
+        "evidenceIds": [
+          "gov-impl-evidence"
+        ],
+        "proofLevel": "P1",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "gov-verify",
+        "claimType": "Verification",
+        "proofSurfaceId": "@aaes-os/aaes-governance",
+        "evidenceIds": [
+          "gov-test-evidence"
+        ],
+        "proofLevel": "P2",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "ucr-impl",
+        "claimType": "Implementation",
+        "proofSurfaceId": "@aaes-os/ucr-runtime",
+        "evidenceIds": [
+          "ucr-impl-evidence"
+        ],
+        "proofLevel": "P1",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "ucr-verify",
+        "claimType": "Verification",
+        "proofSurfaceId": "@aaes-os/ucr-runtime",
+        "evidenceIds": [
+          "ucr-test-evidence"
+        ],
+        "proofLevel": "P2",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "ops-impl",
+        "claimType": "Implementation",
+        "proofSurfaceId": "@aaes-os/ops-console",
+        "evidenceIds": [
+          "ops-impl-evidence"
+        ],
+        "proofLevel": "P1",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "ops-verify",
+        "claimType": "Verification",
+        "proofSurfaceId": "@aaes-os/ops-console",
+        "evidenceIds": [
+          "ops-test-evidence"
+        ],
+        "proofLevel": "P2",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "studio-impl",
+        "claimType": "Implementation",
+        "proofSurfaceId": "@aaes-os/nova-studio",
+        "evidenceIds": [
+          "studio-impl-evidence"
+        ],
+        "proofLevel": "P1",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "studio-verify",
+        "claimType": "Verification",
+        "proofSurfaceId": "@aaes-os/nova-studio",
+        "evidenceIds": [
+          "studio-smoke-evidence"
+        ],
+        "proofLevel": "P2",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "cis-hierarchy-spec",
+        "claimType": "Specification",
+        "proofSurfaceId": "@cis-core/standards-hierarchy",
+        "evidenceIds": [
+          "cis-hierarchy-doc",
+          "cis-hierarchy-json"
+        ],
+        "proofLevel": "P1",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "cis-hierarchy-traceability",
+        "claimType": "Verification",
+        "proofSurfaceId": "@cis-core/standards-hierarchy",
+        "evidenceIds": [
+          "cis-hierarchy-traceability",
+          "cis-hierarchy-test"
+        ],
+        "proofLevel": "P2",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "cis-traceability-impl",
+        "claimType": "Specification",
+        "proofSurfaceId": "@cis-core/standards-traceability-matrix",
+        "evidenceIds": [
+          "cis-traceability-doc"
+        ],
+        "proofLevel": "P1",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "cis-traceability-test",
+        "claimType": "Verification",
+        "proofSurfaceId": "@cis-core/standards-traceability-matrix",
+        "evidenceIds": [
+          "cis-traceability-json",
+          "cis-traceability-test-evidence"
+        ],
+        "proofLevel": "P2",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "cis-registry-impl",
+        "claimType": "Specification",
+        "proofSurfaceId": "@cis-core/companion-spec-registry",
+        "evidenceIds": [
+          "cis-registry-json"
+        ],
+        "proofLevel": "P1",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "cis-registry-evidence",
+        "claimType": "Implementation",
+        "proofSurfaceId": "@cis-core/companion-spec-registry",
+        "evidenceIds": [
+          "cis-registry-test",
+          "cis-registry-doc"
+        ],
+        "proofLevel": "P1",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "artifact-gov-model",
+        "claimType": "Specification",
+        "proofSurfaceId": "@cis-core/artifact-governance",
+        "evidenceIds": [
+          "artifact-gov-doc",
+          "artifact-gov-json"
+        ],
+        "proofLevel": "P1",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "artifact-gov-test",
+        "claimType": "Verification",
+        "proofSurfaceId": "@cis-core/artifact-governance",
+        "evidenceIds": [
+          "artifact-gov-test-evidence"
+        ],
+        "proofLevel": "P2",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "pricing-layers",
+        "claimType": "Specification",
+        "proofSurfaceId": "@cis-core/sovereign-router-pricing",
+        "evidenceIds": [
+          "pricing-doc",
+          "pricing-spec"
+        ],
+        "proofLevel": "P1",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "pricing-segments",
+        "claimType": "Verification",
+        "proofSurfaceId": "@cis-core/sovereign-router-pricing",
+        "evidenceIds": [
+          "pricing-test"
+        ],
+        "proofLevel": "P2",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "external-map-families",
+        "claimType": "Specification",
+        "proofSurfaceId": "@cis-core/external-standards-mapping",
+        "evidenceIds": [
+          "external-map-doc",
+          "external-map-json"
+        ],
+        "proofLevel": "P1",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "external-map-trace",
+        "claimType": "Verification",
+        "proofSurfaceId": "@cis-core/external-standards-mapping",
+        "evidenceIds": [
+          "external-map-test"
+        ],
+        "proofLevel": "P2",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "conformance-gen-rule",
+        "claimType": "Specification",
+        "proofSurfaceId": "@cis-core/conformance-generation",
+        "evidenceIds": [
+          "conformance-gen-doc",
+          "conformance-gen-generator"
+        ],
+        "proofLevel": "P1",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      },
+      {
+        "claimId": "conformance-gen-test",
+        "claimType": "Verification",
+        "proofSurfaceId": "@cis-core/conformance-generation",
+        "evidenceIds": [
+          "conformance-gen-test"
+        ],
+        "proofLevel": "P2",
+        "verified": true,
+        "replayable": true,
+        "issues": []
+      }
+    ],
+    "views": [
+      {
+        "id": "view:readme",
+        "label": "README",
+        "claimIds": [
+          "gov-impl",
+          "gov-verify",
+          "ucr-impl",
+          "ucr-verify",
+          "ops-impl",
+          "ops-verify",
+          "studio-impl",
+          "studio-verify",
+          "cis-hierarchy-spec",
+          "cis-hierarchy-traceability",
+          "cis-traceability-impl",
+          "cis-traceability-test",
+          "cis-registry-impl",
+          "cis-registry-evidence",
+          "artifact-gov-model",
+          "artifact-gov-test",
+          "pricing-layers",
+          "pricing-segments",
+          "external-map-families",
+          "external-map-trace",
+          "conformance-gen-rule",
+          "conformance-gen-test"
+        ],
+        "proofSurfaceIds": [
+          "@aaes-os/aaes-governance",
+          "@aaes-os/ucr-runtime",
+          "@aaes-os/ops-console",
+          "@aaes-os/nova-studio",
+          "@cis-core/standards-hierarchy",
+          "@cis-core/standards-traceability-matrix",
+          "@cis-core/companion-spec-registry",
+          "@cis-core/artifact-governance",
+          "@cis-core/sovereign-router-pricing",
+          "@cis-core/external-standards-mapping",
+          "@cis-core/conformance-generation"
+        ]
+      },
+      {
+        "id": "view:docs-site",
+        "label": "docs-site",
+        "claimIds": [
+          "gov-impl",
+          "gov-verify",
+          "ucr-impl",
+          "ucr-verify",
+          "ops-impl",
+          "ops-verify",
+          "studio-impl",
+          "studio-verify",
+          "cis-hierarchy-spec",
+          "cis-hierarchy-traceability",
+          "cis-traceability-impl",
+          "cis-traceability-test",
+          "cis-registry-impl",
+          "cis-registry-evidence",
+          "artifact-gov-model",
+          "artifact-gov-test",
+          "pricing-layers",
+          "pricing-segments",
+          "external-map-families",
+          "external-map-trace",
+          "conformance-gen-rule",
+          "conformance-gen-test"
+        ],
+        "proofSurfaceIds": [
+          "@aaes-os/aaes-governance",
+          "@aaes-os/ucr-runtime",
+          "@aaes-os/ops-console",
+          "@aaes-os/nova-studio",
+          "@cis-core/standards-hierarchy",
+          "@cis-core/standards-traceability-matrix",
+          "@cis-core/companion-spec-registry",
+          "@cis-core/artifact-governance",
+          "@cis-core/sovereign-router-pricing",
+          "@cis-core/external-standards-mapping",
+          "@cis-core/conformance-generation"
+        ]
+      },
+      {
+        "id": "view:scorecards",
+        "label": "Scorecards",
+        "claimIds": [
+          "gov-impl",
+          "gov-verify",
+          "ucr-impl",
+          "ucr-verify",
+          "ops-impl",
+          "ops-verify",
+          "studio-impl",
+          "studio-verify",
+          "cis-hierarchy-spec",
+          "cis-hierarchy-traceability",
+          "cis-traceability-impl",
+          "cis-traceability-test",
+          "cis-registry-impl",
+          "cis-registry-evidence",
+          "artifact-gov-model",
+          "artifact-gov-test",
+          "pricing-layers",
+          "pricing-segments",
+          "external-map-families",
+          "external-map-trace",
+          "conformance-gen-rule",
+          "conformance-gen-test"
+        ],
+        "proofSurfaceIds": [
+          "@aaes-os/aaes-governance",
+          "@aaes-os/ucr-runtime",
+          "@aaes-os/ops-console",
+          "@aaes-os/nova-studio",
+          "@cis-core/standards-hierarchy",
+          "@cis-core/standards-traceability-matrix",
+          "@cis-core/companion-spec-registry",
+          "@cis-core/artifact-governance",
+          "@cis-core/sovereign-router-pricing",
+          "@cis-core/external-standards-mapping",
+          "@cis-core/conformance-generation"
+        ]
+      },
+      {
+        "id": "view:nova-studio",
+        "label": "Nova Studio",
+        "claimIds": [
+          "gov-impl",
+          "gov-verify",
+          "ucr-impl",
+          "ucr-verify",
+          "ops-impl",
+          "ops-verify",
+          "studio-impl",
+          "studio-verify",
+          "cis-hierarchy-spec",
+          "cis-hierarchy-traceability",
+          "cis-traceability-impl",
+          "cis-traceability-test",
+          "cis-registry-impl",
+          "cis-registry-evidence",
+          "artifact-gov-model",
+          "artifact-gov-test",
+          "pricing-layers",
+          "pricing-segments",
+          "external-map-families",
+          "external-map-trace",
+          "conformance-gen-rule",
+          "conformance-gen-test"
+        ],
+        "proofSurfaceIds": [
+          "@aaes-os/aaes-governance",
+          "@aaes-os/ucr-runtime",
+          "@aaes-os/ops-console",
+          "@aaes-os/nova-studio",
+          "@cis-core/standards-hierarchy",
+          "@cis-core/standards-traceability-matrix",
+          "@cis-core/companion-spec-registry",
+          "@cis-core/artifact-governance",
+          "@cis-core/sovereign-router-pricing",
+          "@cis-core/external-standards-mapping",
+          "@cis-core/conformance-generation"
+        ]
+      },
+      {
+        "id": "view:ops-console",
+        "label": "Ops Console",
+        "claimIds": [
+          "gov-impl",
+          "gov-verify",
+          "ucr-impl",
+          "ucr-verify",
+          "ops-impl",
+          "ops-verify",
+          "studio-impl",
+          "studio-verify",
+          "cis-hierarchy-spec",
+          "cis-hierarchy-traceability",
+          "cis-traceability-impl",
+          "cis-traceability-test",
+          "cis-registry-impl",
+          "cis-registry-evidence",
+          "artifact-gov-model",
+          "artifact-gov-test",
+          "pricing-layers",
+          "pricing-segments",
+          "external-map-families",
+          "external-map-trace",
+          "conformance-gen-rule",
+          "conformance-gen-test"
+        ],
+        "proofSurfaceIds": [
+          "@aaes-os/aaes-governance",
+          "@aaes-os/ucr-runtime",
+          "@aaes-os/ops-console",
+          "@aaes-os/nova-studio",
+          "@cis-core/standards-hierarchy",
+          "@cis-core/standards-traceability-matrix",
+          "@cis-core/companion-spec-registry",
+          "@cis-core/artifact-governance",
+          "@cis-core/sovereign-router-pricing",
+          "@cis-core/external-standards-mapping",
+          "@cis-core/conformance-generation"
+        ]
+      }
+    ],
+    "nodes": [
+      {
+        "id": "receipt:release:aaes-os:0.1.0",
+        "kind": "root-receipt",
+        "label": "Constitutional Release Receipt",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "This receipt proves the bundle was built, packaged, signed, and verified against the selected artifacts. It does not prove production readiness for unfinished surfaces.",
+        "currentMaturity": "Verified Prototype"
+      },
+      {
+        "id": "view:readme",
+        "kind": "public-view",
+        "label": "README",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "A public view of the canonical evidence graph."
+      },
+      {
+        "id": "view:docs-site",
+        "kind": "public-view",
+        "label": "docs-site",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "A public view of the canonical evidence graph."
+      },
+      {
+        "id": "view:scorecards",
+        "kind": "public-view",
+        "label": "Scorecards",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "A public view of the canonical evidence graph."
+      },
+      {
+        "id": "view:nova-studio",
+        "kind": "public-view",
+        "label": "Nova Studio",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "A public view of the canonical evidence graph."
+      },
+      {
+        "id": "view:ops-console",
+        "kind": "public-view",
+        "label": "Ops Console",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "A public view of the canonical evidence graph."
+      },
+      {
+        "id": "surface:@aaes-os/aaes-governance",
+        "kind": "proof-surface",
+        "label": "AAES Governance Package",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The package proves proof-surface governance and validation, not application deployments.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Builder",
+          "intendedCustomer": "Governance teams and tool builders",
+          "primaryUseCase": "Machine-readable proof-surface publication",
+          "valueProposition": "A standard claim/evidence contract for dashboards and product tiers.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "proofSurfaceId": "@aaes-os/aaes-governance"
+      },
+      {
+        "id": "claim:@aaes-os/aaes-governance:gov-impl",
+        "kind": "claim",
+        "label": "The package implements proof-surface types, validation, and registry helpers.",
+        "status": "Verified",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The package proves proof-surface governance and validation, not application deployments.",
+        "proofSurfaceId": "@aaes-os/aaes-governance",
+        "claimId": "gov-impl",
+        "claimType": "Implementation"
+      },
+      {
+        "id": "claim:@aaes-os/aaes-governance:gov-verify",
+        "kind": "claim",
+        "label": "The package ships tests that validate supported and unsupported proof surfaces.",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The package proves proof-surface governance and validation, not application deployments.",
+        "proofSurfaceId": "@aaes-os/aaes-governance",
+        "claimId": "gov-verify",
+        "claimType": "Verification"
+      },
+      {
+        "id": "evidence:@aaes-os/aaes-governance:gov-impl-evidence",
+        "kind": "evidence",
+        "label": "Source files define ProofSurface, ProofSurfaceRegistry, and JSON helpers.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The package proves proof-surface governance and validation, not application deployments.",
+        "proofSurfaceId": "@aaes-os/aaes-governance",
+        "claimId": "gov-impl",
+        "evidenceId": "gov-impl-evidence"
+      },
+      {
+        "id": "evidence:@aaes-os/aaes-governance:gov-test-evidence",
+        "kind": "evidence",
+        "label": "Vitest coverage exercises validation, proof levels, and registry publication.",
+        "status": "Observed",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The package proves proof-surface governance and validation, not application deployments.",
+        "proofSurfaceId": "@aaes-os/aaes-governance",
+        "claimId": "gov-verify",
+        "evidenceId": "gov-test-evidence"
+      },
+      {
+        "id": "surface:@aaes-os/ucr-runtime",
+        "kind": "proof-surface",
+        "label": "UCR Runtime",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The runtime proves governed execution and trace consistency, not full production orchestration.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Builder",
+          "intendedCustomer": "Runtime and governance teams",
+          "primaryUseCase": "Governed runtime execution",
+          "valueProposition": "A traceable execution path with patch-controlled output behavior.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "proofSurfaceId": "@aaes-os/ucr-runtime"
+      },
+      {
+        "id": "claim:@aaes-os/ucr-runtime:ucr-impl",
+        "kind": "claim",
+        "label": "The runtime delegates compatibility callers into the governed UCRRuntime execution path and writes terminal evidence receipts.",
+        "status": "Verified",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The runtime proves governed execution and trace consistency, not full production orchestration.",
+        "proofSurfaceId": "@aaes-os/ucr-runtime",
+        "claimId": "ucr-impl",
+        "claimType": "Implementation"
+      },
+      {
+        "id": "claim:@aaes-os/ucr-runtime:ucr-verify",
+        "kind": "claim",
+        "label": "Package tests prove trace-fault emission, span closure, and deployed patch behavior.",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The runtime proves governed execution and trace consistency, not full production orchestration.",
+        "proofSurfaceId": "@aaes-os/ucr-runtime",
+        "claimId": "ucr-verify",
+        "claimType": "Verification"
+      },
+      {
+        "id": "evidence:@aaes-os/ucr-runtime:ucr-impl-evidence",
+        "kind": "evidence",
+        "label": "src/ucrRuntime.ts, src/RuntimeCore.ts, and src/withSpanGuard.ts wire the governed runtime path, trace receipts, and terminal evidence storage.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The runtime proves governed execution and trace consistency, not full production orchestration.",
+        "proofSurfaceId": "@aaes-os/ucr-runtime",
+        "claimId": "ucr-impl",
+        "evidenceId": "ucr-impl-evidence"
+      },
+      {
+        "id": "evidence:@aaes-os/ucr-runtime:ucr-test-evidence",
+        "kind": "evidence",
+        "label": "Vitest coverage exercises the governed runtime, fault traces, and patch regression behavior.",
+        "status": "Observed",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The runtime proves governed execution and trace consistency, not full production orchestration.",
+        "proofSurfaceId": "@aaes-os/ucr-runtime",
+        "claimId": "ucr-verify",
+        "evidenceId": "ucr-test-evidence"
+      },
+      {
+        "id": "surface:@aaes-os/ops-console",
+        "kind": "proof-surface",
+        "label": "AAES Ops Console",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The console proves operator visibility and proof-surface exposure, not governance authority itself.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Operators and governance teams",
+          "primaryUseCase": "Operational proof-surface visibility",
+          "valueProposition": "A single pane for evidence-backed governance claims.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "proofSurfaceId": "@aaes-os/ops-console"
+      },
+      {
+        "id": "claim:@aaes-os/ops-console:ops-impl",
+        "kind": "claim",
+        "label": "The console exposes telemetry routes and a proof-surface endpoint.",
+        "status": "Verified",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The console proves operator visibility and proof-surface exposure, not governance authority itself.",
+        "proofSurfaceId": "@aaes-os/ops-console",
+        "claimId": "ops-impl",
+        "claimType": "Implementation"
+      },
+      {
+        "id": "claim:@aaes-os/ops-console:ops-verify",
+        "kind": "claim",
+        "label": "The console has route coverage and API tests for operator surfaces.",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The console proves operator visibility and proof-surface exposure, not governance authority itself.",
+        "proofSurfaceId": "@aaes-os/ops-console",
+        "claimId": "ops-verify",
+        "claimType": "Verification"
+      },
+      {
+        "id": "evidence:@aaes-os/ops-console:ops-impl-evidence",
+        "kind": "evidence",
+        "label": "Server routes expose telemetry and proof-surface catalog JSON.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The console proves operator visibility and proof-surface exposure, not governance authority itself.",
+        "proofSurfaceId": "@aaes-os/ops-console",
+        "claimId": "ops-impl",
+        "evidenceId": "ops-impl-evidence"
+      },
+      {
+        "id": "evidence:@aaes-os/ops-console:ops-test-evidence",
+        "kind": "evidence",
+        "label": "Vitest routes prove the operator console behavior.",
+        "status": "Observed",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The console proves operator visibility and proof-surface exposure, not governance authority itself.",
+        "proofSurfaceId": "@aaes-os/ops-console",
+        "claimId": "ops-verify",
+        "evidenceId": "ops-test-evidence"
+      },
+      {
+        "id": "surface:@aaes-os/nova-studio",
+        "kind": "proof-surface",
+        "label": "Nova Studio",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The studio proves the visualization concept and the packaged build/smoke path, not a full production desktop platform.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Builder",
+          "intendedCustomer": "Operators, reviewers, and contributors",
+          "primaryUseCase": "Proof-surface visualization and review",
+          "valueProposition": "A clear UI for claim/evidence maturity.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "proofSurfaceId": "@aaes-os/nova-studio"
+      },
+      {
+        "id": "claim:@aaes-os/nova-studio:studio-impl",
+        "kind": "claim",
+        "label": "The studio can render proof-surface registry records from a direct import.",
+        "status": "Verified",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The studio proves the visualization concept and the packaged build/smoke path, not a full production desktop platform.",
+        "proofSurfaceId": "@aaes-os/nova-studio",
+        "claimId": "studio-impl",
+        "claimType": "Implementation"
+      },
+      {
+        "id": "claim:@aaes-os/nova-studio:studio-verify",
+        "kind": "claim",
+        "label": "The production bundle and replay coverage smoke run successfully against the local registry.",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The studio proves the visualization concept and the packaged build/smoke path, not a full production desktop platform.",
+        "proofSurfaceId": "@aaes-os/nova-studio",
+        "claimId": "studio-verify",
+        "claimType": "Verification"
+      },
+      {
+        "id": "evidence:@aaes-os/nova-studio:studio-impl-evidence",
+        "kind": "evidence",
+        "label": "The studio source tree contains components for proof-surface visualization.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The studio proves the visualization concept and the packaged build/smoke path, not a full production desktop platform.",
+        "proofSurfaceId": "@aaes-os/nova-studio",
+        "claimId": "studio-impl",
+        "evidenceId": "studio-impl-evidence"
+      },
+      {
+        "id": "evidence:@aaes-os/nova-studio:studio-smoke-evidence",
+        "kind": "evidence",
+        "label": "The Nova Studio production build and smoke verify the built dist output and replay coverage on the local registry.",
+        "status": "Observed",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The studio proves the visualization concept and the packaged build/smoke path, not a full production desktop platform.",
+        "proofSurfaceId": "@aaes-os/nova-studio",
+        "claimId": "studio-verify",
+        "evidenceId": "studio-smoke-evidence"
+      },
+      {
+        "id": "surface:@cis-core/standards-hierarchy",
+        "kind": "proof-surface",
+        "label": "CIS Standards Hierarchy",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves documentation and registry publication, not independent external certification.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Standards stewards, platform teams, and implementers",
+          "primaryUseCase": "Constitutional standards publication and traceability",
+          "valueProposition": "A stable hierarchy that can be ingested by tooling and audited by humans.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "proofSurfaceId": "@cis-core/standards-hierarchy"
+      },
+      {
+        "id": "claim:@cis-core/standards-hierarchy:cis-hierarchy-spec",
+        "kind": "claim",
+        "label": "The repository publishes a CIS standards hierarchy document and machine-readable hierarchy spec that preserve Core terminology and governance rules.",
+        "status": "Verified",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves documentation and registry publication, not independent external certification.",
+        "proofSurfaceId": "@cis-core/standards-hierarchy",
+        "claimId": "cis-hierarchy-spec",
+        "claimType": "Specification"
+      },
+      {
+        "id": "claim:@cis-core/standards-hierarchy:cis-hierarchy-traceability",
+        "kind": "claim",
+        "label": "The hierarchy has a formal traceability matrix that maps requirements to components, evidence, and tests.",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves documentation and registry publication, not independent external certification.",
+        "proofSurfaceId": "@cis-core/standards-hierarchy",
+        "claimId": "cis-hierarchy-traceability",
+        "claimType": "Verification"
+      },
+      {
+        "id": "evidence:@cis-core/standards-hierarchy:cis-hierarchy-doc",
+        "kind": "evidence",
+        "label": "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md defines CIS Core, companion specifications, governance, and Research OS mapping.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves documentation and registry publication, not independent external certification.",
+        "proofSurfaceId": "@cis-core/standards-hierarchy",
+        "claimId": "cis-hierarchy-spec",
+        "evidenceId": "cis-hierarchy-doc"
+      },
+      {
+        "id": "evidence:@cis-core/standards-hierarchy:cis-hierarchy-json",
+        "kind": "evidence",
+        "label": "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json provides a machine-readable hierarchy for orchestrator ingestion.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves documentation and registry publication, not independent external certification.",
+        "proofSurfaceId": "@cis-core/standards-hierarchy",
+        "claimId": "cis-hierarchy-spec",
+        "evidenceId": "cis-hierarchy-json"
+      },
+      {
+        "id": "evidence:@cis-core/standards-hierarchy:cis-hierarchy-traceability",
+        "kind": "evidence",
+        "label": "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md maps requirements to components, evidence, and tests.",
+        "status": "Observed",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves documentation and registry publication, not independent external certification.",
+        "proofSurfaceId": "@cis-core/standards-hierarchy",
+        "claimId": "cis-hierarchy-traceability",
+        "evidenceId": "cis-hierarchy-traceability"
+      },
+      {
+        "id": "evidence:@cis-core/standards-hierarchy:cis-hierarchy-test",
+        "kind": "evidence",
+        "label": "Proof-surface tests publish the CIS hierarchy into the demo registry and verify it remains first-class evidence.",
+        "status": "Observed",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves documentation and registry publication, not independent external certification.",
+        "proofSurfaceId": "@cis-core/standards-hierarchy",
+        "claimId": "cis-hierarchy-traceability",
+        "evidenceId": "cis-hierarchy-test"
+      },
+      {
+        "id": "surface:@cis-core/standards-traceability-matrix",
+        "kind": "proof-surface",
+        "label": "CIS Standards Traceability Matrix",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves traceability publication and generation linkage, not external certification.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Standards stewards and conformance teams",
+          "primaryUseCase": "Requirement-to-evidence traceability publication",
+          "valueProposition": "A first-class matrix that prevents documentation and test drift.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "proofSurfaceId": "@cis-core/standards-traceability-matrix"
+      },
+      {
+        "id": "claim:@cis-core/standards-traceability-matrix:cis-traceability-impl",
+        "kind": "claim",
+        "label": "The repository publishes a formal traceability matrix that maps requirements to components, evidence, and tests.",
+        "status": "Verified",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves traceability publication and generation linkage, not external certification.",
+        "proofSurfaceId": "@cis-core/standards-traceability-matrix",
+        "claimId": "cis-traceability-impl",
+        "claimType": "Specification"
+      },
+      {
+        "id": "claim:@cis-core/standards-traceability-matrix:cis-traceability-test",
+        "kind": "claim",
+        "label": "The traceability matrix drives the generated conformance suite input and is covered by a drift test.",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves traceability publication and generation linkage, not external certification.",
+        "proofSurfaceId": "@cis-core/standards-traceability-matrix",
+        "claimId": "cis-traceability-test",
+        "claimType": "Verification"
+      },
+      {
+        "id": "evidence:@cis-core/standards-traceability-matrix:cis-traceability-doc",
+        "kind": "evidence",
+        "label": "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md defines the formal matrix with requirement, component, evidence, and test columns.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves traceability publication and generation linkage, not external certification.",
+        "proofSurfaceId": "@cis-core/standards-traceability-matrix",
+        "claimId": "cis-traceability-impl",
+        "evidenceId": "cis-traceability-doc"
+      },
+      {
+        "id": "evidence:@cis-core/standards-traceability-matrix:cis-traceability-json",
+        "kind": "evidence",
+        "label": "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json embeds the traceability matrix as the machine-readable source of truth.",
+        "status": "Observed",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves traceability publication and generation linkage, not external certification.",
+        "proofSurfaceId": "@cis-core/standards-traceability-matrix",
+        "claimId": "cis-traceability-test",
+        "evidenceId": "cis-traceability-json"
+      },
+      {
+        "id": "evidence:@cis-core/standards-traceability-matrix:cis-traceability-test-evidence",
+        "kind": "evidence",
+        "label": "The conformance generation test verifies that the committed suite input matches the generated output from the hierarchy traceability matrix.",
+        "status": "Observed",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves traceability publication and generation linkage, not external certification.",
+        "proofSurfaceId": "@cis-core/standards-traceability-matrix",
+        "claimId": "cis-traceability-test",
+        "evidenceId": "cis-traceability-test-evidence"
+      },
+      {
+        "id": "surface:@cis-core/companion-spec-registry",
+        "kind": "proof-surface",
+        "label": "CIS Companion Spec Registry",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The registry proves publication and alignment, not external certification of every companion implementation.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Platform and standards teams",
+          "primaryUseCase": "Unified publication of companion specifications",
+          "valueProposition": "One registry for core, companions, profiles, and Research OS.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "proofSurfaceId": "@cis-core/companion-spec-registry"
+      },
+      {
+        "id": "claim:@cis-core/companion-spec-registry:cis-registry-impl",
+        "kind": "claim",
+        "label": "The repository publishes a machine-readable companion-spec registry that keeps CIS Core, companion specifications, profiles, and Research OS aligned.",
+        "status": "Verified",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The registry proves publication and alignment, not external certification of every companion implementation.",
+        "proofSurfaceId": "@cis-core/companion-spec-registry",
+        "claimId": "cis-registry-impl",
+        "claimType": "Specification"
+      },
+      {
+        "id": "claim:@cis-core/companion-spec-registry:cis-registry-evidence",
+        "kind": "claim",
+        "label": "The registry is represented in the proof-surface catalog and can be replayed from the release surface.",
+        "status": "Verified",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The registry proves publication and alignment, not external certification of every companion implementation.",
+        "proofSurfaceId": "@cis-core/companion-spec-registry",
+        "claimId": "cis-registry-evidence",
+        "claimType": "Implementation"
+      },
+      {
+        "id": "evidence:@cis-core/companion-spec-registry:cis-registry-json",
+        "kind": "evidence",
+        "label": "docs/crk1/release/CIS_COMPANION_SPEC_REGISTRY.spec.json enumerates CIS Core, companions, profiles, and Research OS.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The registry proves publication and alignment, not external certification of every companion implementation.",
+        "proofSurfaceId": "@cis-core/companion-spec-registry",
+        "claimId": "cis-registry-impl",
+        "evidenceId": "cis-registry-json"
+      },
+      {
+        "id": "evidence:@cis-core/companion-spec-registry:cis-registry-test",
+        "kind": "evidence",
+        "label": "Proof-surface tests confirm the companion registry is published into the demo catalog.",
+        "status": "Observed",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The registry proves publication and alignment, not external certification of every companion implementation.",
+        "proofSurfaceId": "@cis-core/companion-spec-registry",
+        "claimId": "cis-registry-evidence",
+        "evidenceId": "cis-registry-test"
+      },
+      {
+        "id": "evidence:@cis-core/companion-spec-registry:cis-registry-doc",
+        "kind": "evidence",
+        "label": "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md links the companion registry into the release surface.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The registry proves publication and alignment, not external certification of every companion implementation.",
+        "proofSurfaceId": "@cis-core/companion-spec-registry",
+        "claimId": "cis-registry-evidence",
+        "evidenceId": "cis-registry-doc"
+      },
+      {
+        "id": "surface:@cis-core/artifact-governance",
+        "kind": "proof-surface",
+        "label": "Artifact Governance Model",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves repository-level governance metadata publication, not external certification.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Standards stewards and platform operators",
+          "primaryUseCase": "Repository-wide artifact governance",
+          "valueProposition": "One metadata model for major artifacts.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "proofSurfaceId": "@cis-core/artifact-governance"
+      },
+      {
+        "id": "claim:@cis-core/artifact-governance:artifact-gov-model",
+        "kind": "claim",
+        "label": "The repository publishes a shared artifact governance model and registry for major artifacts.",
+        "status": "Verified",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves repository-level governance metadata publication, not external certification.",
+        "proofSurfaceId": "@cis-core/artifact-governance",
+        "claimId": "artifact-gov-model",
+        "claimType": "Specification"
+      },
+      {
+        "id": "claim:@cis-core/artifact-governance:artifact-gov-test",
+        "kind": "claim",
+        "label": "The artifact governance registry can be loaded and summarized by tooling.",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves repository-level governance metadata publication, not external certification.",
+        "proofSurfaceId": "@cis-core/artifact-governance",
+        "claimId": "artifact-gov-test",
+        "claimType": "Verification"
+      },
+      {
+        "id": "evidence:@cis-core/artifact-governance:artifact-gov-doc",
+        "kind": "evidence",
+        "label": "docs/crk1/release/ARTIFACT_GOVERNANCE_MODEL.md defines the shared governance fields and lifecycle.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves repository-level governance metadata publication, not external certification.",
+        "proofSurfaceId": "@cis-core/artifact-governance",
+        "claimId": "artifact-gov-model",
+        "evidenceId": "artifact-gov-doc"
+      },
+      {
+        "id": "evidence:@cis-core/artifact-governance:artifact-gov-json",
+        "kind": "evidence",
+        "label": "docs/crk1/release/ARTIFACT_GOVERNANCE_REGISTRY.spec.json enumerates the governed artifact records.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves repository-level governance metadata publication, not external certification.",
+        "proofSurfaceId": "@cis-core/artifact-governance",
+        "claimId": "artifact-gov-model",
+        "evidenceId": "artifact-gov-json"
+      },
+      {
+        "id": "evidence:@cis-core/artifact-governance:artifact-gov-test-evidence",
+        "kind": "evidence",
+        "label": "The artifact governance registry test confirms the shared model is machine-readable.",
+        "status": "Observed",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves repository-level governance metadata publication, not external certification.",
+        "proofSurfaceId": "@cis-core/artifact-governance",
+        "claimId": "artifact-gov-test",
+        "evidenceId": "artifact-gov-test-evidence"
+      },
+      {
+        "id": "surface:@cis-core/sovereign-router-pricing",
+        "kind": "proof-surface",
+        "label": "Sovereign Router X Pricing Model",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves the pricing model is documented and machine-readable, not that every market price is optimized.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Product, finance, and platform teams",
+          "primaryUseCase": "Layered pricing strategy and unit economics",
+          "valueProposition": "Pricing that survives falling inference costs.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "proofSurfaceId": "@cis-core/sovereign-router-pricing"
+      },
+      {
+        "id": "claim:@cis-core/sovereign-router-pricing:pricing-layers",
+        "kind": "claim",
+        "label": "The product prices platform subscription, AI usage, governance and assurance, knowledge services, enterprise services, and professional services as separate value layers.",
+        "status": "Verified",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves the pricing model is documented and machine-readable, not that every market price is optimized.",
+        "proofSurfaceId": "@cis-core/sovereign-router-pricing",
+        "claimId": "pricing-layers",
+        "claimType": "Specification"
+      },
+      {
+        "id": "claim:@cis-core/sovereign-router-pricing:pricing-segments",
+        "kind": "claim",
+        "label": "The pricing model enumerates individual, professional, team, enterprise, and public sector segments for comparative unit economics.",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves the pricing model is documented and machine-readable, not that every market price is optimized.",
+        "proofSurfaceId": "@cis-core/sovereign-router-pricing",
+        "claimId": "pricing-segments",
+        "claimType": "Verification"
+      },
+      {
+        "id": "evidence:@cis-core/sovereign-router-pricing:pricing-doc",
+        "kind": "evidence",
+        "label": "docs/crk1/release/SOVEREIGN_ROUTER_X_PRICING.md documents the layered revenue model and segment strategy.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves the pricing model is documented and machine-readable, not that every market price is optimized.",
+        "proofSurfaceId": "@cis-core/sovereign-router-pricing",
+        "claimId": "pricing-layers",
+        "evidenceId": "pricing-doc"
+      },
+      {
+        "id": "evidence:@cis-core/sovereign-router-pricing:pricing-spec",
+        "kind": "evidence",
+        "label": "docs/crk1/release/SOVEREIGN_ROUTER_X_PRICING.spec.json provides a machine-readable pricing model.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves the pricing model is documented and machine-readable, not that every market price is optimized.",
+        "proofSurfaceId": "@cis-core/sovereign-router-pricing",
+        "claimId": "pricing-layers",
+        "evidenceId": "pricing-spec"
+      },
+      {
+        "id": "evidence:@cis-core/sovereign-router-pricing:pricing-test",
+        "kind": "evidence",
+        "label": "The pricing model test validates layered revenue and segment coverage.",
+        "status": "Observed",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves the pricing model is documented and machine-readable, not that every market price is optimized.",
+        "proofSurfaceId": "@cis-core/sovereign-router-pricing",
+        "claimId": "pricing-segments",
+        "evidenceId": "pricing-test"
+      },
+      {
+        "id": "surface:@cis-core/external-standards-mapping",
+        "kind": "proof-surface",
+        "label": "External Standards Mapping Layer",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves standards-family mapping, not certification under those standards.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Standards and compliance teams",
+          "primaryUseCase": "Interoperability mapping and traceability",
+          "valueProposition": "Clear mapping to the major external standards families.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "proofSurfaceId": "@cis-core/external-standards-mapping"
+      },
+      {
+        "id": "claim:@cis-core/external-standards-mapping:external-map-families",
+        "kind": "claim",
+        "label": "The repository publishes an external standards mapping layer covering ISO, NIST, IEEE, W3C, and IETF.",
+        "status": "Verified",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves standards-family mapping, not certification under those standards.",
+        "proofSurfaceId": "@cis-core/external-standards-mapping",
+        "claimId": "external-map-families",
+        "claimType": "Specification"
+      },
+      {
+        "id": "claim:@cis-core/external-standards-mapping:external-map-trace",
+        "kind": "claim",
+        "label": "The mapping layer ties external standards families to CIS artifacts and traceability concerns.",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves standards-family mapping, not certification under those standards.",
+        "proofSurfaceId": "@cis-core/external-standards-mapping",
+        "claimId": "external-map-trace",
+        "claimType": "Verification"
+      },
+      {
+        "id": "evidence:@cis-core/external-standards-mapping:external-map-doc",
+        "kind": "evidence",
+        "label": "docs/crk1/release/EXTERNAL_STANDARDS_MAPPING.md explains the mapping layer and standards families.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves standards-family mapping, not certification under those standards.",
+        "proofSurfaceId": "@cis-core/external-standards-mapping",
+        "claimId": "external-map-families",
+        "evidenceId": "external-map-doc"
+      },
+      {
+        "id": "evidence:@cis-core/external-standards-mapping:external-map-json",
+        "kind": "evidence",
+        "label": "docs/crk1/release/EXTERNAL_STANDARDS_MAPPING.spec.json is a machine-readable mapping registry.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves standards-family mapping, not certification under those standards.",
+        "proofSurfaceId": "@cis-core/external-standards-mapping",
+        "claimId": "external-map-families",
+        "evidenceId": "external-map-json"
+      },
+      {
+        "id": "evidence:@cis-core/external-standards-mapping:external-map-test",
+        "kind": "evidence",
+        "label": "The external standards mapping test confirms the five major standards families are represented.",
+        "status": "Observed",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves standards-family mapping, not certification under those standards.",
+        "proofSurfaceId": "@cis-core/external-standards-mapping",
+        "claimId": "external-map-trace",
+        "evidenceId": "external-map-test"
+      },
+      {
+        "id": "surface:@cis-core/conformance-generation",
+        "kind": "proof-surface",
+        "label": "CIS Conformance Suite Generation",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves reproducible generation, not formal standards certification.",
+        "currentMaturity": "Verified Prototype",
+        "commercialReadiness": {
+          "targetTier": "Professional",
+          "intendedCustomer": "Conformance and standards teams",
+          "primaryUseCase": "Reproducible conformance-suite generation",
+          "valueProposition": "No manual drift between traceability and tests.",
+          "currentReadiness": "Verified Prototype"
+        },
+        "proofSurfaceId": "@cis-core/conformance-generation"
+      },
+      {
+        "id": "claim:@cis-core/conformance-generation:conformance-gen-rule",
+        "kind": "claim",
+        "label": "The repository defines a generation rule that derives the conformance suite input from the hierarchy traceability matrix.",
+        "status": "Verified",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves reproducible generation, not formal standards certification.",
+        "proofSurfaceId": "@cis-core/conformance-generation",
+        "claimId": "conformance-gen-rule",
+        "claimType": "Specification"
+      },
+      {
+        "id": "claim:@cis-core/conformance-generation:conformance-gen-test",
+        "kind": "claim",
+        "label": "The committed conformance suite input matches the generated output from the hierarchy traceability source.",
+        "status": "Verified",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves reproducible generation, not formal standards certification.",
+        "proofSurfaceId": "@cis-core/conformance-generation",
+        "claimId": "conformance-gen-test",
+        "claimType": "Verification"
+      },
+      {
+        "id": "evidence:@cis-core/conformance-generation:conformance-gen-doc",
+        "kind": "evidence",
+        "label": "docs/crk1/release/CIS_CONFORMANCE_SUITE_GENERATION.md documents the generation rule and source of truth.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves reproducible generation, not formal standards certification.",
+        "proofSurfaceId": "@cis-core/conformance-generation",
+        "claimId": "conformance-gen-rule",
+        "evidenceId": "conformance-gen-doc"
+      },
+      {
+        "id": "evidence:@cis-core/conformance-generation:conformance-gen-generator",
+        "kind": "evidence",
+        "label": "docs/crk1/release/CIS_CONFORMANCE_SUITE_INPUT.spec.generator.json records the generator inputs and rules.",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves reproducible generation, not formal standards certification.",
+        "proofSurfaceId": "@cis-core/conformance-generation",
+        "claimId": "conformance-gen-rule",
+        "evidenceId": "conformance-gen-generator"
+      },
+      {
+        "id": "evidence:@cis-core/conformance-generation:conformance-gen-test",
+        "kind": "evidence",
+        "label": "The generation test confirms the generated suite input matches the committed release artifact.",
+        "status": "Observed",
+        "proofLevel": "P2",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "The surface proves reproducible generation, not formal standards certification.",
+        "proofSurfaceId": "@cis-core/conformance-generation",
+        "claimId": "conformance-gen-test",
+        "evidenceId": "conformance-gen-test"
+      },
+      {
+        "id": "view:readme",
+        "kind": "public-view",
+        "label": "README",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "A public view of the canonical evidence graph."
+      },
+      {
+        "id": "view:docs-site",
+        "kind": "public-view",
+        "label": "docs-site",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "A public view of the canonical evidence graph."
+      },
+      {
+        "id": "view:scorecards",
+        "kind": "public-view",
+        "label": "Scorecards",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "A public view of the canonical evidence graph."
+      },
+      {
+        "id": "view:nova-studio",
+        "kind": "public-view",
+        "label": "Nova Studio",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "A public view of the canonical evidence graph."
+      },
+      {
+        "id": "view:ops-console",
+        "kind": "public-view",
+        "label": "Ops Console",
+        "status": "Observed",
+        "proofLevel": "P1",
+        "source": "release-receipt",
+        "verified": true,
+        "replayable": true,
+        "truthBoundary": "A public view of the canonical evidence graph."
+      }
+    ],
+    "edges": [
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->view:readme",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "view:readme",
+        "relation": "publishes"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->view:docs-site",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "view:docs-site",
+        "relation": "publishes"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->view:scorecards",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "view:scorecards",
+        "relation": "publishes"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->view:nova-studio",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "view:nova-studio",
+        "relation": "publishes"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->view:ops-console",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "view:ops-console",
+        "relation": "publishes"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->surface:@aaes-os/aaes-governance",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "surface:@aaes-os/aaes-governance",
+        "relation": "roots"
+      },
+      {
+        "id": "edge:surface:@aaes-os/aaes-governance->claim:@aaes-os/aaes-governance:gov-impl",
+        "from": "surface:@aaes-os/aaes-governance",
+        "to": "claim:@aaes-os/aaes-governance:gov-impl",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@aaes-os/aaes-governance:gov-impl->evidence:@aaes-os/aaes-governance:gov-impl-evidence",
+        "from": "claim:@aaes-os/aaes-governance:gov-impl",
+        "to": "evidence:@aaes-os/aaes-governance:gov-impl-evidence",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:surface:@aaes-os/aaes-governance->claim:@aaes-os/aaes-governance:gov-verify",
+        "from": "surface:@aaes-os/aaes-governance",
+        "to": "claim:@aaes-os/aaes-governance:gov-verify",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@aaes-os/aaes-governance:gov-verify->evidence:@aaes-os/aaes-governance:gov-test-evidence",
+        "from": "claim:@aaes-os/aaes-governance:gov-verify",
+        "to": "evidence:@aaes-os/aaes-governance:gov-test-evidence",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->surface:@aaes-os/ucr-runtime",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "surface:@aaes-os/ucr-runtime",
+        "relation": "roots"
+      },
+      {
+        "id": "edge:surface:@aaes-os/ucr-runtime->claim:@aaes-os/ucr-runtime:ucr-impl",
+        "from": "surface:@aaes-os/ucr-runtime",
+        "to": "claim:@aaes-os/ucr-runtime:ucr-impl",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@aaes-os/ucr-runtime:ucr-impl->evidence:@aaes-os/ucr-runtime:ucr-impl-evidence",
+        "from": "claim:@aaes-os/ucr-runtime:ucr-impl",
+        "to": "evidence:@aaes-os/ucr-runtime:ucr-impl-evidence",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:surface:@aaes-os/ucr-runtime->claim:@aaes-os/ucr-runtime:ucr-verify",
+        "from": "surface:@aaes-os/ucr-runtime",
+        "to": "claim:@aaes-os/ucr-runtime:ucr-verify",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@aaes-os/ucr-runtime:ucr-verify->evidence:@aaes-os/ucr-runtime:ucr-test-evidence",
+        "from": "claim:@aaes-os/ucr-runtime:ucr-verify",
+        "to": "evidence:@aaes-os/ucr-runtime:ucr-test-evidence",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->surface:@aaes-os/ops-console",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "surface:@aaes-os/ops-console",
+        "relation": "roots"
+      },
+      {
+        "id": "edge:surface:@aaes-os/ops-console->claim:@aaes-os/ops-console:ops-impl",
+        "from": "surface:@aaes-os/ops-console",
+        "to": "claim:@aaes-os/ops-console:ops-impl",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@aaes-os/ops-console:ops-impl->evidence:@aaes-os/ops-console:ops-impl-evidence",
+        "from": "claim:@aaes-os/ops-console:ops-impl",
+        "to": "evidence:@aaes-os/ops-console:ops-impl-evidence",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:surface:@aaes-os/ops-console->claim:@aaes-os/ops-console:ops-verify",
+        "from": "surface:@aaes-os/ops-console",
+        "to": "claim:@aaes-os/ops-console:ops-verify",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@aaes-os/ops-console:ops-verify->evidence:@aaes-os/ops-console:ops-test-evidence",
+        "from": "claim:@aaes-os/ops-console:ops-verify",
+        "to": "evidence:@aaes-os/ops-console:ops-test-evidence",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->surface:@aaes-os/nova-studio",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "surface:@aaes-os/nova-studio",
+        "relation": "roots"
+      },
+      {
+        "id": "edge:surface:@aaes-os/nova-studio->claim:@aaes-os/nova-studio:studio-impl",
+        "from": "surface:@aaes-os/nova-studio",
+        "to": "claim:@aaes-os/nova-studio:studio-impl",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@aaes-os/nova-studio:studio-impl->evidence:@aaes-os/nova-studio:studio-impl-evidence",
+        "from": "claim:@aaes-os/nova-studio:studio-impl",
+        "to": "evidence:@aaes-os/nova-studio:studio-impl-evidence",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:surface:@aaes-os/nova-studio->claim:@aaes-os/nova-studio:studio-verify",
+        "from": "surface:@aaes-os/nova-studio",
+        "to": "claim:@aaes-os/nova-studio:studio-verify",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@aaes-os/nova-studio:studio-verify->evidence:@aaes-os/nova-studio:studio-smoke-evidence",
+        "from": "claim:@aaes-os/nova-studio:studio-verify",
+        "to": "evidence:@aaes-os/nova-studio:studio-smoke-evidence",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->surface:@cis-core/standards-hierarchy",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "surface:@cis-core/standards-hierarchy",
+        "relation": "roots"
+      },
+      {
+        "id": "edge:surface:@cis-core/standards-hierarchy->claim:@cis-core/standards-hierarchy:cis-hierarchy-spec",
+        "from": "surface:@cis-core/standards-hierarchy",
+        "to": "claim:@cis-core/standards-hierarchy:cis-hierarchy-spec",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/standards-hierarchy:cis-hierarchy-spec->evidence:@cis-core/standards-hierarchy:cis-hierarchy-doc",
+        "from": "claim:@cis-core/standards-hierarchy:cis-hierarchy-spec",
+        "to": "evidence:@cis-core/standards-hierarchy:cis-hierarchy-doc",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:claim:@cis-core/standards-hierarchy:cis-hierarchy-spec->evidence:@cis-core/standards-hierarchy:cis-hierarchy-json",
+        "from": "claim:@cis-core/standards-hierarchy:cis-hierarchy-spec",
+        "to": "evidence:@cis-core/standards-hierarchy:cis-hierarchy-json",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:surface:@cis-core/standards-hierarchy->claim:@cis-core/standards-hierarchy:cis-hierarchy-traceability",
+        "from": "surface:@cis-core/standards-hierarchy",
+        "to": "claim:@cis-core/standards-hierarchy:cis-hierarchy-traceability",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/standards-hierarchy:cis-hierarchy-traceability->evidence:@cis-core/standards-hierarchy:cis-hierarchy-traceability",
+        "from": "claim:@cis-core/standards-hierarchy:cis-hierarchy-traceability",
+        "to": "evidence:@cis-core/standards-hierarchy:cis-hierarchy-traceability",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:claim:@cis-core/standards-hierarchy:cis-hierarchy-traceability->evidence:@cis-core/standards-hierarchy:cis-hierarchy-test",
+        "from": "claim:@cis-core/standards-hierarchy:cis-hierarchy-traceability",
+        "to": "evidence:@cis-core/standards-hierarchy:cis-hierarchy-test",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->surface:@cis-core/standards-traceability-matrix",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "surface:@cis-core/standards-traceability-matrix",
+        "relation": "roots"
+      },
+      {
+        "id": "edge:surface:@cis-core/standards-traceability-matrix->claim:@cis-core/standards-traceability-matrix:cis-traceability-impl",
+        "from": "surface:@cis-core/standards-traceability-matrix",
+        "to": "claim:@cis-core/standards-traceability-matrix:cis-traceability-impl",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/standards-traceability-matrix:cis-traceability-impl->evidence:@cis-core/standards-traceability-matrix:cis-traceability-doc",
+        "from": "claim:@cis-core/standards-traceability-matrix:cis-traceability-impl",
+        "to": "evidence:@cis-core/standards-traceability-matrix:cis-traceability-doc",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:surface:@cis-core/standards-traceability-matrix->claim:@cis-core/standards-traceability-matrix:cis-traceability-test",
+        "from": "surface:@cis-core/standards-traceability-matrix",
+        "to": "claim:@cis-core/standards-traceability-matrix:cis-traceability-test",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/standards-traceability-matrix:cis-traceability-test->evidence:@cis-core/standards-traceability-matrix:cis-traceability-json",
+        "from": "claim:@cis-core/standards-traceability-matrix:cis-traceability-test",
+        "to": "evidence:@cis-core/standards-traceability-matrix:cis-traceability-json",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:claim:@cis-core/standards-traceability-matrix:cis-traceability-test->evidence:@cis-core/standards-traceability-matrix:cis-traceability-test-evidence",
+        "from": "claim:@cis-core/standards-traceability-matrix:cis-traceability-test",
+        "to": "evidence:@cis-core/standards-traceability-matrix:cis-traceability-test-evidence",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->surface:@cis-core/companion-spec-registry",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "surface:@cis-core/companion-spec-registry",
+        "relation": "roots"
+      },
+      {
+        "id": "edge:surface:@cis-core/companion-spec-registry->claim:@cis-core/companion-spec-registry:cis-registry-impl",
+        "from": "surface:@cis-core/companion-spec-registry",
+        "to": "claim:@cis-core/companion-spec-registry:cis-registry-impl",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/companion-spec-registry:cis-registry-impl->evidence:@cis-core/companion-spec-registry:cis-registry-json",
+        "from": "claim:@cis-core/companion-spec-registry:cis-registry-impl",
+        "to": "evidence:@cis-core/companion-spec-registry:cis-registry-json",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:surface:@cis-core/companion-spec-registry->claim:@cis-core/companion-spec-registry:cis-registry-evidence",
+        "from": "surface:@cis-core/companion-spec-registry",
+        "to": "claim:@cis-core/companion-spec-registry:cis-registry-evidence",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/companion-spec-registry:cis-registry-evidence->evidence:@cis-core/companion-spec-registry:cis-registry-test",
+        "from": "claim:@cis-core/companion-spec-registry:cis-registry-evidence",
+        "to": "evidence:@cis-core/companion-spec-registry:cis-registry-test",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:claim:@cis-core/companion-spec-registry:cis-registry-evidence->evidence:@cis-core/companion-spec-registry:cis-registry-doc",
+        "from": "claim:@cis-core/companion-spec-registry:cis-registry-evidence",
+        "to": "evidence:@cis-core/companion-spec-registry:cis-registry-doc",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->surface:@cis-core/artifact-governance",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "surface:@cis-core/artifact-governance",
+        "relation": "roots"
+      },
+      {
+        "id": "edge:surface:@cis-core/artifact-governance->claim:@cis-core/artifact-governance:artifact-gov-model",
+        "from": "surface:@cis-core/artifact-governance",
+        "to": "claim:@cis-core/artifact-governance:artifact-gov-model",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/artifact-governance:artifact-gov-model->evidence:@cis-core/artifact-governance:artifact-gov-doc",
+        "from": "claim:@cis-core/artifact-governance:artifact-gov-model",
+        "to": "evidence:@cis-core/artifact-governance:artifact-gov-doc",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:claim:@cis-core/artifact-governance:artifact-gov-model->evidence:@cis-core/artifact-governance:artifact-gov-json",
+        "from": "claim:@cis-core/artifact-governance:artifact-gov-model",
+        "to": "evidence:@cis-core/artifact-governance:artifact-gov-json",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:surface:@cis-core/artifact-governance->claim:@cis-core/artifact-governance:artifact-gov-test",
+        "from": "surface:@cis-core/artifact-governance",
+        "to": "claim:@cis-core/artifact-governance:artifact-gov-test",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/artifact-governance:artifact-gov-test->evidence:@cis-core/artifact-governance:artifact-gov-test-evidence",
+        "from": "claim:@cis-core/artifact-governance:artifact-gov-test",
+        "to": "evidence:@cis-core/artifact-governance:artifact-gov-test-evidence",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->surface:@cis-core/sovereign-router-pricing",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "surface:@cis-core/sovereign-router-pricing",
+        "relation": "roots"
+      },
+      {
+        "id": "edge:surface:@cis-core/sovereign-router-pricing->claim:@cis-core/sovereign-router-pricing:pricing-layers",
+        "from": "surface:@cis-core/sovereign-router-pricing",
+        "to": "claim:@cis-core/sovereign-router-pricing:pricing-layers",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/sovereign-router-pricing:pricing-layers->evidence:@cis-core/sovereign-router-pricing:pricing-doc",
+        "from": "claim:@cis-core/sovereign-router-pricing:pricing-layers",
+        "to": "evidence:@cis-core/sovereign-router-pricing:pricing-doc",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:claim:@cis-core/sovereign-router-pricing:pricing-layers->evidence:@cis-core/sovereign-router-pricing:pricing-spec",
+        "from": "claim:@cis-core/sovereign-router-pricing:pricing-layers",
+        "to": "evidence:@cis-core/sovereign-router-pricing:pricing-spec",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:surface:@cis-core/sovereign-router-pricing->claim:@cis-core/sovereign-router-pricing:pricing-segments",
+        "from": "surface:@cis-core/sovereign-router-pricing",
+        "to": "claim:@cis-core/sovereign-router-pricing:pricing-segments",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/sovereign-router-pricing:pricing-segments->evidence:@cis-core/sovereign-router-pricing:pricing-test",
+        "from": "claim:@cis-core/sovereign-router-pricing:pricing-segments",
+        "to": "evidence:@cis-core/sovereign-router-pricing:pricing-test",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->surface:@cis-core/external-standards-mapping",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "surface:@cis-core/external-standards-mapping",
+        "relation": "roots"
+      },
+      {
+        "id": "edge:surface:@cis-core/external-standards-mapping->claim:@cis-core/external-standards-mapping:external-map-families",
+        "from": "surface:@cis-core/external-standards-mapping",
+        "to": "claim:@cis-core/external-standards-mapping:external-map-families",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/external-standards-mapping:external-map-families->evidence:@cis-core/external-standards-mapping:external-map-doc",
+        "from": "claim:@cis-core/external-standards-mapping:external-map-families",
+        "to": "evidence:@cis-core/external-standards-mapping:external-map-doc",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:claim:@cis-core/external-standards-mapping:external-map-families->evidence:@cis-core/external-standards-mapping:external-map-json",
+        "from": "claim:@cis-core/external-standards-mapping:external-map-families",
+        "to": "evidence:@cis-core/external-standards-mapping:external-map-json",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:surface:@cis-core/external-standards-mapping->claim:@cis-core/external-standards-mapping:external-map-trace",
+        "from": "surface:@cis-core/external-standards-mapping",
+        "to": "claim:@cis-core/external-standards-mapping:external-map-trace",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/external-standards-mapping:external-map-trace->evidence:@cis-core/external-standards-mapping:external-map-test",
+        "from": "claim:@cis-core/external-standards-mapping:external-map-trace",
+        "to": "evidence:@cis-core/external-standards-mapping:external-map-test",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->surface:@cis-core/conformance-generation",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "surface:@cis-core/conformance-generation",
+        "relation": "roots"
+      },
+      {
+        "id": "edge:surface:@cis-core/conformance-generation->claim:@cis-core/conformance-generation:conformance-gen-rule",
+        "from": "surface:@cis-core/conformance-generation",
+        "to": "claim:@cis-core/conformance-generation:conformance-gen-rule",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/conformance-generation:conformance-gen-rule->evidence:@cis-core/conformance-generation:conformance-gen-doc",
+        "from": "claim:@cis-core/conformance-generation:conformance-gen-rule",
+        "to": "evidence:@cis-core/conformance-generation:conformance-gen-doc",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:claim:@cis-core/conformance-generation:conformance-gen-rule->evidence:@cis-core/conformance-generation:conformance-gen-generator",
+        "from": "claim:@cis-core/conformance-generation:conformance-gen-rule",
+        "to": "evidence:@cis-core/conformance-generation:conformance-gen-generator",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:surface:@cis-core/conformance-generation->claim:@cis-core/conformance-generation:conformance-gen-test",
+        "from": "surface:@cis-core/conformance-generation",
+        "to": "claim:@cis-core/conformance-generation:conformance-gen-test",
+        "relation": "contains"
+      },
+      {
+        "id": "edge:claim:@cis-core/conformance-generation:conformance-gen-test->evidence:@cis-core/conformance-generation:conformance-gen-test",
+        "from": "claim:@cis-core/conformance-generation:conformance-gen-test",
+        "to": "evidence:@cis-core/conformance-generation:conformance-gen-test",
+        "relation": "supports"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->view:readme",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "view:readme",
+        "relation": "publishes"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->view:docs-site",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "view:docs-site",
+        "relation": "publishes"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->view:scorecards",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "view:scorecards",
+        "relation": "publishes"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->view:nova-studio",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "view:nova-studio",
+        "relation": "publishes"
+      },
+      {
+        "id": "edge:receipt:release:aaes-os:0.1.0->view:ops-console",
+        "from": "receipt:release:aaes-os:0.1.0",
+        "to": "view:ops-console",
+        "relation": "publishes"
+      }
+    ],
+    "unresolvedClaims": [],
+    "summary": {
+      "graphId": "ceg:release:aaes-os:0.1.0",
+      "rootReceiptId": "release:aaes-os:0.1.0",
+      "source": "release-receipt",
+      "proofSurfaceCount": 11,
+      "claimCount": 22,
+      "verifiedClaimCount": 22,
+      "replayableClaimCount": 22,
+      "unresolvedClaims": [],
+      "viewCount": 5
+    }
+  },
+  "receiptHash": "sha256:d755dc1fb5cdbd521659192c91e34e2374d49dc0811c385152370af3a1b18ddb"
+}

@@ -1,0 +1,58 @@
+{
+  "$id": "docs/crk1/release/UGR_UGQL_UPL_CRF_V1.conformance.json",
+  "artifact": "UGR/UGQL/UPL/CRF v1 conformance",
+  "purpose": "Machine-readable conformance artifact for the unified knowledge and replay substrate.",
+  "requirements": [
+    {
+      "id": "UGR-1",
+      "statement": "UGR must store worlds, documents, metrics, concepts, rules, agents, arenas, lineages, and mesh links.",
+      "evidence": [
+        "GET /ugr/world/:id",
+        "GET /ugr/object/:id",
+        "GET /ugr/lineage/:id",
+        "GET /ugr/mesh/neighbors"
+      ]
+    },
+    {
+      "id": "UGQL-1",
+      "statement": "UGQL must support SELECT, SEARCH, TRACE, AGGREGATE, and COMPARE queries.",
+      "evidence": [
+        "POST /ugr/query",
+        "GET /ugr/query?ugql=..."
+      ]
+    },
+    {
+      "id": "UPL-1",
+      "statement": "UPL must model domain modules, governance modules, and world packs.",
+      "evidence": [
+        "GET /upl/modules"
+      ]
+    },
+    {
+      "id": "CRF-1",
+      "statement": "CRF must expose replayable timeline, governance state, impact, lineage, and validation data.",
+      "evidence": [
+        "GET /crf/artifacts",
+        "GET /crf/artifacts/:artifactId"
+      ]
+    },
+    {
+      "id": "LEDGER-1",
+      "statement": "The Constitutional Change Ledger must support query, history, replay, diff, impact, and lineage views.",
+      "evidence": [
+        "GET /governance/change-ledger",
+        "GET /governance/history/:intentId",
+        "GET /governance/replay-state",
+        "GET /governance/replay-change/:entryId",
+        "GET /governance/diff",
+        "GET /governance/impact/:entryId",
+        "GET /governance/lineage/:subjectId"
+      ]
+    }
+  ],
+  "test_surface": [
+    "services/sovereign-control-plane/src/knowledge.test.ts",
+    "services/sovereign-control-plane/src/server.test.ts",
+    "ulx/tests/test_ulx_ide_workspace.py"
+  ]
+}

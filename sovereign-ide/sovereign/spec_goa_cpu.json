@@ -1,0 +1,6 @@
+{
+  "profile": "goa_cpu",
+  "mode": "governed",
+  "deterministic": true,
+  "replayable": true
+}

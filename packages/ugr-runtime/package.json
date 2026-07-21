@@ -1,0 +1,92 @@
+{
+  "name": "@aaes-os/ugr-runtime",
+  "version": "0.1.0",
+  "description": "Live UGR/UGQL/UPL/CRF runtime surface for governed knowledge, queries, packaging, and replay",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "ugr-runtime": "./dist/bin.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./models": {
+      "types": "./dist/models.d.ts",
+      "import": "./dist/models.js"
+    },
+    "./storage/sql": {
+      "types": "./dist/storage/sql.d.ts",
+      "import": "./dist/storage/sql.js"
+    },
+    "./storage/graph": {
+      "types": "./dist/storage/graph.d.ts",
+      "import": "./dist/storage/graph.js"
+    },
+    "./storage/vector": {
+      "types": "./dist/storage/vector.d.ts",
+      "import": "./dist/storage/vector.js"
+    },
+    "./api": {
+      "types": "./dist/api.d.ts",
+      "import": "./dist/api.js"
+    },
+    "./runtime": {
+      "types": "./dist/runtime.d.ts",
+      "import": "./dist/runtime.js"
+    },
+    "./adapters": {
+      "types": "./dist/adapters.d.ts",
+      "import": "./dist/adapters.js"
+    },
+    "./adapters/postgres": {
+      "types": "./dist/adapters/postgres.d.ts",
+      "import": "./dist/adapters/postgres.js"
+    },
+    "./adapters/neo4j": {
+      "types": "./dist/adapters/neo4j.d.ts",
+      "import": "./dist/adapters/neo4j.js"
+    },
+    "./adapters/pgvector": {
+      "types": "./dist/adapters/pgvector.d.ts",
+      "import": "./dist/adapters/pgvector.js"
+    },
+    "./drivers/postgres": {
+      "types": "./dist/drivers/postgres.d.ts",
+      "import": "./dist/drivers/postgres.js"
+    },
+    "./drivers/neo4j": {
+      "types": "./dist/drivers/neo4j.d.ts",
+      "import": "./dist/drivers/neo4j.js"
+    },
+    "./drivers/pgvector": {
+      "types": "./dist/drivers/pgvector.d.ts",
+      "import": "./dist/drivers/pgvector.js"
+    },
+    "./runtime-env": {
+      "types": "./dist/runtime-env.d.ts",
+      "import": "./dist/runtime-env.js"
+    },
+    "./cli": {
+      "types": "./dist/cli.d.ts",
+      "import": "./dist/cli.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.json",
+    "test": "vitest run --config vitest.config.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "@types/pg": "^8.20.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "neo4j-driver": "^6.2.0",
+    "pg": "^8.22.0",
+    "pgvector": "^0.3.0"
+  }
+}

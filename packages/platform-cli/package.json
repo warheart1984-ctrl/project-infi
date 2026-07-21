@@ -4,13 +4,15 @@
   "description": "Organism CLI — unified command-line interface for the AAES super-platform",
   "type": "module",
   "bin": {
-    "organism": "./dist/bin.js"
+    "organism": "./dist/bin.js",
+    "aais": "./dist/bin.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "vitest run --config vitest.config.ts"
   },
   "dependencies": {
+    "@aaes-os/lirl": "workspace:*",
     "@aaes-os/platform-core": "workspace:*",
     "@aaes-os/platform-sdk": "workspace:*"
   },

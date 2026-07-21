@@ -8,8 +8,6 @@ import { GovernanceEnforcementEngine } from './governanceEnforcement.js';
 import { IntentLedger } from './intentLedger.js';
 import { AuthorityLedger } from './authorityLedger.js';
 
-const DRIFT_THRESHOLD = 0.35;
-
 export function replay(
   spanId: string,
   options?: {

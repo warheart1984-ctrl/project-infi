@@ -1,0 +1,112 @@
+{
+  "specId": "cis-companion-spec-registry",
+  "displayName": "CIS Companion Specification Registry",
+  "version": "1.0.0",
+  "status": "Frozen",
+  "generatedFrom": "CIS_STANDARDS_HIERARCHY.spec.json",
+  "core": {
+    "name": "CIS Core",
+    "role": "Single authoritative constitutional specification"
+  },
+  "companionSpecifications": [
+    {
+      "name": "Reference Architecture",
+      "responsibility": "System decomposition and boundaries",
+      "status": "Frozen"
+    },
+    {
+      "name": "Ontology",
+      "responsibility": "Shared semantic contract",
+      "status": "Frozen"
+    },
+    {
+      "name": "Knowledge Graph Specification",
+      "responsibility": "Operational knowledge and continuity structure",
+      "status": "Frozen"
+    },
+    {
+      "name": "Governed Knowledge Store Specification",
+      "responsibility": "Canonical knowledge admission, replay, and trust lifecycle",
+      "status": "Frozen"
+    },
+    {
+      "name": "Conformance Suite",
+      "responsibility": "Validation and compliance testing",
+      "status": "Frozen"
+    },
+    {
+      "name": "Reference Runtime",
+      "responsibility": "Executable proof of the architecture",
+      "status": "Frozen"
+    },
+    {
+      "name": "Standards Traceability Matrix",
+      "responsibility": "Requirement-to-evidence mapping",
+      "status": "Frozen"
+    },
+    {
+      "name": "Implementation Profiles",
+      "responsibility": "Domain adaptation without constitutional drift",
+      "status": "Draft"
+    },
+    {
+      "name": "Implementation Profile Freeze Criteria",
+      "responsibility": "Objective gate for promoting profile artifacts from Draft to Frozen",
+      "status": "Frozen"
+    },
+    {
+      "name": "Implementation Profile Worked-Example Policy",
+      "responsibility": "Summary rule for the current frozen profile example set",
+      "status": "Frozen"
+    },
+    {
+      "name": "DX Guide",
+      "responsibility": "Developer onboarding and implementation guidance",
+      "status": "Frozen"
+    },
+    {
+      "name": "Documentation Specification Family",
+      "responsibility": "Authoring, filing, and release rules",
+      "status": "Frozen"
+    },
+    {
+      "name": "Launch Readiness Specification",
+      "responsibility": "Evidence-governed release lifecycle",
+      "status": "Frozen"
+    },
+    {
+      "name": "Research OS",
+      "responsibility": "Evidence, insights, ideas, and actions workflow",
+      "status": "Frozen"
+    },
+    {
+      "name": "SOCK Alignment Specification",
+      "responsibility": "Bridge CIS obligations to SOCK runtime semantics",
+      "status": "Frozen"
+    },
+    {
+      "name": "CORI Alpha Proof Chain",
+      "responsibility": "Minimum governed proof workflow for constitutional evidence",
+      "status": "Frozen"
+    }
+  ],
+  "implementationProfiles": [
+    "Government",
+    "Healthcare",
+    "Finance",
+    "Research",
+    "Education",
+    "Infrastructure",
+    "Regenerative Intelligence"
+  ],
+  "researchOS": {
+    "name": "Research OS",
+    "role": "Permanent institutional memory and improvement loop",
+    "flow": [
+      "Evidence",
+      "Insights",
+      "Ideas",
+      "Actions"
+    ]
+  }
+}

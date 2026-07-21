@@ -1,0 +1,67 @@
+# Free-first policy pack — no paid API keys required.
+# Routes to locally discovered agents: Ollama, LM Studio, Cursor, Devin, local LLMs.
+
+# General coding → prefer Ollama, then LM Studio
+- id: "coding.free.general"
+  when:
+    domain: "coding"
+    risk: "low"
+  then:
+    routing:
+      preferred_backends: ["ollama", "lm-studio", "deepseek-coder", "local-llm", "cursor"]
+
+# Multi-file reasoning → Ollama coder models or DeepSeek via Ollama
+- id: "coding.free.multi_file"
+  when:
+    domain: "coding"
+    tags: ["multi-file"]
+  then:
+    routing:
+      allowed_backends: ["ollama", "deepseek-coder", "lm-studio"]
+    guardrails:
+      require_identity_role: ["developer", "system"]
+
+# Local project refactoring → Cursor (free when running locally)
+- id: "coding.free.local_project"
+  when:
+    domain: "coding"
+    tags: ["local-project"]
+  then:
+    routing:
+      allowed_backends: ["cursor", "ollama", "lm-studio"]
+      preferred_backends: ["cursor"]
+    guardrails:
+      max_tokens_out: 4096
+
+# Agentic tool-use → Devin local or Ollama
+- id: "coding.free.agentic"
+  when:
+    domain: "coding"
+    tags: ["agentic", "tool-use"]
+  then:
+    routing:
+      allowed_backends: ["devin", "ollama", "cursor"]
+    guardrails:
+      require_identity_role: ["developer", "system"]
+
+# Sensitive code → local only (never cloud)
+- id: "coding.free.sensitive"
+  when:
+    domain: "coding"
+    tags: ["sensitive", "proprietary", "phi"]
+  then:
+    routing:
+      allowed_backends: ["ollama", "lm-studio", "local-llm"]
+    guardrails:
+      require_identity_role: ["developer", "system"]
+
+# High risk → prefer strongest local model available
+- id: "coding.free.high_risk"
+  when:
+    domain: "coding"
+    risk: "high"
+  then:
+    routing:
+      preferred_backends: ["ollama", "lm-studio", "deepseek-coder"]
+    guardrails:
+      require_identity_role: ["developer", "system"]

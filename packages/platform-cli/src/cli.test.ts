@@ -5,7 +5,7 @@ import { parseArgs, COMMANDS } from './cli.js';
 describe('platform-cli', () => {
   it('defines all required commands', () => {
     expect(Object.keys(COMMANDS)).toEqual(
-      expect.arrayContaining(['login', 'publish', 'governance', 'connect', 'completion']),
+      expect.arrayContaining(['login', 'publish', 'governance', 'connect', 'completion', 'lirl intent']),
     );
   });
 

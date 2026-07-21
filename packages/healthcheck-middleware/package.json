@@ -1,0 +1,26 @@
+{
+  "name": "@aaes-os/healthcheck-middleware",
+  "version": "0.1.0",
+  "description": "Kubernetes-compatible healthcheck middleware for AAES-OS services",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^22.19.21",
+    "typescript": "^5.9.3"
+  }
+}

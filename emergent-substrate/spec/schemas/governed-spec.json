@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "$id": "https://emergent-substrate/spec/schemas/governed-spec.json",
+  "title": "GovernedSpec",
+  "description": "Post-governance final artifact",
+  "type": "object",
+  "properties": {
+    "spec_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "source_model_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "content": {
+      "type": "string"
+    },
+    "validation_results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/validation_result"
+      }
+    },
+    "governance_status": {
+      "type": "string",
+      "enum": ["pass", "warn", "block"]
+    },
+    "integrated": {
+      "type": "boolean"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["source_model_id", "title", "governance_status"],
+  "$defs": {
+    "validation_result": {
+      "type": "object",
+      "properties": {
+        "constitution_name": {
+          "type": "string"
+        },
+        "constitution_version": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pass", "warn", "block"]
+        },
+        "violations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["constitution_name", "constitution_version", "priority", "status"]
+    }
+  }
+}

@@ -1,0 +1,56 @@
+name: aaes-os-release
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aaes-os-release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install
+        run: corepack pnpm install --frozen-lockfile
+
+      - name: Build
+        run: corepack pnpm build
+
+      - name: Test
+        run: corepack pnpm test
+
+      - name: Lint
+        run: corepack pnpm lint
+
+      - name: Build release bundle
+        run: corepack pnpm run release
+
+      - name: Upload release bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: aaes-os-release-bundle
+          path: |
+            release/bundle/**
+            release/constitutional-release-receipt.json
+            release/checksums.json
+            release/signature.json

@@ -42,15 +42,15 @@
     "open_profile_change_proposals": []
   },
   "hashes": {
-    "manifest_json_sha256": "9b07c2189c7a52642ff48f06ca127709302a914939aef251243e01d5830e6a01",
-    "spec_markdown_sha256": "479aa83834b5445a9902b993256176b6015e54c76f4b9b0e18377269aa0e924e",
-    "test_vectors_json_sha256": "a825c670f6f94c57074cc3dcce23c794488bf180063a6906f7928ae89cba9352",
-    "reproducibility_lock_sha256": "fcead34a717489f06629454fd9735759495c1e9f09968a372351a8ba0e3e658a",
-    "reference_implementation_sha256": "016487c9f02635d5227a03c1898e90dd7993b0ae2f5323eefbd6df8529ccae5b",
-    "test_runner_sha256": "5b7a8bb77cab051a9758066c5015c8eb5b6851fbb4b418198c5213f90f989e4b",
-    "reproducibility_harness_sha256": "2354e3412046258537842305cd9b54d422baca49b48accd753ddac21e3e644ae",
-    "profile_diff_sha256": "379b68610e74ad8f83bc862a92cc49d14cd46c9aa244144c926622584aed97a4",
-    "nexus_governance_module_sha256": "4c0da671769c34c0e352f011ade4a9f5ebd1d724ad96b6cb7666d0982056a02c",
-    "developer_onboarding_sha256": "b747e5dccc739b35dd31b9142477149edd22f3075f5455437e6b8df688d8b281"
+    "manifest_json_sha256": "fac9cef137bbd2a7ab6b2d439bb3ecdc32bc8be678cebbfc2f523b68b364f5b0",
+    "spec_markdown_sha256": "1e76e26c16f5b553f8ab22a3e1065c90660525fe00fb6f98b4592634c0275ec8",
+    "test_vectors_json_sha256": "06df0b4b14b093832f8614b0e3070dec0280b6c1f6a47db0d174974bfd5577dc",
+    "reproducibility_lock_sha256": "030263dd45233648dbd17805707d1c873b129faf1393aa66d327288208527a78",
+    "reference_implementation_sha256": "06f6d76b9897046413bc65dd21abde272ab3340030f2f5c583c59ce6630675e8",
+    "test_runner_sha256": "b2a0be7e403965080863c9fc5dd1a142f7134d1d7f2897855fb1ac3fe4b569e3",
+    "reproducibility_harness_sha256": "9464ea6f1b33f3b73ecdc63f811dadc33018e233835f3ea8491c76299dd543f1",
+    "profile_diff_sha256": "7844e1f1ebcc2397cb7922c648d73e18f3879428ce1ee809cacef5b6590d181a",
+    "nexus_governance_module_sha256": "3f2c9032149058291930c0cfab0718f069fc6558a74a7c2bf7e842b0f34ce7e8",
+    "developer_onboarding_sha256": "caa29a3eb238daa8313ddace64cac8d814278a9df1d4b9b0aa217e02079d147a"
   }
 }

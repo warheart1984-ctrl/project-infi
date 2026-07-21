@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "$id": "https://emergent-substrate/spec/schemas/identity-memory.json",
+  "title": "IdentityMemory",
+  "description": "Key-value identity memory",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "value": {
+      "type": "string"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["key", "value"],
+  "additionalProperties": false
+}

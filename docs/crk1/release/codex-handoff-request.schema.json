@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-infi.local/schemas/codex-handoff-request.schema.json",
+  "title": "Codex Handoff Request Packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["objective", "next_action", "done", "files", "verification", "blockers"],
+  "properties": {
+    "objective": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The task objective to hand off to Codex."
+    },
+    "current_state": {
+      "type": "string",
+      "description": "Short description of the current state before work starts."
+    },
+    "done": {
+      "type": "array",
+      "description": "Completed items that should not be repeated.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "next_action": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The smallest useful next step."
+    },
+    "files": {
+      "type": "array",
+      "description": "Files or paths the task should touch.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "verification": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The command or check that proves the slice."
+    },
+    "blockers": {
+      "type": "array",
+      "description": "Only actual blockers that stop progress.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

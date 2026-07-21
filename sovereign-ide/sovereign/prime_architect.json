@@ -1,0 +1,35 @@
+{
+  "name": "PrimeArchitect",
+  "version": "1.0.0",
+  "description": "Constitutional command layer for the Sovereign Codex Eternal.",
+  "author": "Jon Halstead",
+  "entry": "plugins/prime_architect.py",
+  "commands": [
+    {
+      "id": "promotion.approve_selected",
+      "title": "Approve Selected Promotion",
+      "shortcut": "Ctrl+Shift+P",
+      "handler": "PromotionConsole.approve_selected"
+    },
+    {
+      "id": "lineage.trace",
+      "title": "Trace Lineage",
+      "shortcut": "Ctrl+Shift+L",
+      "handler": "LineageLogger.trace"
+    },
+    {
+      "id": "replay.verify",
+      "title": "Verify Replay",
+      "shortcut": "Ctrl+Shift+R",
+      "handler": "ReplayVerifier.validate"
+    }
+  ],
+  "assets": {
+    "resonance": "resonance/resonance.json",
+    "glyphs": "glyphs/"
+  },
+  "dependencies": [
+    "HarmonicEngine",
+    "MandalaVisualizer"
+  ]
+}

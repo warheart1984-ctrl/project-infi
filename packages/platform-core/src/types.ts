@@ -1,6 +1,91 @@
 import type { CognitiveRisk } from '@aaes-os/governed-runtime';
 
 export type GovernanceMode = 'strict' | 'balanced' | 'experimental';
+export type CustomerPlanId = 'free' | 'pro' | 'enterprise';
+export type CustomerAuthProvider = 'email' | 'google' | 'microsoft' | 'github' | 'apple';
+export type OrganizationRole = 'owner' | 'admin' | 'analyst' | 'developer' | 'auditor';
+export type OrgRole = OrganizationRole;
+
+export interface Org {
+  id: string;
+  name: string;
+  ownerId: string;
+  planId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface OrgMember {
+  orgId: string;
+  customerId: string;
+  role: OrgRole;
+  createdAt: string;
+}
+
+export interface CustomerEntitlements {
+  maxRequestsPerMonth: number;
+  maxTokensPerMonth: number;
+  allowedModels: string[];
+  routingTier: 'basic' | 'pro' | 'enterprise';
+  codexPacketHandoff: boolean;
+  usageLedger: boolean;
+  marginDashboard: boolean;
+  treasuryAccess: boolean;
+  governanceLevel: 'basic' | 'enhanced' | 'full';
+  auditScope: 'personal' | 'team' | 'org';
+  overageBillingEnabled: boolean;
+  customerAuditSurfaces: boolean;
+}
+
+export interface OrganizationMemberRecord {
+  customerId: string;
+  role: OrganizationRole;
+  joinedAt: string;
+}
+
+export interface OrganizationRecord {
+  id: string;
+  name: string;
+  ownerCustomerId: string;
+  planId: string;
+  billingContactEmail: string;
+  domain?: string;
+  members: OrganizationMemberRecord[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CustomerRecord {
+  id: string;
+  ownerId: string;
+  email: string;
+  displayName?: string;
+  authProvider: CustomerAuthProvider;
+  authSubject?: string;
+  passwordHash?: string;
+  planId: CustomerPlanId;
+  planName: string;
+  entitlements: CustomerEntitlements;
+  organizationId?: string;
+  organizationRole?: OrganizationRole;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CustomerSession {
+  sessionId: string;
+  customerId: string;
+  ownerId: string;
+  email: string;
+  planId: CustomerPlanId;
+  planName: string;
+  entitlements: CustomerEntitlements;
+  governanceProfile: GovernanceMode;
+  organizationId?: string;
+  organizationRole?: OrganizationRole;
+  createdAt: string;
+  expiresAt: string;
+}
 
 export interface GovernanceProfile {
   id: GovernanceMode;
@@ -65,12 +150,33 @@ export interface ApiKeyRecord {
 export interface UsageRecord {
   id: string;
   ownerId: string;
+  orgId?: string;
+  customerId?: string;
   capabilityId?: string;
   operation: string;
   units: number;
   governanceProfile: GovernanceMode;
   timestamp: string;
   metadata?: Record<string, unknown>;
+}
+
+export interface UsageEvent {
+  id: string;
+  orgId: string;
+  customerId?: string;
+  kind: string;
+  amount: number;
+  metadata?: Record<string, unknown>;
+  occurredAt: string;
+}
+
+export interface OverageEvent {
+  id: string;
+  orgId: string;
+  kind: string;
+  amount: number;
+  metadata?: Record<string, unknown>;
+  occurredAt: string;
 }
 
 export interface AuthSession {

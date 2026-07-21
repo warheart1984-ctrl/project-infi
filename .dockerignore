@@ -1,0 +1,26 @@
+# Minimal context: only source files
+**/.pytest_cache
+**/__pycache__
+**/node_modules
+**/.next
+**/dist
+**/.env*
+**/*.log
+**/*.docx
+**/*.zip
+**/*.tar.gz
+.git
+.github
+.runtime
+.local
+archive
+artifacts
+build
+ci-artifacts
+.release-logs
+.superpowers
+.constitutional_freeze.json
+.venv
+.venv-test
+sovereign-ide
+.tmp*

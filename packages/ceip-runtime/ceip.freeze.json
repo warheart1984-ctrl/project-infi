@@ -1,0 +1,20 @@
+{
+  "artifact": "CEIP v1.0 Reference Runtime",
+  "status": "FROZEN",
+  "version": "1.0.0",
+  "frozenAt": "2026-07-14T14:54:00-04:00",
+  "authority": "constitutional-review",
+  "canonicalLifecycleStageCount": 19,
+  "compatibility": {
+    "contractChanges": "require semantic versioning and constitutional review",
+    "runtimeChanges": "must remain backward compatible with CEIP 1.x contracts",
+    "extensions": "must integrate through adapters or extension points without reordering the core lifecycle",
+    "breakingChanges": "require CEIP 2.0 and an approved migration/conformance plan"
+  },
+  "artifacts": [
+    { "path": "docs/runtime/CEIP_V1_REFERENCE_RUNTIME.md", "sha256": "91207b73a1dda9aa2e6e4a6057884881e22dcbac36f39ce75c24517542efebb1" },
+    { "path": "packages/ceip-runtime/src/contracts.ts", "sha256": "cc52c51e90ddeaf0de959298f331e3a018eddfd098325381368230077e9cd3b4" },
+    { "path": "packages/ceip-runtime/src/stateMachine.ts", "sha256": "be83b8d98b0349cc38e9171c7bd8cf79130a21d9759548436ae8a7b797357f80" },
+    { "path": "packages/ceip-runtime/src/conformance.ts", "sha256": "743d8cb47172c9e9e735cd0de1d1bc7d44bcbc2bb7dd28a66bcfd103362aad1a" }
+  ]
+}

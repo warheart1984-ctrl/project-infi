@@ -1,0 +1,194 @@
+{
+  "specId": "cis-conformance-suite-input",
+  "displayName": "CIS Conformance Suite Input",
+  "version": "1.0.0",
+  "status": "Frozen",
+  "generatedFrom": "cis-standards-hierarchy",
+  "traceabilityPath": [
+    "Architecture",
+    "Ontology",
+    "Knowledge Graph",
+    "GKS",
+    "Research OS",
+    "Reference Runtime",
+    "Conformance",
+    "Evidence",
+    "Replay",
+    "External Standards"
+  ],
+  "requirements": [
+    {
+      "id": "CR-1",
+      "requirement": "CIS Core remains the single authoritative constitutional specification",
+      "component": "CIS_STANDARDS_HIERARCHY.md and CIS_STANDARDS_HIERARCHY.spec.json",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md",
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "tests": [
+        "packages/aaes-governance/src/proofSurface.test.ts"
+      ]
+    },
+    {
+      "id": "CR-2",
+      "requirement": "Companion specifications inherit Core terminology rather than redefining it",
+      "component": "CIS_STANDARDS_HIERARCHY.md",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "tests": [
+        "packages/aaes-governance/src/proofSurface.test.ts"
+      ]
+    },
+    {
+      "id": "CR-3",
+      "requirement": "Every artifact carries consistent governance status, stewardship, versioning, traceability, and release lifecycle fields",
+      "component": "CIS_STANDARDS_HIERARCHY.md",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "tests": [
+        "packages/aaes-governance/src/proofSurface.test.ts"
+      ]
+    },
+    {
+      "id": "CR-4",
+      "requirement": "Implementation profiles adapt CIS for domain-specific constraints without changing constitutional requirements",
+      "component": "CIS_STANDARDS_HIERARCHY.spec.json",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ],
+      "tests": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.spec.json"
+      ]
+    },
+    {
+      "id": "CR-5",
+      "requirement": "Standards traceability answers requirement, component, evidence, replay, receipt, and test for each capability",
+      "component": "CIS_STANDARDS_TRACEABILITY_MATRIX.md",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md"
+      ],
+      "tests": [
+        "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md"
+      ]
+    },
+    {
+      "id": "CR-6",
+      "requirement": "Research OS preserves evidence, insights, ideas, and actions as durable institutional memory",
+      "component": "CIS_STANDARDS_HIERARCHY.md",
+      "evidence": [
+        "docs/crk1/release/CIS_STANDARDS_HIERARCHY.md"
+      ],
+      "tests": [
+        "packages/aaes-governance/src/proofSurface.test.ts"
+      ]
+    },
+    {
+      "id": "CR-7",
+      "requirement": "Major artifacts follow the shared governance model",
+      "component": "ARTIFACT_GOVERNANCE_MODEL.md and ARTIFACT_GOVERNANCE_REGISTRY.spec.json",
+      "evidence": [
+        "docs/crk1/release/ARTIFACT_GOVERNANCE_MODEL.md",
+        "docs/crk1/release/ARTIFACT_GOVERNANCE_REGISTRY.spec.json"
+      ],
+      "tests": [
+        "tests/release/artifact-governance.test.ts"
+      ]
+    },
+    {
+      "id": "CR-8",
+      "requirement": "External standards families are mapped for interoperability and traceability",
+      "component": "EXTERNAL_STANDARDS_MAPPING.md and EXTERNAL_STANDARDS_MAPPING.spec.json",
+      "evidence": [
+        "docs/crk1/release/EXTERNAL_STANDARDS_MAPPING.md",
+        "docs/crk1/release/EXTERNAL_STANDARDS_MAPPING.spec.json"
+      ],
+      "tests": [
+        "tests/release/external-standards.test.ts"
+      ]
+    },
+    {
+      "id": "CR-9",
+      "requirement": "The conformance suite is generated from the traceability matrix source of truth",
+      "component": "CIS_CONFORMANCE_SUITE_SPECIFICATION.md, CIS_CONFORMANCE_SUITE_GENERATION.md, and CIS_CONFORMANCE_SUITE_INPUT.spec.generator.json",
+      "evidence": [
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_SPECIFICATION.md",
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_GENERATION.md",
+        "docs/crk1/release/CIS_CONFORMANCE_SUITE_INPUT.spec.generator.json"
+      ],
+      "tests": [
+        "tests/release/cis-conformance-generation.test.ts"
+      ]
+    },
+    {
+      "id": "CR-10",
+      "requirement": "CORI Alpha is the first independently verifiable constitutional proof",
+      "component": "CORI_ALPHA_PROOF_CHAIN.md",
+      "evidence": [
+        "docs/crk1/release/CORI_ALPHA_PROOF_CHAIN.md"
+      ],
+      "tests": [
+        "tests/release/cori-alpha-proof.test.ts replay, receipt, and conformance coverage"
+      ]
+    }
+  ],
+  "validationFamilies": [
+    {
+      "id": "VF-1",
+      "name": "Constitutional Verification",
+      "purpose": "Verify that each requirement traces through the full constitutional path.",
+      "acceptanceCriteria": [
+        "Every requirement maps to Architecture, Ontology, Knowledge Graph, GKS, Research OS, Reference Runtime, Conformance, Evidence, Replay, and External Standards.",
+        "Every requirement has a stable component and evidence surface.",
+        "No requirement invents a new constitutional obligation."
+      ]
+    },
+    {
+      "id": "VF-2",
+      "name": "Replay Validation",
+      "purpose": "Verify that the evidence package can be reconstructed deterministically from the recorded replay path.",
+      "acceptanceCriteria": [
+        "Replay produces the recorded evidence package.",
+        "Replay does not depend on private explanation or hidden state.",
+        "Replay confirms the governing decision record."
+      ]
+    },
+    {
+      "id": "VF-3",
+      "name": "Receipt Validation",
+      "purpose": "Verify that the constitutional receipt set is complete and consistent with the governing record.",
+      "acceptanceCriteria": [
+        "Required receipts are present.",
+        "Each receipt matches the governing decision record.",
+        "No receipt contradicts the evidence package."
+      ]
+    },
+    {
+      "id": "VF-4",
+      "name": "Trust Validation",
+      "purpose": "Verify canonical state, stewardship, and trust ledger consistency.",
+      "acceptanceCriteria": [
+        "Canonical state is internally consistent.",
+        "Stewardship records are traceable.",
+        "Trust ledger entries agree with canonical transitions."
+      ]
+    },
+    {
+      "id": "VF-5",
+      "name": "Acceptance Criteria",
+      "purpose": "Verify that the suite records an objective pass, partial, or fail outcome.",
+      "acceptanceCriteria": [
+        "No blocking requirement remains unverified for pass.",
+        "Partial states are recorded explicitly.",
+        "Subjective readiness claims do not override evidence."
+      ]
+    }
+  ],
+  "acceptanceCriteria": [
+    "The suite remains synchronized with the traceability matrix.",
+    "The suite input remains machine-readable and replayable.",
+    "The suite produces evidence-first outcomes only.",
+    "The suite identifies blocking gaps instead of overstating readiness."
+  ]
+}

@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@aaes-os/aaes-governance": "workspace:*",
+    "@aaes-os/evidence-receipts": "workspace:*",
     "@aaes-os/runledger": "workspace:*",
     "@aaes-os/trace-bus": "workspace:*",
     "@aaes-os/tri-core-protocol": "workspace:*"

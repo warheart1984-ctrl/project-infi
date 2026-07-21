@@ -1,0 +1,78 @@
+{
+  "draVersion": "1.0.0",
+  "generatedAt": "2026-06-27T01:11:37.176Z",
+  "risk": {
+    "RUNLEDGER.REQ-001": {
+      "requirementId": "RUNLEDGER.REQ-001",
+      "dependencyDepth": 4,
+      "fanIn": 4,
+      "fanOut": 0,
+      "verificationGaps": 1,
+      "deprecatedDependencies": 0,
+      "score": 17
+    },
+    "TRACEBUS.REQ-001": {
+      "requirementId": "TRACEBUS.REQ-001",
+      "dependencyDepth": 8,
+      "fanIn": 8,
+      "fanOut": 0,
+      "verificationGaps": 1,
+      "deprecatedDependencies": 0,
+      "score": 31
+    },
+    "GOV.REQ-001": {
+      "requirementId": "GOV.REQ-001",
+      "dependencyDepth": 23,
+      "fanIn": 23,
+      "fanOut": 0,
+      "verificationGaps": 1,
+      "deprecatedDependencies": 0,
+      "score": 83.5
+    },
+    "UCR.REQ-001": {
+      "requirementId": "UCR.REQ-001",
+      "dependencyDepth": 11,
+      "fanIn": 11,
+      "fanOut": 0,
+      "verificationGaps": 1,
+      "deprecatedDependencies": 0,
+      "score": 41.5
+    },
+    "TRICORE.REQ-001": {
+      "requirementId": "TRICORE.REQ-001",
+      "dependencyDepth": 8,
+      "fanIn": 8,
+      "fanOut": 0,
+      "verificationGaps": 1,
+      "deprecatedDependencies": 0,
+      "score": 31
+    },
+    "OPSCONSOLE.REQ-001": {
+      "requirementId": "OPSCONSOLE.REQ-001",
+      "dependencyDepth": 28,
+      "fanIn": 28,
+      "fanOut": 0,
+      "verificationGaps": 1,
+      "deprecatedDependencies": 0,
+      "score": 101
+    },
+    "AAES-TEST.REQ-001": {
+      "requirementId": "AAES-TEST.REQ-001",
+      "dependencyDepth": 27,
+      "fanIn": 27,
+      "fanOut": 0,
+      "verificationGaps": 1,
+      "deprecatedDependencies": 0,
+      "score": 97.5
+    },
+    "OPSURF.REQ-001": {
+      "requirementId": "OPSURF.REQ-001",
+      "dependencyDepth": 8,
+      "fanIn": 8,
+      "fanOut": 0,
+      "verificationGaps": 1,
+      "deprecatedDependencies": 0,
+      "score": 31
+    }
+  }
+}

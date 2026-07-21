@@ -1,0 +1,37 @@
+{
+  "name": "@aaes-os/governed-runtime",
+  "version": "0.1.0",
+  "description": "Universal coding adapter layer — CodingRouter, backends, and policy-driven routing",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node --input-type=module -e \"import { cpSync, mkdirSync } from 'node:fs'; mkdirSync('dist/policies',{recursive:true}); cpSync('src/policies/coding.yaml','dist/policies/coding.yaml'); cpSync('src/policies/coding-free.yaml','dist/policies/coding-free.yaml');\"",
+    "test": "vitest run --config vitest.config.ts"
+  },
+  "peerDependencies": {
+    "@cursor/sdk": "*"
+  },
+  "peerDependenciesMeta": {
+    "@cursor/sdk": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@aaes-os/aaes-governance": "workspace:*",
+    "@aaes-os/kerno": "workspace:*",
+    "@aaes-os/sovren": "workspace:*",
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

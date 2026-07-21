@@ -1,9 +1,17 @@
 import type {
   AuthSession,
   CapabilityRecord,
+  CustomerRecord,
+  CustomerSession,
+  CustomerSignupInput,
+  CustomerLoginInput,
   GovernanceMode,
   GovernanceProfile,
   InvokeResult,
+  OrgMember,
+  OrganizationRecord,
+  OverageEvent,
+  UsageRecord,
 } from '@aaes-os/platform-core';
 
 export interface PlatformClientOptions {
@@ -36,6 +44,102 @@ export class PlatformClient {
     this.sessionId = session.sessionId;
     this.governanceProfile = session.governanceProfile;
     return session;
+  }
+
+  async signupCustomer(input: CustomerSignupInput): Promise<{ customer: CustomerRecord; session: CustomerSession }> {
+    const result = await this.request<{ customer: CustomerRecord; session: CustomerSession }>('POST', '/v1/customers/signup', input);
+    this.sessionId = result.session.sessionId;
+    this.governanceProfile = result.session.governanceProfile;
+    return result;
+  }
+
+  async loginCustomer(input: CustomerLoginInput): Promise<{ customer: CustomerRecord; session: CustomerSession }> {
+    const result = await this.request<{ customer: CustomerRecord; session: CustomerSession }>('POST', '/v1/customers/login', input);
+    this.sessionId = result.session.sessionId;
+    this.governanceProfile = result.session.governanceProfile;
+    return result;
+  }
+
+  async getCurrentCustomer(): Promise<{ customer: CustomerRecord; entitlements: CustomerRecord['entitlements']; planId: string; planName: string }> {
+    return this.governedRequest('GET', '/v1/customers/me');
+  }
+
+  async listCustomers(): Promise<{ customers: CustomerRecord[] }> {
+    return this.governedRequest('GET', '/v1/customers');
+  }
+
+  async createOrg(input: {
+    name: string;
+    billingContactEmail?: string;
+    planId?: string;
+    domain?: string;
+    ownerRole?: string;
+  }): Promise<{ organization: OrganizationRecord }> {
+    return this.governedRequest('POST', '/v1/organizations', input);
+  }
+
+  async listOrgs(): Promise<{ organizations: OrganizationRecord[] }> {
+    return this.governedRequest('GET', '/v1/organizations');
+  }
+
+  async getOrg(orgId: string): Promise<{ organization: OrganizationRecord }> {
+    return this.governedRequest('GET', `/v1/organizations/${orgId}`);
+  }
+
+  async listOrgMembers(orgId: string): Promise<{ organizationId: string; members: OrgMember[] }> {
+    return this.governedRequest('GET', `/v1/organizations/${orgId}/members`);
+  }
+
+  async addOrgMember(orgId: string, customerId: string, role: string): Promise<{ organization: OrganizationRecord }> {
+    return this.governedRequest('POST', `/v1/organizations/${orgId}/members`, { customerId, role });
+  }
+
+  async updateOrgMemberRole(orgId: string, customerId: string, role: string): Promise<{ organization: OrganizationRecord }> {
+    return this.governedRequest('PATCH', `/v1/organizations/${orgId}/members/${customerId}`, { role });
+  }
+
+  async getUsageSummary(): Promise<{ totalUnits: number; byOperation: Record<string, number>; byProfile: Record<GovernanceMode, number> }> {
+    return this.governedRequest('GET', '/v1/billing/usage');
+  }
+
+  async getCustomerQuota(): Promise<{
+    customer: CustomerRecord;
+    usageRecords: UsageRecord[];
+    quota: {
+      requestLimit: number;
+      requestCount: number;
+      requestOverage: number;
+      tokenLimit: number;
+      tokenCount: number;
+      tokenOverage: number;
+      overageBillingUsd: number;
+      overageBillingEnabled: boolean;
+      enforcement: {
+        status: 'within_limit' | 'metered_overage' | 'blocked';
+        allowed: boolean;
+        reason: string;
+      };
+    };
+  }> {
+    return this.governedRequest('GET', '/v1/customers/quota');
+  }
+
+  async getOrgUsage(orgId: string): Promise<{
+    organizationId: string;
+    total: number;
+    byKind: Record<string, number>;
+    summary: { total: number; byKind: Record<string, number> };
+    overageEvents: OverageEvent[];
+  }> {
+    return this.governedRequest('GET', `/v1/organizations/${orgId}/usage`);
+  }
+
+  async recordOrgUsage(orgId: string, input: { customerId?: string; kind: string; amount: number; metadata?: Record<string, unknown> }): Promise<UsageRecord> {
+    return this.governedRequest('POST', `/v1/organizations/${orgId}/usage`, input);
+  }
+
+  async getOverageEvents(orgId: string): Promise<{ events: OverageEvent[] }> {
+    return this.governedRequest('GET', `/v1/organizations/${orgId}/overage`);
   }
 
   setApiKey(key: string): void {
@@ -91,6 +195,65 @@ export class PlatformClient {
     }>('GET', '/v1/billing/usage');
   }
 
+  async getTreasuryPlan(input?: {
+    customerId?: string;
+    customerInvoiceUsd?: number;
+    openAiUsageCostUsd?: number;
+    taxRatePct?: number;
+    profitReservePct?: number;
+    platformReservePct?: number;
+  }) {
+    return this.governedRequest('POST', '/v1/billing/treasury/plan', {
+      ...(input ?? {}),
+    });
+  }
+
+  async getTreasurySchedule() {
+    return this.governedRequest('GET', '/v1/billing/treasury/schedule');
+  }
+
+  async createCheckoutSession(orgId: string, input?: { amount?: number; currency?: string }) {
+    return this.governedRequest('POST', `/v1/organizations/${orgId}/billing/checkout`, input ?? {});
+  }
+
+  async createPayoutInstruction(orgId: string, input?: { amount?: number; currency?: string }) {
+    return this.governedRequest('POST', `/v1/organizations/${orgId}/billing/payout`, input ?? {});
+  }
+
+  async getPricingAudit(orgId: string) {
+    return this.governedRequest('GET', `/v1/organizations/${orgId}/audit/pricing`);
+  }
+
+  async getRoutingAudit(orgId: string) {
+    return this.governedRequest('GET', `/v1/organizations/${orgId}/audit/routing`);
+  }
+
+  async getEntitlementsAudit(orgId: string) {
+    return this.governedRequest('GET', `/v1/organizations/${orgId}/audit/entitlements`);
+  }
+
+  async evaluatePricing(input: {
+    customerId?: string;
+    segment: string;
+    monthlyCustomers?: number;
+    routedRequestsPerCustomer?: number;
+    governanceReviewsPerCustomer?: number;
+    knowledgeUpdatesPerCustomer?: number;
+    serviceHoursPerCustomer?: number;
+    compliancePressure?: number;
+    workloadVolatility?: number;
+    supportComplexity?: number;
+    privateDeployment?: boolean;
+    assuranceRequired?: boolean;
+    customerInvoiceUsd?: number;
+    openAiUsageCostUsd?: number;
+    taxRatePct?: number;
+    profitReservePct?: number;
+    platformReservePct?: number;
+  }) {
+    return this.governedRequest('POST', '/v1/billing/pricing/evaluate', input);
+  }
+
   async testModule(moduleId: string, version: string) {
     return this.request<{ passed: boolean; checks: string[] }>('POST', '/v1/modules/test', {
       moduleId,
@@ -132,7 +295,7 @@ export class PlatformClient {
   private async request<T>(
     method: string,
     path: string,
-    body?: Record<string, unknown>,
+    body?: unknown,
   ): Promise<T> {
     const headers: Record<string, string> = { 'content-type': 'application/json' };
     if (this.apiKey) {
@@ -144,7 +307,7 @@ export class PlatformClient {
     const res = await fetch(`${this.baseUrl}${path}`, {
       method,
       headers,
-      body: body ? JSON.stringify(body) : undefined,
+      body: body === undefined ? undefined : JSON.stringify(body),
     });
 
     if (!res.ok) {

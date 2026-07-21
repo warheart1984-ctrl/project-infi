@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "requiredFields": ["problem","decision","alternatives","evidence","tradeoffs","impactAnalysis","supersession","constitutionalPrinciple","standardsAffected","specificationsAffected","runtimeImpact","conformanceImpact"],
+  "records": [
+    {"id":"ADR-0001","title":"Freeze the Constitutional Runtime core","status":"ACCEPTED","date":"2026-07-14","path":"docs/adr/0001-freeze-core-runtime.md","supersedes":[],"supersededBy":null},
+    {"id":"ADR-0002","title":"Freeze CEIP v1.0","status":"ACCEPTED","date":"2026-07-14","path":"docs/adr/0002-freeze-ceip-v1.md","supersedes":[],"supersededBy":null},
+    {"id":"ADR-0003","title":"Preserve constitutional layer independence","status":"ACCEPTED","date":"2026-07-14","path":"docs/adr/0003-independent-hierarchy.md","supersedes":[],"supersededBy":null},
+    {"id":"ADR-0004","title":"Express enterprise expansion as a CEIP profile","status":"ACCEPTED","date":"2026-07-14","path":"docs/adr/0004-enterprise-profile-mapping.md","supersedes":[],"supersededBy":null}
+  ]
+}

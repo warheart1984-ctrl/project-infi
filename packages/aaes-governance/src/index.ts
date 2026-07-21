@@ -13,6 +13,37 @@ export { type GovernanceContext, type GovernanceActor } from './context/Governan
 export { FaultJournalStore, type FaultJournalStoreOptions, type FaultRecord, type FaultRecordInput } from './faults/FaultJournalStore.js';
 export { constitutionalProfile, type ConstitutionalProfile } from './constitutionalProfile.js';
 export {
+  deriveCanonicalReplayEvidenceContract,
+  type CanonicalReplayEvidenceContract,
+  type ReplayVerificationReport,
+  validateCanonicalReplayEvidenceContract,
+  verifyReplayCoverage,
+} from './crec.js';
+export {
+  CONSTITUTIONAL_EVIDENCE_GRAPH_JSON_SCHEMA,
+  CONSTITUTIONAL_EVIDENCE_GRAPH_JSON_SCHEMA_VERSION,
+  createConstitutionalEvidenceGraph,
+  createConstitutionalEvidenceGraphFromProofSurfaces,
+  type ConstitutionalEvidenceGraph,
+  type ConstitutionalEvidenceGraphClaimResolution,
+  type ConstitutionalEvidenceGraphEdge,
+  type ConstitutionalEvidenceGraphEdgeRelation,
+  type ConstitutionalEvidenceGraphNode,
+  type ConstitutionalEvidenceGraphNodeKind,
+  type ConstitutionalEvidenceGraphNodeStatus,
+  type ConstitutionalEvidenceGraphProofSurface,
+  type ConstitutionalEvidenceGraphSource,
+  type ConstitutionalEvidenceGraphSummary,
+  type ConstitutionalEvidenceGraphView,
+  type ConstitutionalEvidenceGraphValidationIssue,
+  type ConstitutionalReleaseReceipt,
+  resolveConstitutionalEvidenceGraph,
+  resolveConstitutionalEvidenceGraphFromProofSurfaces,
+  resolveConstitutionalEvidenceGraphFromReleaseReceipt,
+  summarizeConstitutionalEvidenceGraph,
+  validateConstitutionalEvidenceGraph,
+} from './evidenceGraph.js';
+export {
   PROOF_SURFACE_LAW,
   type ClaimType,
   type ProofLevel,

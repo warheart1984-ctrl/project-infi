@@ -1,0 +1,20 @@
+{
+  "name": "@aaes-os/docs-site",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./scripts/start-docs-site.mjs",
+    "build": "node ./scripts/build-docs-site.mjs",
+    "serve": "node ./scripts/serve-docs-site.mjs",
+    "smoke": "node ./scripts/smoke-docs-site.mjs",
+    "verify": "node ./scripts/build-docs-site.mjs && node ./scripts/smoke-docs-site.mjs"
+  },
+  "dependencies": {
+    "@aaes-os/aaes-governance": "workspace:*",
+    "@docusaurus/core": "^3.9.2",
+    "@docusaurus/preset-classic": "^3.9.2",
+    "@mdx-js/react": "^3.1.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  }
+}

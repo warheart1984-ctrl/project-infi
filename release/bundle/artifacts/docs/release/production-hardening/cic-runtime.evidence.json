@@ -1,0 +1,88 @@
+{
+  "id": "cic-runtime",
+  "packageName": "@aaes-os/cic-runtime",
+  "status": "release-evidence-ready",
+  "packageDir": "packages/cic-runtime",
+  "docsPage": "docs-site/docs/runtime/cic-runtime.md",
+  "registryId": "CIC",
+  "checks": {
+    "packageJson": true,
+    "source": true,
+    "tests": true,
+    "buildOutput": true,
+    "docsPage": true,
+    "registryLive": true,
+    "packageName": true,
+    "buildScript": true,
+    "testScript": true
+  },
+  "commands": {
+    "build": "corepack pnpm --filter @aaes-os/cic-runtime build",
+    "test": "corepack pnpm --filter @aaes-os/cic-runtime test"
+  },
+  "replayAuditPacket": {
+    "replayReference": "cic-runtime.evidence.json#replayAuditPacket",
+    "auditReference": "cic-runtime.evidence.json#checks",
+    "documentationReference": "docs-site/docs/runtime/cic-runtime.md",
+    "requiredArtifacts": [
+      "packageJson",
+      "source",
+      "tests",
+      "buildOutput",
+      "docsPage",
+      "registryLive"
+    ]
+  },
+  "releasePackagingPacket": {
+    "manifestId": "cic-runtime-d95983c75d067631fa287f552ca0db3d10f14473f7e47b7351546c6839bc5329",
+    "checksumAlgorithm": "sha256",
+    "includedFiles": [
+      {
+        "path": "packages/cic-runtime/package.json",
+        "sha256": "8173553a575c2f704b2f0f26f521523f6b8e4a060a52be11845a6d659d19a22b",
+        "bytes": 601
+      },
+      {
+        "path": "packages/cic-runtime/src/index.ts",
+        "sha256": "3fc136cc01326e52ce6afa6883f47d87a229a94d892e5ef57b0de46e907156fb",
+        "bytes": 12684
+      },
+      {
+        "path": "packages/cic-runtime/src/index.test.ts",
+        "sha256": "95dc5b46ef735d0b5cdcbae706c3264b556677b2de55c09ebbc56d0fa01dceaa",
+        "bytes": 3102
+      },
+      {
+        "path": "packages/cic-runtime/dist/index.js",
+        "sha256": "b9461165dc3e42e71f12eeeb04b5c410e4c640a200c3b3a221937fc2e1f8ed0f",
+        "bytes": 9809
+      },
+      {
+        "path": "docs-site/docs/runtime/cic-runtime.md",
+        "sha256": "839a1d840c1a2e18e04184ce76a6912d86f5252c98a98c6723f134c6fa55547c",
+        "bytes": 1423
+      },
+      {
+        "path": "packages/ulx-governance/src/ULXLanguageRegistry.ts",
+        "sha256": "d50acfe956c0d1ff112e5871940ee5a98b70e7131921c1668b4ad4f1f7d52509",
+        "bytes": 7972
+      }
+    ]
+  },
+  "externalIntegrationPacket": {
+    "target": "semantic graph inference adapter",
+    "readiness": "live-integration-verified",
+    "evidence": [
+      "docs-site/docs/runtime/cic-runtime.md",
+      "packages/cic-runtime/src/index.ts",
+      "cic-runtime.evidence.json",
+      "docs/release/external-integrations/README.md",
+      "docs/release/external-integrations/external-integration-index.json"
+    ],
+    "serviceEvidenceIds": [
+      "github-origin-remote",
+      "npm-registry-toolchain"
+    ]
+  },
+  "blockers": []
+}

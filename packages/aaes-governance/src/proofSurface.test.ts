@@ -9,6 +9,7 @@ import {
   validateProofSurface,
   type ProofSurface,
 } from './proofSurface.js';
+import { deriveCanonicalReplayEvidenceContract, validateCanonicalReplayEvidenceContract, verifyReplayCoverage } from './crec.js';
 
 function buildSurface(overrides: Partial<ProofSurface> = {}): ProofSurface {
   return {
@@ -86,7 +87,7 @@ function buildSurface(overrides: Partial<ProofSurface> = {}): ProofSurface {
       intendedCustomer: 'Developers and governance teams',
       primaryUseCase: 'Evidence-backed claim publication',
       valueProposition: 'Makes readiness machine-readable and auditable.',
-      currentReadiness: 'Prototype',
+      currentReadiness: 'Verified Prototype',
     },
     nextRequiredEvidence: ['Publish the registry API to downstream dashboards.'],
     ...overrides,
@@ -145,5 +146,73 @@ describe('ProofSurface', () => {
 
     expect(registry.get('@aaes-os/ucr-runtime')).toBeDefined();
     expect(listProofSurfaceSummaries(registry).some((surface) => surface.identity.id === '@aaes-os/ucr-runtime')).toBe(true);
+  });
+
+  it('includes the CIS standards hierarchy surface in the demo registry', () => {
+    const registry = createDemoProofSurfaceRegistry();
+
+    expect(registry.get('@cis-core/standards-hierarchy')).toBeDefined();
+    expect(listProofSurfaceSummaries(registry).some((surface) => surface.identity.id === '@cis-core/standards-hierarchy')).toBe(true);
+  });
+
+  it('includes the CIS standards traceability matrix surface in the demo registry', () => {
+    const registry = createDemoProofSurfaceRegistry();
+
+    expect(registry.get('@cis-core/standards-traceability-matrix')).toBeDefined();
+    expect(listProofSurfaceSummaries(registry).some((surface) => surface.identity.id === '@cis-core/standards-traceability-matrix')).toBe(true);
+  });
+
+  it('includes the CIS companion spec registry surface in the demo registry', () => {
+    const registry = createDemoProofSurfaceRegistry();
+
+    expect(registry.get('@cis-core/companion-spec-registry')).toBeDefined();
+    expect(listProofSurfaceSummaries(registry).some((surface) => surface.identity.id === '@cis-core/companion-spec-registry')).toBe(true);
+  });
+
+  it('includes the artifact governance surface in the demo registry', () => {
+    const registry = createDemoProofSurfaceRegistry();
+
+    expect(registry.get('@cis-core/artifact-governance')).toBeDefined();
+    expect(listProofSurfaceSummaries(registry).some((surface) => surface.identity.id === '@cis-core/artifact-governance')).toBe(true);
+  });
+
+  it('includes the sovereign router pricing surface in the demo registry', () => {
+    const registry = createDemoProofSurfaceRegistry();
+
+    expect(registry.get('@cis-core/sovereign-router-pricing')).toBeDefined();
+    expect(listProofSurfaceSummaries(registry).some((surface) => surface.identity.id === '@cis-core/sovereign-router-pricing')).toBe(true);
+  });
+
+  it('includes the external standards mapping surface in the demo registry', () => {
+    const registry = createDemoProofSurfaceRegistry();
+
+    expect(registry.get('@cis-core/external-standards-mapping')).toBeDefined();
+    expect(listProofSurfaceSummaries(registry).some((surface) => surface.identity.id === '@cis-core/external-standards-mapping')).toBe(true);
+  });
+
+  it('includes the conformance generation surface in the demo registry', () => {
+    const registry = createDemoProofSurfaceRegistry();
+
+    expect(registry.get('@cis-core/conformance-generation')).toBeDefined();
+    expect(listProofSurfaceSummaries(registry).some((surface) => surface.identity.id === '@cis-core/conformance-generation')).toBe(true);
+  });
+
+  it('derives a valid canonical replay and evidence contract', () => {
+    const surface = buildSurface();
+    const crec = deriveCanonicalReplayEvidenceContract(surface);
+    const issues = validateCanonicalReplayEvidenceContract(crec);
+
+    expect(crec.intent).toBe(surface.purpose);
+    expect(crec.proofSurfaceLevel).toBe(surface.proofLevel);
+    expect(issues.filter((issue) => issue.severity === 'error')).toHaveLength(0);
+  });
+
+  it('verifies replay coverage across the demo registry', () => {
+    const registry = createDemoProofSurfaceRegistry();
+    const report = verifyReplayCoverage(registry.list());
+
+    expect(report.passed).toBe(true);
+    expect(report.inspectedSurfaces).toBeGreaterThan(0);
+    expect(report.replayableSurfaces).toBe(report.inspectedSurfaces);
   });
 });

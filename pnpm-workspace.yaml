@@ -2,3 +2,4 @@ packages:
   - 'packages/*'
   - 'services/*'
   - 'simulation/mesh-simulator'
+  - 'nova-studio'

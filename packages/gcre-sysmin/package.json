@@ -1,0 +1,23 @@
+{
+  "name": "@aaes-os/gcre-sysmin",
+  "version": "0.1.0",
+  "description": "Live GCRE-SYSMIN-001 family registry and surface for the extracted AAES-OS language family",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.json",
+    "test": "vitest run --config vitest.config.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,1 @@
+import type{JsonValue}from'../common/models.js';export type KernelEventType='INTENT_ACCEPTED'|'PLAN_APPROVED'|'EXECUTION_AUTHORIZED'|'STEP_COMPLETED'|'EVIDENCE_ACCEPTED'|'USS_UPDATED';export interface KernelEvent{id:string;type:KernelEventType;actorId:string;intentId?:string;planId?:string;stepId?:string;evidenceId?:string;updateId?:string;timestamp:string;payload:JsonValue}

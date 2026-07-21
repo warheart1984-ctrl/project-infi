@@ -4,11 +4,13 @@
   "description": "Multi-organism mesh simulator with stress-test scenarios",
   "type": "module",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -b tsconfig.json",
     "simulate": "tsx src/simulate.ts",
     "test": "vitest run --config vitest.config.ts"
   },
   "dependencies": {
+    "@aaes-os/aaes-governance": "workspace:*",
+    "@aaes-os/tri-core-protocol": "workspace:*",
     "@aaes-os/psom-mesh": "workspace:*",
     "@aaes-os/sgce": "workspace:*",
     "@aaes-os/platform-core": "workspace:*"

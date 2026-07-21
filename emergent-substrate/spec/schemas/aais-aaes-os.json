@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "$id": "https://emergent-substrate/spec/schemas/aais-aaes-os.json",
+  "title": "AAIS/AAES-OS Constitution Specification",
+  "description": "AAIS/AAES-OS constitution specification",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "const": "AAIS/AAES-OS"
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "priority": {
+      "type": "integer",
+      "const": 5
+    },
+    "blocks_on": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rules": {
+      "type": "object",
+      "properties": {
+        "recursive_self_modification": {
+          "type": "boolean",
+          "const": true
+        },
+        "adaptation_gate_violations": {
+          "type": "boolean",
+          "const": true
+        },
+        "constitution_freeze_enforcement": {
+          "type": "boolean",
+          "const": true
+        },
+        "runaway_loops": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    }
+  },
+  "required": ["name", "version", "priority", "blocks_on"]
+}

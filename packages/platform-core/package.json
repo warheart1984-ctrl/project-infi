@@ -9,6 +9,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./coriAlphaSummary": {
+      "types": "./dist/coriAlphaSummary.d.ts",
+      "import": "./dist/coriAlphaSummary.js"
     }
   },
   "scripts": {
@@ -18,10 +22,12 @@
   "dependencies": {
     "@aaes-os/aaes-governance": "workspace:*",
     "@aaes-os/governed-runtime": "workspace:*",
-    "@aaes-os/sovren": "workspace:*"
+    "@aaes-os/sovren": "workspace:*",
+    "react": "^19.1.1"
   },
   "devDependencies": {
     "@types/node": "^22.19.21",
+    "@types/react": "^19.1.13",
     "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   }

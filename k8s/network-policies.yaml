@@ -1,0 +1,313 @@
+---
+# Network Policies for AAES-OS cluster
+# Ingress policies: allow only required inter-service communication
+# Egress policies: restrict outbound to known services
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: platform-api-netpol
+  namespace: aaes-os
+spec:
+  podSelector:
+    matchLabels:
+      app: platform-api
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow ingress from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 3000
+  # Allow ops-console to call platform-api
+  - from:
+    - podSelector:
+        matchLabels:
+          app: ops-console
+    ports:
+    - protocol: TCP
+      port: 3000
+  # Allow platform-web to call platform-api
+  - from:
+    - podSelector:
+        matchLabels:
+          app: platform-web
+    ports:
+    - protocol: TCP
+      port: 3000
+  # Kubelet probes
+  - from:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          component: kubelet
+    ports:
+    - protocol: TCP
+      port: 3000
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow sovereign-control-plane
+  - to:
+    - podSelector:
+        matchLabels:
+          app: sovereign-control-plane
+    ports:
+    - protocol: TCP
+      port: 3000
+  # Allow uss-api
+  - to:
+    - podSelector:
+        matchLabels:
+          app: uss-api
+    ports:
+    - protocol: TCP
+      port: 3000
+  # Allow external HTTPS
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: platform-web-netpol
+  namespace: aaes-os
+spec:
+  podSelector:
+    matchLabels:
+      app: platform-web
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow ingress from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 3000
+  # Kubelet probes
+  - from:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          component: kubelet
+    ports:
+    - protocol: TCP
+      port: 3000
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow platform-api
+  - to:
+    - podSelector:
+        matchLabels:
+          app: platform-api
+    ports:
+    - protocol: TCP
+      port: 3000
+  # Allow external HTTPS
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ops-console-netpol
+  namespace: aaes-os
+spec:
+  podSelector:
+    matchLabels:
+      app: ops-console
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow ingress from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 3000
+  # Kubelet probes
+  - from:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          component: kubelet
+    ports:
+    - protocol: TCP
+      port: 3000
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow platform-api
+  - to:
+    - podSelector:
+        matchLabels:
+          app: platform-api
+    ports:
+    - protocol: TCP
+      port: 3000
+  # Allow external HTTPS
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: sovereign-control-plane-netpol
+  namespace: aaes-os
+spec:
+  podSelector:
+    matchLabels:
+      app: sovereign-control-plane
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow platform-api to call
+  - from:
+    - podSelector:
+        matchLabels:
+          app: platform-api
+    ports:
+    - protocol: TCP
+      port: 3000
+  # Kubelet probes
+  - from:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          component: kubelet
+    ports:
+    - protocol: TCP
+      port: 3000
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow external HTTPS
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: uss-api-netpol
+  namespace: aaes-os
+spec:
+  podSelector:
+    matchLabels:
+      app: uss-api
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow platform-api to call
+  - from:
+    - podSelector:
+        matchLabels:
+          app: platform-api
+    ports:
+    - protocol: TCP
+      port: 3000
+  # Kubelet probes
+  - from:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          component: kubelet
+    ports:
+    - protocol: TCP
+      port: 3000
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow external HTTPS
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
+
+---
+# Deny-all policy: default deny all ingress & egress
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: aaes-os
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress

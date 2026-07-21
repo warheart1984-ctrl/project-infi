@@ -1,0 +1,21 @@
+{
+  "suite": "AAIS-DRIVE-CONFORMANCE-V1.0",
+  "target_level": 5,
+  "tests": [
+    {"test_id":"C1.1","category":"oauth-vault","preconditions":["configured OAuth client"],"steps":["build authorization URL","complete callback"],"expected_outcome":"validated offline authorization","expected_evidence":"auth"},
+    {"test_id":"C1.2","category":"oauth-vault","preconditions":["refresh token"],"steps":["store token"],"expected_outcome":"AES-256-GCM ciphertext","expected_evidence":"store"},
+    {"test_id":"C1.3","category":"oauth-vault","preconditions":["stored token"],"steps":["load token"],"expected_outcome":"actor/org-bound load","expected_evidence":"load"},
+    {"test_id":"C1.4","category":"oauth-vault","preconditions":["connected account"],"steps":["revoke token","attempt Drive call"],"expected_outcome":"call fails closed","expected_evidence":"revoke"},
+    {"test_id":"C2.1","category":"drive","preconditions":["connected account"],"steps":["list files"],"expected_outcome":"file list","expected_evidence":"list"},
+    {"test_id":"C2.2","category":"drive","preconditions":["connected account"],"steps":["search files"],"expected_outcome":"filtered list","expected_evidence":"search"},
+    {"test_id":"C2.3","category":"drive","preconditions":["accessible file"],"steps":["fetch or export"],"expected_outcome":"file bytes","expected_evidence":"fetch|export"},
+    {"test_id":"C2.4","category":"drive","preconditions":["local fixture"],"steps":["upload"],"expected_outcome":"new file and revision","expected_evidence":"upload"},
+    {"test_id":"C2.5","category":"drive","preconditions":["uploaded fixture"],"steps":["update"],"expected_outcome":"new revision","expected_evidence":"update"},
+    {"test_id":"C3.1","category":"ceip-ckca","preconditions":["operation evidence"],"steps":["validate event binding"],"expected_outcome":"actor/org/provider present","expected_evidence":"all"},
+    {"test_id":"C3.2","category":"ceip-ckca","preconditions":["repeated operations"],"steps":["validate intervals and predecessor"],"expected_outcome":"half-open lineage DAG","expected_evidence":"all"},
+    {"test_id":"C3.3","category":"ceip-ckca","preconditions":["receipt"],"steps":["canonicalize and hash"],"expected_outcome":"stable SHA-256","expected_evidence":"all"},
+    {"test_id":"C4.1","category":"halt","preconditions":["unavailable evidence log"],"steps":["attempt operation"],"expected_outcome":"HALT:EVIDENCE_ERROR","expected_evidence":"none"},
+    {"test_id":"C4.2","category":"halt","preconditions":["missing vault binding"],"steps":["attempt operation"],"expected_outcome":"HALT:AUTHORITY_ERROR","expected_evidence":"none"},
+    {"test_id":"C4.3","category":"halt","preconditions":["malformed canonical input"],"steps":["canonicalize"],"expected_outcome":"HALT:CANONICALIZATION_ERROR","expected_evidence":"none"}
+  ]
+}

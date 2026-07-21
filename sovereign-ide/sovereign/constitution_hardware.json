@@ -1,0 +1,13 @@
+{
+  "app_name": "Sovereign IDE",
+  "launcher": "sovereign-ide",
+  "invariants": [
+    "continuity",
+    "lineage",
+    "replay",
+    "federation",
+    "accountability",
+    "advisory"
+  ],
+  "surface_count": 6
+}

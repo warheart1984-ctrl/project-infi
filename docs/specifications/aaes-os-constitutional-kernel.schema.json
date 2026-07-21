@@ -1,0 +1,389 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-infi.local/docs/specifications/aaes-os-constitutional-kernel.schema.json",
+  "title": "Sovereign OS Constitutional Kernel (SOCK) Schema",
+  "description": "Machine-readable schema for the five frozen v1.0 constitutional languages: CSL, ISL, CIC, CCC, and COE.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["csl", "isl", "cic", "ccc", "coe"],
+  "properties": {
+    "csl": { "$ref": "#/$defs/cslSection" },
+    "isl": { "$ref": "#/$defs/islSection" },
+    "cic": { "$ref": "#/$defs/cicSection" },
+    "ccc": { "$ref": "#/$defs/cccSection" },
+    "coe": { "$ref": "#/$defs/coeSection" }
+  },
+  "$defs": {
+    "traceabilityRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cisRequirement", "referenceArchitecture", "conformanceTest", "evidenceArtifact"],
+      "properties": {
+        "cisRequirement": { "type": "string", "minLength": 1 },
+        "referenceArchitecture": { "type": "string", "minLength": 1 },
+        "conformanceTest": { "type": "string", "minLength": 1 },
+        "evidenceArtifact": { "type": "string", "minLength": 1 },
+        "notes": { "type": "string" }
+      }
+    },
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "minLength": 1 },
+        "uri": { "type": "string", "minLength": 1 },
+        "hash": { "type": "string", "minLength": 1 },
+        "signature": { "type": "string", "minLength": 1 }
+      }
+    },
+    "authorityRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actor", "roles"],
+      "properties": {
+        "actor": { "type": "string", "minLength": 1 },
+        "roles": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        },
+        "permissions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "receiptRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receiptId", "artifactId"],
+      "properties": {
+        "receiptId": { "type": "string", "minLength": 1 },
+        "artifactId": { "type": "string", "minLength": 1 },
+        "hash": { "type": "string", "minLength": 1 },
+        "signature": { "type": "string", "minLength": 1 },
+        "replayIndex": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "cslField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "type": { "type": "string", "minLength": 1 },
+        "required": { "type": "boolean", "default": false },
+        "description": { "type": "string" }
+      }
+    },
+    "cslType": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "tier", "kind", "fields", "dynamics", "horizon", "traceability"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "tier": { "type": "integer", "minimum": 0 },
+        "kind": { "type": "string", "minLength": 1 },
+        "fields": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/cslField" },
+          "minItems": 1
+        },
+        "dynamics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["generates", "resolves"],
+          "properties": {
+            "generates": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "resolves": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "horizon": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["promotesTo", "expandsTo"],
+          "properties": {
+            "promotesTo": { "type": "string", "minLength": 1 },
+            "expandsTo": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "traceability": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/traceabilityRow" },
+          "minItems": 1
+        }
+      }
+    },
+    "islIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actor", "target", "purpose", "context", "evidence", "authority", "traceability"],
+      "properties": {
+        "actor": { "type": "string", "minLength": 1 },
+        "target": { "type": "string", "minLength": 1 },
+        "purpose": { "type": "string", "minLength": 1 },
+        "context": { "type": "object", "additionalProperties": true },
+        "evidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceRef" },
+          "minItems": 1
+        },
+        "authority": { "$ref": "#/$defs/authorityRef" },
+        "traceability": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/traceabilityRow" },
+          "minItems": 1
+        }
+      }
+    },
+    "cicRuleCondition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "operator", "value"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "operator": {
+          "type": "string",
+          "enum": ["=", "!=", "<", "<=", ">", ">="]
+        },
+        "value": {}
+      }
+    },
+    "cicBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifactField", "semanticConcept"],
+      "properties": {
+        "artifactField": { "type": "string", "minLength": 1 },
+        "semanticConcept": { "type": "string", "minLength": 1 }
+      }
+    },
+    "cicRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "conditions", "conclusion", "bindings", "traceability"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "conditions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/cicRuleCondition" },
+          "minItems": 1
+        },
+        "conclusion": { "type": "string", "minLength": 1 },
+        "bindings": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/cicBinding" }
+        },
+        "traceability": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/traceabilityRow" },
+          "minItems": 1
+        }
+      }
+    },
+    "cccReplayContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "deterministic", "ledgerReferences"],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["historical", "counterfactual", "comparison"]
+        },
+        "deterministic": { "type": "boolean" },
+        "ledgerReferences": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceRef" }
+        }
+      }
+    },
+    "cccTimeline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["events", "states", "transitions"],
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "states": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "transitions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "cccContinuity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["invariant", "scope", "replayContract", "timeline", "traceability"],
+      "properties": {
+        "invariant": { "type": "string", "minLength": 1 },
+        "scope": { "type": "string", "minLength": 1 },
+        "replayContract": { "$ref": "#/$defs/cccReplayContract" },
+        "timeline": { "$ref": "#/$defs/cccTimeline" },
+        "traceability": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/traceabilityRow" },
+          "minItems": 1
+        }
+      }
+    },
+    "coeRoute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intent", "agent", "policy", "decision", "pipeline", "traceability"],
+      "properties": {
+        "intent": { "type": "string", "minLength": 1 },
+        "agent": { "type": "string", "minLength": 1 },
+        "policy": { "type": "string", "minLength": 1 },
+        "decision": { "type": "string", "minLength": 1 },
+        "pipeline": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        },
+        "constraints": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "traceability": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/traceabilityRow" },
+          "minItems": 1
+        }
+      }
+    },
+    "coeSchedule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workflow", "triggers", "constraints", "traceability"],
+      "properties": {
+        "workflow": { "type": "string", "minLength": 1 },
+        "triggers": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        },
+        "constraints": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "traceability": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/traceabilityRow" },
+          "minItems": 1
+        }
+      }
+    },
+    "coePromotionWorkflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fromType", "toType", "evidence", "authority", "traceability"],
+      "properties": {
+        "fromType": { "type": "string", "minLength": 1 },
+        "toType": { "type": "string", "minLength": 1 },
+        "evidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceRef" },
+          "minItems": 1
+        },
+        "authority": { "$ref": "#/$defs/authorityRef" },
+        "traceability": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/traceabilityRow" },
+          "minItems": 1
+        }
+      }
+    },
+    "cslSection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "types"],
+      "properties": {
+        "version": { "type": "string", "minLength": 1 },
+        "types": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/cslType" },
+          "minItems": 1
+        }
+      }
+    },
+    "islSection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "intents"],
+      "properties": {
+        "version": { "type": "string", "minLength": 1 },
+        "intents": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/islIntent" },
+          "minItems": 1
+        }
+      }
+    },
+    "cicSection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "rules"],
+      "properties": {
+        "version": { "type": "string", "minLength": 1 },
+        "rules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/cicRule" },
+          "minItems": 1
+        }
+      }
+    },
+    "cccSection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "continuities"],
+      "properties": {
+        "version": { "type": "string", "minLength": 1 },
+        "continuities": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/cccContinuity" },
+          "minItems": 1
+        }
+      }
+    },
+    "coeSection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "routes", "schedules", "promotionWorkflows"],
+      "properties": {
+        "version": { "type": "string", "minLength": 1 },
+        "routes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/coeRoute" },
+          "minItems": 1
+        },
+        "schedules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/coeSchedule" },
+          "minItems": 1
+        },
+        "promotionWorkflows": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/coePromotionWorkflow" },
+          "minItems": 1
+        }
+      }
+    }
+  }
+}

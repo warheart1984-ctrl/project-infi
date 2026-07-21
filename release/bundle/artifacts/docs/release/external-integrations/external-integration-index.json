@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-07-13T13:12:52.847Z",
+  "workspace": "E:/project-infi",
+  "status": "verified",
+  "observations": [
+    {
+      "id": "github-origin-remote",
+      "service": "GitHub",
+      "target": "https://github.com/warheart1984-ctrl/project-infi.git",
+      "mode": "git-ls-remote",
+      "checkedAt": "2026-07-13T13:12:52.847Z",
+      "command": "git ls-remote origin HEAD",
+      "observed": {
+        "remote": "https://github.com/warheart1984-ctrl/project-infi.git",
+        "ref": "HEAD",
+        "commit": "f69f79e04b14931314fcfd01237ff4979ab96143",
+        "attempts": 1
+      },
+      "blockers": [],
+      "status": "verified",
+      "evidenceHash": "fba6f37d903a31f9f6df2f5d87e4dc2ed5a416e7560c0f4780aac81ed565bcb4"
+    },
+    {
+      "id": "npm-registry-toolchain",
+      "service": "npm Registry",
+      "target": "pnpm",
+      "mode": "registry-metadata-fetch",
+      "checkedAt": "2026-07-13T13:12:52.847Z",
+      "endpoint": "https://registry.npmjs.org/pnpm",
+      "observed": {
+        "requestedPackage": "pnpm",
+        "workspacePackageManager": "pnpm@10.15.0",
+        "httpStatus": 200,
+        "registryName": "pnpm",
+        "latestVersion": "11.12.0",
+        "attempts": 1
+      },
+      "blockers": [],
+      "status": "verified",
+      "evidenceHash": "82ceb3f9d037769dbbfa923955a4f4b6ad2147f1166b43a025e29fa8b93e92db"
+    }
+  ],
+  "aggregateHash": "c61bafed5148a10f6e2f1cf320eb5431790dfa4d32a87f6b044e1d59d24eb022"
+}

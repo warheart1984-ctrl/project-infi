@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "target": "ES2022",
     "module": "NodeNext",
@@ -15,6 +16,19 @@
     "skipLibCheck": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts"],
-  "exclude": ["dist", "node_modules"]
+  "include": ["src/**/*.ts", "tests/**/*.ts", "packages/**/*.ts", "services/**/*.ts"],
+  "exclude": [
+    "dist",
+    "node_modules",
+    ".runtime",
+    "release",
+    "tools",
+    "packages/**/*.test.ts",
+    "packages/**/*.spec.ts",
+    "packages/**/__tests__/**/*.ts",
+    "packages/**/dist-smoke/**/*.ts",
+    "services/**/*.test.ts",
+    "services/**/*.spec.ts",
+    "services/**/__tests__/**/*.ts"
+  ]
 }
