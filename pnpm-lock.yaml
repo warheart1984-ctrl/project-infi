@@ -156,6 +156,18 @@ importers:
         specifier: ^3.2.4
         version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
 
+  packages/ceip-runtime:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.19.21
+        version: 22.20.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
+
   packages/cic-runtime:
     devDependencies:
       '@types/node':
@@ -412,6 +424,22 @@ importers:
         specifier: ^3.2.4
         version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
 
+  packages/healthcheck-middleware:
+    dependencies:
+      express:
+        specifier: ^5.1.0
+        version: 5.2.1
+    devDependencies:
+      '@types/express':
+        specifier: ^5.0.3
+        version: 5.0.6
+      '@types/node':
+        specifier: ^22.19.21
+        version: 22.20.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/infinity-agents:
     dependencies:
       '@aaes-os/aaes-governance':
@@ -450,6 +478,18 @@ importers:
         specifier: ^3.2.4
         version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
 
+  packages/isl-compiler:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.19.21
+        version: 22.20.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
+
   packages/isl-runtime:
     devDependencies:
       '@types/node':
@@ -463,6 +503,28 @@ importers:
         version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
 
   packages/kerno:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.19.21
+        version: 22.20.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
+
+  packages/lirl:
+    dependencies:
+      '@aaes-os/aaes-governance':
+        specifier: workspace:*
+        version: link:../aaes-governance
+      '@aaes-os/evidence-receipts':
+        specifier: workspace:*
+        version: link:../evidence-receipts
+      '@aaes-os/runledger':
+        specifier: workspace:*
+        version: link:../runledger
     devDependencies:
       '@types/node':
         specifier: ^22.19.21
@@ -610,6 +672,9 @@ importers:
 
   packages/platform-cli:
     dependencies:
+      '@aaes-os/lirl':
+        specifier: workspace:*
+        version: link:../lirl
       '@aaes-os/platform-core':
         specifier: workspace:*
         version: link:../platform-core
@@ -1040,6 +1105,18 @@ importers:
         specifier: ^3.2.4
         version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
 
+  services/ciems-kernel:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.19.21
+        version: 22.20.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
+
   services/ops-console:
     dependencies:
       '@aaes-os/aaes-governance':
@@ -1133,6 +1210,9 @@ importers:
       '@aaes-os/aaes-governance':
         specifier: workspace:*
         version: link:../../packages/aaes-governance
+      '@aaes-os/lirl':
+        specifier: workspace:*
+        version: link:../../packages/lirl
       '@aaes-os/platform-core':
         specifier: workspace:*
         version: link:../../packages/platform-core
@@ -1247,6 +1327,18 @@ importers:
       tsx:
         specifier: ^4.20.5
         version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
+
+  services/uss-api:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.19.21
+        version: 22.20.0
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
