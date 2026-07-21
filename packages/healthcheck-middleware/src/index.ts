@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { type Express, type Request, type Response } from 'express';
 
 /**
  * Shared health check middleware for all services
