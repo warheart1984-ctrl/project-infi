@@ -44,6 +44,13 @@ __pycache__/
 # Local scratch artifacts.
 .tmp_*
 
+# Hoisted dependency caches / stale pnpm artifacts.
+**/.node_modules.*/
+
+# Repo-root backup archives.
+/*.zip
+/*.tar.gz
+
 # Reproducible model-training and native compiler outputs.
 training/out/
 llm-inference-engine/build/
