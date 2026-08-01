@@ -3,10 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { createAvailableProviders, pickProvider } from './registry.js';
 
 describe('provider registry', () => {
-  it('creates pollinations, cloudflare, huggingface, and hfspace providers', () => {
+  it('creates pollinations, gemini, cloudflare, huggingface, and hfspace providers', () => {
     const providers = createAvailableProviders({ env: {} });
     expect(providers.map((provider) => provider.name)).toEqual([
       'pollinations',
+      'gemini',
       'cloudflare',
       'huggingface',
       'hfspace',
@@ -15,7 +16,12 @@ describe('provider registry', () => {
 
   it('marks providers configured from the environment', () => {
     const providers = createAvailableProviders({
-      env: { CLOUDFLARE_ACCOUNT_ID: 'a', CLOUDFLARE_API_TOKEN: 't', HF_TOKEN: 'hf' },
+      env: {
+        GEMINI_API_KEY: 'g',
+        CLOUDFLARE_ACCOUNT_ID: 'a',
+        CLOUDFLARE_API_TOKEN: 't',
+        HF_TOKEN: 'hf',
+      },
     });
     expect(providers.every((provider) => provider.configured)).toBe(true);
   });
@@ -29,6 +35,7 @@ describe('provider registry', () => {
 
   it('picks a provider by name', () => {
     const providers = createAvailableProviders({ env: {} });
+    expect(pickProvider(providers, 'gemini').name).toBe('gemini');
     expect(pickProvider(providers, 'cloudflare').name).toBe('cloudflare');
     expect(pickProvider(providers, 'huggingface').name).toBe('huggingface');
     expect(pickProvider(providers, 'hfspace').name).toBe('hfspace');

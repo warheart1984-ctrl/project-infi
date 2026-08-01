@@ -41,12 +41,6 @@ async function main(): Promise<void> {
     process.exitCode = 2;
     return;
   }
-  if (!input && !referenceUrl) {
-    console.error('error: provide an input image file or --url <image-url>');
-    console.error(usageText());
-    process.exitCode = 2;
-    return;
-  }
 
   const provider = pickProvider(createAvailableProviders(), providerName);
   if (!provider.configured) {
@@ -55,9 +49,13 @@ async function main(): Promise<void> {
     return;
   }
 
+  // Text-to-image is allowed for keyless/free providers (Pollinations, Gemini).
+  // Image-to-image still uses --url or a local input file when provided.
   const referenceImage = referenceUrl
     ? { kind: 'url' as const, url: referenceUrl }
-    : toDataUrlReference(input as string);
+    : input
+      ? toDataUrlReference(input)
+      : undefined;
 
   const capability = describeImageStudioCapability();
   const provenance = imageStudioProvenance(prompt);

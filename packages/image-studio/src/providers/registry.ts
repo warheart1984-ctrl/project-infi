@@ -1,4 +1,5 @@
 import { CloudflareProvider } from './cloudflare.js';
+import { GeminiProvider } from './gemini.js';
 import { HfSpaceProvider } from './hfspace.js';
 import { HuggingFaceProvider } from './huggingface.js';
 import { PollinationsProvider } from './pollinations.js';
@@ -14,6 +15,7 @@ export function createAvailableProviders(options: ProviderRegistryOptions = {}):
   const fetchImpl = options.fetchImpl ?? fetch;
   return [
     new PollinationsProvider(undefined, fetchImpl),
+    new GeminiProvider({ env, fetchImpl }),
     new CloudflareProvider({ env, fetchImpl }),
     new HuggingFaceProvider({ env, fetchImpl }),
     new HfSpaceProvider({ fetchImpl }),

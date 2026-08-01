@@ -1,4 +1,5 @@
 export { PollinationsProvider } from './providers/pollinations.js';
+export { GeminiProvider } from './providers/gemini.js';
 export { CloudflareProvider } from './providers/cloudflare.js';
 export { HuggingFaceProvider } from './providers/huggingface.js';
 export { HfSpaceProvider, HF_SPACE_BASE_URL } from './providers/hfspace.js';
