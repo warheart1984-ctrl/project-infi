@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aaes-os.local/schemas/cef-evidence-record.schema.json",
+  "title": "CEF Abstract Evidence Record",
+  "description": "Profile-agnostic evidence record for the Constitutional Evidence Framework. Profile payloads live under evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "framework",
+    "schemaVersion",
+    "profile",
+    "recordId",
+    "subject",
+    "claim",
+    "authority",
+    "evidence",
+    "verification",
+    "decision",
+    "proofSurfaceLevel",
+    "truthBoundary",
+    "timestamp"
+  ],
+  "properties": {
+    "framework": { "type": "string", "const": "CEF" },
+    "schemaVersion": { "type": "string", "const": "0.1" },
+    "profile": {
+      "type": "string",
+      "enum": ["CREC", "OEL", "CEL", "SEL", "MEL", "EXE"]
+    },
+    "recordId": { "type": "string", "minLength": 1 },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "repository",
+            "deployment",
+            "linguistic-artifact",
+            "security-assessment",
+            "model-evaluation",
+            "execution",
+            "other"
+          ]
+        },
+        "id": { "type": "string" },
+        "version": { "type": ["string", "null"] },
+        "commitSha": { "type": ["string", "null"] }
+      }
+    },
+    "claim": { "type": "string", "minLength": 1 },
+    "authority": { "type": "string", "minLength": 1 },
+    "evidence": {
+      "type": "object",
+      "description": "Profile-specific payload. Validated by the profile schema, not by CEF core."
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "gates"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL", "PENDING", "PARTIAL", "WAIVED"]
+        },
+        "gates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "status"],
+            "properties": {
+              "id": { "type": "string" },
+              "status": {
+                "type": "string",
+                "enum": ["pass", "fail", "pending", "waived"]
+              },
+              "detail": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome"],
+      "properties": {
+        "outcome": {
+          "type": "string",
+          "enum": ["promote", "hold", "deny", "pending", "attest"]
+        },
+        "rationale": { "type": ["string", "null"] }
+      }
+    },
+    "certificateRef": { "type": ["string", "null"] },
+    "proofSurfaceLevel": {
+      "type": "string",
+      "enum": ["P0", "P1", "P2", "P3", "P4", "P5"]
+    },
+    "truthBoundary": { "type": "string", "minLength": 1 },
+    "challengeSurface": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "profileSchemaRef": {
+      "type": ["string", "null"],
+      "description": "URI or path to the profile-specific schema used to validate evidence"
+    }
+  }
+}

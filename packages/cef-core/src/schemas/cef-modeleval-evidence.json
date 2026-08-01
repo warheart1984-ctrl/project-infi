@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aaes-os.local/schemas/cef-modeleval-evidence.json",
+  "title": "CEF ModelEval Evidence Profile v1.0",
+  "allOf": [
+    { "$ref": "https://aaes-os.local/schemas/cef-core-evidence.json" },
+    {
+      "type": "object",
+      "required": ["type", "modelEval"],
+      "properties": {
+        "type": { "const": "ModelEval" },
+        "modelEval": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "modelId",
+            "benchmarkSuite",
+            "scores",
+            "riskAssessment",
+            "uncertainty"
+          ],
+          "properties": {
+            "modelId": { "type": "string", "minLength": 1 },
+            "benchmarkSuite": { "type": "string", "minLength": 1 },
+            "scores": { "type": "object" },
+            "riskAssessment": { "type": "object" },
+            "uncertainty": { "type": "object" },
+            "lineageRefs": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  ]
+}

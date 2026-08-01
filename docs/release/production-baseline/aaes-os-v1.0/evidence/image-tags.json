@@ -1,0 +1,59 @@
+{
+  "baselineId": "AAES-OS-PRODUCTION-BASELINE-v1.0",
+  "kind": "immutable-container-image-tags",
+  "frozenCommit": "7efa0c5f766bc0b30b6eef820d198be3a6bf1a5d",
+  "registry": "ghcr.io/warheart1984-ctrl/aaes-os",
+  "policy": {
+    "productionPin": "digest",
+    "allowedMutableTags": ["latest", "main", "develop"],
+    "mutableTagsForbiddenForBaselineClaim": true,
+    "semverPattern": "vMAJOR.MINOR.PATCH",
+    "requiredLabels": ["org.opencontainers.image.revision", "org.opencontainers.image.source"]
+  },
+  "services": [
+    {
+      "service": "ops-console",
+      "imageRepository": "ghcr.io/warheart1984-ctrl/aaes-os/ops-console",
+      "baselineTagCandidates": ["sha-7efa0c5", "v1.0.0"],
+      "digest": null,
+      "digestStatus": "pending-first-ghcr-push"
+    },
+    {
+      "service": "platform-api",
+      "imageRepository": "ghcr.io/warheart1984-ctrl/aaes-os/platform-api",
+      "baselineTagCandidates": ["sha-7efa0c5", "v1.0.0"],
+      "digest": null,
+      "digestStatus": "pending-first-ghcr-push"
+    },
+    {
+      "service": "platform-web",
+      "imageRepository": "ghcr.io/warheart1984-ctrl/aaes-os/platform-web",
+      "baselineTagCandidates": ["sha-7efa0c5", "v1.0.0"],
+      "digest": null,
+      "digestStatus": "pending-first-ghcr-push"
+    },
+    {
+      "service": "sovereign-control-plane",
+      "imageRepository": "ghcr.io/warheart1984-ctrl/aaes-os/sovereign-control-plane",
+      "baselineTagCandidates": ["sha-7efa0c5", "v1.0.0"],
+      "digest": null,
+      "digestStatus": "pending-first-ghcr-push"
+    },
+    {
+      "service": "uss-api",
+      "imageRepository": "ghcr.io/warheart1984-ctrl/aaes-os/uss-api",
+      "baselineTagCandidates": ["sha-7efa0c5", "v1.0.0"],
+      "digest": null,
+      "digestStatus": "pending-first-ghcr-push"
+    }
+  ],
+  "pinningExample": "image: ghcr.io/warheart1984-ctrl/aaes-os/platform-api@sha256:<digest>",
+  "truthBoundary": "Tag policy is frozen. Digests may be filled from CI (optional backlog). Until filled, digestStatus remains pending-first-ghcr-push. ESFR 2026-07-31 does not require digest pins for PromotionEligibility.",
+  "ciContract": {
+    "workflow": ".github/workflows/build-and-push.yml",
+    "job": "merge-image-digests",
+    "mergeTool": "tools/merge-image-digests.ts",
+    "artifact": "baseline-image-tags",
+    "requiredForEsfr": false
+  }
+}

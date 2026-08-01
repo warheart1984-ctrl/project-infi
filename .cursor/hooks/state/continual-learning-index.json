@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "workspace": "G:\\project-infi",
+  "updatedAt": "2026-07-31T21:14:00Z",
+  "transcripts": {
+    "C:\\Users\\My PC\\.cursor\\projects\\g-project-infi\\agent-transcripts\\a0e18530-a4db-4155-abed-c4b398ab5ad9\\a0e18530-a4db-4155-abed-c4b398ab5ad9.jsonl": {
+      "mtimeMs": 1784566208609,
+      "size": 287652
+    },
+    "C:\\Users\\My PC\\.cursor\\projects\\g-project-infi\\agent-transcripts\\a0e18530-a4db-4155-abed-c4b398ab5ad9\\subagents\\9cc7530d-5821-4cab-876f-fbcb0c4604e5.jsonl": {
+      "mtimeMs": 1784561950770,
+      "size": 14823
+    },
+    "C:\\Users\\My PC\\.cursor\\projects\\g-project-infi\\agent-transcripts\\a0e18530-a4db-4155-abed-c4b398ab5ad9\\subagents\\a092a388-7416-4902-be24-895c8cf12099.jsonl": {
+      "mtimeMs": 1784566373159,
+      "size": 7350
+    },
+    "C:\\Users\\My PC\\.cursor\\projects\\g-project-infi\\agent-transcripts\\a0e18530-a4db-4155-abed-c4b398ab5ad9\\subagents\\a217a023-d4b7-4621-8f43-43794cb3cd01.jsonl": {
+      "mtimeMs": 1784566313654,
+      "size": 11829
+    },
+    "C:\\Users\\My PC\\.cursor\\projects\\g-project-infi\\agent-transcripts\\a0e18530-a4db-4155-abed-c4b398ab5ad9\\subagents\\e26c1b9c-7be0-4a5c-b0f5-e753328a00d2.jsonl": {
+      "mtimeMs": 1784565744668,
+      "size": 16511
+    },
+    "C:\\Users\\My PC\\.cursor\\projects\\g-project-infi\\agent-transcripts\\a1ae2f6b-6d9b-4d27-b9d8-e09049186732\\a1ae2f6b-6d9b-4d27-b9d8-e09049186732.jsonl": {
+      "mtimeMs": 1784577153695,
+      "size": 8743
+    },
+    "C:\\Users\\My PC\\.cursor\\projects\\g-project-infi\\agent-transcripts\\ca3ad793-f6b7-4aad-9ba5-1a120f006fc4\\ca3ad793-f6b7-4aad-9ba5-1a120f006fc4.jsonl": {
+      "mtimeMs": 1785546028746,
+      "size": 18426
+    },
+    "C:\\Users\\My PC\\.cursor\\projects\\g-project-infi\\agent-transcripts\\ca3ad793-f6b7-4aad-9ba5-1a120f006fc4\\subagents\\08a10798-c05b-4062-a4fb-6aa656d149b5.jsonl": {
+      "mtimeMs": 1785546912677,
+      "size": 2219
+    }
+  }
+}

@@ -1,0 +1,15 @@
+---
+description: AAES lean crew (6 roles + ESFR) for project-infi
+alwaysApply: false
+---
+
+# AAES Crew
+
+When the user asks for AAES crew, multi-agent Vision→Evidence→ESFR, or Mandala-style dispatch in this repo:
+
+1. Load `.cursor/skills/aaes-crew/SKILL.md` (foreman — **not** one of the six)
+2. Use agents under `.cursor/agents/aaes-*.md` (exclude treating `aaes-esfr` as a pre-ESFR role; `aaes-crew-foreman` is orchestrator only)
+3. Run **ESFR** (`aaes-esfr`) only after readiness evidence — last pipeline step
+4. Modes: pick from `.cursor/aaes-crew/modes-registry.json`
+5. Prefer vendor skills listed per role; resolve paths via `.cursor/aaes-crew/vendor-skills-paths.json`
+6. Stay Drive-G-1 honest

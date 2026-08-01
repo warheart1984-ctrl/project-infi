@@ -1,0 +1,18 @@
+﻿{
+    "jobId":  "surface-trefoil-4d",
+    "version":  "1.0",
+    "outputDir":  "G:\\project-infi\\native\\vulkan-render-worker\\validation-output\\trefoil-4d",
+    "width":  128,
+    "backend":  "vulkan",
+    "frames":  2,
+    "evidenceRefs":  [
+                         "native-surface-parity"
+                     ],
+    "height":  96,
+    "fps":  30,
+    "meshPath":  "G:/New folder/engine/surfaces/meshes/trefoil-4d.mesh.json",
+    "scenePath":  "none",
+    "surfaceId":  "trefoil-4d",
+    "createdAt":  "2026-07-22T08:26:25.1876547Z",
+    "sceneId":  "native-parity"
+}

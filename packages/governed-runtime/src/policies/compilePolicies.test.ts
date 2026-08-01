@@ -11,7 +11,7 @@ const SAMPLE_YAML = `
     risk: low
   then:
     routing:
-      preferred_backends: ["groq-llama3-70b"]
+      preferred_backends: ["groq"]
 `;
 
 describe('compilePolicies', () => {
@@ -19,7 +19,7 @@ describe('compilePolicies', () => {
     const policies = loadPoliciesFromYaml(SAMPLE_YAML);
     expect(policies).toHaveLength(1);
     expect(policies[0]?.id).toBe('test.policy');
-    expect(policies[0]?.routing.preferredBackends).toEqual(['groq-llama3-70b']);
+    expect(policies[0]?.routing.preferredBackends).toEqual(['groq']);
   });
 
   it('matches governance context', () => {
@@ -92,18 +92,18 @@ describe('CodingRouter', () => {
       {
         id: 'prefer-groq',
         when: { domain: 'coding', risk: 'low' },
-        then: { routing: { preferredBackends: ['groq-llama3-70b'] } },
+        then: { routing: { preferredBackends: ['groq'] } },
       },
     ]);
 
     const router = new CodingRouter(
-      [mockBackend('codex', 'codex'), mockBackend('groq-llama3-70b', 'groq')],
+      [mockBackend('codex', 'codex'), mockBackend('groq', 'groq')],
       policies,
       new PatternLedger(),
     );
 
     const result = await router.execute(baseRequest());
-    expect(result.backendName).toBe('groq-llama3-70b');
+    expect(result.backendName).toBe('groq');
     expect(result.output.text).toBe('groq');
     expect(result.governance.policyIds).toContain('prefer-groq');
   });

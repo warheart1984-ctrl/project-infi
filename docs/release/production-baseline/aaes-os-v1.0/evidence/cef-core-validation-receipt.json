@@ -1,0 +1,16 @@
+{
+  "kind": "cef-core-validation-receipt",
+  "baselineId": "AAES-OS-PRODUCTION-BASELINE-v1.0",
+  "evidenceRef": "G:/project-infi/docs/release/production-baseline/aaes-os-v1.0/evidence/oel-evidence-validated.json",
+  "package": "@aaes-os/cef-core",
+  "packageVersion": "1.0.0",
+  "validatedAt": "2026-08-01T01:58:33.705Z",
+  "checks": {
+    "validateEvidence": true,
+    "validateProfileOEL": true,
+    "allInvariantsPassed": true,
+    "promotionAllowed": true,
+    "promotionReason": "decision=hold (not an overclaim)"
+  },
+  "promotionImplication": "Promotion structurally allowed; still requires authority signature + live digests/cluster evidence for ACTIVE certificate"
+}

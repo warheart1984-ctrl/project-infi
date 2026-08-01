@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aaes-os.local/schemas/cef-oel-evidence.json",
+  "title": "CEF OEL Evidence Profile v1.0",
+  "allOf": [
+    { "$ref": "https://aaes-os.local/schemas/cef-core-evidence.json" },
+    {
+      "type": "object",
+      "required": ["type", "oel"],
+      "properties": {
+        "type": { "const": "OEL" },
+        "oel": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "deploymentId",
+            "commitSha",
+            "containerDigest",
+            "immutableTag",
+            "sbomRef",
+            "supplyChainFacts",
+            "vulnerabilityScan",
+            "securityGates",
+            "conformanceTests",
+            "runtimeHealth",
+            "policyValidation"
+          ],
+          "properties": {
+            "deploymentId": { "type": "string", "minLength": 1 },
+            "commitSha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{7,40}$"
+            },
+            "containerDigest": { "type": "string", "minLength": 1 },
+            "immutableTag": { "type": "string", "minLength": 1 },
+            "sbomRef": { "type": "string", "minLength": 1 },
+            "supplyChainFacts": { "type": "object" },
+            "vulnerabilityScan": { "type": "object" },
+            "securityGates": { "type": "object" },
+            "conformanceTests": {
+              "type": "object",
+              "required": ["passed", "total"],
+              "properties": {
+                "passed": { "type": "integer", "minimum": 0 },
+                "total": { "type": "integer", "minimum": 0 }
+              }
+            },
+            "runtimeHealth": { "type": "object" },
+            "policyValidation": {
+              "type": "object",
+              "required": ["netpol", "rbac", "securityContext"],
+              "properties": {
+                "netpol": { "type": "string" },
+                "rbac": { "type": "string" },
+                "securityContext": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

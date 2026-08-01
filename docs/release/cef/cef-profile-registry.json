@@ -1,0 +1,73 @@
+{
+  "framework": "CEF",
+  "schemaVersion": "1.0",
+  "updatedAt": "2026-07-20",
+  "charter": "docs/release/cef/CEF_V1_CHARTER.md",
+  "specification": "docs/release/cef/CEF_V1_SPECIFICATION.md",
+  "invariant": "No claim may exceed its evidence.",
+  "profiles": [
+    {
+      "id": "CREC",
+      "name": "Research Evidence",
+      "domain": "research",
+      "status": "active",
+      "primaryDocs": [
+        "docs-site/docs/governance/crec.md",
+        "docs/release/constitutional-release-receipt.md"
+      ],
+      "storage": "docs/release/research-evidence-layer/"
+    },
+    {
+      "id": "OEL",
+      "name": "Operational Evidence",
+      "domain": "ops",
+      "status": "active",
+      "primaryDocs": [
+        "docs/release/operational-evidence-layer/CEF_PROFILE_OEL_V1.md",
+        "docs/release/operational-evidence-layer/OPERATIONAL_EVIDENCE_LAYER.md",
+        "docs/release/production-baseline/aaes-os-v1.0/INDEX.md"
+      ],
+      "profileSchema": "docs/release/cef/schemas/cef-oel-evidence.schema.json",
+      "certificateKind": "deployment-certificate",
+      "storage": "docs/release/operational-evidence-layer/"
+    },
+    {
+      "id": "CEL",
+      "name": "Linguistic / Constitutional Evidence",
+      "domain": "language",
+      "status": "proto",
+      "primaryDocs": [
+        "Mythar-hackathon/specifications/MYTHAR-AAES-OS-INTEGRATION-v0.1-DRAFT.md"
+      ],
+      "implementationHints": [
+        "mythar-v0.2/src/mythar/aaes.py"
+      ]
+    },
+    {
+      "id": "Security",
+      "name": "Security Evidence",
+      "domain": "security",
+      "status": "planned",
+      "notes": "SBOM, supply chain, vulnerability, policy gates — may also embed in OEL gates"
+    },
+    {
+      "id": "ModelEval",
+      "name": "Model Evaluation Evidence",
+      "domain": "model",
+      "status": "planned",
+      "notes": "Benchmarks, risk, uncertainty, lineage"
+    }
+  ],
+  "sharedComponents": [
+    {
+      "id": "certification-engine",
+      "status": "specified",
+      "doc": "docs/release/cef/CERTIFICATION_ENGINE_V1.md"
+    },
+    {
+      "id": "stewardship-protocol",
+      "status": "specified",
+      "doc": "docs/release/cef/STEWARDSHIP_PROTOCOL_V1.md"
+    }
+  ]
+}

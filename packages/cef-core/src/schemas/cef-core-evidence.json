@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aaes-os.local/schemas/cef-core-evidence.json",
+  "title": "CEF Core Evidence Object v1.0",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "id",
+    "type",
+    "version",
+    "authority",
+    "context",
+    "inputs",
+    "verification",
+    "lineage",
+    "replay",
+    "audit",
+    "promotion"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "type": {
+      "type": "string",
+      "enum": ["CREC", "OEL", "CEL", "Security", "ModelEval"]
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+([.-][0-9A-Za-z.-]+)?$"
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["carId", "actorId", "role"],
+      "properties": {
+        "carId": { "type": "string", "minLength": 1 },
+        "actorId": { "type": "string", "minLength": 1 },
+        "role": { "type": "string", "minLength": 1 }
+      }
+    },
+    "context": {
+      "type": "object",
+      "required": ["domain"],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "enum": ["ops", "research", "language", "security", "model"]
+        },
+        "subdomain": { "type": "string" }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "properties": {
+        "artifacts": { "type": "array", "items": { "type": "string" } },
+        "dataRefs": { "type": "array", "items": { "type": "string" } },
+        "advisoryOutputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["modelId", "output"],
+            "properties": {
+              "modelId": { "type": "string" },
+              "output": { "type": "object" }
+            }
+          }
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "properties": {
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "result"],
+            "properties": {
+              "id": { "type": "string" },
+              "result": {
+                "type": "string",
+                "enum": ["passed", "failed", "pending", "waived"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "lineage": {
+      "type": "object",
+      "properties": {
+        "parentEvidence": { "type": ["string", "null"] },
+        "previousVersions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "replay": {
+      "type": "object",
+      "required": ["instructions"],
+      "properties": {
+        "instructions": { "type": "string", "minLength": 1 }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "required": ["visibility"],
+      "properties": {
+        "visibility": {
+          "type": "string",
+          "enum": ["public", "internal"]
+        },
+        "disclosure": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "promotion": {
+      "type": "object",
+      "required": ["decision"],
+      "properties": {
+        "decision": {
+          "type": "string",
+          "enum": ["approved", "rejected", "hold"]
+        },
+        "signature": { "type": ["string", "null"] },
+        "timestamp": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

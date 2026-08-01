@@ -88,6 +88,10 @@ If verification fails, the repo remains usable only for the already-verified sur
 
 Verified Prototype for the governance/runtime spine, docs-site, Nova Studio, ops-console, and SovereignX execution surfaces; scaffold / prototype elsewhere.
 
+## Vertical slice (LIRL v0.1)
+
+The **Lawful Intent Receipt Loop** is implemented in `packages/lirl` with accept/reject tests (`packages/lirl/src/lirl.test.ts`) and exposed on `platform-api` at `POST /v1/lirl/intents` (plus memory/operator reads). It wires `InvariantEngine` (law gate), `GovernedMemoryStore` (file-backed memory under `.runtime/lirl/`), `createEvidenceReceipt` (receipt), and a static operator HTML snapshot. This proves one thin civilization organ loop; it does **not** upgrade the whole workspace to “Civilization OS live.” Detail: `docs/civilization-os/VERTICAL_SLICE.md`.
+
 ## Canonical Replay & Evidence Contract (CREC)
 
 ### Intent

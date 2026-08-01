@@ -1,0 +1,55 @@
+{
+  "baselineId": "AAES-OS-PRODUCTION-BASELINE-v1.0",
+  "kind": "deployment-receipt",
+  "version": "1.0",
+  "status": "release-candidate-frozen",
+  "proofSurfaceLevel": "P2",
+  "constitutionalMaturity": "Verified Prototype (operational stack)",
+  "frozenCommit": "7efa0c5f766bc0b30b6eef820d198be3a6bf1a5d",
+  "frozenCommitSubject": "Complete AAES-OS containerization and deployment stack",
+  "frozenCommitTimestamp": "2026-07-20T04:36:58-04:00",
+  "verificationDate": "2026-07-20",
+  "registry": "ghcr.io/warheart1984-ctrl/aaes-os",
+  "services": [
+    "ops-console",
+    "platform-api",
+    "platform-web",
+    "sovereign-control-plane",
+    "uss-api"
+  ],
+  "buildEvidence": {
+    "workflow": ".github/workflows/build-and-push.yml",
+    "matrix": ["ops-console", "platform-api", "platform-web", "sovereign-control-plane", "uss-api"],
+    "status": "workflow-frozen-at-baseline-commit"
+  },
+  "testEvidence": {
+    "workflowJobs": ["test", "security-scan"],
+    "status": "declared-in-workflow; run artifacts pending retention"
+  },
+  "lintStatus": "declared-in-workflow-test-job",
+  "replayStatus": "operational-baseline-replay-via-checksums-and-apply-order",
+  "auditStatus": "runtime-audit-slot-defined; live audit pending-cluster-execution",
+  "observability": {
+    "healthEndpoints": ["/health", "/ready", "/health/detailed", "/healthz", "/readyz"],
+    "prometheusAnnotations": "platform-api scrape annotations present in production manifest",
+    "hpa": "platform-api 3-10, platform-web 2-5, ops-console 1-3"
+  },
+  "failureContracts": [
+    "readiness fails when declared dependencies unhealthy",
+    "network policy default-deny except explicit allow rules",
+    "rollback via previous immutable image digest + prior manifest checksum set"
+  ],
+  "knownLimitations": [
+    "Live cluster execution evidence slots pending",
+    "Image digests not yet pinned from a successful GHCR push of this baseline",
+    "Manifest examples may still show your-org placeholder in ancillary docs"
+  ],
+  "truthBoundary": "Receipt freezes the operational deployment stack at the named commit. It does not claim production completeness for unfinished constitutional runtime packages.",
+  "challengeSurface": [
+    "Checksum mismatch against evidence/k8s-manifest-checksums.json",
+    "Use of mutable latest tags as production pins",
+    "Silent mutation of NetworkPolicy or HPA without version bump"
+  ],
+  "evidencePackage": "evidence/deployment-evidence-package.json",
+  "freezeNotice": "AAES_OS_PRODUCTION_BASELINE_FREEZE.md"
+}

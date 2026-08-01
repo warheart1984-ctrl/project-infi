@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aaes-os.local/schemas/deployment-certificate.schema.json",
+  "title": "AAES-OS Deployment Certificate",
+  "description": "Human and machine projection of an Operational Evidence Record used for promotion stewardship.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "certificateId",
+    "evidenceRecordId",
+    "deploymentCertificate",
+    "checks",
+    "promotionAuthority",
+    "timestamp",
+    "overallStatus"
+  ],
+  "properties": {
+    "schemaVersion": { "type": "string", "const": "1.0" },
+    "certificateId": { "type": "string" },
+    "evidenceRecordId": { "type": "string" },
+    "deploymentCertificate": { "type": "string" },
+    "version": { "type": "string" },
+    "commitSha": { "type": "string" },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "imageDigest",
+        "sbomVerified",
+        "conformanceTests",
+        "securityScan",
+        "policyValidation"
+      ],
+      "properties": {
+        "imageDigest": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "type": "string", "enum": ["pass", "fail", "pending"] },
+            "detail": { "type": "string" }
+          }
+        },
+        "sbomVerified": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "type": "string", "enum": ["pass", "fail", "pending", "waived"] },
+            "detail": { "type": "string" }
+          }
+        },
+        "conformanceTests": {
+          "type": "object",
+          "required": ["status", "passed", "total"],
+          "properties": {
+            "status": { "type": "string", "enum": ["pass", "fail", "pending", "partial"] },
+            "passed": { "type": "integer", "minimum": 0 },
+            "total": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "securityScan": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "type": "string", "enum": ["pass", "fail", "pending"] },
+            "detail": { "type": "string" }
+          }
+        },
+        "policyValidation": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "type": "string", "enum": ["pass", "fail", "pending"] },
+            "detail": { "type": "string" }
+          }
+        },
+        "runtimeHealth": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "type": "string", "enum": ["pass", "fail", "pending", "degraded"] },
+            "detail": { "type": "string" }
+          }
+        }
+      }
+    },
+    "promotionAuthority": { "type": "string" },
+    "promotionDecision": {
+      "type": "string",
+      "enum": ["promote", "hold", "deny", "pending"]
+    },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "overallStatus": {
+      "type": "string",
+      "enum": ["CERTIFIED", "CONDITIONAL", "DENIED", "DRAFT"]
+    },
+    "proofSurfaceLevel": {
+      "type": "string",
+      "enum": ["P0", "P1", "P2", "P3", "P4", "P5"]
+    },
+    "truthBoundary": { "type": "string" }
+  }
+}

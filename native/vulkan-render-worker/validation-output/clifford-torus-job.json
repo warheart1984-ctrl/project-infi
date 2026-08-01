@@ -1,0 +1,18 @@
+﻿{
+    "jobId":  "surface-clifford-torus",
+    "version":  "1.0",
+    "outputDir":  "G:\\project-infi\\native\\vulkan-render-worker\\validation-output\\clifford-torus",
+    "width":  128,
+    "backend":  "vulkan",
+    "frames":  2,
+    "evidenceRefs":  [
+                         "native-surface-parity"
+                     ],
+    "height":  96,
+    "fps":  30,
+    "meshPath":  "G:/New folder/engine/surfaces/meshes/clifford-torus.mesh.json",
+    "scenePath":  "none",
+    "surfaceId":  "clifford-torus",
+    "createdAt":  "2026-07-22T08:26:23.4196477Z",
+    "sceneId":  "native-parity"
+}

@@ -1,23 +1,33 @@
-# Free-first policy pack — no paid API keys required.
-# Routes to locally discovered agents: Ollama, LM Studio, Cursor, Devin, local LLMs.
+# Free-first policy pack — local agents + optional free cloud keys.
+# Cloud: OpenRouter Free Models Router, Groq free tier (when keys present).
+# Image/video generation is out of scope for this pack (not free/reliable).
 
-# General coding → prefer Ollama, then LM Studio
+# General coding → local first, then free cloud
 - id: "coding.free.general"
   when:
     domain: "coding"
     risk: "low"
   then:
     routing:
-      preferred_backends: ["ollama", "lm-studio", "deepseek-coder", "local-llm", "cursor"]
+      preferred_backends: ["ollama", "lm-studio", "deepseek-coder", "local-llm", "openrouter-free", "groq", "cursor"]
 
-# Multi-file reasoning → Ollama coder models or DeepSeek via Ollama
+# Fast cloud iteration when Groq is available
+- id: "coding.free.fast_cloud"
+  when:
+    domain: "coding"
+    tags: ["fast", "cloud"]
+  then:
+    routing:
+      preferred_backends: ["groq", "openrouter-free", "ollama"]
+
+# Multi-file reasoning → local coder models, then OpenRouter free pool
 - id: "coding.free.multi_file"
   when:
     domain: "coding"
     tags: ["multi-file"]
   then:
     routing:
-      allowed_backends: ["ollama", "deepseek-coder", "lm-studio"]
+      allowed_backends: ["ollama", "deepseek-coder", "lm-studio", "openrouter-free", "groq"]
     guardrails:
       require_identity_role: ["developer", "system"]
 
@@ -28,7 +38,7 @@
     tags: ["local-project"]
   then:
     routing:
-      allowed_backends: ["cursor", "ollama", "lm-studio"]
+      allowed_backends: ["cursor", "ollama", "lm-studio", "openrouter-free"]
       preferred_backends: ["cursor"]
     guardrails:
       max_tokens_out: 4096
@@ -62,6 +72,6 @@
     risk: "high"
   then:
     routing:
-      preferred_backends: ["ollama", "lm-studio", "deepseek-coder"]
+      preferred_backends: ["ollama", "lm-studio", "deepseek-coder", "openrouter-free"]
     guardrails:
       require_identity_role: ["developer", "system"]

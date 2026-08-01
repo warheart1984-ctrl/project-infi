@@ -1,0 +1,18 @@
+---
+description: Apply AAES ModeKey lens when an invoke brief or plan embeds one
+alwaysApply: false
+---
+
+# ModeKey auto-apply approximation
+
+When the user message, crew plan, or invoke brief contains a **ModeKey**
+(`crew__actor__stance`) or a mode from `.cursor/aaes-crew/modes-registry.json`:
+
+1. Treat it as the active cognitive lens for the current agent turn.
+2. Do **not** change write authority; precedence remains  
+   role bans > Drive-G laws > Evidence > Mode.
+3. Mirror the stance bias (e.g. evidence-strict, minimal-diff, ops-freeze) in conclusions.
+4. If no ModeKey is present, continue without inventing one.
+
+**Honesty:** This rule is guidance for Cursor agents. It is **not** a runtime
+enforcer inside AAES-OS Node processes.

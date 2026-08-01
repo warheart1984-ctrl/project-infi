@@ -2,6 +2,7 @@ import { createServer, type IncomingMessage, type ServerResponse } from 'node:ht
 
 import { bufferToDataUrl } from './detectImageType.js';
 import { createAvailableProviders, pickProvider } from './providers/registry.js';
+import { AuthHealthChecker } from './providers/authHealth.js';
 import type { ImageProvider } from './providers/types.js';
 import { describeImageStudioCapability, imageStudioProvenance } from './runtime.js';
 
@@ -30,11 +31,16 @@ export function startStudioServer(options: StudioServerOptions = {}): Promise<vo
     server.once('error', reject);
     server.listen(port, host, () => {
       console.log(`image-studio web UI: http://${host}:${port}`);
-      for (const provider of providers) {
-        const state = provider.configured ? 'configured' : `needs setup (${provider.configHelp ?? 'see docs'})`;
-        console.log(`provider: ${provider.name} [${state}]`);
-      }
-      console.log('Anonymous Pollinations tier: ~1 request per 15s, watermarked.');
+      const healthData = {
+        timestamp: Date.now(),
+        providers: providers.map(p => ({
+          name: p.name,
+          configured: p.configured,
+          requiresApiKey: p.requiresApiKey,
+          configHelp: p.configHelp,
+        })),
+      };
+      console.log(JSON.stringify(healthData, null, 2));
       resolve();
     });
   });
@@ -64,6 +70,12 @@ async function handleRequest(
       })),
     );
     sendJson(res, 200, { ok: true, providers: listed });
+    return;
+  }
+
+  if (req.method === 'GET' && url.pathname === '/api/health') {
+    const health = AuthHealthChecker.getAllProvidersHealth(providers);
+    sendJson(res, 200, { ok: true, health });
     return;
   }
 
@@ -189,7 +201,7 @@ export function buildHtmlPage(): string {
 </head>
 <body>
 <h1>image-studio</h1>
-<p>Free image-to-image. <strong>Pollinations</strong> works with no API key (anonymous: ~1 req/15s, watermarked). <strong>Cloudflare</strong> and <strong>Hugging Face</strong> use their free tiers once you set tokens.</p>
+<p>Free image-to-image. <strong>Pollinations</strong> works with no API key (anonymous: ~1 req/15s, watermarked). <strong>HF Space</strong> uses a keyless community ZeroGPU Space (rate-limited). <strong>Genblaze</strong> (MRS stills) and <strong>StoryForge</strong> (Infinity audio) require API keys and local services. <strong>Cloudflare</strong> and <strong>Hugging Face</strong> use their free tiers once you set tokens.</p>
 
 <label for="file">1. Reference image</label>
 <div id="drop">Click or drop an image here</div>
@@ -209,6 +221,8 @@ export function buildHtmlPage(): string {
     <select id="model"></select>
   </div>
 </div>
+
+<div id="auth-status" style="margin-top:14px;padding:10px;background:#1a1a2e;border-radius:8px;font-size:0.85rem;"></div>
 
 <div class="row">
   <div>
@@ -235,6 +249,8 @@ export function buildHtmlPage(): string {
 <script>
   let currentDataUrl = null;
   let modelsByProvider = {};
+
+  const authStatusDiv = document.getElementById('auth-status');
 
   const file = document.getElementById('file');
   const drop = document.getElementById('drop');
@@ -269,6 +285,39 @@ export function buildHtmlPage(): string {
     }
     provider.value = firstConfigured || (list[0] ? list[0].name : 'pollinations');
     fillModels();
+  }
+
+  async function loadAuthStatus() {
+    try {
+      const res = await fetch('/api/health');
+      const data = await res.json();
+      const health = data.health || [];
+      const ready = health.filter((h) => h.status === 'ready');
+      const needsAuth = health.filter((h) => h.status === 'needs_auth');
+      const errors = health.filter((h) => h.status === 'error');
+
+      let html = '<strong>Provider Health</strong>\n';
+      html += 'Ready: ' + ready.length + ' | Needs Setup: ' + needsAuth.length + ' | Errors: ' + errors.length + '\n\n';
+
+      if (needsAuth.length > 0) {
+        html += 'Providers requiring setup:\n';
+        needsAuth.forEach((h) => {
+          html += '  \u26A0 ' + h.name + ': ' + (h.error || 'API key or service URL required') + '\n';
+        });
+      }
+
+      if (errors.length > 0) {
+        html += '\nProviders with errors:\n';
+        errors.forEach((h) => {
+          html += '  \u2717 ' + h.name + ': ' + (h.error || 'unknown error') + '\n';
+        });
+      }
+
+      authStatusDiv.textContent = html;
+      authStatusDiv.style.display = needsAuth.length > 0 || errors.length > 0 ? 'block' : 'none';
+    } catch (err) {
+      authStatusDiv.style.display = 'none';
+    }
   }
 
   function fillModels() {
@@ -327,6 +376,7 @@ export function buildHtmlPage(): string {
   });
 
   loadProviders();
+  loadAuthStatus();
 </script>
 </body>
 </html>`;

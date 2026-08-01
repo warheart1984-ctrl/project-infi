@@ -8,3 +8,5 @@ export { LocalLlmBackend, type LocalLlmBackendOptions } from './LocalLlmBackend.
 export { OllamaBackend, type OllamaBackendOptions } from './OllamaBackend.js';
 export { LmStudioBackend, type LmStudioBackendOptions } from './LmStudioBackend.js';
 export { OpenAiCompatibleBackend, type OpenAiCompatibleBackendOptions } from './OpenAiCompatibleBackend.js';
+export { OpenRouterBackend, type OpenRouterBackendOptions } from './OpenRouterBackend.js';
+export { createLocalFetch, warmOllamaModel } from './localFetch.js';

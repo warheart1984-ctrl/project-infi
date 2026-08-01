@@ -1,0 +1,53 @@
+#version 450
+layout(local_size_x=64) in;
+layout(set=0,binding=0,std430) buffer Pixels { uint pixels[]; };
+layout(set=0,binding=1,std430) buffer Depth { uint depths[]; };
+layout(set=0,binding=2,std430) readonly buffer Vertices { vec4 vertices[]; };
+layout(set=0,binding=3,std430) readonly buffer Faces { uvec4 faces[]; };
+layout(push_constant) uniform Params { uint width; uint height; float time; uint pass; uint vertexCount; uint faceCount; } pc;
+
+vec4 rotate4(vec4 p,float t) {
+  float a=t*.7,c=cos(a),s=sin(a); p.xw=mat2(c,-s,s,c)*p.xw;
+  a=t*1.1;c=cos(a);s=sin(a);p.yz=mat2(c,-s,s,c)*p.yz;
+  a=t*1.5;c=cos(a);s=sin(a);p.zw=mat2(c,-s,s,c)*p.zw;
+  a=t*2.;c=cos(a);s=sin(a);p.yw=mat2(c,-s,s,c)*p.yw;
+  return p;
+}
+
+vec4 project4(vec4 p) {
+  float k4=4./max(.25,4.-p.w); vec3 q=p.xyz*k4;
+  float k3=4./max(.25,4.-q.z); vec2 ndc=q.xy*k3*.34;
+  return vec4((ndc.x*.5+.5)*float(pc.width),(1.-(ndc.y*.5+.5))*float(pc.height),q.z,p.w);
+}
+
+float edge(vec2 a,vec2 b,vec2 p){return (p.x-a.x)*(b.y-a.y)-(p.y-a.y)*(b.x-a.x);}
+
+void main() {
+  uint id=gl_GlobalInvocationID.x;
+  if(pc.pass==0u){
+    uint count=pc.width*pc.height;if(id>=count)return;
+    pixels[id]=uint(13)|uint(18<<8)|uint(24<<16)|uint(255<<24);depths[id]=0xffffffffu;return;
+  }
+  if(id>=pc.faceCount)return;
+  uvec3 tri=faces[id].xyz;if(any(greaterThanEqual(tri,uvec3(pc.vertexCount))))return;
+  vec4 r0=rotate4(vertices[tri.x],pc.time),r1=rotate4(vertices[tri.y],pc.time),r2=rotate4(vertices[tri.z],pc.time);
+  vec4 a=project4(r0),b=project4(r1),c=project4(r2);
+  float area=edge(a.xy,b.xy,c.xy);if(abs(area)<.0001)return;
+  vec2 lo=max(floor(min(a.xy,min(b.xy,c.xy))),vec2(0));
+  vec2 hi=min(ceil(max(a.xy,max(b.xy,c.xy))),vec2(pc.width-1u,pc.height-1u));
+  vec3 n=normalize(cross(vec3(b.xy-a.xy,b.z-a.z),vec3(c.xy-a.xy,c.z-a.z)));
+  float light=.24+.9*max(dot(n,normalize(vec3(-.35,-.55,.76))),0.);
+  for(uint y=uint(lo.y);y<=uint(hi.y);++y)for(uint x=uint(lo.x);x<=uint(hi.x);++x){
+    vec2 p=vec2(x,y)+.5;float w0=edge(b.xy,c.xy,p)/area,w1=edge(c.xy,a.xy,p)/area,w2=1.-w0-w1;
+    if(w0<0.||w1<0.||w2<0.)continue;
+    float z=w0*a.z+w1*b.z+w2*c.z;uint packedDepth=uint(clamp((z+16.)/32.,0.,1.)*4294967294.);
+    uint pixel=y*pc.width+x;
+    if(pc.pass==1u){atomicMin(depths[pixel],packedDepth);continue;}
+    if(packedDepth==depths[pixel]){
+      float wd=w0*a.w+w1*b.w+w2*c.w,t=clamp(wd*.5+.5,0.,1.);
+      vec3 base=mix(vec3(.12,.25,.48),vec3(.95,.55,.25),t);float fog=exp(-abs(z)*.045);
+      vec3 color=clamp(base*light*fog+vec3(.025,.035,.05)*(1.-fog),0.,1.);uvec3 rgb=uvec3(color*255.);
+      pixels[pixel]=rgb.r|(rgb.g<<8)|(rgb.b<<16)|uint(255<<24);
+    }
+  }
+}

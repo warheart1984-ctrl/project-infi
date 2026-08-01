@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aaes-os.local/schemas/cef-certificate.schema.json",
+  "title": "CEF Certificate v1.0",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "certificateId",
+    "status",
+    "version",
+    "profile",
+    "evidenceRef",
+    "authority",
+    "verification",
+    "replay",
+    "audit",
+    "promotion",
+    "stewardship"
+  ],
+  "properties": {
+    "certificateId": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["DRAFT", "ACTIVE", "REVOKED", "HISTORICAL"]
+    },
+    "version": { "type": "string" },
+    "profile": {
+      "type": "string",
+      "enum": ["CREC", "OEL", "CEL", "Security", "ModelEval"]
+    },
+    "evidenceRef": { "type": "string" },
+    "authority": {
+      "type": "object",
+      "required": ["carId", "actorId"],
+      "properties": {
+        "carId": { "type": "string" },
+        "actorId": { "type": "string" },
+        "role": { "type": "string" }
+      }
+    },
+    "verification": { "type": "object" },
+    "replay": {
+      "type": "object",
+      "required": ["instructions"],
+      "properties": {
+        "instructions": { "type": "string" }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "properties": {
+        "visibility": { "type": "string" },
+        "disclosure": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "promotion": {
+      "type": "object",
+      "required": ["decision"],
+      "properties": {
+        "decision": {
+          "type": "string",
+          "enum": ["APPROVE", "REJECT", "HOLD", "approved", "rejected", "hold"]
+        },
+        "signature": { "type": ["string", "null"] },
+        "timestamp": { "type": ["string", "null"] }
+      }
+    },
+    "stewardship": {
+      "type": "object",
+      "required": ["state"],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "unpromoted",
+            "active",
+            "renewal_pending",
+            "revoked",
+            "historical"
+          ]
+        }
+      }
+    }
+  }
+}

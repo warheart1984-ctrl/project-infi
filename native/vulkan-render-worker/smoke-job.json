@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "jobId": "vulkan-smoke-1",
+  "sceneId": "worker-smoke",
+  "backend": "vulkan",
+  "adapterId": "vulkan-00000000-0100-0000-0000-000000000000",
+  "scenePath": "none",
+  "meshPath": "G:/New folder/engine/surfaces/meshes/clifford-torus.mesh.json",
+  "sharedFramePath": "G:/project-infi/native/vulkan-render-worker/smoke-output/live-frame.sxfr",
+  "outputDir": "G:/project-infi/native/vulkan-render-worker/smoke-output",
+  "width": 640,
+  "height": 480,
+  "frames": 3,
+  "fps": 30,
+  "surfaceId": "clifford-torus",
+  "evidenceRefs": ["manual-smoke"],
+  "createdAt": "2026-07-22T01:55:00.000Z"
+}

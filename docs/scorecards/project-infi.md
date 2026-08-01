@@ -17,6 +17,29 @@ AAES-OS is the canonical governed runtime workspace for the AAES governance spin
 
 Verified Prototype for the governance/runtime spine, docs-site, Nova Studio, ops-console, and SovereignX execution surfaces; scaffold / prototype elsewhere.
 
+## CEF + Production Baseline (2026-07-31 slice)
+
+Drive-G-2 dimensions for this slice — do **not** collapse into one “production ready” adjective:
+
+| Dimension | Rating | Audience | Evidence |
+|-----------|--------|----------|----------|
+| Constitutional model | Working | operators / governance | CEF charter; `@aaes-os/cef-core` schema + invariants + promotion gate |
+| Governance methodology | Partial | operators | Lean AAES crew + ESFR declared; ModeKey guidance only |
+| Reference implementation | Working (library) / Partial (ops) | operators | cef-core + certification/stewardship stubs; k8s freeze without full live pack |
+| Platform engineering | Partial | operators | Manifest freeze + optional CI digest-merge / live capture contracts |
+| Commercial operations | Early / not claimed | users | No self-serve claim from this baseline |
+
+### Freeze vs independently reproduced
+
+| Claim | Status | Evidence ladder |
+|-------|--------|-----------------|
+| Operational stack **frozen** | Evidenced | Production Baseline v1.0 checksums + freeze notice at `7efa0c5f` |
+| `@aaes-os/cef-core` Phase 1 | **P2 Verified** | package tests (schema, profiles, promotion gate) |
+| OEL certificate **ACTIVE** | Deferred / not required for current ESFR | DRAFT/HOLD is the accepted certificate state for this gate |
+| Independently reproduced ops | **Waived for current ESFR** | Optional backlog; `evidence/live/` tooling remains |
+
+ESFR note: [docs/release/AAES_CREW_CEF_BASELINE_ESFR_2026-07-31.md](../release/AAES_CREW_CEF_BASELINE_ESFR_2026-07-31.md) — **pass** with independent-reproduction prerequisites waived.
+
 ## Build Status
 
 - Fresh build passes for the verified governed packages and ops-console surfaces in this pass.

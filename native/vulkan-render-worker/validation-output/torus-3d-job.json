@@ -1,0 +1,18 @@
+﻿{
+    "jobId":  "surface-torus-3d",
+    "version":  "1.0",
+    "outputDir":  "G:\\project-infi\\native\\vulkan-render-worker\\validation-output\\torus-3d",
+    "width":  128,
+    "backend":  "vulkan",
+    "frames":  2,
+    "evidenceRefs":  [
+                         "native-surface-parity"
+                     ],
+    "height":  96,
+    "fps":  30,
+    "meshPath":  "G:/New folder/engine/surfaces/meshes/torus-3d.mesh.json",
+    "scenePath":  "none",
+    "surfaceId":  "torus-3d",
+    "createdAt":  "2026-07-22T08:26:24.6386462Z",
+    "sceneId":  "native-parity"
+}

@@ -1,0 +1,24 @@
+{
+  "adapterId": "",
+  "backend": "vulkan",
+  "completedAt": "2026-07-22T08:26:27Z",
+  "deviceName": "AMD Radeon (TM) R9 380 Series",
+  "evidenceRefs": [
+    "resident-1"
+  ],
+  "jobId": "resident-1",
+  "meshContract": {
+    "contentHash": "9257a291b539751da0afa74507b38fee49a1aa53be91e0250decd765d5d97c0c",
+    "faceCount": 2048,
+    "id": "hopf-surface",
+    "vertexCount": 1089
+  },
+  "outputPaths": [
+    "G:\\project-infi\\native\\vulkan-render-worker\\resident-validation\\output-1\\vulkan-frame-000000.ppm",
+    "G:\\project-infi\\native\\vulkan-render-worker\\resident-validation\\output-1\\vulkan-frame-000001.ppm"
+  ],
+  "startedAt": "2026-07-22T08:26:27Z",
+  "status": "completed",
+  "version": "1.0",
+  "workerEvidenceHash": "3b9630c7f4f13025bccce8eb14c51a975b1a62fb0407d743198cb8f4c4633e5a"
+}

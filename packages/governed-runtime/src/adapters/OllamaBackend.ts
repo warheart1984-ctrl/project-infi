@@ -1,5 +1,6 @@
 import type { CodingBackend, GovernedChatRequest } from '../types.js';
 import { buildChatResponse, postJson } from './helpers.js';
+import { createLocalFetch } from './localFetch.js';
 
 export interface OllamaBackendOptions {
   baseUrl?: string;
@@ -29,7 +30,7 @@ export class OllamaBackend implements CodingBackend {
     );
     this.model = options.model ?? process.env.OLLAMA_MODEL ?? 'qwen2.5-coder:3b';
     this.name = options.name ?? 'ollama';
-    this.fetchImpl = options.fetch ?? globalThis.fetch;
+    this.fetchImpl = options.fetch ?? createLocalFetch();
   }
 
   async chat(req: GovernedChatRequest) {

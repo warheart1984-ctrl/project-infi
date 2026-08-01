@@ -1,7 +1,7 @@
 {
   "name": "@aaes-os/image-studio",
   "version": "0.1.0",
-  "description": "AAIS-governed image-to-image studio using free cloud-hosted models (Pollinations, keyless). CLI + local web UI.",
+  "description": "AAIS-governed image studio using free cloud-hosted models (Pollinations keyless, Gemini free-tier key). Text-to-image + image-to-image. CLI + local web UI.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

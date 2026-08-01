@@ -1,0 +1,18 @@
+﻿{
+    "jobId":  "resident-2",
+    "version":  "1.0",
+    "outputDir":  "G:\\project-infi\\native\\vulkan-render-worker\\resident-validation\\output-2",
+    "width":  128,
+    "backend":  "vulkan",
+    "frames":  2,
+    "evidenceRefs":  [
+                         "resident-2"
+                     ],
+    "height":  96,
+    "fps":  30,
+    "meshPath":  "G:/New folder/engine/surfaces/meshes/trefoil-4d.mesh.json",
+    "scenePath":  "none",
+    "surfaceId":  "trefoil-4d",
+    "createdAt":  "2026-07-22T08:26:26.9276494Z",
+    "sceneId":  "scene-2"
+}

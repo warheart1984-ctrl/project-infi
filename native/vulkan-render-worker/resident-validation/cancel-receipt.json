@@ -1,0 +1,22 @@
+{
+  "adapterId": "",
+  "backend": "vulkan",
+  "completedAt": "2026-07-22T08:26:27Z",
+  "deviceName": "AMD Radeon (TM) R9 380 Series",
+  "error": "render cancelled by governance",
+  "evidenceRefs": [
+    "resident-cancel"
+  ],
+  "jobId": "resident-cancel",
+  "meshContract": {
+    "contentHash": "7f289194480a62da1b04a9a05b8de9ae78a56bbfa71cb34223c11855724da58d",
+    "faceCount": 48,
+    "id": "tesseract",
+    "vertexCount": 16
+  },
+  "outputPaths": [],
+  "startedAt": "2026-07-22T08:26:27Z",
+  "status": "failed",
+  "version": "1.0",
+  "workerEvidenceHash": "a3b592d9b36cdf06be08ab8684b8c3826eadac7955777003df39480b808ccf8c"
+}

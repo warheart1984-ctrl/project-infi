@@ -2,11 +2,13 @@ import { PatternLedger } from '@aaes-os/aaes-governance';
 import { AAISRuntime } from '@aaes-os/aais';
 import {
   CodingRouter,
+  createLocalFetch,
   discoverFreeBackends,
   loadCodingPolicyPack,
   loadFreeCodingPolicyPack,
   OllamaBackend,
   requireFreeBackends,
+  warmOllamaModel,
   type CodingBackend,
   type DiscoveryOptions,
   type DiscoveryResult,
@@ -20,6 +22,8 @@ export interface FreeCodingStackOptions extends DiscoveryOptions {
   additionalBackends?: CodingBackend[];
   /** Use free-only policy pack (default: true). Set false to use cloud policy pack. */
   freePolicies?: boolean;
+  /** Warm Ollama coder models into memory (default: true when both qwen models exist). */
+  warmModels?: boolean;
 }
 
 export interface FreeCodingStack {
@@ -46,7 +50,8 @@ function hasModels(models: string[] | undefined, required: readonly string[]): b
 export async function createFreeCodingStack(
   options: FreeCodingStackOptions = {},
 ): Promise<FreeCodingStack> {
-  const discovery = await discoverFreeBackends(options);
+  const fetchImpl = options.fetch ?? createLocalFetch();
+  const discovery = await discoverFreeBackends({ ...options, fetch: fetchImpl });
   const discoveredBackends = requireFreeBackends(discovery);
   const backends = [...discoveredBackends];
   const sovereignXRouter = new SovereignXRouter();
@@ -57,8 +62,11 @@ export async function createFreeCodingStack(
 
   const ollamaAvailable = discovery.available.find((agent) => agent.name === 'ollama');
   if (ollamaAvailable && hasModels(ollamaAvailable.models, ['qwen2.5-coder:3b', 'qwen2.5-coder:7b'])) {
-    const fetchImpl = options.fetch ?? globalThis.fetch;
     const ollamaUrl = ollamaAvailable.url.replace(/\/$/, '');
+    if (options.warmModels !== false) {
+      // Prefer warming the small model first so AAIS short prompts are ready.
+      await warmOllamaModel(ollamaUrl, 'qwen2.5-coder:3b', fetchImpl);
+    }
     const shortBackend = new OllamaBackend({
       baseUrl: ollamaUrl,
       model: 'qwen2.5-coder:3b',

@@ -1,0 +1,9 @@
+# ninja log v6
+326	11840	8064119570516483	CMakeFiles/sovereignx-vulkan-worker.dir/main.cpp.obj	3e541602f268eaa5
+11843	12100	8064119685676458	sovereignx-vulkan-worker.exe	19f7f56435ae82bc
+81	8229	8064108224573823	CMakeFiles/sovereignx-adl-telemetry.dir/adl-telemetry.cpp.obj	e2066568a0a1e098
+52	326	8064119570327001	frame.comp.spv	774e0f4885e3faab
+52	326	8064119570327001	G:/project-infi/native/vulkan-render-worker/build/frame.comp.spv	774e0f4885e3faab
+8230	8461	8064108306073852	sovereignx-adl-telemetry.exe	25f8255c8c0fe78
+55	11947	8064122081318103	CMakeFiles/sovereignx-vulkan-worker.dir/main.cpp.obj	3e541602f268eaa5
+11948	12179	8064122200255771	sovereignx-vulkan-worker.exe	19f7f56435ae82bc

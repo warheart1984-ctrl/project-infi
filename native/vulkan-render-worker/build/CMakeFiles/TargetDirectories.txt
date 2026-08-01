@@ -1,0 +1,5 @@
+G:/project-infi/native/vulkan-render-worker/build/CMakeFiles/sovereignx-frame-shader.dir
+G:/project-infi/native/vulkan-render-worker/build/CMakeFiles/sovereignx-vulkan-worker.dir
+G:/project-infi/native/vulkan-render-worker/build/CMakeFiles/sovereignx-adl-telemetry.dir
+G:/project-infi/native/vulkan-render-worker/build/CMakeFiles/edit_cache.dir
+G:/project-infi/native/vulkan-render-worker/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aaes-os.local/schemas/cef-security-evidence.json",
+  "title": "CEF Security Evidence Profile v1.0",
+  "allOf": [
+    { "$ref": "https://aaes-os.local/schemas/cef-core-evidence.json" },
+    {
+      "type": "object",
+      "required": ["type", "security"],
+      "properties": {
+        "type": { "const": "Security" },
+        "security": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "sbomRef",
+            "vulnerabilityScan",
+            "supplyChain",
+            "policyGates"
+          ],
+          "properties": {
+            "sbomRef": { "type": "string", "minLength": 1 },
+            "vulnerabilityScan": { "type": "object" },
+            "supplyChain": { "type": "object" },
+            "policyGates": { "type": "object" },
+            "scanTool": { "type": "string" },
+            "overallStatus": {
+              "type": "string",
+              "enum": ["PASS", "FAIL", "PENDING", "PASS_WITH_ACCEPTED_RISK"]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

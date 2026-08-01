@@ -5,7 +5,7 @@
     risk: "low"
   then:
     routing:
-      preferred_backends: ["groq-llama3-70b"]
+      preferred_backends: ["groq"]
     guardrails:
       max_tokens_out: 4096
 

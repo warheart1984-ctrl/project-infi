@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-07-31T21:00:00Z",
+  "note": "Thin AAES role→vendor map. Paths resolve via vendor-skills-paths.json. Cursor opens SKILL.md; Node does not execute.",
+  "roles": {
+    "aaes-crew-foreman": {
+      "vendorSkills": [
+        "writing-plans",
+        "workflow-from-chats",
+        "verify-this",
+        "review-and-ship"
+      ]
+    },
+    "aaes-architect": {
+      "vendorSkills": [
+        "writing-plans",
+        "brainstorming",
+        "workflow-from-chats"
+      ]
+    },
+    "aaes-builder": {
+      "vendorSkills": [
+        "writing-plans",
+        "check-compiler-errors"
+      ]
+    },
+    "aaes-coding": {
+      "vendorSkills": [
+        "test-driven-development",
+        "check-compiler-errors",
+        "systematic-debugging"
+      ]
+    },
+    "aaes-implementor": {
+      "vendorSkills": [
+        "verify-this",
+        "run-smoke-tests",
+        "systematic-debugging"
+      ]
+    },
+    "aaes-reviewer": {
+      "vendorSkills": [
+        "review-and-ship",
+        "verification-before-completion"
+      ]
+    },
+    "aaes-inspector": {
+      "vendorSkills": [
+        "verify-this",
+        "verification-before-completion",
+        "run-smoke-tests"
+      ]
+    },
+    "aaes-esfr": {
+      "vendorSkills": [
+        "verification-before-completion",
+        "review-and-ship",
+        "verify-this"
+      ]
+    }
+  }
+}

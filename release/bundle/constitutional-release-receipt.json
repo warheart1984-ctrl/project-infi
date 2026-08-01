@@ -6,7 +6,7 @@
     "bundle": "release/bundle",
     "artifactCount": 43,
     "checksumCount": 43,
-    "signature": "ccf6699420ca769c823167b00eb6bef3f0d836a12826a12753ce60e9abcbee95"
+    "signature": "2d647eb07f50aab30c3bece71f6859de15ca03508e2484109d43f7cc4bec2b82"
   },
   "proofSurfaceLevel": "P2",
   "buildEvidence": {
@@ -61,7 +61,7 @@
       "Audit trace is documented in the docs hub and scorecard."
     ]
   },
-  "verificationDate": "2026-07-14T16:52:26.145Z",
+  "verificationDate": "2026-08-01T01:35:51.908Z",
   "knownLimitations": [
     "Coverage percentages are not yet standardized across every workspace package.",
     "External database integration tests require configured PostgreSQL and Neo4j services.",
@@ -70,11 +70,11 @@
   "truthBoundary": "This receipt proves the bundle was built, packaged, signed, and verified against the selected artifacts. It does not prove production readiness for unfinished surfaces.",
   "constitutionalMaturity": "Verified Prototype",
   "commercialReadiness": "Builder",
-  "generatedAt": "2026-07-14T16:52:22.885Z",
+  "generatedAt": "2026-08-01T01:35:50.393Z",
   "constitutionalEvidenceGraph": {
     "schemaVersion": "1.0",
     "graphId": "ceg:release:aaes-os:0.1.0",
-    "generatedAt": "2026-07-14T16:52:22.885Z",
+    "generatedAt": "2026-08-01T01:35:50.393Z",
     "source": "release-receipt",
     "rootReceipt": {
       "receiptId": "release:aaes-os:0.1.0",
@@ -148,7 +148,7 @@
       "truthBoundary": "This receipt proves the bundle was built, packaged, signed, and verified against the selected artifacts. It does not prove production readiness for unfinished surfaces.",
       "constitutionalMaturity": "Verified Prototype",
       "commercialReadiness": "Builder",
-      "generatedAt": "2026-07-14T16:52:22.885Z"
+      "generatedAt": "2026-08-01T01:35:50.393Z"
     },
     "proofSurfaces": [
       {
@@ -2378,5 +2378,5 @@
       "viewCount": 5
     }
   },
-  "receiptHash": "sha256:d755dc1fb5cdbd521659192c91e34e2374d49dc0811c385152370af3a1b18ddb"
+  "receiptHash": "sha256:3c34a6c0742e7332b8c8c8ba51d61c53f6b7f9ab80b39ba22d404fff93abe789"
 }

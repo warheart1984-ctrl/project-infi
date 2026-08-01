@@ -1,223 +1,224 @@
 {
-  "name": "aaes-os",
-  "version": "0.1.0",
-  "bundle": "release/bundle",
-  "files": [
-    {
-      "path": "README.md",
-      "sha256": "4cc7a042594c25ca3f9d9d1cbcbdca10d19418699f925531e9f725b630f40c77",
-      "size": 22372
-    },
-    {
-      "path": "docs/README.md",
-      "sha256": "07b7fb06445580b2c318ca8bfc039905924ca4cc95c52d465dcdf3ee2919dbd0",
-      "size": 11919
-    },
-    {
-      "path": "docs/architecture/README.md",
-      "sha256": "d4fd34b073fb24ef720efe9dd4c39c5cd36ad683f9db8af3558e713ae88b7c4f",
-      "size": 603
-    },
-    {
-      "path": "docs/architecture/AAES_OS_UCR_MAPPING.md",
-      "sha256": "d509692e42e0d4ee591d0d7f3356bfc1ee79711528dfb99f449cca1b726f74d2",
-      "size": 5271
-    },
-    {
-      "path": "docs/crk1/release/CIS_CONFORMANCE_SUITE_GENERATION.md",
-      "sha256": "e7c2831a910330066af15f9d4026b8313144b8de7d1fe03689f4bc43cbb811e0",
-      "size": 1239
-    },
-    {
-      "path": "docs/crk1/release/CIS_CONFORMANCE_SUITE_INPUT.spec.generator.json",
-      "sha256": "9bc4618d554dab9d9d05fbb20fb03c05c3e23f3b5803f4b97c815e3d86347c4e",
-      "size": 514
-    },
-    {
-      "path": "docs/crk1/release/CIS_CONFORMANCE_SUITE_INPUT.spec.json",
-      "sha256": "1f3153631add9179f809885a6b256973a6dfa36c917ceefe7d2be246caec967a",
-      "size": 7058
-    },
-    {
-      "path": "docs/crk1/release/CIS_CONFORMANCE_SUITE_SPECIFICATION.md",
-      "sha256": "4e1a7380d6537635bc8e87c9421264b7fdc324808836710df3c1e0c163442cee",
-      "size": 3991
-    },
-    {
-      "path": "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md",
-      "sha256": "1f80499823741796b4c479c4127cb965d795dc907c463f499126979dab81387d",
-      "size": 9032
-    },
-    {
-      "path": "docs/release/constitutional-release-receipt.md",
-      "sha256": "e2abf46897593ef8bc7c4661dff4065e5b242c3914cb355b8e096417f50022c2",
-      "size": 1573
-    },
-    {
-      "path": "docs/release/external-integrations/README.md",
-      "sha256": "c321d90a6f36820b1872c98ebe43bd18ce80ae66ef0d0f1360f34b5c505e45bd",
-      "size": 690
-    },
-    {
-      "path": "docs/release/external-integrations/external-integration-index.json",
-      "sha256": "6c0c6da00e9f407b6c045a0ca6643ec4a7b565148e69f6c46ddab5c218a4cdab",
-      "size": 1461
-    },
-    {
-      "path": "docs/release/production-hardening/README.md",
-      "sha256": "1a691b65ebcdc3aa887b3fe3f926fd54d89b394baf6fdd4ceb4e7924306a3a3f",
-      "size": 2742
-    },
-    {
-      "path": "docs/release/production-hardening/production-hardening-index.json",
-      "sha256": "b6ad858805539b291b31978c94a9c04009fe4a8a77baf95a2caadb2ceab18849",
-      "size": 34905
-    },
-    {
-      "path": "docs/release/production-hardening/ul-runtime.evidence.json",
-      "sha256": "50d66c3aead078802be095c838d8b6d4d84b28346b651cebf94f7f454d0f6e88",
-      "size": 2773
-    },
-    {
-      "path": "docs/release/production-hardening/csl-runtime.evidence.json",
-      "sha256": "1d4ac5c6863db2e693adf167ecc5f547d282a0f3d304b2d81e067620ce8e3972",
-      "size": 2799
-    },
-    {
-      "path": "docs/release/production-hardening/isl-runtime.evidence.json",
-      "sha256": "39ec0214ba562b7011b05264c45b62c641bed7a77356867b05cbd3fb87455a2c",
-      "size": 2793
-    },
-    {
-      "path": "docs/release/production-hardening/cic-runtime.evidence.json",
-      "sha256": "02359d38598c8b854b85e533a4681c6b50ae0ebe5f0929adb0433035aaec12ec",
-      "size": 2793
-    },
-    {
-      "path": "docs/release/production-hardening/ccc-runtime.evidence.json",
-      "sha256": "0a35e61d80262c2172e65653fc0915bb9f376acba2387d64c1f01aae10e9855a",
-      "size": 2793
-    },
-    {
-      "path": "docs/release/production-hardening/coe-runtime.evidence.json",
-      "sha256": "3b0d80cbe754dca7fc000e1c86c35d6f45ffb43891f0b9ebd65a7944955bdb86",
-      "size": 2786
-    },
-    {
-      "path": "docs/release/production-hardening/cml-voss-runtime.evidence.json",
-      "sha256": "04ae163883dcdfeeb78e5cd6faad34f935867207595e50297ac4f15011c0ec76",
-      "size": 2894
-    },
-    {
-      "path": "docs/release/production-hardening/ugr-runtime.evidence.json",
-      "sha256": "6e5b5098a5ffd3b203b11dc514078497db91c4bbc3f00a0545d72d1b73268087",
-      "size": 2797
-    },
-    {
-      "path": "docs/release/production-hardening/gcre-sysmin.evidence.json",
-      "sha256": "2ed2ebc93b2713b489f3ba2c9d328b4c06ce7a861aab97a381ccbf0a978ba470",
-      "size": 2799
-    },
-    {
-      "path": "docs/release/production-hardening/coda-runtime.evidence.json",
-      "sha256": "633c3bb256c3aae015b2bc9e097f08b8c8df2cc50ef1fd32f6af88d26b7fa5b0",
-      "size": 2811
-    },
-    {
-      "path": "docs/release/production-hardening/nova-coda.evidence.json",
-      "sha256": "d1ea5852fada08d7460f4ab7ed0a36eaea34baa9ccc06663d393da9a3112bce4",
-      "size": 2757
-    },
-    {
-      "path": "docs/crk1/release/CORI_ALPHA_PROOF_CHAIN.md",
-      "sha256": "56eed5bff377105edd39cfc5dd6219c2f0ed6452a9848111147da9e04dd8c846",
-      "size": 3634
-    },
-    {
-      "path": "docs/crk1/release/CORI_ALPHA_PROOF_CHAIN_FREEZE.md",
-      "sha256": "2d6f0c478343c580f72d83bde283397989aa6e56331e43340b263dd4984a1d81",
-      "size": 1502
-    },
-    {
-      "path": "docs/crk1/release/CORI_ALPHA_MILESTONE_NOTE.md",
-      "sha256": "ae27f9007c838aa090e19755e1e831345d1a3d46fc6eb6fb63efd5acd1c1d3be",
-      "size": 2050
-    },
-    {
-      "path": "docs/crk1/release/CORI_ALPHA_MINIMAL_RUNTIME_PROOF_PLAN.md",
-      "sha256": "76317eb3df7e7928dfe24937e1d39417c2023e4b24fce8192ab4e73b689a4df9",
-      "size": 10490
-    },
-    {
-      "path": "docs/crk1/release/CORI_ALPHA_STATUS.schema.json",
-      "sha256": "f42bf667a969b900c26054d33af811567a349005f866b2797bccddd695a97658",
-      "size": 5408
-    },
-    {
-      "path": "docs/crk1/release/CORI_ALPHA_MINIMAL_RUNTIME_STATUS.spec.json",
-      "sha256": "bfb059f657cdefd8ce750cc4232969c510a829db8f5d481db41f884228fd22a3",
-      "size": 16563
-    },
-    {
-      "path": "docs/crk1/release/CORI_ALPHA_MINIMAL_RUNTIME_DASHBOARD.md",
-      "sha256": "1ca0207dd24a1fef330c824ef0a720b5835fda1f3c3bba6d148fd834ff5b0d18",
-      "size": 8063
-    },
-    {
-      "path": "docs/crk1/release/CIS_LAUNCH_READINESS_SPECIFICATION.md",
-      "sha256": "22cdf7b4ca88811861e4b798cb4fff8ebc4db51f1b9896dc4e69c61b7ba9a5c4",
-      "size": 3126
-    },
-    {
-      "path": "docs/scorecards/project-infi.md",
-      "sha256": "36791c6d7a673e2261290cb2bc714af5d2d611908f2553fd3a67762ef3b0ef8f",
-      "size": 40706
-    },
-    {
-      "path": "package.json",
-      "sha256": "5b2d42103a6af1ff324001cb73af7ea8d6f5b036b9d98d7293fcf0717aa89931",
-      "size": 3614
-    },
-    {
-      "path": "tools/external-integration-evidence.ts",
-      "sha256": "f19756e74db8b3ef8a216c94c58b1f29a7ac3e3eaac08357447276780f135093",
-      "size": 12721
-    },
-    {
-      "path": "tools/production-hardening-evidence.ts",
-      "sha256": "7e90e224781b473eac5caa9f229869c9fd92b429380769ea50aec9e377f04d3c",
-      "size": 11714
-    },
-    {
-      "path": "release/build-release.ts",
-      "sha256": "1c5401a5b6502f5642499fb46afbe29c3152192d0c63997a342a107849a1a0e8",
-      "size": 759
-    },
-    {
-      "path": "release/package-release.ts",
-      "sha256": "18b6c04a0987dd728b53ae941440e98f4af9ea0afa32c4ec6b86409697212c50",
-      "size": 1390
-    },
-    {
-      "path": "release/receipt.ts",
-      "sha256": "c8707acbed63d02c23de7bd327fdb715abc3c64eb96e562134921f463a5b8a3e",
-      "size": 9240
-    },
-    {
-      "path": "release/scorecard-sync.ts",
-      "sha256": "b32afc409bdb89001bf24b79781d70fab0dd5321976d958d051f1a5d735fdc0c",
-      "size": 12790
-    },
-    {
-      "path": "release/sign-release.ts",
-      "sha256": "6b577d3a4fb15c085bf0a73bb806ad749ce7634fa9e30c0c6d41fee219f37b9c",
-      "size": 1594
-    },
-    {
-      "path": "release/verify-release.ts",
-      "sha256": "3b120fa0ee71d79e95a0f7efa773b9bcf7dd90e752dc8d6ff017398d732ca4ae",
-      "size": 4501
-    }
-  ],
-  "signature": null
+    "name":  "aaes-os",
+    "version":  "0.1.0",
+    "bundle":  "release/bundle",
+    "files":  [
+                  {
+                      "path":  "README.md",
+                      "sha256":  "4f846dca9fb1f238107ac14f2d04ce4b7dfe0c0ded8d9b0cb26d64318329f806",
+                      "size":  22776
+                  },
+                  {
+                      "path":  "docs/README.md",
+                      "sha256":  "8c7c300645d3e0d822394b1bdea965402a029cb19b3a6f9f7261b01566c736fd",
+                      "size":  12823
+                  },
+                  {
+                      "path":  "docs/architecture/README.md",
+                      "sha256":  "200c09baceafa0f795624c10a0e5192b0d7df8c71189dfe057d9c8408c5997ec",
+                      "size":  624
+                  },
+                  {
+                      "path":  "docs/architecture/AAES_OS_UCR_MAPPING.md",
+                      "sha256":  "261aaaef55f375108a1b1b1266551f3bafbe5dd383e3daf7db44ba0e5071220c",
+                      "size":  5356
+                  },
+                  {
+                      "path":  "docs/crk1/release/CIS_CONFORMANCE_SUITE_GENERATION.md",
+                      "sha256":  "97d02c4b0d52f9eeea6a475c8785e1b6b5de6da2d1aa5455d96ef545f4564512",
+                      "size":  1273
+                  },
+                  {
+                      "path":  "docs/crk1/release/CIS_CONFORMANCE_SUITE_INPUT.spec.generator.json",
+                      "sha256":  "81158511b21a3835f4054334e13bd7ea44544561c945e739cda1c9aa0b034a96",
+                      "size":  528
+                  },
+                  {
+                      "path":  "docs/crk1/release/CIS_CONFORMANCE_SUITE_INPUT.spec.json",
+                      "sha256":  "6a6b8931590c772ac159755c03784dc965ee688ba9aabb7b6db7ab783f3cec9c",
+                      "size":  7252
+                  },
+                  {
+                      "path":  "docs/crk1/release/CIS_CONFORMANCE_SUITE_SPECIFICATION.md",
+                      "sha256":  "5a4c6826d38e91ccea15518c65475929bcfc4f17a88c6a6e4f886df18a810981",
+                      "size":  4103
+                  },
+                  {
+                      "path":  "docs/crk1/release/CIS_STANDARDS_TRACEABILITY_MATRIX.md",
+                      "sha256":  "7fbc0a1205565538b60a784e3447a41ce05cdde1a6cd93211ca4c2d350c5a90b",
+                      "size":  9108
+                  },
+                  {
+                      "path":  "docs/release/constitutional-release-receipt.md",
+                      "sha256":  "7721df943939460dc81afd658db71e4de68f144cd894b6d5ea2efcc17a24dcfd",
+                      "size":  1619
+                  },
+                  {
+                      "path":  "docs/release/external-integrations/README.md",
+                      "sha256":  "8b8fc52845b9382e4ae197612813906bc99058aea48014195c4790f4bea2c952",
+                      "size":  704
+                  },
+                  {
+                      "path":  "docs/release/external-integrations/external-integration-index.json",
+                      "sha256":  "ac35bf5d297c5e8e4e16888023be7d0ee6f66953ff61254cf51d51534505975a",
+                      "size":  1505
+                  },
+                  {
+                      "path":  "docs/release/production-hardening/README.md",
+                      "sha256":  "dc4d982a1cae37c10f25e0c04a09cb4f180a6c605d41554c65df81c4c82699ff",
+                      "size":  2766
+                  },
+                  {
+                      "path":  "docs/release/production-hardening/production-hardening-index.json",
+                      "sha256":  "c08e7c8a0ce4d3d29bb6019303468ce2ed3a371f5fe5b5d780b24a2d41dd30ed",
+                      "size":  35881
+                  },
+                  {
+                      "path":  "docs/release/production-hardening/ul-runtime.evidence.json",
+                      "sha256":  "9d9217630fb25dd81cd39b456cb0dcf4840ef6252b7269203b789d00be4eb9bb",
+                      "size":  2861
+                  },
+                  {
+                      "path":  "docs/release/production-hardening/csl-runtime.evidence.json",
+                      "sha256":  "4306c7fd572763c07791b3edf6debd348b887725976608f9ffb31c22b81e3f7c",
+                      "size":  2887
+                  },
+                  {
+                      "path":  "docs/release/production-hardening/isl-runtime.evidence.json",
+                      "sha256":  "14ccefdc35de24ee7850bde52c336baa5173314f3212fee33a815354b296d3ab",
+                      "size":  2881
+                  },
+                  {
+                      "path":  "docs/release/production-hardening/cic-runtime.evidence.json",
+                      "sha256":  "299b5a92e011b90c8100ff38ac9231279eebe0b7dea10c42890c5a434a080c1a",
+                      "size":  2881
+                  },
+                  {
+                      "path":  "docs/release/production-hardening/ccc-runtime.evidence.json",
+                      "sha256":  "bdb732f2fdab8174dfbb6ee14aa20358f98577e296da15be0f29df14dee9d59d",
+                      "size":  2881
+                  },
+                  {
+                      "path":  "docs/release/production-hardening/coe-runtime.evidence.json",
+                      "sha256":  "43ef7c888fec46a1ce03f6081bf17447900f42edb49cab019aece4ccf389b898",
+                      "size":  2874
+                  },
+                  {
+                      "path":  "docs/release/production-hardening/cml-voss-runtime.evidence.json",
+                      "sha256":  "53f8aa61f1707d942ded1cbe4dfa7491049d467925d9b884e6de193096168902",
+                      "size":  2982
+                  },
+                  {
+                      "path":  "docs/release/production-hardening/ugr-runtime.evidence.json",
+                      "sha256":  "6798c60417af593cb56fb035ebc71314b9ea7dfd9149c79370e4aa462796a555",
+                      "size":  2885
+                  },
+                  {
+                      "path":  "docs/release/production-hardening/gcre-sysmin.evidence.json",
+                      "sha256":  "241c7276aebf1c4e82015ff5a7d25e1181a23e94b112b7f36735a0aa34f96e16",
+                      "size":  2887
+                  },
+                  {
+                      "path":  "docs/release/production-hardening/coda-runtime.evidence.json",
+                      "sha256":  "99e91c9d63d08e15ec2e690bdb998b48f13b0d7dd4717a9bab18ae51035a794c",
+                      "size":  2899
+                  },
+                  {
+                      "path":  "docs/release/production-hardening/nova-coda.evidence.json",
+                      "sha256":  "b95a2c68a18a9ec7caee1879e36ff4c3213bb2304fe171b302a42dc2454c58fe",
+                      "size":  2845
+                  },
+                  {
+                      "path":  "docs/crk1/release/CORI_ALPHA_PROOF_CHAIN.md",
+                      "sha256":  "6cc87ff00bcf7e142b238ff5736c1f0bcbbec430eb5206eef0fd790533d60781",
+                      "size":  3738
+                  },
+                  {
+                      "path":  "docs/crk1/release/CORI_ALPHA_PROOF_CHAIN_FREEZE.md",
+                      "sha256":  "17eed4e5201b1253af2835e6ec04f9f30a3e092284806a0f1ff779edd87e326c",
+                      "size":  1539
+                  },
+                  {
+                      "path":  "docs/crk1/release/CORI_ALPHA_MILESTONE_NOTE.md",
+                      "sha256":  "6534e9c4fa1792d35ce6b8f39dd56f7bd984b3d5e3318df9df5d3ed8d5e64744",
+                      "size":  2104
+                  },
+                  {
+                      "path":  "docs/crk1/release/CORI_ALPHA_MINIMAL_RUNTIME_PROOF_PLAN.md",
+                      "sha256":  "d29e5c26ef443420be965a823d8e7f84c1acb30453942728411bb35f5eba8dd9",
+                      "size":  10650
+                  },
+                  {
+                      "path":  "docs/crk1/release/CORI_ALPHA_STATUS.schema.json",
+                      "sha256":  "9ed022a67285a8741ef14b1d69f4b50abeec2257d359b516b12b1e2217b071f1",
+                      "size":  5643
+                  },
+                  {
+                      "path":  "docs/crk1/release/CORI_ALPHA_MINIMAL_RUNTIME_STATUS.spec.json",
+                      "sha256":  "6dec0ace460bcff358867c6c396777fe6e5eba9fcdf2471c2cb0f221b16ca5e6",
+                      "size":  17065
+                  },
+                  {
+                      "path":  "docs/crk1/release/CORI_ALPHA_MINIMAL_RUNTIME_DASHBOARD.md",
+                      "sha256":  "136f793757aa9f93d773c91972a79eb232bf837300f659c09f81cd5e518d333f",
+                      "size":  8153
+                  },
+                  {
+                      "path":  "docs/crk1/release/CIS_LAUNCH_READINESS_SPECIFICATION.md",
+                      "sha256":  "17abfce6c00331541e7f387363773efe14c921f0eeab32e8e4e4fb187d788056",
+                      "size":  3227
+                  },
+                  {
+                      "path":  "docs/scorecards/project-infi.md",
+                      "sha256":  "803f9b57cd646c81a13a77616388fca8bceb2d0e4539cc924350aad5ef9b1ace",
+                      "size":  42043
+                  },
+                  {
+                      "path":  "package.json",
+                      "sha256":  "e40ec83849560151ea6e7c967e9a5248a2d9b007b059da9a3c9caf52db636ba0",
+                      "size":  3863
+                  },
+                  {
+                      "path":  "tools/external-integration-evidence.ts",
+                      "sha256":  "baa63e585f10d391eee86bc5d5a8f86af22f307202c70d2adb1d937c959e39f5",
+                      "size":  13086
+                  },
+                  {
+                      "path":  "tools/production-hardening-evidence.ts",
+                      "sha256":  "a9fe5d7277dd6f2dbf54c4650795a5e8d8bff675827c0e57d813f8d507aa01fb",
+                      "size":  12050
+                  },
+                  {
+                      "path":  "release/build-release.ts",
+                      "sha256":  "b85f87b1ff17f394968ec5d51e7f0750018089099702c615ebf86bb134e09008",
+                      "size":  789
+                  },
+                  {
+                      "path":  "release/package-release.ts",
+                      "sha256":  "fc30b88e036222a4455d8896e5696d8dececab9c1c689eb6a0196fda6a671dba",
+                      "size":  1440
+                  },
+                  {
+                      "path":  "release/receipt.ts",
+                      "sha256":  "4065e535998ccb14345f1c6d82d65caf2441a070fa686a1e6795c4ce2f84e9a2",
+                      "size":  9497
+                  },
+                  {
+                      "path":  "release/scorecard-sync.ts",
+                      "sha256":  "d13f0dd9abd277d369a7d2d3d61f9b433f2a9ddf6c76b155901ebd54efc3225b",
+                      "size":  13064
+                  },
+                  {
+                      "path":  "release/sign-release.ts",
+                      "sha256":  "4e7c950da6c1f230486ba9d31f241fe28a9674e95d4a1d243b3bf27c4e1da2c7",
+                      "size":  1649
+                  },
+                  {
+                      "path":  "release/verify-release.ts",
+                      "sha256":  "aa7514232631f059d8497a551f7ca361a36f548fc54c5f6922b9552ef29fbb8c",
+                      "size":  4630
+                  }
+              ],
+    "signature":  null,
+    "release-readiness-record.md":  "928F31D7AFE93507B8663E7F9B48EACBCE1CF5302D74FF0F32E39285139A21D3"
 }

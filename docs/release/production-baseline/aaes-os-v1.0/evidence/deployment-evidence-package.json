@@ -1,0 +1,73 @@
+{
+  "baselineId": "AAES-OS-PRODUCTION-BASELINE-v1.0",
+  "kind": "deployment-evidence-package",
+  "version": "1.0",
+  "frozenCommit": "7efa0c5f766bc0b30b6eef820d198be3a6bf1a5d",
+  "generatedAt": "2026-07-20T15:34:00Z",
+  "lastUpdatedAt": "2026-07-31T21:15:00Z",
+  "status": "baseline-frozen-esfr-pass-live-deferred",
+  "cefCoreBinding": {
+    "evidencePath": "oel-evidence-validated.json",
+    "receiptPath": "cef-core-validation-receipt.json",
+    "status": "schema-validated-hold",
+    "promotionGate": "@aaes-os/cef-certification evaluatePromotion",
+    "liveEvidencePath": "live/STATUS.json"
+  },
+  "stewardshipChain": [
+    "Architecture",
+    "Implementation",
+    "Deployment",
+    "Evidence",
+    "Independent Reproduction",
+    "Stewardship"
+  ],
+  "slots": {
+    "immutableContainerImageTags": {
+      "path": "image-tags.json",
+      "status": "policy-frozen"
+    },
+    "kubernetesManifestVersion": {
+      "path": "k8s-manifest-checksums.json",
+      "status": "checksums-frozen",
+      "reverifyPath": "checksum-reverify.json",
+      "reverifyStatus": "matched-2026-07-31"
+    },
+    "cicdProvenance": {
+      "path": "cicd-provenance.json",
+      "status": "workflow-frozen"
+    },
+    "securityValidation": {
+      "path": "security-validation.md",
+      "status": "controls-declared; live-scan-artifacts-pending"
+    },
+    "healthReadinessValidation": {
+      "path": "health-readiness.md",
+      "status": "contracts-frozen; live-probe-results-pending"
+    },
+    "scalingValidation": {
+      "path": "scaling-validation.md",
+      "status": "hpa-ranges-frozen; load-test-pending-cluster-execution"
+    },
+    "recoveryFailureTesting": {
+      "path": "recovery-failure.md",
+      "status": "procedures-frozen; execution-pending-cluster-execution"
+    },
+    "runtimeAuditRecords": {
+      "path": "runtime-audit.md",
+      "status": "audit-surface-defined; live-records-pending"
+    },
+    "deploymentReceipt": {
+      "path": "deployment-receipt.json",
+      "status": "emitted"
+    }
+  },
+  "reproductionMinimum": [
+    "checkout frozenCommit",
+    "verify k8s-manifest-checksums.json",
+    "build or pull digest-pinned images",
+    "apply manifests in documented order",
+    "fill pending-cluster-execution slots with kubectl and probe outputs",
+    "follow REPRODUCTION_RUNBOOK.md",
+    "re-run @aaes-os/cef-core validateProfile('OEL', evidence)"
+  ]
+}

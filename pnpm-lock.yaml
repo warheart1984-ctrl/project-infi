@@ -24,6 +24,9 @@ importers:
       '@aaes-os/coding-assistant':
         specifier: workspace:*
         version: link:packages/coding-assistant
+      '@aaes-os/image-studio':
+        specifier: workspace:*
+        version: link:packages/image-studio
     devDependencies:
       '@esbuild/win32-x64':
         specifier: 0.28.1

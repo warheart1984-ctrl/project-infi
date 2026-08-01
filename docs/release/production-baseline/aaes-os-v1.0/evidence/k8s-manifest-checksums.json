@@ -1,0 +1,61 @@
+{
+  "baselineId": "AAES-OS-PRODUCTION-BASELINE-v1.0",
+  "kind": "kubernetes-manifest-checksums",
+  "algorithm": "SHA-256",
+  "frozenCommit": "7efa0c5f766bc0b30b6eef820d198be3a6bf1a5d",
+  "generatedAt": "2026-07-20T15:34:00Z",
+  "files": [
+    {
+      "path": "k8s/aaes-os-production.yaml",
+      "sha256": "1cd3042c36bd93da6ea029b1ac73840f6fd6078d165d9ab1b635f49c59a0d3c1",
+      "role": "namespace-deployments-services-rbac-pdb"
+    },
+    {
+      "path": "k8s/network-policies.yaml",
+      "sha256": "66f3c93c95734ba9ee656524ea2d43dce00ab12ea0c1364da581ee9419813695",
+      "role": "zero-trust-network-policies"
+    },
+    {
+      "path": "k8s/ingress-and-load-balancing.yaml",
+      "sha256": "39b98dd76918473b678f4733d5cdb0556250912b9f0c799efa9c2f8054342338",
+      "role": "ingress-tls-hpa"
+    },
+    {
+      "path": "docker-compose.yml",
+      "sha256": "550b110a93d76be2ddeff2a5ba8b207c8d352f596caf9f0c57d622d50bbc0a33",
+      "role": "local-reference-compose"
+    },
+    {
+      "path": ".github/workflows/build-and-push.yml",
+      "sha256": "eb4c099bd2330bf489a10bba600f72a018a94b8006188e43d624119986d7c10a",
+      "role": "cicd-build-push-trivy"
+    },
+    {
+      "path": "packages/healthcheck-middleware/package.json",
+      "sha256": "5741ae2dfdf34a400f4c93c0b737ba2975f0af88e5d2a8826806582910450480",
+      "role": "healthcheck-package-identity"
+    },
+    {
+      "path": "DEPLOYMENT_GUIDE.md",
+      "sha256": "3bb46fe4403c002f320432c907fd0d9852d3d35edf2d55130c71e197c62e2ace",
+      "role": "operator-guide"
+    },
+    {
+      "path": "REGISTRY_SETUP.md",
+      "sha256": "5b63cf13639dd874bf5d8351f842e33e03af7dfcd176f3ed4417a63465f96c44",
+      "role": "registry-procedure"
+    },
+    {
+      "path": "IMPLEMENTATION_SUMMARY.md",
+      "sha256": "9892628605457bc6b549bbfa1295c2e390e19cec3f71383ff1d5ce403d824e05",
+      "role": "stack-completion-record"
+    }
+  ],
+  "manifestVersion": "aaes-os-k8s-v1.0",
+  "applyOrder": [
+    "k8s/network-policies.yaml",
+    "k8s/aaes-os-production.yaml",
+    "k8s/ingress-and-load-balancing.yaml"
+  ],
+  "verificationCommand": "Get-FileHash <path> -Algorithm SHA256"
+}

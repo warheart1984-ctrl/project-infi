@@ -1,0 +1,19 @@
+﻿{
+    "jobId":  "cancel-native",
+    "version":  "1.0",
+    "outputDir":  "G:\\project-infi\\native\\vulkan-render-worker\\validation-output\\cancelled",
+    "width":  640,
+    "backend":  "vulkan",
+    "frames":  120,
+    "evidenceRefs":  [
+                         "native-cancellation"
+                     ],
+    "height":  480,
+    "cancellationPath":  "G:\\project-infi\\native\\vulkan-render-worker\\validation-output\\cancel.signal",
+    "fps":  30,
+    "meshPath":  "G:/New folder/engine/surfaces/meshes/trefoil-4d.mesh.json",
+    "scenePath":  "none",
+    "surfaceId":  "trefoil-4d",
+    "createdAt":  "2026-07-22T08:26:26.1896481Z",
+    "sceneId":  "native-cancellation"
+}
