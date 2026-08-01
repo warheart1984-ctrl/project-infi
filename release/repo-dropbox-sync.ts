@@ -438,7 +438,7 @@ function stageWorkingTreeSnapshot(repoPath: string, stageDir: string): void {
 
 function createZipFromDirectory(sourceDir: string, archivePath: string): void {
   ensureDir(dirname(archivePath));
-  execFileSync('tar', ['-a', '-c', '-f', archivePath, '-C', sourceDir, '.'], { stdio: 'pipe' });
+  execFileSync('tar', ['-a', '-c', '-f', basename(archivePath), '-C', sourceDir, '.'], { cwd: dirname(archivePath), stdio: 'pipe' });
 }
 
 function createRepoSnapshotArchive(repoPath: string, snapshotKind: RepoDropboxSnapshotKind, commit: string, archivePath: string): void {
