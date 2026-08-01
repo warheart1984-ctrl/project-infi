@@ -15,6 +15,7 @@ describe('AAIS capabilities', () => {
     expect(capabilityNames).toContain('Reference Runtime Composer');
     expect(capabilityNames).toContain('Conformance Suite Generator');
     expect(capabilityNames).toContain('Implementation Gap Resolver');
+    expect(capabilityNames).toContain('Image-to-Image Studio');
   });
 
   it('composes a normalized reference runtime order', () => {

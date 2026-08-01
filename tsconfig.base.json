@@ -52,6 +52,7 @@
       "@aaes-os/infinity-agents": ["packages/infinity-agents/src/index.ts"],
       "@aaes-os/sandbox": ["packages/sandbox/src/index.ts"],
       "@aaes-os/coding-assistant": ["packages/coding-assistant/src/index.ts"],
+      "@aaes-os/image-studio": ["packages/image-studio/src/index.ts"],
       "@aaes-os/sovren": ["packages/sovren/src/index.ts"],
       "@aaes-os/kerno": ["packages/kerno/src/index.ts"],
       "@aaes-os/federation": ["packages/federation/src/index.ts"],
@@ -75,7 +76,10 @@
       "@aaes-os/evidence-lineage-ledger": ["packages/evidence-lineage-ledger/src/index.ts"],
       "@aaes-os/canonical-stewardship-matrix": ["packages/canonical-stewardship-matrix/src/index.ts"],
       "@aaes-os/canonical-temporal-grid": ["packages/canonical-temporal-grid/src/index.ts"],
-      "@aaes-os/evidence-sovereign-ledger": ["packages/evidence-sovereign-ledger/src/index.ts"]
+      "@aaes-os/evidence-sovereign-ledger": ["packages/evidence-sovereign-ledger/src/index.ts"],
+      "@aaes-os/cef-core": ["packages/cef-core/src/index.ts"],
+      "@aaes-os/cef-certification": ["packages/cef-certification/src/index.ts"],
+      "@aaes-os/cef-stewardship": ["packages/cef-stewardship/src/index.ts"]
     }
   }
 }

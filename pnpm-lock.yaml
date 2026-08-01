@@ -209,6 +209,22 @@ importers:
         specifier: ^3.2.4
         version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
 
+  packages/cef-certification:
+    dependencies:
+      '@aaes-os/cef-core':
+        specifier: workspace:*
+        version: link:../cef-core
+    devDependencies:
+      '@types/node':
+        specifier: ^22.19.21
+        version: 22.20.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
+
   packages/cef-core:
     dependencies:
       ajv:
@@ -217,6 +233,25 @@ importers:
       ajv-formats:
         specifier: ^3.0.1
         version: 3.0.1(ajv@8.20.0)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.19.21
+        version: 22.20.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
+
+  packages/cef-stewardship:
+    dependencies:
+      '@aaes-os/cef-certification':
+        specifier: workspace:*
+        version: link:../cef-certification
+      '@aaes-os/cef-core':
+        specifier: workspace:*
+        version: link:../cef-core
     devDependencies:
       '@types/node':
         specifier: ^22.19.21
@@ -518,6 +553,9 @@ importers:
       '@cursor/sdk':
         specifier: '*'
         version: 1.0.23
+      undici:
+        specifier: 6.27.0
+        version: 6.27.0
       yaml:
         specifier: ^2.8.0
         version: 2.9.0
@@ -547,6 +585,25 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+
+  packages/image-studio:
+    dependencies:
+      '@aaes-os/aais':
+        specifier: workspace:*
+        version: link:../aais
+    devDependencies:
+      '@types/node':
+        specifier: ^22.19.21
+        version: 22.20.0
+      tsx:
+        specifier: ^4.20.5
+        version: 4.22.4
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.6(@types/node@22.20.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0)
 
   packages/infinity-agents:
     dependencies:

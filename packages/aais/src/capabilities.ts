@@ -136,6 +136,7 @@ export const AAISCapabilities = [
   createCapability('Database Designer', 'database', 'Designs durable storage shapes for governed data.'),
   createCapability('Diagram Generator', 'generator', 'Produces traceable architecture diagrams.'),
   createCapability('Deployment Generator', 'generator', 'Produces deterministic deployment plans.'),
+  createCapability('Image-to-Image Studio', 'generator', 'Transforms existing images using free cloud-hosted image-to-image models.'),
   createCapability('Version Control Intelligence', 'analyzer', 'Tracks repository state and version drift.'),
   createCapability('Runtime Evolution Manager', 'orchestrator', 'Manages approved runtime evolution steps.'),
   createCapability('Drift Detection Engine', 'analyzer', 'Detects drift from the constitutional baseline.'),
