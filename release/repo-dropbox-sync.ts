@@ -436,17 +436,9 @@ function stageWorkingTreeSnapshot(repoPath: string, stageDir: string): void {
   }
 }
 
-function psQuote(value: string): string {
-  return `'${value.replace(/'/g, "''")}'`;
-}
-
 function createZipFromDirectory(sourceDir: string, archivePath: string): void {
   ensureDir(dirname(archivePath));
-  const script = [
-    'Add-Type -AssemblyName System.IO.Compression.FileSystem;',
-    `[System.IO.Compression.ZipFile]::CreateFromDirectory(${psQuote(sourceDir)}, ${psQuote(archivePath)}, [System.IO.Compression.CompressionLevel]::Optimal, $false)`,
-  ].join(' ');
-  execFileSync('powershell', ['-NoProfile', '-Command', script], { stdio: 'pipe' });
+  execFileSync('tar', ['-a', '-c', '-f', archivePath, '-C', sourceDir, '.'], { stdio: 'pipe' });
 }
 
 function createRepoSnapshotArchive(repoPath: string, snapshotKind: RepoDropboxSnapshotKind, commit: string, archivePath: string): void {
