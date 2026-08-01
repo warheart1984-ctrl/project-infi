@@ -28,6 +28,9 @@ ENV/
 frontend/node_modules/
 mobile/node_modules/
 node_modules/
+**/.node_modules.*/
+**/.vite/
+**/.next/
 
 # Env / secrets
 .env

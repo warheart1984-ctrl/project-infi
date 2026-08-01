@@ -29,5 +29,11 @@
     "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   },
+  "pnpm": {
+    "overrides": {
+      "postcss": "8.5.25",
+      "esbuild@^0.27.0": "^0.28.1"
+    }
+  },
   "packageManager": "pnpm@10.15.0"
 }
