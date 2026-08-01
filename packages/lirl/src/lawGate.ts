@@ -119,12 +119,18 @@ export class LirlLawGate {
     });
     const span = this.runs.startSpan(run.runId, { name: 'lirl.law_gate' });
 
+    const actor = intent.actorId?.toLowerCase() === 'governance' ? 'governance'
+      : intent.actorId?.toLowerCase() === 'runtime' ? 'runtime'
+      : intent.actorId?.toLowerCase() === 'agent' ? 'agent'
+      : intent.actorId?.toLowerCase() === 'substrate' ? 'substrate'
+      : 'agent';
+
     const invariantResults = await this.engine.evaluateAll({
       runId: run.runId,
       spanId: span.spanId,
       input: intent,
       output: { stage: 'law_gate' },
-      actor: intent.actorId || 'unknown',
+      actor,
       action: intent.action || 'unknown',
       payload: intent.payload,
     });
