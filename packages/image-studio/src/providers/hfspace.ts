@@ -75,6 +75,49 @@ function extractImageUrl(sse: string): string | undefined {
   return match?.[1]?.replace(/\\\//g, '/');
 }
 
+const FAILURE_HINTS = /failed|error|exception|quota|timeout/i;
+const KNOWN_ERROR_KEYS = new Set(['error', 'message', 'exception', 'detail']);
+
+function extractEmbeddedError(dataText: string): string | undefined {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(dataText) as unknown;
+  } catch {
+    const lineMatch = /"([^"]*(?:failed|error|exception|quota)[^"]*)"/i.exec(dataText);
+    return lineMatch?.[1]?.slice(0, 500);
+  }
+
+  const hits: string[] = [];
+  const walk = (value: unknown): void => {
+    if (typeof value === 'string') {
+      if (FAILURE_HINTS.test(value)) {
+        hits.push(value.slice(0, 500));
+      }
+      return;
+    }
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        walk(item);
+      }
+      return;
+    }
+    if (value && typeof value === 'object') {
+      const record = value as Record<string, unknown>;
+      for (const key of Object.keys(record)) {
+        if (KNOWN_ERROR_KEYS.has(key.toLowerCase()) && typeof record[key] === 'string') {
+          hits.push((record[key] as string).slice(0, 500));
+          return;
+        }
+      }
+      for (const item of Object.values(record)) {
+        walk(item);
+      }
+    }
+  };
+  walk(parsed);
+  return hits[0];
+}
+
 /**
  * Keyless provider for the community Hugging Face ZeroGPU Space
  * (FLUX.2-Klein-9B img2img). Talks to the Space's public Gradio API:
@@ -87,7 +130,7 @@ export class HfSpaceProvider implements ImageProvider {
   readonly requiresApiKey = false;
   readonly configured = true;
   readonly configHelp =
-    'Community Hugging Face ZeroGPU Space (FLUX.2-Klein-9B) — keyless but rate-limited; the Space may go offline or change.';
+    'Community Hugging Face ZeroGPU Space (FLUX.2-Klein-9B) — keyless but quota-capped: anonymous ZeroGPU quota is ~2 min/day (~1 generation at 90s each, resets 24h after first use), so back-to-back requests fail until the window resets; the Space is third-party and may go offline or change.';
 
   private readonly baseUrl: string;
   private readonly fetchImpl: typeof fetch;
@@ -219,19 +262,17 @@ export class HfSpaceProvider implements ImageProvider {
           if (url) {
             return url;
           }
+          const embeddedError = extractEmbeddedError(event.data);
+          if (embeddedError) {
+            throw new Error(`HF Space inference failed: ${embeddedError}`);
+          }
           const payload = this.tryParseJson(event.data);
           const eventName = event.name || (payload?.event as string | undefined);
           if (eventName === 'error' || eventName === 'complete') {
             if (eventName === 'complete') {
               throw new Error('HF Space finished without producing an image');
             }
-            const detail =
-              typeof payload?.error === 'string'
-                ? (payload.error as string)
-                : typeof payload?.message === 'string'
-                  ? (payload.message as string)
-                  : 'unknown error';
-            throw new Error(`HF Space inference failed: ${detail}`);
+            throw new Error(`HF Space inference failed: ${eventName === 'error' ? 'unknown error' : 'unknown reason'}`);
           }
         }
       }

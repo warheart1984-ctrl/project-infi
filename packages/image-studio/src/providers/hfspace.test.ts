@@ -202,4 +202,50 @@ describe('HfSpaceProvider', () => {
       }),
     ).rejects.toThrow(/finished without producing an image/);
   });
+
+  it('surfaces an error embedded in a complete event', async () => {
+    const startResponse = new Response(JSON.stringify({ event_id: 'evt-6' }), {
+      status: 200,
+      headers: { 'content-type': 'application/json' },
+    });
+    const pollResponse = new Response(
+      'event: complete\ndata: {"error": "cannot identify image file", "visible": true}\n\n',
+      { status: 200, headers: { 'content-type': 'text/event-stream' } },
+    );
+    const fetchImpl = vi
+      .fn()
+      .mockResolvedValueOnce(startResponse)
+      .mockResolvedValueOnce(pollResponse);
+
+    const provider = new HfSpaceProvider({ fetchImpl: fetchImpl as unknown as typeof fetch });
+    await expect(
+      provider.generate({
+        prompt: 'x',
+        referenceImage: { kind: 'url', url: 'https://example.com/photo.png' },
+      }),
+    ).rejects.toThrow(/HF Space inference failed: cannot identify image file/);
+  });
+
+  it('surfaces a ZeroGPU quota error embedded in the batch result', async () => {
+    const startResponse = new Response(JSON.stringify({ event_id: 'evt-7' }), {
+      status: 200,
+      headers: { 'content-type': 'application/json' },
+    });
+    const pollResponse = new Response(
+      'event: generating\ndata: [[], "Batch 1/1 failed: \'You have exceeded your ZeroGPU quota\'\"]\n\nevent: complete\ndata: [[], "Batch 1/1 failed: \'You have exceeded your ZeroGPU quota\'\"]\n\n',
+      { status: 200, headers: { 'content-type': 'text/event-stream' } },
+    );
+    const fetchImpl = vi
+      .fn()
+      .mockResolvedValueOnce(startResponse)
+      .mockResolvedValueOnce(pollResponse);
+
+    const provider = new HfSpaceProvider({ fetchImpl: fetchImpl as unknown as typeof fetch });
+    await expect(
+      provider.generate({
+        prompt: 'x',
+        referenceImage: { kind: 'url', url: 'https://example.com/photo.png' },
+      }),
+    ).rejects.toThrow(/HF Space inference failed: Batch 1\/1 failed: 'You have exceeded your ZeroGPU quota'/);
+  });
 });
