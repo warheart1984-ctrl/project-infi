@@ -1,0 +1,36 @@
+{
+  "name": "@aaes-os/image-studio",
+  "version": "0.1.0",
+  "description": "AAIS-governed image-to-image studio using free cloud-hosted models (Pollinations, keyless). CLI + local web UI.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "image-studio": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.json",
+    "test": "vitest run --config vitest.config.ts",
+    "cli": "tsx src/cli.ts",
+    "studio": "tsx src/server.ts",
+    "start": "tsx src/server.ts"
+  },
+  "dependencies": {
+    "@aaes-os/aais": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  },
+  "references": [
+    { "path": "../aais" }
+  ]
+}

@@ -44,6 +44,18 @@ importers:
         specifier: ^3.2.4
         version: 3.2.6(@types/node@22.19.21)(tsx@4.22.4)
 
+  packages/aais:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.19.21
+        version: 22.19.21
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.6(@types/node@22.19.21)(tsx@4.22.4)
+
   packages/constitutional-enforcement-node:
     dependencies:
       '@aaes-os/evidence-receipts':
@@ -121,6 +133,25 @@ importers:
       '@types/node':
         specifier: ^22.19.21
         version: 22.19.21
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.6(@types/node@22.19.21)(tsx@4.22.4)
+
+  packages/image-studio:
+    dependencies:
+      '@aaes-os/aais':
+        specifier: workspace:*
+        version: link:../aais
+    devDependencies:
+      '@types/node':
+        specifier: ^22.19.21
+        version: 22.19.21
+      tsx:
+        specifier: ^4.20.5
+        version: 4.22.4
       typescript:
         specifier: ^5.9.3
         version: 5.9.3

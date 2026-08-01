@@ -32,7 +32,9 @@
       "@aaes-os/invariant-registry": ["packages/invariant-registry/src/index.ts"],
       "@aaes-os/nimf": ["packages/nimf/src/index.ts"],
       "@aaes-os/constitutional-evolution": ["packages/constitutional-evolution/src/index.ts"],
-      "@aaes-os/omega-stress-harness": ["packages/omega-stress-harness/src/index.ts"]
+      "@aaes-os/omega-stress-harness": ["packages/omega-stress-harness/src/index.ts"],
+      "@aaes-os/aais": ["packages/aais/src/index.ts"],
+      "@aaes-os/image-studio": ["packages/image-studio/src/index.ts"]
     }
   }
 }
