@@ -97,13 +97,16 @@ import { createSovereignXHardwareThermalBridge } from './sovereignxHardwareTherm
 import { runSovereignXHardwareOverrideDrill, type SovereignXHardwareOverrideDrillRequest } from './sovereignxHardwareOverrideDrill.js';
 import { validateSovereignXHardwareReplayRecords } from './sovereignxHardwareReplayValidation.js';
 import {
-  applySovereignXClusterControlRequest,
   buildSovereignXClusterGovernanceProjection,
   getSovereignXClusterControlState,
   resetSovereignXClusterControlState,
   type SovereignXClusterControlRequest,
   type SovereignXClusterGovernanceProjection,
 } from './sovereignxClusterGovernance.js';
+import {
+  createSovereignXClusterControlAdapter,
+  type SovereignXClusterControlAdapter,
+} from './sovereignxClusterControlAdapter.js';
 
 const PORT = Number(process.env.PORT ?? 4000);
 const serviceDir = path.dirname(fileURLToPath(import.meta.url));
@@ -276,6 +279,9 @@ let cepViewState: CepViewState = {
 seedCepArtifactsIfNeeded();
 cepViewState = buildInitialCepViewState();
 resetSovereignXClusterControlState();
+const sovereignXClusterControlAdapter: SovereignXClusterControlAdapter = createSovereignXClusterControlAdapter({
+  controlUrl: process.env.SOVEREIGNX_CLUSTER_CONTROL_URL,
+});
 const platformApiBaseUrl = (process.env.PLATFORM_API_URL ?? 'http://localhost:4100').replace(/\/+$/, '');
 let platformApiSessionIdPromise: Promise<string | null> | null = null;
 
@@ -2615,10 +2621,12 @@ app.get('/sovereignx/cluster-membership', (_req, res) => {
   });
 });
 
-app.post('/sovereignx/cluster-membership/control', (req, res) => {
+app.post('/sovereignx/cluster-membership/control', async (req, res) => {
   const snapshot = captureSovereignXHardwareSnapshot();
   const request = (req.body ?? {}) as SovereignXClusterControlRequest;
-  const controlState = applySovereignXClusterControlRequest(request, snapshot.governor.state.lastUpdatedAtMs);
+  const observedAtMs = snapshot.governor.state.lastUpdatedAtMs;
+  const adapterResult = await sovereignXClusterControlAdapter.applyControl(request, observedAtMs);
+  const controlState = adapterResult.controlState;
   const clusterGovernanceSnapshot = buildSovereignXClusterGovernanceSnapshot(snapshot);
   const clusterGovernance = buildSovereignXClusterGovernanceProjection(
     clusterGovernanceSnapshot.router,
@@ -2630,9 +2638,21 @@ app.post('/sovereignx/cluster-membership/control', (req, res) => {
   res.json({
     hardware: snapshot,
     controlState,
+    controlResult: {
+      outcome: adapterResult.outcome,
+      auditEntry: adapterResult.auditEntry,
+    },
+    adapterStatus: sovereignXClusterControlAdapter.status(),
     clusterRouting: clusterGovernanceSnapshot.clusterRouting,
     clusterGovernance,
     traceabilityMatrix: clusterGovernance.traceabilityMatrix,
+  });
+});
+
+app.get('/sovereignx/cluster-membership/control/audit', (_req, res) => {
+  res.json({
+    adapterStatus: sovereignXClusterControlAdapter.status(),
+    auditTrail: sovereignXClusterControlAdapter.auditTrail(),
   });
 });
 
