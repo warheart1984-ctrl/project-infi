@@ -61,7 +61,7 @@
       "Audit trace is documented in the docs hub and scorecard."
     ]
   },
-  "verificationDate": "2026-08-02T00:55:37.674Z",
+  "verificationDate": "2026-08-02T01:12:22.067Z",
   "knownLimitations": [
     "Coverage percentages are not yet standardized across every workspace package.",
     "External database integration tests require configured PostgreSQL and Neo4j services.",
@@ -70,11 +70,11 @@
   "truthBoundary": "This receipt proves the bundle was built, packaged, signed, and verified against the selected artifacts. It does not prove production readiness for unfinished surfaces.",
   "constitutionalMaturity": "Verified Prototype",
   "commercialReadiness": "Builder",
-  "generatedAt": "2026-08-02T00:55:33.769Z",
+  "generatedAt": "2026-08-02T01:12:20.463Z",
   "constitutionalEvidenceGraph": {
     "schemaVersion": "1.0",
     "graphId": "ceg:release:aaes-os:0.1.0",
-    "generatedAt": "2026-08-02T00:55:33.769Z",
+    "generatedAt": "2026-08-02T01:12:20.463Z",
     "source": "release-receipt",
     "rootReceipt": {
       "receiptId": "release:aaes-os:0.1.0",
@@ -148,7 +148,7 @@
       "truthBoundary": "This receipt proves the bundle was built, packaged, signed, and verified against the selected artifacts. It does not prove production readiness for unfinished surfaces.",
       "constitutionalMaturity": "Verified Prototype",
       "commercialReadiness": "Builder",
-      "generatedAt": "2026-08-02T00:55:33.769Z"
+      "generatedAt": "2026-08-02T01:12:20.463Z"
     },
     "proofSurfaces": [
       {
@@ -2378,5 +2378,5 @@
       "viewCount": 5
     }
   },
-  "receiptHash": "sha256:e7cbf23c7e796066256642639a9c563ef63977077a84a212fe54e12e11424dc4"
+  "receiptHash": "sha256:2018ab8f2028b744ce510fe790b791c4f47986b821d0bf2dec61c638beecb130"
 }
