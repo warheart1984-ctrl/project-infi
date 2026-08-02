@@ -46,7 +46,6 @@
                       "release/scorecard-sync.ts",
                       "release/sign-release.ts",
                       "release/verify-release.ts",
-                      "release-readiness-record.md",
-                      "release-readiness-record.md"
+                      "release/release-readiness-record.md"
                   ]
 }

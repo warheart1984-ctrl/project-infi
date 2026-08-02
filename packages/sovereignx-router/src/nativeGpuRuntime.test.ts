@@ -5,7 +5,7 @@ import { collectLiveGpuTelemetry,createNativeRenderJob,dispatchNativeRenderJob,e
 
 describe('native GPU runtime',()=>{
   it('validates the hashed Scene4D mesh contract before native dispatch',async()=>{
-    const mesh=path.resolve('meshes','clifford-torus.mesh.json');
+    const mesh=path.join(path.dirname(fileURLToPath(import.meta.url)),'..','meshes','clifford-torus.mesh.json');
     const contract=await validateNativeMeshContract(mesh);expect(contract).toMatchObject({id:'clifford-torus',vertexCount:1089,faceCount:2048});
   });
   it('parses live NVIDIA telemetry into router runtime stats',()=>{
