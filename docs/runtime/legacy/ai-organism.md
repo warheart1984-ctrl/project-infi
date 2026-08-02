@@ -1,5 +1,7 @@
 # AI Organism
 
+**DEPRECATED (2026-08-01):** this Python narrative is parked. `ai_organism.py` does not run in this workspace (missing `ulx` module; hardcoded `E:\` path). The execution contract below is now enforced as a tested **alive gate** on the TypeScript LIRL vertical slice: `tests/integration/ai-organism-alive.test.ts` (5 conditions + full-gate case).
+
 **Prime Architect 7-Layer Architecture with UCDD Compliance**
 
 ## Overview
@@ -124,6 +126,8 @@ The AI Organism is considered "alive" when:
 - At least one constitution is attached
 - At least one full loop iteration has completed
 - Identity memory is non-empty
+
+> **Current enforcement:** `tests/integration/ai-organism-alive.test.ts` asserts all five conditions (and a combined full-alive case) against the LIRL stack (`packages/lirl/`). The Python scaffold is deprecated and does not run.
 
 ## Compliance Status
 
