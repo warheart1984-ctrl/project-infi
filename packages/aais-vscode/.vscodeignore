@@ -1,0 +1,15 @@
+# VS Code extension ignore file
+**/node_modules/**
+**/.git/**
+**/.vscode/**
+**/out/**
+**/*.ts
+**/*.map
+**/src/**
+**/tsconfig.json
+**/.eslintrc*
+**/vitest.config.ts
+**/sovereign-ide/**
+**/.pytest_cache/**
+**/coverage/**
+**/.nyc_output/**

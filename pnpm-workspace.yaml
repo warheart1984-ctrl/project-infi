@@ -3,3 +3,5 @@ packages:
   - 'services/*'
   - 'simulation/mesh-simulator'
   - 'nova-studio'
+  - 'docs-site'
+  - 'packages/aais-vscode'

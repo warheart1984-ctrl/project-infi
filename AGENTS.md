@@ -67,3 +67,4 @@ Use `.cursor/skills/continual-learning/SKILL.md` → `agents-memory-updater` to 
 - CRE at `G:\cre` supplies the lean 6-role + ESFR crew pattern referenced by `.cursor/aaes-crew/`
 - CEF charter/specs live under `docs/release/cef/`; OEL under `docs/release/operational-evidence-layer/`; schema validation is `@aaes-os/cef-core`
 - ModeKey auto-apply in this repo is declared Cursor guidance, not a Node runtime enforcer
+- Architectural Atlas lives at `docs/atlas/README.md` — layered view of all 71 `@aaes-os/*` packages by platform layer
