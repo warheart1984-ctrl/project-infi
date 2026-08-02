@@ -43,6 +43,7 @@ ESFR note: [docs/release/AAES_CREW_CEF_BASELINE_ESFR_2026-07-31.md](../release/A
 ## Build Status
 
 - Fresh build passes for the verified governed packages and ops-console surfaces in this pass.
+- Release pipeline: 44 artifacts packaged, signed, and verified into `release/bundle` (2026-08-02).
 - Build commands used in the current workspace include:
   - `corepack pnpm --filter @aaes-os/aaes-governance build`
   - `corepack pnpm --filter @aaes-os/ucr-runtime build`
@@ -54,6 +55,8 @@ ESFR note: [docs/release/AAES_CREW_CEF_BASELINE_ESFR_2026-07-31.md](../release/A
 ## Test Status
 
 - Fresh package tests pass for the verified governance and ops surfaces in this pass.
+- Full suite: **153 passed files / 593 passed tests / 2 skipped** (skips are external DB integration tests), run 2026-08-02.
+- New: `sovereignxClusterControlAdapter.test.ts` covers the local and remote control-plane backends (apply, noop, forward, fallback, reject).
 - Test commands used in the current workspace include:
   - `corepack pnpm --filter @aaes-os/aaes-governance test`
   - `corepack pnpm --filter @aaes-os/ops-console test`
@@ -63,12 +66,16 @@ ESFR note: [docs/release/AAES_CREW_CEF_BASELINE_ESFR_2026-07-31.md](../release/A
 
 - Smoke paths exist for the ops console, workspace docs, docs-site, and simulator.
 - Fresh smoke verification now covers docs-site and Nova Studio; release smoke remains a next milestone.
+- docs-site: **79 pages built, 28 pages smoke-verified** (2026-08-02), including the new Nova Studio surface page.
+- Nova Studio: production build + smoke pass (`@aaes-os/nova-studio verify`), 12 surfaces replayable.
+- ops-console: 44 tests pass across 7 files, including the live cluster membership control endpoint and the cluster control adapter.
 
 ## Documentation Status
 
 - `README.md` now points to this scorecard and the docs hub.
 - `docs/README.md` now acts as the canonical docs index.
 - `docs-site/docs/overview.md` now links the repo constitution to the workspace baseline.
+- Nova Studio now has a first-class docs-site page (`docs/runtime/nova-studio.md`) linked from the nav, surface map, and smoke validator.
 
 ## Constitutional Profile
 
@@ -387,7 +394,7 @@ The repo proves the existence of the governed baseline and the current evidence 
 
 ### Blindspots
 
-- Known architectural blindspots: the docs-site and Nova Studio are still not fully production-runnable
+- Known architectural blindspots: the docs-site and Nova Studio are still not fully production-runnable; their build and smoke paths pass, but live backend catalog ingestion and production deployment evidence are not yet complete
 - Known governance blindspots: some surfaces remain scaffolded and cannot yet claim verified readiness
 - Known replay/audit blindspots: fresh replay verification is not yet complete across every surface
 - Known release blindspots: packaging and publish evidence still need to be checked for every promoted slice
@@ -695,7 +702,7 @@ Prototype to Verified Prototype progression requires a fresh CAR review before t
 
 ## Blindspots
 
-- Known architectural blindspots: the docs-site and Nova Studio are still not fully production-runnable
+- Known architectural blindspots: the docs-site and Nova Studio are still not fully production-runnable; their build and smoke paths pass, but live backend catalog ingestion and production deployment evidence are not yet complete
 - Known governance blindspots: some surfaces remain scaffolded and cannot yet claim verified readiness
 - Known replay/audit blindspots: fresh replay verification is not yet complete across every surface
 - Known release blindspots: packaging and publish evidence still need to be checked for every promoted slice

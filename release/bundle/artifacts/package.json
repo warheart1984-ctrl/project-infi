@@ -17,6 +17,7 @@
     "release:package": "node release/package-release.ts",
     "release:sign": "node release/sign-release.ts",
     "release:verify": "node release/verify-release.ts",
+    "scorecard:sync": "tsx release/scorecard-sync.ts",
     "integrations:evidence": "tsx tools/external-integration-evidence.ts",
     "hardening:evidence": "tsx tools/production-hardening-evidence.ts",
     "release": "pnpm build && pnpm run release:build && pnpm run release:package && pnpm run release:sign && pnpm run release:verify",

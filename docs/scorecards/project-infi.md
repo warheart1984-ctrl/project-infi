@@ -55,7 +55,7 @@ ESFR note: [docs/release/AAES_CREW_CEF_BASELINE_ESFR_2026-07-31.md](../release/A
 ## Test Status
 
 - Fresh package tests pass for the verified governance and ops surfaces in this pass.
-- Full suite: **149 passed files / 579 passed tests / 2 skipped** (skips are external DB integration tests), run 2026-08-02.
+- Full suite: **153 passed files / 593 passed tests / 2 skipped** (skips are external DB integration tests), run 2026-08-02.
 - New: `sovereignxClusterControlAdapter.test.ts` covers the local and remote control-plane backends (apply, noop, forward, fallback, reject).
 - Test commands used in the current workspace include:
   - `corepack pnpm --filter @aaes-os/aaes-governance test`

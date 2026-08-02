@@ -6,7 +6,7 @@
     "bundle": "release/bundle",
     "artifactCount": 44,
     "checksumCount": 44,
-    "signature": "3942a3242bc8d29247dee70d12a95068962859308b43b8b7fc63cfd1a1f65f90"
+    "signature": "702d0bcfbc065455b3f652b55dd63478c9fe227550d94b3a6377f8f016c9f16f"
   },
   "proofSurfaceLevel": "P2",
   "buildEvidence": {
@@ -22,11 +22,11 @@
   "testEvidence": {
     "status": "Observed",
     "evidence": [
-      "pnpm exec vitest run (435 passed, 2 environment-dependent integration tests skipped)",
-      "pnpm run release:drift (25 passed)"
+      "pnpm exec vitest run (full workspace suite)",
+      "pnpm run release:drift (release drift suite)"
     ],
     "notes": [
-      "Fresh local verification completed on 2026-07-14."
+      "Fresh local verification recorded at release generation (2026-08-02T08:25:07.183Z)."
     ]
   },
   "lintStatus": {
@@ -35,7 +35,7 @@
       "pnpm exec eslint \"packages/**/*.{js,jsx,ts,tsx,mjs,cjs}\" \"services/**/*.{js,jsx,ts,tsx,mjs,cjs}\" --max-warnings 0"
     ],
     "notes": [
-      "Strict workspace lint completed with zero errors on 2026-07-14."
+      "Strict workspace lint completed with zero errors."
     ]
   },
   "replayStatus": {
@@ -47,7 +47,7 @@
       "pnpm run release:drift"
     ],
     "notes": [
-      "Replay/drift verification passed 25 tests; external database integration replays remain environment-dependent."
+      "Replay/drift verification passed; external database integration replays remain environment-dependent."
     ]
   },
   "auditStatus": {
@@ -61,7 +61,7 @@
       "Audit trace is documented in the docs hub and scorecard."
     ]
   },
-  "verificationDate": "2026-08-02T01:12:22.067Z",
+  "verificationDate": "2026-08-02T08:25:42.080Z",
   "knownLimitations": [
     "Coverage percentages are not yet standardized across every workspace package.",
     "External database integration tests require configured PostgreSQL and Neo4j services.",
@@ -70,11 +70,11 @@
   "truthBoundary": "This receipt proves the bundle was built, packaged, signed, and verified against the selected artifacts. It does not prove production readiness for unfinished surfaces.",
   "constitutionalMaturity": "Verified Prototype",
   "commercialReadiness": "Builder",
-  "generatedAt": "2026-08-02T01:12:20.463Z",
+  "generatedAt": "2026-08-02T08:25:07.183Z",
   "constitutionalEvidenceGraph": {
     "schemaVersion": "1.0",
     "graphId": "ceg:release:aaes-os:0.1.0",
-    "generatedAt": "2026-08-02T01:12:20.463Z",
+    "generatedAt": "2026-08-02T08:25:07.183Z",
     "source": "release-receipt",
     "rootReceipt": {
       "receiptId": "release:aaes-os:0.1.0",
@@ -100,11 +100,11 @@
       "testEvidence": {
         "status": "Observed",
         "evidence": [
-          "pnpm exec vitest run (435 passed, 2 environment-dependent integration tests skipped)",
-          "pnpm run release:drift (25 passed)"
+          "pnpm exec vitest run (full workspace suite)",
+          "pnpm run release:drift (release drift suite)"
         ],
         "notes": [
-          "Fresh local verification completed on 2026-07-14."
+          "Fresh local verification recorded at release generation (2026-08-02T08:25:07.183Z)."
         ]
       },
       "lintStatus": {
@@ -113,7 +113,7 @@
           "pnpm exec eslint \"packages/**/*.{js,jsx,ts,tsx,mjs,cjs}\" \"services/**/*.{js,jsx,ts,tsx,mjs,cjs}\" --max-warnings 0"
         ],
         "notes": [
-          "Strict workspace lint completed with zero errors on 2026-07-14."
+          "Strict workspace lint completed with zero errors."
         ]
       },
       "replayStatus": {
@@ -125,7 +125,7 @@
           "pnpm run release:drift"
         ],
         "notes": [
-          "Replay/drift verification passed 25 tests; external database integration replays remain environment-dependent."
+          "Replay/drift verification passed; external database integration replays remain environment-dependent."
         ]
       },
       "auditStatus": {
@@ -148,7 +148,7 @@
       "truthBoundary": "This receipt proves the bundle was built, packaged, signed, and verified against the selected artifacts. It does not prove production readiness for unfinished surfaces.",
       "constitutionalMaturity": "Verified Prototype",
       "commercialReadiness": "Builder",
-      "generatedAt": "2026-08-02T01:12:20.463Z"
+      "generatedAt": "2026-08-02T08:25:07.183Z"
     },
     "proofSurfaces": [
       {
@@ -2378,5 +2378,5 @@
       "viewCount": 5
     }
   },
-  "receiptHash": "sha256:2018ab8f2028b744ce510fe790b791c4f47986b821d0bf2dec61c638beecb130"
+  "receiptHash": "sha256:3d0c07f32ae1576a5dda4f0425c7d384932a26194c9b1e405b548932334fd634"
 }

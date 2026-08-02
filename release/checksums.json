@@ -5,8 +5,8 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "3ccfd7897462da8484d81de3cc4233add17e69ee55b10d248a72f06aa7e1fc6f",
-      "size": 22362
+      "sha256": "4f846dca9fb1f238107ac14f2d04ce4b7dfe0c0ded8d9b0cb26d64318329f806",
+      "size": 22776
     },
     {
       "path": "docs/README.md",
@@ -170,13 +170,13 @@
     },
     {
       "path": "docs/scorecards/project-infi.md",
-      "sha256": "a0c86979df529b122a69b621ace2fbedd5e04fa72b1b0e603c781661e0bfa142",
-      "size": 43685
+      "sha256": "2f282fe488369d7688153a9822953b06a955280b3a78f085f269a10dd7e8504c",
+      "size": 44799
     },
     {
       "path": "package.json",
-      "sha256": "4e6f9ffc962f55ec8157a05818004a0904ca78115996f4f60f25e8e7bd7f629e",
-      "size": 4195
+      "sha256": "e6eebf7fa244533846051e700d10480eee8a7028fdc46660da92045194b9fdb3",
+      "size": 4251
     },
     {
       "path": "tools/external-integration-evidence.ts",
@@ -195,18 +195,18 @@
     },
     {
       "path": "release/package-release.ts",
-      "sha256": "18b6c04a0987dd728b53ae941440e98f4af9ea0afa32c4ec6b86409697212c50",
-      "size": 1390
+      "sha256": "2b585218f65de8e54a42901a8bacaa8d2d92974ac8f51f336b4b1358ba788a08",
+      "size": 1354
     },
     {
       "path": "release/receipt.ts",
-      "sha256": "c8707acbed63d02c23de7bd327fdb715abc3c64eb96e562134921f463a5b8a3e",
-      "size": 9240
+      "sha256": "33b08357a21d996f3546a18d864b06588e34a3e628f2eaf1ec20bb8b492bee83",
+      "size": 9294
     },
     {
       "path": "release/scorecard-sync.ts",
-      "sha256": "b32afc409bdb89001bf24b79781d70fab0dd5321976d958d051f1a5d735fdc0c",
-      "size": 12790
+      "sha256": "af1bdcfbb48eaad10e407014d75e72c1cb7912800acd76586f130097a5c9d6bb",
+      "size": 13216
     },
     {
       "path": "release/sign-release.ts",
