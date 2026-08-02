@@ -67,6 +67,7 @@ export default {
             'runtime/nova-coda',
             'runtime/nova-substrate',
             'runtime/nova-substrate-client',
+            'runtime/nova-studio',
             'runtime/ul-runtime',
             'runtime/csl-runtime',
             'runtime/isl-runtime',

@@ -58,7 +58,7 @@ For the first row, collect build output, test output, smoke output, replay bundl
 
 For the docs-site row, collect docs build output, route graph snapshot, page-level citation manifest, replay trace, evidence graph linkage, and the docs claim boundary update.
 
-For the Nova Studio row, collect studio build output, smoke output, replay trace, operator event trace, evidence graph linkage, and the studio claim boundary update.
+For the Nova Studio row, collect studio build output, smoke output, replay trace, operator event trace, evidence graph linkage, and the studio claim boundary update. The operator shell surface is documented at [Nova Studio](./runtime/nova-studio.md).
 
 For the ops-console row, collect console build output, service test output, smoke output, telemetry snapshot, operator trace, evidence graph linkage, and the console claim boundary update.
 
