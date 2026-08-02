@@ -4,9 +4,9 @@
     "name": "aaes-os",
     "version": "0.1.0",
     "bundle": "release/bundle",
-    "artifactCount": 43,
-    "checksumCount": 43,
-    "signature": "2d647eb07f50aab30c3bece71f6859de15ca03508e2484109d43f7cc4bec2b82"
+    "artifactCount": 44,
+    "checksumCount": 44,
+    "signature": "3942a3242bc8d29247dee70d12a95068962859308b43b8b7fc63cfd1a1f65f90"
   },
   "proofSurfaceLevel": "P2",
   "buildEvidence": {
@@ -61,7 +61,7 @@
       "Audit trace is documented in the docs hub and scorecard."
     ]
   },
-  "verificationDate": "2026-08-01T01:35:51.908Z",
+  "verificationDate": "2026-08-02T00:55:37.674Z",
   "knownLimitations": [
     "Coverage percentages are not yet standardized across every workspace package.",
     "External database integration tests require configured PostgreSQL and Neo4j services.",
@@ -70,11 +70,11 @@
   "truthBoundary": "This receipt proves the bundle was built, packaged, signed, and verified against the selected artifacts. It does not prove production readiness for unfinished surfaces.",
   "constitutionalMaturity": "Verified Prototype",
   "commercialReadiness": "Builder",
-  "generatedAt": "2026-08-01T01:35:50.393Z",
+  "generatedAt": "2026-08-02T00:55:33.769Z",
   "constitutionalEvidenceGraph": {
     "schemaVersion": "1.0",
     "graphId": "ceg:release:aaes-os:0.1.0",
-    "generatedAt": "2026-08-01T01:35:50.393Z",
+    "generatedAt": "2026-08-02T00:55:33.769Z",
     "source": "release-receipt",
     "rootReceipt": {
       "receiptId": "release:aaes-os:0.1.0",
@@ -82,8 +82,8 @@
         "name": "aaes-os",
         "version": "0.1.0",
         "bundle": "release/bundle",
-        "artifactCount": 43,
-        "checksumCount": 43,
+        "artifactCount": 44,
+        "checksumCount": 44,
         "signature": null
       },
       "proofSurfaceLevel": "P2",
@@ -148,7 +148,7 @@
       "truthBoundary": "This receipt proves the bundle was built, packaged, signed, and verified against the selected artifacts. It does not prove production readiness for unfinished surfaces.",
       "constitutionalMaturity": "Verified Prototype",
       "commercialReadiness": "Builder",
-      "generatedAt": "2026-08-01T01:35:50.393Z"
+      "generatedAt": "2026-08-02T00:55:33.769Z"
     },
     "proofSurfaces": [
       {
@@ -2378,5 +2378,5 @@
       "viewCount": 5
     }
   },
-  "receiptHash": "sha256:3c34a6c0742e7332b8c8c8ba51d61c53f6b7f9ab80b39ba22d404fff93abe789"
+  "receiptHash": "sha256:e7cbf23c7e796066256642639a9c563ef63977077a84a212fe54e12e11424dc4"
 }

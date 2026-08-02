@@ -1,8 +1,8 @@
 # Production Hardening Evidence
 
-Generated: 2026-07-13T13:13:00.595Z
+Generated: 2026-08-02T00:50:28.255Z
 
-Aggregate hash: `0496c5b377b56d81a168eae5094dc34969c406cce706474de39c1ec88f779e10`
+Aggregate hash: `cc29b42c5287838e47be11a916c1e3289ad9204a7ae26c9b215df1c7007d43e9`
 
 Status: `release-evidence-ready`
 
@@ -15,7 +15,7 @@ Status: `release-evidence-ready`
 | @aaes-os/ccc-runtime | release-evidence-ready | ccc-runtime.evidence.json#replayAuditPacket | ccc-runtime-08e90738ab8907d2af4febbbe64126df95b578b065cbdc7581dcbf7ebcca1cb2 | live-integration-verified |
 | @aaes-os/coe-runtime | release-evidence-ready | coe-runtime.evidence.json#replayAuditPacket | coe-runtime-e29d8de47ce4d324570aba89d83c2b7980bdb97b7c4bf0e62dd46d37149986c9 | live-integration-verified |
 | @aaes-os/cml-voss-runtime | release-evidence-ready | cml-voss-runtime.evidence.json#replayAuditPacket | cml-voss-runtime-a3cf11a5c2e4604019795e4386aee91f7f873c16664a7728ccaf304c2039684c | live-integration-verified |
-| @aaes-os/ugr-runtime | release-evidence-ready | ugr-runtime.evidence.json#replayAuditPacket | ugr-runtime-99b2d2444727bff7d273dada453337a458b1cbb6193fc0bd6dd7528b0b70232c | live-integration-verified |
+| @aaes-os/ugr-runtime | release-evidence-ready | ugr-runtime.evidence.json#replayAuditPacket | ugr-runtime-e97e0d449195979b1be8384c0dc6188cbeb70f66d45339de5ebdbce01a0fc624 | live-integration-verified |
 | @aaes-os/gcre-sysmin | release-evidence-ready | gcre-sysmin.evidence.json#replayAuditPacket | gcre-sysmin-00db121ac8625f73d888cb494aef22d74209975b457f8b73b9ab25fe5aa9bb5c | live-integration-verified |
 | @aaes-os/coda-runtime | release-evidence-ready | coda-runtime.evidence.json#replayAuditPacket | coda-runtime-64d7a74eaf7e2dc3a98575f757b46b6cb698250d8da83e8ff5ca7953f7647bb4 | live-integration-verified |
 | @aaes-os/nova-coda | release-evidence-ready | nova-coda.evidence.json#replayAuditPacket | nova-coda-0aaf424915daaf1a5eecd48c14275809c7424779145f21b0cc19dcffa91a637b | live-integration-verified |

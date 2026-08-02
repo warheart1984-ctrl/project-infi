@@ -46,14 +46,20 @@
     "platform-web": "pnpm --filter @aaes-os/platform-web dev",
     "organism": "pnpm --filter @aaes-os/platform-cli exec organism",
     "mesh:simulate": "pnpm --filter @aaes-os/mesh-simulator run simulate",
-    "free-coding": "tsx tools/free-coding-cli.ts"
+    "free-coding": "tsx tools/free-coding-cli.ts",
+    "aais": "tsx tools/aais-cli.ts",
+    "aais:status": "tsx tools/aais-cli.ts --status",
+    "oel:validate": "tsx tools/oel-validate.ts",
+    "baseline:merge-digests": "tsx tools/merge-image-digests.ts",
+    "aaes-crew:sync-vendor": "node scripts/aaes-crew-sync-vendor-paths.mjs"
   },
   "engines": {
     "node": ">=20"
   },
   "dependencies": {
     "@aaes-os/architect-agent": "workspace:*",
-    "@aaes-os/coding-assistant": "workspace:*"
+    "@aaes-os/coding-assistant": "workspace:*",
+    "@aaes-os/image-studio": "workspace:*"
   },
   "devDependencies": {
     "@esbuild/win32-x64": "0.28.1",
