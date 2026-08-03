@@ -410,5 +410,7 @@ The scorecard appendix now carries the detailed release-packaging and challenge 
 - Planned interoperability tests
 - Planned performance benchmarks
 
+## CCALF (learning framework)
 
+Declared CCALF v1.0 specification bundle: [`docs/ccalf/`](docs/ccalf/) (learning/competency stewardship docs; not a runtime engine gate).
 
