@@ -431,6 +431,8 @@ describe('GET /telemetry', () => {
       expect(controlResponse.status).toBe(200);
       const controlBody = (await controlResponse.json()) as {
         controlState: { quarantinedNodeIds: string[]; desiredNodeCount: number };
+        controlResult: { outcome: string; auditEntry: { auditId: string; backend: string } };
+        adapterStatus: { backend: string; controlUrl: string | null; auditEntryCount: number };
         clusterGovernance: {
           summary: { quarantinedNodeCount: number; activeNodeCount: number };
           autoscaling: { action: string; recommendedNodeCount: number };
@@ -440,6 +442,12 @@ describe('GET /telemetry', () => {
         };
         traceabilityMatrix: { rows: { capabilityId: string }[] };
       };
+
+      expect(controlBody.controlResult.outcome).toBe('applied');
+      expect(controlBody.controlResult.auditEntry.backend).toBe('local');
+      expect(controlBody.adapterStatus.backend).toBe('local');
+      expect(controlBody.adapterStatus.controlUrl).toBeNull();
+      expect(controlBody.adapterStatus.auditEntryCount).toBeGreaterThan(0);
 
       expect(controlBody.controlState.quarantinedNodeIds).toContain('cluster-gpu-a');
       expect(controlBody.controlState.desiredNodeCount).toBeGreaterThan(0);

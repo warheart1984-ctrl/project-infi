@@ -1,4 +1,4 @@
-import type { Express, Request, Response } from 'express';
+import type { Express, Request } from 'express';
 
 import {
   platform,

@@ -17,9 +17,33 @@ AAES-OS is the canonical governed runtime workspace for the AAES governance spin
 
 Verified Prototype for the governance/runtime spine, docs-site, Nova Studio, ops-console, and SovereignX execution surfaces; scaffold / prototype elsewhere.
 
+## CEF + Production Baseline (2026-07-31 slice)
+
+Drive-G-2 dimensions for this slice — do **not** collapse into one “production ready” adjective:
+
+| Dimension | Rating | Audience | Evidence |
+|-----------|--------|----------|----------|
+| Constitutional model | Working | operators / governance | CEF charter; `@aaes-os/cef-core` schema + invariants + promotion gate |
+| Governance methodology | Partial | operators | Lean AAES crew + ESFR declared; ModeKey guidance only |
+| Reference implementation | Working (library) / Partial (ops) | operators | cef-core + certification/stewardship stubs; k8s freeze without full live pack |
+| Platform engineering | Partial | operators | Manifest freeze + optional CI digest-merge / live capture contracts |
+| Commercial operations | Early / not claimed | users | No self-serve claim from this baseline |
+
+### Freeze vs independently reproduced
+
+| Claim | Status | Evidence ladder |
+|-------|--------|-----------------|
+| Operational stack **frozen** | Evidenced | Production Baseline v1.0 checksums + freeze notice at `7efa0c5f` |
+| `@aaes-os/cef-core` Phase 1 | **P2 Verified** | package tests (schema, profiles, promotion gate) |
+| OEL certificate **ACTIVE** | Deferred / not required for current ESFR | DRAFT/HOLD is the accepted certificate state for this gate |
+| Independently reproduced ops | **Waived for current ESFR** | Optional backlog; `evidence/live/` tooling remains |
+
+ESFR note: [docs/release/AAES_CREW_CEF_BASELINE_ESFR_2026-07-31.md](../release/AAES_CREW_CEF_BASELINE_ESFR_2026-07-31.md) — **pass** with independent-reproduction prerequisites waived.
+
 ## Build Status
 
 - Fresh build passes for the verified governed packages and ops-console surfaces in this pass.
+- Release pipeline: 44 artifacts packaged, signed, and verified into `release/bundle` (2026-08-02).
 - Build commands used in the current workspace include:
   - `corepack pnpm --filter @aaes-os/aaes-governance build`
   - `corepack pnpm --filter @aaes-os/ucr-runtime build`
@@ -31,6 +55,8 @@ Verified Prototype for the governance/runtime spine, docs-site, Nova Studio, ops
 ## Test Status
 
 - Fresh package tests pass for the verified governance and ops surfaces in this pass.
+- Full suite: **153 passed files / 593 passed tests / 2 skipped** (skips are external DB integration tests), run 2026-08-02.
+- New: `sovereignxClusterControlAdapter.test.ts` covers the local and remote control-plane backends (apply, noop, forward, fallback, reject).
 - Test commands used in the current workspace include:
   - `corepack pnpm --filter @aaes-os/aaes-governance test`
   - `corepack pnpm --filter @aaes-os/ops-console test`
@@ -40,12 +66,16 @@ Verified Prototype for the governance/runtime spine, docs-site, Nova Studio, ops
 
 - Smoke paths exist for the ops console, workspace docs, docs-site, and simulator.
 - Fresh smoke verification now covers docs-site and Nova Studio; release smoke remains a next milestone.
+- docs-site: **79 pages built, 28 pages smoke-verified** (2026-08-02), including the new Nova Studio surface page.
+- Nova Studio: production build + smoke pass (`@aaes-os/nova-studio verify`), 12 surfaces replayable.
+- ops-console: 44 tests pass across 7 files, including the live cluster membership control endpoint and the cluster control adapter.
 
 ## Documentation Status
 
 - `README.md` now points to this scorecard and the docs hub.
 - `docs/README.md` now acts as the canonical docs index.
 - `docs-site/docs/overview.md` now links the repo constitution to the workspace baseline.
+- Nova Studio now has a first-class docs-site page (`docs/runtime/nova-studio.md`) linked from the nav, surface map, and smoke validator.
 
 ## Constitutional Profile
 
@@ -87,6 +117,10 @@ If verification fails, the repo remains usable only for the already-verified sur
 ### Current Constitutional Maturity
 
 Verified Prototype for the governance/runtime spine, docs-site, Nova Studio, ops-console, and SovereignX execution surfaces; scaffold / prototype elsewhere.
+
+## Vertical slice (LIRL v0.1)
+
+The **Lawful Intent Receipt Loop** is implemented in `packages/lirl` with accept/reject tests (`packages/lirl/src/lirl.test.ts`) and exposed on `platform-api` at `POST /v1/lirl/intents` (plus memory/operator reads). It wires `InvariantEngine` (law gate), `GovernedMemoryStore` (file-backed memory under `.runtime/lirl/`), `createEvidenceReceipt` (receipt), and a static operator HTML snapshot. This proves one thin civilization organ loop; it does **not** upgrade the whole workspace to “Civilization OS live.” Detail: `docs/civilization-os/VERTICAL_SLICE.md`.
 
 ## Canonical Replay & Evidence Contract (CREC)
 
@@ -360,7 +394,7 @@ The repo proves the existence of the governed baseline and the current evidence 
 
 ### Blindspots
 
-- Known architectural blindspots: the docs-site and Nova Studio are still not fully production-runnable
+- Known architectural blindspots: the docs-site and Nova Studio are still not fully production-runnable; their build and smoke paths pass, but live backend catalog ingestion and production deployment evidence are not yet complete
 - Known governance blindspots: some surfaces remain scaffolded and cannot yet claim verified readiness
 - Known replay/audit blindspots: fresh replay verification is not yet complete across every surface
 - Known release blindspots: packaging and publish evidence still need to be checked for every promoted slice
@@ -668,7 +702,7 @@ Prototype to Verified Prototype progression requires a fresh CAR review before t
 
 ## Blindspots
 
-- Known architectural blindspots: the docs-site and Nova Studio are still not fully production-runnable
+- Known architectural blindspots: the docs-site and Nova Studio are still not fully production-runnable; their build and smoke paths pass, but live backend catalog ingestion and production deployment evidence are not yet complete
 - Known governance blindspots: some surfaces remain scaffolded and cannot yet claim verified readiness
 - Known replay/audit blindspots: fresh replay verification is not yet complete across every surface
 - Known release blindspots: packaging and publish evidence still need to be checked for every promoted slice

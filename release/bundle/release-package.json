@@ -2,7 +2,7 @@
   "name": "aaes-os",
   "version": "0.1.0",
   "bundle": "release/bundle",
-  "artifactCount": 43,
+  "artifactCount": 44,
   "artifacts": [
     "README.md",
     "docs/README.md",
@@ -46,8 +46,9 @@
     "release/receipt.ts",
     "release/scorecard-sync.ts",
     "release/sign-release.ts",
-    "release/verify-release.ts"
+    "release/verify-release.ts",
+    "release/release-readiness-record.md"
   ],
-  "generatedAt": "2026-07-14T16:52:23.925Z",
-  "signature": "ccf6699420ca769c823167b00eb6bef3f0d836a12826a12753ce60e9abcbee95"
+  "generatedAt": "2026-08-02T08:25:07.556Z",
+  "signature": "702d0bcfbc065455b3f652b55dd63478c9fe227550d94b3a6377f8f016c9f16f"
 }

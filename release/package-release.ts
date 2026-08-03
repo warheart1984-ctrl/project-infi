@@ -1,4 +1,4 @@
-import { dirname, join, resolve } from 'node:path';
+import { join } from 'node:path';
 
 import {
   copyArtifactTree,
@@ -7,10 +7,10 @@ import {
   getBundleManifestPath,
   getBundleRoot,
   getChecksumsPath,
-  getManifestPath,
   getReceiptPath,
   loadManifest,
   readJson,
+  resolveArtifactPath,
   writeJson,
 } from './shared.ts';
 
@@ -24,7 +24,7 @@ function main() {
   ensureDir(getBundleRoot());
   const packageFiles = [];
   for (const artifact of manifest.artifacts) {
-    const sourcePath = resolve(dirname(getManifestPath()), '..', artifact);
+    const sourcePath = resolveArtifactPath(artifact);
     const bundledPath = copyArtifactTree(sourcePath, getBundleRoot(), join('artifacts', artifact));
     packageFiles.push({
       path: artifact,

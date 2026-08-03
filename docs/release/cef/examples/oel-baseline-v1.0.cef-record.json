@@ -1,0 +1,43 @@
+{
+  "framework": "CEF",
+  "schemaVersion": "0.1",
+  "profile": "OEL",
+  "recordId": "CEF-OEL-WRAP-baseline-v1.0-7efa0c5f",
+  "subject": {
+    "kind": "deployment",
+    "id": "AAES-OS-PRODUCTION-BASELINE-v1.0",
+    "version": "1.0.0-baseline",
+    "commitSha": "7efa0c5f766bc0b30b6eef820d198be3a6bf1a5d"
+  },
+  "claim": "AAES-OS operational stack at commit 7efa0c5f is frozen as Production Baseline v1.0 and eligible for promotion only after OEL gates clear",
+  "authority": "AAES Constitutional Runtime",
+  "evidence": {
+    "profileRecordRef": "docs/release/operational-evidence-layer/examples/aaes-os-production-baseline-v1.0.evidence-record.json",
+    "baselineIndexRef": "docs/release/production-baseline/aaes-os-v1.0/INDEX.md"
+  },
+  "verification": {
+    "status": "PARTIAL",
+    "gates": [
+      { "id": "baseline-freeze", "status": "pass", "detail": "Commit and checksums frozen" },
+      { "id": "policy-validation", "status": "pass", "detail": "Manifest-level NetPol/securityContext" },
+      { "id": "container-digests", "status": "pending", "detail": null },
+      { "id": "sbom", "status": "pending", "detail": null },
+      { "id": "vulnerability-scan", "status": "pending", "detail": null },
+      { "id": "conformance-tests", "status": "pending", "detail": null },
+      { "id": "runtime-health", "status": "pending", "detail": null }
+    ]
+  },
+  "decision": {
+    "outcome": "hold",
+    "rationale": "CEF wrapper demonstrates profile federation; promotion blocked on pending OEL gates"
+  },
+  "certificateRef": "docs/release/operational-evidence-layer/examples/aaes-os-production-baseline-v1.0.certificate.md",
+  "proofSurfaceLevel": "P2",
+  "truthBoundary": "This CEF record wraps an OEL profile instance. It does not invent a new evidence system.",
+  "challengeSurface": [
+    "Treating CREC/OEL/CEL as unrelated systems after CEF registration",
+    "Promoting while verification.status is PARTIAL without DRAFT/CONDITIONAL certificate status"
+  ],
+  "timestamp": "2026-07-20T16:09:00Z",
+  "profileSchemaRef": "docs/release/operational-evidence-layer/operational-evidence-record.schema.json"
+}

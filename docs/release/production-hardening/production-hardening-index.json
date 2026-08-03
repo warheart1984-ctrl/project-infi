@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T13:13:00.595Z",
+  "generatedAt": "2026-08-02T00:50:28.255Z",
   "workspace": "E:/project-infi",
   "status": "release-evidence-ready",
   "surfaces": [
@@ -655,18 +655,18 @@
         ]
       },
       "releasePackagingPacket": {
-        "manifestId": "ugr-runtime-99b2d2444727bff7d273dada453337a458b1cbb6193fc0bd6dd7528b0b70232c",
+        "manifestId": "ugr-runtime-e97e0d449195979b1be8384c0dc6188cbeb70f66d45339de5ebdbce01a0fc624",
         "checksumAlgorithm": "sha256",
         "includedFiles": [
           {
             "path": "packages/ugr-runtime/package.json",
-            "sha256": "398f50aa01bc755fbb9073b9540253a57693f16af1678ddc8e50d59f768eef5e",
-            "bytes": 579
+            "sha256": "e01fbdd055fa03d4c64f2f0421fd66872b75877ee62237338c4cd67774e10f26",
+            "bytes": 2451
           },
           {
             "path": "packages/ugr-runtime/src/index.ts",
-            "sha256": "47c27bcdf8dfe69f0870407daaeb0f4605a92c11ac9a4144b4dfad6d5b0ae2c5",
-            "bytes": 31287
+            "sha256": "d7ed9dce333e1f456e4df16d5582f85c40edbd318b4cf797e275a3d10c4547bc",
+            "bytes": 31207
           },
           {
             "path": "packages/ugr-runtime/src/index.test.ts",
@@ -675,8 +675,8 @@
           },
           {
             "path": "packages/ugr-runtime/dist/index.js",
-            "sha256": "fbe083095869d2490737e191f9e435c6a3d1ebfae6e567443243ea01b4b4a4b7",
-            "bytes": 26682
+            "sha256": "d07dbc8ff9f2db2f6bd5f240487efa78247d0f728e713338bee72b3d69ce8116",
+            "bytes": 26692
           },
           {
             "path": "docs-site/docs/runtime/ugr-runtime.md",
@@ -972,5 +972,5 @@
       "blockers": []
     }
   ],
-  "aggregateHash": "0496c5b377b56d81a168eae5094dc34969c406cce706474de39c1ec88f779e10"
+  "aggregateHash": "cc29b42c5287838e47be11a916c1e3289ad9204a7ae26c9b215df1c7007d43e9"
 }

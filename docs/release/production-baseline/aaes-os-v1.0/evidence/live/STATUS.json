@@ -1,0 +1,14 @@
+{
+  "baselineId": "AAES-OS-PRODUCTION-BASELINE-v1.0",
+  "kind": "live-evidence-status",
+  "status": "deferred-not-required-for-esfr-v1",
+  "updatedAt": "2026-07-31T22:05:00Z",
+  "slots": {
+    "probes": "deferred",
+    "trivy": "deferred",
+    "hpa": "deferred",
+    "recovery": "deferred"
+  },
+  "captureCommand": "pwsh -File scripts/capture-baseline-live-evidence.ps1",
+  "note": "Live cluster capture is optional backlog. ESFR 2026-07-31 waived independent reproduction as a gate requirement."
+}

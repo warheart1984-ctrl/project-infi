@@ -58,7 +58,7 @@ For the first row, collect build output, test output, smoke output, replay bundl
 
 For the docs-site row, collect docs build output, route graph snapshot, page-level citation manifest, replay trace, evidence graph linkage, and the docs claim boundary update.
 
-For the Nova Studio row, collect studio build output, smoke output, replay trace, operator event trace, evidence graph linkage, and the studio claim boundary update.
+For the Nova Studio row, collect studio build output, smoke output, replay trace, operator event trace, evidence graph linkage, and the studio claim boundary update. The operator shell surface is documented at [Nova Studio](./runtime/nova-studio.md).
 
 For the ops-console row, collect console build output, service test output, smoke output, telemetry snapshot, operator trace, evidence graph linkage, and the console claim boundary update.
 
@@ -73,8 +73,8 @@ The scorecard appendix now carries the detailed release-packaging and challenge 
 - Operational status: Verified Prototype for the governance/runtime spine, docs-site, ops surfaces, Nova Studio, and SovereignX execution surfaces; other surfaces remain scaffold/prototype.
 - Commercial readiness: Builder tier with prototype-to-verified-prototype progression.
 - Proof level: P2-Verified for the governed baseline; lower levels apply to unfinished surfaces.
-- Receipt hash: sha256:2bca968431d67fb744f90af08fb75e813521e7c8215cdc42c59a65971b534aab
-- Verification timestamp: 2026-07-13T13:19:57.447Z
+- Receipt hash: sha256:594c0198b0de354f254c2c1f430a8139c2e6da0c9a0ea7aa3642aa4a78aa2633
+- Verification timestamp: 2026-08-02T08:25:11.341Z
 
 ## Who it is for
 

@@ -1,14 +1,14 @@
 # External Integration Evidence
 
-Generated: 2026-07-13T13:12:52.847Z
+Generated: 2026-08-02T00:50:36.932Z
 
 Status: `verified`
 
-Aggregate hash: `c61bafed5148a10f6e2f1cf320eb5431790dfa4d32a87f6b044e1d59d24eb022`
+Aggregate hash: `d67acaf203efa6adbca07be46947cef1dba8f973b8485e08ac0a4aadee895dc2`
 
 | Service | Target | Mode | Status | Evidence hash |
 | --- | --- | --- | --- | --- |
-| GitHub | https://github.com/warheart1984-ctrl/project-infi.git | git-ls-remote | verified | fba6f37d903a31f9f6df2f5d87e4dc2ed5a416e7560c0f4780aac81ed565bcb4 |
-| npm Registry | pnpm | registry-metadata-fetch | verified | 82ceb3f9d037769dbbfa923955a4f4b6ad2147f1166b43a025e29fa8b93e92db |
+| GitHub | https://github.com/warheart1984-ctrl/project-infi.git | git-ls-remote | verified | 07b0542156186ee77ef7afd5a8409f84725b028f65d76bf7759b81c77fc8e34b |
+| npm Registry | pnpm | registry-metadata-fetch | verified | 262acb3ae91a31fc5c57f5faafc095a9014ba91a0b2eb8e34122f707145bc2cb |
 
 This packet records read-only, real-service probes used by the production-hardening release evidence. It does not write to external systems.

@@ -5,9 +5,9 @@ use arena::Arena;
 use protocol::{decode_header, encode_header, MessageType};
 use serde_json::{json, Value};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
-use tokio::net::UnixListener;
+use tokio::net::TcpListener;
 
-const SOCKET_PATH: &str = "/tmp/nova.sock";
+const LISTEN_ADDR: &str = "127.0.0.1:8080";
 
 struct ConnectionState {
     arena: Arena,
@@ -31,9 +31,8 @@ impl Default for ConnectionState {
 
 #[tokio::main]
 async fn main() {
-    let _ = std::fs::remove_file(SOCKET_PATH);
-    let listener = UnixListener::bind(SOCKET_PATH).expect("bind failed");
-    println!("NovaCoda substrate listening at {}", SOCKET_PATH);
+    let listener = TcpListener::bind(LISTEN_ADDR).await.expect("bind failed");
+    println!("NovaCoda substrate listening at {}", LISTEN_ADDR);
 
     loop {
         let (stream, _) = listener.accept().await.unwrap();
@@ -41,7 +40,7 @@ async fn main() {
     }
 }
 
-async fn handle_connection(mut stream: tokio::net::UnixStream) {
+async fn handle_connection(mut stream: tokio::net::TcpStream) {
     let mut header_buf = [0u8; 12];
     let mut state = ConnectionState::default();
 

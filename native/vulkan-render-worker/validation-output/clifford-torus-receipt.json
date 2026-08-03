@@ -1,0 +1,24 @@
+{
+  "adapterId": "",
+  "backend": "vulkan",
+  "completedAt": "2026-07-22T08:26:23Z",
+  "deviceName": "AMD Radeon (TM) R9 380 Series",
+  "evidenceRefs": [
+    "native-surface-parity"
+  ],
+  "jobId": "surface-clifford-torus",
+  "meshContract": {
+    "contentHash": "da443b3296626c855f0c50f1e927dbdd26852763f75408c462904d33cfed2d67",
+    "faceCount": 2048,
+    "id": "clifford-torus",
+    "vertexCount": 1089
+  },
+  "outputPaths": [
+    "G:\\project-infi\\native\\vulkan-render-worker\\validation-output\\clifford-torus\\vulkan-frame-000000.ppm",
+    "G:\\project-infi\\native\\vulkan-render-worker\\validation-output\\clifford-torus\\vulkan-frame-000001.ppm"
+  ],
+  "startedAt": "2026-07-22T08:26:23Z",
+  "status": "completed",
+  "version": "1.0",
+  "workerEvidenceHash": "c87183ad205cb97c4d3f3860bd21576cdfc8079834866e1c2a4da3ba1780f827"
+}

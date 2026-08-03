@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "test": "vitest run --config vitest.config.ts",
     "build": "tsx scripts/build-prod.ts",
     "dev": "tsx scripts/build-dev.ts",
     "start": "tsx scripts/build-dev.ts",
@@ -26,6 +27,7 @@
     "tsx": "^4.20.5",
     "typescript": "^5.9.3",
     "ts-loader": "^9.5.1",
+    "vitest": "^3.2.4",
     "webpack": "^5.100.0",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2"

@@ -1,0 +1,112 @@
+{
+  "name": "aais-vscode",
+  "displayName": "AAIS Coding Assistant",
+  "description": "AAES-OS AAIS — governance-first coding assistant with local/cloud backends",
+  "version": "0.1.0",
+  "publisher": "aaes-os",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": ["Other"],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onCommand:aais.openChat",
+    "onCommand:aais.configure",
+    "onCommand:aais.toggleGovernance",
+    "onView:aaisChatView"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "aais.openChat",
+        "title": "AAIS: Open Chat",
+        "category": "AAIS"
+      },
+      {
+        "command": "aais.configure",
+        "title": "AAIS: Configure Backends",
+        "category": "AAIS"
+      },
+      {
+        "command": "aais.toggleGovernance",
+        "title": "AAIS: Toggle Governance Mode",
+        "category": "AAIS"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "aais-chat",
+          "title": "AAIS",
+          "icon": "media/aais-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "aais-chat": [
+        {
+          "id": "aaisChatView",
+          "name": "Chat",
+          "type": "webview",
+          "icon": "media/chat-icon.svg"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AAIS",
+      "properties": {
+        "aais.governanceMode": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable governance mode (AAIS flow, policies, invariants)"
+        },
+        "aais.preferredBackend": {
+          "type": "string",
+          "enum": ["auto", "ollama", "groq", "openrouter-free", "lm-studio", "cursor"],
+          "default": "auto",
+          "description": "Preferred backend for coding requests"
+        },
+        "aais.ollamaUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:11434",
+          "description": "Ollama server URL"
+        },
+        "aais.autoDetect": {
+          "type": "boolean",
+          "default": true,
+          "description": "Auto-detect available backends"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "aais.openChat",
+        "key": "ctrl+alt+a",
+        "mac": "cmd+alt+a",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.0",
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.5.0",
+    "vsce": "^2.15.0",
+    "esbuild": "^0.20.0"
+  },
+  "dependencies": {
+    "@aaes-os/coding-assistant": "workspace:*",
+    "@aaes-os/governed-runtime": "workspace:*",
+    "@aaes-os/aais": "workspace:*"
+  }
+}

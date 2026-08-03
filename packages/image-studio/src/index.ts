@@ -1,6 +1,9 @@
 export { PollinationsProvider } from './providers/pollinations.js';
 export { CloudflareProvider } from './providers/cloudflare.js';
 export { HuggingFaceProvider } from './providers/huggingface.js';
+export { HfSpaceProvider, HF_SPACE_BASE_URL } from './providers/hfspace.js';
+export { GenblazeProvider } from './providers/genblaze.js';
+export { StoryForgeProvider } from './providers/storyforge.js';
 export { createAvailableProviders, pickProvider } from './providers/registry.js';
 export { dataUrlToBase64, resolveReferenceBase64 } from './providers/reference.js';
 export type { ImageGenRequest, ImageGenResult, ImageProvider, ProviderEnv, ReferenceImage } from './providers/types.js';

@@ -35,6 +35,7 @@ export default {
             { to: '/docs/runtime/coda-doc', label: 'CodaDoc' },
             { to: '/docs/runtime/coda-runtime', label: 'CodaRuntime' },
             { to: '/docs/runtime/nova-coda', label: 'NovaCoda' },
+            { to: '/docs/runtime/nova-studio', label: 'Nova Studio' },
             { to: '/docs/runtime/nova-substrate-client', label: 'Nova Substrate Client' },
             { to: '/docs/runtime/isl-runtime', label: 'ISL Runtime' },
             { to: '/docs/runtime/gcre-sysmin', label: 'GCRE-SYSMIN-001' },

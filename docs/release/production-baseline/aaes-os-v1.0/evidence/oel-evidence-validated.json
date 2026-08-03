@@ -1,0 +1,89 @@
+{
+  "id": "evidence-baseline-v1.0",
+  "type": "OEL",
+  "version": "1.0.0",
+  "authority": {
+    "carId": "car-ops-001",
+    "actorId": "ops-approver-001",
+    "role": "approver"
+  },
+  "context": {
+    "domain": "ops",
+    "subdomain": "aaes-os-production-baseline"
+  },
+  "inputs": {
+    "artifacts": [
+      "docs/release/production-baseline/aaes-os-v1.0/INDEX.md",
+      "docs/release/production-baseline/aaes-os-v1.0/evidence/checksum-reverify.json",
+      "docs/release/production-baseline/aaes-os-v1.0/evidence/REPRODUCTION_RUNBOOK.md",
+      "k8s/aaes-os-production.yaml",
+      "k8s/network-policies.yaml",
+      "k8s/ingress-and-load-balancing.yaml",
+      ".github/workflows/build-and-push.yml",
+      "packages/cef-core"
+    ],
+    "dataRefs": [
+      "commit:7efa0c5f766bc0b30b6eef820d198be3a6bf1a5d",
+      "cef-core:validateProfile:OEL"
+    ],
+    "advisoryOutputs": []
+  },
+  "verification": {
+    "checks": [
+      { "id": "check-integrity", "result": "passed" },
+      { "id": "check-completeness", "result": "pending" },
+      { "id": "check-security", "result": "pending" },
+      { "id": "check-conformance", "result": "pending" },
+      { "id": "check-policy", "result": "pending" },
+      { "id": "check-replay", "result": "passed" },
+      { "id": "check-audit", "result": "passed" },
+      { "id": "check-cef-core-schema", "result": "passed" }
+    ]
+  },
+  "lineage": {
+    "parentEvidence": null,
+    "previousVersions": ["docs/release/cef/examples/evidence-baseline-v1.0.json"]
+  },
+  "replay": {
+    "instructions": "1) checkout 7efa0c5f766bc0b30b6eef820d198be3a6bf1a5d 2) verify docs/release/production-baseline/aaes-os-v1.0/evidence/k8s-manifest-checksums.json 3) build/pull digest-pinned images 4) apply k8s manifests in frozen order 5) re-run health/security/conformance gates 6) pnpm --filter @aaes-os/cef-core test && validateProfile('OEL', this object) 7) compare verification results"
+  },
+  "audit": {
+    "visibility": "internal",
+    "disclosure": []
+  },
+  "promotion": {
+    "decision": "hold",
+    "signature": null,
+    "timestamp": null
+  },
+  "oel": {
+    "deploymentId": "aaes-os-production-baseline-v1.0",
+    "commitSha": "7efa0c5f766bc0b30b6eef820d198be3a6bf1a5d",
+    "containerDigest": "pending",
+    "immutableTag": "pending",
+    "sbomRef": "pending",
+    "supplyChainFacts": {
+      "registry": "ghcr.io/warheart1984-ctrl/aaes-os",
+      "status": "pending-first-ghcr-push"
+    },
+    "vulnerabilityScan": {
+      "tool": "trivy",
+      "status": "pending"
+    },
+    "securityGates": {
+      "status": "controls-declared; live-scan-artifacts-pending"
+    },
+    "conformanceTests": {
+      "passed": 0,
+      "total": 0
+    },
+    "runtimeHealth": {
+      "status": "contracts-frozen; live-probe-results-pending"
+    },
+    "policyValidation": {
+      "netpol": "manifest-frozen",
+      "rbac": "manifest-frozen",
+      "securityContext": "manifest-frozen"
+    }
+  }
+}

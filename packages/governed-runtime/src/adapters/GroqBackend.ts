@@ -1,15 +1,17 @@
 import type { CodingBackend, GovernedChatRequest } from '../types.js';
 import { buildChatResponse, postJson, type OpenAiStyleResponse } from './helpers.js';
+import { createLocalFetch } from './localFetch.js';
 
 export interface GroqBackendOptions {
   apiKey: string;
   model?: string;
   baseUrl?: string;
+  name?: string;
   fetch?: typeof globalThis.fetch;
 }
 
 export class GroqBackend implements CodingBackend {
-  readonly name = 'groq-llama3-70b';
+  readonly name: string;
   readonly supports = { chat: true, code: true };
 
   private readonly apiKey: string;
@@ -19,9 +21,10 @@ export class GroqBackend implements CodingBackend {
 
   constructor(apiKey: string, options: Omit<GroqBackendOptions, 'apiKey'> = {}) {
     this.apiKey = apiKey;
-    this.model = options.model ?? 'llama3-70b-8192';
+    this.model = options.model ?? process.env.GROQ_MODEL ?? 'llama-3.3-70b-versatile';
     this.baseUrl = options.baseUrl ?? 'https://api.groq.com/openai/v1';
-    this.fetchImpl = options.fetch ?? globalThis.fetch;
+    this.name = options.name ?? 'groq';
+    this.fetchImpl = options.fetch ?? createLocalFetch();
   }
 
   static fromOptions(options: GroqBackendOptions): GroqBackend {

@@ -15,7 +15,7 @@ export class HuggingFaceProvider implements ImageProvider {
   readonly name = 'huggingface';
   readonly requiresApiKey = true;
   readonly configHelp =
-    'Set HF_TOKEN (free Hugging Face account, token with "Inference Providers" permission). Free tier: monthly inference credits.';
+    'Set HF_TOKEN (free Hugging Face account, token with "Inference Providers" permission). Note: the free tier serves no image-to-image models (hf-inference router returns 400), so this provider only works with a paid subscription.';
 
   private readonly apiToken: string | undefined;
   private readonly fetchImpl: typeof fetch;

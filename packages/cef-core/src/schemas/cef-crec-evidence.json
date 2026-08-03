@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aaes-os.local/schemas/cef-crec-evidence.json",
+  "title": "CEF CREC Evidence Profile v1.0",
+  "allOf": [
+    { "$ref": "https://aaes-os.local/schemas/cef-core-evidence.json" },
+    {
+      "type": "object",
+      "required": ["type", "crec"],
+      "properties": {
+        "type": { "const": "CREC" },
+        "crec": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "experimentId",
+            "claim",
+            "methods",
+            "results",
+            "proofSurfaceLevel"
+          ],
+          "properties": {
+            "experimentId": { "type": "string", "minLength": 1 },
+            "claim": { "type": "string", "minLength": 1 },
+            "methods": { "type": "array", "items": { "type": "string" } },
+            "results": { "type": "object" },
+            "proofSurfaceLevel": {
+              "type": "string",
+              "enum": ["P0", "P1", "P2", "P3", "P4", "P5"]
+            },
+            "datasetRefs": { "type": "array", "items": { "type": "string" } },
+            "truthBoundary": { "type": "string" }
+          }
+        }
+      }
+    }
+  ]
+}

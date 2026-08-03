@@ -1,0 +1,18 @@
+﻿{
+    "jobId":  "resident-1",
+    "version":  "1.0",
+    "outputDir":  "G:\\project-infi\\native\\vulkan-render-worker\\resident-validation\\output-1",
+    "width":  128,
+    "backend":  "vulkan",
+    "frames":  2,
+    "evidenceRefs":  [
+                         "resident-1"
+                     ],
+    "height":  96,
+    "fps":  30,
+    "meshPath":  "G:/New folder/engine/surfaces/meshes/hopf-surface.mesh.json",
+    "scenePath":  "none",
+    "surfaceId":  "hopf-surface",
+    "createdAt":  "2026-07-22T08:26:26.9166469Z",
+    "sceneId":  "scene-1"
+}

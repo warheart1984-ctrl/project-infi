@@ -1,0 +1,44 @@
+                 Constitutional Evidence Framework (CEF)
+                 ----------------------------------------
+                                |   Core Invariants   |
+                                |  Replay • Audit     |
+                                |  Authority • Version|
+                                -----------------------
+        ---------------------------------------------------------------
+        |                         Profiles                           |
+        ---------------------------------------------------------------
+        |                                                             |
+        |   CREC (Research)     OEL (Operations)     CEL (Language)  |
+        |                                                             |
+        |   Security Evidence    ModelEval Evidence   Certification   |
+        |                                                             |
+        ---------------------------------------------------------------
+                                |
+                                v
+                     -------------------------------
+                     |     Certification Engine     |
+                     |-------------------------------|
+                     | Promotion Decision           |
+                     | Verification Gates           |
+                     | Authority Check (CAR)        |
+                     | Signature + Replay Identity  |
+                     -------------------------------
+                                |
+                                v
+                     -------------------------------
+                     |        Certificate           |
+                     |-------------------------------|
+                     | Immutable                    |
+                     | Replayable                   |
+                     | Auditable                    |
+                     | Stewardship State            |
+                     -------------------------------
+                                |
+                                v
+                     -------------------------------
+                     |         Stewardship          |
+                     |-------------------------------|
+                     | Renewal • Revocation         |
+                     | Historical Replay            |
+                     | Audit Disclosure             |
+                     -------------------------------

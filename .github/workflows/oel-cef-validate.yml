@@ -1,0 +1,57 @@
+name: OEL CEF Validate
+
+on:
+  push:
+    paths:
+      - 'packages/cef-core/**'
+      - 'packages/cef-certification/**'
+      - 'packages/cef-stewardship/**'
+      - 'docs/release/production-baseline/**'
+      - 'docs/release/cef/**'
+      - 'tools/oel-validate.ts'
+      - 'tools/merge-image-digests.ts'
+      - '.github/workflows/oel-cef-validate.yml'
+  pull_request:
+    paths:
+      - 'packages/cef-core/**'
+      - 'packages/cef-certification/**'
+      - 'packages/cef-stewardship/**'
+      - 'docs/release/production-baseline/**'
+      - 'docs/release/cef/**'
+      - 'tools/oel-validate.ts'
+      - '.github/workflows/oel-cef-validate.yml'
+
+jobs:
+  oel-cef-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        run: npm install -g pnpm@10.15.0
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Test cef-core
+        run: pnpm --filter @aaes-os/cef-core test
+
+      - name: Build cef consumers
+        run: |
+          pnpm --filter @aaes-os/cef-core build
+          pnpm --filter @aaes-os/cef-certification build
+          pnpm --filter @aaes-os/cef-stewardship build
+
+      - name: Validate baseline OEL evidence
+        run: pnpm exec tsx tools/oel-validate.ts
+
+      - name: Run certification + stewardship package tests
+        run: |
+          pnpm --filter @aaes-os/cef-certification test
+          pnpm --filter @aaes-os/cef-stewardship test

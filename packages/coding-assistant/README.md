@@ -42,12 +42,17 @@ pnpm free-coding --infinity "Build a CLI todo app in Rust"
 |-------|-------------|---------|
 | Ollama | `http://127.0.0.1:11434` | `OLLAMA_HOST`, `OLLAMA_MODEL` |
 | LM Studio | `http://127.0.0.1:1234` | `LM_STUDIO_URL`, `LM_STUDIO_MODEL` |
+| OpenRouter (free text) | `https://openrouter.ai/api/v1` | `OPENROUTER_API_KEY`, `OPENROUTER_MODEL` (default `openrouter/free`) |
+| Groq (free-tier text) | `https://api.groq.com/openai/v1` | `GROQ_API_KEY`, `GROQ_MODEL` |
 | Cursor (local) | `http://127.0.0.1:5100` | — |
 | Devin (local) | `http://127.0.0.1:8000` | — |
 | Local LLM | `http://127.0.0.1:8080` | — |
 
-Auto-discovery probes each endpoint at startup. The free policy pack (`coding-free.yaml`) routes tasks to the best available local backend.
-When both `qwen2.5-coder:3b` and `qwen2.5-coder:7b` are present in Ollama, the assistant now wraps them in a SovereignX router so small prompts favor the 3B model and larger prompts favor the 7B model.
+Auto-discovery probes local endpoints and registers cloud free backends when keys are set.
+The free policy pack (`coding-free.yaml`) prefers local, then OpenRouter/Groq.
+When both `qwen2.5-coder:3b` and `qwen2.5-coder:7b` are present in Ollama, SovereignX routes small prompts to 3B and larger prompts to 7B.
+
+**Honesty:** OpenRouter/Groq wiring in this pack is **text/chat only**. Free cloud images use `@aaes-os/image-studio` via `pnpm aais --image` (Pollinations keyless; Gemini with `GEMINI_API_KEY`). Free cloud **video** is not provided.
 
 ### Plug in any OpenAI-compatible agent
 

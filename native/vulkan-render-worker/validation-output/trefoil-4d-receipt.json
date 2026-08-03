@@ -1,0 +1,24 @@
+{
+  "adapterId": "",
+  "backend": "vulkan",
+  "completedAt": "2026-07-22T08:26:25Z",
+  "deviceName": "AMD Radeon (TM) R9 380 Series",
+  "evidenceRefs": [
+    "native-surface-parity"
+  ],
+  "jobId": "surface-trefoil-4d",
+  "meshContract": {
+    "contentHash": "5b78f09a53f121dc7b56d053dc03109295ab78cd3d5fad88c76a7e610603efba",
+    "faceCount": 2048,
+    "id": "trefoil-4d",
+    "vertexCount": 1089
+  },
+  "outputPaths": [
+    "G:\\project-infi\\native\\vulkan-render-worker\\validation-output\\trefoil-4d\\vulkan-frame-000000.ppm",
+    "G:\\project-infi\\native\\vulkan-render-worker\\validation-output\\trefoil-4d\\vulkan-frame-000001.ppm"
+  ],
+  "startedAt": "2026-07-22T08:26:25Z",
+  "status": "completed",
+  "version": "1.0",
+  "workerEvidenceHash": "d3b9ca05b0ce92f4d8501c35ec9c1293ca324d8b0934dff235b0bd33df25f079"
+}

@@ -15,6 +15,7 @@ They are grouped here so the docs site can present them as first-class runtime p
 - [NovaCoda](./nova-coda.md)
 - [Nova Substrate](./nova-substrate.md)
 - [Nova Substrate Client](./nova-substrate-client.md)
+- [Nova Studio](./nova-studio.md)
 - [UL Runtime](./ul-runtime.md)
 - [CSL Runtime](./csl-runtime.md)
 - [ISL Runtime](./isl-runtime.md)

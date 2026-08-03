@@ -5,13 +5,13 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "4cc7a042594c25ca3f9d9d1cbcbdca10d19418699f925531e9f725b630f40c77",
-      "size": 22372
+      "sha256": "4f846dca9fb1f238107ac14f2d04ce4b7dfe0c0ded8d9b0cb26d64318329f806",
+      "size": 22776
     },
     {
       "path": "docs/README.md",
-      "sha256": "07b7fb06445580b2c318ca8bfc039905924ca4cc95c52d465dcdf3ee2919dbd0",
-      "size": 11919
+      "sha256": "8c7c300645d3e0d822394b1bdea965402a029cb19b3a6f9f7261b01566c736fd",
+      "size": 12823
     },
     {
       "path": "docs/architecture/README.md",
@@ -55,23 +55,23 @@
     },
     {
       "path": "docs/release/external-integrations/README.md",
-      "sha256": "c321d90a6f36820b1872c98ebe43bd18ce80ae66ef0d0f1360f34b5c505e45bd",
+      "sha256": "f2abe0a1a4a6c6efbb8dcd7d3b72b16704b9febc7d2d26b53037ad1cb8147cae",
       "size": 690
     },
     {
       "path": "docs/release/external-integrations/external-integration-index.json",
-      "sha256": "6c0c6da00e9f407b6c045a0ca6643ec4a7b565148e69f6c46ddab5c218a4cdab",
+      "sha256": "090979296254b2577081fb92bb074d6ff7a9dc5dd257682fe098075035521fc8",
       "size": 1461
     },
     {
       "path": "docs/release/production-hardening/README.md",
-      "sha256": "1a691b65ebcdc3aa887b3fe3f926fd54d89b394baf6fdd4ceb4e7924306a3a3f",
+      "sha256": "7359b4e6c4e5943f9a5defaadf3030b5db21366989cd8ae4e3542b0f285faf6a",
       "size": 2742
     },
     {
       "path": "docs/release/production-hardening/production-hardening-index.json",
-      "sha256": "b6ad858805539b291b31978c94a9c04009fe4a8a77baf95a2caadb2ceab18849",
-      "size": 34905
+      "sha256": "e9ecbd992b843be2518f46a56a1cf1695f2d66265658344d4abaa4b49aa66390",
+      "size": 34906
     },
     {
       "path": "docs/release/production-hardening/ul-runtime.evidence.json",
@@ -110,8 +110,8 @@
     },
     {
       "path": "docs/release/production-hardening/ugr-runtime.evidence.json",
-      "sha256": "6e5b5098a5ffd3b203b11dc514078497db91c4bbc3f00a0545d72d1b73268087",
-      "size": 2797
+      "sha256": "b1db609093816245a72873d25d684b74dd96194cacef4a7e19d86aab9f745910",
+      "size": 2798
     },
     {
       "path": "docs/release/production-hardening/gcre-sysmin.evidence.json",
@@ -170,13 +170,13 @@
     },
     {
       "path": "docs/scorecards/project-infi.md",
-      "sha256": "36791c6d7a673e2261290cb2bc714af5d2d611908f2553fd3a67762ef3b0ef8f",
-      "size": 40706
+      "sha256": "2f282fe488369d7688153a9822953b06a955280b3a78f085f269a10dd7e8504c",
+      "size": 44799
     },
     {
       "path": "package.json",
-      "sha256": "5b2d42103a6af1ff324001cb73af7ea8d6f5b036b9d98d7293fcf0717aa89931",
-      "size": 3614
+      "sha256": "e6eebf7fa244533846051e700d10480eee8a7028fdc46660da92045194b9fdb3",
+      "size": 4251
     },
     {
       "path": "tools/external-integration-evidence.ts",
@@ -195,18 +195,18 @@
     },
     {
       "path": "release/package-release.ts",
-      "sha256": "18b6c04a0987dd728b53ae941440e98f4af9ea0afa32c4ec6b86409697212c50",
-      "size": 1390
+      "sha256": "2b585218f65de8e54a42901a8bacaa8d2d92974ac8f51f336b4b1358ba788a08",
+      "size": 1354
     },
     {
       "path": "release/receipt.ts",
-      "sha256": "c8707acbed63d02c23de7bd327fdb715abc3c64eb96e562134921f463a5b8a3e",
-      "size": 9240
+      "sha256": "33b08357a21d996f3546a18d864b06588e34a3e628f2eaf1ec20bb8b492bee83",
+      "size": 9294
     },
     {
       "path": "release/scorecard-sync.ts",
-      "sha256": "b32afc409bdb89001bf24b79781d70fab0dd5321976d958d051f1a5d735fdc0c",
-      "size": 12790
+      "sha256": "af1bdcfbb48eaad10e407014d75e72c1cb7912800acd76586f130097a5c9d6bb",
+      "size": 13216
     },
     {
       "path": "release/sign-release.ts",
@@ -217,6 +217,11 @@
       "path": "release/verify-release.ts",
       "sha256": "3b120fa0ee71d79e95a0f7efa773b9bcf7dd90e752dc8d6ff017398d732ca4ae",
       "size": 4501
+    },
+    {
+      "path": "release/release-readiness-record.md",
+      "sha256": "928f31d7afe93507b8663e7f9b48eacbce1cf5302d74ff0f32e39285139a21d3",
+      "size": 1626
     }
   ],
   "signature": null

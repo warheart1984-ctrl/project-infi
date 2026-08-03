@@ -1,0 +1,88 @@
+{
+  "name": "mrs-mcp",
+  "version": "0.1.0",
+  "description": "MCP server bridging ChatGPT to the MRS RT4D rendering engine with constitutional evidence",
+  "author": "AAES-OS",
+  "license": "MIT",
+  "mcp": {
+    "server": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "env": {
+        "MRS_ENGINE_URL": "http://127.0.0.1:8080",
+        "MRS_API_KEY": ""
+      }
+    },
+    "tools": [
+      {
+        "name": "render_rt4d_preview",
+        "description": "Render a scene via the MRS RT4D engine and return the full layered evidence bundle",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "sceneSpec": { "type": "object", "description": "Canonical JSON scene specification" },
+            "surface": { "type": "string", "description": "Surface identifier validated against engine capability gate" },
+            "seed": { "type": "integer", "description": "Optional deterministic seed" },
+            "camera": {
+              "type": "object",
+              "properties": {
+                "fov": { "type": "number", "minimum": 1, "maximum": 179 },
+                "position": { "type": "array", "items": { "type": "number" }, "minItems": 3, "maxItems": 3 },
+                "target": { "type": "array", "items": { "type": "number" }, "minItems": 3, "maxItems": 3 },
+                "rotations": { "type": "array", "items": { "type": "number" }, "minItems": 3, "maxItems": 3 }
+              }
+            },
+            "quality": {
+              "type": "object",
+              "properties": {
+                "resolution": { "type": "array", "items": { "type": "integer", "minimum": 1 }, "minItems": 2, "maxItems": 2 },
+                "spp": { "type": "integer", "minimum": 1 },
+                "maxDepth": { "type": "integer", "minimum": 1 }
+              }
+            },
+            "trajectory": { "type": "array", "items": { "type": "array", "items": { "type": "number" } } }
+          },
+          "required": ["sceneSpec", "surface"]
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "renderId": { "type": "string", "pattern": "^rt4d-render-[a-f0-9]{16}$" },
+            "sceneId": { "type": "string" },
+            "width": { "type": "integer", "minimum": 1 },
+            "height": { "type": "integer", "minimum": 1 },
+            "seed": { "type": "integer" },
+            "trajectoryRoot": { "type": "string" },
+            "sceneSpecHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+            "projectionHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+            "pixelHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+            "pngHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+            "rendererVersion": { "type": "string" },
+            "runtimeFingerprint": {
+              "type": "object",
+              "properties": {
+                "node": { "type": "string" },
+                "zlib": { "type": "string" },
+                "platform": { "type": "string" },
+                "arch": { "type": "string" }
+              },
+              "required": ["node", "zlib", "platform", "arch"],
+              "additionalProperties": false
+            },
+            "evidenceStatus": { "type": "string", "enum": ["substrate_verified"] },
+            "promotionStatus": { "type": "string", "enum": ["not_promoted_to_ciems"] }
+          },
+          "required": ["renderId", "sceneId", "width", "height", "seed", "trajectoryRoot", "sceneSpecHash", "projectionHash", "pixelHash", "pngHash", "rendererVersion", "runtimeFingerprint", "evidenceStatus", "promotionStatus"],
+          "additionalProperties": false
+        }
+      }
+    ]
+  },
+  "skills": [
+    {
+      "name": "mrs-rendering",
+      "description": "Governed RT4D rendering workflow using MRS MCP server",
+      "instructions": "Use render_rt4d_preview for all RT4D renders. Never claim substrate_verified evidence without a successful MCP tool call. Never use AAIS as a fallback renderer for MRS evidence."
+    }
+  ]
+}

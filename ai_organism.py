@@ -1,8 +1,20 @@
 #!/usr/bin/env python3
 """
-AI Organism - Main Entry Point
-Prime Architect 7-Layer Architecture with UCDD Compliance
-Constitutional Governance Integration
+DEPRECATED (2026-08-01) - AI Organism legacy Python scaffold.
+
+This entry point is parked: it requires the legacy `ulx` Python module
+(see `docs/runtime/legacy/ai-organism.md`) and does not run in this workspace
+(ModuleNotFoundError: No module named 'ulx'; also hardcodes E:\\ path).
+
+The living embodiment of the AI Organism execution contract lives in the
+TypeScript LIRL vertical slice:
+  - packages/lirl/src/loop.ts            (intent -> law gate -> memory -> receipt -> operator view)
+  - packages/lirl/src/lawGate.ts         (constitution/invariant gate)
+  - packages/lirl/src/memory.ts          (governed identity memory)
+  - packages/lirl/src/receipts.ts        (evidence receipts)
+  - tests/integration/ai-organism-alive.test.ts  (alive gate: 5 execution-contract conditions)
+
+Do not extend this file. Prefer the LIRL stack and its alive-gate tests.
 """
 
 import sys

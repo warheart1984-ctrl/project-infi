@@ -1,0 +1,42 @@
+certificateId: cert-baseline-v1.0
+status: DRAFT
+version: 1.0.0
+profile: OEL
+evidenceRef: evidence-baseline-v1.0
+evidencePath: docs/release/production-baseline/aaes-os-v1.0/evidence/oel-evidence-validated.json
+cefCoreReceipt: docs/release/production-baseline/aaes-os-v1.0/evidence/cef-core-validation-receipt.json
+authority:
+  carId: car-ops-001
+  actorId: ops-approver-001
+verification:
+  integrity: passed
+  completeness: waived-for-esfr-v1
+  security:
+    sbom: waived-for-esfr-v1
+    vulnerabilityScan: waived-for-esfr-v1
+    supplyChain: waived-for-esfr-v1
+  conformanceTests:
+    passed: 0
+    total: 0
+  policyValidation:
+    netpol: manifest-frozen
+    rbac: manifest-frozen
+    securityContext: manifest-frozen
+  cefCoreSchema: passed
+replay:
+  instructions: "See oel-evidence-validated.json replay.instructions and evidence/REPRODUCTION_RUNBOOK.md"
+audit:
+  visibility: internal
+  disclosure: []
+promotion:
+  decision: HOLD
+  signature: null
+  timestamp: null
+stewardship:
+  state: unpromoted
+claimBoundary: >-
+  DRAFT/HOLD is the accepted certificate state for the current ESFR gate.
+  Freeze + cef-core schema validation are evidenced. GHCR digest pins, live
+  cluster capture, and authority-signed ACTIVE promotion are deferred optional
+  backlog — not PromotionEligibility requirements for AAES_CREW_CEF_BASELINE_ESFR_2026-07-31.
+promotionGate: '@aaes-os/cef-certification evaluatePromotion + @aaes-os/cef-core assertPromotionAllowed (ACTIVE path deferred)'

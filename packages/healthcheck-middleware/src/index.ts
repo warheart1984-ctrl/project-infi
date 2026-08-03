@@ -1,4 +1,4 @@
-import express, { type Express, type Request, type Response } from 'express';
+import { type Express, type Request, type Response } from 'express';
 
 /**
  * Shared health check middleware for all services
@@ -50,12 +50,12 @@ export function createHealthCheckHandler(options: HealthCheckOptions = {}) {
             const timeoutPromise = new Promise<boolean>((resolve) =>
               setTimeout(() => resolve(false), checkTimeout)
             );
-            results[name] = await Promise.race([checkPromise, timeoutPromise]);
-            if (!results[name]) allHealthy = false;
-          } catch (error) {
-            results[name] = false;
-            allHealthy = false;
-          }
+             results[name] = await Promise.race([checkPromise, timeoutPromise]);
+             if (!results[name]) allHealthy = false;
+           } catch {
+             results[name] = false;
+             allHealthy = false;
+           }
         })
       );
 

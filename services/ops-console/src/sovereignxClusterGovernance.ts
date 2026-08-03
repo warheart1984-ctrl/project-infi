@@ -211,6 +211,11 @@ export function applySovereignXClusterControlRequest(
   return getSovereignXClusterControlState();
 }
 
+export function replaceSovereignXClusterControlState(state: SovereignXClusterControlState): SovereignXClusterControlState {
+  sovereignXClusterControlState = cloneControlState(state);
+  return getSovereignXClusterControlState();
+}
+
 export function buildSovereignXClusterGovernanceProjection(
   router: SovereignXRouter,
   request: SovereignXClusterRouteRequest,
@@ -325,9 +330,9 @@ export function buildSovereignXConstitutionalTraceabilityMatrix(
       capabilityId: 'cluster-membership-control',
       capabilityName: 'Live cluster membership control',
       constitutionalRequirements: ['CIS-CORE-02 Governance before automation', 'CIS-CORE-04 Versioned change management', 'CIS-CORE-07 Significant actions are governed before execution'],
-      architecturalComponent: 'sovereignxClusterControlState + cluster governance projection',
+      architecturalComponent: 'sovereignxClusterControlState + cluster governance projection + cluster control adapter',
       evidenceIds: ['ops-router-evidence-cluster-membership', 'ops-router-evidence-tests'],
-      tests: ['services/ops-console/src/server.test.ts'],
+      tests: ['services/ops-console/src/server.test.ts', 'services/ops-console/src/sovereignxClusterControlAdapter.test.ts'],
       proofSurfaceIds: ['@aaes-os/sovereignx-cluster-governance-runtime'],
       status: 'verified',
     },
@@ -337,7 +342,7 @@ export function buildSovereignXConstitutionalTraceabilityMatrix(
       constitutionalRequirements: ['CIS-CORE-02 Governance before automation', 'CIS-CORE-05 Audit records preserve operational history', 'CIS-CORE-07 Significant actions are governed before execution'],
       architecturalComponent: 'cluster governance autoscaler and failover planner',
       evidenceIds: ['ops-router-evidence-cluster-membership', 'ops-router-evidence-tests'],
-      tests: ['services/ops-console/src/server.test.ts'],
+      tests: ['services/ops-console/src/server.test.ts', 'services/ops-console/src/sovereignxClusterControlAdapter.test.ts'],
       proofSurfaceIds: ['@aaes-os/sovereignx-cluster-governance-runtime'],
       status: 'verified',
     },
@@ -347,7 +352,7 @@ export function buildSovereignXConstitutionalTraceabilityMatrix(
       constitutionalRequirements: ['CIS-CORE-01 Evidence before claims', 'CIS-CORE-05 Audit records preserve operational history', 'CIS-CORE-07 Significant actions are governed before execution'],
       architecturalComponent: 'cluster soak and chaos validator',
       evidenceIds: ['ops-router-evidence-cluster-membership', 'ops-router-evidence-tests'],
-      tests: ['services/ops-console/src/server.test.ts'],
+      tests: ['services/ops-console/src/server.test.ts', 'services/ops-console/src/sovereignxClusterControlAdapter.test.ts'],
       proofSurfaceIds: ['@aaes-os/sovereignx-cluster-governance-runtime'],
       status: 'verified',
     },

@@ -36,7 +36,7 @@
 | Conformance | `conformance/` | Y | N | Y | partial | Fixtures present |
 | Continuity engine | `continuity-engine/` | N | N | Y | unknown | |
 | Evolve engine | `evolve_engine/` | N | N | Y | unknown | |
-| AI organism entry | `ai_organism.py` + `docs/runtime/legacy/ai-organism.md` | Y | Y | partial | partial | Docstring claims “complete” — **parked**; treat as entry/integration scaffold |
+| AI organism entry | `ai_organism.py` + `docs/runtime/legacy/ai-organism.md` | Y | Y | partial | **deprecated** | Docstring claims “complete” — **parked/deprecated** (does not run: missing `ulx` module, hardcoded `E:\` path); execution contract lives in LIRL alive gate `tests/integration/ai-organism-alive.test.ts` |
 | **LIRL vertical slice** | `packages/lirl/` + `services/platform-api/src/lirlRoutes.ts` | Y | Y | Y | **partial (tested)** | Lawful Intent Receipt Loop — package + HTTP; 5 vitest cases green |
 | Symbolic organism tests | `tests/test_symbolic_organism_vm*` | — | — | Y | partial | Test artifacts exist |
 

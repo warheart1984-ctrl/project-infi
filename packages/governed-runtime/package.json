@@ -27,6 +27,7 @@
     "@aaes-os/aaes-governance": "workspace:*",
     "@aaes-os/kerno": "workspace:*",
     "@aaes-os/sovren": "workspace:*",
+    "undici": "6.27.0",
     "yaml": "^2.8.0"
   },
   "devDependencies": {

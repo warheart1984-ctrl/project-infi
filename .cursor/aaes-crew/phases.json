@@ -1,0 +1,57 @@
+{
+  "count": 6,
+  "esfrPipelineSlot": 7,
+  "defaultModeKey": "sage__navigator__evidence-strict",
+  "phases": [
+    {
+      "id": "vision",
+      "name": "Vision & Discovery",
+      "order": 1,
+      "roleSkill": "aaes-architect",
+      "family": "vision"
+    },
+    {
+      "id": "architecture",
+      "name": "Architecture & Specification",
+      "order": 2,
+      "roleSkill": "aaes-architect",
+      "family": "architecture"
+    },
+    {
+      "id": "design",
+      "name": "Design & Scaffold",
+      "order": 3,
+      "roleSkill": "aaes-builder",
+      "family": "design"
+    },
+    {
+      "id": "implementation",
+      "name": "Implementation & Coding",
+      "order": 4,
+      "roleSkill": "aaes-coding",
+      "family": "implementation"
+    },
+    {
+      "id": "testing",
+      "name": "Testing & Verification",
+      "order": 5,
+      "roleSkill": "aaes-inspector",
+      "family": "testing"
+    },
+    {
+      "id": "operations",
+      "name": "Deployment, Operations & Evidence",
+      "order": 6,
+      "roleSkill": "aaes-implementor",
+      "family": "operations"
+    },
+    {
+      "id": "esfr",
+      "name": "ESFR PromotionEligibility",
+      "order": 7,
+      "roleSkill": "aaes-esfr",
+      "family": "standards",
+      "note": "Not one of the six pre-ESFR roles; run last"
+    }
+  ]
+}

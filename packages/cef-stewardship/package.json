@@ -1,0 +1,27 @@
+{
+  "name": "@aaes-os/cef-stewardship",
+  "version": "1.0.0",
+  "description": "CEF Stewardship stub — certificate lifecycle gated by @aaes-os/cef-core",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "pnpm --filter @aaes-os/cef-certification build && vitest run --config vitest.config.ts"
+  },
+  "dependencies": {
+    "@aaes-os/cef-core": "workspace:*",
+    "@aaes-os/cef-certification": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

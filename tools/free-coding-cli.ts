@@ -18,6 +18,8 @@ if (!prompt) {
   console.error('Requires a free local agent: Ollama, LM Studio, Cursor, or Devin.');
   console.error('  ollama serve');
   console.error('  ollama pull qwen2.5-coder:3b');
+  console.error('  ollama pull qwen2.5-coder:7b   # AAIS 3b/7b routing');
+  console.error('Or: pnpm aais --status');
   process.exit(1);
 }
 

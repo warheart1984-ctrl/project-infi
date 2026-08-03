@@ -1,7 +1,8 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-import { getBundleRoot, getRepoRoot } from './shared.ts';
+import { getRepoRoot } from './shared.ts';
 
 function buildReceiptDrivenSnapshot(receipt) {
   const maturity = String(receipt?.constitutionalMaturity ?? 'Unknown');
@@ -95,17 +96,14 @@ function updateReadme(filePath, snapshot) {
     `| Proof Level | ${snapshot.proofSurfaceLevel} |`,
     filePath,
   );
-  updated = updated.replace(/\| Receipt hash \| .* \|/g, `| Receipt hash | ${snapshot.receiptHash} |`);
-  if (updated === content || !updated.includes(snapshot.receiptHash)) {
-    throw new Error(`expected text not found in ${filePath}`);
-  }
+  updated = updated.replace(/\| Receipt hash \| .* \|/g, '| Receipt hash | See `release/constitutional-release-receipt.json` |');
   updated = updated.replace(
     /\| Verification timestamp \| .* \|/g,
-    `| Verification timestamp | ${snapshot.verificationTimestamp} |`,
+    '| Verification timestamp | See `release/constitutional-release-receipt.json` |',
   );
 
   if (updated !== content) {
-    writeFileSync(filePath, `${updated}\n`);
+    writeFileSync(filePath, updated.endsWith('\n') ? updated : `${updated}\n`);
   }
 }
 
@@ -178,14 +176,14 @@ function updateScorecard(filePath, snapshot) {
     snapshot.commercialReadiness,
     filePath,
   );
-  updated = updated.replace(/^\| Receipt hash \| .* \|$/m, `| Receipt hash | ${snapshot.receiptHash} |`);
+  updated = updated.replace(/^\| Receipt hash \| .* \|$/m, '| Receipt hash | See `release/constitutional-release-receipt.json` |');
   updated = updated.replace(
     /^\| Verification timestamp \| .* \|$/m,
-    `| Verification timestamp | ${snapshot.verificationTimestamp} |`,
+    '| Verification timestamp | See `release/constitutional-release-receipt.json` |',
   );
 
   if (updated !== content) {
-    writeFileSync(filePath, `${updated}\n`);
+    writeFileSync(filePath, updated.endsWith('\n') ? updated : `${updated}\n`);
   }
 }
 
@@ -248,18 +246,17 @@ function updateOverview(filePath, snapshot) {
   );
 
   if (updated !== content) {
-    writeFileSync(filePath, `${updated}\n`);
+    writeFileSync(filePath, updated.endsWith('\n') ? updated : `${updated}\n`);
   }
 }
 
-export function syncScorecardSnapshot(receipt) {
+export function syncScorecardSnapshot(receipt, options = {}) {
+  const repoRoot = options.repoRoot ?? getRepoRoot();
   const snapshot = buildReceiptDrivenSnapshot(receipt);
-  const targets = [
-    { path: resolve(getRepoRoot(), 'README.md'), kind: 'readme' },
-    { path: resolve(getRepoRoot(), 'docs/scorecards/project-infi.md'), kind: 'scorecard' },
-    { path: resolve(getRepoRoot(), 'docs-site/docs/overview.md'), kind: 'overview' },
-    { path: resolve(getBundleRoot(), 'artifacts/README.md'), kind: 'readme' },
-    { path: resolve(getBundleRoot(), 'artifacts/docs/scorecards/project-infi.md'), kind: 'scorecard' },
+  const targets = options.targets ?? [
+    { path: resolve(repoRoot, 'README.md'), kind: 'readme' },
+    { path: resolve(repoRoot, 'docs/scorecards/project-infi.md'), kind: 'scorecard' },
+    { path: resolve(repoRoot, 'docs-site/docs/overview.md'), kind: 'overview' },
   ];
 
   for (const target of targets) {
@@ -271,4 +268,18 @@ export function syncScorecardSnapshot(receipt) {
       updateScorecard(target.path, snapshot);
     }
   }
+}
+
+export function readVerifiedReleaseReceipt(receiptPath) {
+  return JSON.parse(readFileSync(resolve(getRepoRoot(), receiptPath), 'utf8'));
+}
+
+export function main() {
+  const receipt = readVerifiedReleaseReceipt('release/constitutional-release-receipt.json');
+  syncScorecardSnapshot(receipt);
+  console.log('scorecard snapshot synced from release receipt');
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main();
 }

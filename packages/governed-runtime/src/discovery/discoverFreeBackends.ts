@@ -2,10 +2,12 @@ import { CursorBackend } from '../adapters/CursorBackend.js';
 import { CursorSdkBackend } from '../adapters/CursorSdkBackend.js';
 import { DeepSeekCoderBackend } from '../adapters/DeepSeekCoderBackend.js';
 import { DevinBackend } from '../adapters/DevinBackend.js';
+import { GroqBackend } from '../adapters/GroqBackend.js';
 import { LmStudioBackend } from '../adapters/LmStudioBackend.js';
 import { LocalLlmBackend } from '../adapters/LocalLlmBackend.js';
 import { OllamaBackend } from '../adapters/OllamaBackend.js';
 import { OpenAiCompatibleBackend } from '../adapters/OpenAiCompatibleBackend.js';
+import { OpenRouterBackend } from '../adapters/OpenRouterBackend.js';
 import type { CodingBackend } from '../types.js';
 
 export interface AgentEndpoint {
@@ -28,6 +30,14 @@ export interface DiscoveryOptions {
   cursorModel?: string;
   devinUrl?: string;
   localLlmUrl?: string;
+  /** OpenRouter API key (or set OPENROUTER_API_KEY). Enables free cloud text via openrouter/free. */
+  openRouterApiKey?: string;
+  openRouterModel?: string;
+  /** Groq API key (or set GROQ_API_KEY). Free-tier cloud text. */
+  groqApiKey?: string;
+  groqModel?: string;
+  /** When false, skip cloud free backends even if keys are set. Default true. */
+  includeCloudFree?: boolean;
   extraEndpoints?: AgentEndpoint[];
   /** Skip network probes and use only manually supplied backends. */
   backends?: CodingBackend[];
@@ -198,6 +208,58 @@ export async function discoverFreeBackends(options: DiscoveryOptions = {}): Prom
     skipped.push({ name: 'local-llm', url: localUrl, reason: 'not reachable' });
   }
 
+  const includeCloud = options.includeCloudFree !== false;
+
+  const openRouterKey = options.openRouterApiKey ?? process.env.OPENROUTER_API_KEY;
+  if (includeCloud && openRouterKey) {
+    const model =
+      options.openRouterModel ?? process.env.OPENROUTER_MODEL ?? 'openrouter/free';
+    backends.push(
+      new OpenRouterBackend({
+        apiKey: openRouterKey,
+        model,
+        name: 'openrouter-free',
+        fetch: fetchImpl,
+      }),
+    );
+    available.push({
+      name: 'openrouter-free',
+      url: 'https://openrouter.ai/api/v1',
+      models: [model],
+    });
+  } else if (includeCloud) {
+    skipped.push({
+      name: 'openrouter-free',
+      url: 'https://openrouter.ai/api/v1',
+      reason: 'OPENROUTER_API_KEY not set',
+    });
+  }
+
+  const groqKey = options.groqApiKey ?? process.env.GROQ_API_KEY;
+  if (includeCloud && groqKey) {
+    const model =
+      options.groqModel ?? process.env.GROQ_MODEL ?? 'llama-3.3-70b-versatile';
+    backends.push(
+      GroqBackend.fromOptions({
+        apiKey: groqKey,
+        model,
+        name: 'groq',
+        fetch: fetchImpl,
+      }),
+    );
+    available.push({
+      name: 'groq',
+      url: 'https://api.groq.com/openai/v1',
+      models: [model],
+    });
+  } else if (includeCloud) {
+    skipped.push({
+      name: 'groq',
+      url: 'https://api.groq.com/openai/v1',
+      reason: 'GROQ_API_KEY not set',
+    });
+  }
+
   for (const endpoint of options.extraEndpoints ?? []) {
     backends.push(backendFromEndpoint(endpoint, fetchImpl));
     available.push({ name: endpoint.name, url: endpoint.baseUrl });
@@ -209,7 +271,7 @@ export async function discoverFreeBackends(options: DiscoveryOptions = {}): Prom
 export function requireFreeBackends(result: DiscoveryResult): CodingBackend[] {
   if (result.backends.length === 0) {
     throw new Error(
-      'No free local agents found. Start one of: Ollama (ollama serve), LM Studio, Cursor SDK (CURSOR_API_KEY), Cursor local API, or Devin local API. ' +
+      'No free agents found. Start Ollama/LM Studio/local LLM, or set OPENROUTER_API_KEY / GROQ_API_KEY for free cloud text. ' +
         'Then run discoverFreeBackends() again.',
     );
   }

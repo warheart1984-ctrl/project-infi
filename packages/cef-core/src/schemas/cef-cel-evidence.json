@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aaes-os.local/schemas/cef-cel-evidence.json",
+  "title": "CEF CEL Evidence Profile v1.0",
+  "allOf": [
+    { "$ref": "https://aaes-os.local/schemas/cef-core-evidence.json" },
+    {
+      "type": "object",
+      "required": ["type", "cel"],
+      "properties": {
+        "type": { "const": "CEL" },
+        "cel": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "expression",
+            "compilerVersion",
+            "isf",
+            "invariantsPassed"
+          ],
+          "properties": {
+            "expression": { "type": "string", "minLength": 1 },
+            "compilerVersion": { "type": "string", "minLength": 1 },
+            "isf": { "type": "object" },
+            "ast": { "type": "object" },
+            "aaesEnvelopeRef": { "type": "string" },
+            "invariantsPassed": { "type": "boolean" },
+            "registryRefs": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  ]
+}

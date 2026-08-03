@@ -1,0 +1,24 @@
+{
+  "adapterId": "",
+  "backend": "vulkan",
+  "completedAt": "2026-07-22T08:26:26Z",
+  "deviceName": "AMD Radeon (TM) R9 380 Series",
+  "evidenceRefs": [
+    "native-surface-parity"
+  ],
+  "jobId": "surface-tesseract",
+  "meshContract": {
+    "contentHash": "7f289194480a62da1b04a9a05b8de9ae78a56bbfa71cb34223c11855724da58d",
+    "faceCount": 48,
+    "id": "tesseract",
+    "vertexCount": 16
+  },
+  "outputPaths": [
+    "G:\\project-infi\\native\\vulkan-render-worker\\validation-output\\tesseract\\vulkan-frame-000000.ppm",
+    "G:\\project-infi\\native\\vulkan-render-worker\\validation-output\\tesseract\\vulkan-frame-000001.ppm"
+  ],
+  "startedAt": "2026-07-22T08:26:25Z",
+  "status": "completed",
+  "version": "1.0",
+  "workerEvidenceHash": "203f206984332639963688e68bf589e3e59d4d3a6bb04b3a3384dda93846f46b"
+}

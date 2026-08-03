@@ -27,13 +27,14 @@ intent → law gate → memory write → receipt/evidence → operator view
 | Operator view | `buildOperatorSnapshot()` + HTML file | `packages/lirl/src/operatorView.ts` → `.runtime/lirl/operator.html` |
 | HTTP surface | `POST /v1/lirl/intents`, `GET /v1/lirl/memory/:key`, `GET /v1/lirl/operator` | `services/platform-api/src/lirlRoutes.ts` |
 
-**Tests:** `packages/lirl/src/lirl.test.ts` (3 cases) + `services/platform-api/src/lirl.test.ts` (2 HTTP cases)
+**Tests:** `packages/lirl/src/lirl.test.ts` (3 cases) + `services/platform-api/src/lirl.test.ts` (2 HTTP cases) + `tests/integration/vertical-slice-acceptance.test.ts` (4 acceptance cases, one per criterion below)
 
 ```bash
 cd project-infi
 corepack pnpm --filter @aaes-os/lirl test
 corepack pnpm --filter @aaes-os/platform-api test
 corepack pnpm --filter @aaes-os/platform-cli test
+pnpm exec vitest run tests/integration/vertical-slice-acceptance.test.ts
 ```
 
 ## CLI (local, no platform-api)
@@ -50,10 +51,10 @@ corepack pnpm --filter @aaes-os/platform-cli exec organism lirl intent \
 
 | # | Criterion | Status |
 |---|-----------|--------|
-| 1 | Happy path: accept → memory row → receipt id → operator view | **pass** (`accepts lawful memory.write`) |
-| 2 | Reject path: unlawful → no memory → rejection receipt | **pass** (`rejects unlawful intent`) |
-| 3 | Docs list exact modules | **this file** |
-| 4 | Scorecard note | **see** `docs/scorecards/project-infi.md` § Vertical slice |
+| 1 | Happy path: accept → memory row → receipt id → operator view | **pass** (`AC-1 happy path` in acceptance suite) |
+| 2 | Reject path: unlawful → no memory → rejection receipt | **pass** (`AC-2 reject path` in acceptance suite) |
+| 3 | Docs list exact modules | **pass** (`AC-3 docs list modules`) |
+| 4 | Scorecard note | **pass** (`AC-4 scorecard note`) |
 
 ---
 

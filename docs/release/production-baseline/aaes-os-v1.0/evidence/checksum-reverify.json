@@ -1,0 +1,39 @@
+{
+  "baselineId": "AAES-OS-PRODUCTION-BASELINE-v1.0",
+  "kind": "checksum-reverification",
+  "frozenCommit": "7efa0c5f766bc0b30b6eef820d198be3a6bf1a5d",
+  "verifiedAt": "2026-07-31T21:15:00Z",
+  "workspaceHeadAtVerify": "cb521036d50481882875f22b29996081b07d65d0",
+  "note": "Working tree HEAD may advance; freeze identity remains frozenCommit. Digests below compared to evidence/k8s-manifest-checksums.json.",
+  "results": [
+    {
+      "path": "k8s/aaes-os-production.yaml",
+      "sha256": "1cd3042c36bd93da6ea029b1ac73840f6fd6078d165d9ab1b635f49c59a0d3c1",
+      "match": true
+    },
+    {
+      "path": "k8s/network-policies.yaml",
+      "sha256": "66f3c93c95734ba9ee656524ea2d43dce00ab12ea0c1364da581ee9419813695",
+      "match": true
+    },
+    {
+      "path": "k8s/ingress-and-load-balancing.yaml",
+      "sha256": "39b98dd76918473b678f4733d5cdb0556250912b9f0c799efa9c2f8054342338",
+      "match": true
+    },
+    {
+      "path": ".github/workflows/build-and-push.yml",
+      "sha256": "eb4c099bd2330bf489a10bba600f72a018a94b8006188e43d624119986d7c10a",
+      "match": true
+    }
+  ],
+  "allMatched": true,
+  "ghcrDigests": {
+    "status": "pending-first-ghcr-push",
+    "reason": "image-tags.json digests remain null; no local CI scan artifacts attached"
+  },
+  "clusterExecution": {
+    "status": "pending-cluster-execution",
+    "reason": "No kubectl apply / probe / HPA / recovery outputs attached to this baseline package"
+  }
+}

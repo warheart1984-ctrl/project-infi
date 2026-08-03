@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "1.0",
+  "recordId": "AAES-OS-OEL-REC-baseline-v1.0-7efa0c5f",
+  "baselineId": "AAES-OS-PRODUCTION-BASELINE-v1.0",
+  "version": "1.0.0-baseline",
+  "commitSha": "7efa0c5f766bc0b30b6eef820d198be3a6bf1a5d",
+  "containerDigests": [
+    {
+      "service": "ops-console",
+      "image": "ghcr.io/warheart1984-ctrl/aaes-os/ops-console",
+      "digest": null,
+      "digestStatus": "pending"
+    },
+    {
+      "service": "platform-api",
+      "image": "ghcr.io/warheart1984-ctrl/aaes-os/platform-api",
+      "digest": null,
+      "digestStatus": "pending"
+    },
+    {
+      "service": "platform-web",
+      "image": "ghcr.io/warheart1984-ctrl/aaes-os/platform-web",
+      "digest": null,
+      "digestStatus": "pending"
+    },
+    {
+      "service": "sovereign-control-plane",
+      "image": "ghcr.io/warheart1984-ctrl/aaes-os/sovereign-control-plane",
+      "digest": null,
+      "digestStatus": "pending"
+    },
+    {
+      "service": "uss-api",
+      "image": "ghcr.io/warheart1984-ctrl/aaes-os/uss-api",
+      "digest": null,
+      "digestStatus": "pending"
+    }
+  ],
+  "sbom": {
+    "status": "pending",
+    "format": null,
+    "artifactUri": null,
+    "waiverReason": null
+  },
+  "vulnerabilityScan": {
+    "status": "PENDING",
+    "tool": "aquasecurity/trivy-action",
+    "artifactUri": null,
+    "summary": "Workflow frozen in baseline; SARIF attachment pending first CI run retention"
+  },
+  "conformanceTests": {
+    "passed": 0,
+    "total": 0,
+    "status": "PENDING",
+    "suiteId": null
+  },
+  "runtimeHealth": {
+    "status": "pending",
+    "services": [
+      { "service": "platform-api", "liveness": "pending", "readiness": "pending" },
+      { "service": "platform-web", "liveness": "pending", "readiness": "pending" },
+      { "service": "ops-console", "liveness": "pending", "readiness": "pending" },
+      { "service": "sovereign-control-plane", "liveness": "pending", "readiness": "pending" },
+      { "service": "uss-api", "liveness": "pending", "readiness": "pending" }
+    ]
+  },
+  "policyValidation": {
+    "status": "PASS",
+    "checks": [
+      "network-policies-frozen",
+      "pod-securityContext-nonroot-readonly-drop-all",
+      "rbac-minimal-role-present"
+    ]
+  },
+  "promotionDecision": {
+    "decision": "hold",
+    "authority": "AAES Constitutional Runtime",
+    "rationale": "Baseline and OEL structure frozen; promote blocked until digests, SBOM, scan, conformance, and runtime health gates clear",
+    "failingGates": [
+      "containerDigests",
+      "sbom",
+      "vulnerabilityScan",
+      "conformanceTests",
+      "runtimeHealth",
+      "approvalSignature"
+    ]
+  },
+  "approvalSignature": {
+    "status": "pending",
+    "signer": "AAES Constitutional Runtime steward",
+    "signedAt": null,
+    "method": null,
+    "signatureRef": null
+  },
+  "timestamp": "2026-07-20T15:54:00Z",
+  "proofSurfaceLevel": "P2",
+  "truthBoundary": "Record freezes the evidence schema and baseline linkage for operational promotion. It does not claim a live promoted production deployment.",
+  "challengeSurface": [
+    "Promotion decision set to promote while gates remain pending",
+    "Digest status claimed pinned without sha256 values",
+    "Manifest checksum drift from production baseline evidence"
+  ],
+  "relatedArtifacts": [
+    "docs/release/production-baseline/aaes-os-v1.0/INDEX.md",
+    "docs/release/production-baseline/aaes-os-v1.0/evidence/deployment-receipt.json",
+    "docs/release/operational-evidence-layer/OPERATIONAL_EVIDENCE_LAYER.md"
+  ]
+}

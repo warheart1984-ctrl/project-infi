@@ -26,6 +26,7 @@ const requiredPages = [
   path.join('docs', 'veilthorn', 'examples.html'),
   path.join('docs', 'veilthorn', 'conformance.html'),
   path.join('docs', 'runtime', 'node-v0-1.html'),
+  path.join('docs', 'runtime', 'nova-studio.html'),
   path.join('docs', 'ulx', 'ulx-ide-integration.html'),
   path.join('docs', 'visualizer', 'sovereign-ide.html'),
   path.join('docs', 'governance', 'crec.html'),

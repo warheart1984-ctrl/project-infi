@@ -1,0 +1,19 @@
+﻿{
+    "jobId":  "resident-cancel",
+    "version":  "1.0",
+    "outputDir":  "G:\\project-infi\\native\\vulkan-render-worker\\resident-validation\\cancel-output",
+    "width":  128,
+    "backend":  "vulkan",
+    "frames":  4,
+    "evidenceRefs":  [
+                         "resident-cancel"
+                     ],
+    "height":  96,
+    "cancellationPath":  "G:\\project-infi\\native\\vulkan-render-worker\\resident-validation\\cancel.signal",
+    "fps":  30,
+    "meshPath":  "G:/New folder/engine/surfaces/meshes/tesseract.mesh.json",
+    "scenePath":  "none",
+    "surfaceId":  "tesseract",
+    "createdAt":  "2026-07-22T08:26:26.9406475Z",
+    "sceneId":  "cancel"
+}

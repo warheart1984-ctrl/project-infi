@@ -1,0 +1,38 @@
+# CEF Prometheus metric catalog v1.0
+
+metrics:
+  - name: cef_evidence_total
+    type: gauge
+    labels: [type]
+    description: Count of evidence objects by CEF profile type
+  - name: cef_evidence_verification_failed_total
+    type: counter
+    description: Cumulative verification failures
+  - name: cef_evidence_replay_errors_total
+    type: counter
+    description: Cumulative replay reconstruction errors
+  - name: cef_certificate_total
+    type: gauge
+    labels: [status]
+    description: Count of certificates by status
+  - name: cef_certificate_promotions_total
+    type: counter
+    description: Cumulative successful promotions
+  - name: cef_certificate_revocations_total
+    type: counter
+    description: Cumulative revocations
+  - name: cef_gate_security_failed_total
+    type: counter
+    description: Security gate failures
+  - name: cef_gate_conformance_failed_total
+    type: counter
+    description: Conformance gate failures
+  - name: cef_gate_policy_failed_total
+    type: counter
+    description: Policy gate failures
+  - name: cef_stewardship_renewal_pending_total
+    type: gauge
+    description: Certificates in renewal_pending state
+  - name: cef_stewardship_active_total
+    type: gauge
+    description: Certificates in active stewardship state

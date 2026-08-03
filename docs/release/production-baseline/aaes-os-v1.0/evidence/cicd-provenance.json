@@ -1,0 +1,56 @@
+{
+  "baselineId": "AAES-OS-PRODUCTION-BASELINE-v1.0",
+  "kind": "cicd-provenance",
+  "frozenCommit": "7efa0c5f766bc0b30b6eef820d198be3a6bf1a5d",
+  "workflow": {
+    "path": ".github/workflows/build-and-push.yml",
+    "sha256": "eb4c099bd2330bf489a10bba600f72a018a94b8006188e43d624119986d7c10a",
+    "name": "Docker Build & Push",
+    "triggers": {
+      "pushBranches": ["main", "develop"],
+      "tags": ["v*"],
+      "pullRequestBranches": ["main", "develop"]
+    }
+  },
+  "jobs": [
+    {
+      "id": "build-and-push",
+      "matrixServices": [
+        "ops-console",
+        "platform-api",
+        "platform-web",
+        "sovereign-control-plane",
+        "uss-api"
+      ],
+      "registry": "ghcr.io",
+      "imageNameTemplate": "${{ github.repository }}/${{ matrix.service }}",
+      "buildArgs": {
+        "SERVICE": "${{ matrix.service }}",
+        "NODE_VERSION": "20"
+      },
+      "cache": "gha",
+      "pushOn": "non-pull_request"
+    },
+    {
+      "id": "test",
+      "steps": ["pnpm install --frozen-lockfile", "pnpm run lint", "pnpm run test", "pnpm run build"]
+    },
+    {
+      "id": "security-scan",
+      "tool": "aquasecurity/trivy-action",
+      "scanType": "fs",
+      "output": "trivy-results.sarif"
+    }
+  ],
+  "provenanceClaims": [
+    "Images are built from repository source at the workflow SHA",
+    "Service matrix is explicit and frozen for v1.0",
+    "Trivy filesystem scan is part of the baseline pipeline"
+  ],
+  "pendingArtifacts": [
+    "GitHub Actions run URL for commit 7efa0c5f",
+    "Uploaded Trivy SARIF for that run",
+    "GHCR package digests for each matrix service"
+  ],
+  "truthBoundary": "Workflow definition is frozen and checksummed. Individual run artifacts must be attached before claiming full CI provenance for a live release."
+}
