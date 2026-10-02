@@ -59,6 +59,7 @@ class OpenRouterProvider:
     provider_name = "openrouter"
     display_name = "OpenRouter"
     send_openrouter_extras = True
+    min_output_tokens = 0
 
     """OpenAI-compatible OpenRouter adapter for free or paid routed models."""
 
@@ -103,6 +104,9 @@ class OpenRouterProvider:
         except error.URLError as exc:
             raise RuntimeError(f"{self.display_name} request failed: {exc.reason}") from exc
 
+    def extra_payload(self, model: str) -> dict[str, Any]:
+        return {}
+
     async def invoke(
         self,
         messages: list[JarvisMessage | dict[str, Any]],
@@ -121,9 +125,10 @@ class OpenRouterProvider:
         request_payload: dict[str, Any] = {
             "model": kwargs.get("model") or self.model,
             "messages": provider_messages or [{"role": "user", "content": "Hello."}],
-            "max_tokens": int(kwargs.get("max_tokens") or 2048),
+            "max_tokens": max(int(kwargs.get("max_tokens") or 2048), self.min_output_tokens),
             "temperature": float(kwargs.get("temperature") or 0.7),
         }
+        request_payload.update(self.extra_payload(request_payload["model"]))
         if self.send_openrouter_extras:
             request_payload["max_completion_tokens"] = request_payload["max_tokens"]
         if tools:

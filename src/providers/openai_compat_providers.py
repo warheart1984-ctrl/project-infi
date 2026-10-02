@@ -14,6 +14,8 @@ DEFAULT_NVIDIA_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 
 class _CompatProvider(OpenRouterProvider):
     send_openrouter_extras = False
+    # Reasoning models spend tokens thinking; tiny budgets return empty text.
+    min_output_tokens = 256
     key_env = ""
     model_env = ""
     url_env = ""
@@ -38,6 +40,9 @@ class GroqProvider(_CompatProvider):
     default_model = DEFAULT_GROQ_MODEL
     default_url = DEFAULT_GROQ_URL
 
+    def extra_payload(self, model):
+        return {"reasoning_effort": "low"} if model.startswith("openai/gpt-oss") else {}
+
 
 class NvidiaProvider(_CompatProvider):
     provider_name = "nvidia"
@@ -47,3 +52,8 @@ class NvidiaProvider(_CompatProvider):
     url_env = "AAIS_NVIDIA_BASE_URL"
     default_model = DEFAULT_NVIDIA_MODEL
     default_url = DEFAULT_NVIDIA_URL
+
+    def extra_payload(self, model):
+        if "nemotron" in model:
+            return {"chat_template_kwargs": {"enable_thinking": False}}
+        return {}
