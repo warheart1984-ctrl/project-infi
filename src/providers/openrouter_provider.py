@@ -32,7 +32,7 @@ def _extract_text_content(content: Any) -> str:
     return str(content or "").strip()
 
 
-def _parse_tool_calls(message: dict[str, Any] | None) -> list[ToolResult] | None:
+def _parse_tool_calls(message: dict[str, Any] | None, provider: str = "openrouter") -> list[ToolResult] | None:
     tool_calls = (message or {}).get("tool_calls") or []
     normalized: list[ToolResult] = []
     for item in tool_calls:
@@ -48,7 +48,7 @@ def _parse_tool_calls(message: dict[str, Any] | None) -> list[ToolResult] | None
                 id=item.get("id"),
                 name=function_payload.get("name") or item.get("name"),
                 arguments=dict(arguments or {}),
-                provider="openrouter",
+                provider=provider,
                 kind=str(item.get("type") or "tool_call"),
             )
         )
@@ -56,6 +56,10 @@ def _parse_tool_calls(message: dict[str, Any] | None) -> list[ToolResult] | None
 
 
 class OpenRouterProvider:
+    provider_name = "openrouter"
+    display_name = "OpenRouter"
+    send_openrouter_extras = True
+
     """OpenAI-compatible OpenRouter adapter for free or paid routed models."""
 
     def __init__(
@@ -95,9 +99,9 @@ class OpenRouterProvider:
                 return json.loads(response.read().decode("utf-8"))
         except error.HTTPError as exc:
             message = exc.read().decode("utf-8", errors="replace")
-            raise RuntimeError(f"OpenRouter request failed: {exc.code} {message}") from exc
+            raise RuntimeError(f"{self.display_name} request failed: {exc.code} {message}") from exc
         except error.URLError as exc:
-            raise RuntimeError(f"OpenRouter request failed: {exc.reason}") from exc
+            raise RuntimeError(f"{self.display_name} request failed: {exc.reason}") from exc
 
     async def invoke(
         self,
@@ -111,30 +115,35 @@ class OpenRouterProvider:
             for message in messages or []
         ]
         provider_messages = [message.to_provider_message() for message in normalized_messages]
+        if not self.send_openrouter_extras:
+            allowed = {"role", "content", "name", "tool_calls", "tool_call_id"}
+            provider_messages = [{k: v for k, v in m.items() if k in allowed} for m in provider_messages]
         request_payload: dict[str, Any] = {
             "model": kwargs.get("model") or self.model,
             "messages": provider_messages or [{"role": "user", "content": "Hello."}],
             "max_tokens": int(kwargs.get("max_tokens") or 2048),
-            "max_completion_tokens": int(kwargs.get("max_tokens") or 2048),
             "temperature": float(kwargs.get("temperature") or 0.7),
         }
+        if self.send_openrouter_extras:
+            request_payload["max_completion_tokens"] = request_payload["max_tokens"]
         if tools:
             request_payload["tools"] = list(tools)
 
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
+            "User-Agent": "aais-jarvis/1.0",
         }
-        if self.site_url:
+        if self.send_openrouter_extras and self.site_url:
             headers["HTTP-Referer"] = self.site_url
-        if self.app_name:
+        if self.send_openrouter_extras and self.app_name:
             headers["X-Title"] = self.app_name
 
         response = await asyncio.to_thread(self.client, request_payload, headers)
         choice = ((response.get("choices") or [None])[0]) or {}
         message = choice.get("message") or {}
         content = _extract_text_content(message.get("content"))
-        tool_calls = _parse_tool_calls(message)
+        tool_calls = _parse_tool_calls(message, self.provider_name)
         usage = response.get("usage") or {}
         finish_reason = str(choice.get("finish_reason") or "").strip().lower() or None
 
@@ -145,7 +154,7 @@ class OpenRouterProvider:
         return ProviderResponse(
             content=content,
             tool_calls=tool_calls,
-            provider="openrouter",
+            provider=self.provider_name,
             model=model_name,
             stop_reason=finish_reason,
             finish_reason=finish_reason,

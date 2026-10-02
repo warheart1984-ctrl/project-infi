@@ -19,6 +19,7 @@ from dataclasses import asdict, is_dataclass
 from datetime import datetime
 from src.datetime_compat import UTC
 from io import BytesIO
+from typing import Any
 from uuid import uuid4
 
 from flask import Flask, Response, jsonify, request

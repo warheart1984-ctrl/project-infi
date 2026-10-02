@@ -11,6 +11,7 @@ from src.jarvis_provider_registry import ProviderConfig, ProviderRegistry as Bas
 from src.logger import get_logger
 from src.providers.claude_provider import ClaudeProvider
 from src.providers.local_provider import LocalProvider
+from src.providers.openai_compat_providers import GroqProvider, NvidiaProvider
 from src.providers.openrouter_provider import OpenRouterProvider
 
 logger = get_logger(__name__)
@@ -109,6 +110,30 @@ class ProviderRegistry(BaseProviderRegistry):
                     ),
                     adapter=None,
                 )
+
+        for _cls, _label, _key_env in (
+            (GroqProvider, "Groq", "GROQ_API_KEY"),
+            (NvidiaProvider, "NVIDIA", "NVIDIA_API_KEY"),
+        ):
+            _key = os.getenv(_key_env, "").strip()
+            _model = os.getenv(_cls.model_env, "").strip() or _cls.default_model
+            _meta = {
+                "kind": "remote",
+                "summary": f"{_label} hosted models through an OpenAI-compatible API.",
+                "model": _model,
+            }
+            if not _key:
+                _meta.update(reason=f"{_key_env} is not set.", activation_hint=f"Add {_key_env} to .env to activate.")
+                self.register(
+                    ProviderConfig(name=_cls.provider_name, display_name=_label, enabled=False, supports_stream=True, meta=_meta),
+                    adapter=None,
+                )
+                continue
+            _meta.update(reason=f"{_label} provider is configured.", activation_hint="")
+            self.register(
+                ProviderConfig(name=_cls.provider_name, display_name=_label, enabled=True, supports_stream=True, meta=_meta),
+                adapter=_cls(api_key=_key, model=_model),
+            )
 
         api_key = os.getenv("ANTHROPIC_API_KEY", "").strip()
         if not api_key:

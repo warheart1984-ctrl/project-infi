@@ -14,16 +14,22 @@ import os
 REMOTE_PROVIDER_LABELS = {
     "claude": "Claude — First Sister",
     "openrouter": "OpenRouter — Free Relay",
+    "groq": "Groq",
+    "nvidia": "NVIDIA",
 }
 
 REMOTE_PROVIDER_MODEL_ENVS = {
     "claude": "AAIS_CLAUDE_MODEL",
     "openrouter": "AAIS_OPENROUTER_MODEL",
+    "groq": "AAIS_GROQ_MODEL",
+    "nvidia": "AAIS_NVIDIA_MODEL",
 }
 
 REMOTE_PROVIDER_DEFAULT_MODELS = {
     "claude": "claude-3-7-sonnet-20250219",
     "openrouter": "openrouter/free",
+    "groq": "openai/gpt-oss-120b",
+    "nvidia": "nvidia/nemotron-3-super-120b-a12b",
 }
 
 
